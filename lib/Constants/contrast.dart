@@ -1,0 +1,1 @@
+enum Contrast { LIGHT, DARK }
