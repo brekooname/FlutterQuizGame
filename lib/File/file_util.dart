@@ -1,3 +1,7 @@
+import 'dart:io' as io;
+import 'dart:html' as html;
+import 'package:flutter/foundation.dart' show kIsWeb;
+
 import 'package:flutter/material.dart';
 
 import '../../Components/Game/game.dart';
@@ -8,4 +12,5 @@ class FileUtil {
     return await DefaultAssetBundle.of(context).loadString(
         'implementations/history/questions/en/diff0/questions_diff0_cat0.txt');
   }
+
 }

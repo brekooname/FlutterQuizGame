@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app_quiz_game/Components/Animation/animation_zoom_in_zoom_out.dart';
 import 'package:flutter_app_quiz_game/Components/Button/my_button.dart';
-import 'package:flutter_app_quiz_game/Components/Text/my_text.dart';
 import 'package:flutter_app_quiz_game/File/file_util.dart';
+import 'package:flutter_app_quiz_game/Implementations/History/Components/history_game_level_header.dart';
+import 'dart:io';
 
 import '../../../Components/Button/button_skin_config.dart';
 import '../../../Components/Font/font_config.dart';
 
 class HistoryGameScreen extends StatefulWidget {
   int score = 0;
+  int availableHints = 6;
   List<String> pressedEntries = [];
   List<String> entries = [];
 
@@ -24,14 +27,13 @@ class Question {
 }
 
 class HistoryGameScreenState extends State<HistoryGameScreen> {
-  final double answer_btn_height = 60;
+  final Size answer_btn_size = Size(120, 60);
   Map<String, Question> questions = Map<String, Question>();
 
   @override
-  void initState () {
+  void initState() {
     super.initState();
     setup();
-
   }
 
   setup() async {
@@ -47,8 +49,10 @@ class HistoryGameScreenState extends State<HistoryGameScreen> {
 
   @override
   Widget build(BuildContext context) {
-
-    var header = createLevelHeader();
+    var header = HistoryGameLevelHeader(
+      historyEra: "Modern times",
+      question: "aabace asdasdas sda",
+    );
 
     for (var i = 0; i < widget.entries.length; i++) {
       var btnBackgr = Colors.lightBlueAccent;
@@ -58,8 +62,8 @@ class HistoryGameScreenState extends State<HistoryGameScreen> {
       }
 
       var answerBtn = MyButton(
-          width: 120,
-          height: answer_btn_height,
+          width: answer_btn_size.width,
+          height: answer_btn_size.height,
           disabled: disabled,
           disabledBackgroundColor: Colors.red.shade100,
           onClick: () {
@@ -74,9 +78,10 @@ class HistoryGameScreenState extends State<HistoryGameScreen> {
 
       questions[widget.entries[i]] = Question(
           Image.asset(
-            "assets/implementations/history/score_icon.png",
+            "assets/implementations/history/questions/images/i$i.png",
             alignment: Alignment.center,
-            height: answer_btn_height * 1.4,
+            height: answer_btn_size.height * 1.8,
+            width: answer_btn_size.height * 1.8,
           ),
           answerBtn,
           widget.entries[i]);
@@ -85,8 +90,8 @@ class HistoryGameScreenState extends State<HistoryGameScreen> {
     var listView = ListView.builder(
       itemCount: questions.length,
       itemBuilder: (BuildContext context, int index) {
-        return createOptionItem(questions[widget.entries[index]]!.button,
-            questions[widget.entries[index]]!.image);
+        var question = questions[widget.entries[index]];
+        return createOptionItem(question!.button, true, question.image, index);
       },
     );
 
@@ -113,51 +118,36 @@ class HistoryGameScreenState extends State<HistoryGameScreen> {
     );
   }
 
-  Widget createOptionItem(MyButton answerBtn, Image questionImg) {
+  Widget createOptionItem(
+      MyButton answerBtn, bool? correctAnswer, Image questionImg, int index) {
+    Widget answerPart = correctAnswer == null
+        ? AnimateZoomInZoomOut(
+            toAnimateWidgetSize: answer_btn_size,
+            toAnimateWidget: answerBtn,
+          )
+        : answerBtn;
+
     var item = Row(children: <Widget>[
       Spacer(),
-      answerBtn,
+      SizedBox(width: answer_btn_size.width + 10, child: answerPart),
       SizedBox(width: 20),
       Container(
-          width: 10, height: answer_btn_height * 2, color: Colors.blueGrey),
+          width: 10,
+          height: answer_btn_size.height * 2,
+          color: correctAnswer == null
+              ? Colors.blueGrey
+              : correctAnswer
+                  ? Colors.green
+                  : Colors.red),
       SizedBox(width: 20),
       questionImg,
       Spacer()
     ]);
 
-    return Container(child: item);
-  }
-
-  Container createLevelHeader() {
     return Container(
-      margin: EdgeInsets.all(20),
-      padding: EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: Colors.lightGreenAccent.withAlpha(150),
-      ),
-      child: Row(
-        children: <Widget>[
-          Spacer(),
-          MyText(
-            text: "Modern History",
-            fontConfig: FontConfig(textColor: Colors.green.shade600),
-          ),
-          Spacer(),
-          MyText(
-            text: "0",
-            fontConfig: FontConfig(
-                textColor: Colors.yellow,
-                borderColor: Colors.black,
-                fontSize: FontConfig.getBigFontSize()),
-          ),
-          SizedBox(width: 10),
-          Image.asset(
-            "assets/implementations/history/score_icon.png",
-            alignment: Alignment.center,
-            width: 40,
-          ),
-        ],
-      ),
-    );
+        child: item,
+        color: index % 2 == 0
+              ? Colors.yellow.shade500.withOpacity(0.1)
+            : Colors.yellow.shade500.withOpacity(0.6));
   }
 }

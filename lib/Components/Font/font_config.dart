@@ -29,7 +29,7 @@ class FontConfig {
   }
 
   static int getStandardBorderWidth() {
-    return 2;
+    return 3;
   }
 
   static int getBigFontSize() {

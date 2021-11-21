@@ -8,11 +8,14 @@ class MyText extends StatelessWidget {
 
   double? width;
 
+  Alignment alignmentInsideContainer;
+
   late String text;
 
   MyText(
       {FontConfig? fontConfig,
       required String text,
+      this.alignmentInsideContainer = Alignment.center,
       this.width,
       this.singleLineLabel = false}) {
     this.fontConfig = fontConfig == null ? FontConfig() : fontConfig;
@@ -43,7 +46,8 @@ class MyText extends StatelessWidget {
         ],
       );
     }
-    return Container(width: width, alignment: Alignment.center, child: result);
+    return Container(
+        width: width, alignment: alignmentInsideContainer, child: result);
   }
 }
 

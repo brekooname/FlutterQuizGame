@@ -35,8 +35,14 @@ class MyButton extends StatefulWidget {
     this.disabledBackgroundColor = disabledBackgroundColor == null
         ? Colors.grey.shade400
         : disabledBackgroundColor;
-    if (this.customContent == null) {
+    if (this.customContent == null && this.text != null) {
       this.customContent = [MyText(text: this.text!)];
+    } else if (buttonSkinConfig.icon != null) {
+      this.customContent = [
+        disabled
+            ? ColorUtil.imageToGreyScale(buttonSkinConfig.icon!)
+            : buttonSkinConfig.icon!
+      ];
     }
   }
 
@@ -47,6 +53,15 @@ class MyButton extends StatefulWidget {
 class MyButtonState extends State<MyButton> {
   @override
   Widget build(BuildContext context) {
+    List<Widget> buttonContent;
+    if (widget.pressed && widget.buttonSkinConfig.icon != null) {
+      buttonContent = [
+        ColorUtil.imageDarken(widget.buttonSkinConfig.icon!)
+      ];
+    } else {
+      buttonContent = widget.customContent!;
+    }
+
     return GestureDetector(
         onTapCancel: () {
           if (!widget.disabled) {
@@ -78,11 +93,25 @@ class MyButtonState extends State<MyButton> {
             alignment: Alignment.center,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: widget.customContent!,
+              children: buttonContent,
             )));
   }
 
-  BoxDecoration createButtonDecoration() {
+  BoxDecoration? createButtonDecoration() {
+    if (widget.buttonSkinConfig.backgroundGradient != null) {
+      return createGradientButtonDecoration();
+    } else {
+      return createIconButtonDecoration();
+    }
+  }
+
+  BoxDecoration? createIconButtonDecoration() {
+    return BoxDecoration(
+        boxShadow: [createIconButtonShadow()],
+        borderRadius: BorderRadius.circular(25));
+  }
+
+  BoxDecoration? createGradientButtonDecoration() {
     var buttonSkinConfig;
     if (widget.disabled) {
       buttonSkinConfig = createDisabledButtonSkinConfig();
@@ -96,24 +125,39 @@ class MyButtonState extends State<MyButton> {
             ? createPressedBackgroundGradient()
             : buttonSkinConfig.backgroundGradient,
         border: Border.all(
-            color: buttonSkinConfig.borderColor,
+            color: widget.pressed
+                ? ColorUtil.colorDarken(buttonSkinConfig.borderColor)
+                : buttonSkinConfig.borderColor,
             width: buttonSkinConfig.borderWidth));
+  }
+
+  BoxShadow createIconButtonShadow() {
+    return BoxShadow(
+      color: Colors.grey.withOpacity(0.3),
+      spreadRadius: 0.2,
+      blurRadius: 2,
+      offset: Offset(0, widget.pressed ? 0 : 3), // changes position of shadow
+    );
   }
 
   BoxShadow createButtonShadow() {
     return BoxShadow(
       color: Colors.grey.withOpacity(0.9),
-      spreadRadius: 5,
-      blurRadius: 7,
+      spreadRadius: widget.disabled
+          ? 0
+          : widget.pressed
+              ? 2
+              : 5,
+      blurRadius: widget.pressed ? 4 : 7,
       offset: Offset(0, widget.pressed ? 0 : 3), // changes position of shadow
     );
   }
 
   RadialGradient createPressedBackgroundGradient() {
+    var darken = ColorUtil.colorDarken(
+        widget.buttonSkinConfig.backgroundGradient!.colors.first, 0.05);
     return RadialGradient(
-        colors: widget.buttonSkinConfig.backgroundGradient!.colors
-            .map((e) => ColorUtil.darken(e, 0.05))
-            .toList(),
+        colors: [darken, darken],
         stops: widget.buttonSkinConfig.backgroundGradient!.stops,
         transform: widget.buttonSkinConfig.backgroundGradient!.transform);
   }
@@ -122,7 +166,7 @@ class MyButtonState extends State<MyButton> {
     Color borderColor =
         widget.buttonSkinConfig.borderColor == Colors.transparent
             ? Colors.transparent
-            : ColorUtil.darken(widget.disabledBackgroundColor, 0.2);
+            : ColorUtil.colorDarken(widget.disabledBackgroundColor, 0.2);
     return ButtonSkinConfig(
         backgroundColor: widget.disabledBackgroundColor,
         borderColor: borderColor,

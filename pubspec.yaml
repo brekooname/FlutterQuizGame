@@ -89,4 +89,6 @@ flutter:
   # see https://flutter.dev/custom-fonts/#from-packages
 
   assets:
+  - assets/main/buttons/
   - assets/implementations/history/
+  - assets/implementations/history/questions/images/
