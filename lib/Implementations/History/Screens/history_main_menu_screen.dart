@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Components/Button/my_button.dart';
+import 'package:flutter_app_quiz_game/Components/Popup/rate_app_popup.dart';
 import 'package:flutter_app_quiz_game/Components/Text/game_title.dart';
 import 'package:flutter_app_quiz_game/Components/Text/my_text.dart';
 
@@ -9,6 +10,14 @@ import '../../../Components/Font/font_config.dart';
 class HistoryMainMenuScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    Future.delayed(
+        Duration.zero,
+        () => showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return RateAppPopup();
+            }));
+
     var gameTitle = GameTitle(
       text: "History Game",
       fontConfig: FontConfig(

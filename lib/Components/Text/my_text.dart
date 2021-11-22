@@ -18,7 +18,7 @@ class MyText extends StatelessWidget {
       this.alignmentInsideContainer = Alignment.center,
       this.width,
       this.singleLineLabel = false}) {
-    this.fontConfig = fontConfig == null ? FontConfig() : fontConfig;
+    this.fontConfig = fontConfig ?? FontConfig();
     this.text = text;
   }
 
@@ -35,7 +35,7 @@ class MyText extends StatelessWidget {
     );
 
     Widget result;
-    if (this.fontConfig.borderColor == null) {
+    if (this.fontConfig.borderColor == Colors.transparent) {
       result = defaultText;
     } else {
       result = OutlinedText(

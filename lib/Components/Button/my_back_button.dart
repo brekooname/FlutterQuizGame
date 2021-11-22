@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app_quiz_game/Components/Color/color_util.dart';
-import 'package:flutter_app_quiz_game/Components/Game/game.dart';
-import 'package:flutter_app_quiz_game/Components/Text/my_text.dart';
 import 'package:flutter_app_quiz_game/Constants/contrast.dart';
+import 'package:flutter_app_quiz_game/Game/game.dart';
 
 import '../../Components/Button/button_skin_config.dart';
 import '../../Components/Font/font_config.dart';

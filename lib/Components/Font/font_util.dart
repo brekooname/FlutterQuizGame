@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app_quiz_game/Game/game.dart';
 
-import '../../Components/Game/game.dart';
 import '../../Constants/contrast.dart';
 
 class FontUtil {

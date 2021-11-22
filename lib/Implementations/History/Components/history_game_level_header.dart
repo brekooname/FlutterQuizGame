@@ -37,7 +37,7 @@ class HistoryGameLevelHeader extends StatelessWidget {
   Container createGreenHeader() {
     var backBtn = MyBackButton();
     var hintBtn = HintButton(
-      disabled: false,
+      disabled: false,showAvailableHintsText: true,
     );
     return Container(
         margin: EdgeInsets.all(20),

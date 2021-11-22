@@ -90,5 +90,6 @@ flutter:
 
   assets:
   - assets/main/buttons/
+  - assets/main/general/
   - assets/implementations/history/
   - assets/implementations/history/questions/images/

@@ -17,7 +17,7 @@ class ButtonSkinConfig {
       double borderWidth = 0}) {
     if (backgroundColor != null) {
       this.backgroundGradient = RadialGradient(radius: 4, colors: [
-        ColorUtil.colorDarken(backgroundColor, 0.2),
+        ColorUtil.colorDarken(backgroundColor, -0.05),
         backgroundColor,
       ]);
     } else {

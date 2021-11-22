@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Components/Animation/animation_zoom_in_zoom_out.dart';
-import 'package:flutter_app_quiz_game/Components/Color/color_util.dart';
-import 'package:flutter_app_quiz_game/Components/Game/game.dart';
 import 'package:flutter_app_quiz_game/Components/Text/my_text.dart';
-import 'package:flutter_app_quiz_game/Constants/contrast.dart';
 
 import '../../Components/Button/button_skin_config.dart';
 import '../../Components/Font/font_config.dart';
@@ -14,10 +11,11 @@ class HintButton extends StatelessWidget {
   late Size buttonSize;
 
   bool disabled;
+  bool showAvailableHintsText;
   int availableHints;
 
   HintButton(
-      {Size? buttonSize, this.availableHints = 1, this.disabled = false}) {
+      {Size? buttonSize, this.availableHints = 1, this.disabled = false, this.showAvailableHintsText = false}) {
     this.buttonSize =
         buttonSize == null ? Size(btnSideSize, btnSideSize) : buttonSize;
   }
@@ -47,7 +45,7 @@ class HintButton extends StatelessWidget {
                 toAnimateWidget: btn,
               ));
 
-    return this.availableHints > 1
+    return this.showAvailableHintsText
         ? Stack(
             children: [
               fittedBtn,

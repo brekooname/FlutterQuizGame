@@ -6,12 +6,15 @@ import '../../Components/Button/button_skin_config.dart';
 import '../../Components/Font/font_config.dart';
 
 class MyButton extends StatefulWidget {
+  late FontConfig fontConfig;
+
   late Color disabledBackgroundColor;
 
+  late ButtonSkinConfig buttonSkinConfig;
+
+  late VoidCallback onClick;
+
   bool pressed = false;
-  VoidCallback onClick;
-  FontConfig fontConfig;
-  ButtonSkinConfig buttonSkinConfig;
   double width;
   double height;
   bool disabled;
@@ -23,21 +26,31 @@ class MyButton extends StatefulWidget {
   MyButton({
     Key? key,
     this.text,
-    required this.width,
-    required this.height,
+    this.width = 200,
+    this.height = 60,
     this.disabled = false,
     Color? disabledBackgroundColor,
-    required this.onClick,
-    required this.fontConfig,
-    required this.buttonSkinConfig,
+    VoidCallback? onClick,
+    FontConfig? fontConfig,
+    Color? backgroundColor,
+    ButtonSkinConfig? buttonSkinConfig,
     this.customContent,
   }) : super(key: key) {
-    this.disabledBackgroundColor = disabledBackgroundColor == null
-        ? Colors.grey.shade400
-        : disabledBackgroundColor;
+    this.fontConfig = fontConfig ?? FontConfig();
+
+    this.buttonSkinConfig = buttonSkinConfig ??
+        ButtonSkinConfig(
+            backgroundColor:
+                backgroundColor ?? Colors.lightBlueAccent.shade200);
+
+    this.onClick = onClick ?? () {};
+
+    this.disabledBackgroundColor =
+        disabledBackgroundColor ?? Colors.grey.shade400;
+
     if (this.customContent == null && this.text != null) {
       this.customContent = [MyText(text: this.text!)];
-    } else if (buttonSkinConfig.icon != null) {
+    } else if (buttonSkinConfig!.icon != null) {
       this.customContent = [
         disabled
             ? ColorUtil.imageToGreyScale(buttonSkinConfig.icon!)
@@ -55,9 +68,7 @@ class MyButtonState extends State<MyButton> {
   Widget build(BuildContext context) {
     List<Widget> buttonContent;
     if (widget.pressed && widget.buttonSkinConfig.icon != null) {
-      buttonContent = [
-        ColorUtil.imageDarken(widget.buttonSkinConfig.icon!)
-      ];
+      buttonContent = [ColorUtil.imageDarken(widget.buttonSkinConfig.icon!)];
     } else {
       buttonContent = widget.customContent!;
     }
@@ -146,9 +157,9 @@ class MyButtonState extends State<MyButton> {
       spreadRadius: widget.disabled
           ? 0
           : widget.pressed
-              ? 2
-              : 5,
-      blurRadius: widget.pressed ? 4 : 7,
+              ? 1
+              : 3,
+      blurRadius: widget.pressed ? 3 : 6,
       offset: Offset(0, widget.pressed ? 0 : 3), // changes position of shadow
     );
   }
