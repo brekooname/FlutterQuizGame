@@ -1,9 +1,27 @@
-import 'package:flutter_app_quiz_game/Game/Game/GameService/game_service.dart';
+import 'CategoryService/question_category_service.dart';
 
-abstract class QuestionCategory {
+class QuestionCategory {
   int index;
   String name;
-  GameService getGameService();
+  QuestionCategoryService questionCategoryService;
 
-  QuestionCategory(this.index, this.name);
+  QuestionCategory(
+      {required this.index,
+      required this.name,
+      required this.questionCategoryService});
+
+  @override
+  String toString() {
+    return 'QuestionCategory{name: $name}';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is QuestionCategory &&
+          index == other.index &&
+          name == other.name;
+
+  @override
+  int get hashCode => index.hashCode ^ name.hashCode;
 }

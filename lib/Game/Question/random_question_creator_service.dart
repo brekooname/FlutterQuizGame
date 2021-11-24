@@ -1,26 +1,36 @@
-import 'package:flutter/widgets.dart';
+import 'dart:math';
+
+import 'package:flutter_app_quiz_game/Util/string_extension.dart';
+import 'package:flutter_app_quiz_game/Game/Question/category_difficulty.dart';
 import 'package:flutter_app_quiz_game/Game/Question/question.dart';
 import 'package:flutter_app_quiz_game/Game/Question/question_category.dart';
 import 'package:flutter_app_quiz_game/Game/Question/question_config.dart';
-import 'package:flutter_app_quiz_game/Game/Question/random_difficulty_category.dart';
 
 import '../game.dart';
 import 'QuestionCreator/question_creator.dart';
 
 class RandomQuestionCreatorService {
+  Question createRandomQuestion(
+      CategoryAndDifficulty categoryAndDifficulty, List<String> rawStrings) {
+    int randomLine = Random().nextInt(rawStrings.length);
+    return Question(randomLine, categoryAndDifficulty.difficulty,
+        categoryAndDifficulty.category, rawStrings[randomLine].capitalize());
+  }
 
-  List<Question> createRandomQuestions(QuestionConfig questionConfig) {
+  List<Question> createRandomQuestions(
+      Map<CategoryAndDifficulty, List<String>> allQuestionsWithConfig,
+      QuestionConfig questionConfig) {
     int questionAmount = questionConfig.amountOfQuestions;
-    List<QuestionCategory> categsToUse = questionConfig.categories;
-    List<QuestionCategory> alreadyUsedCategs = [];
+    Set<QuestionCategory> categsToUse = questionConfig.categories;
+    Set<QuestionCategory> alreadyUsedCategs = {};
     List<Question> randomQuestions = [];
     for (int i = 0; i < questionAmount; i++) {
-      RandomCategoryAndDifficulty randomCategoryAndDifficulty =
+      CategoryAndDifficulty randomCategoryAndDifficulty =
           questionConfig.getRandomCategoryAndDifficulty();
       int repeat1 = 0;
       if (!configContainsSingleCategAndDiff(questionConfig)) {
-        while (alreadyUsedCategs
-            .contains(randomCategoryAndDifficulty.questionCategory)) {
+        while (
+            alreadyUsedCategs.contains(randomCategoryAndDifficulty.category)) {
           randomCategoryAndDifficulty =
               questionConfig.getRandomCategoryAndDifficulty();
           if (repeat1 > 100) {
@@ -31,11 +41,11 @@ class RandomQuestionCreatorService {
       }
 
       QuestionCreator questionCreator =
-          Game.getGameId().gameType.getQuestionCreator();
+          Game.getGameId().gameConfig.getQuestionCreator();
       int repeat2 = 0;
-      Question randomQuestion = questionCreator.createRandomQuestion(
-          randomCategoryAndDifficulty.questionDifficulty,
-          randomCategoryAndDifficulty.questionCategory);
+      Question randomQuestion = createRandomQuestion(
+          randomCategoryAndDifficulty,
+          allQuestionsWithConfig[randomCategoryAndDifficulty] ?? []);
       while (randomQuestions.contains(randomQuestion) ||
           !questionCreator.isQuestionValid(randomQuestion)
           //try to use all question categories
@@ -46,9 +56,8 @@ class RandomQuestionCreatorService {
         if (repeat2 > 100) {
           break;
         }
-        randomQuestion = questionCreator.createRandomQuestion(
-            randomCategoryAndDifficulty.questionDifficulty,
-            randomCategoryAndDifficulty.questionCategory);
+        randomQuestion = createRandomQuestion(randomCategoryAndDifficulty,
+            allQuestionsWithConfig[randomCategoryAndDifficulty] ?? []);
         repeat2++;
       }
       randomQuestions[i] = randomQuestion;

@@ -1,18 +1,31 @@
+import 'dart:math';
+
+import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Components/Animation/animation_zoom_in_zoom_out.dart';
 import 'package:flutter_app_quiz_game/Components/Button/my_button.dart';
-import 'package:flutter_app_quiz_game/File/file_util.dart';
+import 'package:flutter_app_quiz_game/Game/Game/game_context.dart';
+import 'package:flutter_app_quiz_game/Game/Game/game_level.dart';
+import 'package:flutter_app_quiz_game/Game/Question/question_info.dart';
+import 'package:flutter_app_quiz_game/Game/Screen/game_screen.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Components/history_game_level_header.dart';
-import 'dart:io';
+import 'package:flutter_app_quiz_game/Implementations/History/Service/history_game_local_storage.dart';
 
 import '../../../Components/Button/button_skin_config.dart';
 import '../../../Components/Font/font_config.dart';
 
-class HistoryGameScreen extends StatefulWidget {
+class HistoryGameScreen extends StatefulWidget with GameScreen {
   int score = 0;
   int availableHints = 6;
   List<String> pressedEntries = [];
-  List<String> entries = [];
+  GameLevel gameLevel;
+  String historyEra = "";
+
+  HistoryGameScreen(
+      {Key? key, required GameContext gameContext, required this.gameLevel})
+      : super(key: key) {
+    gameContextVal = gameContext;
+  }
 
   @override
   State<HistoryGameScreen> createState() => HistoryGameScreenState();
@@ -27,37 +40,31 @@ class Question {
 }
 
 class HistoryGameScreenState extends State<HistoryGameScreen> {
+  ItemScrollController itemScrollController = ItemScrollController();
+  HistoryLocalStorage localStorage = HistoryLocalStorage();
   final Size answer_btn_size = Size(120, 60);
   Map<String, Question> questions = Map<String, Question>();
 
-  @override
-  void initState() {
-    super.initState();
-    setup();
-  }
-
-  setup() async {
-    print("read file");
-    if (widget.entries.isEmpty) {
-      String questions = await FileUtil.loadText(context);
-      setState(() {
-        widget.entries
-            .addAll(questions.split("\n").reversed.map((e) => e.split(":")[1]));
-      });
-    }
-  }
+  List<QuestionInfo> allQuestionInfos = [];
+  int firstOpenQuestionIndex = 0;
+  int currentQuestion = 0;
 
   @override
   Widget build(BuildContext context) {
-    var header = HistoryGameLevelHeader(
-      historyEra: "Modern times",
-      question: "aabace asdasdas sda",
-    );
+    List<String> rawStrings = widget
+        .gameContextVal.currentUserGameUser.allQuestionInfos
+        .map((e) => e.question.rawString)
+        .toList();
 
-    for (var i = 0; i < widget.entries.length; i++) {
+    List<String> questionStrings =
+        rawStrings.map((e) => e.split(":")[0]).toList().reversed.toList();
+    List<String> optionStrings =
+        rawStrings.map((e) => e.split(":")[1]).toList().reversed.toList();
+
+    for (var i = 0; i < optionStrings.length; i++) {
       var btnBackgr = Colors.lightBlueAccent;
       var disabled = false;
-      if (widget.pressedEntries.contains(widget.entries[i])) {
+      if (widget.pressedEntries.contains(optionStrings[i])) {
         disabled = true;
       }
 
@@ -68,15 +75,17 @@ class HistoryGameScreenState extends State<HistoryGameScreen> {
           disabledBackgroundColor: Colors.red.shade100,
           onClick: () {
             setState(() {
-              widget.pressedEntries.add(widget.entries[i]);
+              itemScrollController.scrollTo(
+                  index: 25, duration: Duration(milliseconds: 300));
+              widget.pressedEntries.add(optionStrings[i]);
             });
           },
           buttonSkinConfig: ButtonSkinConfig(
               borderColor: Colors.blue.shade600, backgroundColor: btnBackgr),
           fontConfig: FontConfig(),
-          text: widget.entries[i]);
+          text: optionStrings[i]);
 
-      questions[widget.entries[i]] = Question(
+      questions[optionStrings[i]] = Question(
           Image.asset(
             "assets/implementations/history/questions/images/i$i.png",
             alignment: Alignment.center,
@@ -84,13 +93,28 @@ class HistoryGameScreenState extends State<HistoryGameScreen> {
             width: answer_btn_size.height * 1.8,
           ),
           answerBtn,
-          widget.entries[i]);
+          optionStrings[i]);
     }
 
-    var listView = ListView.builder(
+    ItemPositionsListener itemPositionsListener =
+        ItemPositionsListener.create();
+
+    itemPositionsListener.itemPositions.addListener(() {
+      setHistoryEra(int.parse(optionStrings[
+          itemPositionsListener.itemPositions.value.first.index]));
+    });
+
+    var header = HistoryGameLevelHeader(
+      historyEra: widget.historyEra,
+      question: questionStrings[0],
+    );
+
+    ScrollablePositionedList listView = ScrollablePositionedList.builder(
       itemCount: questions.length,
+      itemScrollController: itemScrollController,
+      itemPositionsListener: itemPositionsListener,
       itemBuilder: (BuildContext context, int index) {
-        var question = questions[widget.entries[index]];
+        var question = questions[optionStrings[index]];
         return createOptionItem(question!.button, true, question.image, index);
       },
     );
@@ -147,7 +171,58 @@ class HistoryGameScreenState extends State<HistoryGameScreen> {
     return Container(
         child: item,
         color: index % 2 == 0
-              ? Colors.yellow.shade500.withOpacity(0.1)
+            ? Colors.yellow.shade500.withOpacity(0.1)
             : Colors.yellow.shade500.withOpacity(0.6));
+  }
+
+  void initNextQuestion() {
+    Set<int> allQPlayed = localStorage.getAllLevelsPlayed(widget.gameLevel);
+    var questionNrInOrder = getQuestionNrInOrder();
+    for (int i in questionNrInOrder) {
+      if (!allQPlayed.contains(i)) {
+        firstOpenQuestionIndex = questionNrInOrder[i];
+        currentQuestion =
+            getRandomNextQuestion(firstOpenQuestionIndex, questionNrInOrder);
+        while (allQPlayed.contains(currentQuestion)) {
+          currentQuestion =
+              getRandomNextQuestion(firstOpenQuestionIndex, questionNrInOrder);
+        }
+
+        break;
+      }
+    }
+  }
+
+  void setHistoryEra(int year) {
+    String res;
+    if (year < -3200) {
+      res = 0.toString();
+    } else if (year < 499) {
+      res = 1.toString();
+    } else if (year < 1499) {
+      res = 2.toString();
+    } else {
+      res = 3.toString();
+    }
+    setState(() {
+      if (res != widget.historyEra) {
+        widget.historyEra = res;
+      }
+    });
+  }
+
+  List<int> getQuestionNrInOrder() {
+    List<int> qNr = [];
+    for (int i = 0; i < allQuestionInfos.length; i++) {
+      qNr.add(i);
+    }
+    return qNr;
+  }
+
+  int getRandomNextQuestion(
+      int firstOpenQuestionIndex, List<int> questionNrInOrder) {
+    int nr = Random().nextInt(5) + firstOpenQuestionIndex;
+    int size = questionNrInOrder.length;
+    return questionNrInOrder.elementAt(min(nr, size - 1));
   }
 }

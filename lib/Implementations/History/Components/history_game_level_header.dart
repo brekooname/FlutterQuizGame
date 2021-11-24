@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Components/Button/hint_button.dart';
 import 'package:flutter_app_quiz_game/Components/Button/my_back_button.dart';
@@ -23,8 +25,7 @@ class HistoryGameLevelHeader extends StatelessWidget {
   }
 
   Container createLevelHeader() {
-    var questionText =
-        MyText(text: "asdf asdf sadf asdf asdfk asdfomsaodf asdf sad");
+    var questionText = MyText(text: question);
 
     return Container(
         child: Column(children: [
@@ -37,7 +38,8 @@ class HistoryGameLevelHeader extends StatelessWidget {
   Container createGreenHeader() {
     var backBtn = MyBackButton();
     var hintBtn = HintButton(
-      disabled: false,showAvailableHintsText: true,
+      disabled: false,
+      showAvailableHintsText: true,
     );
     return Container(
         margin: EdgeInsets.all(20),
@@ -64,7 +66,8 @@ class HistoryGameLevelHeader extends StatelessWidget {
             ),
             Spacer(),
             MyText(
-              text: "Modern History",
+              width: 100,
+              text: historyEra,
               fontConfig: FontConfig(textColor: Colors.green.shade600),
             ),
             Spacer(),

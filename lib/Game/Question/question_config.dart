@@ -1,16 +1,16 @@
 import 'package:flutter_app_quiz_game/Game/Question/question_category.dart';
 import 'package:flutter_app_quiz_game/Game/Question/question_difficulty.dart';
-import 'package:flutter_app_quiz_game/Game/Question/random_difficulty_category.dart';
+import 'package:flutter_app_quiz_game/Game/Question/category_difficulty.dart';
 
 class QuestionConfig {
-  List<QuestionDifficulty> difficulties;
-  List<QuestionCategory> categories;
+  Set<QuestionDifficulty> difficulties;
+  Set<QuestionCategory> categories;
   int amountOfQuestions;
   int hints;
 
   QuestionConfig(this.difficulties, this.categories, this.amountOfQuestions, this.hints);
 
-  RandomCategoryAndDifficulty getRandomCategoryAndDifficulty() {
+  CategoryAndDifficulty getRandomCategoryAndDifficulty() {
     QuestionDifficulty randomQuestionDifficulty = getRandomQuestionDifficulty();
     List<QuestionCategory> categories = randomQuestionDifficulty.categories;
     categories.shuffle();
@@ -19,19 +19,17 @@ class QuestionConfig {
         categories.remove(category);
       }
     }
-    return RandomCategoryAndDifficulty(
+    return CategoryAndDifficulty(
         categories.first, randomQuestionDifficulty);
   }
 
   QuestionDifficulty getRandomQuestionDifficulty() {
-    List<QuestionDifficulty> list = difficulties;
-    list.shuffle();
+    Set<QuestionDifficulty> list = difficulties;
     return list.first;
   }
 
   QuestionCategory getRandomQuestionCategory() {
-    List<QuestionCategory> list = categories;
-    categories.shuffle();
+    Set<QuestionCategory> list = categories;
     return list.first;
   }
 }

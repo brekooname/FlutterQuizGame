@@ -1,3 +1,4 @@
+import 'package:flutter_app_quiz_game/Game/Question/QuestionService/question_service.dart';
 import 'package:flutter_app_quiz_game/Game/Question/question_info.dart';
 import 'package:flutter_app_quiz_game/Game/Question/question_info_status.dart';
 
@@ -40,7 +41,8 @@ class GameUser {
     return wonQuestions + lostQuestions;
   }
 
-  void addAnswerToQuestionInfo(QuestionInfo? gameQuestionInfo, String answerId) {
+  void addAnswerToQuestionInfo(
+      QuestionInfo? gameQuestionInfo, String answerId) {
     if (gameQuestionInfo != null) {
       gameQuestionInfo.addAnswer(answerId);
       setQuestionFinishedStatus(gameQuestionInfo);
@@ -52,19 +54,15 @@ class GameUser {
   }
 
   void setQuestionFinishedStatus(QuestionInfo gameQuestionInfo) {
-    GameService gameService = CreatorDependenciesContainer.getCreator(
-            gameQuestionInfo
-                .getQuestion()
-                .getQuestionCategory()
-                .getCreatorDependencies())
-        .getGameService(gameQuestionInfo.getQuestion());
-    bool userSuccess =
-        gameService.isGameFinishedSuccessful(gameQuestionInfo.answers);
+    QuestionService questionService =
+        gameQuestionInfo.question.getQuestionService();
+    bool userSuccess = questionService.isGameFinishedSuccessful(
+        gameQuestionInfo.question, gameQuestionInfo.answers);
     if (userSuccess) {
       setWonQuestion(gameQuestionInfo);
     } else {
-      bool userFail =
-          gameService.isGameFinishedFailed(gameQuestionInfo.answers);
+      bool userFail = questionService.isGameFinishedFailed(
+          gameQuestionInfo.question, gameQuestionInfo.answers);
       if (userFail) {
         setLostQuestion(gameQuestionInfo);
       }

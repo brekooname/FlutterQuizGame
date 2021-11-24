@@ -1,15 +1,23 @@
 import 'package:flutter_app_quiz_game/Game/GameType/game_question_config.dart';
+import 'package:flutter_app_quiz_game/Game/Question/CategoryService/unqiue_answers_question_category_service.dart';
 import 'package:flutter_app_quiz_game/Game/Question/question_category.dart';
 import 'package:flutter_app_quiz_game/Game/Question/question_difficulty.dart';
 
 class HistoryGameQuestionConfig extends GameQuestionConfig {
-  QuestionCategory cat0 = QuestionCategory(0, "cat0", );
-  QuestionCategory cat1 = QuestionCategory(1, "cat1");
+  QuestionCategory cat0 = QuestionCategory(
+      index: 0,
+      name: "cat0",
+      questionCategoryService: UniqueAnswersCategoryQuestionService());
+  QuestionCategory cat1 = QuestionCategory(
+      index: 1,
+      name: "cat1",
+      questionCategoryService: UniqueAnswersCategoryQuestionService());
 
   late QuestionDifficulty diff0;
 
   HistoryGameQuestionConfig() {
-    diff0 = QuestionDifficulty(0, "diff0", [cat0, cat1]);
+    diff0 =
+        QuestionDifficulty(index: 0, name: "diff0", categories: [cat0, cat1]);
   }
 
   @override
@@ -19,6 +27,6 @@ class HistoryGameQuestionConfig extends GameQuestionConfig {
 
   @override
   List<QuestionCategory> categories() {
-    throw [cat0, cat1];
+    return [cat0, cat1];
   }
 }

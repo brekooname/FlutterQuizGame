@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app_quiz_game/Game/Game/game_user.dart';
 import 'package:flutter_app_quiz_game/Game/Question/question.dart';
 import 'package:flutter_app_quiz_game/Game/Question/question_info.dart';
-import 'package:flutter_app_quiz_game/Util/list_util.dart';
+import 'package:flutter_app_quiz_game/Util/list_extension.dart';
 
-import '../game_user.dart';
+import '../category_difficulty.dart';
 
-abstract class GameService {
+abstract class QuestionService {
   bool addAnswerToGameInfo(
       GameUser gameUser, Question question, String answer) {
     bool isAnswerCorrect = isAnswerCorrectInQuestion(question, answer);
@@ -47,9 +48,8 @@ abstract class GameService {
       List<String> allAnswers, List<String> correctAnswers) {
     List<String> newAllAnswersList = allAnswers;
     newAllAnswersList.shuffle();
-    newAllAnswersList =
-        ListUtil.removeAll(newAllAnswersList, questionInfo.answers);
-    newAllAnswersList = ListUtil.removeAll(newAllAnswersList, correctAnswers);
+    newAllAnswersList.removeAll(questionInfo.answers);
+    newAllAnswersList.removeAll(correctAnswers);
     return newAllAnswersList;
   }
 
@@ -71,7 +71,9 @@ abstract class GameService {
   String getRandomUnpressedAnswerFromQuestion(
       Question question, Set<String> pressedAnswers);
 
-  List<String> getAllAnswerOptions(Question question);
+  List<String> getAllAnswerOptionsForQuestion(
+      Map<CategoryAndDifficulty, List<String>> allQuestionsWithConfig,
+      Question question);
 
   List<String> getUnpressedCorrectAnswers(
       Question question, Set<String> pressedAnswers);

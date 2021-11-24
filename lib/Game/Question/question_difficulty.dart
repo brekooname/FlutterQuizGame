@@ -5,5 +5,25 @@ class QuestionDifficulty {
   String name;
   List<QuestionCategory> categories;
 
-  QuestionDifficulty(this.index, this.name, this.categories);
+  QuestionDifficulty(
+      {required this.index, required this.name, required this.categories});
+
+  @override
+  String toString() {
+    return 'QuestionDifficulty{name: $name}';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+          other is QuestionDifficulty &&
+              index == other.index &&
+              name == other.name;
+
+  @override
+  int get hashCode =>
+      index.hashCode ^
+      name.hashCode ^
+      categories.hashCode;
+
 }

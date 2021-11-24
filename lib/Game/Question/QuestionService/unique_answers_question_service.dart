@@ -1,19 +1,24 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_app_quiz_game/Game/Game/GameService/quiz_game_service.dart';
+import 'package:flutter_app_quiz_game/Game/Question/QuestionService/quiz_game_service.dart';
 import 'package:flutter_app_quiz_game/Game/Question/question.dart';
-import 'package:flutter_app_quiz_game/Game/Question/question_info.dart';
-import 'package:flutter_app_quiz_game/Util/list_util.dart';
 
-import '../game_user.dart';
-import 'game_service.dart';
+import '../category_difficulty.dart';
 
-abstract class UniqueAnswersQuizGameService extends QuizGameService {
+class UniqueAnswersQuestionService extends QuizQuestionService {
+
+  static final UniqueAnswersQuestionService singleton = UniqueAnswersQuestionService.internal();
+
+  factory UniqueAnswersQuestionService() {
+    return singleton;
+  }
+
+  UniqueAnswersQuestionService.internal();
+
   @override
   List<String> getAnswers(Question question) {
     List<String> answers = [];
-    List<String> answersIdsArray = getCorrectAnswerIds(question);
+    List<String> pressedAnswersArray = getCorrectAnswerIds(question);
     List<String> answerOptionsArray = getAnswerOptionsArray(question);
-    for (String answerId in answersIdsArray) {
+    for (String answerId in pressedAnswersArray) {
       answers.add(answerOptionsArray[int.parse(answerId)]);
     }
     answers.shuffle();
@@ -27,7 +32,9 @@ abstract class UniqueAnswersQuizGameService extends QuizGameService {
   }
 
   @override
-  List<String> getAllAnswerOptions(Question question) {
+  List<String> getAllAnswerOptionsForQuestion(
+      Map<CategoryAndDifficulty, List<String>> allQuestionsWithConfig,
+      Question question) {
     List<String> answerOptions = [];
     for (String answer in getAnswerOptionsArray(question)) {
       answerOptions.add(answer.trim());

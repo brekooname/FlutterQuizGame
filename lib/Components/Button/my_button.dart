@@ -50,11 +50,11 @@ class MyButton extends StatefulWidget {
 
     if (this.customContent == null && this.text != null) {
       this.customContent = [MyText(text: this.text!)];
-    } else if (buttonSkinConfig!.icon != null) {
+    } else if (this.buttonSkinConfig.icon != null) {
       this.customContent = [
         disabled
-            ? ColorUtil.imageToGreyScale(buttonSkinConfig.icon!)
-            : buttonSkinConfig.icon!
+            ? ColorUtil.imageToGreyScale(this.buttonSkinConfig.icon!)
+            : this.buttonSkinConfig.icon!
       ];
     }
   }
@@ -70,7 +70,7 @@ class MyButtonState extends State<MyButton> {
     if (widget.pressed && widget.buttonSkinConfig.icon != null) {
       buttonContent = [ColorUtil.imageDarken(widget.buttonSkinConfig.icon!)];
     } else {
-      buttonContent = widget.customContent!;
+      buttonContent = widget.customContent ?? [Container()];
     }
 
     return GestureDetector(
@@ -123,23 +123,29 @@ class MyButtonState extends State<MyButton> {
   }
 
   BoxDecoration? createGradientButtonDecoration() {
-    var buttonSkinConfig;
+    ButtonSkinConfig buttonSkinConfig;
     if (widget.disabled) {
       buttonSkinConfig = createDisabledButtonSkinConfig();
     } else {
       buttonSkinConfig = widget.buttonSkinConfig;
     }
+
+    Color borderColor = widget.pressed
+        ? ColorUtil.colorDarken(
+            buttonSkinConfig.borderColor ?? Colors.transparent)
+        : buttonSkinConfig.borderColor ?? Colors.transparent;
+
     return BoxDecoration(
         boxShadow: [createButtonShadow()],
         borderRadius: BorderRadius.circular(25),
         gradient: widget.pressed
-            ? createPressedBackgroundGradient()
+            ? buttonSkinConfig.backgroundGradient == null
+                ? null
+                : createPressedBackgroundGradient(
+                    buttonSkinConfig.backgroundGradient!)
             : buttonSkinConfig.backgroundGradient,
         border: Border.all(
-            color: widget.pressed
-                ? ColorUtil.colorDarken(buttonSkinConfig.borderColor)
-                : buttonSkinConfig.borderColor,
-            width: buttonSkinConfig.borderWidth));
+            color: borderColor, width: buttonSkinConfig.borderWidth));
   }
 
   BoxShadow createIconButtonShadow() {
@@ -164,13 +170,12 @@ class MyButtonState extends State<MyButton> {
     );
   }
 
-  RadialGradient createPressedBackgroundGradient() {
-    var darken = ColorUtil.colorDarken(
-        widget.buttonSkinConfig.backgroundGradient!.colors.first, 0.05);
+  RadialGradient createPressedBackgroundGradient(Gradient backgroundGradient) {
+    var darken = ColorUtil.colorDarken(backgroundGradient.colors.first, 0.05);
     return RadialGradient(
         colors: [darken, darken],
-        stops: widget.buttonSkinConfig.backgroundGradient!.stops,
-        transform: widget.buttonSkinConfig.backgroundGradient!.transform);
+        stops: backgroundGradient.stops,
+        transform: backgroundGradient.transform);
   }
 
   ButtonSkinConfig createDisabledButtonSkinConfig() {

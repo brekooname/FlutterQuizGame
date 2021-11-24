@@ -1,5 +1,6 @@
 import 'package:flutter_app_quiz_game/Game/Game/game_context.dart';
 import 'package:flutter_app_quiz_game/Game/Game/game_context.dart';
+import 'package:flutter_app_quiz_game/Game/Question/category_difficulty.dart';
 import 'package:flutter_app_quiz_game/Game/Question/question.dart';
 import 'package:flutter_app_quiz_game/Game/Question/question.dart';
 import 'package:flutter_app_quiz_game/Game/Question/question_category.dart';
@@ -13,6 +14,10 @@ import 'game_context.dart';
 import 'game_user.dart';
 
 class GameContextService {
+  Map<CategoryAndDifficulty, List<String>> allQuestionsWithConfig;
+
+  GameContextService(this.allQuestionsWithConfig);
+
   GameContext createGameContextWithQuestions(List<Question> questions) {
     return createGameContextWithHintsAndQuestions(0, questions);
   }
@@ -20,8 +25,8 @@ class GameContextService {
   GameContext createGameContextWithHintsAndQuestions(
       int amountAvailableHints, List<Question> questions) {
     GameUser gameUser = createGameUser(questions);
-    List<QuestionCategory> categs = [];
-    List<QuestionDifficulty> diff = [];
+    Set<QuestionCategory> categs = {};
+    Set<QuestionDifficulty> diff = {};
     for (Question question in questions) {
       categs.add(question.category);
       diff.add(question.difficulty);
@@ -33,8 +38,8 @@ class GameContextService {
 
   GameContext createGameContextWithQuestionConfig(
       QuestionConfig questionConfig) {
-    List<Question> randomQuestions =
-        RandomQuestionCreatorService().createRandomQuestions(questionConfig);
+    List<Question> randomQuestions = RandomQuestionCreatorService()
+        .createRandomQuestions(allQuestionsWithConfig, questionConfig);
     GameUser gameUser = createGameUser(randomQuestions);
     return createGameContextWithUserAndQuestionConfig(gameUser, questionConfig);
   }
@@ -55,9 +60,8 @@ class GameContextService {
   void addNewQuestionInfo(GameUser gameUser, Question question) {
     QuestionInfo gameQuestionInfo = QuestionInfo(question: question);
     gameUser.addQuestionInfoToList(gameQuestionInfo);
-    Game.getGameId()
-        .gameType
-        .getGameService()
+    question.category.questionCategoryService
+        .getQuestionService()
         .processNewQuestionInfo(gameUser, gameQuestionInfo);
   }
 }
