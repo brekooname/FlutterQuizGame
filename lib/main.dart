@@ -1,89 +1,59 @@
-import 'dart:collection';
-
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-import '../Constants/constant.dart';
 import '../Implementations/History/Screens/history_main_menu_screen.dart';
-import 'File/file_util.dart';
-import 'Game/Game/game_context_service.dart';
-import 'Game/Question/QuestionCreator/question_creator.dart';
-import 'Game/Question/category_difficulty.dart';
-import 'Game/Question/question_category.dart';
-import 'Game/Question/question_difficulty.dart';
-import 'Game/game.dart';
-import 'Implementations/History/Constants/history_game_level.dart';
-import 'Implementations/History/Screens/history_game_screen.dart';
+import 'Game/Constants/app_id.dart';
+import 'Game/my_app_context.dart';
+import 'Lib/Popup/rate_app_popup.dart';
+import 'Lib/Storage/rate_app_local_storage.dart';
 
 void main() {
   runApp(MyApp());
 }
 
 class MyApp extends StatefulWidget {
-  Map<CategoryAndDifficulty, List<String>> allQuestionsWithConfig =
-      HashMap<CategoryAndDifficulty, List<String>>();
+  late SharedPreferences localStorage;
+
+  bool initCompleted = false;
 
   @override
   State<MyApp> createState() => MyAppState();
 }
 
 class MyAppState extends State<MyApp> {
-  @override
-  void initState() {
-    super.initState();
-    setup();
-  }
-
-  setup() async {
-    if (widget.allQuestionsWithConfig.isEmpty) {
-      Map<CategoryAndDifficulty, List<String>> res =
-          HashMap<CategoryAndDifficulty, List<String>>();
-      var categories = Game.getGameId().gameConfig.questionCategories();
-      var difficulties = Game.getGameId().gameConfig.questionDifficulties();
-      for (QuestionCategory category in categories) {
-        for (QuestionDifficulty difficulty in difficulties) {
-          String questions =
-              await FileUtil.getTextForConfig(difficulty, category);
-          print(questions);
-          CategoryAndDifficulty config =
-              CategoryAndDifficulty(category, difficulty);
-          res[config] = questions.split("\n");
-        }
-      }
+  init() async {
+    if (!widget.initCompleted) {
+      SharedPreferences localStorage = await SharedPreferences.getInstance();
 
       setState(() {
-        widget.allQuestionsWithConfig = res;
+        widget.initCompleted = true;
+        widget.localStorage = localStorage;
       });
-      await Game.init();
     }
   }
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    Widget screenToShow = HistoryMainMenuScreen();
+    Widget widgetToShow;
+    if (widget.initCompleted) {
+      MyAppContext myAppContext =
+          MyAppContext(widget.localStorage, AppIds().history);
 
-    if (widget.allQuestionsWithConfig.isNotEmpty) {
-      var gameLevel = HistoryGameLevel().level_0_0;
-      var gameContext = GameContextService(widget.allQuestionsWithConfig)
-          .createGameContextWithQuestions(
-              QuestionCreator().getAllQuestionsForCategoryAndDifficulty(
-        widget.allQuestionsWithConfig,
-        gameLevel.category,
-        gameLevel.difficulty,
-      ));
+      RateAppLocalStorage rateAppLocalStorage =
+          RateAppLocalStorage(myAppContext: myAppContext);
+      rateAppLocalStorage.incrementAppLaunchedCount();
 
-      screenToShow = HistoryGameScreen(gameContext: gameContext, gameLevel: gameLevel,);
+      widgetToShow = HistoryMainMenuScreen(myAppContext);
+    } else {
+      init();
+      widgetToShow = Container();
     }
+
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          primaryColor: K_PRIMARY_COLOR,
-
-          // This makes the visual density adapt to the platform that you run
-          // the app on. For desktop platforms, the controls will be smaller and
-          // closer together (more dense) than on mobile platforms.
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        home: screenToShow);
+        home: widgetToShow);
   }
 }

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app_quiz_game/Components/Color/color_util.dart';
-import 'package:flutter_app_quiz_game/Components/Text/my_text.dart';
+import 'package:flutter_app_quiz_game/Lib/Color/color_util.dart';
+import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
-import '../../Components/Button/button_skin_config.dart';
-import '../../Components/Font/font_config.dart';
+import '../../Lib/Button/button_skin_config.dart';
+import '../../Lib/Font/font_config.dart';
 
 class MyButton extends StatefulWidget {
   late FontConfig fontConfig;
@@ -150,7 +150,7 @@ class MyButtonState extends State<MyButton> {
 
   BoxShadow createIconButtonShadow() {
     return BoxShadow(
-      color: Colors.grey.withOpacity(0.3),
+      color: widget.pressed ?Colors.grey.withOpacity(0.5):Colors.grey.withOpacity(0.3),
       spreadRadius: 0.2,
       blurRadius: 2,
       offset: Offset(0, widget.pressed ? 0 : 3), // changes position of shadow

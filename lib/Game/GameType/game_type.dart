@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app_quiz_game/Constants/contrast.dart';
-import 'package:flutter_app_quiz_game/Game/Question/QuestionCreator/question_creator.dart';
+import 'package:flutter_app_quiz_game/Game/Question/QuestionService/question_parser.dart';
 import 'package:flutter_app_quiz_game/Game/Question/question_category.dart';
 import 'package:flutter_app_quiz_game/Game/Question/question_difficulty.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_app_quiz_game/Lib/Constants/contrast.dart';
 
+import '../my_app_context.dart';
 import 'game_question_config.dart';
 
 abstract class GameConfig {
+
   GameQuestionConfig getGameQuestionConfig();
 
   Contrast getScreenContrast() {
@@ -24,8 +25,8 @@ abstract class GameConfig {
         : Colors.blue.shade600;
   }
 
-  QuestionCreator getQuestionCreator() {
-    return QuestionCreator();
+  QuestionParser getQuestionParser() {
+    return QuestionParser();
   }
 
   List<QuestionCategory> questionCategories() {

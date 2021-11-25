@@ -1,15 +1,16 @@
 import 'dart:collection';
 
 import 'package:flutter_app_quiz_game/Game/Game/game_level.dart';
-import 'package:flutter_app_quiz_game/Game/game.dart';
+import 'package:flutter_app_quiz_game/Game/my_app_context.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HistoryLocalStorage {
-  late SharedPreferences prefs = Game.localStorage;
+  late SharedPreferences prefs;
 
   static final HistoryLocalStorage singleton = HistoryLocalStorage.internal();
 
-  factory HistoryLocalStorage() {
+  factory HistoryLocalStorage({required MyAppContext myAppContext}) {
+    singleton.prefs = myAppContext.localStorage;
     return singleton;
   }
 

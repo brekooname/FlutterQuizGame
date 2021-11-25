@@ -1,15 +1,27 @@
 import 'dart:math';
 
-import 'package:flutter_app_quiz_game/Util/string_extension.dart';
 import 'package:flutter_app_quiz_game/Game/Question/category_difficulty.dart';
 import 'package:flutter_app_quiz_game/Game/Question/question.dart';
 import 'package:flutter_app_quiz_game/Game/Question/question_category.dart';
 import 'package:flutter_app_quiz_game/Game/Question/question_config.dart';
+import 'package:flutter_app_quiz_game/Lib/Extensions/string_extension.dart';
 
-import '../game.dart';
-import 'QuestionCreator/question_creator.dart';
+import '../my_app_context.dart';
+import 'QuestionService/question_parser.dart';
 
 class RandomQuestionCreatorService {
+  late MyAppContext myAppContext;
+
+  static final RandomQuestionCreatorService singleton =
+      RandomQuestionCreatorService.internal();
+
+  factory RandomQuestionCreatorService({required MyAppContext myAppContext}) {
+    singleton.myAppContext = myAppContext;
+    return singleton;
+  }
+
+  RandomQuestionCreatorService.internal();
+
   Question createRandomQuestion(
       CategoryAndDifficulty categoryAndDifficulty, List<String> rawStrings) {
     int randomLine = Random().nextInt(rawStrings.length);
@@ -40,14 +52,14 @@ class RandomQuestionCreatorService {
         }
       }
 
-      QuestionCreator questionCreator =
-          Game.getGameId().gameConfig.getQuestionCreator();
+      QuestionParser questionParser =
+          myAppContext.appId.gameConfig.getQuestionParser();
       int repeat2 = 0;
       Question randomQuestion = createRandomQuestion(
           randomCategoryAndDifficulty,
           allQuestionsWithConfig[randomCategoryAndDifficulty] ?? []);
       while (randomQuestions.contains(randomQuestion) ||
-          !questionCreator.isQuestionValid(randomQuestion)
+          !questionParser.isQuestionValid(randomQuestion)
           //try to use all question categories
           ||
           (!configContainsSingleCategAndDiff(questionConfig) &&

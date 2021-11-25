@@ -4,21 +4,30 @@ import 'package:flutter_app_quiz_game/Game/Question/question_category.dart';
 import 'package:flutter_app_quiz_game/Game/Question/question_difficulty.dart';
 
 class HistoryGameQuestionConfig extends GameQuestionConfig {
-  QuestionCategory cat0 = QuestionCategory(
-      index: 0,
-      name: "cat0",
-      questionCategoryService: UniqueAnswersCategoryQuestionService());
-  QuestionCategory cat1 = QuestionCategory(
-      index: 1,
-      name: "cat1",
-      questionCategoryService: UniqueAnswersCategoryQuestionService());
+  late QuestionCategory cat0;
+
+  late QuestionCategory cat1;
 
   late QuestionDifficulty diff0;
 
-  HistoryGameQuestionConfig() {
-    diff0 =
-        QuestionDifficulty(index: 0, name: "diff0", categories: [cat0, cat1]);
+  static final HistoryGameQuestionConfig singleton =
+      HistoryGameQuestionConfig.internal();
+
+  factory HistoryGameQuestionConfig() {
+    singleton.cat0 = QuestionCategory(
+        index: 0,
+        name: "cat0",
+        questionCategoryService: UniqueAnswersCategoryQuestionService());
+    singleton.cat1 = QuestionCategory(
+        index: 1,
+        name: "cat1",
+        questionCategoryService: UniqueAnswersCategoryQuestionService());
+    singleton.diff0 = QuestionDifficulty(
+        index: 0, name: "diff0", categories: [singleton.cat0, singleton.cat1]);
+    return singleton;
   }
+
+  HistoryGameQuestionConfig.internal();
 
   @override
   List<QuestionDifficulty> difficulties() {

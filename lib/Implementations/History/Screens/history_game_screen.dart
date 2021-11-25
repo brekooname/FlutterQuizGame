@@ -1,20 +1,25 @@
 import 'dart:math';
 
-import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app_quiz_game/Components/Animation/animation_zoom_in_zoom_out.dart';
-import 'package:flutter_app_quiz_game/Components/Button/my_button.dart';
 import 'package:flutter_app_quiz_game/Game/Game/game_context.dart';
 import 'package:flutter_app_quiz_game/Game/Game/game_level.dart';
 import 'package:flutter_app_quiz_game/Game/Question/question_info.dart';
-import 'package:flutter_app_quiz_game/Game/Screen/game_screen.dart';
+import 'package:flutter_app_quiz_game/Game/my_app_context.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Components/history_game_level_header.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Service/history_game_local_storage.dart';
+import 'package:flutter_app_quiz_game/Lib/Animation/animation_zoom_in_zoom_out.dart';
+import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
+import 'package:flutter_app_quiz_game/Lib/Screen/standard_screen.dart';
+import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
-import '../../../Components/Button/button_skin_config.dart';
-import '../../../Components/Font/font_config.dart';
+import '../../../Lib/Button/button_skin_config.dart';
+import '../../../Lib/Font/font_config.dart';
 
-class HistoryGameScreen extends StatefulWidget with GameScreen {
+class HistoryGameScreen extends StatefulWidget {
+  GameContext gameContext;
+  MyAppContext myAppContext;
+  late HistoryLocalStorage historyLocalStorage;
+
   int score = 0;
   int availableHints = 6;
   List<String> pressedEntries = [];
@@ -22,9 +27,12 @@ class HistoryGameScreen extends StatefulWidget with GameScreen {
   String historyEra = "";
 
   HistoryGameScreen(
-      {Key? key, required GameContext gameContext, required this.gameLevel})
+      {Key? key,
+      required this.gameLevel,
+      required this.gameContext,
+      required this.myAppContext})
       : super(key: key) {
-    gameContextVal = gameContext;
+    historyLocalStorage = HistoryLocalStorage(myAppContext: myAppContext);
   }
 
   @override
@@ -39,10 +47,10 @@ class Question {
   Question(this.image, this.button, this.question);
 }
 
-class HistoryGameScreenState extends State<HistoryGameScreen> {
-  ItemScrollController itemScrollController = ItemScrollController();
-  HistoryLocalStorage localStorage = HistoryLocalStorage();
+class HistoryGameScreenState extends State<HistoryGameScreen>
+    with StandardScreen {
   final Size answer_btn_size = Size(120, 60);
+  ItemScrollController itemScrollController = ItemScrollController();
   Map<String, Question> questions = Map<String, Question>();
 
   List<QuestionInfo> allQuestionInfos = [];
@@ -52,7 +60,7 @@ class HistoryGameScreenState extends State<HistoryGameScreen> {
   @override
   Widget build(BuildContext context) {
     List<String> rawStrings = widget
-        .gameContextVal.currentUserGameUser.allQuestionInfos
+        .gameContext.currentUserGameUser.allQuestionInfos
         .map((e) => e.question.rawString)
         .toList();
 
@@ -127,19 +135,7 @@ class HistoryGameScreenState extends State<HistoryGameScreen> {
       ],
     );
 
-    return AspectRatio(
-      aspectRatio: 1.777083333333333,
-      child: Container(
-        decoration: BoxDecoration(
-            image: DecorationImage(
-          repeat: ImageRepeat.repeat,
-          image: AssetImage(
-              'assets/implementations/history/background_texture.png'),
-        )),
-        alignment: Alignment.center,
-        child: mainColumn,
-      ),
-    );
+    return createScreen(mainColumn);
   }
 
   Widget createOptionItem(
@@ -176,7 +172,8 @@ class HistoryGameScreenState extends State<HistoryGameScreen> {
   }
 
   void initNextQuestion() {
-    Set<int> allQPlayed = localStorage.getAllLevelsPlayed(widget.gameLevel);
+    Set<int> allQPlayed =
+        widget.historyLocalStorage.getAllLevelsPlayed(widget.gameLevel);
     var questionNrInOrder = getQuestionNrInOrder();
     for (int i in questionNrInOrder) {
       if (!allQPlayed.contains(i)) {
@@ -204,11 +201,11 @@ class HistoryGameScreenState extends State<HistoryGameScreen> {
     } else {
       res = 3.toString();
     }
-    setState(() {
-      if (res != widget.historyEra) {
+    if (res != widget.historyEra) {
+      setState(() {
         widget.historyEra = res;
-      }
-    });
+      });
+    }
   }
 
   List<int> getQuestionNrInOrder() {

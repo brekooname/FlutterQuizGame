@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Game/Game/game_user.dart';
 import 'package:flutter_app_quiz_game/Game/Question/question.dart';
 import 'package:flutter_app_quiz_game/Game/Question/question_info.dart';
-import 'package:flutter_app_quiz_game/Util/list_extension.dart';
+import 'package:flutter_app_quiz_game/Lib/Extensions/list_extension.dart';
 
 import '../category_difficulty.dart';
 

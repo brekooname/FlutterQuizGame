@@ -9,14 +9,27 @@ import 'package:flutter_app_quiz_game/Game/Question/question_difficulty.dart';
 import 'package:flutter_app_quiz_game/Game/Question/question_info.dart';
 import 'package:flutter_app_quiz_game/Game/Question/random_question_creator_service.dart';
 
-import '../game.dart';
+import '../my_app_context.dart';
 import 'game_context.dart';
 import 'game_user.dart';
 
 class GameContextService {
-  Map<CategoryAndDifficulty, List<String>> allQuestionsWithConfig;
+  late Map<CategoryAndDifficulty, List<String>> allQuestionsWithConfig;
 
-  GameContextService(this.allQuestionsWithConfig);
+  late MyAppContext myAppContext;
+
+  static final GameContextService singleton = GameContextService.internal();
+
+  factory GameContextService(
+      {required MyAppContext myAppContext,
+      required Map<CategoryAndDifficulty, List<String>>
+          allQuestionsWithConfig}) {
+    singleton.myAppContext = myAppContext;
+    singleton.allQuestionsWithConfig = allQuestionsWithConfig;
+    return singleton;
+  }
+
+  GameContextService.internal();
 
   GameContext createGameContextWithQuestions(List<Question> questions) {
     return createGameContextWithHintsAndQuestions(0, questions);
@@ -38,8 +51,9 @@ class GameContextService {
 
   GameContext createGameContextWithQuestionConfig(
       QuestionConfig questionConfig) {
-    List<Question> randomQuestions = RandomQuestionCreatorService()
-        .createRandomQuestions(allQuestionsWithConfig, questionConfig);
+    List<Question> randomQuestions =
+        RandomQuestionCreatorService(myAppContext: myAppContext)
+            .createRandomQuestions(allQuestionsWithConfig, questionConfig);
     GameUser gameUser = createGameUser(randomQuestions);
     return createGameContextWithUserAndQuestionConfig(gameUser, questionConfig);
   }

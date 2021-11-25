@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app_quiz_game/Components/Animation/animation_zoom_in_zoom_out.dart';
-import 'package:flutter_app_quiz_game/Components/Text/my_text.dart';
+import 'package:flutter_app_quiz_game/Lib/Animation/animation_zoom_in_zoom_out.dart';
+import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
-import '../../Components/Button/button_skin_config.dart';
-import '../../Components/Font/font_config.dart';
+import '../../Lib/Button/button_skin_config.dart';
+import '../../Lib/Font/font_config.dart';
 import 'my_button.dart';
 
 class HintButton extends StatelessWidget {
@@ -15,7 +15,10 @@ class HintButton extends StatelessWidget {
   int availableHints;
 
   HintButton(
-      {Size? buttonSize, this.availableHints = 1, this.disabled = false, this.showAvailableHintsText = false}) {
+      {Size? buttonSize,
+      this.availableHints = 1,
+      this.disabled = false,
+      this.showAvailableHintsText = false}) {
     this.buttonSize =
         buttonSize == null ? Size(btnSideSize, btnSideSize) : buttonSize;
   }
@@ -34,6 +37,10 @@ class HintButton extends StatelessWidget {
           width: buttonSize.width,
         )),
         fontConfig: FontConfig());
+
+    if (availableHints == 0) {
+      this.disabled = true;
+    }
 
     var fittedBtn = SizedBox(
         width: buttonSize.width,

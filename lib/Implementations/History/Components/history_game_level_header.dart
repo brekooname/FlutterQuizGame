@@ -1,11 +1,11 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_app_quiz_game/Components/Button/hint_button.dart';
-import 'package:flutter_app_quiz_game/Components/Button/my_back_button.dart';
-import 'package:flutter_app_quiz_game/Components/Text/my_text.dart';
+import 'package:flutter_app_quiz_game/Lib/Button/hint_button.dart';
+import 'package:flutter_app_quiz_game/Lib/Button/my_back_button.dart';
+import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
-import '../../../Components/Font/font_config.dart';
+import '../../../Lib/Font/font_config.dart';
 
 class HistoryGameLevelHeader extends StatelessWidget {
   int score;
@@ -21,22 +21,22 @@ class HistoryGameLevelHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return createLevelHeader();
+    return createLevelHeader(context);
   }
 
-  Container createLevelHeader() {
+  Container createLevelHeader(BuildContext context) {
     var questionText = MyText(text: question);
 
     return Container(
         child: Column(children: [
-      createGreenHeader(),
+      createGreenHeader(context),
       questionText,
       SizedBox(height: 10)
     ]));
   }
 
-  Container createGreenHeader() {
-    var backBtn = MyBackButton();
+  Container createGreenHeader(BuildContext context) {
+    var backBtn = MyBackButton(context: context);
     var hintBtn = HintButton(
       disabled: false,
       showAvailableHintsText: true,

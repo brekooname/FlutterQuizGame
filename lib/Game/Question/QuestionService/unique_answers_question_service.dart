@@ -1,3 +1,4 @@
+import 'package:flutter_app_quiz_game/Game/Question/QuestionService/question_parser.dart';
 import 'package:flutter_app_quiz_game/Game/Question/QuestionService/quiz_game_service.dart';
 import 'package:flutter_app_quiz_game/Game/Question/question.dart';
 
@@ -5,9 +6,14 @@ import '../category_difficulty.dart';
 
 class UniqueAnswersQuestionService extends QuizQuestionService {
 
-  static final UniqueAnswersQuestionService singleton = UniqueAnswersQuestionService.internal();
 
-  factory UniqueAnswersQuestionService() {
+  late QuestionParser questionParser;
+
+  static final UniqueAnswersQuestionService singleton =
+  UniqueAnswersQuestionService.internal();
+
+  factory UniqueAnswersQuestionService({required QuestionParser questionParser}) {
+    singleton.questionParser = questionParser;
     return singleton;
   }
 

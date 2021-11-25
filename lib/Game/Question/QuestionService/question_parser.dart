@@ -1,9 +1,10 @@
-import 'package:flutter_app_quiz_game/Util/string_extension.dart';
 import 'package:flutter_app_quiz_game/Game/Question/question.dart';
 import 'package:flutter_app_quiz_game/Game/Question/question_category.dart';
+import 'package:flutter_app_quiz_game/Lib/Extensions/map_extension.dart';
+import 'package:flutter_app_quiz_game/Lib/Extensions/string_extension.dart';
 
-import '../../game.dart';
 import '../category_difficulty.dart';
+import '../question_difficulty.dart';
 
 class QuestionParser {
   List<String> getAnswers(String questionString) {
@@ -16,8 +17,8 @@ class QuestionParser {
     List<String> answerOptions = getAnswers(question.rawString);
     List<Question> allQuestionsForCategory =
         getAllQuestionsForCategory(allQuestionsWithConfig, question.category);
-    for (String fileId
-        in QuestionParser().getAnswerIds(question.rawString, 3)) {
+    var answerIds = getAnswerIds(question.rawString, 3);
+    for (String fileId in answerIds) {
       var questionForFileId =
           getQuestionForFileId(fileId, allQuestionsForCategory);
       if (questionForFileId == null) {
@@ -36,14 +37,13 @@ class QuestionParser {
   List<Question> getAllQuestionsForCategory(
       Map<CategoryAndDifficulty, List<String>> allQuestionsWithConfig,
       QuestionCategory questionCategory) {
-    var gameConfig = Game.getGameId().gameConfig;
-    return gameConfig
-        .getQuestionCreator()
-        .getAllQuestionsForCategoryAndDifficulties(
-          allQuestionsWithConfig,
-          questionCategory,
-          gameConfig.questionDifficulties(),
-        );
+    var difficulties =
+        allQuestionsWithConfig.entries.map((e) => e.key.difficulty).toList();
+    return getAllQuestionsForCategoryAndDifficulties(
+      allQuestionsWithConfig,
+      questionCategory,
+      difficulties,
+    );
   }
 
   Question? getQuestionForFileId(String fileId, List<Question> allQuestions) {
@@ -62,5 +62,51 @@ class QuestionParser {
       toReturn.add(answer.trim());
     }
     return toReturn;
+  }
+
+  List<Question> getAllQuestions(
+      Map<CategoryAndDifficulty, List<String>> allQuestionsWithConfig) {
+    List<Question> questions = [];
+
+    for (var e in allQuestionsWithConfig.entries) {
+      var categoryAndDifficulty = e.key;
+      var lines = allQuestionsWithConfig.get(categoryAndDifficulty) ?? [];
+      for (int i = 0; i < lines.length; i++) {
+        questions.add(Question(i, categoryAndDifficulty.difficulty,
+            categoryAndDifficulty.category, lines[i]));
+      }
+    }
+
+    return questions;
+  }
+
+  List<Question> getAllQuestionsForCategoryAndDifficulty(
+    Map<CategoryAndDifficulty, List<String>> allQuestionsWithConfig,
+    QuestionCategory category,
+    QuestionDifficulty difficulty,
+  ) {
+    return getAllQuestionsForCategoryAndDifficulties(
+        allQuestionsWithConfig, category, [difficulty]);
+  }
+
+  List<Question> getAllQuestionsForCategoryAndDifficulties(
+    Map<CategoryAndDifficulty, List<String>> allQuestionsWithConfig,
+    QuestionCategory category,
+    List<QuestionDifficulty> difficultyLevels,
+  ) {
+    List<Question> questions = [];
+    for (QuestionDifficulty difficultyLevel in difficultyLevels) {
+      List<String> lines = allQuestionsWithConfig
+              .get(CategoryAndDifficulty(category, difficultyLevel)) ??
+          [];
+      for (int i = 0; i < lines.length; i++) {
+        questions.add(Question(i, difficultyLevel, category, lines[i]));
+      }
+    }
+    return questions;
+  }
+
+  bool isQuestionValid(Question question) {
+    return true;
   }
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app_quiz_game/Components/Font/font_config.dart';
+import 'package:flutter_app_quiz_game/Lib/Font/font_config.dart';
 
 class MyText extends StatelessWidget {
   late FontConfig fontConfig;

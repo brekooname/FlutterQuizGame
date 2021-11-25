@@ -1,22 +1,67 @@
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_app_quiz_game/Components/Button/my_button.dart';
-import 'package:flutter_app_quiz_game/Components/Popup/rate_app_popup.dart';
-import 'package:flutter_app_quiz_game/Components/Text/game_title.dart';
-import 'package:flutter_app_quiz_game/Components/Text/my_text.dart';
+import 'package:flutter_app_quiz_game/Game/Game/game_context_service.dart';
+import 'package:flutter_app_quiz_game/Game/Question/category_difficulty.dart';
+import 'package:flutter_app_quiz_game/Game/Question/question_category.dart';
+import 'package:flutter_app_quiz_game/Game/Question/question_difficulty.dart';
+import 'package:flutter_app_quiz_game/Game/my_app_context.dart';
+import 'package:flutter_app_quiz_game/Implementations/History/Constants/history_game_level.dart';
+import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
+import 'package:flutter_app_quiz_game/Lib/File/file_util.dart';
+import 'package:flutter_app_quiz_game/Lib/Popup/rate_app_popup.dart';
+import 'package:flutter_app_quiz_game/Lib/Screen/standard_screen.dart';
+import 'package:flutter_app_quiz_game/Lib/Text/game_title.dart';
+import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
-import '../../../Components/Button/button_skin_config.dart';
-import '../../../Components/Font/font_config.dart';
+import '../../../Lib/Button/button_skin_config.dart';
+import '../../../Lib/Font/font_config.dart';
+import 'history_game_screen.dart';
 
-class HistoryMainMenuScreen extends StatelessWidget {
+class HistoryMainMenuScreen extends StatefulWidget {
+  Map<CategoryAndDifficulty, List<String>> allQuestionsWithConfig =
+      HashMap<CategoryAndDifficulty, List<String>>();
+  MyAppContext myAppContext;
+
+  HistoryMainMenuScreen(this.myAppContext);
+
+  @override
+  State<HistoryMainMenuScreen> createState() => HistoryMainMenuScreenState();
+}
+
+class HistoryMainMenuScreenState extends State<HistoryMainMenuScreen>
+    with StandardScreen {
+  setup() async {
+    if (widget.allQuestionsWithConfig.isEmpty) {
+      RatePopupService ratePopupService =
+      RatePopupService(buildContext: context, myAppContext: widget.myAppContext);
+      ratePopupService.showRateAppPopup();
+
+      Map<CategoryAndDifficulty, List<String>> res =
+          HashMap<CategoryAndDifficulty, List<String>>();
+      var categories =
+          widget.myAppContext.appId.gameConfig.questionCategories();
+      var difficulties =
+          widget.myAppContext.appId.gameConfig.questionDifficulties();
+      for (QuestionCategory category in categories) {
+        for (QuestionDifficulty difficulty in difficulties) {
+          String questions = await FileUtil(myAppContext: widget.myAppContext)
+              .getTextForConfig(difficulty, category);
+          CategoryAndDifficulty config =
+              CategoryAndDifficulty(category, difficulty);
+          res[config] = questions.split("\n");
+        }
+      }
+
+      setState(() {
+        widget.allQuestionsWithConfig = res;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    Future.delayed(
-        Duration.zero,
-        () => showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return RateAppPopup();
-            }));
+    setup();
 
     var gameTitle = GameTitle(
       text: "History Game",
@@ -33,7 +78,32 @@ class HistoryMainMenuScreen extends StatelessWidget {
     var level1 = MyButton(
         width: 200,
         height: 100,
-        onClick: () {},
+        onClick: () {
+          if (widget.allQuestionsWithConfig.isNotEmpty) {
+            var gameLevel =
+                HistoryGameLevel(myAppContext: widget.myAppContext).level_0_0;
+
+            var gameContext = GameContextService(
+                    myAppContext: widget.myAppContext,
+                    allQuestionsWithConfig: widget.allQuestionsWithConfig)
+                .createGameContextWithQuestions(widget
+                    .myAppContext.appId.gameConfig
+                    .getQuestionParser()
+                    .getAllQuestionsForCategoryAndDifficulty(
+                      widget.allQuestionsWithConfig,
+                      gameLevel.category,
+                      gameLevel.difficulty,
+                    ));
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => HistoryGameScreen(
+                          myAppContext: widget.myAppContext,
+                          gameContext: gameContext,
+                          gameLevel: gameLevel,
+                        )));
+          }
+        },
         buttonSkinConfig: ButtonSkinConfig(
           borderColor: Colors.blue.shade600,
           backgroundColor: Colors.lightBlueAccent,
@@ -80,18 +150,6 @@ class HistoryMainMenuScreen extends StatelessWidget {
       ],
     );
 
-    return AspectRatio(
-      aspectRatio: 1.777083333333333,
-      child: Container(
-        decoration: BoxDecoration(
-            image: DecorationImage(
-          repeat: ImageRepeat.repeat,
-          image: AssetImage(
-              'assets/implementations/history/background_texture.png'),
-        )),
-        alignment: Alignment.center,
-        child: mainColumn,
-      ),
-    );
+    return createScreen(mainColumn);
   }
 }

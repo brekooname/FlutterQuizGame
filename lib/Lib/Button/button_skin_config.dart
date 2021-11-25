@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app_quiz_game/Components/Color/color_util.dart';
+import 'package:flutter_app_quiz_game/Lib/Color/color_util.dart';
 
 class ButtonSkinConfig {
   RadialGradient? backgroundGradient;
