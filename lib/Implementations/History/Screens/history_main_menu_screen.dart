@@ -66,11 +66,7 @@ class HistoryMainMenuScreenState extends State<HistoryMainMenuScreen>
 
   @override
   Widget build(BuildContext context) {
-    initScreen(widget.myAppContext, context, adService.createNewBannerAd(() {
-      setState(() {
-        isBannerAdLoaded = true;
-      });
-    }));
+    initScreen(widget.myAppContext, context);
 
     setupQuestions();
 
@@ -104,14 +100,16 @@ class HistoryMainMenuScreenState extends State<HistoryMainMenuScreen>
                       gameLevel.category,
                       gameLevel.difficulty,
                     ));
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => HistoryGameScreen(
-                          myAppContext: widget.myAppContext,
-                          gameContext: gameContext,
-                          gameLevel: gameLevel,
-                        )));
+            showPopupAd(context, () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => HistoryGameScreen(
+                            myAppContext: widget.myAppContext,
+                            gameContext: gameContext,
+                            gameLevel: gameLevel,
+                          )));
+            });
           }
         },
         buttonSkinConfig: ButtonSkinConfig(
@@ -161,5 +159,12 @@ class HistoryMainMenuScreenState extends State<HistoryMainMenuScreen>
     );
 
     return createScreen(mainColumn);
+  }
+
+  @override
+  void dispose() {
+    bannerAd.dispose();
+    interstitialAd?.dispose();
+    super.dispose();
   }
 }

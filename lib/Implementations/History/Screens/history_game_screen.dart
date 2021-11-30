@@ -59,11 +59,7 @@ class HistoryGameScreenState extends State<HistoryGameScreen>
 
   @override
   Widget build(BuildContext context) {
-    initScreen(widget.myAppContext, context, adService.createNewBannerAd(() {
-      setState(() {
-        isBannerAdLoaded = true;
-      });
-    }));
+    initScreen(widget.myAppContext, context);
 
     List<String> rawStrings = widget
         .gameContext.currentUserGameUser.allQuestionInfos
@@ -101,7 +97,7 @@ class HistoryGameScreenState extends State<HistoryGameScreen>
 
       questions[optionStrings[i]] = Question(
           Image.asset(
-            "assets/implementations/history/questions/images/i$i.png",
+            "assets/implementations/${widget.myAppContext.appId.appKey}/questions/images/i$i.png",
             alignment: Alignment.center,
             height: answer_btn_size.height * 1.8,
             width: answer_btn_size.height * 1.8,
@@ -227,5 +223,12 @@ class HistoryGameScreenState extends State<HistoryGameScreen>
     int nr = Random().nextInt(5) + firstOpenQuestionIndex;
     int size = questionNrInOrder.length;
     return questionNrInOrder.elementAt(min(nr, size - 1));
+  }
+
+  @override
+  void dispose() {
+    bannerAd.dispose();
+    interstitialAd?.dispose();
+    super.dispose();
   }
 }

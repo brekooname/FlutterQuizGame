@@ -23,4 +23,11 @@ class LocalizationService {
   List<Locale> getAllLocales() {
     return Language.values.map((e) => Locale(e.toString(), "")).toList();
   }
+
+  String getLabelTextWithParams(String labelText, List<String> args) {
+    for (int i = 0; i < args.length; ++i) {
+      labelText = labelText.replaceAll("{$i}", args[i]);
+    }
+    return labelText;
+  }
 }
