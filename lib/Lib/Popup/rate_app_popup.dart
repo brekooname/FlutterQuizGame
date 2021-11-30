@@ -29,7 +29,6 @@ class RatePopupService {
   RatePopupService.internal();
 
   void showRateAppPopup() {
-    print("count" + rateAppLocalStorage.appLaunchedCount().toString());
     if (rateAppLocalStorage.isAlreadyRated()) {
       //TODO ---VALUE CHANGED--- should be return
       return;

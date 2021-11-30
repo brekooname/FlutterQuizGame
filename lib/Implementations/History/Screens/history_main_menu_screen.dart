@@ -31,10 +31,10 @@ class HistoryMainMenuScreen extends StatefulWidget {
 
 class HistoryMainMenuScreenState extends State<HistoryMainMenuScreen>
     with StandardScreen {
-  setup() async {
+  setupQuestions() async {
     if (widget.allQuestionsWithConfig.isEmpty) {
-      RatePopupService ratePopupService =
-      RatePopupService(buildContext: context, myAppContext: widget.myAppContext);
+      RatePopupService ratePopupService = RatePopupService(
+          buildContext: context, myAppContext: widget.myAppContext);
       ratePopupService.showRateAppPopup();
 
       Map<CategoryAndDifficulty, List<String>> res =
@@ -60,19 +60,29 @@ class HistoryMainMenuScreenState extends State<HistoryMainMenuScreen>
   }
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    setup();
+    initScreen(widget.myAppContext, context, adService.createNewBannerAd(() {
+      setState(() {
+        isBannerAdLoaded = true;
+      });
+    }));
+
+    setupQuestions();
 
     var gameTitle = GameTitle(
-      text: "History Game",
+      text: widget.myAppContext.appTitle,
       fontConfig: FontConfig(
           textColor: Colors.lightGreenAccent,
           fontWeight: FontWeight.normal,
           borderWidth: FontConfig.getStandardBorderWidth() * 2,
           fontSize: FontConfig.getBigFontSize(),
           borderColor: Colors.green),
-      backgroundImagePath:
-          "assets/implementations/history/title_clouds_background.png",
+      backgroundImagePath: imageService.getImagePath("title_clouds_background"),
     );
 
     var level1 = MyButton(
@@ -110,9 +120,9 @@ class HistoryMainMenuScreenState extends State<HistoryMainMenuScreen>
         ),
         fontConfig: FontConfig(),
         customContent: <Widget>[
-          MyText(text: "Important Years In History"),
+          MyText(text: label.l_important_years_in_history),
           MyText(
-            text: "Highscore: 100",
+            text: getLabelTextWithParam(label.l_high_score_param0, "100"),
             fontConfig: FontConfig(
                 textColor: Colors.yellow,
                 fontWeight: FontWeight.normal,
@@ -129,9 +139,9 @@ class HistoryMainMenuScreenState extends State<HistoryMainMenuScreen>
             backgroundColor: Colors.greenAccent),
         fontConfig: FontConfig(),
         customContent: <Widget>[
-          MyText(text: "Great World Powers"),
+          MyText(text: label.l_great_world_powers),
           MyText(
-            text: "Highscore: 100",
+            text: getLabelTextWithParam(label.l_high_score_param0, "100"),
             fontConfig: FontConfig(
                 textColor: Colors.yellow,
                 fontWeight: FontWeight.normal,

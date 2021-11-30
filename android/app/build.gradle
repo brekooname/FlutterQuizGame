@@ -38,13 +38,21 @@ android {
     }
 
     sourceSets {
+
         main.java.srcDirs += 'src/main/kotlin'
+
+        history {
+            assets.srcDirs = ['assets/implementations/history', 'assets/main']
+        }
+        historyPro {
+            assets.srcDirs = ['assets/implementations/history', 'assets/main']
+        }
     }
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "com.gigi.flutter_app_quiz_game"
-        minSdkVersion 16
+        applicationId "app.flutter_app_quiz_game"
+        minSdkVersion 19
         targetSdkVersion 30
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
@@ -56,6 +64,27 @@ android {
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig signingConfigs.debug
         }
+    }
+
+    flavorDimensions "game"
+    productFlavors {
+/////////////////////////////////////////////////////////////////////////////
+        history {
+            applicationIdSuffix ".history"
+            versionCode 1
+            versionName "1.00"
+            dimension "game"
+            manifestPlaceholders = [appIcon: "@drawable/history_icon"]
+        }
+/////////////////////////////////////////////////////////////////////////////
+        historyPro {
+            applicationIdSuffix ".historypro"
+            versionCode 1
+            versionName "1.00"
+            dimension "game"
+            manifestPlaceholders = [appIcon: "@drawable/historypro_icon"]
+        }
+/////////////////////////////////////////////////////////////////////////////
     }
 }
 

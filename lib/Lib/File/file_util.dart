@@ -28,9 +28,10 @@ class FileUtil {
 
   String getQuestionFilePath(QuestionDifficulty difficultyLevelToCreate,
       QuestionCategory categoryEnumToCreate) {
-    var gameName = myAppContext.appId.name;
+    var gameName = myAppContext.appId.appKey;
     var diffIndex = difficultyLevelToCreate.index;
     var categIndex = categoryEnumToCreate.index;
-    return "assets/implementations/$gameName/questions/en/diff$diffIndex/questions_diff${diffIndex}_cat$categIndex.txt";
+    var langCode = myAppContext.languageCode;
+    return "assets/implementations/$gameName/questions/$langCode/diff$diffIndex/questions_diff${diffIndex}_cat$categIndex.txt";
   }
 }

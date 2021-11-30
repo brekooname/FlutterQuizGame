@@ -59,6 +59,12 @@ class HistoryGameScreenState extends State<HistoryGameScreen>
 
   @override
   Widget build(BuildContext context) {
+    initScreen(widget.myAppContext, context, adService.createNewBannerAd(() {
+      setState(() {
+        isBannerAdLoaded = true;
+      });
+    }));
+
     List<String> rawStrings = widget
         .gameContext.currentUserGameUser.allQuestionInfos
         .map((e) => e.question.rawString)
