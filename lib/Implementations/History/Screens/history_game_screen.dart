@@ -25,6 +25,8 @@ class HistoryGameScreen extends StatefulWidget {
   GameLevel gameLevel;
   String historyEra = "";
   int currentQuestion = 0;
+  int firstOpenQuestionIndex = 0;
+  int? mostPressedCurrentQuestion;
 
   HistoryGameScreen(
       {Key? key,
@@ -34,12 +36,24 @@ class HistoryGameScreen extends StatefulWidget {
       : super(key: key) {
     historyLocalStorage = HistoryLocalStorage(myAppContext: myAppContext);
     currentQuestion = getCurrentQuestion();
-
+    firstOpenQuestionIndex = getFirstOpenQuestion();
     historyLocalStorage.clearLevelsPlayed(gameLevel);
   }
 
   @override
   State<HistoryGameScreen> createState() => HistoryGameScreenState();
+
+  int getFirstOpenQuestion() {
+    Set<int> allQPlayed = historyLocalStorage.getAllLevelsPlayed(gameLevel);
+    int questionNrInOrderLength =
+        gameContext.currentUserGameUser.allQuestionInfos.length;
+    for (int i = 0; i < questionNrInOrderLength; i++) {
+      if (!allQPlayed.contains(i)) {
+        return i;
+      }
+    }
+    return -1;
+  }
 
   int getCurrentQuestion() {
     Set<int> allQPlayed = historyLocalStorage.getAllLevelsPlayed(gameLevel);
@@ -59,7 +73,7 @@ class HistoryGameScreen extends StatefulWidget {
         return currentQuestion;
       }
     }
-    return 0;
+    return -1;
   }
 
   int getRandomNextQuestion(
@@ -106,7 +120,6 @@ class HistoryGameScreenState extends State<HistoryGameScreen>
       var btnBackgr = Colors.lightBlueAccent;
       var disabled = false;
 
-
       bool? correctAnswer;
       Color? disabledBackgroundColor;
       if (levelsWon.contains(i)) {
@@ -121,8 +134,7 @@ class HistoryGameScreenState extends State<HistoryGameScreen>
 
       var optionText = getOptionText(optionStrings[i]);
       var answerBtn = MyButton(
-          width: answer_btn_size.width,
-          height: answer_btn_size.height,
+          size: answer_btn_size,
           disabled: disabled,
           disabledBackgroundColor: disabledBackgroundColor,
           onClick: () {
@@ -136,12 +148,14 @@ class HistoryGameScreenState extends State<HistoryGameScreen>
               } else {
                 itemScrollController.scrollTo(
                     index: widget.currentQuestion,
-                    duration: Duration(milliseconds: 300));
+                    duration: Duration(milliseconds: 900));
                 widget.historyLocalStorage
                     .setLevelLost(widget.currentQuestion, widget.gameLevel);
               }
             });
+            widget.mostPressedCurrentQuestion = widget.currentQuestion;
             widget.currentQuestion = widget.getCurrentQuestion();
+            widget.firstOpenQuestionIndex = widget.getFirstOpenQuestion();
           },
           buttonSkinConfig: ButtonSkinConfig(
               borderColor: Colors.blue.shade600, backgroundColor: btnBackgr),
@@ -149,18 +163,29 @@ class HistoryGameScreenState extends State<HistoryGameScreen>
           text: optionText);
 
       var imgRatio = 1.3;
-      var imageSize = Size(
-          answer_btn_size.width * imgRatio, answer_btn_size.height * imgRatio);
+      var maxWidth = answer_btn_size.width * imgRatio;
+      var maxHeight = answer_btn_size.height * imgRatio;
+      var appKey = myAppContext.appId.appKey;
       Image image = levelsImgShown.contains(i)
           ? imageService.getSpecificImage(
-              imageName: "i$i", module: "questions/images", size: imageSize)
+              appKey: appKey,
+              maxWidth: maxWidth,
+              maxHeight: maxHeight,
+              imageName: "i$i",
+              module: "questions/images")
           : levelsLost.contains(i)
               ? imageService.getSpecificImage(
-                  imageName: "hist_answ_wrong", size: imageSize)
+                  maxWidth: maxWidth,
+                  maxHeight: maxHeight,
+                  appKey: appKey,
+                  imageName: "hist_answ_wrong")
               : imageService.getSpecificImage(
-                  imageName: "timeline_opt_unknown", size: imageSize);
-      questions[optionStrings[i]] = HistoryQuestion(
-          image, answerBtn, correctAnswer, optionStrings[i]);
+                  appKey: appKey,
+                  maxWidth: maxWidth,
+                  maxHeight: maxHeight,
+                  imageName: "timeline_opt_unknown");
+      questions[optionStrings[i]] =
+          HistoryQuestion(image, answerBtn, correctAnswer, optionStrings[i]);
     }
 
     ItemPositionsListener itemPositionsListener =
@@ -172,8 +197,34 @@ class HistoryGameScreenState extends State<HistoryGameScreen>
     });
 
     var header = HistoryGameLevelHeader(
+      availableHints: widget.gameContext.amountAvailableHints,
       historyEra: widget.historyEra,
       question: questionStrings[widget.currentQuestion],
+      hintButtonOnClick: () {
+        widget.gameContext.amountAvailableHints =
+            widget.gameContext.amountAvailableHints - 1;
+
+        Set<int> allQPlayed =
+            widget.historyLocalStorage.getAllLevelsPlayed(widget.gameLevel);
+        Set<int> allImgShown =
+            widget.historyLocalStorage.getLevelsImgShown(widget.gameLevel);
+        int nrOfImgToShow = 5;
+        int indexToShow = widget.firstOpenQuestionIndex;
+        while (nrOfImgToShow > 0) {
+          if (!allQPlayed.contains(indexToShow) &&
+              !allImgShown.contains(indexToShow)) {
+            widget.historyLocalStorage
+                .setLeveImgShown(indexToShow, widget.gameLevel);
+            nrOfImgToShow--;
+          }
+          indexToShow++;
+
+          if (indexToShow > questions.length) {
+            break;
+          }
+        }
+        setState(() {});
+      },
     );
 
     ScrollablePositionedList listView = ScrollablePositionedList.builder(
@@ -182,7 +233,8 @@ class HistoryGameScreenState extends State<HistoryGameScreen>
       itemPositionsListener: itemPositionsListener,
       itemBuilder: (BuildContext context, int index) {
         var question = questions[optionStrings[index]];
-        return createOptionItem(question!.button, question.correctAnswer, question.image, index);
+        return createOptionItem(
+            question!.button, question.correctAnswer, question.image, index);
       },
     );
 
@@ -195,8 +247,11 @@ class HistoryGameScreenState extends State<HistoryGameScreen>
 
   Widget createOptionItem(
       MyButton answerBtn, bool? correctAnswer, Image questionImg, int index) {
-    Widget answerPart = correctAnswer == null
+    Widget answerPart = (widget.mostPressedCurrentQuestion != null &&
+            widget.mostPressedCurrentQuestion == index)
         ? AnimateZoomInZoomOut(
+            zoomInZoomOutOnce: true,
+            duration: const Duration(milliseconds: 1200),
             toAnimateWidgetSize: answer_btn_size,
             toAnimateWidget: answerBtn,
           )
@@ -204,7 +259,7 @@ class HistoryGameScreenState extends State<HistoryGameScreen>
 
     var item = Row(children: <Widget>[
       Spacer(),
-      SizedBox(width: answer_btn_size.width + 10, child: answerPart),
+      Padding(padding: EdgeInsets.all(10), child: answerPart),
       SizedBox(width: 20),
       Container(
           width: 10,

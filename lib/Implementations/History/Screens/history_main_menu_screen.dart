@@ -43,12 +43,13 @@ class HistoryMainMenuScreenState extends State<HistoryMainMenuScreen>
           fontSize: FontConfig.getBigFontSize(),
           borderColor: Colors.green),
       backgroundImagePath: imageService.getSpecificImagePath(
+          appKey: myAppContext.appId.appKey,
           imageName: "title_clouds_background"),
     );
 
+    var btnSize = Size(200, 100);
     var level1 = MyButton(
-        width: 200,
-        height: 100,
+        size: btnSize,
         onClick: () {
           if (widget.allQuestionsWithConfig.isNotEmpty) {
             var gameLevel =
@@ -57,14 +58,15 @@ class HistoryMainMenuScreenState extends State<HistoryMainMenuScreen>
             var gameContext = GameContextService(
                     myAppContext: widget.myAppContext,
                     allQuestionsWithConfig: widget.allQuestionsWithConfig)
-                .createGameContextWithQuestions(widget
-                    .myAppContext.appId.gameConfig
-                    .getQuestionParser()
-                    .getAllQuestionsForCategoryAndDifficulty(
-                      widget.allQuestionsWithConfig,
-                      gameLevel.category,
-                      gameLevel.difficulty,
-                    ));
+                .createGameContextWithHintsAndQuestions(
+                    6,
+                    widget.myAppContext.appId.gameConfig
+                        .getQuestionParser()
+                        .getAllQuestionsForCategoryAndDifficulty(
+                          widget.allQuestionsWithConfig,
+                          gameLevel.category,
+                          gameLevel.difficulty,
+                        ));
             showPopupAd(context, () {
               Navigator.push(
                   context,
@@ -94,8 +96,7 @@ class HistoryMainMenuScreenState extends State<HistoryMainMenuScreen>
         ]);
 
     var level2 = MyButton(
-        width: 200,
-        height: 100,
+        size: btnSize,
         onClick: () {},
         buttonSkinConfig: ButtonSkinConfig(
             borderColor: Colors.green.shade600,

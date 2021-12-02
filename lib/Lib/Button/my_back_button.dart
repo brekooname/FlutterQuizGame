@@ -20,8 +20,7 @@ class MyBackButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var btn = MyButton(
-        width: button_size.width,
-        height: button_size.height,
+        size: button_size,
         onClick: onClick,
         buttonSkinConfig: ButtonSkinConfig(
             icon: Image.asset(

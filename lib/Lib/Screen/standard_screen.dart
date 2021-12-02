@@ -8,7 +8,8 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 
 mixin StandardScreen {
-  ImageService? _imageService;
+  late MyAppContext myAppContext;
+  ImageService imageService = ImageService();
   LocalizationService? _localizationService;
   AdService adService = AdService();
   BannerAd? bannerAd;
@@ -16,16 +17,11 @@ mixin StandardScreen {
   bool isInterstitialAdLoaded = false;
 
   void initScreen(MyAppContext myAppContext, BuildContext buildContext) {
-    _imageService = ImageService(myAppContext: myAppContext);
+    this.myAppContext = myAppContext;
     _localizationService = LocalizationService(buildContext: buildContext);
     if (!kIsWeb) {
       initAds(buildContext);
     }
-  }
-
-  ImageService get imageService {
-    assert(_imageService != null);
-    return _imageService!;
   }
 
   LocalizationService get localizationService {
@@ -120,7 +116,7 @@ mixin StandardScreen {
         decoration: BoxDecoration(
             image: DecorationImage(
           repeat: ImageRepeat.repeat,
-          image: AssetImage(imageService.getSpecificImagePath(
+          image: AssetImage(imageService.getSpecificImagePath(appKey: myAppContext.appId.appKey,
               imageName: "background_texture")),
         )),
         alignment: Alignment.center,

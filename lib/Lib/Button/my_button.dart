@@ -6,6 +6,7 @@ import '../../Lib/Button/button_skin_config.dart';
 import '../../Lib/Font/font_config.dart';
 
 class MyButton extends StatefulWidget {
+  static const Size btn_size = Size(200, 60);
   late FontConfig fontConfig;
 
   late Color disabledBackgroundColor;
@@ -15,8 +16,7 @@ class MyButton extends StatefulWidget {
   late VoidCallback onClick;
 
   bool pressed = false;
-  double width;
-  double height;
+  Size size;
   bool disabled;
 
   String? text;
@@ -26,8 +26,7 @@ class MyButton extends StatefulWidget {
   MyButton({
     Key? key,
     this.text,
-    this.width = 200,
-    this.height = 60,
+    this.size = btn_size,
     this.disabled = false,
     Color? disabledBackgroundColor,
     VoidCallback? onClick,
@@ -98,8 +97,8 @@ class MyButtonState extends State<MyButton> {
         },
         child: AnimatedContainer(
             duration: Duration(milliseconds: 100),
-            width: widget.width,
-            height: widget.height,
+            width: widget.size.width,
+            height: widget.size.height,
             decoration: createButtonDecoration(),
             alignment: Alignment.center,
             child: Column(
@@ -150,7 +149,9 @@ class MyButtonState extends State<MyButton> {
 
   BoxShadow createIconButtonShadow() {
     return BoxShadow(
-      color: widget.pressed ?Colors.grey.withOpacity(0.5):Colors.grey.withOpacity(0.3),
+      color: widget.pressed
+          ? Colors.grey.withOpacity(0.5)
+          : Colors.grey.withOpacity(0.3),
       spreadRadius: 0.2,
       blurRadius: 2,
       offset: Offset(0, widget.pressed ? 0 : 3), // changes position of shadow

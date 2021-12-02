@@ -19,7 +19,7 @@ class InternalAnimatedWidget extends AnimatedWidget {
     return Center(
       child: Opacity(
         opacity: Tween<double>(begin: 1, end: 1).evaluate(animation),
-        child: Container(
+        child: SizedBox(
           height: Tween<double>(
                   begin: toAnimateWidgetSize.height,
                   end: toAnimateWidgetSize.height - this.zoomAmount)
@@ -40,10 +40,14 @@ class AnimateZoomInZoomOut extends StatefulWidget {
   Widget toAnimateWidget;
   Size toAnimateWidgetSize;
   int zoomAmount;
+  bool zoomInZoomOutOnce;
+  Duration duration;
 
   AnimateZoomInZoomOut(
       {Key? key,
       this.zoomAmount = default_zoom_amount,
+      this.zoomInZoomOutOnce = false,
+      this.duration = const Duration(seconds: 1),
       required this.toAnimateWidgetSize,
       required this.toAnimateWidget})
       : super(key: key);
@@ -62,12 +66,13 @@ class MyAnimatedWidgetState extends State<AnimateZoomInZoomOut>
   void initState() {
     super.initState();
     controller =
-        AnimationController(duration: const Duration(seconds: 1), vsync: this);
-    animation = CurvedAnimation(parent: controller, curve: Curves.easeIn)
-      ..addStatusListener((status) {
+        AnimationController(duration: widget.duration, vsync: this);
+    animation = CurvedAnimation(parent: controller, curve: Curves.ease);
+    animation.addStatusListener((status) {
         if (status == AnimationStatus.completed) {
           controller.reverse();
-        } else if (status == AnimationStatus.dismissed) {
+        } else if (status == AnimationStatus.dismissed &&
+            !widget.zoomInZoomOutOnce) {
           controller.forward();
         }
       });

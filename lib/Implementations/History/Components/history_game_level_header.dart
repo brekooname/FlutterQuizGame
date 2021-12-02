@@ -12,10 +12,12 @@ class HistoryGameLevelHeader extends StatelessWidget {
   int availableHints;
   String historyEra;
   String question;
+  VoidCallback hintButtonOnClick;
 
   HistoryGameLevelHeader(
       {this.score = 0,
-      this.availableHints = 6,
+      required this.hintButtonOnClick,
+      required this.availableHints,
       required this.historyEra,
       required this.question});
 
@@ -38,6 +40,8 @@ class HistoryGameLevelHeader extends StatelessWidget {
   Container createGreenHeader(BuildContext context) {
     var backBtn = MyBackButton(context: context);
     var hintBtn = HintButton(
+      onClick: this.hintButtonOnClick,
+      availableHints: this.availableHints,
       disabled: false,
       showAvailableHintsText: true,
     );
