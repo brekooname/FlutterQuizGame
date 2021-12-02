@@ -23,7 +23,7 @@ class ImageClickQuestionService extends QuestionService {
   ImageClickQuestionService.internal();
 
   Map<MyButton, ImageClickInfo> getAnswerOptionsCoordinates(
-      Map<CategoryAndDifficulty, List<String>> allQuestionsWithConfig,
+      Map<CategoryDifficulty, List<Question>> allQuestionsWithConfig,
       List<MyButton> allAnswerOptionsButtons,
       QuestionDifficulty questionDifficultyLevel,
       QuestionCategory questionCategory) {
@@ -74,7 +74,7 @@ class ImageClickQuestionService extends QuestionService {
 
   @override
   List<String> getAllAnswerOptionsForQuestion(
-      Map<CategoryAndDifficulty, List<String>> allQuestionsWithConfig,
+      Map<CategoryDifficulty, List<Question>> allQuestionsWithConfig,
       Question question) {
     return questionParser.getAllAnswerOptionsForQuestion(
         allQuestionsWithConfig, question);

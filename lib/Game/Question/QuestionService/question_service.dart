@@ -72,7 +72,7 @@ abstract class QuestionService {
       Question question, Set<String> pressedAnswers);
 
   List<String> getAllAnswerOptionsForQuestion(
-      Map<CategoryAndDifficulty, List<String>> allQuestionsWithConfig,
+      Map<CategoryDifficulty, List<Question>> allQuestionsWithConfig,
       Question question);
 
   List<String> getUnpressedCorrectAnswers(

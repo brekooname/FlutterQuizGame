@@ -1,11 +1,11 @@
 import 'package:flutter_app_quiz_game/Game/Question/question_category.dart';
 import 'package:flutter_app_quiz_game/Game/Question/question_difficulty.dart';
 
-class CategoryAndDifficulty {
+class CategoryDifficulty {
   QuestionCategory category;
   QuestionDifficulty difficulty;
 
-  CategoryAndDifficulty(this.category, this.difficulty);
+  CategoryDifficulty(this.category, this.difficulty);
 
   @override
   String toString() {
@@ -15,7 +15,7 @@ class CategoryAndDifficulty {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-          other is CategoryAndDifficulty &&
+          other is CategoryDifficulty &&
               category == other.category &&
               difficulty == other.difficulty;
 

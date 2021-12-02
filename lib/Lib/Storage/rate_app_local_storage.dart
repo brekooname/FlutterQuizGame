@@ -14,26 +14,26 @@ class RateAppLocalStorage {
   RateAppLocalStorage.internal();
 
   int appLaunchedCount() {
-    return prefs.getInt(getAppLaunchedCountKey()) ?? 0;
+    return prefs.getInt(_getAppLaunchedCountKey()) ?? 0;
   }
 
   void incrementAppLaunchedCount() {
-    prefs.setInt(getAppLaunchedCountKey(), appLaunchedCount() + 1);
+    prefs.setInt(_getAppLaunchedCountKey(), appLaunchedCount() + 1);
   }
 
   bool isAlreadyRated() {
-    return prefs.getBool(getAlreadyRatedKey()) ?? false;
+    return prefs.getBool(_getAlreadyRatedKey()) ?? false;
   }
 
   void setAlreadyRated() {
-    prefs.setBool(getAlreadyRatedKey(), true);
+    prefs.setBool(_getAlreadyRatedKey(), true);
   }
 
-  String getAlreadyRatedKey() {
+  String _getAlreadyRatedKey() {
     return "RateAppLocalStorage_AlreadyRated";
   }
 
-  String getAppLaunchedCountKey() {
+  String _getAppLaunchedCountKey() {
     return "RateAppLocalStorage_AppLaunchedCount";
   }
 }

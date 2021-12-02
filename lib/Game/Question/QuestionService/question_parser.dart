@@ -12,7 +12,7 @@ class QuestionParser {
   }
 
   List<String> getAllAnswerOptionsForQuestion(
-      Map<CategoryAndDifficulty, List<String>> allQuestionsWithConfig,
+      Map<CategoryDifficulty, List<Question>> allQuestionsWithConfig,
       Question question) {
     List<String> answerOptions = getAnswers(question.rawString);
     List<Question> allQuestionsForCategory =
@@ -35,7 +35,7 @@ class QuestionParser {
   }
 
   List<Question> getAllQuestionsForCategory(
-      Map<CategoryAndDifficulty, List<String>> allQuestionsWithConfig,
+      Map<CategoryDifficulty, List<Question>> allQuestionsWithConfig,
       QuestionCategory questionCategory) {
     var difficulties =
         allQuestionsWithConfig.entries.map((e) => e.key.difficulty).toList();
@@ -64,24 +64,8 @@ class QuestionParser {
     return toReturn;
   }
 
-  List<Question> getAllQuestions(
-      Map<CategoryAndDifficulty, List<String>> allQuestionsWithConfig) {
-    List<Question> questions = [];
-
-    for (var e in allQuestionsWithConfig.entries) {
-      var categoryAndDifficulty = e.key;
-      var lines = allQuestionsWithConfig.get(categoryAndDifficulty) ?? [];
-      for (int i = 0; i < lines.length; i++) {
-        questions.add(Question(i, categoryAndDifficulty.difficulty,
-            categoryAndDifficulty.category, lines[i]));
-      }
-    }
-
-    return questions;
-  }
-
   List<Question> getAllQuestionsForCategoryAndDifficulty(
-    Map<CategoryAndDifficulty, List<String>> allQuestionsWithConfig,
+    Map<CategoryDifficulty, List<Question>> allQuestionsWithConfig,
     QuestionCategory category,
     QuestionDifficulty difficulty,
   ) {
@@ -90,17 +74,17 @@ class QuestionParser {
   }
 
   List<Question> getAllQuestionsForCategoryAndDifficulties(
-    Map<CategoryAndDifficulty, List<String>> allQuestionsWithConfig,
+    Map<CategoryDifficulty, List<Question>> allQuestionsWithConfig,
     QuestionCategory category,
     List<QuestionDifficulty> difficultyLevels,
   ) {
     List<Question> questions = [];
     for (QuestionDifficulty difficultyLevel in difficultyLevels) {
-      List<String> lines = allQuestionsWithConfig
-              .get(CategoryAndDifficulty(category, difficultyLevel)) ??
+      List<Question> categQ = allQuestionsWithConfig
+              .get(CategoryDifficulty(category, difficultyLevel)) ??
           [];
-      for (int i = 0; i < lines.length; i++) {
-        questions.add(Question(i, difficultyLevel, category, lines[i]));
+      for (int i = 0; i < categQ.length; i++) {
+        questions.add(categQ[i]);
       }
     }
     return questions;

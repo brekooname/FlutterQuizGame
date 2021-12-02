@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 import '../Implementations/History/Screens/history_main_menu_screen.dart';
 import 'Game/Constants/app_id.dart';
@@ -30,12 +31,23 @@ class MyAppState extends State<MyApp> {
   static const platform = MethodChannel('main.flutter');
 
   init(BuildContext context) async {
+    String appTitle;
+    String appKey;
+    bool isPro;
+    if (kIsWeb) {
+      appTitle = "History Game";
+      appKey = AppIds.history.appKey;
+      isPro = false;
+    } else {
+      appTitle = await platform.invokeMethod('getAppTitle');
+      appKey = await platform.invokeMethod('getAppKey');
+      isPro = await platform.invokeMethod('isPro');
+    }
     if (!widget.initCompleted) {
-      MobileAds.instance.initialize();
+      if (!kIsWeb) {
+        MobileAds.instance.initialize();
+      }
       SharedPreferences localStorage = await SharedPreferences.getInstance();
-      String appTitle = await platform.invokeMethod('getAppTitle');
-      String appKey = await platform.invokeMethod('getAppKey');
-      bool isPro = await platform.invokeMethod('isPro');
       setState(() {
         widget.initCompleted = true;
         widget.appId = AppIds(appKey: appKey).appId;

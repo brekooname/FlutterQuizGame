@@ -39,7 +39,7 @@ class UniqueAnswersQuestionService extends QuizQuestionService {
 
   @override
   List<String> getAllAnswerOptionsForQuestion(
-      Map<CategoryAndDifficulty, List<String>> allQuestionsWithConfig,
+      Map<CategoryDifficulty, List<Question>> allQuestionsWithConfig,
       Question question) {
     List<String> answerOptions = [];
     for (String answer in getAnswerOptionsArray(question)) {

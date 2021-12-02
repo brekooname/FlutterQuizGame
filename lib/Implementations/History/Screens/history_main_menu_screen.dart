@@ -3,13 +3,11 @@ import 'dart:collection';
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Game/Game/game_context_service.dart';
 import 'package:flutter_app_quiz_game/Game/Question/category_difficulty.dart';
-import 'package:flutter_app_quiz_game/Game/Question/question_category.dart';
-import 'package:flutter_app_quiz_game/Game/Question/question_difficulty.dart';
+import 'package:flutter_app_quiz_game/Game/Question/question.dart';
 import 'package:flutter_app_quiz_game/Game/my_app_context.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Constants/history_game_level.dart';
+import 'package:flutter_app_quiz_game/Implementations/History/Questions/history_questions.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
-import 'package:flutter_app_quiz_game/Lib/File/file_util.dart';
-import 'package:flutter_app_quiz_game/Lib/Popup/rate_app_popup.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/standard_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/game_title.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
@@ -19,11 +17,13 @@ import '../../../Lib/Font/font_config.dart';
 import 'history_game_screen.dart';
 
 class HistoryMainMenuScreen extends StatefulWidget {
-  Map<CategoryAndDifficulty, List<String>> allQuestionsWithConfig =
-      HashMap<CategoryAndDifficulty, List<String>>();
+  Map<CategoryDifficulty, List<Question>> allQuestionsWithConfig =
+      HashMap<CategoryDifficulty, List<Question>>();
   MyAppContext myAppContext;
 
-  HistoryMainMenuScreen(this.myAppContext);
+  HistoryMainMenuScreen(this.myAppContext) {
+    allQuestionsWithConfig = HistoryQuestions().getAllQuestions();
+  }
 
   @override
   State<HistoryMainMenuScreen> createState() => HistoryMainMenuScreenState();
@@ -31,45 +31,9 @@ class HistoryMainMenuScreen extends StatefulWidget {
 
 class HistoryMainMenuScreenState extends State<HistoryMainMenuScreen>
     with StandardScreen {
-  setupQuestions() async {
-    if (widget.allQuestionsWithConfig.isEmpty) {
-      RatePopupService ratePopupService = RatePopupService(
-          buildContext: context, myAppContext: widget.myAppContext);
-      ratePopupService.showRateAppPopup();
-
-      Map<CategoryAndDifficulty, List<String>> res =
-          HashMap<CategoryAndDifficulty, List<String>>();
-      var categories =
-          widget.myAppContext.appId.gameConfig.questionCategories();
-      var difficulties =
-          widget.myAppContext.appId.gameConfig.questionDifficulties();
-      for (QuestionCategory category in categories) {
-        for (QuestionDifficulty difficulty in difficulties) {
-          String questions = await FileUtil(myAppContext: widget.myAppContext)
-              .getTextForConfig(difficulty, category);
-          CategoryAndDifficulty config =
-              CategoryAndDifficulty(category, difficulty);
-          res[config] = questions.split("\n");
-        }
-      }
-
-      setState(() {
-        widget.allQuestionsWithConfig = res;
-      });
-    }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     initScreen(widget.myAppContext, context);
-
-    setupQuestions();
-
     var gameTitle = GameTitle(
       text: widget.myAppContext.appTitle,
       fontConfig: FontConfig(
@@ -78,7 +42,8 @@ class HistoryMainMenuScreenState extends State<HistoryMainMenuScreen>
           borderWidth: FontConfig.getStandardBorderWidth() * 2,
           fontSize: FontConfig.getBigFontSize(),
           borderColor: Colors.green),
-      backgroundImagePath: imageService.getImagePath("title_clouds_background"),
+      backgroundImagePath: imageService.getSpecificImagePath(
+          imageName: "title_clouds_background"),
     );
 
     var level1 = MyButton(
@@ -120,7 +85,7 @@ class HistoryMainMenuScreenState extends State<HistoryMainMenuScreen>
         customContent: <Widget>[
           MyText(text: label.l_important_years_in_history),
           MyText(
-            text: getLabelTextWithParam(label.l_high_score_param0, "100"),
+            text: formatTextWithOneParam(label.l_high_score_param0, "100"),
             fontConfig: FontConfig(
                 textColor: Colors.yellow,
                 fontWeight: FontWeight.normal,
@@ -139,7 +104,7 @@ class HistoryMainMenuScreenState extends State<HistoryMainMenuScreen>
         customContent: <Widget>[
           MyText(text: label.l_great_world_powers),
           MyText(
-            text: getLabelTextWithParam(label.l_high_score_param0, "100"),
+            text: formatTextWithOneParam(label.l_high_score_param0, "100"),
             fontConfig: FontConfig(
                 textColor: Colors.yellow,
                 fontWeight: FontWeight.normal,
@@ -163,7 +128,7 @@ class HistoryMainMenuScreenState extends State<HistoryMainMenuScreen>
 
   @override
   void dispose() {
-    bannerAd.dispose();
+    bannerAd?.dispose();
     interstitialAd?.dispose();
     super.dispose();
   }

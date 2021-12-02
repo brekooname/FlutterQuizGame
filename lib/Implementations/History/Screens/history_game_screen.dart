@@ -3,12 +3,12 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Game/Game/game_context.dart';
 import 'package:flutter_app_quiz_game/Game/Game/game_level.dart';
-import 'package:flutter_app_quiz_game/Game/Question/question_info.dart';
 import 'package:flutter_app_quiz_game/Game/my_app_context.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Components/history_game_level_header.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Service/history_game_local_storage.dart';
 import 'package:flutter_app_quiz_game/Lib/Animation/animation_zoom_in_zoom_out.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
+import 'package:flutter_app_quiz_game/Lib/Extensions/int_extension.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/standard_screen.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
@@ -22,9 +22,9 @@ class HistoryGameScreen extends StatefulWidget {
 
   int score = 0;
   int availableHints = 6;
-  List<String> pressedEntries = [];
   GameLevel gameLevel;
   String historyEra = "";
+  int currentQuestion = 0;
 
   HistoryGameScreen(
       {Key? key,
@@ -33,29 +33,56 @@ class HistoryGameScreen extends StatefulWidget {
       required this.myAppContext})
       : super(key: key) {
     historyLocalStorage = HistoryLocalStorage(myAppContext: myAppContext);
+    currentQuestion = getCurrentQuestion();
+
+    historyLocalStorage.clearLevelsPlayed(gameLevel);
   }
 
   @override
   State<HistoryGameScreen> createState() => HistoryGameScreenState();
+
+  int getCurrentQuestion() {
+    Set<int> allQPlayed = historyLocalStorage.getAllLevelsPlayed(gameLevel);
+    int questionNrInOrderLength =
+        gameContext.currentUserGameUser.allQuestionInfos.length;
+    int firstOpenQuestionIndex = 0;
+    int currentQuestion = 0;
+    for (int i = 0; i < questionNrInOrderLength; i++) {
+      if (!allQPlayed.contains(i)) {
+        firstOpenQuestionIndex = i;
+        currentQuestion = getRandomNextQuestion(
+            firstOpenQuestionIndex, questionNrInOrderLength);
+        while (allQPlayed.contains(currentQuestion)) {
+          currentQuestion = getRandomNextQuestion(
+              firstOpenQuestionIndex, questionNrInOrderLength);
+        }
+        return currentQuestion;
+      }
+    }
+    return 0;
+  }
+
+  int getRandomNextQuestion(
+      int firstOpenQuestionIndex, int questionNrInOrderLength) {
+    int nr = Random().nextInt(5) + firstOpenQuestionIndex;
+    return min(nr, questionNrInOrderLength - 1);
+  }
 }
 
-class Question {
+class HistoryQuestion {
   Image image;
   MyButton button;
+  bool? correctAnswer;
   String question;
 
-  Question(this.image, this.button, this.question);
+  HistoryQuestion(this.image, this.button, this.correctAnswer, this.question);
 }
 
 class HistoryGameScreenState extends State<HistoryGameScreen>
     with StandardScreen {
   final Size answer_btn_size = Size(120, 60);
   ItemScrollController itemScrollController = ItemScrollController();
-  Map<String, Question> questions = Map<String, Question>();
-
-  List<QuestionInfo> allQuestionInfos = [];
-  int firstOpenQuestionIndex = 0;
-  int currentQuestion = 0;
+  Map<String, HistoryQuestion> questions = Map<String, HistoryQuestion>();
 
   @override
   Widget build(BuildContext context) {
@@ -71,39 +98,69 @@ class HistoryGameScreenState extends State<HistoryGameScreen>
     List<String> optionStrings =
         rawStrings.map((e) => e.split(":")[1]).toList().reversed.toList();
 
+    var levelsWon = widget.historyLocalStorage.getLevelsWon(widget.gameLevel);
+    var levelsLost = widget.historyLocalStorage.getLevelsLost(widget.gameLevel);
+    var levelsImgShown =
+        widget.historyLocalStorage.getLevelsImgShown(widget.gameLevel);
     for (var i = 0; i < optionStrings.length; i++) {
       var btnBackgr = Colors.lightBlueAccent;
       var disabled = false;
-      if (widget.pressedEntries.contains(optionStrings[i])) {
+
+
+      bool? correctAnswer;
+      Color? disabledBackgroundColor;
+      if (levelsWon.contains(i)) {
+        correctAnswer = true;
+        disabledBackgroundColor = Colors.green.shade200;
+        disabled = true;
+      } else if (levelsLost.contains(i)) {
+        correctAnswer = false;
+        disabledBackgroundColor = Colors.red.shade300;
         disabled = true;
       }
 
+      var optionText = getOptionText(optionStrings[i]);
       var answerBtn = MyButton(
           width: answer_btn_size.width,
           height: answer_btn_size.height,
           disabled: disabled,
-          disabledBackgroundColor: Colors.red.shade100,
+          disabledBackgroundColor: disabledBackgroundColor,
           onClick: () {
             setState(() {
-              itemScrollController.scrollTo(
-                  index: 25, duration: Duration(milliseconds: 300));
-              widget.pressedEntries.add(optionStrings[i]);
+              if (getOptionText(optionStrings[widget.currentQuestion]) ==
+                  optionText) {
+                widget.historyLocalStorage
+                    .setLevelWon(widget.currentQuestion, widget.gameLevel);
+                widget.historyLocalStorage
+                    .setLeveImgShown(widget.currentQuestion, widget.gameLevel);
+              } else {
+                itemScrollController.scrollTo(
+                    index: widget.currentQuestion,
+                    duration: Duration(milliseconds: 300));
+                widget.historyLocalStorage
+                    .setLevelLost(widget.currentQuestion, widget.gameLevel);
+              }
             });
+            widget.currentQuestion = widget.getCurrentQuestion();
           },
           buttonSkinConfig: ButtonSkinConfig(
               borderColor: Colors.blue.shade600, backgroundColor: btnBackgr),
           fontConfig: FontConfig(),
-          text: optionStrings[i]);
+          text: optionText);
 
-      questions[optionStrings[i]] = Question(
-          Image.asset(
-            "assets/implementations/${widget.myAppContext.appId.appKey}/questions/images/i$i.png",
-            alignment: Alignment.center,
-            height: answer_btn_size.height * 1.8,
-            width: answer_btn_size.height * 1.8,
-          ),
-          answerBtn,
-          optionStrings[i]);
+      var imgRatio = 1.3;
+      var imageSize = Size(
+          answer_btn_size.width * imgRatio, answer_btn_size.height * imgRatio);
+      Image image = levelsImgShown.contains(i)
+          ? imageService.getSpecificImage(
+              imageName: "i$i", module: "questions/images", size: imageSize)
+          : levelsLost.contains(i)
+              ? imageService.getSpecificImage(
+                  imageName: "hist_answ_wrong", size: imageSize)
+              : imageService.getSpecificImage(
+                  imageName: "timeline_opt_unknown", size: imageSize);
+      questions[optionStrings[i]] = HistoryQuestion(
+          image, answerBtn, correctAnswer, optionStrings[i]);
     }
 
     ItemPositionsListener itemPositionsListener =
@@ -116,7 +173,7 @@ class HistoryGameScreenState extends State<HistoryGameScreen>
 
     var header = HistoryGameLevelHeader(
       historyEra: widget.historyEra,
-      question: questionStrings[0],
+      question: questionStrings[widget.currentQuestion],
     );
 
     ScrollablePositionedList listView = ScrollablePositionedList.builder(
@@ -125,16 +182,12 @@ class HistoryGameScreenState extends State<HistoryGameScreen>
       itemPositionsListener: itemPositionsListener,
       itemBuilder: (BuildContext context, int index) {
         var question = questions[optionStrings[index]];
-        return createOptionItem(question!.button, true, question.image, index);
+        return createOptionItem(question!.button, question.correctAnswer, question.image, index);
       },
     );
 
     var mainColumn = Column(
-      children: <Widget>[
-        SizedBox(height: 5),
-        header,
-        Expanded(child: listView)
-      ],
+      children: <Widget>[header, Expanded(child: listView)],
     );
 
     return createScreen(mainColumn);
@@ -173,35 +226,16 @@ class HistoryGameScreenState extends State<HistoryGameScreen>
             : Colors.yellow.shade500.withOpacity(0.6));
   }
 
-  void initNextQuestion() {
-    Set<int> allQPlayed =
-        widget.historyLocalStorage.getAllLevelsPlayed(widget.gameLevel);
-    var questionNrInOrder = getQuestionNrInOrder();
-    for (int i in questionNrInOrder) {
-      if (!allQPlayed.contains(i)) {
-        firstOpenQuestionIndex = questionNrInOrder[i];
-        currentQuestion =
-            getRandomNextQuestion(firstOpenQuestionIndex, questionNrInOrder);
-        while (allQPlayed.contains(currentQuestion)) {
-          currentQuestion =
-              getRandomNextQuestion(firstOpenQuestionIndex, questionNrInOrder);
-        }
-
-        break;
-      }
-    }
-  }
-
   void setHistoryEra(int year) {
     String res;
     if (year < -3200) {
-      res = 0.toString();
+      res = label.l_prehistory;
     } else if (year < 499) {
-      res = 1.toString();
+      res = label.l_ancient_history;
     } else if (year < 1499) {
-      res = 2.toString();
+      res = label.l_middle_ages;
     } else {
-      res = 3.toString();
+      res = label.l_modern_history;
     }
     if (res != widget.historyEra) {
       setState(() {
@@ -210,24 +244,17 @@ class HistoryGameScreenState extends State<HistoryGameScreen>
     }
   }
 
-  List<int> getQuestionNrInOrder() {
-    List<int> qNr = [];
-    for (int i = 0; i < allQuestionInfos.length; i++) {
-      qNr.add(i);
-    }
-    return qNr;
-  }
-
-  int getRandomNextQuestion(
-      int firstOpenQuestionIndex, List<int> questionNrInOrder) {
-    int nr = Random().nextInt(5) + firstOpenQuestionIndex;
-    int size = questionNrInOrder.length;
-    return questionNrInOrder.elementAt(min(nr, size - 1));
+  String getOptionText(String yearString) {
+    int year = int.parse(yearString);
+    String val =
+        year < 0 ? year.abs().formatIntEveryThreeChars() : year.toString();
+    val = year < 0 ? formatTextWithOneParam(label.l_param0_bc, val) : val;
+    return val;
   }
 
   @override
   void dispose() {
-    bannerAd.dispose();
+    bannerAd?.dispose();
     interstitialAd?.dispose();
     super.dispose();
   }

@@ -19,21 +19,21 @@ class InAppPurchasesPreferencesLocalStorage {
     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     //!!!!!!!!!!!!! TODO should be disabled !!!!!!!!!!!!!!
     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    prefs.setBool(getPurchaseIdKey(""), false);
+    prefs.setBool(_getPurchaseIdKey(""), false);
     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   }
 
   bool isPurchased(String purchaseId) {
-    return prefs.getBool(getPurchaseIdKey(purchaseId)) ?? false;
+    return prefs.getBool(_getPurchaseIdKey(purchaseId)) ?? false;
   }
 
   void savePurchase(String purchaseId) {
-    prefs.setBool(getPurchaseIdKey(purchaseId), true);
+    prefs.setBool(_getPurchaseIdKey(purchaseId), true);
   }
 
-  String getPurchaseIdKey(String purchaseId) {
+  String _getPurchaseIdKey(String purchaseId) {
     return "InAppPurchasesPreferencesLocalStorage_PurchaseIdKey_" + purchaseId;
   }
 }

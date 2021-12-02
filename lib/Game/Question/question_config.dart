@@ -10,7 +10,7 @@ class QuestionConfig {
 
   QuestionConfig(this.difficulties, this.categories, this.amountOfQuestions, this.hints);
 
-  CategoryAndDifficulty getRandomCategoryAndDifficulty() {
+  CategoryDifficulty getRandomCategoryAndDifficulty() {
     QuestionDifficulty randomQuestionDifficulty = getRandomQuestionDifficulty();
     List<QuestionCategory> categories = randomQuestionDifficulty.categories;
     categories.shuffle();
@@ -19,7 +19,7 @@ class QuestionConfig {
         categories.remove(category);
       }
     }
-    return CategoryAndDifficulty(
+    return CategoryDifficulty(
         categories.first, randomQuestionDifficulty);
   }
 

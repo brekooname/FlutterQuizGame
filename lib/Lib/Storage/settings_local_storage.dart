@@ -14,26 +14,26 @@ class SettingsLocalStorage {
   SettingsLocalStorage.internal();
 
   bool isSoundOn() {
-    return prefs.getBool(getToggleSoundKey()) ?? true;
+    return prefs.getBool(_getToggleSoundKey()) ?? true;
   }
 
   void toggleSound() {
-    prefs.setBool(getToggleSoundKey(), !isSoundOn());
+    prefs.setBool(_getToggleSoundKey(), !isSoundOn());
   }
 
   bool isMusicOn() {
-    return prefs.getBool(getToggleMusicKey()) ?? true;
+    return prefs.getBool(_getToggleMusicKey()) ?? true;
   }
 
   void toggleMusic() {
-    prefs.setBool(getToggleMusicKey(), !isMusicOn());
+    prefs.setBool(_getToggleMusicKey(), !isMusicOn());
   }
 
-  String getToggleSoundKey() {
+  String _getToggleSoundKey() {
     return "SettingsLocalStorage_ToggleSoundKey";
   }
 
-  String getToggleMusicKey() {
+  String _getToggleMusicKey() {
     return "SettingsLocalStorage_ToggleMusicKey";
   }
 }

@@ -5,18 +5,22 @@ import 'package:flutter_app_quiz_game/Lib/Image/image_service.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_app_quiz_game/Lib/Localization/localization_service.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 mixin StandardScreen {
-  late BannerAd bannerAd;
   ImageService? _imageService;
   LocalizationService? _localizationService;
   AdService adService = AdService();
+  BannerAd? bannerAd;
   InterstitialAd? interstitialAd;
+  bool isInterstitialAdLoaded = false;
 
   void initScreen(MyAppContext myAppContext, BuildContext buildContext) {
     _imageService = ImageService(myAppContext: myAppContext);
     _localizationService = LocalizationService(buildContext: buildContext);
-    initAds(buildContext);
+    if (!kIsWeb) {
+      initAds(buildContext);
+    }
   }
 
   ImageService get imageService {
@@ -34,18 +38,18 @@ mixin StandardScreen {
     return _localizationService!.getAppLocalizations();
   }
 
-  String getLabelTextWithParam(String labelText, String param) {
-    return localizationService.getLabelTextWithParams(labelText, [param]);
+  String formatTextWithOneParam(String labelText, String param) {
+    return localizationService.formatTextWithParams(labelText, [param]);
   }
 
-  String getLabelTextWithTwoParams(
+  String formatTextWithTwoParams(
       String labelText, String param1, String param2) {
     return localizationService
-        .getLabelTextWithParams(labelText, [param1, param2]);
+        .formatTextWithParams(labelText, [param1, param2]);
   }
 
   void showPopupAd(BuildContext buildContext, VoidCallback goAfterClose) {
-    if (interstitialAd != null) {
+    if (interstitialAd != null && isInterstitialAdLoaded) {
       interstitialAd!.show();
       interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
           onAdDismissedFullScreenContent: (interstitialAd) {
@@ -73,17 +77,19 @@ mixin StandardScreen {
         },
       ),
     );
-    bannerAd.load();
+    bannerAd?.load();
   }
 
   void initInterstitialAd() {
     interstitialAd?.dispose();
+    isInterstitialAdLoaded = false;
     InterstitialAd.load(
         adUnitId: adService.interstitialAdUnitId,
         request: AdRequest(),
         adLoadCallback: InterstitialAdLoadCallback(
           onAdLoaded: (InterstitialAd ad) {
             interstitialAd = ad;
+            isInterstitialAdLoaded = true;
           },
           onAdFailedToLoad: (LoadAdError error) {
             print('InterstitialAd failed to load: $error');
@@ -95,13 +101,18 @@ mixin StandardScreen {
     return Colors.red;
   }
 
-  Widget createScreen(Widget widget) {
-    var bannerAdContainer = Container(
-      child: AdWidget(ad: bannerAd),
-      width: bannerAd.size.width.toDouble(),
-      height: 75.0,
-      alignment: Alignment.center,
-    );
+  Widget createScreen(Widget mainContent) {
+    Container bannerAdContainer;
+    if (bannerAd != null) {
+      bannerAdContainer = Container(
+        child: AdWidget(ad: bannerAd!),
+        width: bannerAd?.size.width.toDouble(),
+        height: 55.0,
+        alignment: Alignment.center,
+      );
+    } else {
+      bannerAdContainer = Container();
+    }
 
     return AspectRatio(
       aspectRatio: 1.777083333333333,
@@ -109,11 +120,12 @@ mixin StandardScreen {
         decoration: BoxDecoration(
             image: DecorationImage(
           repeat: ImageRepeat.repeat,
-          image: AssetImage(imageService.getImagePath("background_texture")),
+          image: AssetImage(imageService.getSpecificImagePath(
+              imageName: "background_texture")),
         )),
         alignment: Alignment.center,
         child: Column(
-          children: <Widget>[bannerAdContainer, widget],
+          children: <Widget>[bannerAdContainer, Expanded(child: mainContent)],
         ),
       ),
     );

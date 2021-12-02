@@ -1,7 +1,5 @@
 import 'package:flutter_app_quiz_game/Game/Game/game_context.dart';
-import 'package:flutter_app_quiz_game/Game/Game/game_context.dart';
 import 'package:flutter_app_quiz_game/Game/Question/category_difficulty.dart';
-import 'package:flutter_app_quiz_game/Game/Question/question.dart';
 import 'package:flutter_app_quiz_game/Game/Question/question.dart';
 import 'package:flutter_app_quiz_game/Game/Question/question_category.dart';
 import 'package:flutter_app_quiz_game/Game/Question/question_config.dart';
@@ -14,7 +12,7 @@ import 'game_context.dart';
 import 'game_user.dart';
 
 class GameContextService {
-  late Map<CategoryAndDifficulty, List<String>> allQuestionsWithConfig;
+  late Map<CategoryDifficulty, List<Question>> allQuestionsWithConfig;
 
   late MyAppContext myAppContext;
 
@@ -22,7 +20,7 @@ class GameContextService {
 
   factory GameContextService(
       {required MyAppContext myAppContext,
-      required Map<CategoryAndDifficulty, List<String>>
+      required Map<CategoryDifficulty, List<Question>>
           allQuestionsWithConfig}) {
     singleton.myAppContext = myAppContext;
     singleton.allQuestionsWithConfig = allQuestionsWithConfig;

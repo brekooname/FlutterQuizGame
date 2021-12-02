@@ -4,6 +4,7 @@ import 'package:flutter_app_quiz_game/Game/Question/category_difficulty.dart';
 import 'package:flutter_app_quiz_game/Game/Question/question.dart';
 import 'package:flutter_app_quiz_game/Game/Question/question_category.dart';
 import 'package:flutter_app_quiz_game/Game/Question/question_config.dart';
+import 'package:flutter_app_quiz_game/Lib/Extensions/map_extension.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/string_extension.dart';
 
 import '../my_app_context.dart';
@@ -22,22 +23,25 @@ class RandomQuestionCreatorService {
 
   RandomQuestionCreatorService.internal();
 
-  Question createRandomQuestion(
-      CategoryAndDifficulty categoryAndDifficulty, List<String> rawStrings) {
-    int randomLine = Random().nextInt(rawStrings.length);
-    return Question(randomLine, categoryAndDifficulty.difficulty,
-        categoryAndDifficulty.category, rawStrings[randomLine].capitalize());
+  Question createRandomQuestion(CategoryDifficulty categoryAndDifficulty,
+      List<Question> allQuestionsWithConfig) {
+    int randomLine = Random().nextInt(allQuestionsWithConfig.length);
+    return Question(
+        randomLine,
+        categoryAndDifficulty.difficulty,
+        categoryAndDifficulty.category,
+        allQuestionsWithConfig[randomLine].rawString.capitalize());
   }
 
   List<Question> createRandomQuestions(
-      Map<CategoryAndDifficulty, List<String>> allQuestionsWithConfig,
+      Map<CategoryDifficulty, List<Question>> allQuestionsWithConfig,
       QuestionConfig questionConfig) {
     int questionAmount = questionConfig.amountOfQuestions;
     Set<QuestionCategory> categsToUse = questionConfig.categories;
     Set<QuestionCategory> alreadyUsedCategs = {};
     List<Question> randomQuestions = [];
     for (int i = 0; i < questionAmount; i++) {
-      CategoryAndDifficulty randomCategoryAndDifficulty =
+      CategoryDifficulty randomCategoryAndDifficulty =
           questionConfig.getRandomCategoryAndDifficulty();
       int repeat1 = 0;
       if (!configContainsSingleCategAndDiff(questionConfig)) {
@@ -57,7 +61,7 @@ class RandomQuestionCreatorService {
       int repeat2 = 0;
       Question randomQuestion = createRandomQuestion(
           randomCategoryAndDifficulty,
-          allQuestionsWithConfig[randomCategoryAndDifficulty] ?? []);
+          allQuestionsWithConfig.get(randomCategoryAndDifficulty) ?? []);
       while (randomQuestions.contains(randomQuestion) ||
           !questionParser.isQuestionValid(randomQuestion)
           //try to use all question categories
@@ -69,7 +73,7 @@ class RandomQuestionCreatorService {
           break;
         }
         randomQuestion = createRandomQuestion(randomCategoryAndDifficulty,
-            allQuestionsWithConfig[randomCategoryAndDifficulty] ?? []);
+            allQuestionsWithConfig.get(randomCategoryAndDifficulty) ?? []);
         repeat2++;
       }
       randomQuestions[i] = randomQuestion;

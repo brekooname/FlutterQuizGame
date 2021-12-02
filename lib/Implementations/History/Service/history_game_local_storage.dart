@@ -17,27 +17,27 @@ class HistoryLocalStorage {
   HistoryLocalStorage.internal();
 
   Set<int> getLevelsWon(GameLevel gameLevel) {
-    return convertToInt(getLevelsWonFieldName(gameLevel));
+    return convertToInt(_getLevelsWonFieldName(gameLevel));
   }
 
   Set<int> getLevelsLost(GameLevel gameLevel) {
-    return convertToInt(getLevelsLostFieldName(gameLevel));
+    return convertToInt(_getLevelsLostFieldName(gameLevel));
   }
 
   void setLevelLost(int level, GameLevel gameLevel) {
     Set<int> l = getLevelsLost(gameLevel);
     l.add(level);
-    prefs.setString(getLevelsLostFieldName(gameLevel), l.join(","));
+    prefs.setString(_getLevelsLostFieldName(gameLevel), l.join(","));
   }
 
   Set<int> getLevelsImgShown(GameLevel gameLevel) {
-    return convertToInt(getLevelsImageShownFieldName(gameLevel));
+    return convertToInt(_getLevelsImageShownFieldName(gameLevel));
   }
 
   void setLeveImgShown(int level, GameLevel gameLevel) {
     Set<int> l = getLevelsImgShown(gameLevel);
     l.add(level);
-    prefs.setString(getLevelsImageShownFieldName(gameLevel), l.join(","));
+    prefs.setString(_getLevelsImageShownFieldName(gameLevel), l.join(","));
   }
 
   Set<int> getAllLevelsPlayed(GameLevel gameLevel) {
@@ -61,7 +61,7 @@ class HistoryLocalStorage {
   void setLevelWon(int level, GameLevel gameLevel) {
     Set<int> l = getLevelsWon(gameLevel);
     l.add(level);
-    prefs.setString(getLevelsWonFieldName(gameLevel), l.join(","));
+    prefs.setString(_getLevelsWonFieldName(gameLevel), l.join(","));
     int levelsWonSize = getLevelsWon(gameLevel).length;
     if (levelsWonSize > getHighScore(gameLevel)) {
       setIsHighScore(gameLevel, true);
@@ -70,45 +70,45 @@ class HistoryLocalStorage {
   }
 
   bool isHighScore(GameLevel gameLevel) {
-    return prefs.getBool(getIsHighScoreFieldName(gameLevel)) ?? false;
+    return prefs.getBool(_getIsHighScoreFieldName(gameLevel)) ?? false;
   }
 
   void setIsHighScore(GameLevel gameLevel, bool val) {
-    prefs.setBool(getIsHighScoreFieldName(gameLevel), val);
+    prefs.setBool(_getIsHighScoreFieldName(gameLevel), val);
   }
 
   void setHighScore(int score, GameLevel gameLevel) {
-    prefs.setInt(getHighScoreFieldName(gameLevel), score);
+    prefs.setInt(_getHighScoreFieldName(gameLevel), score);
   }
 
   int getHighScore(GameLevel gameLevel) {
-    return prefs.getInt(getHighScoreFieldName(gameLevel)) ?? 0;
+    return prefs.getInt(_getHighScoreFieldName(gameLevel)) ?? 0;
   }
 
-  String getLevelsImageShownFieldName(GameLevel gameLevel) {
+  String _getLevelsImageShownFieldName(GameLevel gameLevel) {
     return gameLevel.name + "imgShown";
   }
 
-  String getLevelsWonFieldName(GameLevel gameLevel) {
+  String _getLevelsWonFieldName(GameLevel gameLevel) {
     return gameLevel.name + "levelsWon";
   }
 
-  String getLevelsLostFieldName(GameLevel gameLevel) {
+  String _getLevelsLostFieldName(GameLevel gameLevel) {
     return gameLevel.name + "levelsLost";
   }
 
-  String getHighScoreFieldName(GameLevel gameLevel) {
+  String _getHighScoreFieldName(GameLevel gameLevel) {
     return gameLevel.name + "highScore";
   }
 
-  String getIsHighScoreFieldName(GameLevel gameLevel) {
+  String _getIsHighScoreFieldName(GameLevel gameLevel) {
     return gameLevel.name + "isHighScore";
   }
 
   void clearLevelsPlayed(GameLevel gameLevel) {
     setIsHighScore(gameLevel, false);
-    prefs.setString(getLevelsWonFieldName(gameLevel), "");
-    prefs.setString(getLevelsLostFieldName(gameLevel), "");
-    prefs.setString(getLevelsImageShownFieldName(gameLevel), "");
+    prefs.setString(_getLevelsWonFieldName(gameLevel), "");
+    prefs.setString(_getLevelsLostFieldName(gameLevel), "");
+    prefs.setString(_getLevelsImageShownFieldName(gameLevel), "");
   }
 }
