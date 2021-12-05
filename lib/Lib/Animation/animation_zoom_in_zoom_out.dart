@@ -16,21 +16,16 @@ class InternalAnimatedWidget extends AnimatedWidget {
   @override
   Widget build(BuildContext context) {
     final animation = listenable as Animation<double>;
-    return Center(
-      child: Opacity(
-        opacity: Tween<double>(begin: 1, end: 1).evaluate(animation),
-        child: SizedBox(
-          height: Tween<double>(
-                  begin: toAnimateWidgetSize.height,
-                  end: toAnimateWidgetSize.height - this.zoomAmount)
-              .evaluate(animation),
-          width: Tween<double>(
-                  begin: toAnimateWidgetSize.width,
-                  end: toAnimateWidgetSize.width - this.zoomAmount)
-              .evaluate(animation),
-          child: toAnimateWidget,
-        ),
-      ),
+    return SizedBox(
+      height: Tween<double>(
+              begin: toAnimateWidgetSize.height,
+              end: toAnimateWidgetSize.height - this.zoomAmount)
+          .evaluate(animation),
+      width: Tween<double>(
+              begin: toAnimateWidgetSize.width,
+              end: toAnimateWidgetSize.width - this.zoomAmount)
+          .evaluate(animation),
+      child: toAnimateWidget,
     );
   }
 }
@@ -65,17 +60,16 @@ class MyAnimatedWidgetState extends State<AnimateZoomInZoomOut>
   @override
   void initState() {
     super.initState();
-    controller =
-        AnimationController(duration: widget.duration, vsync: this);
+    controller = AnimationController(duration: widget.duration, vsync: this);
     animation = CurvedAnimation(parent: controller, curve: Curves.ease);
     animation.addStatusListener((status) {
-        if (status == AnimationStatus.completed) {
-          controller.reverse();
-        } else if (status == AnimationStatus.dismissed &&
-            !widget.zoomInZoomOutOnce) {
-          controller.forward();
-        }
-      });
+      if (status == AnimationStatus.completed) {
+        controller.reverse();
+      } else if (status == AnimationStatus.dismissed &&
+          !widget.zoomInZoomOutOnce) {
+        controller.forward();
+      }
+    });
     controller.forward();
   }
 

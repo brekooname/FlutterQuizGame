@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Lib/Color/color_util.dart';
+import 'package:flutter_app_quiz_game/Lib/ScreenDimensions/screen_dimensions_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
 import '../../Lib/Button/button_skin_config.dart';
 import '../../Lib/Font/font_config.dart';
 
 class MyButton extends StatefulWidget {
-  static const Size btn_size = Size(200, 60);
+  ScreenDimensionsService screenDimensions = ScreenDimensionsService();
   late FontConfig fontConfig;
 
   late Color disabledBackgroundColor;
@@ -16,7 +17,7 @@ class MyButton extends StatefulWidget {
   late VoidCallback onClick;
 
   bool pressed = false;
-  Size size;
+  late Size size;
   bool disabled;
 
   String? text;
@@ -26,15 +27,16 @@ class MyButton extends StatefulWidget {
   MyButton({
     Key? key,
     this.text,
-    this.size = btn_size,
     this.disabled = false,
     Color? disabledBackgroundColor,
     VoidCallback? onClick,
+    Size? size,
     FontConfig? fontConfig,
     Color? backgroundColor,
     ButtonSkinConfig? buttonSkinConfig,
     this.customContent,
   }) : super(key: key) {
+    this.size = size??Size(screenDimensions.w(20), screenDimensions.h(12));
     this.fontConfig = fontConfig ?? FontConfig();
 
     this.buttonSkinConfig = buttonSkinConfig ??
@@ -118,7 +120,8 @@ class MyButtonState extends State<MyButton> {
   BoxDecoration? createIconButtonDecoration() {
     return BoxDecoration(
         boxShadow: [createIconButtonShadow()],
-        borderRadius: BorderRadius.circular(25));
+        borderRadius:
+            BorderRadius.circular(FontConfig.getStandardBorderRadius()));
   }
 
   BoxDecoration? createGradientButtonDecoration() {
@@ -136,7 +139,8 @@ class MyButtonState extends State<MyButton> {
 
     return BoxDecoration(
         boxShadow: [createButtonShadow()],
-        borderRadius: BorderRadius.circular(25),
+        borderRadius:
+            BorderRadius.circular(FontConfig.getStandardBorderRadius()),
         gradient: widget.pressed
             ? buttonSkinConfig.backgroundGradient == null
                 ? null
@@ -153,8 +157,13 @@ class MyButtonState extends State<MyButton> {
           ? Colors.grey.withOpacity(0.5)
           : Colors.grey.withOpacity(0.3),
       spreadRadius: 0.2,
-      blurRadius: 2,
-      offset: Offset(0, widget.pressed ? 0 : 3), // changes position of shadow
+      blurRadius: FontConfig.getStandardShadowOffset(),
+      offset: Offset(
+          0,
+          widget.pressed
+              ? 0
+              : FontConfig
+                  .getStandardShadowOffset()), // changes position of shadow
     );
   }
 
@@ -166,8 +175,15 @@ class MyButtonState extends State<MyButton> {
           : widget.pressed
               ? 1
               : 3,
-      blurRadius: widget.pressed ? 3 : 6,
-      offset: Offset(0, widget.pressed ? 0 : 3), // changes position of shadow
+      blurRadius: widget.pressed
+          ? FontConfig.getStandardShadowOffset()
+          : FontConfig.getStandardShadowOffset() * 2,
+      offset: Offset(
+          0,
+          widget.pressed
+              ? 0
+              : FontConfig
+                  .getStandardShadowOffset()), // changes position of shadow
     );
   }
 

@@ -1,10 +1,10 @@
 enum Language {
-/*cs,
+  cs,
   da,
   de,
-  el,*/
+  el,
   en,
- /* es,
+  es,
   fi,
   fr,
   hi,
@@ -27,5 +27,6 @@ enum Language {
   tr,
   uk,
   vi,
-  zh*/
+  zh
+
 }

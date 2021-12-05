@@ -7,7 +7,9 @@ import 'package:flutter_app_quiz_game/Game/Question/question.dart';
 import 'package:flutter_app_quiz_game/Game/my_app_context.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Constants/history_game_level.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Questions/history_questions.dart';
+import 'package:flutter_app_quiz_game/Implementations/History/Service/history_game_local_storage.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
+import 'package:flutter_app_quiz_game/Lib/Navigation/navigator_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/standard_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/game_title.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
@@ -20,9 +22,12 @@ class HistoryMainMenuScreen extends StatefulWidget {
   Map<CategoryDifficulty, List<Question>> allQuestionsWithConfig =
       HashMap<CategoryDifficulty, List<Question>>();
   MyAppContext myAppContext;
+  late HistoryLocalStorage historyLocalStorage;
 
   HistoryMainMenuScreen(this.myAppContext) {
-    allQuestionsWithConfig = HistoryQuestions().getAllQuestions();
+    allQuestionsWithConfig =
+        HistoryQuestions().getAllQuestions(myAppContext.languageCode);
+    historyLocalStorage = HistoryLocalStorage(myAppContext: myAppContext);
   }
 
   @override
@@ -39,7 +44,7 @@ class HistoryMainMenuScreenState extends State<HistoryMainMenuScreen>
       fontConfig: FontConfig(
           textColor: Colors.lightGreenAccent,
           fontWeight: FontWeight.normal,
-          borderWidth: FontConfig.getStandardBorderWidth() * 2,
+          borderWidth: FontConfig.getStandardBorderWidth() * 1.6,
           fontSize: FontConfig.getBigFontSize(),
           borderColor: Colors.green),
       backgroundImagePath: imageService.getSpecificImagePath(
@@ -47,14 +52,12 @@ class HistoryMainMenuScreenState extends State<HistoryMainMenuScreen>
           imageName: "title_clouds_background"),
     );
 
-    var btnSize = Size(200, 100);
+    var historyGameLevel = HistoryGameLevel(myAppContext: widget.myAppContext);
+    var btnSize = Size(screenDimensions.w(60), screenDimensions.h(20));
     var level1 = MyButton(
         size: btnSize,
         onClick: () {
           if (widget.allQuestionsWithConfig.isNotEmpty) {
-            var gameLevel =
-                HistoryGameLevel(myAppContext: widget.myAppContext).level_0_0;
-
             var gameContext = GameContextService(
                     myAppContext: widget.myAppContext,
                     allQuestionsWithConfig: widget.allQuestionsWithConfig)
@@ -64,18 +67,19 @@ class HistoryMainMenuScreenState extends State<HistoryMainMenuScreen>
                         .getQuestionParser()
                         .getAllQuestionsForCategoryAndDifficulty(
                           widget.allQuestionsWithConfig,
-                          gameLevel.category,
-                          gameLevel.difficulty,
+                          historyGameLevel.level_0_0.category,
+                          historyGameLevel.level_0_0.difficulty,
                         ));
             showPopupAd(context, () {
-              Navigator.push(
+              NavigatorService().goTo(
                   context,
-                  MaterialPageRoute(
-                      builder: (context) => HistoryGameScreen(
-                            myAppContext: widget.myAppContext,
-                            gameContext: gameContext,
-                            gameLevel: gameLevel,
-                          )));
+                  HistoryGameScreen(
+                    myAppContext: widget.myAppContext,
+                    gameContext: gameContext,
+                    gameLevel: historyGameLevel.level_0_0,
+                  ), () {
+                setState(() {});
+              });
             });
           }
         },
@@ -87,7 +91,11 @@ class HistoryMainMenuScreenState extends State<HistoryMainMenuScreen>
         customContent: <Widget>[
           MyText(text: label.l_important_years_in_history),
           MyText(
-            text: formatTextWithOneParam(label.l_high_score_param0, "100"),
+            text: formatTextWithOneParam(
+                label.l_high_score_param0,
+                widget.historyLocalStorage
+                    .getHighScore(historyGameLevel.level_0_0)
+                    .toString()),
             fontConfig: FontConfig(
                 textColor: Colors.yellow,
                 fontWeight: FontWeight.normal,
@@ -105,7 +113,11 @@ class HistoryMainMenuScreenState extends State<HistoryMainMenuScreen>
         customContent: <Widget>[
           MyText(text: label.l_great_world_powers),
           MyText(
-            text: formatTextWithOneParam(label.l_high_score_param0, "100"),
+            text: formatTextWithOneParam(
+                label.l_high_score_param0,
+                widget.historyLocalStorage
+                    .getHighScore(historyGameLevel.level_0_1)
+                    .toString()),
             fontConfig: FontConfig(
                 textColor: Colors.yellow,
                 fontWeight: FontWeight.normal,
@@ -115,11 +127,11 @@ class HistoryMainMenuScreenState extends State<HistoryMainMenuScreen>
 
     var mainColumn = Column(
       children: <Widget>[
-        SizedBox(height: 20),
+        SizedBox(height: screenDimensions.h(4)),
         gameTitle,
-        SizedBox(height: 60),
+        SizedBox(height: screenDimensions.h(7)),
         level1,
-        SizedBox(height: 20),
+        SizedBox(height: screenDimensions.h(3)),
         level2,
       ],
     );

@@ -8,6 +8,8 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import '../Implementations/History/Screens/history_main_menu_screen.dart';
 import 'Game/Constants/app_id.dart';
 import 'Game/my_app_context.dart';
+import 'Lib/Constants/language.dart';
+import 'Lib/ScreenDimensions/screen_dimensions_service.dart';
 import 'Lib/Storage/rate_app_local_storage.dart';
 
 void main() {
@@ -29,14 +31,19 @@ class MyApp extends StatefulWidget {
 
 class MyAppState extends State<MyApp> {
   static const platform = MethodChannel('main.flutter');
+  static late double screenWidth;
+  static late double screenHeight;
 
   init(BuildContext context) async {
     String appTitle;
     String appKey;
     bool isPro;
     if (kIsWeb) {
-      appTitle = "History Game";
-      appKey = AppIds.history.appKey;
+      //
+      var appId = AppIds.history;
+      //
+      appTitle = appId.gameConfig.getTitle(Language.en);
+      appKey = appId.appKey;
       isPro = false;
     } else {
       appTitle = await platform.invokeMethod('getAppTitle');
@@ -64,8 +71,13 @@ class MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     Widget widgetToShow;
     if (widget.initCompleted) {
-      MyAppContext myAppContext = MyAppContext(widget.languageCode,
-          widget.localStorage, widget.appTitle, widget.appId, widget.isPro);
+      MyAppContext myAppContext = MyAppContext(
+          widget.languageCode,
+          widget.localStorage,
+          widget.appTitle,
+          widget.appId,
+          widget.isPro,
+          true);
 
       RateAppLocalStorage rateAppLocalStorage =
           RateAppLocalStorage(myAppContext: myAppContext);
@@ -77,13 +89,22 @@ class MyAppState extends State<MyApp> {
       widgetToShow = Container();
     }
 
-    return MaterialApp(
+    var materialApp = MaterialApp(
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        home: widgetToShow);
+        home: Builder(builder: (BuildContext context) {
+          screenWidth =
+              ScreenDimensionsService.calculateScreenWidth(context, true);
+          screenHeight =
+              ScreenDimensionsService.calculateScreenHeight(context, true);
+
+          return widgetToShow;
+        }));
+
+    return materialApp;
   }
 }

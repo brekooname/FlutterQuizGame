@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Lib/Animation/animation_zoom_in_zoom_out.dart';
 import 'package:flutter_app_quiz_game/Lib/Image/image_service.dart';
+import 'package:flutter_app_quiz_game/Lib/ScreenDimensions/screen_dimensions_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
 import '../../Lib/Button/button_skin_config.dart';
@@ -8,7 +9,7 @@ import '../../Lib/Font/font_config.dart';
 import 'my_button.dart';
 
 class HintButton extends StatelessWidget {
-  double btnSideSize = 60;
+  ScreenDimensionsService screenDimensions = ScreenDimensionsService();
   late Size buttonSize;
   VoidCallback onClick;
   bool disabled;
@@ -21,7 +22,8 @@ class HintButton extends StatelessWidget {
       required this.onClick,
       this.disabled = false,
       this.showAvailableHintsText = false}) {
-    this.buttonSize = buttonSize ?? Size(btnSideSize, btnSideSize);
+    var side = screenDimensions.w(12);
+    this.buttonSize = buttonSize ?? Size(side, side);
   }
 
   @override
@@ -61,9 +63,9 @@ class HintButton extends StatelessWidget {
                     alignmentInsideContainer: Alignment.bottomRight,
                     text: availableHints.toString(),
                     fontConfig: FontConfig(
-                        fontSize: FontConfig.getBigFontSize(),
+                        fontSize: FontConfig.getNormalFontSize(),
                         textColor: Colors.lightGreenAccent,
-                        borderWidth: FontConfig.getStandardBorderWidth() * 2,
+                        borderWidth: FontConfig.getStandardBorderWidth() * 1.5,
                         borderColor: Colors.black),
                   ))
             ],

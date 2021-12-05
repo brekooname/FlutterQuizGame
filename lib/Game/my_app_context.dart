@@ -11,7 +11,8 @@ class MyAppContext {
   String appTitle;
   AppId appId;
   bool isPro;
+  bool isPortraitMode;
 
   MyAppContext(this.languageCode, this.localStorage, this.appTitle, this.appId,
-      this.isPro);
+      this.isPro, this.isPortraitMode);
 }

@@ -1,16 +1,18 @@
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Game/my_app_context.dart';
 import 'package:flutter_app_quiz_game/Lib/Ads/ad_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Image/image_service.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_app_quiz_game/Lib/Localization/localization_service.dart';
+import 'package:flutter_app_quiz_game/Lib/ScreenDimensions/screen_dimensions_service.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
 
 mixin StandardScreen {
   late MyAppContext myAppContext;
   ImageService imageService = ImageService();
   LocalizationService? _localizationService;
+  ScreenDimensionsService screenDimensions = ScreenDimensionsService();
   AdService adService = AdService();
   BannerAd? bannerAd;
   InterstitialAd? interstitialAd;
@@ -110,18 +112,24 @@ mixin StandardScreen {
       bannerAdContainer = Container();
     }
 
-    return AspectRatio(
-      aspectRatio: 1.777083333333333,
-      child: Container(
-        decoration: BoxDecoration(
-            image: DecorationImage(
-          repeat: ImageRepeat.repeat,
-          image: AssetImage(imageService.getSpecificImagePath(appKey: myAppContext.appId.appKey,
-              imageName: "background_texture")),
-        )),
-        alignment: Alignment.center,
-        child: Column(
-          children: <Widget>[bannerAdContainer, Expanded(child: mainContent)],
+    return Container(
+      decoration: BoxDecoration(
+          image: DecorationImage(
+        repeat: ImageRepeat.repeat,
+        image: AssetImage(imageService.getSpecificImagePath(
+            appKey: myAppContext.appId.appKey,
+            imageName: "background_texture")),
+      )),
+      alignment: Alignment.center,
+      width: double.infinity,
+      height: 100.0,
+      child: AspectRatio(
+        aspectRatio: 9 / 16,
+        child: Container(
+          alignment: Alignment.center,
+          child: Column(
+            children: <Widget>[bannerAdContainer, Expanded(child: mainContent)],
+          ),
         ),
       ),
     );

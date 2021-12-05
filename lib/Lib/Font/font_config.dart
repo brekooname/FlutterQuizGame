@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../main.dart';
 import 'font_util.dart';
 
 class FontConfig {
@@ -7,20 +8,21 @@ class FontConfig {
 
   late Color borderColor;
 
-  late int fontSize;
+  late double fontSize;
 
-  late int borderWidth;
+  late double borderWidth;
 
   FontWeight? fontWeight;
 
   FontConfig(
       {Color? textColor,
       this.borderColor = Colors.transparent,
-      int? fontSize,
-      int? borderWidth,
+      double? fontSize,
+      double? borderWidth,
       this.fontWeight = FontWeight.bold}) {
     this.fontSize = fontSize == null ? getNormalFontSize() : fontSize;
-    this.textColor = textColor == null ? FontUtil.getFontDefaultColor() : textColor;
+    this.textColor =
+        textColor == null ? FontUtil.getFontDefaultColor() : textColor;
     this.borderWidth = borderColor == Colors.transparent
         ? 0
         : borderWidth == null
@@ -28,19 +30,34 @@ class FontConfig {
             : borderWidth;
   }
 
-  static int getStandardBorderWidth() {
-    return 3;
+  static double getStandardBorderWidth() {
+    return getDisplayDimensionScale() / 250;
   }
 
-  static int getBigFontSize() {
-    return (getNormalFontSize() * 1.5).round();
+  static double getStandardBorderRadius() {
+    return getDisplayDimensionScale() / 45;
   }
 
-  static int getNormalFontSize() {
-    return 20;
+  static double getStandardShadowOffset() {
+    return getDisplayDimensionScale() / 260;
   }
 
-  static int getSmallFontSize() {
-    return (getNormalFontSize() / 2).round();
+  static double getCustomFontSize(double val) {
+    return getNormalFontSize() * val;
   }
+
+  static double getBigFontSize() {
+    return getNormalFontSize() * 1.5;
+  }
+
+  static double getNormalFontSize() {
+    return getDisplayDimensionScale() / 45;
+  }
+
+  static double getSmallFontSize() {
+    return getNormalFontSize() / 2;
+  }
+
+  static double getDisplayDimensionScale() =>
+      (MyAppState.screenWidth + MyAppState.screenHeight);
 }

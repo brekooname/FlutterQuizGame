@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Lib/Color/color_util.dart';
+import 'package:flutter_app_quiz_game/Lib/Font/font_config.dart';
 
 class ButtonSkinConfig {
   RadialGradient? backgroundGradient;
@@ -25,10 +26,7 @@ class ButtonSkinConfig {
     }
     this.borderColor = borderColor;
     this.borderWidth =
-        borderColor == Colors.transparent ? 0 : getStandardBorderWidth();
+        borderColor == Colors.transparent ? 0 : FontConfig.getStandardBorderWidth();
   }
 
-  static double getStandardBorderWidth() {
-    return 5;
-  }
 }

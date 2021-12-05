@@ -4,7 +4,7 @@ import 'package:flutter_app_quiz_game/Lib/Font/font_config.dart';
 class MyText extends StatelessWidget {
   late FontConfig fontConfig;
 
-  late bool singleLineLabel;
+  late int maxLines;
 
   double? width;
 
@@ -17,21 +17,19 @@ class MyText extends StatelessWidget {
       required String text,
       this.alignmentInsideContainer = Alignment.center,
       this.width,
-      this.singleLineLabel = false}) {
+      this.maxLines = 2}) {
     this.fontConfig = fontConfig ?? FontConfig();
     this.text = text;
   }
 
   @override
   Widget build(BuildContext context) {
+    TextStyle textStyle = getTextStyle();
+
     var defaultText = Text(
       this.text,
       textAlign: TextAlign.center,
-      style: TextStyle(
-          decoration: TextDecoration.none,
-          fontWeight: fontConfig.fontWeight,
-          color: fontConfig.textColor,
-          fontSize: fontConfig.fontSize.roundToDouble()),
+      style: textStyle,
     );
 
     Widget result;
@@ -49,12 +47,42 @@ class MyText extends StatelessWidget {
     return Container(
         width: width, alignment: alignmentInsideContainer, child: result);
   }
+
+  TextStyle getTextStyle() {
+    var textStyle = TextStyle(
+        decoration: TextDecoration.none,
+        fontWeight: fontConfig.fontWeight,
+        color: fontConfig.textColor,
+        fontSize: fontConfig.fontSize);
+
+    while (hasTextOverflow(this.text, textStyle,
+        maxWidth: width ?? double.infinity, maxLines: maxLines)) {
+      textStyle = TextStyle(
+          decoration: TextDecoration.none,
+          fontWeight: fontConfig.fontWeight,
+          color: fontConfig.textColor,
+          fontSize: textStyle.fontSize! / 1.1);
+    }
+    return textStyle;
+  }
+
+  bool hasTextOverflow(String text, TextStyle style,
+      {double minWidth = 0,
+      double maxWidth = double.infinity,
+      int maxLines = 2}) {
+    final TextPainter textPainter = TextPainter(
+      text: TextSpan(text: text, style: style),
+      maxLines: maxLines,
+      textDirection: TextDirection.ltr,
+    )..layout(minWidth: minWidth, maxWidth: maxWidth);
+    return textPainter.didExceedMaxLines;
+  }
 }
 
 class OutlinedTextStroke {
   final Color? color;
 
-  final int? width;
+  final double? width;
 
   const OutlinedTextStroke({this.color, this.width});
 }
@@ -73,14 +101,17 @@ class OutlinedText extends StatelessWidget {
     double widthSum = 0;
     for (var i = 0; i < list.length; i++) {
       widthSum += list[i].width ?? 0;
-      children.add(Text(text?.data ?? '',
-          softWrap: true,
+
+      var textControl = Text(text?.data ?? '',
+          overflow: TextOverflow.fade,
           textAlign: text?.textAlign,
           style: (text?.style ?? TextStyle()).copyWith(
               foreground: Paint()
                 ..style = PaintingStyle.stroke
                 ..strokeWidth = widthSum
-                ..color = list[i].color ?? Colors.transparent)));
+                ..color = list[i].color ?? Colors.transparent));
+
+      children.add(textControl);
     }
 
     return Stack(

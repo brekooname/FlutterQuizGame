@@ -4,6 +4,9 @@ import 'package:flutter_app_quiz_game/Game/Question/category_difficulty.dart';
 import 'package:flutter_app_quiz_game/Game/Question/category_difficulty_service.dart';
 import 'package:flutter_app_quiz_game/Game/Question/question.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Constants/history_question_config.dart';
+import 'package:flutter_app_quiz_game/Lib/Constants/language.dart';
+import 'package:flutter_app_quiz_game/Lib/Extensions/enum_extension.dart';
+import 'package:flutter_app_quiz_game/Lib/Extensions/map_extension.dart';
 
 class HistoryQuestions extends CategoryDifficultyService {
   static final HistoryQuestions singleton = HistoryQuestions.internal();
@@ -14,13 +17,29 @@ class HistoryQuestions extends CategoryDifficultyService {
 
   HistoryQuestions.internal();
 
-  Map<CategoryDifficulty, List<Question>> getAllQuestions() {
-    Map<CategoryDifficulty, List<Question>> result =
-        HashMap<CategoryDifficulty, List<Question>>();
-    //
+  Map<CategoryDifficulty, List<Question>> getAllQuestions(String languageCode) {
+    Language language =
+        Language.values.firstWhere((element) => element.name() == languageCode);
+
+    return getAllQuestionsWithLanguages().get(language);
+  }
+
+  Map<Language, Map<CategoryDifficulty, List<Question>>>
+      getAllQuestionsWithLanguages() {
+    Map<Language, Map<CategoryDifficulty, List<Question>>> result =
+        HashMap<Language, Map<CategoryDifficulty, List<Question>>>();
     var questionConfig = HistoryGameQuestionConfig();
+
+    addEN(result, questionConfig);
+
+    return result;
+  }
+
+  void addEN(Map<Language, Map<CategoryDifficulty, List<Question>>> result,
+      HistoryGameQuestionConfig questionConfig) {
     addQuestions(
         result, //
+        Language.en, //
         questionConfig.cat0, //
         questionConfig.diff0, //
         [
@@ -73,6 +92,7 @@ class HistoryQuestions extends CategoryDifficultyService {
     //
     addQuestions(
         result, //
+        Language.en, //
         questionConfig.cat1, //
         questionConfig.diff0, //
         [
@@ -112,6 +132,5 @@ class HistoryQuestions extends CategoryDifficultyService {
           "European Union:1993,x",
         ]);
     //
-    return result;
   }
 }

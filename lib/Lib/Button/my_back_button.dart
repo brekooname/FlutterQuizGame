@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Lib/Constants/contrast.dart';
 import 'package:flutter_app_quiz_game/Game/my_app_context.dart';
+import 'package:flutter_app_quiz_game/Lib/ScreenDimensions/screen_dimensions_service.dart';
 
 import '../../Lib/Button/button_skin_config.dart';
 import '../../Lib/Font/font_config.dart';
 import 'my_button.dart';
 
 class MyBackButton extends StatelessWidget {
-  Size button_size = Size(50, 50);
+  ScreenDimensionsService screenDimensions = ScreenDimensionsService();
+  late Size button_size;
+
   late VoidCallback onClick;
 
   MyBackButton({VoidCallback? onClick, required BuildContext context}) {
+    var side = screenDimensions.w(12);
+    button_size = Size(side, side);
     this.onClick = onClick ??
         () {
           Navigator.pop(context);
