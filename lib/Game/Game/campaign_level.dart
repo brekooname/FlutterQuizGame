@@ -1,14 +1,14 @@
 import 'package:flutter_app_quiz_game/Game/Question/question_category.dart';
 import 'package:flutter_app_quiz_game/Game/Question/question_difficulty.dart';
 
-class GameLevel {
+class CampaignLevel {
   int index;
   String name;
 
   QuestionCategory category;
   QuestionDifficulty difficulty;
 
-  GameLevel(
+  CampaignLevel(
       {required this.index,
       required this.name,
       required this.category,

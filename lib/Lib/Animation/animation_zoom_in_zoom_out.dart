@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class InternalAnimatedWidget extends AnimatedWidget {
   Widget toAnimateWidget;
   Size toAnimateWidgetSize;
-  int zoomAmount;
+  double zoomAmount;
 
   InternalAnimatedWidget(
       {Key? key,
@@ -16,25 +16,29 @@ class InternalAnimatedWidget extends AnimatedWidget {
   @override
   Widget build(BuildContext context) {
     final animation = listenable as Animation<double>;
-    return SizedBox(
-      height: Tween<double>(
-              begin: toAnimateWidgetSize.height,
-              end: toAnimateWidgetSize.height - this.zoomAmount)
-          .evaluate(animation),
-      width: Tween<double>(
-              begin: toAnimateWidgetSize.width,
-              end: toAnimateWidgetSize.width - this.zoomAmount)
-          .evaluate(animation),
-      child: toAnimateWidget,
+    return Center(
+      child: SizedBox(
+        height: Tween<double>(
+                begin: toAnimateWidgetSize.height,
+                end: toAnimateWidgetSize.height -
+                    (toAnimateWidgetSize.height / this.zoomAmount))
+            .evaluate(animation),
+        width: Tween<double>(
+                begin: toAnimateWidgetSize.width,
+                end: toAnimateWidgetSize.width -
+                    (toAnimateWidgetSize.width / this.zoomAmount))
+            .evaluate(animation),
+        child: toAnimateWidget,
+      ),
     );
   }
 }
 
 class AnimateZoomInZoomOut extends StatefulWidget {
-  static const int default_zoom_amount = 15;
+  static const double default_zoom_amount = 5;
   Widget toAnimateWidget;
   Size toAnimateWidgetSize;
-  int zoomAmount;
+  double zoomAmount;
   bool zoomInZoomOutOnce;
   Duration duration;
 

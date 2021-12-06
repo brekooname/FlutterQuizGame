@@ -1,6 +1,6 @@
 import 'dart:collection';
 
-import 'package:flutter_app_quiz_game/Game/Game/game_level.dart';
+import 'package:flutter_app_quiz_game/Game/Game/campaign_level.dart';
 import 'package:flutter_app_quiz_game/Game/my_app_context.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -16,31 +16,31 @@ class HistoryLocalStorage {
 
   HistoryLocalStorage.internal();
 
-  Set<int> getLevelsWon(GameLevel gameLevel) {
+  Set<int> getLevelsWon(CampaignLevel gameLevel) {
     return convertToInt(_getLevelsWonFieldName(gameLevel));
   }
 
-  Set<int> getLevelsLost(GameLevel gameLevel) {
+  Set<int> getLevelsLost(CampaignLevel gameLevel) {
     return convertToInt(_getLevelsLostFieldName(gameLevel));
   }
 
-  void setLevelLost(int level, GameLevel gameLevel) {
+  void setLevelLost(int level, CampaignLevel gameLevel) {
     Set<int> l = getLevelsLost(gameLevel);
     l.add(level);
     prefs.setString(_getLevelsLostFieldName(gameLevel), l.join(","));
   }
 
-  Set<int> getLevelsImgShown(GameLevel gameLevel) {
+  Set<int> getLevelsImgShown(CampaignLevel gameLevel) {
     return convertToInt(_getLevelsImageShownFieldName(gameLevel));
   }
 
-  void setLeveImgShown(int level, GameLevel gameLevel) {
+  void setLeveImgShown(int level, CampaignLevel gameLevel) {
     Set<int> l = getLevelsImgShown(gameLevel);
     l.add(level);
     prefs.setString(_getLevelsImageShownFieldName(gameLevel), l.join(","));
   }
 
-  Set<int> getAllLevelsPlayed(GameLevel gameLevel) {
+  Set<int> getAllLevelsPlayed(CampaignLevel gameLevel) {
     Set<int> all = HashSet<int>();
     all.addAll(getLevelsLost(gameLevel));
     all.addAll(getLevelsWon(gameLevel));
@@ -58,7 +58,7 @@ class HistoryLocalStorage {
     return res;
   }
 
-  void setLevelWon(int level, GameLevel gameLevel) {
+  void setLevelWon(int level, CampaignLevel gameLevel) {
     Set<int> l = getLevelsWon(gameLevel);
     l.add(level);
     prefs.setString(_getLevelsWonFieldName(gameLevel), l.join(","));
@@ -69,43 +69,43 @@ class HistoryLocalStorage {
     }
   }
 
-  bool isHighScore(GameLevel gameLevel) {
+  bool isHighScore(CampaignLevel gameLevel) {
     return prefs.getBool(_getIsHighScoreFieldName(gameLevel)) ?? false;
   }
 
-  void setIsHighScore(GameLevel gameLevel, bool val) {
+  void setIsHighScore(CampaignLevel gameLevel, bool val) {
     prefs.setBool(_getIsHighScoreFieldName(gameLevel), val);
   }
 
-  void setHighScore(int score, GameLevel gameLevel) {
+  void setHighScore(int score, CampaignLevel gameLevel) {
     prefs.setInt(_getHighScoreFieldName(gameLevel), score);
   }
 
-  int getHighScore(GameLevel gameLevel) {
+  int getHighScore(CampaignLevel gameLevel) {
     return prefs.getInt(_getHighScoreFieldName(gameLevel)) ?? 0;
   }
 
-  String _getLevelsImageShownFieldName(GameLevel gameLevel) {
+  String _getLevelsImageShownFieldName(CampaignLevel gameLevel) {
     return gameLevel.name + "imgShown";
   }
 
-  String _getLevelsWonFieldName(GameLevel gameLevel) {
+  String _getLevelsWonFieldName(CampaignLevel gameLevel) {
     return gameLevel.name + "levelsWon";
   }
 
-  String _getLevelsLostFieldName(GameLevel gameLevel) {
+  String _getLevelsLostFieldName(CampaignLevel gameLevel) {
     return gameLevel.name + "levelsLost";
   }
 
-  String _getHighScoreFieldName(GameLevel gameLevel) {
+  String _getHighScoreFieldName(CampaignLevel gameLevel) {
     return gameLevel.name + "highScore";
   }
 
-  String _getIsHighScoreFieldName(GameLevel gameLevel) {
+  String _getIsHighScoreFieldName(CampaignLevel gameLevel) {
     return gameLevel.name + "isHighScore";
   }
 
-  void clearLevelsPlayed(GameLevel gameLevel) {
+  void clearLevelsPlayed(CampaignLevel gameLevel) {
     setIsHighScore(gameLevel, false);
     prefs.setString(_getLevelsWonFieldName(gameLevel), "");
     prefs.setString(_getLevelsLostFieldName(gameLevel), "");

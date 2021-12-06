@@ -12,8 +12,11 @@ class HintButton extends StatelessWidget {
   ScreenDimensionsService screenDimensions = ScreenDimensionsService();
   late Size buttonSize;
   VoidCallback onClick;
+  VoidCallback? onWatchRewardedAdReward;
   bool disabled;
   bool showAvailableHintsText;
+  bool isRewardedAdLoaded;
+  bool watchRewardedAdForHint;
   int availableHints;
 
   HintButton(
@@ -21,26 +24,41 @@ class HintButton extends StatelessWidget {
       this.availableHints = 1,
       required this.onClick,
       this.disabled = false,
+      this.onWatchRewardedAdReward,
+      this.watchRewardedAdForHint = false,
+      this.isRewardedAdLoaded = false,
       this.showAvailableHintsText = false}) {
-    var side = screenDimensions.w(12);
+    var side = screenDimensions.w(14);
     this.buttonSize = buttonSize ?? Size(side, side);
+    if (watchRewardedAdForHint) {
+      assert(onWatchRewardedAdReward != null);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    var shouldShowRewardedAd = availableHints <= 0 && watchRewardedAdForHint;
     var icon = ImageService().getMainImage(
-        imageName: "btn_hint", module: "buttons", maxWidth: buttonSize.width);
+        imageName: shouldShowRewardedAd && isRewardedAdLoaded
+            ? "btn_hint_ad"
+            : "btn_hint",
+        module: "buttons",
+        maxWidth: buttonSize.width);
+
+    if (availableHints <= 0 && !watchRewardedAdForHint) {
+      this.disabled = true;
+    }
+
+    if (shouldShowRewardedAd && !isRewardedAdLoaded) {
+      this.disabled = true;
+    }
 
     var btn = MyButton(
         size: buttonSize,
         disabled: disabled,
-        onClick: onClick,
+        onClick: shouldShowRewardedAd ? onWatchRewardedAdReward : onClick,
         buttonSkinConfig: ButtonSkinConfig(icon: icon),
         fontConfig: FontConfig());
-
-    if (availableHints == 0) {
-      this.disabled = true;
-    }
 
     var fittedBtn = SizedBox(
         width: buttonSize.width,
@@ -52,24 +70,25 @@ class HintButton extends StatelessWidget {
                 toAnimateWidget: btn,
               ));
 
-    return this.showAvailableHintsText
+    return this.showAvailableHintsText && !shouldShowRewardedAd
         ? Stack(
-            children: [
-              fittedBtn,
-              Container(
-                  width: buttonSize.width,
-                  height: buttonSize.height,
-                  child: MyText(
-                    alignmentInsideContainer: Alignment.bottomRight,
-                    text: availableHints.toString(),
-                    fontConfig: FontConfig(
-                        fontSize: FontConfig.getNormalFontSize(),
-                        textColor: Colors.lightGreenAccent,
-                        borderWidth: FontConfig.getStandardBorderWidth() * 1.5,
-                        borderColor: Colors.black),
-                  ))
-            ],
+            children: [fittedBtn, createHintAmountText()],
           )
         : fittedBtn;
+  }
+
+  Container createHintAmountText() {
+    return Container(
+        width: buttonSize.width,
+        height: buttonSize.height,
+        child: MyText(
+          alignmentInsideContainer: Alignment.bottomRight,
+          text: availableHints.toString(),
+          fontConfig: FontConfig(
+              fontSize: FontConfig.getNormalFontSize(),
+              textColor: Colors.lightGreenAccent,
+              borderWidth: FontConfig.getStandardBorderWidth() * 1.2,
+              borderColor: Colors.black),
+        ));
   }
 }

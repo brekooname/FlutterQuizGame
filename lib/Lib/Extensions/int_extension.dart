@@ -1,15 +1,15 @@
 import 'package:flutter_app_quiz_game/Lib/Extensions/string_extension.dart';
 
 extension IntExtension on int {
-  String formatIntEveryThreeChars() {
+  String formatIntEveryChars(int everyChars) {
     String stringVal = this.toString();
     String result = this.toString();
     int j = 0;
-    if (this.abs().toString().length > 3) {
+    if (this.abs().toString().length > everyChars) {
       result = "";
       for (int i = stringVal.length - 1; i >= 0; i--) {
         result = result + stringVal[i];
-        if (j == 2) {
+        if (j == everyChars - 1) {
           result = result + ".";
           j = 0;
         } else {

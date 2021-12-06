@@ -15,13 +15,17 @@ class HistoryGameLevelHeader extends StatelessWidget {
   String historyEra;
   String question;
   VoidCallback hintButtonOnClick;
+  VoidCallback onWatchRewardedAdReward;
+  bool isRewardedAdLoaded;
   MyAppContext myAppContext;
   ScreenDimensionsService screenDimensions;
 
   HistoryGameLevelHeader(
       {this.score = 0,
       this.animateScore = false,
+      this.isRewardedAdLoaded = false,
       required this.hintButtonOnClick,
+      required this.onWatchRewardedAdReward,
       required this.availableHints,
       required this.historyEra,
       required this.question,
@@ -46,9 +50,9 @@ class HistoryGameLevelHeader extends StatelessWidget {
       createGreenHeader(context),
       SizedBox(height: screenDimensions.h(1)),
       Container(
-        height: screenDimensions.h(15),
+        height: screenDimensions.h(11),
         decoration: BoxDecoration(
-          color: Colors.red.shade300.withAlpha(150),
+          color: Colors.green.shade100.withAlpha(150),
         ),
         child: questionText,
       ),
@@ -57,17 +61,22 @@ class HistoryGameLevelHeader extends StatelessWidget {
   }
 
   Widget createGreenHeader(BuildContext context) {
-    var backBtn = MyBackButton(
-      context: context
-    );
-    var hintBtn = HintButton(
-      onClick: this.hintButtonOnClick,
-      availableHints: this.availableHints,
-      disabled: false,
-      showAvailableHintsText: true
-    );
+    print("0000000000000000000000000000000000ISREWARDEDADLOADED" + isRewardedAdLoaded.toString());
 
+    var backBtn = MyBackButton(context: context);
+    var hintBtn = HintButton(
+        onClick: this.hintButtonOnClick,
+        availableHints: this.availableHints,
+        isRewardedAdLoaded: isRewardedAdLoaded,
+        disabled: false,
+        watchRewardedAdForHint: true,
+        onWatchRewardedAdReward: onWatchRewardedAdReward,
+        showAvailableHintsText: true);
+
+    var scoreTextWidth = screenDimensions.w(10);
     var scoreText = MyText(
+      maxLines: 1,
+      width: scoreTextWidth,
       text: this.score.toString(),
       fontConfig: FontConfig(
           textColor: Colors.yellow,
@@ -76,7 +85,7 @@ class HistoryGameLevelHeader extends StatelessWidget {
     );
 
     return Container(
-        height: screenDimensions.h(13),
+        height: screenDimensions.h(9),
         decoration: BoxDecoration(
           color: Colors.lightGreenAccent.withAlpha(150),
         ),
@@ -87,7 +96,7 @@ class HistoryGameLevelHeader extends StatelessWidget {
                 backBtn,
                 SizedBox(width: screenDimensions.w(2)),
                 SizedBox(
-                    width: screenDimensions.w(10),
+                    width: scoreTextWidth,
                     child: animateScore
                         ? AnimateZoomInZoomOutText(
                             zoomAmount: 1.4,

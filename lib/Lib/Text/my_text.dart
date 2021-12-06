@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Lib/Font/font_config.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class MyText extends StatelessWidget {
+  MyTextCreatorService _myTextCreatorService = MyTextCreatorService();
+
   late FontConfig fontConfig;
 
   late int maxLines;
@@ -12,25 +15,19 @@ class MyText extends StatelessWidget {
 
   late String text;
 
-  MyText(
-      {FontConfig? fontConfig,
-      required String text,
-      this.alignmentInsideContainer = Alignment.center,
-      this.width,
-      this.maxLines = 2}) {
+  MyText({FontConfig? fontConfig,
+    required String text,
+    this.alignmentInsideContainer = Alignment.center,
+    this.width,
+    this.maxLines = 2}) {
     this.fontConfig = fontConfig ?? FontConfig();
     this.text = text;
   }
 
   @override
   Widget build(BuildContext context) {
-    TextStyle textStyle = getTextStyle();
-
-    var defaultText = Text(
-      this.text,
-      textAlign: TextAlign.center,
-      style: textStyle,
-    );
+    var defaultText = _myTextCreatorService
+        .createText(this.text, getTextStyle(), TextAlign.center);
 
     Widget result;
     if (this.fontConfig.borderColor == Colors.transparent) {
@@ -68,13 +65,14 @@ class MyText extends StatelessWidget {
 
   bool hasTextOverflow(String text, TextStyle style,
       {double minWidth = 0,
-      double maxWidth = double.infinity,
-      int maxLines = 2}) {
+        double maxWidth = double.infinity,
+        int maxLines = 2}) {
     final TextPainter textPainter = TextPainter(
       text: TextSpan(text: text, style: style),
       maxLines: maxLines,
       textDirection: TextDirection.ltr,
-    )..layout(minWidth: minWidth, maxWidth: maxWidth);
+    )
+      ..layout(minWidth: minWidth, maxWidth: maxWidth);
     return textPainter.didExceedMaxLines;
   }
 }
@@ -88,11 +86,12 @@ class OutlinedTextStroke {
 }
 
 class OutlinedText extends StatelessWidget {
+  final MyTextCreatorService _myTextCreatorService = MyTextCreatorService();
   final Text? text;
 
   final List<OutlinedTextStroke>? strokes;
 
-  const OutlinedText({Key? key, this.text, this.strokes}) : super(key: key);
+  OutlinedText({Key? key, this.text, this.strokes}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -102,20 +101,37 @@ class OutlinedText extends StatelessWidget {
     for (var i = 0; i < list.length; i++) {
       widthSum += list[i].width ?? 0;
 
-      var textControl = Text(text?.data ?? '',
-          overflow: TextOverflow.fade,
-          textAlign: text?.textAlign,
-          style: (text?.style ?? TextStyle()).copyWith(
-              foreground: Paint()
-                ..style = PaintingStyle.stroke
-                ..strokeWidth = widthSum
-                ..color = list[i].color ?? Colors.transparent));
+      var textControl = _myTextCreatorService.createText(
+          text?.data ?? '', (text?.style ?? TextStyle()).copyWith(
+          foreground: Paint()
+            ..style = PaintingStyle.stroke
+            ..strokeWidth = widthSum
+            ..color = list[i].color ?? Colors.transparent), text?.textAlign);
 
       children.add(textControl);
     }
 
     return Stack(
       children: [...children.reversed, text ?? SizedBox.shrink()],
+    );
+  }
+}
+
+class MyTextCreatorService {
+  static final MyTextCreatorService singleton = MyTextCreatorService.internal();
+
+  factory MyTextCreatorService() {
+    return singleton;
+  }
+
+  MyTextCreatorService.internal();
+
+  Text createText(String text, TextStyle textStyle, TextAlign? textAlign) {
+    return Text(
+      text,
+      overflow: TextOverflow.fade,
+      textAlign: textAlign,
+      style: GoogleFonts.lato(textStyle: textStyle),
     );
   }
 }

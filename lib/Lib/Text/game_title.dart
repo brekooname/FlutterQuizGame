@@ -20,7 +20,7 @@ class GameTitle extends StatelessWidget {
     this.fontConfig = fontConfig;
     this.text = text;
     this.backgroundImagePath = backgroundImagePath;
-    this.defaultBackgroundImageWidth = ScreenDimensionsService().w(90);
+    this.defaultBackgroundImageWidth = ScreenDimensionsService().w(85);
   }
 
   @override

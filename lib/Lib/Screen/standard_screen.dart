@@ -17,9 +17,14 @@ mixin StandardScreen {
   BannerAd? bannerAd;
   InterstitialAd? interstitialAd;
   bool isInterstitialAdLoaded = false;
+  RewardedAd? rewardedAd;
+  bool isRewardedAdLoaded = false;
+  VoidCallback? onRewardedAdLoadedSetState;
 
-  void initScreen(MyAppContext myAppContext, BuildContext buildContext) {
+  void initScreen(MyAppContext myAppContext, BuildContext buildContext,
+      {VoidCallback? onRewardedAdLoadedSetState}) {
     this.myAppContext = myAppContext;
+    this.onRewardedAdLoadedSetState = onRewardedAdLoadedSetState;
     _localizationService = LocalizationService(buildContext: buildContext);
     if (!kIsWeb) {
       initAds(buildContext);
@@ -46,22 +51,45 @@ mixin StandardScreen {
         .formatTextWithParams(labelText, [param1, param2]);
   }
 
-  void showPopupAd(BuildContext buildContext, VoidCallback goAfterClose) {
+  void showPopupAd(BuildContext buildContext, VoidCallback executeAfterClose) {
     if (interstitialAd != null && isInterstitialAdLoaded) {
       interstitialAd!.show();
       interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
           onAdDismissedFullScreenContent: (interstitialAd) {
-        goAfterClose.call();
+        executeAfterClose.call();
+        initInterstitialAd();
+      }, onAdFailedToShowFullScreenContent: (InterstitialAd ad, AdError error) {
+        executeAfterClose.call();
         initInterstitialAd();
       });
     } else {
-      goAfterClose.call();
+      executeAfterClose.call();
       initInterstitialAd();
+    }
+  }
+
+  void showRewardedAd(
+      BuildContext buildContext, VoidCallback executeAfterClose) {
+    if (rewardedAd != null && isRewardedAdLoaded) {
+      rewardedAd!.show(
+          onUserEarnedReward: (RewardedAd ad, RewardItem rewardItem) {
+        executeAfterClose.call();
+        initRewardedAd();
+      });
+      rewardedAd!.fullScreenContentCallback = FullScreenContentCallback(
+          onAdDismissedFullScreenContent: (interstitialAd) {
+        initRewardedAd();
+      }, onAdFailedToShowFullScreenContent: (RewardedAd ad, AdError error) {
+        initRewardedAd();
+      });
+    } else {
+      initRewardedAd();
     }
   }
 
   void initAds(BuildContext buildContext) {
     initInterstitialAd();
+    initRewardedAd();
 
     bannerAd = BannerAd(
       adUnitId: adService.bannerAdUnitId,
@@ -93,6 +121,28 @@ mixin StandardScreen {
             print('InterstitialAd failed to load: $error');
           },
         ));
+  }
+
+  void initRewardedAd() {
+    if (onRewardedAdLoadedSetState != null) {
+      rewardedAd?.dispose();
+      isRewardedAdLoaded = false;
+      print("9999999999999999999999999999999999999999ISREWARDEDADLOADED" + isRewardedAdLoaded.toString());
+      RewardedAd.load(
+          adUnitId: adService.rewardedAdUnitId,
+          request: AdRequest(),
+          rewardedAdLoadCallback: RewardedAdLoadCallback(
+            onAdLoaded: (RewardedAd ad) {
+              this.rewardedAd = ad;
+              print("55555555555555555555555555555ISREWARDEDADLOADED" + isRewardedAdLoaded.toString());
+              onRewardedAdLoadedSetState?.call();
+            },
+            onAdFailedToLoad: (LoadAdError error) {
+              print("55555555555555555555555555555xxxxxxxxxxxxxxxxxx" + isRewardedAdLoaded.toString());
+              print('RewardedAd failed to load: $error');
+            },
+          ));
+    }
   }
 
   Color getBackgroundColor() {

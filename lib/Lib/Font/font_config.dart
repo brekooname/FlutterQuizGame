@@ -51,7 +51,7 @@ class FontConfig {
   }
 
   static double getNormalFontSize() {
-    return getDisplayDimensionScale() / 45;
+    return getDisplayDimensionScale() / 55;
   }
 
   static double getSmallFontSize() {

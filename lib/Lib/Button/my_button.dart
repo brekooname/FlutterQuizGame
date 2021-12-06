@@ -36,7 +36,7 @@ class MyButton extends StatefulWidget {
     ButtonSkinConfig? buttonSkinConfig,
     this.customContent,
   }) : super(key: key) {
-    this.size = size??Size(screenDimensions.w(20), screenDimensions.h(12));
+    this.size = size??Size(screenDimensions.w(50), screenDimensions.h(12));
     this.fontConfig = fontConfig ?? FontConfig();
 
     this.buttonSkinConfig = buttonSkinConfig ??
