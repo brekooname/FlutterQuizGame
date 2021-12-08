@@ -2,6 +2,9 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Game/my_app_context.dart';
 import 'package:flutter_app_quiz_game/Lib/Ads/ad_service.dart';
+import 'package:flutter_app_quiz_game/Lib/Assets/assets_service.dart';
+import 'package:flutter_app_quiz_game/Lib/Audio/my_audio_player.dart';
+import 'package:flutter_app_quiz_game/Lib/Button/button_size.dart';
 import 'package:flutter_app_quiz_game/Lib/Image/image_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Localization/localization_service.dart';
 import 'package:flutter_app_quiz_game/Lib/ScreenDimensions/screen_dimensions_service.dart';
@@ -10,6 +13,10 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 mixin StandardScreen {
   late MyAppContext myAppContext;
+  late MyAudioPlayer audioPlayer;
+
+  ButtonSize buttonSize = ButtonSize();
+  AssetsService assetsService = AssetsService();
   ImageService imageService = ImageService();
   LocalizationService? _localizationService;
   ScreenDimensionsService screenDimensions = ScreenDimensionsService();
@@ -17,14 +24,10 @@ mixin StandardScreen {
   BannerAd? bannerAd;
   InterstitialAd? interstitialAd;
   bool isInterstitialAdLoaded = false;
-  RewardedAd? rewardedAd;
-  bool isRewardedAdLoaded = false;
-  VoidCallback? onRewardedAdLoadedSetState;
 
-  void initScreen(MyAppContext myAppContext, BuildContext buildContext,
-      {VoidCallback? onRewardedAdLoadedSetState}) {
+  void initScreen(MyAppContext myAppContext, BuildContext buildContext) {
     this.myAppContext = myAppContext;
-    this.onRewardedAdLoadedSetState = onRewardedAdLoadedSetState;
+    this.audioPlayer = MyAudioPlayer(myAppContext);
     _localizationService = LocalizationService(buildContext: buildContext);
     if (!kIsWeb) {
       initAds(buildContext);
@@ -41,8 +44,9 @@ mixin StandardScreen {
     return _localizationService!.getAppLocalizations();
   }
 
-  String formatTextWithOneParam(String labelText, String param) {
-    return localizationService.formatTextWithParams(labelText, [param]);
+  String formatTextWithOneParam(String labelText, Object param) {
+    return localizationService
+        .formatTextWithParams(labelText, [param.toString()]);
   }
 
   String formatTextWithTwoParams(
@@ -68,29 +72,8 @@ mixin StandardScreen {
     }
   }
 
-  void showRewardedAd(
-      BuildContext buildContext, VoidCallback executeAfterClose) {
-    if (rewardedAd != null && isRewardedAdLoaded) {
-      rewardedAd!.show(
-          onUserEarnedReward: (RewardedAd ad, RewardItem rewardItem) {
-        executeAfterClose.call();
-        initRewardedAd();
-      });
-      rewardedAd!.fullScreenContentCallback = FullScreenContentCallback(
-          onAdDismissedFullScreenContent: (interstitialAd) {
-        initRewardedAd();
-      }, onAdFailedToShowFullScreenContent: (RewardedAd ad, AdError error) {
-        initRewardedAd();
-      });
-    } else {
-      initRewardedAd();
-    }
-  }
-
   void initAds(BuildContext buildContext) {
     initInterstitialAd();
-    initRewardedAd();
-
     bannerAd = BannerAd(
       adUnitId: adService.bannerAdUnitId,
       size: AdSize.banner,
@@ -123,28 +106,6 @@ mixin StandardScreen {
         ));
   }
 
-  void initRewardedAd() {
-    if (onRewardedAdLoadedSetState != null) {
-      rewardedAd?.dispose();
-      isRewardedAdLoaded = false;
-      print("9999999999999999999999999999999999999999ISREWARDEDADLOADED" + isRewardedAdLoaded.toString());
-      RewardedAd.load(
-          adUnitId: adService.rewardedAdUnitId,
-          request: AdRequest(),
-          rewardedAdLoadCallback: RewardedAdLoadCallback(
-            onAdLoaded: (RewardedAd ad) {
-              this.rewardedAd = ad;
-              print("55555555555555555555555555555ISREWARDEDADLOADED" + isRewardedAdLoaded.toString());
-              onRewardedAdLoadedSetState?.call();
-            },
-            onAdFailedToLoad: (LoadAdError error) {
-              print("55555555555555555555555555555xxxxxxxxxxxxxxxxxx" + isRewardedAdLoaded.toString());
-              print('RewardedAd failed to load: $error');
-            },
-          ));
-    }
-  }
-
   Color getBackgroundColor() {
     return Colors.red;
   }
@@ -166,9 +127,10 @@ mixin StandardScreen {
       decoration: BoxDecoration(
           image: DecorationImage(
         repeat: ImageRepeat.repeat,
-        image: AssetImage(imageService.getSpecificImagePath(
+        image: AssetImage(assetsService.getSpecificAssetPath(
             appKey: myAppContext.appId.appKey,
-            imageName: "background_texture")),
+            assetExtension: "png",
+            assetName: "background_texture")),
       )),
       alignment: Alignment.center,
       width: double.infinity,

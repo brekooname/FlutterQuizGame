@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app_quiz_game/Game/my_app_context.dart';
+import 'package:flutter_app_quiz_game/Lib/Button/button_size.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Font/font_config.dart';
-import 'package:flutter_app_quiz_game/Lib/Image/image_service.dart';
-import 'package:flutter_app_quiz_game/Lib/Storage/rate_app_local_storage.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
 import 'my_popup.dart';
@@ -15,11 +13,10 @@ class GameFinishedPopup extends StatelessWidget with MyPopup {
   Size? popupSize;
   VoidCallback playAgainClick;
 
-  GameFinishedPopup(
-      {this.isGameFinishedSuccess = true,
-      this.popupSize,
-      this.highScore,
-      required this.playAgainClick});
+  GameFinishedPopup({this.isGameFinishedSuccess = true,
+    this.popupSize,
+    this.highScore,
+    required this.playAgainClick});
 
   @override
   Dialog build(BuildContext context) {
@@ -31,7 +28,7 @@ class GameFinishedPopup extends StatelessWidget with MyPopup {
       child: Container(
         decoration: BoxDecoration(
             borderRadius:
-                BorderRadius.circular(FontConfig.getStandardBorderRadius()),
+            BorderRadius.circular(FontConfig.getStandardBorderRadius()),
             color: Colors.white),
         height: popupSize!.height,
         width: popupSize!.width,
@@ -42,7 +39,7 @@ class GameFinishedPopup extends StatelessWidget with MyPopup {
               children: <Widget>[
                 imageService.getMainImage(
                     imageName: getImageName(),
-                    module: "general",
+                    module: "popup",
                     maxWidth: popupSize!.width / 2.6),
                 SizedBox(height: screenDimensions.h(2)),
                 MyText(

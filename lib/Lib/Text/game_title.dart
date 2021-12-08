@@ -6,21 +6,24 @@ import 'package:flutter_app_quiz_game/Lib/ScreenDimensions/screen_dimensions_ser
 import 'my_text.dart';
 
 class GameTitle extends StatelessWidget {
-  late double defaultBackgroundImageWidth;
+  late double backgroundImageWidth;
   late FontConfig fontConfig;
 
   late String text;
 
   late String backgroundImagePath;
 
-  GameTitle(
-      {required FontConfig fontConfig,
-      required String text,
-      required String backgroundImagePath}) {
+  GameTitle({
+    required FontConfig fontConfig,
+    required String text,
+    required String backgroundImagePath,
+    double? backgroundImageWidth,
+  }) {
     this.fontConfig = fontConfig;
     this.text = text;
     this.backgroundImagePath = backgroundImagePath;
-    this.defaultBackgroundImageWidth = ScreenDimensionsService().w(85);
+    this.backgroundImageWidth =
+        backgroundImageWidth ?? ScreenDimensionsService().w(85);
   }
 
   @override
@@ -31,11 +34,11 @@ class GameTitle extends StatelessWidget {
         backgroundImagePath,
         fit: BoxFit.fitWidth,
         alignment: Alignment.center,
-        width: defaultBackgroundImageWidth,
+        width: backgroundImageWidth,
       ),
       MyText(
         text: this.text,
-        width: defaultBackgroundImageWidth / 1.2,
+        width: backgroundImageWidth / 1.2,
         fontConfig: this.fontConfig,
       ),
     ]);

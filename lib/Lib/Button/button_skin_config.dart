@@ -9,24 +9,30 @@ class ButtonSkinConfig {
 
   Color? borderColor;
 
+  bool withBorder;
+
   late double borderWidth;
 
   ButtonSkinConfig(
       {Color? backgroundColor,
       Image? icon,
-      Color borderColor = Colors.transparent,
-      double borderWidth = 0}) {
+      Color? borderColor,
+      double borderWidth = 0,
+      this.withBorder = true}) {
     if (backgroundColor != null) {
       this.backgroundGradient = RadialGradient(radius: 4, colors: [
         ColorUtil.colorDarken(backgroundColor, -0.05),
         backgroundColor,
       ]);
     } else {
+      this.withBorder = false;
       this.icon = icon;
     }
-    this.borderColor = borderColor;
-    this.borderWidth =
-        borderColor == Colors.transparent ? 0 : FontConfig.getStandardBorderWidth();
+    this.borderColor = withBorder
+        ? borderColor ?? ColorUtil.colorDarken(backgroundColor!, -0.15)
+        : Colors.transparent;
+    this.borderWidth = borderColor == Colors.transparent
+        ? 0
+        : FontConfig.getStandardBorderWidth();
   }
-
 }

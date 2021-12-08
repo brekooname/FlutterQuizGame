@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Lib/Animation/animation_zoom_in_zoom_out.dart';
 import 'package:flutter_app_quiz_game/Lib/Image/image_service.dart';
+import 'package:flutter_app_quiz_game/Lib/Popup/watch_rewarded_ad_popup.dart';
 import 'package:flutter_app_quiz_game/Lib/ScreenDimensions/screen_dimensions_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
@@ -12,10 +13,8 @@ class HintButton extends StatelessWidget {
   ScreenDimensionsService screenDimensions = ScreenDimensionsService();
   late Size buttonSize;
   VoidCallback onClick;
-  VoidCallback? onWatchRewardedAdReward;
   bool disabled;
   bool showAvailableHintsText;
-  bool isRewardedAdLoaded;
   bool watchRewardedAdForHint;
   int availableHints;
 
@@ -24,24 +23,17 @@ class HintButton extends StatelessWidget {
       this.availableHints = 1,
       required this.onClick,
       this.disabled = false,
-      this.onWatchRewardedAdReward,
       this.watchRewardedAdForHint = false,
-      this.isRewardedAdLoaded = false,
       this.showAvailableHintsText = false}) {
     var side = screenDimensions.w(14);
     this.buttonSize = buttonSize ?? Size(side, side);
-    if (watchRewardedAdForHint) {
-      assert(onWatchRewardedAdReward != null);
-    }
   }
 
   @override
   Widget build(BuildContext context) {
     var shouldShowRewardedAd = availableHints <= 0 && watchRewardedAdForHint;
     var icon = ImageService().getMainImage(
-        imageName: shouldShowRewardedAd && isRewardedAdLoaded
-            ? "btn_hint_ad"
-            : "btn_hint",
+        imageName: shouldShowRewardedAd ? "btn_hint_ad" : "btn_hint",
         module: "buttons",
         maxWidth: buttonSize.width);
 
@@ -49,14 +41,21 @@ class HintButton extends StatelessWidget {
       this.disabled = true;
     }
 
-    if (shouldShowRewardedAd && !isRewardedAdLoaded) {
-      this.disabled = true;
-    }
-
     var btn = MyButton(
         size: buttonSize,
         disabled: disabled,
-        onClick: shouldShowRewardedAd ? onWatchRewardedAdReward : onClick,
+        onClick: shouldShowRewardedAd
+            ? () {
+                Future.delayed(
+                    Duration.zero,
+                    () => showDialog(
+                        barrierDismissible: false,
+                        context: context,
+                        builder: (BuildContext context) {
+                          return buildWatchRewardedAdPopup(context);
+                        }));
+              }
+            : onClick,
         buttonSkinConfig: ButtonSkinConfig(icon: icon),
         fontConfig: FontConfig());
 
@@ -75,6 +74,10 @@ class HintButton extends StatelessWidget {
             children: [fittedBtn, createHintAmountText()],
           )
         : fittedBtn;
+  }
+
+  Widget buildWatchRewardedAdPopup(BuildContext context) {
+    return WatchRewardedAdPopup(onUserEarnedReward: this.onClick);
   }
 
   Container createHintAmountText() {

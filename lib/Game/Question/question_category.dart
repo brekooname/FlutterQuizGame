@@ -2,13 +2,14 @@ import 'CategoryService/question_category_service.dart';
 
 class QuestionCategory {
   int index;
-  String name;
   QuestionCategoryService questionCategoryService;
 
   QuestionCategory(
-      {required this.index,
-      required this.name,
-      required this.questionCategoryService});
+      {required this.index, required this.questionCategoryService});
+
+  String get name {
+    return "cat" + index.toString();
+  }
 
   @override
   String toString() {
@@ -18,9 +19,7 @@ class QuestionCategory {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is QuestionCategory &&
-          index == other.index &&
-          name == other.name;
+      other is QuestionCategory && index == other.index && name == other.name;
 
   @override
   int get hashCode => index.hashCode ^ name.hashCode;

@@ -1,56 +1,83 @@
 import 'package:flutter_app_quiz_game/Game/Question/QuestionService/question_service.dart';
+import 'package:flutter_app_quiz_game/Game/Question/question.dart';
+import 'package:flutter_app_quiz_game/Game/Question/question_category.dart';
+import 'package:flutter_app_quiz_game/Game/Question/question_difficulty.dart';
 import 'package:flutter_app_quiz_game/Game/Question/question_info.dart';
 import 'package:flutter_app_quiz_game/Game/Question/question_info_status.dart';
 
 class GameUser {
-  List<QuestionInfo> openQuestionInfos = [];
-  List<QuestionInfo> allQuestionInfos = [];
-  int wonQuestions = 0;
-  int lostQuestions = 0;
+  List<QuestionInfo> _openQuestionInfos = [];
+  List<QuestionInfo> _allQuestionInfos = [];
 
   void setWonQuestion(QuestionInfo gameQuestionInfo) {
     if (gameQuestionInfo.isQuestionOpen()) {
       gameQuestionInfo.status = QuestionInfoStatus.WON;
-      wonQuestions++;
-      openQuestionInfos.remove(gameQuestionInfo);
+      _openQuestionInfos.remove(gameQuestionInfo);
     }
   }
 
   void resetQuestion(QuestionInfo gameQuestionInfo) {
-    if (gameQuestionInfo.status == QuestionInfoStatus.LOST) {
-      lostQuestions = lostQuestions - 1;
-    } else if (gameQuestionInfo.status == QuestionInfoStatus.WON) {
-      wonQuestions = wonQuestions - 1;
-    }
     gameQuestionInfo.status = QuestionInfoStatus.OPEN;
-    if (!openQuestionInfos.contains(gameQuestionInfo)) {
+    if (!_openQuestionInfos.contains(gameQuestionInfo)) {
       gameQuestionInfo.answers.clear();
-      openQuestionInfos.add(gameQuestionInfo);
+      _openQuestionInfos.add(gameQuestionInfo);
     }
   }
 
   void setLostQuestion(QuestionInfo gameQuestionInfo) {
     if (gameQuestionInfo.isQuestionOpen()) {
       gameQuestionInfo.status = QuestionInfoStatus.LOST;
-      lostQuestions++;
-      openQuestionInfos.remove(gameQuestionInfo);
+      _openQuestionInfos.remove(gameQuestionInfo);
     }
   }
 
-  int getFinishedQuestions() {
-    return wonQuestions + lostQuestions;
+  QuestionInfo getRandomQuestion(
+      QuestionDifficulty difficulty, QuestionCategory category) {
+    List<QuestionInfo> res =
+        getOpenQuestionsForConfig(difficulty, category).toList();
+    res.shuffle();
+    return res.first;
   }
 
-  void addAnswerToQuestionInfo(
-      QuestionInfo? gameQuestionInfo, String answerId) {
-    if (gameQuestionInfo != null) {
-      gameQuestionInfo.addAnswer(answerId);
-      setQuestionFinishedStatus(gameQuestionInfo);
-    }
+  QuestionInfo getFirstOpenQuestion(
+      QuestionDifficulty difficulty, QuestionCategory category) {
+    return getOpenQuestionsForConfig(difficulty, category).first;
   }
 
-  void addAnswerToCurrentQuestionInfo(String answerId) {
-    addAnswerToQuestionInfo(getQuestionInfo(), answerId);
+  QuestionInfo getQuestionInfo(Question question) {
+    return getAllQuestionsForConfig(question.difficulty, question.category)
+        .where((element) => element.question.index == question.index)
+        .first;
+  }
+
+  Iterable<QuestionInfo> getOpenQuestionsForConfig(
+      QuestionDifficulty difficulty, QuestionCategory category) {
+    return _allQuestionInfos.where((element) =>
+        element.status == QuestionInfoStatus.OPEN &&
+        element.question.category == category &&
+        element.question.difficulty == difficulty);
+  }
+
+  List<QuestionInfo> getAllQuestionsForConfig(
+      QuestionDifficulty difficulty, QuestionCategory category) {
+    return _allQuestionInfos
+        .where((element) =>
+            element.question.category == category &&
+            element.question.difficulty == difficulty)
+        .toList();
+  }
+
+  int countAllQuestions(List<QuestionInfoStatus> questionInfoStatus) {
+    return _allQuestionInfos
+        .where((e) => questionInfoStatus.contains(e.status))
+        .length;
+  }
+
+  bool addAnswerToQuestionInfo(Question question, String answerId) {
+    QuestionInfo questionInfo = getQuestionInfo(question);
+    questionInfo.addAnswer(answerId);
+    setQuestionFinishedStatus(questionInfo);
+    return questionInfo.status == QuestionInfoStatus.WON;
   }
 
   void setQuestionFinishedStatus(QuestionInfo gameQuestionInfo) {
@@ -69,24 +96,8 @@ class GameUser {
     }
   }
 
-  QuestionInfo? getQuestionInfo() {
-    return openQuestionInfos.isEmpty ? null : openQuestionInfos.first;
-  }
-
-  QuestionInfo getQuestionInfoForIndex(int questionIndex) {
-    return allQuestionInfos.elementAt(questionIndex);
-  }
-
-  bool userHasMultipleQuestions() {
-    return getTotalNrOfQuestions() > 1;
-  }
-
-  int getTotalNrOfQuestions() {
-    return allQuestionInfos.length;
-  }
-
   void addQuestionInfoToList(QuestionInfo gameQuestionInfo) {
-    allQuestionInfos.add(gameQuestionInfo);
-    openQuestionInfos.add(gameQuestionInfo);
+    _allQuestionInfos.add(gameQuestionInfo);
+    _openQuestionInfos.add(gameQuestionInfo);
   }
 }

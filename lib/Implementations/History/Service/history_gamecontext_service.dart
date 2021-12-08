@@ -24,13 +24,13 @@ class HistoryGameContextService {
             myAppContext: myAppContext,
             allQuestionsWithConfig: allQuestionsWithConfig)
         .createGameContextWithHintsAndQuestions(
-            3,
+            11,
             myAppContext.appId.gameConfig
                 .getQuestionParser()
-                .getAllQuestionsForCategoryAndDifficulty(
+                .getAllQuestionsForCategoriesAndDifficulties(
                   allQuestionsWithConfig,
                   campaignLevel.category,
-                  campaignLevel.difficulty,
+                  [campaignLevel.difficulty],
                 ));
     return gameContext;
   }

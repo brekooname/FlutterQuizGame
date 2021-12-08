@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_app_quiz_game/Lib/Button/button_size.dart';
 import 'package:flutter_app_quiz_game/Lib/Image/image_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Localization/localization_service.dart';
 import 'package:flutter_app_quiz_game/Lib/ScreenDimensions/screen_dimensions_service.dart';
@@ -8,6 +9,7 @@ mixin MyPopup {
   late Size defaultSize;
   LocalizationService? _localizationService;
   ImageService imageService = ImageService();
+  ButtonSize buttonSize = ButtonSize();
   ScreenDimensionsService screenDimensions = ScreenDimensionsService();
 
   void initPopup(BuildContext buildContext) {

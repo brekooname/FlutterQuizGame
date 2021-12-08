@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Game/my_app_context.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
+import 'package:flutter_app_quiz_game/Lib/Font/font_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Storage/rate_app_local_storage.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
+
+import 'my_popup.dart';
 
 class RatePopupService {
   //TODO ---VALUE CHANGED--- should be 2
@@ -46,51 +49,51 @@ class RatePopupService {
   }
 }
 
-class RateAppPopup extends StatelessWidget {
+class RateAppPopup extends StatelessWidget with MyPopup {
   RateAppLocalStorage rateAppLocalStorage;
 
   RateAppPopup(this.rateAppLocalStorage);
 
   @override
   Dialog build(BuildContext context) {
-    var width = 360.0;
-    var height = 450.0;
+    initPopup(context);
+
     return Dialog(
       child: Container(
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(50), color: Colors.white),
-        height: height,
-        width: width,
+            borderRadius:
+                BorderRadius.circular(FontConfig.getStandardBorderRadius()),
+            color: Colors.white),
+        height: defaultSize.height,
+        width: defaultSize.width,
         child: Padding(
-            padding: EdgeInsets.all(20),
+            padding: EdgeInsets.all(screenDimensions.w(2)),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
-                Image.asset(
-                  "assets/main/general/rate_app_background_stars.png",
-                  width: width / 2.6,
-                ),
-                SizedBox(height: 20),
-                MyText(
-                    text:
-                        'If you enjoy using our app please give it a rating.'),
-                SizedBox(height: 40),
+                imageService.getMainImage(
+                    imageName: "popup_rate_app_stars_background",
+                    module: "popup",
+                    maxWidth: defaultSize.width / 2.6),
+                SizedBox(height: screenDimensions.h(5)),
+                MyText(text: label.l_thanks_for_your_support),
+                SizedBox(height: screenDimensions.h(5)),
                 MyButton(
-                  text: 'Rate now the app',
+                  text: label.l_rate_now_the_app,
                   backgroundColor: Colors.lightGreenAccent,
                   onClick: () {
                     rateAppLocalStorage.setAlreadyRated();
                   },
                 ),
-                SizedBox(height: 20),
+                SizedBox(height: screenDimensions.h(5)),
                 MyButton(
-                  text: 'Rate later',
+                  text: label.l_rate_later,
                   backgroundColor: Colors.grey.shade300,
                   onClick: () {
                     Navigator.pop(context);
                   },
                 ),
-                SizedBox(height: 10),
+                SizedBox(height: screenDimensions.h(5)),
               ],
             )),
       ),

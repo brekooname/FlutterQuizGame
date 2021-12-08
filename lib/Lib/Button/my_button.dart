@@ -1,23 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Lib/Color/color_util.dart';
-import 'package:flutter_app_quiz_game/Lib/ScreenDimensions/screen_dimensions_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
 import '../../Lib/Button/button_skin_config.dart';
 import '../../Lib/Font/font_config.dart';
+import 'button_size.dart';
 
 class MyButton extends StatefulWidget {
-  ScreenDimensionsService screenDimensions = ScreenDimensionsService();
+  ButtonSize _buttonSize = ButtonSize();
+
   late FontConfig fontConfig;
-
   late Color disabledBackgroundColor;
-
   late ButtonSkinConfig buttonSkinConfig;
-
   late VoidCallback onClick;
+  late Size size;
 
   bool pressed = false;
-  late Size size;
   bool disabled;
 
   String? text;
@@ -36,7 +34,7 @@ class MyButton extends StatefulWidget {
     ButtonSkinConfig? buttonSkinConfig,
     this.customContent,
   }) : super(key: key) {
-    this.size = size??Size(screenDimensions.w(50), screenDimensions.h(12));
+    this.size = size ?? _buttonSize.normalSize;
     this.fontConfig = fontConfig ?? FontConfig();
 
     this.buttonSkinConfig = buttonSkinConfig ??

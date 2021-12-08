@@ -25,13 +25,15 @@ class FontConfig {
         textColor == null ? FontUtil.getFontDefaultColor() : textColor;
     this.borderWidth = borderColor == Colors.transparent
         ? 0
-        : borderWidth == null
-            ? getStandardBorderWidth()
-            : borderWidth;
+        : borderWidth ?? getStandardBorderWidthBasedOnFontSize(this.fontSize);
+  }
+
+  static double getStandardBorderWidthBasedOnFontSize(double fontSize) {
+    return getStandardBorderWidth() * (fontSize / getNormalFontSize());
   }
 
   static double getStandardBorderWidth() {
-    return getDisplayDimensionScale() / 250;
+    return getDisplayDimensionScale() / 400;
   }
 
   static double getStandardBorderRadius() {
@@ -48,6 +50,10 @@ class FontConfig {
 
   static double getBigFontSize() {
     return getNormalFontSize() * 1.5;
+  }
+
+  static double getVeryBigFontSize() {
+    return getNormalFontSize() * 2;
   }
 
   static double getNormalFontSize() {

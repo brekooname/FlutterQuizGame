@@ -1,10 +1,13 @@
 import 'package:flutter/widgets.dart';
-import 'package:flutter_app_quiz_game/Game/my_app_context.dart';
+import 'package:flutter_app_quiz_game/Lib/Assets/assets_service.dart';
 
 class ImageService {
+  late AssetsService _assetsService;
+
   static final ImageService singleton = ImageService.internal();
 
   factory ImageService() {
+    singleton._assetsService = AssetsService();
     return singleton;
   }
 
@@ -16,17 +19,12 @@ class ImageService {
       required String appKey,
       double? maxWidth,
       double? maxHeight}) {
-    String path = getSpecificImagePath(
-        imageName: imageName, appKey: appKey, module: module);
+    String path = _assetsService.getSpecificAssetPath(
+        assetName: imageName,
+        assetExtension: "png",
+        appKey: appKey,
+        module: module);
     return getByImagePath(path, maxWidth, maxHeight);
-  }
-
-  String getSpecificImagePath(
-      {required String imageName, required String appKey, String? module}) {
-    String path = "assets/implementations/$appKey";
-    path = module != null ? path + "/" + module : path;
-    path = path + "/$imageName.png";
-    return path;
   }
 
   Image getMainImage(
@@ -34,10 +32,11 @@ class ImageService {
       String? module,
       double? maxWidth,
       double? maxHeight}) {
-    String path = "assets/main";
-    path = module != null ? path + "/" + module : path;
-    path = path + "/$imageName.png";
-    return getByImagePath(path, maxWidth, maxHeight);
+    return getByImagePath(
+        _assetsService.getMainAssetPath(
+            module: module, assetName: imageName, assetExtension: "png"),
+        maxWidth,
+        maxHeight);
   }
 
   Image getByImagePath(String imagePath, double? maxWidth, double? maxHeight) {

@@ -39,9 +39,9 @@ class QuestionParser {
       QuestionCategory questionCategory) {
     var difficulties =
         allQuestionsWithConfig.entries.map((e) => e.key.difficulty).toList();
-    return getAllQuestionsForCategoryAndDifficulties(
+    return getAllQuestionsForCategoriesAndDifficulties(
       allQuestionsWithConfig,
-      questionCategory,
+      [questionCategory],
       difficulties,
     );
   }
@@ -64,27 +64,20 @@ class QuestionParser {
     return toReturn;
   }
 
-  List<Question> getAllQuestionsForCategoryAndDifficulty(
+  List<Question> getAllQuestionsForCategoriesAndDifficulties(
     Map<CategoryDifficulty, List<Question>> allQuestionsWithConfig,
-    QuestionCategory category,
-    QuestionDifficulty difficulty,
-  ) {
-    return getAllQuestionsForCategoryAndDifficulties(
-        allQuestionsWithConfig, category, [difficulty]);
-  }
-
-  List<Question> getAllQuestionsForCategoryAndDifficulties(
-    Map<CategoryDifficulty, List<Question>> allQuestionsWithConfig,
-    QuestionCategory category,
+    List<QuestionCategory> categories,
     List<QuestionDifficulty> difficultyLevels,
   ) {
     List<Question> questions = [];
-    for (QuestionDifficulty difficultyLevel in difficultyLevels) {
-      List<Question> categQ = allQuestionsWithConfig
-              .get(CategoryDifficulty(category, difficultyLevel)) ??
-          [];
-      for (int i = 0; i < categQ.length; i++) {
-        questions.add(categQ[i]);
+    for (QuestionCategory category in categories) {
+      for (QuestionDifficulty difficultyLevel in difficultyLevels) {
+        List<Question> categQ = allQuestionsWithConfig
+                .get(CategoryDifficulty(category, difficultyLevel)) ??
+            [];
+        for (int i = 0; i < categQ.length; i++) {
+          questions.add(categQ[i]);
+        }
       }
     }
     return questions;

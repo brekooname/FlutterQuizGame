@@ -35,6 +35,7 @@ dependencies:
   scrollable_positioned_list: ^0.2.3
   google_mobile_ads: ^0.13.0
   google_fonts:
+  audioplayers: ^0.20.1
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -97,6 +98,30 @@ flutter:
   assets:
     - assets/main/buttons/
     - assets/main/general/
+    - assets/main/popup/
+    - assets/main/audio/
+    ########################
+    ###### HISTORY ########
+    ########################
     - assets/implementations/history/
-    - assets/implementations/history/questions/images/
-    - assets/implementations/history/questions/en/diff0/
+    - assets/implementations/history/buttons/
+    - assets/implementations/history/questions/images/diff0/cat0/
+    - assets/implementations/history/questions/images/diff0/cat1/
+    - assets/implementations/history/questions/images/diff0/cat2/
+    - assets/implementations/history/questions/images/diff0/cat3/
+    - assets/implementations/history/questions/images/diff0/cat4/
+    - assets/implementations/history/questions/images/diff1/cat0/
+    - assets/implementations/history/questions/images/diff1/cat1/
+    - assets/implementations/history/questions/images/diff1/cat2/
+    - assets/implementations/history/questions/images/diff1/cat3/
+    - assets/implementations/history/questions/images/diff1/cat4/
+    - assets/implementations/history/questions/images/diff2/cat0/
+    - assets/implementations/history/questions/images/diff2/cat1/
+    - assets/implementations/history/questions/images/diff2/cat2/
+    - assets/implementations/history/questions/images/diff2/cat3/
+    - assets/implementations/history/questions/images/diff2/cat4/
+    - assets/implementations/history/questions/images/diff3/cat0/
+    - assets/implementations/history/questions/images/diff3/cat1/
+    - assets/implementations/history/questions/images/diff3/cat2/
+    - assets/implementations/history/questions/images/diff3/cat3/
+    - assets/implementations/history/questions/images/diff3/cat4/

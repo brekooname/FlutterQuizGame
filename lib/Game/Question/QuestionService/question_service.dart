@@ -9,9 +9,7 @@ import '../category_difficulty.dart';
 abstract class QuestionService {
   bool addAnswerToGameInfo(
       GameUser gameUser, Question question, String answer) {
-    bool isAnswerCorrect = isAnswerCorrectInQuestion(question, answer);
-    gameUser.addAnswerToCurrentQuestionInfo(answer);
-    return isAnswerCorrect;
+    return gameUser.addAnswerToQuestionInfo(question, answer);
   }
 
   bool compareAnswerStrings(String answer1, String answer2) {
