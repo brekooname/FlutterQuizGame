@@ -39,7 +39,7 @@ class ImageClickQuestionService extends QuestionService {
         if (button.text != null &&
             (button.text ?? "").toLowerCase() ==
                 questionParser
-                    .getAnswers(question.rawString)
+                    .getCorrectAnswersFromRawString(question.rawString)
                     .first
                     .toLowerCase()) {
           buttonWithCoordinates[button] =
@@ -62,7 +62,7 @@ class ImageClickQuestionService extends QuestionService {
   }
 
   List<String> getAnswers(Question question) {
-    return questionParser.getAnswers(question.rawString);
+    return questionParser.getCorrectAnswersFromRawString(question.rawString);
   }
 
   @override
@@ -79,7 +79,7 @@ class ImageClickQuestionService extends QuestionService {
   List<String> getAllAnswerOptionsForQuestion(
       Map<CategoryDifficulty, List<Question>> allQuestionsWithConfig,
       Question question) {
-    return questionParser.getAllAnswerOptionsForQuestion(
+    return questionParser.getAllPossibleAnswersForQuestion(
         allQuestionsWithConfig, question);
   }
 

@@ -5,8 +5,6 @@ import 'package:flutter_app_quiz_game/Game/Question/Model/category_difficulty.da
 import 'package:flutter_app_quiz_game/Game/Question/Model/question.dart';
 import 'package:flutter_app_quiz_game/Game/Question/question_collector_service.dart';
 
-import '../../../main.dart';
-
 class HistoryGameContextService {
   final QuestionCollectorService _questionCollectorService =
       QuestionCollectorService();
@@ -29,8 +27,8 @@ class HistoryGameContextService {
                 _questionCollectorService
                     .getAllQuestionsForCategoriesAndDifficulties(
                   allQuestionsWithConfig,
-                  campaignLevel.category,
                   [campaignLevel.difficulty],
+                  campaignLevel.category,
                 ));
     return gameContext;
   }

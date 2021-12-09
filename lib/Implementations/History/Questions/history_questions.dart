@@ -21,7 +21,12 @@ class HistoryQuestions extends GameAllQuestionsService {
     Language language =
         Language.values.firstWhere((element) => element.name() == languageCode);
 
-    return getAllQuestionsWithLanguages().get(language);
+    var questions = getAllQuestionsWithLanguages().get(language);
+    if (questions == null) {
+      return getAllQuestionsWithLanguages().get(Language.en);
+    } else {
+      return questions;
+    }
   }
 
   Map<Language, Map<CategoryDifficulty, List<Question>>>

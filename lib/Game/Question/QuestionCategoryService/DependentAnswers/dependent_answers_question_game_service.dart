@@ -1,16 +1,16 @@
-import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/question_parser.dart';
-import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/quiz_game_service.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/category_difficulty.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question.dart';
+import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/DependentAnswers/dependent_answers_question_parser.dart';
+import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/quiz_game_service.dart';
 
 class DependentAnswersQuestionService extends QuizQuestionService {
-  late QuestionParser questionParser;
+  late DependentAnswersQuestionParser questionParser;
 
   static final DependentAnswersQuestionService singleton =
       DependentAnswersQuestionService.internal();
 
   factory DependentAnswersQuestionService(
-      {required QuestionParser questionParser}) {
+      {required DependentAnswersQuestionParser questionParser}) {
     singleton.questionParser = questionParser;
     return singleton;
   }
@@ -27,14 +27,14 @@ class DependentAnswersQuestionService extends QuizQuestionService {
 
   @override
   List<String> getAnswers(Question question) {
-    return questionParser.getAnswers(question.rawString);
+    return questionParser.getCorrectAnswersFromRawString(question.rawString);
   }
 
   @override
   List<String> getAllAnswerOptionsForQuestion(
       Map<CategoryDifficulty, List<Question>> allQuestionsWithConfig,
       Question question) {
-    return questionParser.getAllAnswerOptionsForQuestion(
-        allQuestionsWithConfig, question);
+    return questionParser.getAllPossibleAnswersForQuestion(
+        allQuestionsWithConfig, question, false, 3);
   }
 }

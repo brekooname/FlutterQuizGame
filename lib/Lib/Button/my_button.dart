@@ -84,7 +84,7 @@ class MyButtonState extends State<MyButton> {
     if (widget.contentLocked) {
       buttonContent = buildContentLocked(buttonContent);
       widget.onClick = () {
-        InAppPurchasesPopupService(buildContext: context).showPopup("abc");
+        InAppPurchasesPopupService(buildContext: context).showPopup();
       };
     }
 

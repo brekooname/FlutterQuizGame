@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
+import 'package:flutter_app_quiz_game/Lib/Font/font_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Storage/in_app_purchases_local_storage.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
@@ -22,7 +23,7 @@ class InAppPurchasesPopupService {
 
   InAppPurchasesPopupService.internal();
 
-  void showPopup(String inAppPurchaseDescription) {
+  void showPopup({String? inAppPurchaseDescription}) {
     Future.delayed(
         Duration.zero,
         () => showDialog(
@@ -36,7 +37,7 @@ class InAppPurchasesPopupService {
 
 class InAppPurchasesPopup extends StatelessWidget with MyPopup {
   InAppPurchasesPreferencesLocalStorage _inAppPurchasesPreferencesLocalStorage;
-  String _inAppPurchaseDescription;
+  String? _inAppPurchaseDescription;
 
   InAppPurchasesPopup(this._inAppPurchasesPreferencesLocalStorage,
       this._inAppPurchaseDescription);
@@ -53,7 +54,8 @@ class InAppPurchasesPopup extends StatelessWidget with MyPopup {
             module: "popup",
             maxWidth: defaultBackgroundImageWidth),
         SizedBox(height: screenDimensions.h(5)),
-        MyText(text: _inAppPurchaseDescription),
+        MyText(fontConfig: FontConfig(fontSize: FontConfig.getBigFontSize()),
+            text: _inAppPurchaseDescription ?? label.l_extra_content_ad_free),
         SizedBox(height: screenDimensions.h(5)),
         MyButton(
           text: label.l_buy,

@@ -28,7 +28,7 @@ class DependentAnswersCategoryQuestionService extends QuestionCategoryService {
   }
 
   @override
-  QuestionParser getQuestionParser() {
+  DependentAnswersQuestionParser getQuestionParser() {
     return DependentAnswersQuestionParser();
   }
 }
