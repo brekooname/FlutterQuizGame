@@ -1,14 +1,14 @@
 import 'dart:collection';
 
-import 'package:flutter_app_quiz_game/Game/Question/category_difficulty.dart';
-import 'package:flutter_app_quiz_game/Game/Question/category_difficulty_service.dart';
-import 'package:flutter_app_quiz_game/Game/Question/question.dart';
+import 'package:flutter_app_quiz_game/Game/Question/Model/category_difficulty.dart';
+import 'package:flutter_app_quiz_game/Game/Question/game_all_questions_service.dart';
+import 'package:flutter_app_quiz_game/Game/Question/Model/question.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Constants/history_question_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Constants/language.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/enum_extension.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/map_extension.dart';
 
-class HistoryQuestions extends CategoryDifficultyService {
+class HistoryQuestions extends GameAllQuestionsService {
   static final HistoryQuestions singleton = HistoryQuestions.internal();
 
   factory HistoryQuestions() {
@@ -97,16 +97,16 @@ class HistoryQuestions extends CategoryDifficultyService {
         questionConfig.cat2, //
         questionConfig.diff0, //
         [
-          "Battle of Waterloo:Belgium",
-          "Battle of Gettysburg:USA",
-          "Siege of Stalingrad:Russia",
-          "Invasion of Normandy:France",
-          "The Battle of Okinawa:Japan",
-          "The Battle of Vienna:Austria",
-          "Fall of the Berlin Wall:Germany",
-          "Treaty of Versailles:France",
-          "Assassination of Archduke Franz Ferdinand:Bosnia and Herzegovina",
-          "Chernobyl disaster:Ukraine"
+          "Battle of Waterloo:Belgium:2,3,5",
+          "Battle of Gettysburg:USA:5,6,7",
+          "Siege of Stalingrad:Russia:6,8,9",
+          "Invasion of Normandy:France:5,6,8",
+          "The Battle of Okinawa:Japan:1,8,9",
+          "The Battle of Vienna:Austria:6,0,3",
+          "Fall of the Berlin Wall:Germany:0,5,3",
+          "Treaty of Versailles:France:1,0,5",
+          "Assassination of Archduke Franz Ferdinand:Bosnia and Herzegovina:1,5,6",
+          "Chernobyl disaster:Ukraine:1,2,8"
         ]);
     addQuestions(
         result, //
@@ -132,15 +132,15 @@ class HistoryQuestions extends CategoryDifficultyService {
         questionConfig.cat4, //
         questionConfig.diff0, //
         [
-          "Napoleon",
-          "William Shakespeare",
-          "Abraham Lincoln",
-          "George Washington",
-          "Thomas Jefferson",
-          "Charles Darwin",
-          "Martin Luther",
-          "Albert Einstein",
-          "Isaac Newton"
+          ":Napoleon Bonaparte:",
+          ":William Shakespeare:",
+          ":Abraham Lincoln:",
+          ":George Washington:",
+          ":Thomas Jefferson:",
+          ":Charles Darwin:",
+          ":Martin Luther:",
+          ":Albert Einstein:",
+          ":Isaac Newton:"
         ]);
     addQuestions(
         result, //
@@ -179,14 +179,14 @@ class HistoryQuestions extends CategoryDifficultyService {
         questionConfig.cat2, //
         questionConfig.diff1, //
         [
-          "Siege of Orleans:France",
-          "Fall of Constantinople:Turkey",
-          "Battle of Hastings:England",
-          "Machu Picchu:Peru",
-          "Bagan:Myanmar",
-          "Angkor:Cambodia",
-          "Taj Mahal:India",
-          "The Great Wall:China"
+          "Siege of Orleans:France:1,2,6",
+          "Fall of Constantinople:Turkey:0,2,7",
+          "Battle of Hastings:England:0,1,5",
+          "Machu Picchu:Peru:4,5,6",
+          "Bagan:Myanmar:3,5,7",
+          "Angkor:Cambodia:3,4,6",
+          "Taj Mahal:India:4,5,7",
+          "The Great Wall:China:3,5,6"
         ]);
     addQuestions(
         result, //
@@ -208,14 +208,14 @@ class HistoryQuestions extends CategoryDifficultyService {
         questionConfig.cat4, //
         questionConfig.diff1, //
         [
-          "Christopher Columbus",
-          "Charlemagne",
-          "Leonardo da Vinci",
-          "Genghis Khan",
-          "Galileo Galilei",
-          "Ferdinand Magellan",
-          "Nicolaus Copernicus",
-          "Michelangelo"
+          ":Christopher Columbus:",
+          ":Charlemagne:",
+          ":Leonardo da Vinci:",
+          ":Genghis Khan:",
+          ":Galileo Galilei:",
+          ":Ferdinand Magellan:",
+          ":Nicolaus Copernicus:",
+          ":Michelangelo:"
         ]);
     addQuestions(
         result, //
@@ -253,13 +253,13 @@ class HistoryQuestions extends CategoryDifficultyService {
         questionConfig.cat2, //
         questionConfig.diff2, //
         [
-          "Battle of Marathon:Greece",
-          "Battle of Zama:Tunisia",
-          "Battle of Gaugamela:Iraq",
-          "Pyramids of Giza:Egypt",
-          "Petra:Jordan",
-          "Pompeii:Italy",
-          "Library of Alexandria:Egypt"
+          "Battle of Marathon:Greece:",
+          "Battle of Zama:Tunisia:",
+          "Battle of Gaugamela:Iraq:",
+          "Pyramids of Giza:Egypt:",
+          "Petra:Jordan:",
+          "Pompeii:Italy:",
+          "Library of Alexandria:Egypt:"
         ]);
     addQuestions(
         result, //
@@ -280,12 +280,12 @@ class HistoryQuestions extends CategoryDifficultyService {
         questionConfig.cat4, //
         questionConfig.diff2, //
         [
-          "Alexander the Great",
-          "Julius Caesar",
-          "Plato",
-          "Aristotle",
-          "Confucius",
-          "Socrates"
+          ":Alexander the Great:",
+          ":Julius Caesar:",
+          ":Plato:",
+          ":Aristotle:",
+          ":Confucius:",
+          ":Socrates:"
         ]);
     addQuestions(
         result, //
@@ -305,10 +305,10 @@ class HistoryQuestions extends CategoryDifficultyService {
         questionConfig.cat2, //
         questionConfig.diff3, //
         [
-          "Venus of Willendorf:Austria",
-          "Lascaux cave:France",
-          "Sumer:Iraq",
-          "Stonehenge:England"
+          "Venus of Willendorf:Austria:",
+          "Lascaux cave:France:",
+          "Sumer:Iraq:",
+          "Stonehenge:England:"
         ]);
     addQuestions(
         result, //

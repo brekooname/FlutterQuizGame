@@ -1,14 +1,14 @@
 import 'dart:collection';
 
-import 'package:flutter_app_quiz_game/Game/Question/question.dart';
-import 'package:flutter_app_quiz_game/Game/Question/question_category.dart';
-import 'package:flutter_app_quiz_game/Game/Question/question_difficulty.dart';
+import 'package:flutter_app_quiz_game/Game/Question/Model/question.dart';
+import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
+import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
 import 'package:flutter_app_quiz_game/Lib/Constants/language.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/map_extension.dart';
 
-import 'category_difficulty.dart';
+import 'Model/category_difficulty.dart';
 
-abstract class CategoryDifficultyService {
+abstract class GameAllQuestionsService {
   Map<CategoryDifficulty, List<Question>> getAllQuestions(String languageCode);
 
   void addQuestions(

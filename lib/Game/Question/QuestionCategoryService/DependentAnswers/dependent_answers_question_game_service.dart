@@ -1,7 +1,7 @@
-import 'package:flutter_app_quiz_game/Game/Question/QuestionService/question_parser.dart';
-import 'package:flutter_app_quiz_game/Game/Question/QuestionService/quiz_game_service.dart';
-import 'package:flutter_app_quiz_game/Game/Question/category_difficulty.dart';
-import 'package:flutter_app_quiz_game/Game/Question/question.dart';
+import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/question_parser.dart';
+import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/quiz_game_service.dart';
+import 'package:flutter_app_quiz_game/Game/Question/Model/category_difficulty.dart';
+import 'package:flutter_app_quiz_game/Game/Question/Model/question.dart';
 
 class DependentAnswersQuestionService extends QuizQuestionService {
   late QuestionParser questionParser;

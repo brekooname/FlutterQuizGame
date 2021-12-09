@@ -1,38 +1,22 @@
-import 'package:flutter_app_quiz_game/Game/Question/question.dart';
-import 'package:flutter_app_quiz_game/Game/Question/question_category.dart';
+import 'dart:collection';
+
+import 'package:flutter_app_quiz_game/Game/Question/Model/question.dart';
+import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
+import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
+import 'package:flutter_app_quiz_game/Lib/Constants/language.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/map_extension.dart';
-import 'package:flutter_app_quiz_game/Lib/Extensions/string_extension.dart';
 
-import '../category_difficulty.dart';
-import '../question_difficulty.dart';
+import 'Model/category_difficulty.dart';
 
-class QuestionParser {
-  List<String> getAnswers(String questionString) {
-    return [questionString.split(":")[2]];
+class QuestionCollectorService {
+  static final QuestionCollectorService singleton =
+      QuestionCollectorService.internal();
+
+  factory QuestionCollectorService() {
+    return singleton;
   }
 
-  List<String> getAllAnswerOptionsForQuestion(
-      Map<CategoryDifficulty, List<Question>> allQuestionsWithConfig,
-      Question question) {
-    List<String> answerOptions = getAnswers(question.rawString);
-    List<Question> allQuestionsForCategory =
-        getAllQuestionsForCategory(allQuestionsWithConfig, question.category);
-    var answerIds = getAnswerIds(question.rawString, 3);
-    for (String fileId in answerIds) {
-      var questionForFileId =
-          getQuestionForFileId(fileId, allQuestionsForCategory);
-      if (questionForFileId == null) {
-        continue;
-      }
-      answerOptions.addAll(getAnswers(questionForFileId.rawString));
-    }
-    answerOptions.shuffle();
-    List<String> result = [];
-    for (String answer in answerOptions) {
-      result.add(answer.capitalize());
-    }
-    return result;
-  }
+  QuestionCollectorService.internal();
 
   List<Question> getAllQuestionsForCategory(
       Map<CategoryDifficulty, List<Question>> allQuestionsWithConfig,
@@ -46,7 +30,7 @@ class QuestionParser {
     );
   }
 
-  Question? getQuestionForFileId(String fileId, List<Question> allQuestions) {
+  Question? getQuestionForIndex(String fileId, List<Question> allQuestions) {
     for (Question question in allQuestions) {
       if (question.rawString.split(":")[0] == fileId) {
         return question;
@@ -81,9 +65,5 @@ class QuestionParser {
       }
     }
     return questions;
-  }
-
-  bool isQuestionValid(Question question) {
-    return true;
   }
 }

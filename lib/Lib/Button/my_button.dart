@@ -51,7 +51,11 @@ class MyButton extends StatefulWidget {
         disabledBackgroundColor ?? Colors.grey.shade400;
 
     if (this.customContent == null && this.text != null) {
-      this.customContent = MyText(text: this.text!);
+      this.customContent = MyText(
+        text: this.text!,
+        maxLines: 2,
+        width: this.size.width / 1.1,
+      );
     } else if (this.buttonSkinConfig.image != null) {
       this.customContent = createImageButtonContent();
     }
@@ -188,12 +192,11 @@ class MyButtonState extends State<MyButton> {
 
   BoxShadow createImageButtonShadow() {
     return BoxShadow(
-      color: widget.pressed
-          ? Colors.grey.withOpacity(0.3)
-          : Colors.grey.withOpacity(0.1),
-      spreadRadius: 0.2,
-      blurRadius: FontConfig.getStandardShadowOffset() / 2// changes position of shadow
-    );
+        color: widget.pressed
+            ? Colors.grey.withOpacity(0.6)
+            : Colors.grey.withOpacity(0.2),
+        spreadRadius: FontConfig.getStandardShadowRadius(),
+        blurRadius: FontConfig.getStandardShadowRadius());
   }
 
   BoxShadow createButtonShadow() {

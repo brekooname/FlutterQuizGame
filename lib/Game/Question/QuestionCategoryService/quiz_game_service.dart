@@ -1,4 +1,4 @@
-import 'package:flutter_app_quiz_game/Game/Question/question.dart';
+import 'package:flutter_app_quiz_game/Game/Question/Model/question.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/list_extension.dart';
 
 import 'question_service.dart';

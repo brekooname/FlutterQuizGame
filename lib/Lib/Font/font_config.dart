@@ -44,6 +44,10 @@ class FontConfig {
     return getDisplayDimensionScale() / 260;
   }
 
+  static double getStandardShadowRadius() {
+    return getDisplayDimensionScale() / 260;
+  }
+
   static double getCustomFontSize(double val) {
     return getNormalFontSize() * val;
   }

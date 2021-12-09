@@ -1,6 +1,6 @@
-import 'package:flutter_app_quiz_game/Game/Question/question_category.dart';
-import 'package:flutter_app_quiz_game/Game/Question/question_difficulty.dart';
-import 'package:flutter_app_quiz_game/Game/Question/category_difficulty.dart';
+import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
+import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
+import 'package:flutter_app_quiz_game/Game/Question/Model/category_difficulty.dart';
 
 class QuestionConfig {
   Set<QuestionDifficulty> difficulties;

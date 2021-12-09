@@ -2,8 +2,8 @@ import 'dart:collection';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Game/Game/campaign_level.dart';
-import 'package:flutter_app_quiz_game/Game/Question/category_difficulty.dart';
-import 'package:flutter_app_quiz_game/Game/Question/question.dart';
+import 'package:flutter_app_quiz_game/Game/Question/Model/category_difficulty.dart';
+import 'package:flutter_app_quiz_game/Game/Question/Model/question.dart';
 
 import 'package:flutter_app_quiz_game/Implementations/History/Constants/history_campaign_level.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Constants/history_question_config.dart';
@@ -159,8 +159,7 @@ class HistoryMainMenuScreenState extends State<HistoryMainMenuScreen>
 
   @override
   void dispose() {
-    bannerAd?.dispose();
-    interstitialAd?.dispose();
+    disposeScreen();
     super.dispose();
   }
 }

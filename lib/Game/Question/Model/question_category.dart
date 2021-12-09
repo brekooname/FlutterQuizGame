@@ -1,4 +1,4 @@
-import 'CategoryService/question_category_service.dart';
+import '../QuestionCategoryService/question_category_service.dart';
 
 class QuestionCategory {
   int index;

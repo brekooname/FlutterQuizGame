@@ -1,13 +1,11 @@
 import 'dart:collection';
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Game/Game/game_context.dart';
-import 'package:flutter_app_quiz_game/Game/Question/question_category.dart';
-import 'package:flutter_app_quiz_game/Game/Question/question_difficulty.dart';
-import 'package:flutter_app_quiz_game/Game/Question/question_info.dart';
-import 'package:flutter_app_quiz_game/Game/Question/question_info_status.dart';
-
+import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
+import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
+import 'package:flutter_app_quiz_game/Game/Question/Model/question_info.dart';
+import 'package:flutter_app_quiz_game/Game/Question/Model/question_info_status.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Components/history_game_level_header.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Constants/history_campaign_level.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Constants/history_question_config.dart';
@@ -31,7 +29,7 @@ class HistoryGameTimelineScreen extends StatefulWidget with GameScreen {
   late HistoryLocalStorage historyLocalStorage;
   late QuestionInfo currentQuestion;
 
-  int? mostPressedCurrentQuestion;
+  int? mostRecentPressedCurrentQuestion;
   List<int> shownAnswerImages = [];
   bool correctAnswerPressed = false;
 
@@ -52,11 +50,6 @@ class HistoryGameTimelineScreen extends StatefulWidget with GameScreen {
   State<HistoryGameTimelineScreen> createState() =>
       HistoryGameTimelineScreenState();
 
-  int getRandomNextQuestion(
-      int firstOpenQuestionIndex, int questionNrInOrderLength) {
-    int nr = Random().nextInt(5) + firstOpenQuestionIndex;
-    return min(nr, questionNrInOrderLength - 1);
-  }
 }
 
 class HistoryQuestion {
@@ -178,7 +171,7 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
                 widget.correctAnswerPressed = false;
               }
             });
-            widget.mostPressedCurrentQuestion = questionIndex;
+            widget.mostRecentPressedCurrentQuestion = questionIndex;
             widget.currentQuestion = widget.gameContext.gameUser
                 .getRandomQuestion(widget.difficulty, widget.category);
           },
@@ -317,8 +310,8 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
 
   Widget createOptionItemCat0(MyButton answerBtn, Size answerBtnSize,
       bool? correctAnswer, Image questionImg, int index) {
-    Widget answerPart = (widget.mostPressedCurrentQuestion != null &&
-            widget.mostPressedCurrentQuestion == index)
+    Widget answerPart = (widget.mostRecentPressedCurrentQuestion != null &&
+            widget.mostRecentPressedCurrentQuestion == index)
         ? AnimateZoomInZoomOut(
             zoomInZoomOutOnce: true,
             duration: const Duration(milliseconds: 500),
@@ -373,8 +366,8 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
 
   Widget createOptionItemCat1(MyButton answerBtn, Size answerBtnSize,
       bool? correctAnswer, Image questionImg, int index) {
-    Widget answerPart = (widget.mostPressedCurrentQuestion != null &&
-            widget.mostPressedCurrentQuestion == index)
+    Widget answerPart = (widget.mostRecentPressedCurrentQuestion != null &&
+            widget.mostRecentPressedCurrentQuestion == index)
         ? AnimateZoomInZoomOut(
             zoomInZoomOutOnce: true,
             duration: const Duration(milliseconds: 500),
@@ -427,8 +420,7 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
 
   @override
   void dispose() {
-    bannerAd?.dispose();
-    interstitialAd?.dispose();
+    disposeScreen();
     super.dispose();
   }
 }

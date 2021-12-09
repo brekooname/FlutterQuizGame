@@ -1,9 +1,9 @@
-import 'package:flutter_app_quiz_game/Game/Question/QuestionService/question_service.dart';
-import 'package:flutter_app_quiz_game/Game/Question/question.dart';
-import 'package:flutter_app_quiz_game/Game/Question/question_category.dart';
-import 'package:flutter_app_quiz_game/Game/Question/question_difficulty.dart';
-import 'package:flutter_app_quiz_game/Game/Question/question_info.dart';
-import 'package:flutter_app_quiz_game/Game/Question/question_info_status.dart';
+import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/question_service.dart';
+import 'package:flutter_app_quiz_game/Game/Question/Model/question.dart';
+import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
+import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
+import 'package:flutter_app_quiz_game/Game/Question/Model/question_info.dart';
+import 'package:flutter_app_quiz_game/Game/Question/Model/question_info_status.dart';
 
 class GameUser {
   List<QuestionInfo> _openQuestionInfos = [];

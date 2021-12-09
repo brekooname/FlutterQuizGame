@@ -1,6 +1,6 @@
-import 'package:flutter_app_quiz_game/Game/Question/QuestionService/question_service.dart';
-import 'package:flutter_app_quiz_game/Game/Question/question_category.dart';
-import 'package:flutter_app_quiz_game/Game/Question/question_difficulty.dart';
+import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/question_service.dart';
+import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
+import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
 
 class Question {
   int index;

@@ -1,15 +1,18 @@
 import 'dart:collection';
 
-import 'package:flutter_app_quiz_game/Game/Question/QuestionService/question_parser.dart';
-import 'package:flutter_app_quiz_game/Game/Question/QuestionService/question_service.dart';
+import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/question_parser.dart';
+import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/question_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
 
-import '../category_difficulty.dart';
-import '../question.dart';
-import '../question_category.dart';
-import '../question_difficulty.dart';
+import '../../Model/category_difficulty.dart';
+import '../../Model/question.dart';
+import '../../Model/question_category.dart';
+import '../../Model/question_difficulty.dart';
+import '../../question_collector_service.dart';
 
 class ImageClickQuestionService extends QuestionService {
+  final QuestionCollectorService _questionCollectorService =
+      QuestionCollectorService();
   late QuestionParser questionParser;
 
   static final ImageClickQuestionService singleton =
@@ -27,8 +30,8 @@ class ImageClickQuestionService extends QuestionService {
       List<MyButton> allAnswerOptionsButtons,
       QuestionDifficulty questionDifficultyLevel,
       QuestionCategory questionCategory) {
-    List<Question> allQuestions = questionParser.getAllQuestionsForCategory(
-        allQuestionsWithConfig, questionCategory);
+    List<Question> allQuestions = _questionCollectorService
+        .getAllQuestionsForCategory(allQuestionsWithConfig, questionCategory);
     Map<MyButton, ImageClickInfo> buttonWithCoordinates =
         HashMap<MyButton, ImageClickInfo>();
     for (Question question in allQuestions) {

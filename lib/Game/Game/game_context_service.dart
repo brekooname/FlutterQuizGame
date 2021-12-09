@@ -1,10 +1,10 @@
 import 'package:flutter_app_quiz_game/Game/Game/game_context.dart';
-import 'package:flutter_app_quiz_game/Game/Question/category_difficulty.dart';
-import 'package:flutter_app_quiz_game/Game/Question/question.dart';
-import 'package:flutter_app_quiz_game/Game/Question/question_category.dart';
-import 'package:flutter_app_quiz_game/Game/Question/question_config.dart';
-import 'package:flutter_app_quiz_game/Game/Question/question_difficulty.dart';
-import 'package:flutter_app_quiz_game/Game/Question/question_info.dart';
+import 'package:flutter_app_quiz_game/Game/Question/Model/category_difficulty.dart';
+import 'package:flutter_app_quiz_game/Game/Question/Model/question.dart';
+import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
+import 'package:flutter_app_quiz_game/Game/Question/Model/question_config.dart';
+import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
+import 'package:flutter_app_quiz_game/Game/Question/Model/question_info.dart';
 import 'package:flutter_app_quiz_game/Game/Question/random_question_creator_service.dart';
 
 import 'game_context.dart';

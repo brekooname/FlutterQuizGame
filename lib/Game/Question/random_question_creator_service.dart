@@ -1,14 +1,14 @@
 import 'dart:math';
 
-import 'package:flutter_app_quiz_game/Game/Question/category_difficulty.dart';
-import 'package:flutter_app_quiz_game/Game/Question/question.dart';
-import 'package:flutter_app_quiz_game/Game/Question/question_category.dart';
-import 'package:flutter_app_quiz_game/Game/Question/question_config.dart';
+import 'package:flutter_app_quiz_game/Game/Question/Model/category_difficulty.dart';
+import 'package:flutter_app_quiz_game/Game/Question/Model/question.dart';
+import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
+import 'package:flutter_app_quiz_game/Game/Question/Model/question_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/map_extension.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/string_extension.dart';
 
 import '../../main.dart';
-import 'QuestionService/question_parser.dart';
+import 'QuestionCategoryService/question_parser.dart';
 
 class RandomQuestionCreatorService {
   static final RandomQuestionCreatorService singleton =
@@ -53,8 +53,9 @@ class RandomQuestionCreatorService {
         }
       }
 
-      QuestionParser questionParser =
-          MyApp.appId.gameConfig.getQuestionParser();
+      QuestionParser questionParser = randomCategoryAndDifficulty
+          .category.questionCategoryService
+          .getQuestionParser();
       int repeat2 = 0;
       Question randomQuestion = createRandomQuestion(
           randomCategoryAndDifficulty,

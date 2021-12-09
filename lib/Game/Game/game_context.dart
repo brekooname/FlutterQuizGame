@@ -1,4 +1,4 @@
-import 'package:flutter_app_quiz_game/Game/Question/question_config.dart';
+import 'package:flutter_app_quiz_game/Game/Question/Model/question_config.dart';
 
 import 'game_user.dart';
 

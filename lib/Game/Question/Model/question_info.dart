@@ -1,8 +1,8 @@
 import 'dart:collection';
 import 'dart:core';
 
-import 'package:flutter_app_quiz_game/Game/Question/question.dart';
-import 'package:flutter_app_quiz_game/Game/Question/question_info_status.dart';
+import 'package:flutter_app_quiz_game/Game/Question/Model/question.dart';
+import 'package:flutter_app_quiz_game/Game/Question/Model/question_info_status.dart';
 
 class QuestionInfo {
   late Question question;

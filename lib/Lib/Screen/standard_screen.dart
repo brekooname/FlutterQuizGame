@@ -32,6 +32,11 @@ mixin StandardScreen {
     }
   }
 
+  void disposeScreen(){
+    bannerAd?.dispose();
+    interstitialAd?.dispose();
+  }
+
   LocalizationService get localizationService {
     assert(_localizationService != null);
     return _localizationService!;

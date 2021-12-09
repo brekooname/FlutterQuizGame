@@ -1,7 +1,8 @@
 import 'package:flutter_app_quiz_game/Game/GameType/game_question_config.dart';
-import 'package:flutter_app_quiz_game/Game/Question/CategoryService/unqiue_answers_question_category_service.dart';
-import 'package:flutter_app_quiz_game/Game/Question/question_category.dart';
-import 'package:flutter_app_quiz_game/Game/Question/question_difficulty.dart';
+import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/DependentAnswers/dependent_answers_question_category_service.dart';
+import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/UniqueAnswers/unqiue_answers_question_category_service.dart';
+import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
+import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
 
 class HistoryGameQuestionConfig extends GameQuestionConfig {
   late QuestionCategory cat0;
@@ -29,13 +30,13 @@ class HistoryGameQuestionConfig extends GameQuestionConfig {
         questionCategoryService: UniqueAnswersCategoryQuestionService());
     singleton.cat2 = QuestionCategory(
         index: 2,
-        questionCategoryService: UniqueAnswersCategoryQuestionService());
+        questionCategoryService: DependentAnswersCategoryQuestionService());
     singleton.cat3 = QuestionCategory(
         index: 3,
         questionCategoryService: UniqueAnswersCategoryQuestionService());
     singleton.cat4 = QuestionCategory(
         index: 4,
-        questionCategoryService: UniqueAnswersCategoryQuestionService());
+        questionCategoryService: DependentAnswersCategoryQuestionService());
     //
     //DIFFICULTIES
     singleton.diff0 = QuestionDifficulty(

@@ -41,7 +41,7 @@ class HistoryGameLevelHeader extends StatelessWidget {
 
     return Container(
         child: Column(children: [
-      createGreenHeader(context),
+      createScoreHeader(context),
       SizedBox(height: screenDimensions.h(1)),
       Container(
         height: screenDimensions.h(11),
@@ -57,7 +57,7 @@ class HistoryGameLevelHeader extends StatelessWidget {
     ]));
   }
 
-  Widget createGreenHeader(BuildContext context) {
+  Widget createScoreHeader(BuildContext context) {
     var backBtn = MyBackButton(context: context);
     var hintBtn = HintButton(
         onClick: this.hintButtonOnClick,
@@ -80,7 +80,7 @@ class HistoryGameLevelHeader extends StatelessWidget {
     return Container(
         height: screenDimensions.h(9),
         decoration: BoxDecoration(
-          color: Colors.lightGreenAccent.withAlpha(150),
+          color: Colors.lightBlueAccent.withOpacity(0.3),
         ),
         child: Padding(
             padding: EdgeInsets.all(screenDimensions.w(1)),

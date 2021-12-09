@@ -1,8 +1,9 @@
 import 'package:flutter_app_quiz_game/Game/Constants/hint_button_type.dart';
-import 'package:flutter_app_quiz_game/Game/Question/CategoryService/question_category_service.dart';
-import 'package:flutter_app_quiz_game/Game/Question/QuestionService/question_parser.dart';
-import 'package:flutter_app_quiz_game/Game/Question/QuestionService/question_service.dart';
-import 'package:flutter_app_quiz_game/Game/Question/QuestionService/unique_answers_question_service.dart';
+import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/DependentAnswers/dependent_answers_question_parser.dart';
+import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/question_category_service.dart';
+import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/question_parser.dart';
+import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/question_service.dart';
+import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/UniqueAnswers/unique_answers_question_service.dart';
 
 class UniqueAnswersCategoryQuestionService extends QuestionCategoryService {
   static final UniqueAnswersCategoryQuestionService singleton =
@@ -26,6 +27,6 @@ class UniqueAnswersCategoryQuestionService extends QuestionCategoryService {
 
   @override
   QuestionParser getQuestionParser() {
-    return QuestionParser();
+    return DependentAnswersQuestionParser();
   }
 }
