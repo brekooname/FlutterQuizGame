@@ -1,5 +1,5 @@
 import 'package:flutter_app_quiz_game/Game/Game/campaign_level.dart';
-import 'package:flutter_app_quiz_game/Game/my_app_context.dart';
+
 import 'package:flutter_app_quiz_game/Implementations/History/Constants/history_question_config.dart';
 
 class ExampleCampaignLevel {
@@ -32,7 +32,7 @@ class ExampleCampaignLevel {
 
   static final ExampleCampaignLevel singleton = ExampleCampaignLevel.internal();
 
-  factory ExampleCampaignLevel({required MyAppContext myAppContext}) {
+  factory ExampleCampaignLevel() {
     var questionConfig = HistoryGameQuestionConfig();
     //DIFF_0
     singleton.level_0_0 = CampaignLevel(

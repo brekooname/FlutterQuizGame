@@ -7,17 +7,14 @@ import 'package:flutter_app_quiz_game/Game/Question/question_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/map_extension.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/string_extension.dart';
 
-import '../my_app_context.dart';
+import '../../main.dart';
 import 'QuestionService/question_parser.dart';
 
 class RandomQuestionCreatorService {
-  late MyAppContext myAppContext;
-
   static final RandomQuestionCreatorService singleton =
       RandomQuestionCreatorService.internal();
 
-  factory RandomQuestionCreatorService({required MyAppContext myAppContext}) {
-    singleton.myAppContext = myAppContext;
+  factory RandomQuestionCreatorService() {
     return singleton;
   }
 
@@ -57,7 +54,7 @@ class RandomQuestionCreatorService {
       }
 
       QuestionParser questionParser =
-          myAppContext.appId.gameConfig.getQuestionParser();
+          MyApp.appId.gameConfig.getQuestionParser();
       int repeat2 = 0;
       Question randomQuestion = createRandomQuestion(
           randomCategoryAndDifficulty,

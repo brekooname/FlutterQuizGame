@@ -56,7 +56,7 @@ class HintButton extends StatelessWidget {
                         }));
               }
             : onClick,
-        buttonSkinConfig: ButtonSkinConfig(icon: icon),
+        buttonSkinConfig: ButtonSkinConfig(image: icon),
         fontConfig: FontConfig());
 
     var fittedBtn = SizedBox(

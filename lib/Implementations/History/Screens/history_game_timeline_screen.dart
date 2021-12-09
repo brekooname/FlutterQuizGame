@@ -7,7 +7,7 @@ import 'package:flutter_app_quiz_game/Game/Question/question_category.dart';
 import 'package:flutter_app_quiz_game/Game/Question/question_difficulty.dart';
 import 'package:flutter_app_quiz_game/Game/Question/question_info.dart';
 import 'package:flutter_app_quiz_game/Game/Question/question_info_status.dart';
-import 'package:flutter_app_quiz_game/Game/my_app_context.dart';
+
 import 'package:flutter_app_quiz_game/Implementations/History/Components/history_game_level_header.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Constants/history_campaign_level.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Constants/history_question_config.dart';
@@ -20,6 +20,7 @@ import 'package:flutter_app_quiz_game/Lib/Popup/game_finished_popup.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/game_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/standard_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
+import 'package:flutter_app_quiz_game/main.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 import '../../../Lib/Button/button_skin_config.dart';
@@ -27,7 +28,6 @@ import '../../../Lib/Font/font_config.dart';
 
 class HistoryGameTimelineScreen extends StatefulWidget with GameScreen {
   GameContext gameContext;
-  MyAppContext myAppContext;
   late HistoryLocalStorage historyLocalStorage;
   late QuestionInfo currentQuestion;
 
@@ -39,11 +39,10 @@ class HistoryGameTimelineScreen extends StatefulWidget with GameScreen {
       {Key? key,
       required QuestionDifficulty difficulty,
       required QuestionCategory category,
-      required this.gameContext,
-      required this.myAppContext})
+      required this.gameContext})
       : super(key: key) {
     initScreen(HistoryCampaignLevel(), difficulty, category);
-    historyLocalStorage = HistoryLocalStorage(myAppContext: myAppContext);
+    historyLocalStorage = HistoryLocalStorage();
 
     currentQuestion =
         gameContext.gameUser.getRandomQuestion(difficulty, category);
@@ -79,18 +78,15 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
 
   @override
   void initState() {
-    var appKey = widget.myAppContext.appId.appKey;
+    var appKey = MyApp.appId.appKey;
     timelineOptUnknown = imageService.getSpecificImage(
-        appKey: appKey,
         maxWidth: getImageWidth(),
         imageName: "timeline_opt_unknown");
     histAnswWrong = imageService.getSpecificImage(
         maxWidth: getImageWidth(),
-        appKey: appKey,
         imageName: "hist_answ_wrong");
     arrowRight = imageService.getSpecificImage(
         imageName: "arrow_right",
-        appKey: appKey,
         maxWidth: screenDimensions.w(10));
     super.initState();
   }
@@ -105,7 +101,7 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
 
   @override
   Widget build(BuildContext context) {
-    initScreen(widget.myAppContext, context);
+    initScreen(context);
 
     if (widget.currentQuestion == -1) {
       Future.delayed(
@@ -189,13 +185,12 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
           buttonSkinConfig: ButtonSkinConfig(
               borderColor: Colors.blue.shade600, backgroundColor: btnBackgr),
           fontConfig: FontConfig(),
-          customContent: [getOptionContentCat(optionText)]);
+          customContent: getOptionContentCat(optionText));
       var imgRatio = 1.3;
       var maxHeight = answerBtnSize.height * imgRatio;
-      var appKey = myAppContext.appId.appKey;
+      var appKey = MyApp.appId.appKey;
       Image image = widget.shownAnswerImages.contains(i)
           ? imageService.getSpecificImage(
-              appKey: appKey,
               maxWidth: getImageWidth(),
               maxHeight: maxHeight,
               imageName: "i" + i.toString(),
@@ -211,7 +206,6 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
       availableHints: widget.gameContext.amountAvailableHints,
       question:
           widget.currentQuestion == -1 ? "" : questionStrings[questionIndex],
-      myAppContext: widget.myAppContext,
       animateScore: widget.correctAnswerPressed,
       score: formatTextWithOneParam(label.l_score_param0, levelsWon.length),
       hintButtonOnClick: () {

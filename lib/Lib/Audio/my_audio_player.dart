@@ -1,5 +1,5 @@
 import 'package:audioplayers/audioplayers.dart';
-import 'package:flutter_app_quiz_game/Game/my_app_context.dart';
+
 import 'package:flutter_app_quiz_game/Lib/Assets/assets_service.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter_app_quiz_game/Lib/Storage/settings_local_storage.dart';
@@ -10,10 +10,10 @@ class MyAudioPlayer {
 
   static final MyAudioPlayer singleton = MyAudioPlayer.internal();
 
-  factory MyAudioPlayer(MyAppContext myAppContext) {
+  factory MyAudioPlayer() {
     singleton._assetsService = AssetsService();
     singleton._settingsLocalStorage =
-        SettingsLocalStorage(myAppContext: myAppContext);
+        SettingsLocalStorage();
     return singleton;
   }
 

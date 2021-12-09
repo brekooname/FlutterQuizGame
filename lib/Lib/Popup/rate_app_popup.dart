@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app_quiz_game/Game/my_app_context.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
-import 'package:flutter_app_quiz_game/Lib/Font/font_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Storage/rate_app_local_storage.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
@@ -15,17 +13,11 @@ class RatePopupService {
 
   late BuildContext context;
 
-  late MyAppContext myAppContext;
-
   static final RatePopupService singleton = RatePopupService.internal();
 
-  factory RatePopupService(
-      {required BuildContext buildContext,
-      required MyAppContext myAppContext}) {
+  factory RatePopupService({required BuildContext buildContext}) {
     singleton.context = buildContext;
-    singleton.myAppContext = myAppContext;
-    singleton.rateAppLocalStorage =
-        RateAppLocalStorage(myAppContext: myAppContext);
+    singleton.rateAppLocalStorage = RateAppLocalStorage();
     return singleton;
   }
 
@@ -55,48 +47,35 @@ class RateAppPopup extends StatelessWidget with MyPopup {
   RateAppPopup(this.rateAppLocalStorage);
 
   @override
-  Dialog build(BuildContext context) {
+  AlertDialog build(BuildContext context) {
     initPopup(context);
 
-    return Dialog(
-      child: Container(
-        decoration: BoxDecoration(
-            borderRadius:
-                BorderRadius.circular(FontConfig.getStandardBorderRadius()),
-            color: Colors.white),
-        height: defaultSize.height,
-        width: defaultSize.width,
-        child: Padding(
-            padding: EdgeInsets.all(screenDimensions.w(2)),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                imageService.getMainImage(
-                    imageName: "popup_rate_app_stars_background",
-                    module: "popup",
-                    maxWidth: defaultSize.width / 2.6),
-                SizedBox(height: screenDimensions.h(5)),
-                MyText(text: label.l_thanks_for_your_support),
-                SizedBox(height: screenDimensions.h(5)),
-                MyButton(
-                  text: label.l_rate_now_the_app,
-                  backgroundColor: Colors.lightGreenAccent,
-                  onClick: () {
-                    rateAppLocalStorage.setAlreadyRated();
-                  },
-                ),
-                SizedBox(height: screenDimensions.h(5)),
-                MyButton(
-                  text: label.l_rate_later,
-                  backgroundColor: Colors.grey.shade300,
-                  onClick: () {
-                    Navigator.pop(context);
-                  },
-                ),
-                SizedBox(height: screenDimensions.h(5)),
-              ],
-            )),
-      ),
-    );
+    return createDialog(Column(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: <Widget>[
+        imageService.getMainImage(
+            imageName: "popup_rate_app_stars_background",
+            module: "popup",
+            maxWidth: defaultBackgroundImageWidth),
+        SizedBox(height: screenDimensions.h(5)),
+        MyText(text: label.l_thanks_for_your_support),
+        SizedBox(height: screenDimensions.h(5)),
+        MyButton(
+          text: label.l_rate_now_the_app,
+          backgroundColor: Colors.lightGreenAccent,
+          onClick: () {
+            rateAppLocalStorage.setAlreadyRated();
+          },
+        ),
+        SizedBox(height: screenDimensions.h(5)),
+        MyButton(
+          text: label.l_rate_later,
+          backgroundColor: Colors.grey.shade300,
+          onClick: () {
+            Navigator.pop(context);
+          },
+        ),
+      ],
+    ));
   }
 }

@@ -1,39 +1,35 @@
-import 'package:flutter_app_quiz_game/Game/my_app_context.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_app_quiz_game/Lib/Storage/my_local_storage.dart';
 
-class RateAppLocalStorage {
-  late SharedPreferences prefs;
-
+class RateAppLocalStorage extends MyLocalStorage {
   static final RateAppLocalStorage singleton = RateAppLocalStorage.internal();
 
-  factory RateAppLocalStorage({required MyAppContext myAppContext}) {
-    singleton.prefs = myAppContext.localStorage;
+  factory RateAppLocalStorage() {
     return singleton;
   }
 
   RateAppLocalStorage.internal();
 
   int appLaunchedCount() {
-    return prefs.getInt(_getAppLaunchedCountKey()) ?? 0;
+    return localStorage.getInt(_getAppLaunchedCountKey()) ?? 0;
   }
 
   void incrementAppLaunchedCount() {
-    prefs.setInt(_getAppLaunchedCountKey(), appLaunchedCount() + 1);
+    localStorage.setInt(_getAppLaunchedCountKey(), appLaunchedCount() + 1);
   }
 
   bool isAlreadyRated() {
-    return prefs.getBool(_getAlreadyRatedKey()) ?? false;
+    return localStorage.getBool(_getAlreadyRatedKey()) ?? false;
   }
 
   void setAlreadyRated() {
-    prefs.setBool(_getAlreadyRatedKey(), true);
+    localStorage.setBool(_getAlreadyRatedKey(), true);
   }
 
   String _getAlreadyRatedKey() {
-    return "RateAppLocalStorage_AlreadyRated";
+    return localStorageName + "_AlreadyRated";
   }
 
   String _getAppLaunchedCountKey() {
-    return "RateAppLocalStorage_AppLaunchedCount";
+    return localStorageName + "_AppLaunchedCount";
   }
 }

@@ -1,3 +1,5 @@
+import '../../main.dart';
+
 class AssetsService {
   static final AssetsService singleton = AssetsService.internal();
 
@@ -10,8 +12,8 @@ class AssetsService {
   String getSpecificAssetPath(
       {required String assetName,
       required String assetExtension,
-      required String appKey,
       String? module}) {
+    String appKey = MyApp.appId.appKey;
     String path = "assets/implementations/$appKey";
     path = module != null ? path + "/" + module : path;
     path = path + "/$assetName.$assetExtension";

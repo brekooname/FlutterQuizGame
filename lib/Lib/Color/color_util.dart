@@ -9,7 +9,7 @@ class ColorUtil {
     return hslDark.toColor();
   }
 
-  static Widget imageDarken(Image image, [double amount = -0.001]) {
+  static Widget imageDarken(Widget image, [double amount = -0.001]) {
     return ColorFiltered(
       colorFilter: ColorFilter.matrix(
           ColorFilterGenerator.brightnessAdjustMatrix(value: -0.001)),
@@ -19,7 +19,7 @@ class ColorUtil {
     );
   }
 
-  static Widget imageToGreyScale(Image image) {
+  static Widget imageToGreyScale(Widget image) {
     return ColorFiltered(
       colorFilter: ColorFilter.matrix(ColorFilterGenerator.saturationAdjustMatrix(value: -1)),
       child: Container(

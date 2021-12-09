@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app_quiz_game/Game/my_app_context.dart';
+
 import 'package:flutter_app_quiz_game/Lib/Animation/animation_zoom_in_zoom_out_text.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/hint_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_back_button.dart';
@@ -15,7 +15,6 @@ class HistoryGameLevelHeader extends StatelessWidget {
   String question;
   VoidCallback hintButtonOnClick;
   bool isRewardedAdLoaded;
-  MyAppContext myAppContext;
   ScreenDimensionsService screenDimensions;
 
   HistoryGameLevelHeader(
@@ -25,7 +24,6 @@ class HistoryGameLevelHeader extends StatelessWidget {
       required this.hintButtonOnClick,
       required this.availableHints,
       required this.question,
-      required this.myAppContext,
       required this.screenDimensions});
 
   @override

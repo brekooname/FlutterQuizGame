@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app_quiz_game/Game/my_app_context.dart';
 import 'package:flutter_app_quiz_game/Lib/Ads/ad_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
-import 'package:flutter_app_quiz_game/Lib/Font/font_config.dart';
-import 'package:flutter_app_quiz_game/Lib/Image/image_service.dart';
-import 'package:flutter_app_quiz_game/Lib/Storage/rate_app_local_storage.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
@@ -21,57 +17,33 @@ class WatchRewardedAdPopup extends StatelessWidget with MyPopup {
       {this.watchVideoForExtraHint = true, required this.onUserEarnedReward});
 
   @override
-  Dialog build(BuildContext context) {
+  AlertDialog build(BuildContext context) {
     initPopup(context);
 
-    Size popupSize = defaultSize;
-
-    return Dialog(
-      child: Container(
-        decoration: BoxDecoration(
-            borderRadius:
-                BorderRadius.circular(FontConfig.getStandardBorderRadius()),
-            color: Colors.white),
-        height: popupSize.height,
-        width: popupSize.width,
-        child: Padding(
-            padding: EdgeInsets.all(screenDimensions.w(2)),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                imageService.getMainImage(
-                    imageName: getImageName(),
-                    module: "popup",
-                    maxWidth: popupSize.width / 2.6),
-                SizedBox(height: screenDimensions.h(2)),
-                MyText(
-                  text: getText(),
-                  maxLines: 3,
-                  width: popupSize.width / 1.2,
-                ),
-                SizedBox(height: screenDimensions.h(5)),
-                MyButton(
-                    text: label.l_play_again,
-                    backgroundColor: Colors.lightGreenAccent,
-                    onClick: () {
-                      showRewardedAd(context, () {
-                        onUserEarnedReward.call();
-                      });
-                    }),
-                SizedBox(height: screenDimensions.h(4)),
-                MyButton(
-                  text: label.l_go_back,
-                  backgroundColor: Colors.grey.shade300,
-                  onClick: () {
-                    var nav = Navigator.of(context);
-                    nav.pop();
-                  },
-                ),
-                SizedBox(height: screenDimensions.h(2)),
-              ],
-            )),
-      ),
-    );
+    return createDialog(Column(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: <Widget>[
+        imageService.getMainImage(
+            imageName: getImageName(),
+            module: "popup",
+            maxWidth: defaultBackgroundImageWidth),
+        SizedBox(height: screenDimensions.h(2)),
+        MyText(
+          text: getText(),
+          maxLines: 3,
+          width: width / 1.2,
+        ),
+        SizedBox(height: screenDimensions.h(5)),
+        MyButton(
+            text: label.l_play_again,
+            backgroundColor: Colors.lightGreenAccent,
+            onClick: () {
+              showRewardedAd(context, () {
+                onUserEarnedReward.call();
+              });
+            }),
+      ],
+    ));
   }
 
   void showRewardedAd(

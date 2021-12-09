@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app_quiz_game/Game/my_app_context.dart';
+
 
 import '../../Lib/Constants/contrast.dart';
+import '../../main.dart';
 
 class FontUtil {
 
   static Color getFontDefaultColor() {
-    return getFontDefaultColorForContrast(MyAppContext.contrast);
+    return getFontDefaultColorForContrast(MyApp.appId.gameConfig.screenContrast);
   }
 
   static Color getFontDefaultColorForContrast(Contrast contrast) {

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app_quiz_game/Lib/Button/button_size.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Font/font_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
@@ -7,72 +6,58 @@ import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 import 'my_popup.dart';
 
 class GameFinishedPopup extends StatelessWidget with MyPopup {
-
   int? highScore;
   bool isGameFinishedSuccess;
-  Size? popupSize;
   VoidCallback playAgainClick;
 
-  GameFinishedPopup({this.isGameFinishedSuccess = true,
-    this.popupSize,
-    this.highScore,
-    required this.playAgainClick});
+  GameFinishedPopup(
+      {this.isGameFinishedSuccess = true,
+      this.highScore,
+      required this.playAgainClick});
 
   @override
-  Dialog build(BuildContext context) {
+  AlertDialog build(BuildContext context) {
     initPopup(context);
 
-    popupSize = popupSize ?? defaultSize;
+    return createDialog(
+        Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: <Widget>[
+            imageService.getMainImage(
+                imageName: getImageName(),
+                module: "popup",
+                maxWidth: defaultBackgroundImageWidth),
+            SizedBox(height: screenDimensions.h(2)),
+            MyText(
+              text: getGameFinishedText(),
+              maxLines: 3,
+              width: width / 1.2,
+            ),
+            highScore == null ? Container() : buildHighScoreText(),
+            SizedBox(height: screenDimensions.h(5)),
+            MyButton(
+                text: label.l_play_again,
+                backgroundColor: Colors.lightGreenAccent,
+                onClick: () {
+                  onClickGoBack(context);
+                  playAgainClick.call();
+                }),
+            SizedBox(height: screenDimensions.h(4)),
+            MyButton(
+              text: label.l_go_back,
+              backgroundColor: Colors.grey.shade300,
+              onClick: () => onClickGoBack(context),
+            ),
+            SizedBox(height: screenDimensions.h(2)),
+          ],
+        ),
+        onCloseBtnClick: () => onClickGoBack(context));
+  }
 
-    return Dialog(
-      child: Container(
-        decoration: BoxDecoration(
-            borderRadius:
-            BorderRadius.circular(FontConfig.getStandardBorderRadius()),
-            color: Colors.white),
-        height: popupSize!.height,
-        width: popupSize!.width,
-        child: Padding(
-            padding: EdgeInsets.all(screenDimensions.w(2)),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                imageService.getMainImage(
-                    imageName: getImageName(),
-                    module: "popup",
-                    maxWidth: popupSize!.width / 2.6),
-                SizedBox(height: screenDimensions.h(2)),
-                MyText(
-                  text: getGameFinishedText(),
-                  maxLines: 3,
-                  width: popupSize!.width / 1.2,
-                ),
-                highScore == null ? Container() : buildHighScoreText(),
-                SizedBox(height: screenDimensions.h(5)),
-                MyButton(
-                    text: label.l_play_again,
-                    backgroundColor: Colors.lightGreenAccent,
-                    onClick: () {
-                      var nav = Navigator.of(context);
-                      nav.pop();
-                      nav.pop();
-                      playAgainClick.call();
-                    }),
-                SizedBox(height: screenDimensions.h(4)),
-                MyButton(
-                  text: label.l_go_back,
-                  backgroundColor: Colors.grey.shade300,
-                  onClick: () {
-                    var nav = Navigator.of(context);
-                    nav.pop();
-                    nav.pop();
-                  },
-                ),
-                SizedBox(height: screenDimensions.h(2)),
-              ],
-            )),
-      ),
-    );
+  void onClickGoBack(BuildContext context) {
+    var nav = Navigator.of(context);
+    nav.pop();
+    nav.pop();
   }
 
   MyText buildHighScoreText() {
@@ -86,7 +71,7 @@ class GameFinishedPopup extends StatelessWidget with MyPopup {
           borderWidth: FontConfig.getStandardBorderWidth() * 1.2,
           fontSize: FontConfig.getNormalFontSize(),
           borderColor: Colors.green),
-      width: popupSize!.width / 1.2,
+      width: width / 1.2,
     );
   }
 

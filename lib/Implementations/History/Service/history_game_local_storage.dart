@@ -1,30 +1,26 @@
 import 'package:flutter_app_quiz_game/Game/Game/campaign_level.dart';
-import 'package:flutter_app_quiz_game/Game/my_app_context.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_app_quiz_game/Lib/Storage/my_local_storage.dart';
 
-class HistoryLocalStorage {
-  late SharedPreferences prefs;
-
+class HistoryLocalStorage extends MyLocalStorage {
   static final HistoryLocalStorage singleton = HistoryLocalStorage.internal();
 
-  factory HistoryLocalStorage({required MyAppContext myAppContext}) {
-    singleton.prefs = myAppContext.localStorage;
+  factory HistoryLocalStorage() {
     return singleton;
   }
 
   HistoryLocalStorage.internal();
 
   int getHighScore(CampaignLevel gameLevel) {
-    return prefs.getInt(_getHighScoreFieldName(gameLevel)) ?? 0;
+    return localStorage.getInt(_getHighScoreFieldName(gameLevel)) ?? 0;
   }
 
   void setHighScore(int score, CampaignLevel gameLevel) {
     if (score > getHighScore(gameLevel)) {
-      prefs.setInt(_getHighScoreFieldName(gameLevel), score);
+      localStorage.setInt(_getHighScoreFieldName(gameLevel), score);
     }
   }
 
   String _getHighScoreFieldName(CampaignLevel gameLevel) {
-    return gameLevel.name + "highScore";
+    return localStorageName + "_" + gameLevel.name + "_highScore";
   }
 }

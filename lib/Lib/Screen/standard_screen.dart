@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
-import 'package:flutter_app_quiz_game/Game/my_app_context.dart';
+
 import 'package:flutter_app_quiz_game/Lib/Ads/ad_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Assets/assets_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Audio/my_audio_player.dart';
@@ -12,7 +12,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 mixin StandardScreen {
-  late MyAppContext myAppContext;
   late MyAudioPlayer audioPlayer;
 
   ButtonSize buttonSize = ButtonSize();
@@ -25,9 +24,8 @@ mixin StandardScreen {
   InterstitialAd? interstitialAd;
   bool isInterstitialAdLoaded = false;
 
-  void initScreen(MyAppContext myAppContext, BuildContext buildContext) {
-    this.myAppContext = myAppContext;
-    this.audioPlayer = MyAudioPlayer(myAppContext);
+  void initScreen(BuildContext buildContext) {
+    this.audioPlayer = MyAudioPlayer();
     _localizationService = LocalizationService(buildContext: buildContext);
     if (!kIsWeb) {
       initAds(buildContext);
@@ -128,7 +126,6 @@ mixin StandardScreen {
           image: DecorationImage(
         repeat: ImageRepeat.repeat,
         image: AssetImage(assetsService.getSpecificAssetPath(
-            appKey: myAppContext.appId.appKey,
             assetExtension: "png",
             assetName: "background_texture")),
       )),

@@ -65,5 +65,5 @@ class FontConfig {
   }
 
   static double getDisplayDimensionScale() =>
-      (MyAppState.screenWidth + MyAppState.screenHeight);
+      (MyApp.screenWidth + MyApp.screenHeight);
 }

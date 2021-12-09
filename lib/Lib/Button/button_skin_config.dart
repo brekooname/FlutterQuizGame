@@ -4,18 +4,17 @@ import 'package:flutter_app_quiz_game/Lib/Font/font_config.dart';
 
 class ButtonSkinConfig {
   RadialGradient? backgroundGradient;
-
-  Image? icon;
-
+  Image? _image;
+  Icon? _icon;
   Color? borderColor;
-
   bool withBorder;
 
   late double borderWidth;
 
   ButtonSkinConfig(
       {Color? backgroundColor,
-      Image? icon,
+      Image? image,
+      Icon? icon,
       Color? borderColor,
       double borderWidth = 0,
       this.withBorder = true}) {
@@ -26,7 +25,8 @@ class ButtonSkinConfig {
       ]);
     } else {
       this.withBorder = false;
-      this.icon = icon;
+      this._image = image;
+      this._icon = icon;
     }
     this.borderColor = withBorder
         ? borderColor ?? ColorUtil.colorDarken(backgroundColor!, -0.15)
@@ -34,5 +34,9 @@ class ButtonSkinConfig {
     this.borderWidth = borderColor == Colors.transparent
         ? 0
         : FontConfig.getStandardBorderWidth();
+  }
+
+  Widget? get image {
+    return _image ?? _icon;
   }
 }

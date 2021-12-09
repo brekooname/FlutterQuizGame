@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_app_quiz_game/Game/my_app_context.dart';
+
 
 import '../../main.dart';
 
@@ -16,11 +16,11 @@ class ScreenDimensionsService {
   ScreenDimensionsService.internal();
 
   double h(double percent) {
-    return _getValueForPercent(MyAppState.screenHeight, percent);
+    return _getValueForPercent(MyApp.screenHeight, percent);
   }
 
   double w(double percent) {
-    return _getValueForPercent(MyAppState.screenWidth, percent);
+    return _getValueForPercent(MyApp.screenWidth, percent);
   }
 
   double getNewHeightForNewWidth(
