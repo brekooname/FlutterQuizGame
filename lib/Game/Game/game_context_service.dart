@@ -61,8 +61,7 @@ class GameContextService {
   void addNewQuestionInfo(GameUser gameUser, Question question) {
     QuestionInfo gameQuestionInfo = QuestionInfo(question);
     gameUser.addQuestionInfoToList(gameQuestionInfo);
-    question.category.questionCategoryService
-        .getQuestionService()
+    question.questionService
         .processNewQuestionInfo(gameUser, gameQuestionInfo);
   }
 }

@@ -73,9 +73,11 @@ class GameUser {
 
   List<QuestionInfo> getAllQuestions(
       List<QuestionInfoStatus> questionInfoStatus) {
-    return _allQuestionInfos
-        .where((e) => questionInfoStatus.contains(e.status))
-        .toList();
+    return questionInfoStatus.isEmpty
+        ? _allQuestionInfos
+        : _allQuestionInfos
+            .where((e) => questionInfoStatus.contains(e.status))
+            .toList();
   }
 
   bool addAnswerToQuestionInfo(Question question, String answerId) {

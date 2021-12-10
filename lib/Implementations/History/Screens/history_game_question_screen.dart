@@ -9,12 +9,10 @@ import 'package:flutter_app_quiz_game/Game/Question/Model/question_info_status.d
 import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/question_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Components/history_game_level_header.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Constants/history_campaign_level.dart';
-import 'package:flutter_app_quiz_game/Implementations/History/Questions/history_all_questions.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Service/history_game_local_storage.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/button_skin_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Color/color_util.dart';
-import 'package:flutter_app_quiz_game/Lib/Font/font_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Popup/game_finished_popup.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/game_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/standard_screen.dart';

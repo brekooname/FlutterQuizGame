@@ -10,6 +10,7 @@ import 'package:flutter_app_quiz_game/Implementations/History/Constants/history_
 import 'package:flutter_app_quiz_game/Implementations/History/Questions/history_all_questions.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Screens/history_game_question_screen.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Service/history_game_local_storage.dart';
+import 'package:flutter_app_quiz_game/Implementations/History/Service/history_game_screen_manager.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Service/history_gamecontext_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/settings_button.dart';
@@ -100,16 +101,8 @@ class HistoryMainMenuScreenState extends State<HistoryMainMenuScreen>
         contentLocked: contentLocked,
         size: btnSize,
         onClick: () {
-          NavigatorService().goTo(
-              context,
-              HistoryGameTimelineScreen(
-                gameContext: HistoryGameContextService()
-                    .createGameContext(campaignLevel),
-                difficulty: campaignLevel.difficulty,
-                category: HistoryGameQuestionConfig().cat1,
-              ), () {
-            setState(() {});
-          });
+          HistoryGameScreenManager(buildContext: context)
+              .showScreen(campaignLevel);
         },
         buttonSkinConfig: ButtonSkinConfig(backgroundColor: btnColor),
         fontConfig: FontConfig(),

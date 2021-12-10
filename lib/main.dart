@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_app_quiz_game/Implementations/History/Constants/history_campaign_level.dart';
+import 'package:flutter_app_quiz_game/Implementations/History/Service/history_game_screen_manager.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -73,7 +75,11 @@ class MyAppState extends State<MyApp> {
       RateAppLocalStorage rateAppLocalStorage = RateAppLocalStorage();
       rateAppLocalStorage.incrementAppLaunchedCount();
 
-      widgetToShow = HistoryMainMenuScreen();
+      //
+      // widgetToShow = HistoryMainMenuScreen();
+      widgetToShow = HistoryGameScreenManager(buildContext: context)
+          .getScreen(HistoryCampaignLevel().level_0);
+      //
     } else {
       init(context);
       widgetToShow = Container();
