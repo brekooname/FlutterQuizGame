@@ -25,13 +25,17 @@ class ImageClickQuestionService extends QuestionService {
 
   ImageClickQuestionService.internal();
 
+  @override
+  String getQuestionToBeDisplayed(Question question) {
+    return question.rawString.split(":")[0];
+  }
+
   Map<MyButton, ImageClickInfo> getAnswerOptionsCoordinates(
-      Map<CategoryDifficulty, List<Question>> allQuestionsWithConfig,
       List<MyButton> allAnswerOptionsButtons,
       QuestionDifficulty questionDifficultyLevel,
       QuestionCategory questionCategory) {
-    List<Question> allQuestions = _questionCollectorService
-        .getAllQuestionsForCategory(allQuestionsWithConfig, questionCategory);
+    List<Question> allQuestions =
+        _questionCollectorService.getAllQuestionsForCategory(questionCategory);
     Map<MyButton, ImageClickInfo> buttonWithCoordinates =
         HashMap<MyButton, ImageClickInfo>();
     for (Question question in allQuestions) {
@@ -76,11 +80,8 @@ class ImageClickQuestionService extends QuestionService {
   }
 
   @override
-  List<String> getAllAnswerOptionsForQuestion(
-      Map<CategoryDifficulty, List<Question>> allQuestionsWithConfig,
-      Question question) {
-    return questionParser.getAllPossibleAnswersForQuestion(
-        allQuestionsWithConfig, question);
+  Set<String> getAllAnswerOptionsForQuestion(Question question) {
+    return Set();
   }
 
   @override
@@ -113,11 +114,16 @@ class ImageClickQuestionService extends QuestionService {
   }
 
   @override
-  String getRandomUnpressedAnswerFromQuestion(
+  String getRandomUnpressedCorrectAnswerFromQuestion(
       Question question, Set<String> pressedAnswers) {
     List<String> answers = getAnswers(question);
     answers.shuffle();
     return answers.first;
+  }
+
+  @override
+  List<String> getCorrectAnswers(Question question) {
+    throw UnimplementedError();
   }
 }
 

@@ -9,10 +9,12 @@ import 'package:flutter_app_quiz_game/Lib/Localization/localization_service.dart
 import 'package:flutter_app_quiz_game/Lib/ScreenDimensions/screen_dimensions_service.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../../main.dart';
+
 mixin MyPopup {
   late double width;
   late BuildContext buildContext;
-  LocalizationService? _localizationService;
+  LocalizationService localizationService = LocalizationService();
   ImageService imageService = ImageService();
   ButtonSize buttonSize = ButtonSize();
   ScreenDimensionsService screenDimensions = ScreenDimensionsService();
@@ -20,7 +22,6 @@ mixin MyPopup {
   void initPopup(BuildContext buildContext) {
     this.buildContext = buildContext;
     this.width = screenDimensions.w(100);
-    _localizationService = LocalizationService(buildContext: buildContext);
   }
 
   double get defaultBackgroundImageWidth => width / 3.4;
@@ -74,15 +75,7 @@ mixin MyPopup {
             icon: Icon(Icons.clear, color: Colors.red, size: closeBtnWidth)));
   }
 
-  LocalizationService get localizationService {
-    assert(_localizationService != null);
-    return _localizationService!;
-  }
-
-  AppLocalizations get label {
-    assert(_localizationService != null);
-    return _localizationService!.getAppLocalizations();
-  }
+  AppLocalizations get label => MyApp.appLocalizations;
 
   String formatTextWithOneParam(String labelText, String param) {
     return localizationService.formatTextWithParams(labelText, [param]);

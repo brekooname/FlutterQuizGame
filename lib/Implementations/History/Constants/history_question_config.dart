@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:flutter_app_quiz_game/Game/GameType/game_question_config.dart';
 import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/DependentAnswers/dependent_answers_question_category_service.dart';
 import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/UniqueAnswers/unqiue_answers_question_category_service.dart';
@@ -53,12 +55,24 @@ class HistoryGameQuestionConfig extends GameQuestionConfig {
   HistoryGameQuestionConfig.internal();
 
   @override
-  List<QuestionDifficulty> difficulties() {
-    return [diff0];
-  }
+  List<QuestionDifficulty> get difficulties => [diff0];
 
   @override
-  List<QuestionCategory> categories() {
-    return [cat0, cat1];
+  List<QuestionCategory> get categories => [cat0, cat1];
+
+  @override
+  Map<QuestionCategoryWithPrefixCode, String> get prefixLabelForCode {
+    Map<QuestionCategoryWithPrefixCode, String> res = HashMap();
+    res.putIfAbsent(QuestionCategoryWithPrefixCode(cat0, 0),
+            () => label.l_when_did_the_event_take_place);
+    res.putIfAbsent(QuestionCategoryWithPrefixCode(cat1, 0),
+            () => label.l_between_what_years_did_this_empire_exist);
+    res.putIfAbsent(QuestionCategoryWithPrefixCode(cat2, 0),
+        () => label.l_where_did_the_event_take_place);
+    res.putIfAbsent(QuestionCategoryWithPrefixCode(cat2, 1),
+            () => label.l_in_what_modern_country_is_it_located);
+    res.putIfAbsent(QuestionCategoryWithPrefixCode(cat3, 0),
+            () => label.l_identify_the_historical_figure);
+    return res;
   }
 }

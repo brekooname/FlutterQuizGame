@@ -1,12 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Game/Game/game_user.dart';
+import 'package:flutter_app_quiz_game/Game/GameType/game_question_config.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_info.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/list_extension.dart';
+import 'package:flutter_app_quiz_game/Lib/Extensions/map_extension.dart';
 
-import '../Model/category_difficulty.dart';
+import '../../../main.dart';
 
 abstract class QuestionService {
+  String getQuestionToBeDisplayed(Question question);
+
+  List<String> getCorrectAnswers(Question question);
+
+  String getRandomUnpressedCorrectAnswerFromQuestion(
+      Question question, Set<String> pressedAnswers);
+
+  Set<String> getAllAnswerOptionsForQuestion(Question question);
+
+  int getPrefixCodeForQuestion(Question question) {
+    return 0;
+  }
+
+  String getPrefixToBeDisplayedForQuestion(Question question) {
+    return MyApp.appId.gameConfig.gameQuestionConfig.prefixLabelForCode.get(
+            QuestionCategoryWithPrefixCode(
+                question.category, getPrefixCodeForQuestion(question))) ??
+        "";
+  }
+
+  String getCorrectAnswer(Question question) {
+    return getCorrectAnswers(question).first;
+  }
+
   bool addAnswerToGameInfo(
       GameUser gameUser, Question question, String answer) {
     return gameUser.addAnswerToQuestionInfo(question, answer);
@@ -23,56 +49,50 @@ abstract class QuestionService {
 
   Image? getQuestionImage(Question question) {
     Image? image;
-    List<String> split = question.rawString.split(":");
-    int imageSplitPos = getImageToBeDisplayedPositionInString();
-    if (split.length == imageSplitPos + 1 && split[imageSplitPos] != null) {
+    if (false) {
       image = Image.asset("img_cat" +
           question.category.index.toString() +
           "_" +
-          split[imageSplitPos]);
+          question.index.toString());
     }
     return image;
-  }
-
-  String getQuestionToBeDisplayed(Question question) {
-    String questionString = question.rawString;
-    String questionToBeDisplayed = questionString.contains(":")
-        ? questionString.split(":")[getQuestionToBeDisplayedPositionInString()]
-        : "";
-    return questionToBeDisplayed;
   }
 
   List<String> createWrongAnswerList(QuestionInfo questionInfo,
       List<String> allAnswers, List<String> correctAnswers) {
     List<String> newAllAnswersList = allAnswers;
     newAllAnswersList.shuffle();
-    newAllAnswersList.removeAll(questionInfo.answers);
+    newAllAnswersList.removeAll(questionInfo.pressedAnswers);
     newAllAnswersList.removeAll(correctAnswers);
     return newAllAnswersList;
   }
 
-  void processNewQuestionInfo(
-      GameUser gameUser, QuestionInfo gameQuestionInfo) {}
-
-  int getImageToBeDisplayedPositionInString();
-
-  int getQuestionToBeDisplayedPositionInString();
-
-  bool isGameFinishedSuccessful(Question question, Set<String> pressedAnswers);
-
-  bool isGameFinishedFailed(Question question, Set<String> pressedAnswers);
-
-  int getNrOfWrongAnswersPressed(Set<String> pressedAnswers);
-
-  bool isAnswerCorrectInQuestion(Question question, String answer);
-
-  String getRandomUnpressedAnswerFromQuestion(
-      Question question, Set<String> pressedAnswers);
-
-  List<String> getAllAnswerOptionsForQuestion(
-      Map<CategoryDifficulty, List<Question>> allQuestionsWithConfig,
-      Question question);
+  bool isAnswerCorrectInQuestion(Question question, String answer) {
+    return compareAnswerStrings(
+        answer.toLowerCase(), getCorrectAnswers(question).first.toLowerCase());
+  }
 
   List<String> getUnpressedCorrectAnswers(
-      Question question, Set<String> pressedAnswers);
+      Question question, Set<String> pressedAnswers) {
+    List<String> answers = getCorrectAnswers(question);
+    answers.removeAll(pressedAnswers);
+    return answers;
+  }
+
+  int getNrOfWrongAnswersPressed(Set<String> pressedAnswers) {
+    return 0;
+  }
+
+  bool isGameFinishedSuccessful(Question question, Set<String> pressedAnswers) {
+    return pressedAnswers.isNotEmpty &&
+        isAnswerCorrectInQuestion(question, pressedAnswers.first);
+  }
+
+  bool isGameFinishedFailed(Question question, Set<String> pressedAnswers) {
+    return pressedAnswers.isNotEmpty &&
+        !isAnswerCorrectInQuestion(question, pressedAnswers.first);
+  }
+
+  void processNewQuestionInfo(
+      GameUser gameUser, QuestionInfo gameQuestionInfo) {}
 }

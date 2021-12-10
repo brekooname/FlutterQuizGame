@@ -19,7 +19,7 @@ class GameUser {
   void resetQuestion(QuestionInfo gameQuestionInfo) {
     gameQuestionInfo.status = QuestionInfoStatus.OPEN;
     if (!_openQuestionInfos.contains(gameQuestionInfo)) {
-      gameQuestionInfo.answers.clear();
+      gameQuestionInfo.pressedAnswers.clear();
       _openQuestionInfos.add(gameQuestionInfo);
     }
   }
@@ -68,28 +68,32 @@ class GameUser {
   }
 
   int countAllQuestions(List<QuestionInfoStatus> questionInfoStatus) {
+    return getAllQuestions(questionInfoStatus).length;
+  }
+
+  List<QuestionInfo> getAllQuestions(
+      List<QuestionInfoStatus> questionInfoStatus) {
     return _allQuestionInfos
         .where((e) => questionInfoStatus.contains(e.status))
-        .length;
+        .toList();
   }
 
   bool addAnswerToQuestionInfo(Question question, String answerId) {
     QuestionInfo questionInfo = getQuestionInfo(question);
-    questionInfo.addAnswer(answerId);
+    questionInfo.addPressedAnswer(answerId);
     setQuestionFinishedStatus(questionInfo);
     return questionInfo.status == QuestionInfoStatus.WON;
   }
 
   void setQuestionFinishedStatus(QuestionInfo gameQuestionInfo) {
-    QuestionService questionService =
-        gameQuestionInfo.question.getQuestionService();
+    QuestionService questionService = gameQuestionInfo.question.questionService;
     bool userSuccess = questionService.isGameFinishedSuccessful(
-        gameQuestionInfo.question, gameQuestionInfo.answers);
+        gameQuestionInfo.question, gameQuestionInfo.pressedAnswers);
     if (userSuccess) {
       setWonQuestion(gameQuestionInfo);
     } else {
       bool userFail = questionService.isGameFinishedFailed(
-          gameQuestionInfo.question, gameQuestionInfo.answers);
+          gameQuestionInfo.question, gameQuestionInfo.pressedAnswers);
       if (userFail) {
         setLostQuestion(gameQuestionInfo);
       }

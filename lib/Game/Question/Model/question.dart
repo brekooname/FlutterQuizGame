@@ -10,9 +10,17 @@ class Question {
 
   Question(this.index, this.difficulty, this.category, this.rawString);
 
-  QuestionService getQuestionService() {
-    return category.questionCategoryService.getQuestionService();
-  }
+  QuestionService get questionService =>
+      category.questionCategoryService.getQuestionService();
+
+  String get questionToBeDisplayed =>
+      questionService.getQuestionToBeDisplayed(this);
+
+  String get correctAnswer =>
+      questionService.getCorrectAnswer(this);
+
+  String get questionPrefixToBeDisplayed =>
+      questionService.getPrefixToBeDisplayedForQuestion(this);
 
   @override
   String toString() {

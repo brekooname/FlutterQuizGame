@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
-
 import 'package:flutter_app_quiz_game/Lib/Ads/ad_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Assets/assets_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Audio/my_audio_player.dart';
@@ -11,13 +10,14 @@ import 'package:flutter_app_quiz_game/Lib/ScreenDimensions/screen_dimensions_ser
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
-mixin StandardScreen {
-  late MyAudioPlayer audioPlayer;
+import '../../main.dart';
 
+mixin StandardScreen {
+  MyAudioPlayer audioPlayer = MyAudioPlayer();
   ButtonSize buttonSize = ButtonSize();
   AssetsService assetsService = AssetsService();
   ImageService imageService = ImageService();
-  LocalizationService? _localizationService;
+  LocalizationService localizationService = LocalizationService();
   ScreenDimensionsService screenDimensions = ScreenDimensionsService();
   AdService adService = AdService();
   BannerAd? bannerAd;
@@ -25,27 +25,17 @@ mixin StandardScreen {
   bool isInterstitialAdLoaded = false;
 
   void initScreen(BuildContext buildContext) {
-    this.audioPlayer = MyAudioPlayer();
-    _localizationService = LocalizationService(buildContext: buildContext);
     if (!kIsWeb) {
       initAds(buildContext);
     }
   }
 
-  void disposeScreen(){
+  void disposeScreen() {
     bannerAd?.dispose();
     interstitialAd?.dispose();
   }
 
-  LocalizationService get localizationService {
-    assert(_localizationService != null);
-    return _localizationService!;
-  }
-
-  AppLocalizations get label {
-    assert(_localizationService != null);
-    return _localizationService!.getAppLocalizations();
-  }
+  AppLocalizations get label => MyApp.appLocalizations;
 
   String formatTextWithOneParam(String labelText, Object param) {
     return localizationService
@@ -131,8 +121,7 @@ mixin StandardScreen {
           image: DecorationImage(
         repeat: ImageRepeat.repeat,
         image: AssetImage(assetsService.getSpecificAssetPath(
-            assetExtension: "png",
-            assetName: "background_texture")),
+            assetExtension: "png", assetName: "background_texture")),
       )),
       alignment: Alignment.center,
       width: double.infinity,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app_quiz_game/Game/Question/Model/question.dart';
 
 import 'package:flutter_app_quiz_game/Lib/Animation/animation_zoom_in_zoom_out_text.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/hint_button.dart';
@@ -12,7 +13,7 @@ class HistoryGameLevelHeader extends StatelessWidget {
   String score;
   bool animateScore;
   int availableHints;
-  String question;
+  Question question;
   VoidCallback hintButtonOnClick;
   bool isRewardedAdLoaded;
   ScreenDimensionsService screenDimensions;
@@ -32,28 +33,50 @@ class HistoryGameLevelHeader extends StatelessWidget {
   }
 
   Container createLevelHeader(BuildContext context) {
-    var questionText = MyText(
-      width: screenDimensions.w(99),
-      maxLines: 2,
-      text: question,
-      fontConfig: FontConfig(fontSize: FontConfig.getCustomFontSize(1.2)),
+    var margin = screenDimensions.h(1);
+    var questionPrefixToBeDisplayed = question.questionPrefixToBeDisplayed;
+    Widget questionPrefix;
+    if (questionPrefixToBeDisplayed.isEmpty) {
+      questionPrefix = Container();
+    } else {
+      questionPrefix = Padding(
+          padding: EdgeInsets.fromLTRB(0, margin, 0, 0),
+          child: MyText(
+            width: screenDimensions.w(99),
+            maxLines: 2,
+            text: questionPrefixToBeDisplayed,
+            fontSize: FontConfig.getCustomFontSize(0.9),
+          ));
+    }
+    var questionText = Padding(
+        padding: EdgeInsets.fromLTRB(0, margin, 0, margin),
+        child: MyText(
+          width: screenDimensions.w(99),
+          maxLines: 2,
+          text: question.questionToBeDisplayed,
+          fontSize: FontConfig.getCustomFontSize(1.2),
+        ));
+
+    var questionColumn = Column(
+      children: [questionPrefix, questionText],
     );
 
     return Container(
         child: Column(children: [
       createScoreHeader(context),
       SizedBox(height: screenDimensions.h(1)),
-      Container(
-        height: screenDimensions.h(11),
-        decoration: BoxDecoration(
-            color: Colors.green.shade100.withAlpha(150),
-            border: Border.all(
-                color: Colors.green.shade200, width: screenDimensions.w(1)),
-            borderRadius:
-                BorderRadius.circular(FontConfig.getStandardBorderRadius())),
-        child: questionText,
-      ),
-      SizedBox(height: screenDimensions.h(1)),
+      Column(mainAxisSize: MainAxisSize.min, children: [
+        Container(
+          decoration: BoxDecoration(
+              color: Colors.green.shade100.withAlpha(150),
+              border: Border.all(
+                  color: Colors.green.shade200, width: screenDimensions.w(1)),
+              borderRadius:
+                  BorderRadius.circular(FontConfig.getStandardBorderRadius())),
+          child: questionColumn,
+        ),
+        SizedBox(height: screenDimensions.h(1)),
+      ])
     ]));
   }
 

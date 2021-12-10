@@ -15,19 +15,21 @@ class MyText extends StatelessWidget {
 
   late String text;
 
-  MyText({FontConfig? fontConfig,
-    required String text,
-    this.alignmentInsideContainer = Alignment.center,
-    this.width,
-    this.maxLines = 2}) {
-    this.fontConfig = fontConfig ?? FontConfig();
+  MyText(
+      {FontConfig? fontConfig,
+      double? fontSize,
+      required String text,
+      this.alignmentInsideContainer = Alignment.center,
+      this.width,
+      this.maxLines = 2}) {
+    this.fontConfig = fontConfig ?? FontConfig(fontSize: fontSize);
     this.text = text;
   }
 
   @override
   Widget build(BuildContext context) {
-    var defaultText = _myTextCreatorService
-        .createText(this.text, getTextStyle(), TextAlign.center);
+    var defaultText = _myTextCreatorService.createText(
+        this.text, getTextStyle(), TextAlign.center);
 
     Widget result;
     if (this.fontConfig.borderColor == Colors.transparent) {
@@ -65,14 +67,13 @@ class MyText extends StatelessWidget {
 
   bool hasTextOverflow(String text, TextStyle style,
       {double minWidth = 0,
-        double maxWidth = double.infinity,
-        int maxLines = 2}) {
+      double maxWidth = double.infinity,
+      int maxLines = 2}) {
     final TextPainter textPainter = TextPainter(
       text: TextSpan(text: text, style: style),
-      maxLines: maxLines,
+      maxLines: maxLines + 1,
       textDirection: TextDirection.ltr,
-    )
-      ..layout(minWidth: minWidth, maxWidth: maxWidth);
+    )..layout(minWidth: minWidth, maxWidth: maxWidth);
     return textPainter.didExceedMaxLines;
   }
 }
@@ -102,11 +103,13 @@ class OutlinedText extends StatelessWidget {
       widthSum += list[i].width ?? 0;
 
       var textControl = _myTextCreatorService.createText(
-          text?.data ?? '', (text?.style ?? TextStyle()).copyWith(
-          foreground: Paint()
-            ..style = PaintingStyle.stroke
-            ..strokeWidth = widthSum
-            ..color = list[i].color ?? Colors.transparent), text?.textAlign);
+          text?.data ?? '',
+          (text?.style ?? TextStyle()).copyWith(
+              foreground: Paint()
+                ..style = PaintingStyle.stroke
+                ..strokeWidth = widthSum
+                ..color = list[i].color ?? Colors.transparent),
+          text?.textAlign);
 
       children.add(textControl);
     }

@@ -6,6 +6,7 @@ import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.da
 import 'package:flutter_app_quiz_game/Lib/Constants/language.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/map_extension.dart';
 
+import '../../main.dart';
 import 'Model/category_difficulty.dart';
 
 class QuestionCollectorService {
@@ -18,23 +19,23 @@ class QuestionCollectorService {
 
   QuestionCollectorService.internal();
 
-  List<Question> getAllQuestionsForCategory(
-      Map<CategoryDifficulty, List<Question>> allQuestionsWithConfig,
-      QuestionCategory questionCategory) {
+  List<Question> getAllQuestionsForCategory(QuestionCategory questionCategory) {
+    var allQuestionsWithConfig =
+        MyApp.appId.gameConfig.allQuestionsService.allQuestions;
     var difficulties =
         allQuestionsWithConfig.entries.map((e) => e.key.difficulty).toList();
     return getAllQuestionsForCategoriesAndDifficulties(
-      allQuestionsWithConfig,
       difficulties,
       [questionCategory],
     );
   }
 
   List<Question> getAllQuestionsForCategoriesAndDifficulties(
-    Map<CategoryDifficulty, List<Question>> allQuestionsWithConfig,
     List<QuestionDifficulty> difficultyLevels,
     List<QuestionCategory> categories,
   ) {
+    var allQuestionsWithConfig =
+        MyApp.appId.gameConfig.allQuestionsService.allQuestions;
     List<Question> questions = [];
     for (QuestionCategory category in categories) {
       for (QuestionDifficulty difficultyLevel in difficultyLevels) {

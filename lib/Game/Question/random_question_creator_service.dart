@@ -31,7 +31,6 @@ class RandomQuestionCreatorService {
   }
 
   List<Question> createRandomQuestions(
-      Map<CategoryDifficulty, List<Question>> allQuestionsWithConfig,
       QuestionConfig questionConfig) {
     int questionAmount = questionConfig.amountOfQuestions;
     Set<QuestionCategory> categsToUse = questionConfig.categories;
@@ -57,6 +56,8 @@ class RandomQuestionCreatorService {
           .category.questionCategoryService
           .getQuestionParser();
       int repeat2 = 0;
+      var allQuestionsWithConfig =
+      MyApp.appId.gameConfig.allQuestionsService.allQuestions;
       Question randomQuestion = createRandomQuestion(
           randomCategoryAndDifficulty,
           allQuestionsWithConfig.get(randomCategoryAndDifficulty) ?? []);

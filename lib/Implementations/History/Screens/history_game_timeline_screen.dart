@@ -25,7 +25,6 @@ import '../../../Lib/Button/button_skin_config.dart';
 import '../../../Lib/Font/font_config.dart';
 
 class HistoryGameTimelineScreen extends StatefulWidget with GameScreen {
-  GameContext gameContext;
   late HistoryLocalStorage historyLocalStorage;
   late QuestionInfo currentQuestion;
 
@@ -37,9 +36,9 @@ class HistoryGameTimelineScreen extends StatefulWidget with GameScreen {
       {Key? key,
       required QuestionDifficulty difficulty,
       required QuestionCategory category,
-      required this.gameContext})
+      required GameContext gameContext})
       : super(key: key) {
-    initScreen(HistoryCampaignLevel(), difficulty, category);
+    initScreen(HistoryCampaignLevel(), gameContext, difficulty, category);
     historyLocalStorage = HistoryLocalStorage();
 
     currentQuestion =
@@ -49,7 +48,6 @@ class HistoryGameTimelineScreen extends StatefulWidget with GameScreen {
   @override
   State<HistoryGameTimelineScreen> createState() =>
       HistoryGameTimelineScreenState();
-
 }
 
 class HistoryQuestion {
@@ -73,14 +71,11 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
   void initState() {
     var appKey = MyApp.appId.appKey;
     timelineOptUnknown = imageService.getSpecificImage(
-        maxWidth: getImageWidth(),
-        imageName: "timeline_opt_unknown");
+        maxWidth: getImageWidth(), imageName: "timeline_opt_unknown");
     histAnswWrong = imageService.getSpecificImage(
-        maxWidth: getImageWidth(),
-        imageName: "hist_answ_wrong");
+        maxWidth: getImageWidth(), imageName: "hist_answ_wrong");
     arrowRight = imageService.getSpecificImage(
-        imageName: "arrow_right",
-        maxWidth: screenDimensions.w(10));
+        imageName: "arrow_right", maxWidth: screenDimensions.w(10));
     super.initState();
   }
 
@@ -114,12 +109,9 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
     List<String> rawStrings =
         allQuestionsForConfig.map((e) => e.question.rawString).toList();
 
-    List<String> questionStrings =
-        rawStrings.map((e) => e.split(":")[0]).toList().reversed.toList();
     List<String> optionStrings =
         rawStrings.map((e) => e.split(":")[1]).toList().reversed.toList();
 
-    var questionIndex = widget.currentQuestion.question.index;
     var levelsWon = allQuestionsForConfig
         .where((element) => element.status == QuestionInfoStatus.WON)
         .map((e) => e.question.index)
@@ -129,7 +121,6 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
         .map((e) => e.question.index)
         .toList();
     for (var i = 0; i < optionStrings.length; i++) {
-      var btnBackgr = Colors.lightBlueAccent;
       var disabled = false;
 
       bool? correctAnswer;
@@ -144,44 +135,10 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
         disabled = true;
       }
 
-      var optionText = getOptionText(optionStrings[i]);
-      var answerBtn = MyButton(
-          size: answerBtnSize,
-          disabled: disabled,
-          disabledBackgroundColor: disabledBackgroundColor,
-          onClick: () {
-            setState(() {
-              if (getOptionText(optionStrings[questionIndex]) == optionText) {
-                audioPlayer.playSuccess();
-                widget.shownAnswerImages.add(questionIndex);
-                widget.gameContext.gameUser
-                    .setWonQuestion(widget.currentQuestion);
-                widget.correctAnswerPressed = true;
-                widget.historyLocalStorage.setHighScore(
-                    widget.gameContext.gameUser
-                        .countAllQuestions([QuestionInfoStatus.WON]),
-                    widget.campaignLevel);
-              } else {
-                audioPlayer.playFail();
-                itemScrollController.scrollTo(
-                    index: questionIndex,
-                    duration: Duration(milliseconds: 600));
-                widget.gameContext.gameUser
-                    .setLostQuestion(widget.currentQuestion);
-                widget.correctAnswerPressed = false;
-              }
-            });
-            widget.mostRecentPressedCurrentQuestion = questionIndex;
-            widget.currentQuestion = widget.gameContext.gameUser
-                .getRandomQuestion(widget.difficulty, widget.category);
-          },
-          buttonSkinConfig: ButtonSkinConfig(
-              borderColor: Colors.blue.shade600, backgroundColor: btnBackgr),
-          fontConfig: FontConfig(),
-          customContent: getOptionContentCat(optionText));
+      MyButton answerBtn = createAnswerButton(
+          answerBtnSize, disabled, disabledBackgroundColor, optionStrings, i);
       var imgRatio = 1.3;
       var maxHeight = answerBtnSize.height * imgRatio;
-      var appKey = MyApp.appId.appKey;
       Image image = widget.shownAnswerImages.contains(i)
           ? imageService.getSpecificImage(
               maxWidth: getImageWidth(),
@@ -197,8 +154,7 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
 
     var header = HistoryGameLevelHeader(
       availableHints: widget.gameContext.amountAvailableHints,
-      question:
-          widget.currentQuestion == -1 ? "" : questionStrings[questionIndex],
+      question: widget.currentQuestion.question,
       animateScore: widget.correctAnswerPressed,
       score: formatTextWithOneParam(label.l_score_param0, levelsWon.length),
       hintButtonOnClick: () {
@@ -228,6 +184,47 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
     );
 
     return createScreen(mainColumn);
+  }
+
+  MyButton createAnswerButton(Size answerBtnSize, bool disabled,
+      Color? disabledBackgroundColor, List<String> optionStrings, int i) {
+    var btnBackgr = Colors.lightBlueAccent;
+    var optionText = getOptionText(optionStrings[i]);
+    int questionIndex = widget.currentQuestion.question.index;
+    var answerBtn = MyButton(
+        size: answerBtnSize,
+        disabled: disabled,
+        disabledBackgroundColor: disabledBackgroundColor,
+        onClick: () {
+          setState(() {
+            if (getOptionText(optionStrings[questionIndex]) == optionText) {
+              audioPlayer.playSuccess();
+              widget.shownAnswerImages.add(questionIndex);
+              widget.gameContext.gameUser
+                  .setWonQuestion(widget.currentQuestion);
+              widget.correctAnswerPressed = true;
+              widget.historyLocalStorage.setHighScore(
+                  widget.gameContext.gameUser
+                      .countAllQuestions([QuestionInfoStatus.WON]),
+                  widget.campaignLevel);
+            } else {
+              audioPlayer.playFail();
+              itemScrollController.scrollTo(
+                  index: questionIndex, duration: Duration(milliseconds: 600));
+              widget.gameContext.gameUser
+                  .setLostQuestion(widget.currentQuestion);
+              widget.correctAnswerPressed = false;
+            }
+          });
+          widget.mostRecentPressedCurrentQuestion = questionIndex;
+          widget.currentQuestion = widget.gameContext.gameUser
+              .getRandomQuestion(widget.difficulty, widget.category);
+        },
+        buttonSkinConfig: ButtonSkinConfig(
+            borderColor: Colors.blue.shade600, backgroundColor: btnBackgr),
+        fontConfig: FontConfig(),
+        customContent: getOptionContentCat(optionText));
+    return answerBtn;
   }
 
   String getQuestionImagePath(
@@ -329,15 +326,20 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
       Spacer()
     ]);
 
+    Color color = getColorForAnswerStatus(correctAnswer);
+    return Container(
+        child: item,
+        color:
+            index % 2 == 0 ? color.withOpacity(0.2) : color.withOpacity(0.4));
+  }
+
+  Color getColorForAnswerStatus(bool? correctAnswer) {
     var color = correctAnswer == null
         ? Colors.yellow.shade500
         : correctAnswer
             ? Colors.green.shade200
             : Colors.red.shade200;
-    return Container(
-        child: item,
-        color:
-            index % 2 == 0 ? color.withOpacity(0.2) : color.withOpacity(0.4));
+    return color;
   }
 
   Widget getQuestionSeparator(Size answerBtnSize, bool? correctAnswer) {
@@ -385,11 +387,11 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
       Spacer()
     ]);
 
+    Color color = getColorForAnswerStatus(correctAnswer);
     return Container(
         child: item,
-        color: index % 2 == 0
-            ? Colors.yellow.shade500.withOpacity(0.1)
-            : Colors.yellow.shade500.withOpacity(0.6));
+        color:
+            index % 2 == 0 ? color.withOpacity(0.2) : color.withOpacity(0.4));
   }
 
   String getOptionText(String yearString) {

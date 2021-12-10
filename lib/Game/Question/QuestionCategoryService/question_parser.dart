@@ -11,6 +11,8 @@ abstract class QuestionParser {
   //We return a list in case of multiple correct answers
   List<String> getCorrectAnswersFromRawString(String questionString);
 
+  String getQuestionToBeDisplayed(String questionRawString);
+
   bool isQuestionValid(Question question) {
     return true;
   }

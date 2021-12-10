@@ -20,6 +20,7 @@ class MyApp extends StatefulWidget {
   static late double screenWidth;
   static late double screenHeight;
   static late SharedPreferences localStorage;
+  static late AppLocalizations appLocalizations;
   static late AppId appId;
   static late String appTitle;
   static late String languageCode;
@@ -32,7 +33,6 @@ class MyApp extends StatefulWidget {
 }
 
 class MyAppState extends State<MyApp> {
-
   init(BuildContext context) async {
     String appTitle;
     String appKey;
@@ -70,8 +70,7 @@ class MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     Widget widgetToShow;
     if (widget.initCompleted) {
-      RateAppLocalStorage rateAppLocalStorage =
-          RateAppLocalStorage();
+      RateAppLocalStorage rateAppLocalStorage = RateAppLocalStorage();
       rateAppLocalStorage.incrementAppLaunchedCount();
 
       widgetToShow = HistoryMainMenuScreen();
@@ -92,7 +91,7 @@ class MyAppState extends State<MyApp> {
               ScreenDimensionsService.calculateScreenWidth(context, true);
           MyApp.screenHeight =
               ScreenDimensionsService.calculateScreenHeight(context, true);
-
+          MyApp.appLocalizations = AppLocalizations.of(context)!;
           return widgetToShow;
         }));
 

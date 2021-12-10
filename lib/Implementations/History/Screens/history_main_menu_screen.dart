@@ -7,7 +7,8 @@ import 'package:flutter_app_quiz_game/Game/Question/Model/question.dart';
 
 import 'package:flutter_app_quiz_game/Implementations/History/Constants/history_campaign_level.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Constants/history_question_config.dart';
-import 'package:flutter_app_quiz_game/Implementations/History/Questions/history_questions.dart';
+import 'package:flutter_app_quiz_game/Implementations/History/Questions/history_all_questions.dart';
+import 'package:flutter_app_quiz_game/Implementations/History/Screens/history_game_question_screen.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Service/history_game_local_storage.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Service/history_gamecontext_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
@@ -24,13 +25,9 @@ import '../../../main.dart';
 import 'history_game_timeline_screen.dart';
 
 class HistoryMainMenuScreen extends StatefulWidget {
-  Map<CategoryDifficulty, List<Question>> allQuestionsWithConfig =
-      HashMap<CategoryDifficulty, List<Question>>();
   late HistoryLocalStorage historyLocalStorage;
 
   HistoryMainMenuScreen() {
-    allQuestionsWithConfig =
-        HistoryQuestions().getAllQuestions(MyApp.languageCode);
     historyLocalStorage = HistoryLocalStorage();
   }
 
@@ -106,10 +103,10 @@ class HistoryMainMenuScreenState extends State<HistoryMainMenuScreen>
           NavigatorService().goTo(
               context,
               HistoryGameTimelineScreen(
-                gameContext: HistoryGameContextService().createGameContext(
-                    campaignLevel, widget.allQuestionsWithConfig),
+                gameContext: HistoryGameContextService()
+                    .createGameContext(campaignLevel),
                 difficulty: campaignLevel.difficulty,
-                category: HistoryGameQuestionConfig().cat0,
+                category: HistoryGameQuestionConfig().cat1,
               ), () {
             setState(() {});
           });

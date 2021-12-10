@@ -6,7 +6,7 @@ class NavigatorService {
       BuildContext context, StatefulWidget screen, VoidCallback setState) {
     Navigator.push(context, MaterialPageRoute(builder: (context) => screen))
         .then((value) {
-      setState.call();
+      // setState.call();
     });
   }
 }

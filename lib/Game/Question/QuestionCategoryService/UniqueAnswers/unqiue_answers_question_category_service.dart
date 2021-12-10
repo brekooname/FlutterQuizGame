@@ -21,7 +21,7 @@ class UniqueAnswersCategoryQuestionService extends QuestionCategoryService {
   }
 
   @override
-  QuestionService getQuestionService() {
+  UniqueAnswersQuestionService getQuestionService() {
     return UniqueAnswersQuestionService(questionParser: getQuestionParser());
   }
 

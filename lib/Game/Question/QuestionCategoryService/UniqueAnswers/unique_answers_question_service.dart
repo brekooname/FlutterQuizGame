@@ -1,18 +1,16 @@
-import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/question_parser.dart';
-import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/quiz_game_service.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question.dart';
+import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/question_parser.dart';
 
-import '../../Model/category_difficulty.dart';
+import '../question_service.dart';
 
-class UniqueAnswersQuestionService extends QuizQuestionService {
-
-
+class UniqueAnswersQuestionService extends QuestionService {
   late QuestionParser questionParser;
 
   static final UniqueAnswersQuestionService singleton =
-  UniqueAnswersQuestionService.internal();
+      UniqueAnswersQuestionService.internal();
 
-  factory UniqueAnswersQuestionService({required QuestionParser questionParser}) {
+  factory UniqueAnswersQuestionService(
+      {required QuestionParser questionParser}) {
     singleton.questionParser = questionParser;
     return singleton;
   }
@@ -20,7 +18,12 @@ class UniqueAnswersQuestionService extends QuizQuestionService {
   UniqueAnswersQuestionService.internal();
 
   @override
-  List<String> getAnswers(Question question) {
+  String getQuestionToBeDisplayed(Question question) {
+    return question.rawString.split(":")[0];
+  }
+
+  @override
+  List<String> getCorrectAnswers(Question question) {
     List<String> answers = [];
     List<String> pressedAnswersArray = getCorrectAnswerIds(question);
     List<String> answerOptionsArray = getAnswerOptionsArray(question);
@@ -32,21 +35,14 @@ class UniqueAnswersQuestionService extends QuizQuestionService {
   }
 
   @override
-  String getRandomUnpressedAnswerFromQuestion(
+  String getRandomUnpressedCorrectAnswerFromQuestion(
       Question question, Set<String> pressedAnswers) {
     return getUnpressedCorrectAnswers(question, pressedAnswers).first;
   }
 
   @override
-  List<String> getAllAnswerOptionsForQuestion(
-      Map<CategoryDifficulty, List<Question>> allQuestionsWithConfig,
-      Question question) {
-    List<String> answerOptions = [];
-    for (String answer in getAnswerOptionsArray(question)) {
-      answerOptions.add(answer.trim());
-    }
-    answerOptions.shuffle();
-    return answerOptions;
+  Set<String> getAllAnswerOptionsForQuestion(Question question) {
+    return getAnswerOptionsArray(question).map((e) => e.trim()).toSet();
   }
 
   List<String> getCorrectAnswerIds(Question question) {

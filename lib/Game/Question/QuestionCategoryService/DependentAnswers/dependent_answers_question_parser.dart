@@ -1,7 +1,6 @@
 import 'dart:collection';
 
 import 'package:collection/src/iterable_extensions.dart';
-import 'package:flutter_app_quiz_game/Game/Question/Model/category_difficulty.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/string_extension.dart';
 
@@ -15,19 +14,27 @@ class DependentAnswersQuestionParser extends QuestionParser {
     return [questionString.split(":")[1]];
   }
 
+  @override
+  String getQuestionToBeDisplayed(String questionRawString) {
+    return questionRawString.split(":")[0];
+  }
+
+  int getPrefixCodeForQuestion(String questionRawString) {
+    var val = questionRawString.split(":")[3];
+    return val.isEmpty ? 0 : int.parse(val);
+  }
+
   List<int> getAnswerReferences(String questionRawString) {
     List<String> answers = questionRawString.split(":")[2].split(",");
     return answers.map((e) => int.parse(e.trim())).toList();
   }
 
-  List<String> getAllPossibleAnswersForQuestion(
-      Map<CategoryDifficulty, List<Question>> allQuestionsWithConfig,
+  Set<String> getAllPossibleAnswersForQuestion(
       Question question,
       bool includeAllDifficulties,
       int defaultNrOfPossibleAnswersWithoutCorrectOne) {
     List<Question> allQuestionsForCategory =
-        getQuestionsToChooseAsPossibleAnswers(
-            includeAllDifficulties, allQuestionsWithConfig, question);
+        getQuestionsToChooseAsPossibleAnswers(includeAllDifficulties, question);
 
     var answerReferences = getAnswerReferences(question.rawString);
 
@@ -43,18 +50,15 @@ class DependentAnswersQuestionParser extends QuestionParser {
       possibleAnswersResult.addAll(getPossibleAnswersForSpecifiedReferences(
           answerReferences, allQuestionsForCategory));
     }
-    return possibleAnswersResult.map((e) => e.capitalize()).toList();
+    return possibleAnswersResult.map((e) => e.capitalize()).toSet();
   }
 
   List<Question> getQuestionsToChooseAsPossibleAnswers(
-      bool includeAllDifficulties,
-      Map<CategoryDifficulty, List<Question>> allQuestionsWithConfig,
-      Question question) {
+      bool includeAllDifficulties, Question question) {
     return includeAllDifficulties
-        ? questionCollectorService.getAllQuestionsForCategory(
-            allQuestionsWithConfig, question.category)
+        ? questionCollectorService.getAllQuestionsForCategory(question.category)
         : questionCollectorService.getAllQuestionsForCategoriesAndDifficulties(
-            allQuestionsWithConfig, [question.difficulty], [question.category]);
+            [question.difficulty], [question.category]);
   }
 
   Set<String> getPossibleAnswersForSpecifiedReferences(

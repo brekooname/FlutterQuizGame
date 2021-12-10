@@ -4,12 +4,28 @@ import 'package:flutter_app_quiz_game/Game/Question/Model/question.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
 import 'package:flutter_app_quiz_game/Lib/Constants/language.dart';
+import 'package:flutter_app_quiz_game/Lib/Extensions/enum_extension.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/map_extension.dart';
 
+import '../../main.dart';
 import 'Model/category_difficulty.dart';
 
-abstract class GameAllQuestionsService {
-  Map<CategoryDifficulty, List<Question>> getAllQuestions(String languageCode);
+abstract class AllQuestionsService {
+
+  Map<CategoryDifficulty, List<Question>>? allQuestionsCache;
+
+  Map<CategoryDifficulty, List<Question>> get allQuestions {
+    if (allQuestionsCache == null) {
+      Language language = Language.values
+          .firstWhere((element) => element.name() == MyApp.languageCode);
+
+      allQuestionsCache = getAllQuestionsWithLanguages().get(language) ??
+          getAllQuestionsWithLanguages().get(Language.en);
+    }
+    return allQuestionsCache!;
+  }
+
+  Map<Language, Map<CategoryDifficulty, List<Question>>> getAllQuestionsWithLanguages();
 
   void addQuestions(
       Map<Language, Map<CategoryDifficulty, List<Question>>> result,

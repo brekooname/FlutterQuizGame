@@ -1,34 +1,21 @@
 import 'dart:collection';
 
 import 'package:flutter_app_quiz_game/Game/Question/Model/category_difficulty.dart';
-import 'package:flutter_app_quiz_game/Game/Question/game_all_questions_service.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question.dart';
+import 'package:flutter_app_quiz_game/Game/Question/all_questions_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Constants/history_question_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Constants/language.dart';
-import 'package:flutter_app_quiz_game/Lib/Extensions/enum_extension.dart';
-import 'package:flutter_app_quiz_game/Lib/Extensions/map_extension.dart';
 
-class HistoryQuestions extends GameAllQuestionsService {
-  static final HistoryQuestions singleton = HistoryQuestions.internal();
+class HistoryAllQuestions extends AllQuestionsService {
+  static final HistoryAllQuestions singleton = HistoryAllQuestions.internal();
 
-  factory HistoryQuestions() {
+  factory HistoryAllQuestions() {
     return singleton;
   }
 
-  HistoryQuestions.internal();
+  HistoryAllQuestions.internal();
 
-  Map<CategoryDifficulty, List<Question>> getAllQuestions(String languageCode) {
-    Language language =
-        Language.values.firstWhere((element) => element.name() == languageCode);
-
-    var questions = getAllQuestionsWithLanguages().get(language);
-    if (questions == null) {
-      return getAllQuestionsWithLanguages().get(Language.en);
-    } else {
-      return questions;
-    }
-  }
-
+  @override
   Map<Language, Map<CategoryDifficulty, List<Question>>>
       getAllQuestionsWithLanguages() {
     Map<Language, Map<CategoryDifficulty, List<Question>>> result =
@@ -102,16 +89,16 @@ class HistoryQuestions extends GameAllQuestionsService {
         questionConfig.cat2, //
         questionConfig.diff0, //
         [
-          "Battle of Waterloo:Belgium:2,3,5",
-          "Battle of Gettysburg:USA:5,6,7",
-          "Siege of Stalingrad:Russia:6,8,9",
-          "Invasion of Normandy:France:5,6,8",
-          "The Battle of Okinawa:Japan:1,8,9",
-          "The Battle of Vienna:Austria:6,0,3",
-          "Fall of the Berlin Wall:Germany:0,5,3",
-          "Treaty of Versailles:France:1,0,5",
-          "Assassination of Archduke Franz Ferdinand:Bosnia and Herzegovina:1,5,6",
-          "Chernobyl disaster:Ukraine:1,2,8"
+          "Battle of Waterloo:Belgium:2,3,5:0",
+          "Battle of Gettysburg:USA:5,6,7:0",
+          "Siege of Stalingrad:Russia:6,8,9:0",
+          "Invasion of Normandy:France:5,6,8:0",
+          "The Battle of Okinawa:Japan:1,8,9:0",
+          "The Battle of Vienna:Austria:6,0,3:0",
+          "Fall of the Berlin Wall:Germany:0,5,3:0",
+          "Treaty of Versailles:France:1,0,5:0",
+          "Assassination of Archduke Franz Ferdinand:Bosnia and Herzegovina:1,5,6:0",
+          "Chernobyl disaster:Ukraine:1,2,8:0"
         ]);
     addQuestions(
         result, //
@@ -184,14 +171,14 @@ class HistoryQuestions extends GameAllQuestionsService {
         questionConfig.cat2, //
         questionConfig.diff1, //
         [
-          "Siege of Orleans:France:1,2,6",
-          "Fall of Constantinople:Turkey:0,2,7",
-          "Battle of Hastings:England:0,1,5",
-          "Machu Picchu:Peru:4,5,6",
-          "Bagan:Myanmar:3,5,7",
-          "Angkor:Cambodia:3,4,6",
-          "Taj Mahal:India:4,5,7",
-          "The Great Wall:China:3,5,6"
+          "Siege of Orleans:France:1,2,6:0",
+          "Fall of Constantinople:Turkey:0,2,7:0",
+          "Battle of Hastings:England:0,1,5:0",
+          "Machu Picchu:Peru:4,5,6:1",
+          "Bagan:Myanmar:3,5,7:1",
+          "Angkor:Cambodia:3,4,6:1",
+          "Taj Mahal:India:4,5,7:1",
+          "The Great Wall:China:3,5,6:1"
         ]);
     addQuestions(
         result, //
@@ -258,13 +245,13 @@ class HistoryQuestions extends GameAllQuestionsService {
         questionConfig.cat2, //
         questionConfig.diff2, //
         [
-          "Battle of Marathon:Greece:",
-          "Battle of Zama:Tunisia:",
-          "Battle of Gaugamela:Iraq:",
-          "Pyramids of Giza:Egypt:",
-          "Petra:Jordan:",
-          "Pompeii:Italy:",
-          "Library of Alexandria:Egypt:"
+          "Battle of Marathon:Greece::0",
+          "Battle of Zama:Tunisia::0",
+          "Battle of Gaugamela:Iraq::0",
+          "Pyramids of Giza:Egypt::1",
+          "Petra:Jordan::1",
+          "Pompeii:Italy::1",
+          "Library of Alexandria:Egypt::1"
         ]);
     addQuestions(
         result, //
@@ -310,10 +297,10 @@ class HistoryQuestions extends GameAllQuestionsService {
         questionConfig.cat2, //
         questionConfig.diff3, //
         [
-          "Venus of Willendorf:Austria:",
-          "Lascaux cave:France:",
-          "Sumer:Iraq:",
-          "Stonehenge:England:"
+          "Venus of Willendorf:Austria::1",
+          "Lascaux cave:France::1",
+          "Sumer:Iraq::1",
+          "Stonehenge:England::1"
         ]);
     addQuestions(
         result, //

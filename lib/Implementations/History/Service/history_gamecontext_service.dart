@@ -18,18 +18,15 @@ class HistoryGameContextService {
 
   HistoryGameContextService.internal();
 
-  GameContext createGameContext(CampaignLevel campaignLevel,
-      Map<CategoryDifficulty, List<Question>> allQuestionsWithConfig) {
-    var gameContext =
-        GameContextService(allQuestionsWithConfig: allQuestionsWithConfig)
-            .createGameContextWithHintsAndQuestions(
-                11,
-                _questionCollectorService
-                    .getAllQuestionsForCategoriesAndDifficulties(
-                  allQuestionsWithConfig,
-                  [campaignLevel.difficulty],
-                  campaignLevel.category,
-                ));
+  GameContext createGameContext(CampaignLevel campaignLevel) {
+    var gameContext = GameContextService()
+        .createGameContextWithHintsAndQuestions(
+            11,
+            _questionCollectorService
+                .getAllQuestionsForCategoriesAndDifficulties(
+              [campaignLevel.difficulty],
+              campaignLevel.category,
+            ));
     return gameContext;
   }
 }

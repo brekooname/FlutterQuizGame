@@ -1,5 +1,7 @@
 import 'package:flutter_app_quiz_game/Game/GameType/game_question_config.dart';
 import 'package:flutter_app_quiz_game/Game/GameType/game_config.dart';
+import 'package:flutter_app_quiz_game/Game/Question/all_questions_service.dart';
+import 'package:flutter_app_quiz_game/Implementations/History/Questions/history_all_questions.dart';
 import 'package:flutter_app_quiz_game/Lib/Constants/language.dart';
 
 import 'Constants/history_question_config.dart';
@@ -14,9 +16,13 @@ class HistoryGameConfig extends GameConfig {
   HistoryGameConfig.internal();
 
   @override
-  GameQuestionConfig getGameQuestionConfig() {
-    return HistoryGameQuestionConfig();
-  }
+  GameQuestionConfig get gameQuestionConfig => HistoryGameQuestionConfig();
+
+  @override
+  AllQuestionsService get allQuestionsService => HistoryAllQuestions();
+
+  @override
+  String get extraContentProductId => "";
 
   @override
   String getTitle(Language language) {
@@ -81,4 +87,5 @@ class HistoryGameConfig extends GameConfig {
         return "历史游戏";
     }
   }
+
 }

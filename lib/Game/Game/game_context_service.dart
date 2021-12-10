@@ -11,14 +11,9 @@ import 'game_context.dart';
 import 'game_user.dart';
 
 class GameContextService {
-  late Map<CategoryDifficulty, List<Question>> allQuestionsWithConfig;
-
   static final GameContextService singleton = GameContextService.internal();
 
-  factory GameContextService(
-      {required Map<CategoryDifficulty, List<Question>>
-          allQuestionsWithConfig}) {
-    singleton.allQuestionsWithConfig = allQuestionsWithConfig;
+  factory GameContextService() {
     return singleton;
   }
 
@@ -44,8 +39,8 @@ class GameContextService {
 
   GameContext createGameContextWithQuestionConfig(
       QuestionConfig questionConfig) {
-    List<Question> randomQuestions = RandomQuestionCreatorService()
-        .createRandomQuestions(allQuestionsWithConfig, questionConfig);
+    List<Question> randomQuestions =
+        RandomQuestionCreatorService().createRandomQuestions(questionConfig);
     GameUser gameUser = createGameUser(randomQuestions);
     return createGameContextWithUserAndQuestionConfig(gameUser, questionConfig);
   }
@@ -64,7 +59,7 @@ class GameContextService {
   }
 
   void addNewQuestionInfo(GameUser gameUser, Question question) {
-    QuestionInfo gameQuestionInfo = QuestionInfo(question: question);
+    QuestionInfo gameQuestionInfo = QuestionInfo(question);
     gameUser.addQuestionInfoToList(gameQuestionInfo);
     question.category.questionCategoryService
         .getQuestionService()
