@@ -61,7 +61,7 @@ class InAppPurchasesPopup extends StatelessWidget with MyPopup {
           text: label.l_buy,
           backgroundColor: Colors.lightGreenAccent,
           onClick: () {
-            Navigator.pop(context);
+            navigatorService.pop();
           },
         ),
         SizedBox(height: screenDimensions.h(5)),
@@ -69,7 +69,7 @@ class InAppPurchasesPopup extends StatelessWidget with MyPopup {
           text: label.l_restore_purchase,
           backgroundColor: Colors.grey.shade300,
           onClick: () {
-            Navigator.pop(context);
+            navigatorService.pop();
           },
         ),
       ],

@@ -5,18 +5,25 @@ import 'package:flutter_app_quiz_game/Implementations/History/history_game_confi
 import 'package:flutter_app_quiz_game/Lib/Extensions/map_extension.dart';
 
 class AppIds {
-  static AppId history = AppId("history", HistoryGameConfig());
-
-  late AppId appId;
-
   Map<String, GameConfig> appIds = HashMap<String, GameConfig>();
 
-  AppIds({required String appKey}) {
-    //
-    appIds.putIfAbsent(history.appKey, () => history.gameConfig);
-    //
+  static final AppIds singleton = AppIds.internal();
 
-    appId = AppId(appKey, appIds.get(appKey));
+  factory AppIds() {
+    //
+    singleton.appIds.putIfAbsent("history", () => HistoryGameConfig());
+    //
+    return singleton;
+  }
+
+  AppIds.internal();
+
+  AppId getAppId(String appKey) {
+    var gameConfig = appIds.get<String, GameConfig>(appKey);
+    if (gameConfig == null) {
+      throw UnsupportedError("unsupported app key " + appKey);
+    }
+    return AppId(appKey, gameConfig);
   }
 }
 

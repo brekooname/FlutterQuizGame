@@ -23,9 +23,10 @@ abstract class QuestionService {
   }
 
   String getPrefixToBeDisplayedForQuestion(Question question) {
-    return MyApp.appId.gameConfig.gameQuestionConfig.prefixLabelForCode.get(
-            QuestionCategoryWithPrefixCode(
-                question.category, getPrefixCodeForQuestion(question))) ??
+    return MyApp.appId.gameConfig.gameQuestionConfig.prefixLabelForCode
+            .get<QuestionCategoryWithPrefixCode, String>(
+                QuestionCategoryWithPrefixCode(
+                    question.category, getPrefixCodeForQuestion(question))) ??
         "";
   }
 

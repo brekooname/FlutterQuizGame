@@ -6,6 +6,7 @@ import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Font/font_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Image/image_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Localization/localization_service.dart';
+import 'package:flutter_app_quiz_game/Lib/Navigation/navigator_service.dart';
 import 'package:flutter_app_quiz_game/Lib/ScreenDimensions/screen_dimensions_service.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -14,6 +15,7 @@ import '../../main.dart';
 mixin MyPopup {
   late double width;
   late BuildContext buildContext;
+  late NavigatorService navigatorService;
   LocalizationService localizationService = LocalizationService();
   ImageService imageService = ImageService();
   ButtonSize buttonSize = ButtonSize();
@@ -21,6 +23,7 @@ mixin MyPopup {
 
   void initPopup(BuildContext buildContext) {
     this.buildContext = buildContext;
+    this.navigatorService = NavigatorService(buildContext);
     this.width = screenDimensions.w(100);
   }
 
@@ -66,7 +69,7 @@ mixin MyPopup {
         size: Size(closeBtnWidth, closeBtnWidth),
         onClick: () {
           if (onCloseBtnClick == null) {
-            Navigator.of(buildContext).pop();
+            navigatorService.pop();
           } else {
             onCloseBtnClick.call();
           }

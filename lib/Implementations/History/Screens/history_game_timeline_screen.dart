@@ -26,7 +26,7 @@ import '../../../Lib/Font/font_config.dart';
 
 class HistoryGameTimelineScreen extends StatefulWidget with GameScreen {
   late HistoryLocalStorage historyLocalStorage;
-  late QuestionInfo currentQuestion;
+  late QuestionInfo currentQuestionInfo;
 
   Map<int, HistoryQuestion> questions = HashMap<int, HistoryQuestion>();
   int? mostRecentPressedCurrentQuestion;
@@ -42,7 +42,7 @@ class HistoryGameTimelineScreen extends StatefulWidget with GameScreen {
     initScreen(HistoryCampaignLevel(), gameContext, difficulty, category);
     historyLocalStorage = HistoryLocalStorage();
 
-    currentQuestion =
+    currentQuestionInfo =
         gameContext.gameUser.getRandomQuestion(difficulty, category);
   }
 
@@ -90,7 +90,7 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
   Widget build(BuildContext context) {
     initScreen(context);
 
-    if (widget.currentQuestion == -1) {
+    if (widget.currentQuestionInfo == -1) {
       Future.delayed(
           Duration.zero,
           () => showDialog(
@@ -133,7 +133,7 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
 
       var questionAnswer = qi.question.rawString.split(":")[1];
       var correctAnswerText =
-          widget.currentQuestion.question.rawString.split(":")[1];
+          widget.currentQuestionInfo.question.rawString.split(":")[1];
       MyButton answerBtn = createAnswerButton(
           answerBtnSize,
           disabled,
@@ -157,7 +157,7 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
 
     var header = HistoryGameLevelHeader(
       availableHints: widget.gameContext.amountAvailableHints,
-      question: widget.currentQuestion.question,
+      question: widget.currentQuestionInfo.question,
       animateScore: widget.correctAnswerPressed,
       score: formatTextWithOneParam(label.l_score_param0, levelsWon.length),
       hintButtonOnClick: () {
@@ -172,7 +172,8 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
       itemScrollController: itemScrollController,
       itemBuilder: (BuildContext context, int index) {
         var revertedIndex = getRevertedIndexForScrollView(index);
-        HistoryQuestion? question = widget.questions.get(revertedIndex);
+        HistoryQuestion? question =
+            widget.questions.get<int, HistoryQuestion>(revertedIndex);
 
         if (widget.category == HistoryGameQuestionConfig().cat0) {
           return createOptionItemCat0(question!.button, answerBtnSize,
@@ -201,7 +202,7 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
       String correctAnswerOptionText,
       String optionTextToDisplay) {
     var btnBackgr = Colors.lightBlueAccent;
-    int questionIndex = widget.currentQuestion.question.index;
+    int questionIndex = widget.currentQuestionInfo.question.index;
     var answerBtn = MyButton(
         size: answerBtnSize,
         disabled: disabled,
@@ -212,7 +213,7 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
               audioPlayer.playSuccess();
               widget.shownAnswerImages.add(questionIndex);
               widget.gameContext.gameUser
-                  .setWonQuestion(widget.currentQuestion);
+                  .setWonQuestion(widget.currentQuestionInfo);
               widget.correctAnswerPressed = true;
               widget.historyLocalStorage.setHighScore(
                   widget.gameContext.gameUser
@@ -224,12 +225,12 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
                   index: getRevertedIndexForScrollView(questionIndex),
                   duration: Duration(milliseconds: 600));
               widget.gameContext.gameUser
-                  .setLostQuestion(widget.currentQuestion);
+                  .setLostQuestion(widget.currentQuestionInfo);
               widget.correctAnswerPressed = false;
             }
           });
           widget.mostRecentPressedCurrentQuestion = questionIndex;
-          widget.currentQuestion = widget.gameContext.gameUser
+          widget.currentQuestionInfo = widget.gameContext.gameUser
               .getRandomQuestion(widget.difficulty, widget.category);
         },
         buttonSkinConfig: ButtonSkinConfig(
@@ -303,7 +304,7 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
         .map((e) => e.question.index)
         .toList();
     availableQuestionsToShowImages.shuffle();
-    var currentIndex = widget.currentQuestion.question.index;
+    var currentIndex = widget.currentQuestionInfo.question.index;
     availableQuestionsToShowImages.remove(currentIndex);
     availableQuestionsToShowImages.removeAll(widget.shownAnswerImages);
     Set<int> imagesToShow = Set();

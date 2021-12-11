@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_app_quiz_game/Lib/Constants/contrast.dart';
 import 'package:flutter_app_quiz_game/Lib/Image/image_service.dart';
+import 'package:flutter_app_quiz_game/Lib/Navigation/navigator_service.dart';
 import 'package:flutter_app_quiz_game/Lib/ScreenDimensions/screen_dimensions_service.dart';
 
 import '../../Lib/Button/button_skin_config.dart';
@@ -21,7 +22,7 @@ class MyBackButton extends StatelessWidget {
     _button_size = Size(side, side);
     this.onClick = onClick ??
         () {
-          Navigator.pop(context);
+          NavigatorService(context).pop();
         };
   }
 

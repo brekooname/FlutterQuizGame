@@ -41,7 +41,7 @@ class MyAppState extends State<MyApp> {
     bool isPro;
     if (kIsWeb) {
       //
-      var appId = AppIds.history;
+      var appId = AppIds().getAppId("history");
       //
       appTitle = appId.gameConfig.getTitle(Language.en);
       appKey = appId.appKey;
@@ -58,7 +58,7 @@ class MyAppState extends State<MyApp> {
       SharedPreferences localStorage = await SharedPreferences.getInstance();
       setState(() {
         widget.initCompleted = true;
-        MyApp.appId = AppIds(appKey: appKey).appId;
+        MyApp.appId = AppIds().getAppId(appKey);
         MyApp.appTitle = appTitle;
         MyApp.isPro = isPro;
         MyApp.languageCode =
@@ -75,10 +75,13 @@ class MyAppState extends State<MyApp> {
       RateAppLocalStorage rateAppLocalStorage = RateAppLocalStorage();
       rateAppLocalStorage.incrementAppLaunchedCount();
 
+      var historyGameScreenManager =
+          HistoryGameScreenManager(buildContext: context);
       //
       // widgetToShow = HistoryMainMenuScreen();
-      widgetToShow = HistoryGameScreenManager(buildContext: context)
-          .getScreen(HistoryCampaignLevel().level_0);
+      var campaignLevel = HistoryCampaignLevel().level_0;
+      widgetToShow = historyGameScreenManager.getScreen(campaignLevel,
+          historyGameScreenManager.createGameContext(campaignLevel));
       //
     } else {
       init(context);

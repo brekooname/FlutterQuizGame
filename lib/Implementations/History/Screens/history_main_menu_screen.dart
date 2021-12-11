@@ -1,21 +1,12 @@
-import 'dart:collection';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Game/Game/campaign_level.dart';
-import 'package:flutter_app_quiz_game/Game/Question/Model/category_difficulty.dart';
-import 'package:flutter_app_quiz_game/Game/Question/Model/question.dart';
-
 import 'package:flutter_app_quiz_game/Implementations/History/Constants/history_campaign_level.dart';
-import 'package:flutter_app_quiz_game/Implementations/History/Constants/history_question_config.dart';
-import 'package:flutter_app_quiz_game/Implementations/History/Questions/history_all_questions.dart';
-import 'package:flutter_app_quiz_game/Implementations/History/Screens/history_game_question_screen.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Service/history_game_local_storage.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Service/history_game_screen_manager.dart';
-import 'package:flutter_app_quiz_game/Implementations/History/Service/history_gamecontext_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/settings_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Color/color_util.dart';
-import 'package:flutter_app_quiz_game/Lib/Navigation/navigator_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/standard_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/game_title.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
@@ -23,7 +14,6 @@ import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 import '../../../Lib/Button/button_skin_config.dart';
 import '../../../Lib/Font/font_config.dart';
 import '../../../main.dart';
-import 'history_game_timeline_screen.dart';
 
 class HistoryMainMenuScreen extends StatefulWidget {
   late HistoryLocalStorage historyLocalStorage;
@@ -102,7 +92,7 @@ class HistoryMainMenuScreenState extends State<HistoryMainMenuScreen>
         size: btnSize,
         onClick: () {
           HistoryGameScreenManager(buildContext: context)
-              .showScreen(campaignLevel);
+              .showNewGameScreen(campaignLevel);
         },
         buttonSkinConfig: ButtonSkinConfig(backgroundColor: btnColor),
         fontConfig: FontConfig(),

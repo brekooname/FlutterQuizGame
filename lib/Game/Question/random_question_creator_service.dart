@@ -30,8 +30,7 @@ class RandomQuestionCreatorService {
         allQuestionsWithConfig[randomLine].rawString.capitalize());
   }
 
-  List<Question> createRandomQuestions(
-      QuestionConfig questionConfig) {
+  List<Question> createRandomQuestions(QuestionConfig questionConfig) {
     int questionAmount = questionConfig.amountOfQuestions;
     Set<QuestionCategory> categsToUse = questionConfig.categories;
     Set<QuestionCategory> alreadyUsedCategs = {};
@@ -57,10 +56,12 @@ class RandomQuestionCreatorService {
           .getQuestionParser();
       int repeat2 = 0;
       var allQuestionsWithConfig =
-      MyApp.appId.gameConfig.allQuestionsService.allQuestions;
+          MyApp.appId.gameConfig.allQuestionsService.allQuestions;
       Question randomQuestion = createRandomQuestion(
           randomCategoryAndDifficulty,
-          allQuestionsWithConfig.get(randomCategoryAndDifficulty) ?? []);
+          allQuestionsWithConfig.get<CategoryDifficulty, List<Question>>(
+                  randomCategoryAndDifficulty) ??
+              []);
       while (randomQuestions.contains(randomQuestion) ||
           !questionParser.isQuestionValid(randomQuestion)
           //try to use all question categories
@@ -71,8 +72,11 @@ class RandomQuestionCreatorService {
         if (repeat2 > 100) {
           break;
         }
-        randomQuestion = createRandomQuestion(randomCategoryAndDifficulty,
-            allQuestionsWithConfig.get(randomCategoryAndDifficulty) ?? []);
+        randomQuestion = createRandomQuestion(
+            randomCategoryAndDifficulty,
+            allQuestionsWithConfig.get<CategoryDifficulty, List<Question>>(
+                    randomCategoryAndDifficulty) ??
+                []);
         repeat2++;
       }
       randomQuestions[i] = randomQuestion;

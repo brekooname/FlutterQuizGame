@@ -54,7 +54,7 @@ class SettingsPopupState extends State<SettingsPopup> with MyPopup {
                 setState(() {
                   widget._settingsLocalStorage.toggleSound();
                   Future.delayed(Duration(milliseconds: 300),
-                      () => Navigator.of(buildContext).pop());
+                      () => navigatorService.pop());
                 });
               },
             ),

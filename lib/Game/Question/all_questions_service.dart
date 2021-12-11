@@ -11,7 +11,6 @@ import '../../main.dart';
 import 'Model/category_difficulty.dart';
 
 abstract class AllQuestionsService {
-
   Map<CategoryDifficulty, List<Question>>? allQuestionsCache;
 
   Map<CategoryDifficulty, List<Question>> get allQuestions {
@@ -19,13 +18,18 @@ abstract class AllQuestionsService {
       Language language = Language.values
           .firstWhere((element) => element.name() == MyApp.languageCode);
 
-      allQuestionsCache = getAllQuestionsWithLanguages().get(language) ??
-          getAllQuestionsWithLanguages().get(Language.en);
+      allQuestionsCache = getAllQuestionsWithLanguages()
+              .get<Language, Map<CategoryDifficulty, List<Question>>>(
+                  language) ??
+          getAllQuestionsWithLanguages()
+              .get<Language, Map<CategoryDifficulty, List<Question>>>(
+                  Language.en);
     }
     return allQuestionsCache!;
   }
 
-  Map<Language, Map<CategoryDifficulty, List<Question>>> getAllQuestionsWithLanguages();
+  Map<Language, Map<CategoryDifficulty, List<Question>>>
+      getAllQuestionsWithLanguages();
 
   void addQuestions(
       Map<Language, Map<CategoryDifficulty, List<Question>>> result,
@@ -33,11 +37,13 @@ abstract class AllQuestionsService {
       QuestionCategory cat,
       QuestionDifficulty diff,
       List<String> strings) {
-    Map<CategoryDifficulty, List<Question>>? map = result.get(language);
+    Map<CategoryDifficulty, List<Question>>? map =
+        result.get<Language, Map<CategoryDifficulty, List<Question>>>(language);
     if (map == null) {
       result.putIfAbsent(
           language, () => HashMap<CategoryDifficulty, List<Question>>());
-      map = result.get(language);
+      map = result
+          .get<Language, Map<CategoryDifficulty, List<Question>>>(language);
     }
     _addQuestions(map, cat, diff, strings);
   }

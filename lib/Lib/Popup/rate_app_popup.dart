@@ -72,7 +72,7 @@ class RateAppPopup extends StatelessWidget with MyPopup {
           text: label.l_rate_later,
           backgroundColor: Colors.grey.shade300,
           onClick: () {
-            Navigator.pop(context);
+            navigatorService.pop();
           },
         ),
       ],

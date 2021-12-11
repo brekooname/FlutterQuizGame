@@ -10,6 +10,7 @@ import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/ques
 import 'package:flutter_app_quiz_game/Implementations/History/Components/history_game_level_header.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Constants/history_campaign_level.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Service/history_game_local_storage.dart';
+import 'package:flutter_app_quiz_game/Implementations/History/Service/history_game_screen_manager.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/button_skin_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Color/color_util.dart';
@@ -39,8 +40,10 @@ class HistoryGameQuestionScreen extends StatefulWidget with GameScreen {
     currentQuestionInfo =
         gameContext.gameUser.getRandomQuestion(difficulty, category);
     questionService = currentQuestionInfo.question.questionService;
-    possibleAnswers = questionService
-        .getAllAnswerOptionsForQuestion(currentQuestionInfo.question);
+    var list = List.of(questionService
+        .getAllAnswerOptionsForQuestion(currentQuestionInfo.question));
+    list.shuffle();
+    possibleAnswers = HashSet.of(list);
   }
 
   @override
@@ -112,14 +115,26 @@ class HistoryGameQuestionScreenState extends State<HistoryGameQuestionScreen>
                     .isAnswerCorrectInQuestion(
                         widget.currentQuestionInfo.question, text)) {
                   widget.correctAnswerPressed = true;
+                  widget.gameContext.gameUser
+                      .setWonQuestion(widget.currentQuestionInfo);
                 } else {
                   widget.wrongPressedAnswer = text;
+                  widget.gameContext.gameUser
+                      .setLostQuestion(widget.currentQuestionInfo);
                 }
                 // widget.currentQuestionInfo = widget.gameContext.gameUser
                 //     .getRandomQuestion(
                 //         widget.currentQuestionInfo.question.difficulty,
                 //         widget.currentQuestionInfo.question.category);
               });
+
+              Future.delayed(
+                  Duration(milliseconds: 1100),
+                  () => {
+                        HistoryGameScreenManager(buildContext: context)
+                            .showNextGameScreen(HistoryCampaignLevel().level_0,
+                                widget.gameContext)
+                      });
             },
             buttonSkinConfig: ButtonSkinConfig(
                 borderColor: ColorUtil.colorDarken(btnBackgr, 0.1),
