@@ -7,26 +7,41 @@ import 'package:flutter_app_quiz_game/Lib/Extensions/string_extension.dart';
 import '../question_parser.dart';
 
 class DependentAnswersQuestionParser extends QuestionParser {
+
+  static final DependentAnswersQuestionParser singleton = DependentAnswersQuestionParser.internal();
+
+  factory DependentAnswersQuestionParser() {
+    return singleton;
+  }
+
+  DependentAnswersQuestionParser.internal();
+
   //We return a list in case of multiple correct answers
   // but for this case there is only one correct answer
   @override
   List<String> getCorrectAnswersFromRawString(String questionString) {
-    return [questionString.split(":")[1]];
+    return [questionString.split(":")[1].trim()];
   }
 
   @override
   String getQuestionToBeDisplayed(String questionRawString) {
-    return questionRawString.split(":")[0];
+    return questionRawString.split(":")[0].trim();
   }
 
   int getPrefixCodeForQuestion(String questionRawString) {
-    var val = questionRawString.split(":")[3];
+    var val = questionRawString.split(":")[3].trim();
     return val.isEmpty ? 0 : int.parse(val);
   }
 
   List<int> getAnswerReferences(String questionRawString) {
-    List<String> answers = questionRawString.split(":")[2].split(",");
-    return answers.map((e) => int.parse(e.trim())).toList();
+    List<String> answers = questionRawString
+        .split(":")[2]
+        .split(",")
+        .where((element) => element.trim().isNotEmpty)
+        .toList();
+    return answers.isEmpty
+        ? []
+        : answers.map((e) => int.parse(e.trim())).toList();
   }
 
   Set<String> getAllPossibleAnswersForQuestion(
@@ -39,11 +54,13 @@ class DependentAnswersQuestionParser extends QuestionParser {
     var answerReferences = getAnswerReferences(question.rawString);
 
     Set<String> possibleAnswersResult = Set();
-    possibleAnswersResult
-        .addAll(getCorrectAnswersFromRawString(question.rawString));
+    var correctAnswerForCurrentQuestion =
+        getCorrectAnswersFromRawString(question.rawString).first;
+    possibleAnswersResult.add(correctAnswerForCurrentQuestion);
     if (answerReferences.isEmpty) {
       possibleAnswersResult.addAll(
           getPossibleAnswersInCaseNoReferencesWereSpecified(
+              correctAnswerForCurrentQuestion,
               allQuestionsForCategory,
               defaultNrOfPossibleAnswersWithoutCorrectOne));
     } else {
@@ -77,18 +94,23 @@ class DependentAnswersQuestionParser extends QuestionParser {
   }
 
   Set<String> getPossibleAnswersInCaseNoReferencesWereSpecified(
+      String correctAnswerForCurrentQuestion,
       List<Question> allQuestionsForCategory,
       int defaultNrOfPossibleAnswersWithoutCorrectOne) {
-    allQuestionsForCategory.shuffle();
+    List<Question> questionsToProcess = List.of(allQuestionsForCategory);
+    questionsToProcess.shuffle();
     int i = 0;
     Set<String> possibleAnswersResult = HashSet();
     while (possibleAnswersResult.length <
-        defaultNrOfPossibleAnswersWithoutCorrectOne) {
-      if (allQuestionsForCategory.length < i + 1) {
-        break;
+            defaultNrOfPossibleAnswersWithoutCorrectOne &&
+        questionsToProcess.length >= i + 1) {
+      String correctAnswerFromRawString =
+          getCorrectAnswersFromRawString(questionsToProcess[i].rawString).first;
+
+      if (correctAnswerForCurrentQuestion != correctAnswerFromRawString) {
+        possibleAnswersResult.add(correctAnswerFromRawString);
       }
-      possibleAnswersResult.addAll(
-          getCorrectAnswersFromRawString(allQuestionsForCategory[i].rawString));
+
       i++;
     }
     return possibleAnswersResult;

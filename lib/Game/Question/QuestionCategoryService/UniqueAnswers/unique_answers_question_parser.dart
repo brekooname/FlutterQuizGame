@@ -1,16 +1,23 @@
 
 import '../question_parser.dart';
 
-class DependentAnswersQuestionParser extends QuestionParser {
+class UniqueAnswersQuestionParser extends QuestionParser {
+
+  static final UniqueAnswersQuestionParser singleton = UniqueAnswersQuestionParser.internal();
+
+  factory UniqueAnswersQuestionParser() {
+    return singleton;
+  }
+
+  UniqueAnswersQuestionParser.internal();
+
   @override
   List<String> getCorrectAnswersFromRawString(String questionString) {
-    // TODO: implement getCorrectAnswersFromRawString
-    throw UnimplementedError();
+    return [questionString.split("::")[2].trim()];
   }
 
   @override
   String getQuestionToBeDisplayed(String questionRawString) {
-    // TODO: implement getQuestionToBeDisplayed
-    throw UnimplementedError();
+    return questionRawString.split("::")[0];
   }
 }

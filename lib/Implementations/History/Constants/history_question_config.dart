@@ -5,6 +5,7 @@ import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/Depe
 import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/UniqueAnswers/unqiue_answers_question_category_service.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
+import 'package:flutter_app_quiz_game/Implementations/History/Questions/history_question_category_service.dart';
 
 class HistoryGameQuestionConfig extends GameQuestionConfig {
   late QuestionCategory cat0;
@@ -26,10 +27,10 @@ class HistoryGameQuestionConfig extends GameQuestionConfig {
     //CATEGORIES
     singleton.cat0 = QuestionCategory(
         index: 0,
-        questionCategoryService: UniqueAnswersCategoryQuestionService());
+        questionCategoryService: HistoryCategoryQuestionService());
     singleton.cat1 = QuestionCategory(
         index: 1,
-        questionCategoryService: UniqueAnswersCategoryQuestionService());
+        questionCategoryService: HistoryCategoryQuestionService());
     singleton.cat2 = QuestionCategory(
         index: 2,
         questionCategoryService: DependentAnswersCategoryQuestionService());
@@ -71,7 +72,7 @@ class HistoryGameQuestionConfig extends GameQuestionConfig {
         () => label.l_where_did_the_event_take_place);
     res.putIfAbsent(QuestionCategoryWithPrefixCode(cat2, 1),
             () => label.l_in_what_modern_country_is_it_located);
-    res.putIfAbsent(QuestionCategoryWithPrefixCode(cat3, 0),
+    res.putIfAbsent(QuestionCategoryWithPrefixCode(cat4, 0),
             () => label.l_identify_the_historical_figure);
     return res;
   }

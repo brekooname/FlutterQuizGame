@@ -124,15 +124,15 @@ class HistoryAllQuestions extends AllQuestionsService {
         questionConfig.cat4, //
         questionConfig.diff0, //
         [
-          ":Napoleon Bonaparte:",
-          ":William Shakespeare:",
-          ":Abraham Lincoln:",
-          ":George Washington:",
-          ":Thomas Jefferson:",
-          ":Charles Darwin:",
-          ":Martin Luther:",
-          ":Albert Einstein:",
-          ":Isaac Newton:"
+          ":Napoleon Bonaparte::",
+          ":William Shakespeare::",
+          ":Abraham Lincoln::",
+          ":George Washington::",
+          ":Thomas Jefferson::",
+          ":Charles Darwin::",
+          ":Martin Luther::",
+          ":Albert Einstein::",
+          ":Isaac Newton::"
         ]);
     addQuestions(
         result, //
@@ -200,14 +200,14 @@ class HistoryAllQuestions extends AllQuestionsService {
         questionConfig.cat4, //
         questionConfig.diff1, //
         [
-          ":Christopher Columbus:",
-          ":Charlemagne:",
-          ":Leonardo da Vinci:",
-          ":Genghis Khan:",
-          ":Galileo Galilei:",
-          ":Ferdinand Magellan:",
-          ":Nicolaus Copernicus:",
-          ":Michelangelo:"
+          ":Christopher Columbus::",
+          ":Charlemagne::",
+          ":Leonardo da Vinci::",
+          ":Genghis Khan::",
+          ":Galileo Galilei::",
+          ":Ferdinand Magellan::",
+          ":Nicolaus Copernicus::",
+          ":Michelangelo::"
         ]);
     addQuestions(
         result, //
@@ -272,12 +272,12 @@ class HistoryAllQuestions extends AllQuestionsService {
         questionConfig.cat4, //
         questionConfig.diff2, //
         [
-          ":Alexander the Great:",
-          ":Julius Caesar:",
-          ":Plato:",
-          ":Aristotle:",
-          ":Confucius:",
-          ":Socrates:"
+          ":Alexander the Great::",
+          ":Julius Caesar::",
+          ":Plato::",
+          ":Aristotle::",
+          ":Confucius::",
+          ":Socrates::"
         ]);
     addQuestions(
         result, //
@@ -297,7 +297,7 @@ class HistoryAllQuestions extends AllQuestionsService {
         questionConfig.cat2, //
         questionConfig.diff3, //
         [
-          "Venus of Willendorf:Austria::1",
+          "Göbekli Tepe:Turkey::1",
           "Lascaux cave:France::1",
           "Sumer:Iraq::1",
           "Stonehenge:England::1"

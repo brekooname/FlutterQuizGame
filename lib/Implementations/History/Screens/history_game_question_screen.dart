@@ -39,6 +39,7 @@ class HistoryGameQuestionScreen extends StatefulWidget with GameScreen {
 
     currentQuestionInfo =
         gameContext.gameUser.getRandomQuestion(difficulty, category);
+
     questionService = currentQuestionInfo.question.questionService;
     var list = List.of(questionService
         .getAllAnswerOptionsForQuestion(currentQuestionInfo.question));
@@ -76,16 +77,24 @@ class HistoryGameQuestionScreenState extends State<HistoryGameQuestionScreen>
       mainAxisAlignment: MainAxisAlignment.center,
       children: answerBtns,
     ));
-    Column btnContainer = Column(
+    Widget btnContainer = Expanded(
+        child: Column(
       children: answerRows,
-    );
+    ));
 
     var mainColumn = Column(
       mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[header, Expanded(child: btnContainer)],
+      children: <Widget>[header, createImageContainer(), btnContainer],
     );
 
     return createScreen(mainColumn);
+  }
+
+  Widget createImageContainer() {
+    return Expanded(
+        child: Container(
+            child: imageService.getSpecificImage(
+                imageName: "timeline_opt_unknown")));
   }
 
   Widget createPossibleAnswerButton(String text) {
@@ -114,25 +123,23 @@ class HistoryGameQuestionScreenState extends State<HistoryGameQuestionScreen>
                 if (widget.currentQuestionInfo.question.questionService
                     .isAnswerCorrectInQuestion(
                         widget.currentQuestionInfo.question, text)) {
+                  audioPlayer.playSuccess();
                   widget.correctAnswerPressed = true;
                   widget.gameContext.gameUser
                       .setWonQuestion(widget.currentQuestionInfo);
                 } else {
+                  audioPlayer.playFail();
                   widget.wrongPressedAnswer = text;
                   widget.gameContext.gameUser
                       .setLostQuestion(widget.currentQuestionInfo);
                 }
-                // widget.currentQuestionInfo = widget.gameContext.gameUser
-                //     .getRandomQuestion(
-                //         widget.currentQuestionInfo.question.difficulty,
-                //         widget.currentQuestionInfo.question.category);
               });
 
               Future.delayed(
                   Duration(milliseconds: 1100),
                   () => {
                         HistoryGameScreenManager(buildContext: context)
-                            .showNextGameScreen(HistoryCampaignLevel().level_0,
+                            .showNextGameScreen(widget.campaignLevel,
                                 widget.gameContext)
                       });
             },

@@ -10,6 +10,7 @@ import 'package:flutter_app_quiz_game/Implementations/History/Components/history
 import 'package:flutter_app_quiz_game/Implementations/History/Constants/history_campaign_level.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Constants/history_question_config.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Service/history_game_local_storage.dart';
+import 'package:flutter_app_quiz_game/Implementations/History/Service/history_game_screen_manager.dart';
 import 'package:flutter_app_quiz_game/Lib/Animation/animation_zoom_in_zoom_out.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/int_extension.dart';
@@ -25,6 +26,8 @@ import '../../../Lib/Button/button_skin_config.dart';
 import '../../../Lib/Font/font_config.dart';
 
 class HistoryGameTimelineScreen extends StatefulWidget with GameScreen {
+  int questionsToPlayUntilNextCategory = 3;
+
   late HistoryLocalStorage historyLocalStorage;
   late QuestionInfo currentQuestionInfo;
 
@@ -62,6 +65,7 @@ class HistoryQuestion {
 
 class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
     with StandardScreen {
+
   ItemScrollController itemScrollController = ItemScrollController();
   late Image timelineOptUnknown;
   late Image histAnswWrong;
@@ -89,6 +93,16 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
   @override
   Widget build(BuildContext context) {
     initScreen(context);
+
+    if(widget.questionsToPlayUntilNextCategory<=0 || widget.currentQuestionInfo == -1){
+      Future.delayed(
+          Duration(milliseconds: 1100),
+              () => {
+            HistoryGameScreenManager(buildContext: context)
+                .showNextGameScreen(widget.campaignLevel,
+                widget.gameContext)
+          });
+    }
 
     if (widget.currentQuestionInfo == -1) {
       Future.delayed(
@@ -156,6 +170,7 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
     }
 
     var header = HistoryGameLevelHeader(
+      questionContainerHeight: screenDimensions.h(17),
       availableHints: widget.gameContext.amountAvailableHints,
       question: widget.currentQuestionInfo.question,
       animateScore: widget.correctAnswerPressed,
@@ -229,6 +244,7 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
               widget.correctAnswerPressed = false;
             }
           });
+          widget.questionsToPlayUntilNextCategory--;
           widget.mostRecentPressedCurrentQuestion = questionIndex;
           widget.currentQuestionInfo = widget.gameContext.gameUser
               .getRandomQuestion(widget.difficulty, widget.category);

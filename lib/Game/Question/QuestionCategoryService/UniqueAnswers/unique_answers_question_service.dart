@@ -1,16 +1,18 @@
 import 'package:flutter_app_quiz_game/Game/Question/Model/question.dart';
+import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/UniqueAnswers/unique_answers_question_parser.dart';
 import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/question_parser.dart';
+import 'package:flutter_app_quiz_game/Lib/Extensions/string_extension.dart';
 
 import '../question_service.dart';
 
 class UniqueAnswersQuestionService extends QuestionService {
-  late QuestionParser questionParser;
+  late UniqueAnswersQuestionParser questionParser;
 
   static final UniqueAnswersQuestionService singleton =
       UniqueAnswersQuestionService.internal();
 
   factory UniqueAnswersQuestionService(
-      {required QuestionParser questionParser}) {
+      {required UniqueAnswersQuestionParser questionParser}) {
     singleton.questionParser = questionParser;
     return singleton;
   }
@@ -19,19 +21,16 @@ class UniqueAnswersQuestionService extends QuestionService {
 
   @override
   String getQuestionToBeDisplayed(Question question) {
-    return question.rawString.split(":")[0];
+    return questionParser.getQuestionToBeDisplayed(question.rawString);
   }
 
   @override
   List<String> getCorrectAnswers(Question question) {
-    List<String> answers = [];
-    List<String> pressedAnswersArray = getCorrectAnswerIds(question);
-    List<String> answerOptionsArray = getAnswerOptionsArray(question);
-    for (String answerId in pressedAnswersArray) {
-      answers.add(answerOptionsArray[int.parse(answerId)]);
-    }
-    answers.shuffle();
-    return answers;
+    int correctAnswer = int.parse(questionParser
+        .getCorrectAnswersFromRawString(question.rawString)
+        .first);
+    List<String> answerOptions = getAllAnswerOptionsForQuestionAsList(question);
+    return [answerOptions[correctAnswer]];
   }
 
   @override
@@ -42,14 +41,15 @@ class UniqueAnswersQuestionService extends QuestionService {
 
   @override
   Set<String> getAllAnswerOptionsForQuestion(Question question) {
-    return getAnswerOptionsArray(question).map((e) => e.trim()).toSet();
+    return getAllAnswerOptionsForQuestionAsList(question).toSet();
   }
 
-  List<String> getCorrectAnswerIds(Question question) {
-    return question.rawString.split(":")[3].split(",");
-  }
-
-  List<String> getAnswerOptionsArray(Question question) {
-    return question.rawString.split(":")[2].split("##");
+  List<String> getAllAnswerOptionsForQuestionAsList(Question question) {
+    return question.rawString
+        .split("::")[1]
+        .split("##")
+        .map((e) => e.trim().capitalize())
+        .where((element) => element.isNotEmpty)
+        .toList();
   }
 }

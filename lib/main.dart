@@ -4,10 +4,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Constants/history_campaign_level.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Service/history_game_screen_manager.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../Implementations/History/Screens/history_main_menu_screen.dart';
 import 'Game/Constants/app_id.dart';
 import 'Lib/Constants/language.dart';
 import 'Lib/ScreenDimensions/screen_dimensions_service.dart';
@@ -52,6 +52,7 @@ class MyAppState extends State<MyApp> {
       isPro = await MyApp.platform.invokeMethod('isPro');
     }
     if (!widget.initCompleted) {
+      GoogleFonts.config.allowRuntimeFetching = false;
       if (!kIsWeb) {
         MobileAds.instance.initialize();
       }

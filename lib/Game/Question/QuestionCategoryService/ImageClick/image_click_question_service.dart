@@ -56,7 +56,11 @@ class ImageClickQuestionService extends QuestionService {
   }
 
   ImageClickInfo getAnswerOptionCoordinates(String questionString) {
-    List<String> s = questionString.split(":")[4].split(",");
+    List<String> s = questionString
+        .split(":")[4]
+        .split(",")
+        .where((element) => element.trim().isNotEmpty)
+        .toList();
     ImageClickInfo imageClickInfo =
         ImageClickInfo(x: double.parse(s[0]), y: double.parse(s[1]));
     if (s.length == 3) {

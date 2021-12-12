@@ -13,6 +13,7 @@ class HistoryGameLevelHeader extends StatelessWidget {
   String score;
   bool animateScore;
   int availableHints;
+  double? questionContainerHeight;
   Question question;
   VoidCallback hintButtonOnClick;
   bool isRewardedAdLoaded;
@@ -20,6 +21,7 @@ class HistoryGameLevelHeader extends StatelessWidget {
 
   HistoryGameLevelHeader(
       {required this.score,
+      this.questionContainerHeight,
       this.animateScore = false,
       this.isRewardedAdLoaded = false,
       required this.hintButtonOnClick,
@@ -33,32 +35,46 @@ class HistoryGameLevelHeader extends StatelessWidget {
   }
 
   Container createLevelHeader(BuildContext context) {
-    var margin = screenDimensions.h(1);
+    var vertMargin = screenDimensions.h(1);
+    var horizMargin = screenDimensions.w(1);
     var questionPrefixToBeDisplayed = question.questionPrefixToBeDisplayed;
+    var questionToBeDisplayed = question.questionToBeDisplayed;
     Widget questionPrefix;
     if (questionPrefixToBeDisplayed.isEmpty) {
       questionPrefix = Container();
     } else {
       questionPrefix = Padding(
-          padding: EdgeInsets.fromLTRB(0, margin, 0, 0),
+          padding: EdgeInsets.fromLTRB(horizMargin, 0, horizMargin,
+              questionToBeDisplayed.isEmpty ? 0 : vertMargin * 2),
+          child: MyText(
+            width: screenDimensions.w(99),
+            maxLines: 1,
+            text: questionPrefixToBeDisplayed,
+            fontSize: FontConfig.getCustomFontSize(1.0),
+          ));
+    }
+    Widget questionText;
+    if (questionToBeDisplayed.isEmpty) {
+      questionText = Container();
+    } else {
+      questionText = Padding(
+          padding: EdgeInsets.fromLTRB(horizMargin, 0, horizMargin, 0),
           child: MyText(
             width: screenDimensions.w(99),
             maxLines: 2,
-            text: questionPrefixToBeDisplayed,
-            fontSize: FontConfig.getCustomFontSize(0.9),
+            text: questionToBeDisplayed,
+            fontSize: FontConfig.getCustomFontSize(1.2),
           ));
     }
-    var questionText = Padding(
-        padding: EdgeInsets.fromLTRB(0, margin, 0, margin),
-        child: MyText(
-          width: screenDimensions.w(99),
-          maxLines: 2,
-          text: question.questionToBeDisplayed,
-          fontSize: FontConfig.getCustomFontSize(1.2),
-        ));
-
     var questionColumn = Column(
-      children: [questionPrefix, questionText],
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        SizedBox(height: vertMargin),
+        questionPrefix,
+        questionText,
+        SizedBox(height: vertMargin)
+      ],
     );
 
     return Container(
@@ -67,6 +83,7 @@ class HistoryGameLevelHeader extends StatelessWidget {
       SizedBox(height: screenDimensions.h(1)),
       Column(mainAxisSize: MainAxisSize.min, children: [
         Container(
+          height: questionContainerHeight,
           decoration: BoxDecoration(
               color: Colors.green.shade100.withAlpha(150),
               border: Border.all(

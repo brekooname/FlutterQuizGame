@@ -4,15 +4,18 @@ import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/Uniq
 import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/question_category_service.dart';
 import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/question_parser.dart';
 
-class UniqueAnswersCategoryQuestionService extends QuestionCategoryService {
-  static final UniqueAnswersCategoryQuestionService singleton =
-      UniqueAnswersCategoryQuestionService.internal();
+import 'history_question_parser.dart';
+import 'history_question_service.dart';
 
-  factory UniqueAnswersCategoryQuestionService() {
+class HistoryCategoryQuestionService extends QuestionCategoryService {
+  static final HistoryCategoryQuestionService singleton =
+  HistoryCategoryQuestionService.internal();
+
+  factory HistoryCategoryQuestionService() {
     return singleton;
   }
 
-  UniqueAnswersCategoryQuestionService.internal();
+  HistoryCategoryQuestionService.internal();
 
   @override
   String getHintButtonType() {
@@ -20,12 +23,12 @@ class UniqueAnswersCategoryQuestionService extends QuestionCategoryService {
   }
 
   @override
-  UniqueAnswersQuestionService getQuestionService() {
-    return UniqueAnswersQuestionService(questionParser: getQuestionParser());
+  HistoryQuestionService getQuestionService() {
+    return HistoryQuestionService(questionParser: getQuestionParser());
   }
 
   @override
-  UniqueAnswersQuestionParser getQuestionParser() {
-    return UniqueAnswersQuestionParser();
+  HistoryQuestionParser getQuestionParser() {
+    return HistoryQuestionParser();
   }
 }

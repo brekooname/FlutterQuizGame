@@ -35,8 +35,12 @@ class GameUser {
       QuestionDifficulty difficulty, QuestionCategory category) {
     List<QuestionInfo> res =
         getOpenQuestionsForConfig(difficulty, category).toList();
-    res.shuffle();
-    return res.first;
+    if (res.isEmpty) {
+      return res.first;
+    } else {
+      res.shuffle();
+      return res.first;
+    }
   }
 
   QuestionInfo getFirstOpenQuestion(

@@ -33,11 +33,6 @@ class QuestionInfo {
 
   @override
   String toString() {
-    return "GameQuestionInfo{" +
-        "question=" +
-        question.toString() +
-        ", answers=" +
-        pressedAnswers.toString() +
-        '}';
+    return 'QuestionInfo{question: $question, _status: $_status, pressedAnswers: $pressedAnswers}';
   }
 }
