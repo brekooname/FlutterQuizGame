@@ -1,16 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_app_quiz_game/Game/Game/campaign_level.dart';
-import 'package:flutter_app_quiz_game/Game/Game/game_context.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Constants/history_question_config.dart';
+import 'package:flutter_app_quiz_game/Implementations/History/Questions/history_game_context.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Screens/history_game_question_screen.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Screens/history_game_timeline_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/game_screen_manager.dart';
 
 import 'history_gamecontext_service.dart';
 
-class HistoryGameScreenManager extends GameScreenManager {
+class HistoryGameScreenManager extends GameScreenManager<HistoryGameContext> {
   static final HistoryGameScreenManager singleton =
       HistoryGameScreenManager.internal();
 
@@ -25,8 +25,10 @@ class HistoryGameScreenManager extends GameScreenManager {
   void showMainScreen() {}
 
   @override
-  StatefulWidget getScreenForConfig(GameContext gameContext,
-      QuestionDifficulty difficulty, QuestionCategory category) {
+  StatefulWidget getScreenForConfig(
+      HistoryGameContext gameContext,
+      QuestionDifficulty difficulty,
+      QuestionCategory category) {
     StatefulWidget goToScreen;
     var questionConfig = HistoryGameQuestionConfig();
     //
@@ -51,7 +53,7 @@ class HistoryGameScreenManager extends GameScreenManager {
   }
 
   @override
-  GameContext createGameContext(CampaignLevel campaignLevel) {
+  HistoryGameContext createGameContext(CampaignLevel campaignLevel) {
     return HistoryGameContextService().createGameContext(campaignLevel);
   }
 }

@@ -19,7 +19,7 @@ class QuestionInfo {
   QuestionInfoStatus get status => _status;
 
   set status(QuestionInfoStatus questionInfoStatus) {
-    if (_status != QuestionInfoStatus.OPEN) {
+    if (questionInfoStatus != QuestionInfoStatus.OPEN) {
       questionAnsweredAt = DateTime.now();
     } else {
       questionAnsweredAt = null;

@@ -4,15 +4,15 @@ import 'package:flutter_app_quiz_game/Game/Game/game_context.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
 
-mixin GameScreen {
-  GameContext? _gameContext;
+mixin GameScreen<TGameContext extends GameContext> {
+  TGameContext? _gameContext;
   CampaignLevel? _campaignLevel;
   QuestionDifficulty? _difficulty;
   QuestionCategory? _category;
 
   void initScreen(
       CampaignLevelService campaignLevelService,
-      GameContext gameContext,
+      TGameContext gameContext,
       QuestionDifficulty difficulty,
       QuestionCategory category) {
     this._difficulty = difficulty;
@@ -22,7 +22,7 @@ mixin GameScreen {
         campaignLevelService.campaignLevel(difficulty, category);
   }
 
-  GameContext get gameContext {
+  TGameContext get gameContext {
     assert(_gameContext != null);
     return _gameContext!;
   }

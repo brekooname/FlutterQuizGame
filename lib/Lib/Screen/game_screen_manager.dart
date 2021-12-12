@@ -7,24 +7,24 @@ import 'package:flutter_app_quiz_game/Game/Question/Model/question_info.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_info_status.dart';
 import 'package:flutter_app_quiz_game/Lib/Navigation/navigator_service.dart';
 
-abstract class GameScreenManager {
+abstract class GameScreenManager<TGameContext extends GameContext> {
   late BuildContext buildContext;
   NavigatorService? _navigatorService;
 
   void showMainScreen();
 
-  GameContext createGameContext(CampaignLevel campaignLevel);
+  TGameContext createGameContext(CampaignLevel campaignLevel);
 
-  StatefulWidget getScreenForConfig(GameContext gameContext,
+  StatefulWidget getScreenForConfig(TGameContext gameContext,
       QuestionDifficulty difficulty, QuestionCategory category);
 
   void showNewGameScreen(CampaignLevel campaignLevel) {
-    GameContext gameContext = createGameContext(campaignLevel);
+    TGameContext gameContext = createGameContext(campaignLevel);
     navigatorService.goTo(getScreen(campaignLevel, gameContext), () {});
   }
 
   void showNextGameScreen(
-      CampaignLevel campaignLevel, GameContext gameContext) {
+      CampaignLevel campaignLevel, TGameContext gameContext) {
     navigatorService.pop();
     navigatorService.goTo(getScreen(campaignLevel, gameContext), () {});
   }
@@ -35,7 +35,7 @@ abstract class GameScreenManager {
   }
 
   StatefulWidget getScreen(
-      CampaignLevel campaignLevel, GameContext gameContext) {
+      CampaignLevel campaignLevel, TGameContext gameContext) {
     return getScreenForConfig(
         gameContext,
         campaignLevel.difficulty,
@@ -45,6 +45,10 @@ abstract class GameScreenManager {
 
   QuestionCategory _getNotPlayedRandomQuestionCategory(
       List<QuestionInfo> allQuestions) {
+    allQuestions
+        .where((element) => element.status == QuestionInfoStatus.OPEN)
+        .length
+        .toString();
     List<QuestionCategory> availableCategories = List.of(allQuestions
         .where((element) => element.status == QuestionInfoStatus.OPEN)
         .map((e) => e.question.category)
@@ -68,7 +72,7 @@ abstract class GameScreenManager {
         return allQuestions.first.question.category;
       } else {
         playedQuestions.sort(
-            (a, b) => a.questionAnsweredAt!.compareTo(b.questionAnsweredAt!));
+            (a, b) => b.questionAnsweredAt!.compareTo(a.questionAnsweredAt!));
 
         var mostRecentPlayedCategory = playedQuestions.first.question.category;
 

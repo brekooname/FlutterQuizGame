@@ -31,12 +31,12 @@ class GameUser {
     }
   }
 
-  QuestionInfo getRandomQuestion(
+  QuestionInfo? getRandomQuestion(
       QuestionDifficulty difficulty, QuestionCategory category) {
     List<QuestionInfo> res =
         getOpenQuestionsForConfig(difficulty, category).toList();
     if (res.isEmpty) {
-      return res.first;
+      return null;
     } else {
       res.shuffle();
       return res.first;

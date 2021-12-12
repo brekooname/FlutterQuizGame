@@ -4,6 +4,7 @@ import 'package:flutter_app_quiz_game/Game/Game/game_context_service.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/category_difficulty.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question.dart';
 import 'package:flutter_app_quiz_game/Game/Question/question_collector_service.dart';
+import 'package:flutter_app_quiz_game/Implementations/History/Questions/history_game_context.dart';
 
 class HistoryGameContextService {
   final QuestionCollectorService _questionCollectorService =
@@ -18,7 +19,7 @@ class HistoryGameContextService {
 
   HistoryGameContextService.internal();
 
-  GameContext createGameContext(CampaignLevel campaignLevel) {
+  HistoryGameContext createGameContext(CampaignLevel campaignLevel) {
     var gameContext = GameContextService()
         .createGameContextWithHintsAndQuestions(
             11,
@@ -27,6 +28,6 @@ class HistoryGameContextService {
               [campaignLevel.difficulty],
               campaignLevel.category,
             ));
-    return gameContext;
+    return HistoryGameContext(gameContext);
   }
 }
