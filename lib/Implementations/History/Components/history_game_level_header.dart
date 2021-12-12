@@ -14,7 +14,7 @@ class HistoryGameLevelHeader extends StatelessWidget {
   bool animateScore;
   int availableHints;
   double? questionContainerHeight;
-  Question question;
+  Question? question;
   VoidCallback hintButtonOnClick;
   bool isRewardedAdLoaded;
   ScreenDimensionsService screenDimensions;
@@ -37,24 +37,24 @@ class HistoryGameLevelHeader extends StatelessWidget {
   Container createLevelHeader(BuildContext context) {
     var vertMargin = screenDimensions.h(1);
     var horizMargin = screenDimensions.w(1);
-    var questionPrefixToBeDisplayed = question.questionPrefixToBeDisplayed;
-    var questionToBeDisplayed = question.questionToBeDisplayed;
+    var questionPrefixToBeDisplayed = question?.questionPrefixToBeDisplayed;
+    var questionToBeDisplayed = question?.questionToBeDisplayed;
     Widget questionPrefix;
-    if (questionPrefixToBeDisplayed.isEmpty) {
+    if ((questionPrefixToBeDisplayed ?? "").isEmpty) {
       questionPrefix = Container();
     } else {
       questionPrefix = Padding(
           padding: EdgeInsets.fromLTRB(horizMargin, 0, horizMargin,
-              questionToBeDisplayed.isEmpty ? 0 : vertMargin * 2),
+              (questionToBeDisplayed ?? "").isEmpty ? 0 : vertMargin * 2),
           child: MyText(
             width: screenDimensions.w(99),
             maxLines: 1,
-            text: questionPrefixToBeDisplayed,
+            text: questionPrefixToBeDisplayed ?? "",
             fontSize: FontConfig.getCustomFontSize(1.0),
           ));
     }
     Widget questionText;
-    if (questionToBeDisplayed.isEmpty) {
+    if ((questionToBeDisplayed ?? "").isEmpty) {
       questionText = Container();
     } else {
       questionText = Padding(
@@ -62,7 +62,7 @@ class HistoryGameLevelHeader extends StatelessWidget {
           child: MyText(
             width: screenDimensions.w(99),
             maxLines: 2,
-            text: questionToBeDisplayed,
+            text: questionToBeDisplayed ?? "",
             fontSize: FontConfig.getCustomFontSize(1.2),
           ));
     }

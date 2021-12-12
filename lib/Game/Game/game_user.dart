@@ -1,3 +1,4 @@
+import 'package:collection/src/iterable_extensions.dart';
 import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/question_service.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
@@ -46,6 +47,22 @@ class GameUser {
   QuestionInfo getFirstOpenQuestion(
       QuestionDifficulty difficulty, QuestionCategory category) {
     return getOpenQuestionsForConfig(difficulty, category).first;
+  }
+
+  QuestionInfo? getMostRecentAnsweredQuestion(
+      {List<QuestionInfoStatus>? questionInfoStatus,
+      QuestionDifficulty? difficulty,
+      QuestionCategory? category}) {
+    var questionInfo = _allQuestionInfos
+        .where((element) =>
+            (questionInfoStatus ?? []).contains(element.status) &&
+            element.questionAnsweredAt != null &&
+            (category == null || element.question.category == category) &&
+            (difficulty == null || element.question.difficulty == difficulty))
+        .toList();
+    questionInfo
+        .sort((a, b) => b.questionAnsweredAt!.compareTo(a.questionAnsweredAt!));
+    return questionInfo.firstOrNull;
   }
 
   QuestionInfo getQuestionInfo(Question question) {

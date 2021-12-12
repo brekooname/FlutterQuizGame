@@ -25,6 +25,9 @@ abstract class GameScreenManager<TGameContext extends GameContext> {
 
   void showNextGameScreen(
       CampaignLevel campaignLevel, TGameContext gameContext) {
+
+    print("go next");
+
     navigatorService.pop();
     navigatorService.goTo(getScreen(campaignLevel, gameContext), () {});
   }
@@ -36,15 +39,13 @@ abstract class GameScreenManager<TGameContext extends GameContext> {
 
   StatefulWidget getScreen(
       CampaignLevel campaignLevel, TGameContext gameContext) {
-    return getScreenForConfig(
-        gameContext,
-        campaignLevel.difficulty,
-        _getNotPlayedRandomQuestionCategory(
-            List.of(gameContext.gameUser.getAllQuestions([]))));
+    return getScreenForConfig(gameContext, campaignLevel.difficulty,
+        _getNotPlayedRandomQuestionCategory(gameContext));
   }
 
   QuestionCategory _getNotPlayedRandomQuestionCategory(
-      List<QuestionInfo> allQuestions) {
+      TGameContext gameContext) {
+    var allQuestions = gameContext.gameUser.getAllQuestions([]);
     allQuestions
         .where((element) => element.status == QuestionInfoStatus.OPEN)
         .length
@@ -60,23 +61,17 @@ abstract class GameScreenManager<TGameContext extends GameContext> {
     } else if (availableCategories.length == 1) {
       return availableCategories.first;
     } else {
-      var playedQuestions = allQuestions
-          .where((element) =>
-              [QuestionInfoStatus.WON, QuestionInfoStatus.LOST]
-                  .contains(element.status) &&
-              element.questionAnsweredAt != null)
-          .toList();
+      QuestionInfo? mostRecentQuestion = gameContext.gameUser
+          .getMostRecentAnsweredQuestion(questionInfoStatus: [
+        QuestionInfoStatus.WON,
+        QuestionInfoStatus.LOST
+      ]);
 
-      if (playedQuestions.isEmpty) {
+      if (mostRecentQuestion == null) {
         allQuestions.shuffle();
         return allQuestions.first.question.category;
       } else {
-        playedQuestions.sort(
-            (a, b) => b.questionAnsweredAt!.compareTo(a.questionAnsweredAt!));
-
-        var mostRecentPlayedCategory = playedQuestions.first.question.category;
-
-        availableCategories.remove(mostRecentPlayedCategory);
+        availableCategories.remove(mostRecentQuestion.question.category);
         availableCategories.shuffle();
 
         return availableCategories.first;
