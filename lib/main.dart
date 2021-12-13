@@ -79,10 +79,12 @@ class MyAppState extends State<MyApp> {
       var historyGameScreenManager =
           HistoryGameScreenManager(buildContext: context);
       //
-      // widgetToShow = HistoryMainMenuScreen();
-      var campaignLevel = HistoryCampaignLevel().level_0;
-      widgetToShow = historyGameScreenManager.getScreen(campaignLevel,
-          historyGameScreenManager.createGameContext(campaignLevel));
+      ////
+      widgetToShow = historyGameScreenManager.getMainScreen();
+      // var campaignLevel = HistoryCampaignLevel().level_0;
+      // widgetToShow = historyGameScreenManager.getScreen(campaignLevel,
+      //     historyGameScreenManager.createGameContext(campaignLevel));
+      ////
       //
     } else {
       init(context);

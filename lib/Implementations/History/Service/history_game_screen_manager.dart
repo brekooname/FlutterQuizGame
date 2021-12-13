@@ -6,6 +6,7 @@ import 'package:flutter_app_quiz_game/Implementations/History/Constants/history_
 import 'package:flutter_app_quiz_game/Implementations/History/Questions/history_game_context.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Screens/history_game_question_screen.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Screens/history_game_timeline_screen.dart';
+import 'package:flutter_app_quiz_game/Implementations/History/Screens/history_main_menu_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/game_screen_manager.dart';
 
 import 'history_gamecontext_service.dart';
@@ -21,9 +22,10 @@ class HistoryGameScreenManager extends GameScreenManager<HistoryGameContext> {
 
   HistoryGameScreenManager.internal();
 
-  @override
-  void showMainScreen() {}
-
+@override
+  StatefulWidget getMainScreen() {
+    return HistoryMainMenuScreen();
+  }
   @override
   StatefulWidget getScreenForConfig(
       HistoryGameContext gameContext,

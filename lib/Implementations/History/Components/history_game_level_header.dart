@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question.dart';
+import 'package:flutter_app_quiz_game/Implementations/History/Constants/history_question_config.dart';
 
 import 'package:flutter_app_quiz_game/Lib/Animation/animation_zoom_in_zoom_out_text.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/hint_button.dart';
@@ -61,7 +62,8 @@ class HistoryGameLevelHeader extends StatelessWidget {
           padding: EdgeInsets.fromLTRB(horizMargin, 0, horizMargin, 0),
           child: MyText(
             width: screenDimensions.w(99),
-            maxLines: 2,
+            maxLines:
+                question?.category == HistoryGameQuestionConfig().cat3 ? 4 : 2,
             text: questionToBeDisplayed ?? "",
             fontSize: FontConfig.getCustomFontSize(1.2),
           ));

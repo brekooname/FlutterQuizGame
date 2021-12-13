@@ -20,6 +20,7 @@ class SettingsButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var margin = _screenDimensions.w(1);
     var btn = FloatingActionButton(
         elevation: 0,
         hoverElevation: 0,
@@ -32,24 +33,26 @@ class SettingsButton extends StatelessWidget {
         backgroundColor: Colors.transparent,
         splashColor: Colors.transparent,
         onPressed: () {},
-        child: MyButton(
-            onClick: () {
-              Future.delayed(
-                  Duration.zero,
-                  () => showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return SettingsPopup();
-                      }));
-            },
-            size: _button_size,
-            buttonSkinConfig: ButtonSkinConfig(
-              image: (_imageService.getMainImage(
-                  imageName: "btn_settings",
-                  module: "buttons",
-                  maxWidth: _button_size.width)),
-            ),
-            fontConfig: FontConfig()));
+        child: Padding(
+            padding: EdgeInsets.fromLTRB(margin, margin, margin, margin),
+            child: MyButton(
+                onClick: () {
+                  Future.delayed(
+                      Duration.zero,
+                      () => showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return SettingsPopup();
+                          }));
+                },
+                size: _button_size,
+                buttonSkinConfig: ButtonSkinConfig(
+                  image: (_imageService.getMainImage(
+                      imageName: "btn_settings",
+                      module: "buttons",
+                      maxWidth: _button_size.width)),
+                ),
+                fontConfig: FontConfig())));
 
     return btn;
   }

@@ -156,7 +156,11 @@ class HistoryGameQuestionScreenState extends State<HistoryGameQuestionScreen>
             buttonSkinConfig: ButtonSkinConfig(
                 borderColor: ColorUtil.colorDarken(btnBackgr, 0.1),
                 backgroundColor: btnBackgr),
-            customContent: MyText(text: answerBtnText)));
+            customContent: MyText(
+              text: answerBtnText,
+              maxLines: 3,
+              width: btnSize.width / 1.1,
+            )));
   }
 
   HistoryGameLevelHeader createHeader(QuestionInfo questionInfo) {

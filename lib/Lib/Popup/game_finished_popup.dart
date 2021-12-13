@@ -55,8 +55,8 @@ class GameFinishedPopup extends StatelessWidget with MyPopup {
   }
 
   void onClickGoBack(BuildContext context) {
-    navigatorService.pop();
-    navigatorService.pop();
+    navigatorService.pop(context);
+    navigatorService.pop(context);
   }
 
   MyText buildHighScoreText() {

@@ -22,7 +22,7 @@ class MyBackButton extends StatelessWidget {
     _button_size = Size(side, side);
     this.onClick = onClick ??
         () {
-          NavigatorService(context).pop();
+          NavigatorService().pop(context);
         };
   }
 

@@ -131,13 +131,14 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
       String? correctAnswerText =
           widget.currentQuestionInfo?.question.rawString.split(":")[1];
 
-      if ((widget.questionsToPlayUntilNextCategory <= 0 ||
-          widget.currentQuestionInfo == null) &&
-              !widget.alreadyWentToNextScreen) {
+      if (shouldGoToNextGameScreen()) {
         disabled = true;
-        widget.alreadyWentToNextScreen = true;
-        Future.delayed(Duration(milliseconds: zoomInZoomOutAnswerDuration * 2),
-            () => goToNextGameScreen(context));
+        if (!widget.alreadyWentToNextScreen) {
+          widget.alreadyWentToNextScreen = true;
+          Future.delayed(
+              Duration(milliseconds: zoomInZoomOutAnswerDuration * 2),
+              () => goToNextGameScreen(context));
+        }
       }
 
       MyButton answerBtn = createAnswerButton(
@@ -222,8 +223,7 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
     var header = HistoryGameLevelHeader(
       questionContainerHeight: screenDimensions.h(17),
       availableHints: widget.gameContext.amountAvailableHints,
-      question: widget.currentQuestionInfo == null ||
-              widget.questionsToPlayUntilNextCategory == 0
+      question: shouldGoToNextGameScreen()
           ? mostRecentQ?.question
           : widget.currentQuestionInfo?.question,
       animateScore: widget.correctAnswerPressed,
@@ -237,6 +237,11 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
       screenDimensions: screenDimensions,
     );
     return header;
+  }
+
+  bool shouldGoToNextGameScreen() {
+    return widget.currentQuestionInfo == null ||
+            widget.questionsToPlayUntilNextCategory == 0;
   }
 
   void goToNextGameScreen(BuildContext context) {

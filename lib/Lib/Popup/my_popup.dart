@@ -21,9 +21,9 @@ mixin MyPopup {
   ButtonSize buttonSize = ButtonSize();
   ScreenDimensionsService screenDimensions = ScreenDimensionsService();
 
-  void initPopup(BuildContext buildContext) {
-    this.buildContext = buildContext;
-    this.navigatorService = NavigatorService(buildContext);
+  void initPopup(BuildContext context) {
+    this.buildContext = context;
+    this.navigatorService = NavigatorService();
     this.width = screenDimensions.w(100);
   }
 
@@ -63,13 +63,13 @@ mixin MyPopup {
   }
 
   MyButton createClosePopupBtn(
-      BuildContext buildContext, VoidCallback? onCloseBtnClick) {
+      BuildContext context, VoidCallback? onCloseBtnClick) {
     var closeBtnWidth = screenDimensions.w(9);
     return MyButton(
         size: Size(closeBtnWidth, closeBtnWidth),
         onClick: () {
           if (onCloseBtnClick == null) {
-            navigatorService.pop();
+            navigatorService.pop(context);
           } else {
             onCloseBtnClick.call();
           }

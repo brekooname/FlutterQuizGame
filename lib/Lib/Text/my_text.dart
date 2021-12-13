@@ -71,7 +71,7 @@ class MyText extends StatelessWidget {
       int maxLines = 2}) {
     final TextPainter textPainter = TextPainter(
       text: TextSpan(text: text, style: style),
-      maxLines: maxLines + 1,
+      maxLines: maxLines,
       textDirection: TextDirection.ltr,
     )..layout(minWidth: minWidth, maxWidth: maxWidth);
     return textPainter.didExceedMaxLines;

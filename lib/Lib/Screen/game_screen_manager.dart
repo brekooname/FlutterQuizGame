@@ -11,7 +11,7 @@ abstract class GameScreenManager<TGameContext extends GameContext> {
   late BuildContext buildContext;
   NavigatorService? _navigatorService;
 
-  void showMainScreen();
+  StatefulWidget getMainScreen();
 
   TGameContext createGameContext(CampaignLevel campaignLevel);
 
@@ -20,20 +20,21 @@ abstract class GameScreenManager<TGameContext extends GameContext> {
 
   void showNewGameScreen(CampaignLevel campaignLevel) {
     TGameContext gameContext = createGameContext(campaignLevel);
-    navigatorService.goTo(getScreen(campaignLevel, gameContext), () {});
+    navigatorService.goTo(
+        buildContext, getScreen(campaignLevel, gameContext), () {});
   }
 
   void showNextGameScreen(
       CampaignLevel campaignLevel, TGameContext gameContext) {
-
     print("go next");
 
-    navigatorService.pop();
-    navigatorService.goTo(getScreen(campaignLevel, gameContext), () {});
+    navigatorService.pop(buildContext);
+    navigatorService.goTo(
+        buildContext, getScreen(campaignLevel, gameContext), () {});
   }
 
   NavigatorService get navigatorService {
-    _navigatorService ??= NavigatorService(buildContext);
+    _navigatorService ??= NavigatorService();
     return _navigatorService!;
   }
 
