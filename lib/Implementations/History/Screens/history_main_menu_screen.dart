@@ -10,7 +10,6 @@ import 'package:flutter_app_quiz_game/Implementations/History/Service/history_ga
 import 'package:flutter_app_quiz_game/Implementations/History/Service/history_game_screen_manager.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/floating_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
-import 'package:flutter_app_quiz_game/Lib/Button/settings_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Color/color_util.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/map_extension.dart';
 import 'package:flutter_app_quiz_game/Lib/Popup/reset_content_popup.dart';
@@ -95,15 +94,11 @@ class HistoryMainMenuScreenState extends State<HistoryMainMenuScreen>
           FloatingButton(
             context: context,
             iconName: "btn_settings",
-            myPopupToDisplay: SettingsPopup(),
-          ),
-          FloatingButton(
-            context: context,
-            iconName: "btn_reset",
-            myPopupToDisplay: ResetContentPopup(() {
-              widget.historyLocalStorage.clear();
-              setState(() {});
-            }),
+            myPopupToDisplay: SettingsPopup(
+              resetContent: () {
+                widget.historyLocalStorage.clear();
+              },
+            ),
           ),
         ]),
         floatingActionButtonLocation: FloatingActionButtonLocation.startTop));

@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/button_size.dart';
+import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
+import 'package:flutter_app_quiz_game/Lib/Popup/reset_content_popup.dart';
 import 'package:flutter_app_quiz_game/Lib/Storage/settings_local_storage.dart';
 
 import 'my_popup.dart';
@@ -8,9 +10,11 @@ import 'my_popup.dart';
 class SettingsPopup extends StatefulWidget with MyPopup {
   late SettingsLocalStorage _settingsLocalStorage;
   ButtonSize buttonSize = ButtonSize();
+  VoidCallback? resetContent;
 
-  SettingsPopup() {
+  SettingsPopup({VoidCallback? resetContent}) {
     _settingsLocalStorage = SettingsLocalStorage();
+    this.resetContent = resetContent;
   }
 
   @override
@@ -42,23 +46,48 @@ class SettingsPopupState extends State<SettingsPopup> with MyPopup {
   AlertDialog build(BuildContext context) {
     initPopup(context);
 
-    return createDialog(Column(children: [
-      Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            widget._settingsLocalStorage.isSoundOn() ? soundOn : soundOff,
-            CupertinoSwitch(
-              value: widget._settingsLocalStorage.isSoundOn(),
-              onChanged: (value) {
-                setState(() {
-                  widget._settingsLocalStorage.toggleSound();
-                  Future.delayed(Duration(milliseconds: 300),
-                      () => closePopup(context));
-                });
-              },
-            ),
-          ]),
-    ]));
+    var vertMargin = screenDimensions.h(2);
+    return createDialog(Column(
+      children: [
+        MyButton(
+          text: "Delete progress",
+          backgroundColor: Colors.red.shade200,
+          onClick: () {
+            closePopup(context);
+            assert(widget.resetContent != null);
+            Future.delayed(
+                Duration.zero,
+                    () => showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return ResetContentPopup(widget.resetContent!);
+                    }));
+          },
+        ),
+        SizedBox(height: vertMargin * 2),
+        Container(
+          width: width,
+          height: screenDimensions.h(0.2),
+          color: Colors.grey,
+        ),
+        SizedBox(height: vertMargin * 2),
+        Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              widget._settingsLocalStorage.isSoundOn() ? soundOn : soundOff,
+              CupertinoSwitch(
+                value: widget._settingsLocalStorage.isSoundOn(),
+                onChanged: (value) {
+                  setState(() {
+                    widget._settingsLocalStorage.toggleSound();
+                    Future.delayed(
+                        Duration(milliseconds: 300), () => closePopup(context));
+                  });
+                },
+              ),
+            ]),
+      ],
+    ));
   }
 }
