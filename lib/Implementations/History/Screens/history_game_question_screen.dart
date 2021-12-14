@@ -34,9 +34,11 @@ class HistoryGameQuestionScreen extends StatefulWidget
       {Key? key,
       required QuestionDifficulty difficulty,
       required QuestionCategory category,
-      required HistoryGameContext gameContext})
+      required HistoryGameContext gameContext,
+      required VoidCallback refreshMainScreenCallback})
       : super(key: key) {
-    initScreen(HistoryCampaignLevel(), gameContext, difficulty, category);
+    initScreen(HistoryCampaignLevel(), gameContext, difficulty, category,
+        refreshMainScreenCallback);
     historyLocalStorage = HistoryLocalStorage();
 
     currentQuestionInfo =
@@ -160,7 +162,9 @@ class HistoryGameQuestionScreenState extends State<HistoryGameQuestionScreen>
                   () => {
                         HistoryGameScreenManager(buildContext: context)
                             .showNextGameScreen(
-                                widget.campaignLevel, widget.gameContext)
+                                widget.campaignLevel,
+                                widget.gameContext,
+                                widget.refreshMainScreenCallback)
                       });
             },
             buttonSkinConfig: ButtonSkinConfig(
@@ -175,6 +179,7 @@ class HistoryGameQuestionScreenState extends State<HistoryGameQuestionScreen>
 
   HistoryGameLevelHeader createHeader(QuestionInfo questionInfo) {
     var header = HistoryGameLevelHeader(
+      onBackButtonRefreshMainScreenCallback: widget.refreshMainScreenCallback,
       campaignLevel: widget.campaignLevel,
       availableHints: widget.gameContext.amountAvailableHints,
       question: questionInfo.question,
@@ -197,14 +202,6 @@ class HistoryGameQuestionScreenState extends State<HistoryGameQuestionScreen>
   String getQuestionImagePath(
           QuestionDifficulty difficulty, QuestionCategory category) =>
       "questions/images/" + difficulty.name + "/" + category.name;
-
-  GameFinishedPopup buildGameFinishedPopup(BuildContext context) {
-    return GameFinishedPopup(
-      isGameFinishedSuccess: true,
-      highScore: null,
-      playAgainClick: () {},
-    );
-  }
 
   void onHintButtonClick(QuestionInfo questionInfo) {
     widget.gameContext.amountAvailableHints--;

@@ -19,6 +19,7 @@ class HistoryGameLevelHeader extends StatelessWidget {
   double? questionContainerHeight;
   Question? question;
   VoidCallback hintButtonOnClick;
+  VoidCallback onBackButtonRefreshMainScreenCallback;
   bool isRewardedAdLoaded;
   CampaignLevel campaignLevel;
   ScreenDimensionsService screenDimensions = ScreenDimensionsService();
@@ -31,6 +32,7 @@ class HistoryGameLevelHeader extends StatelessWidget {
       this.animateQuestionText = false,
       this.isRewardedAdLoaded = false,
       required this.hintButtonOnClick,
+      required this.onBackButtonRefreshMainScreenCallback,
       required this.availableHints,
       required this.question});
 
@@ -108,7 +110,10 @@ class HistoryGameLevelHeader extends StatelessWidget {
   }
 
   Widget createScoreHeader(BuildContext context) {
-    var backBtn = MyBackButton(context: context);
+    var backBtn = MyBackButton(
+      context: context,
+      refreshGoToPageCallback: onBackButtonRefreshMainScreenCallback,
+    );
     var hintBtn = HintButton(
         onClick: this.hintButtonOnClick,
         availableHints: this.availableHints,

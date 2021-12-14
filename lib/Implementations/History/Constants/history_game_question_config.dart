@@ -63,13 +63,13 @@ class HistoryGameQuestionConfig extends GameQuestionConfig {
   Map<QuestionCategoryWithPrefixCode, String> get prefixLabelForCode {
     Map<QuestionCategoryWithPrefixCode, String> res = HashMap();
     res.putIfAbsent(QuestionCategoryWithPrefixCode(cat0, 0),
-        () => label.l_when_did_the_event_take_place);
+        () => label.l_when_did_this_event_take_place);
     res.putIfAbsent(QuestionCategoryWithPrefixCode(cat1, 0),
         () => label.l_between_what_years_did_this_empire_exist);
     res.putIfAbsent(QuestionCategoryWithPrefixCode(cat2, 0),
-        () => label.l_where_did_the_event_take_place);
+        () => label.l_in_what_modern_country_did_this_event_take_place);
     res.putIfAbsent(QuestionCategoryWithPrefixCode(cat2, 1),
-        () => label.l_in_what_modern_country_is_it_located);
+        () => label.l_in_what_modern_country_is_this_location);
     res.putIfAbsent(QuestionCategoryWithPrefixCode(cat4, 0),
         () => label.l_identify_the_historical_figure);
     return res;

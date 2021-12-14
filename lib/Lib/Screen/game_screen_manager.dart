@@ -15,22 +15,28 @@ abstract class GameScreenManager<TGameContext extends GameContext> {
 
   TGameContext createGameContext(CampaignLevel campaignLevel);
 
-  StatefulWidget getScreenForConfig(TGameContext gameContext,
-      QuestionDifficulty difficulty, QuestionCategory category);
+  StatefulWidget getScreenForConfig(
+      TGameContext gameContext,
+      QuestionDifficulty difficulty,
+      QuestionCategory category,
+      VoidCallback refreshMainScreenCallback);
 
-  void showNewGameScreen(CampaignLevel campaignLevel, VoidCallback setStateForRefresh) {
+  void showNewGameScreen(
+      CampaignLevel campaignLevel, VoidCallback refreshMainSetState) {
     TGameContext gameContext = createGameContext(campaignLevel);
     navigatorService.goTo(
-        buildContext, getScreen(campaignLevel, gameContext), setStateForRefresh);
+        buildContext,
+        getScreen(campaignLevel, gameContext, refreshMainSetState),
+        refreshMainSetState);
   }
 
-  void showNextGameScreen(
-      CampaignLevel campaignLevel, TGameContext gameContext) {
-    print("go next");
-
+  void showNextGameScreen(CampaignLevel campaignLevel, TGameContext gameContext,
+      VoidCallback refreshMainScreenCallback) {
     navigatorService.pop(buildContext);
     navigatorService.goTo(
-        buildContext, getScreen(campaignLevel, gameContext), () {});
+        buildContext,
+        getScreen(campaignLevel, gameContext, refreshMainScreenCallback),
+        refreshMainScreenCallback);
   }
 
   NavigatorService get navigatorService {
@@ -38,10 +44,13 @@ abstract class GameScreenManager<TGameContext extends GameContext> {
     return _navigatorService!;
   }
 
-  StatefulWidget getScreen(
-      CampaignLevel campaignLevel, TGameContext gameContext) {
-    return getScreenForConfig(gameContext, campaignLevel.difficulty,
-        _getNotPlayedRandomQuestionCategory(gameContext));
+  StatefulWidget getScreen(CampaignLevel campaignLevel,
+      TGameContext gameContext, VoidCallback refreshMainScreenCallback) {
+    return getScreenForConfig(
+        gameContext,
+        campaignLevel.difficulty,
+        _getNotPlayedRandomQuestionCategory(gameContext),
+        refreshMainScreenCallback);
   }
 
   QuestionCategory _getNotPlayedRandomQuestionCategory(

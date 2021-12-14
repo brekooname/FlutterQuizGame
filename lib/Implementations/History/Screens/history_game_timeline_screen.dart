@@ -1,6 +1,7 @@
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_app_quiz_game/Game/Question/Model/question.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_info.dart';
@@ -16,7 +17,6 @@ import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/int_extension.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/list_extension.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/map_extension.dart';
-import 'package:flutter_app_quiz_game/Lib/Popup/game_finished_popup.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/game_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/standard_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
@@ -37,14 +37,17 @@ class HistoryGameTimelineScreen extends StatefulWidget
   Map<int, HistoryQuestion> questions = HashMap<int, HistoryQuestion>();
   bool correctAnswerPressed = false;
   bool alreadyWentToNextScreen = false;
+  bool animateQuestionText = false;
 
   HistoryGameTimelineScreen(
       {Key? key,
       required QuestionDifficulty difficulty,
       required QuestionCategory category,
-      required HistoryGameContext gameContext})
+      required HistoryGameContext gameContext,
+      required VoidCallback refreshMainScreenCallback})
       : super(key: key) {
-    initScreen(HistoryCampaignLevel(), gameContext, difficulty, category);
+    initScreen(HistoryCampaignLevel(), gameContext, difficulty, category,
+        refreshMainScreenCallback);
 
     currentQuestionInfo =
         gameContext.gameUser.getRandomQuestion(difficulty, category);
@@ -223,6 +226,7 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
     QuestionInfo? mostRecentQ = getMostRecentAnswered();
 
     var header = HistoryGameLevelHeader(
+      onBackButtonRefreshMainScreenCallback: widget.refreshMainScreenCallback,
       campaignLevel: widget.campaignLevel,
       questionContainerHeight: screenDimensions.h(17),
       availableHints: widget.gameContext.amountAvailableHints,
@@ -230,10 +234,8 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
           ? mostRecentQ?.question
           : widget.currentQuestionInfo?.question,
       animateScore: widget.correctAnswerPressed,
-      animateQuestionText: widget.questionsToPlayUntilNextCategory != 0 &&
-          widget.questionsToPlayUntilNextCategory !=
-              HistoryGameTimelineScreen
-                  .default_questions_to_play_until_next_category,
+      animateQuestionText: widget.animateQuestionText &&
+          widget.questionsToPlayUntilNextCategory != 0,
       score: formatTextWithOneParam(
           label.l_score_param0,
           widget.historyLocalStorage
@@ -244,8 +246,8 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
               widget.gameContext.totalNrOfQuestionsForCampaignLevel.toString()),
       hintButtonOnClick: () {
         if (widget.currentQuestionInfo != null) {
-          onHintButtonClick(levelsWon, levelsLost,
-              widget.currentQuestionInfo!.question.index);
+          onHintButtonClick(
+              levelsWon, levelsLost, widget.currentQuestionInfo!.question);
         }
       },
     );
@@ -258,8 +260,10 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
   }
 
   void goToNextGameScreen(BuildContext context) {
-    return HistoryGameScreenManager(buildContext: context)
-        .showNextGameScreen(widget.campaignLevel, widget.gameContext);
+    return HistoryGameScreenManager(buildContext: context).showNextGameScreen(
+        widget.campaignLevel,
+        widget.gameContext,
+        widget.refreshMainScreenCallback);
   }
 
   MyButton createAnswerButton(
@@ -302,6 +306,7 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
                 widget.correctAnswerPressed = false;
               }
             });
+            widget.animateQuestionText = true;
             widget.questionsToPlayUntilNextCategory--;
             widget.currentQuestionInfo = widget.gameContext.gameUser
                 .getRandomQuestion(widget.difficulty, widget.category);
@@ -318,14 +323,6 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
   String getQuestionImagePath(
           QuestionDifficulty difficulty, QuestionCategory category) =>
       "questions/images/" + difficulty.name + "/" + category.name;
-
-  GameFinishedPopup buildGameFinishedPopup(BuildContext context) {
-    return GameFinishedPopup(
-      isGameFinishedSuccess: true,
-      highScore: null,
-      playAgainClick: () {},
-    );
-  }
 
   double getImageWidth() {
     if (widget.category == HistoryGameQuestionConfig().cat0) {
@@ -369,7 +366,7 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
   }
 
   void onHintButtonClick(
-      List<int> levelsWon, List<int> levelsLost, int currentQuestionIndex) {
+      List<int> levelsWon, List<int> levelsLost, Question question) {
     widget.correctAnswerPressed = false;
 
     widget.gameContext.amountAvailableHints--;
@@ -381,12 +378,12 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
         .map((e) => e.question.index)
         .toList();
     availableQuestionsToShowImages.shuffle();
-    availableQuestionsToShowImages.remove(currentQuestionIndex);
+    availableQuestionsToShowImages.remove(question.index);
     availableQuestionsToShowImages.removeAll(widget
         .gameContext.shownImagesForTimeLineHints
         .getOrDefault(widget.category, List.empty()));
     Set<int> imagesToShow = Set();
-    imagesToShow.add(currentQuestionIndex);
+    imagesToShow.add(question.index);
     var imagesToShowForHint = 3;
     while (imagesToShow.length < imagesToShowForHint &&
         availableQuestionsToShowImages.isNotEmpty) {
@@ -396,7 +393,13 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
     widget.gameContext.shownImagesForTimeLineHints
         .putIfAbsent(widget.category, () => [])
         .addAll(imagesToShow);
-    setState(() {});
+    for (int qImgToShowIndex in imagesToShow) {
+      widget.historyLocalStorage.setTimelineShownImagesQuestion(
+          widget.difficulty, widget.category, qImgToShowIndex);
+    }
+    setState(() {
+      widget.animateQuestionText = false;
+    });
   }
 
   Widget createOptionItemCat0(

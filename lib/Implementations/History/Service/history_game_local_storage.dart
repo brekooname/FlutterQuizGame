@@ -1,6 +1,8 @@
 import 'package:flutter_app_quiz_game/Game/Game/campaign_level.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question.dart';
+import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
+import 'package:flutter_app_quiz_game/Implementations/History/Constants/history_game_question_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Storage/my_local_storage.dart';
 
 class HistoryLocalStorage extends MyLocalStorage {
@@ -16,6 +18,29 @@ class HistoryLocalStorage extends MyLocalStorage {
     return localStorage.getStringList(_getWonQuestionsFieldName(diff)) ?? [];
   }
 
+  List<String> _getTimelineShownImages(QuestionDifficulty diff) {
+    return localStorage
+            .getStringList(_getTimelineShownImagesHintFieldName(diff)) ??
+        [];
+  }
+
+  void setTimelineShownImagesQuestion(
+      QuestionDifficulty diff, QuestionCategory cat, int qIndex) {
+    List<String> list = _getTimelineShownImages(diff);
+    var qKey = getQuestionStorageKey(cat, diff, qIndex);
+    if (!list.contains(qKey)) {
+      list.add(qKey);
+    }
+    localStorage.setStringList(
+        _getTimelineShownImagesHintFieldName(diff), list);
+  }
+
+  bool isTimelineImageShown(Question question) {
+    List<String> list = _getTimelineShownImages(question.difficulty);
+    return list.contains(getQuestionStorageKey(
+        question.category, question.difficulty, question.index));
+  }
+
   int getRemainingHints(QuestionDifficulty diff) {
     return localStorage.getInt(_getRemainingHintsFieldName(diff)) ?? -1;
   }
@@ -26,7 +51,8 @@ class HistoryLocalStorage extends MyLocalStorage {
 
   void setWonQuestion(Question question) {
     List<String> list = getWonQuestions(question.difficulty);
-    var qKey = getQuestionStorageKey(question);
+    var qKey = getQuestionStorageKey(
+        question.category, question.difficulty, question.index);
     if (!list.contains(qKey)) {
       list.add(qKey);
     }
@@ -34,12 +60,9 @@ class HistoryLocalStorage extends MyLocalStorage {
         _getWonQuestionsFieldName(question.difficulty), list);
   }
 
-  String getQuestionStorageKey(Question question) =>
-      question.category.name +
-      "_" +
-      question.difficulty.name +
-      "_" +
-      question.index.toString();
+  String getQuestionStorageKey(
+          QuestionCategory cat, QuestionDifficulty diff, int qIndex) =>
+      cat.name + "_" + diff.name + "_" + qIndex.toString();
 
   String _getWonQuestionsFieldName(QuestionDifficulty difficulty) {
     return localStorageName + "_" + difficulty.name + "_finishedQ";
@@ -47,5 +70,21 @@ class HistoryLocalStorage extends MyLocalStorage {
 
   String _getRemainingHintsFieldName(QuestionDifficulty difficulty) {
     return localStorageName + "_" + difficulty.name + "_RemainingHints";
+  }
+
+  String _getTimelineShownImagesHintFieldName(QuestionDifficulty difficulty) {
+    return localStorageName +
+        "_" +
+        difficulty.name +
+        "_TimelineShownImagesHint";
+  }
+
+  void clear() {
+    for (var diff in HistoryGameQuestionConfig().difficulties) {
+      localStorage.setStringList(_getWonQuestionsFieldName(diff), []);
+      localStorage
+          .setStringList(_getTimelineShownImagesHintFieldName(diff), []);
+      localStorage.setInt(_getRemainingHintsFieldName(diff), -1);
+    }
   }
 }

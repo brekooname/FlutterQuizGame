@@ -30,7 +30,8 @@ class HistoryGameScreenManager extends GameScreenManager<HistoryGameContext> {
   StatefulWidget getScreenForConfig(
       HistoryGameContext gameContext,
       QuestionDifficulty difficulty,
-      QuestionCategory category) {
+      QuestionCategory category,
+      VoidCallback refreshMainScreenCallback) {
     StatefulWidget goToScreen;
     var questionConfig = HistoryGameQuestionConfig();
     //
@@ -43,12 +44,14 @@ class HistoryGameScreenManager extends GameScreenManager<HistoryGameContext> {
         gameContext: gameContext,
         difficulty: difficulty,
         category: category,
+        refreshMainScreenCallback: refreshMainScreenCallback,
       );
     } else {
       goToScreen = HistoryGameQuestionScreen(
         gameContext: gameContext,
         difficulty: difficulty,
         category: category,
+        refreshMainScreenCallback: refreshMainScreenCallback,
       );
     }
     return goToScreen;

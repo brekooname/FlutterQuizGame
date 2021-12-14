@@ -15,7 +15,7 @@ import '../../main.dart';
 mixin MyPopup {
   late double width;
   late BuildContext buildContext;
-  late NavigatorService navigatorService;
+  late NavigatorService _navigatorService;
   LocalizationService localizationService = LocalizationService();
   ImageService imageService = ImageService();
   ButtonSize buttonSize = ButtonSize();
@@ -23,7 +23,7 @@ mixin MyPopup {
 
   void initPopup(BuildContext context) {
     this.buildContext = context;
-    this.navigatorService = NavigatorService();
+    this._navigatorService = NavigatorService();
     this.width = screenDimensions.w(100);
   }
 
@@ -62,6 +62,10 @@ mixin MyPopup {
         ));
   }
 
+  void closePopup(BuildContext context){
+    _navigatorService.pop(context);
+  }
+
   MyButton createClosePopupBtn(
       BuildContext context, VoidCallback? onCloseBtnClick) {
     var closeBtnWidth = screenDimensions.w(9);
@@ -69,7 +73,7 @@ mixin MyPopup {
         size: Size(closeBtnWidth, closeBtnWidth),
         onClick: () {
           if (onCloseBtnClick == null) {
-            navigatorService.pop(context);
+            _navigatorService.pop(context);
           } else {
             onCloseBtnClick.call();
           }

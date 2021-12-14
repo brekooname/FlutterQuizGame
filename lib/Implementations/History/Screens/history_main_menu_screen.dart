@@ -8,10 +8,13 @@ import 'package:flutter_app_quiz_game/Implementations/History/Constants/history_
 import 'package:flutter_app_quiz_game/Implementations/History/Questions/history_all_questions.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Service/history_game_local_storage.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Service/history_game_screen_manager.dart';
+import 'package:flutter_app_quiz_game/Lib/Button/floating_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/settings_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Color/color_util.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/map_extension.dart';
+import 'package:flutter_app_quiz_game/Lib/Popup/reset_content_popup.dart';
+import 'package:flutter_app_quiz_game/Lib/Popup/settings_popup.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/standard_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/game_title.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
@@ -88,10 +91,22 @@ class HistoryMainMenuScreenState extends State<HistoryMainMenuScreen>
     return createScreen(Scaffold(
         body: mainColumn,
         backgroundColor: Colors.transparent,
-        floatingActionButton: SettingsButton(
-          context: context,
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.endTop));
+        floatingActionButton: Row(children: [
+          FloatingButton(
+            context: context,
+            iconName: "btn_settings",
+            myPopupToDisplay: SettingsPopup(),
+          ),
+          FloatingButton(
+            context: context,
+            iconName: "btn_reset",
+            myPopupToDisplay: ResetContentPopup(() {
+              widget.historyLocalStorage.clear();
+              setState(() {});
+            }),
+          ),
+        ]),
+        floatingActionButtonLocation: FloatingActionButtonLocation.startTop));
   }
 
   Widget createLevelButton(BuildContext context, CampaignLevel campaignLevel,

@@ -9,11 +9,13 @@ class GameFinishedPopup extends StatelessWidget with MyPopup {
   int? highScore;
   bool isGameFinishedSuccess;
   VoidCallback playAgainClick;
+  VoidCallback goBackClick;
 
   GameFinishedPopup(
       {this.isGameFinishedSuccess = true,
       this.highScore,
-      required this.playAgainClick});
+      required this.playAgainClick,
+      required this.goBackClick});
 
   @override
   AlertDialog build(BuildContext context) {
@@ -55,8 +57,8 @@ class GameFinishedPopup extends StatelessWidget with MyPopup {
   }
 
   void onClickGoBack(BuildContext context) {
-    navigatorService.pop(context);
-    navigatorService.pop(context);
+    closePopup(context);
+    goBackClick.call();
   }
 
   MyText buildHighScoreText() {
