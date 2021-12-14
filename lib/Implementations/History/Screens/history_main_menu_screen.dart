@@ -1,12 +1,17 @@
+import 'dart:collection';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Game/Game/campaign_level.dart';
+import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Constants/history_campaign_level.dart';
+import 'package:flutter_app_quiz_game/Implementations/History/Constants/history_game_question_config.dart';
+import 'package:flutter_app_quiz_game/Implementations/History/Questions/history_all_questions.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Service/history_game_local_storage.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Service/history_game_screen_manager.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/settings_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Color/color_util.dart';
+import 'package:flutter_app_quiz_game/Lib/Extensions/map_extension.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/standard_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/game_title.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
@@ -16,10 +21,17 @@ import '../../../Lib/Font/font_config.dart';
 import '../../../main.dart';
 
 class HistoryMainMenuScreen extends StatefulWidget {
-  late HistoryLocalStorage historyLocalStorage;
+  late HistoryLocalStorage historyLocalStorage = HistoryLocalStorage();
+  HistoryGameQuestionConfig historyGameQuestionConfig =
+      HistoryGameQuestionConfig();
+  HistoryAllQuestions allQuestions = HistoryAllQuestions();
+  Map<QuestionDifficulty, int> totalNrOfQuestionsForCampaignLevel = HashMap();
 
   HistoryMainMenuScreen() {
-    historyLocalStorage = HistoryLocalStorage();
+    for (CampaignLevel l in HistoryCampaignLevel().allLevels) {
+      totalNrOfQuestionsForCampaignLevel.putIfAbsent(l.difficulty,
+          () => allQuestions.getAllQuestionsForDifficulty(l.difficulty).length);
+    }
   }
 
   @override
@@ -82,17 +94,20 @@ class HistoryMainMenuScreenState extends State<HistoryMainMenuScreen>
         floatingActionButtonLocation: FloatingActionButtonLocation.endTop));
   }
 
-  MyButton createLevelButton(BuildContext context, CampaignLevel campaignLevel,
+  Widget createLevelButton(BuildContext context, CampaignLevel campaignLevel,
       Color btnColor, String labelText, bool contentLocked) {
     var btnSize = Size(screenDimensions.w(80), screenDimensions.h(11));
     var paddingBetween = btnSize.width / 20;
     var iconWidth = screenDimensions.w(15);
-    return MyButton(
+
+    var myButton = MyButton(
         contentLocked: contentLocked,
         size: btnSize,
         onClick: () {
           HistoryGameScreenManager(buildContext: context)
-              .showNewGameScreen(campaignLevel);
+              .showNewGameScreen(campaignLevel, () {
+            setState(() {});
+          });
         },
         buttonSkinConfig: ButtonSkinConfig(backgroundColor: btnColor),
         fontConfig: FontConfig(),
@@ -105,11 +120,19 @@ class HistoryMainMenuScreenState extends State<HistoryMainMenuScreen>
               child: Column(children: [
                 MyText(text: labelText),
                 MyText(
-                  text: formatTextWithOneParam(
-                      label.l_high_score_param0,
-                      widget.historyLocalStorage
-                          .getHighScore(campaignLevel)
-                          .toString()),
+                  text: contentLocked
+                      ? ""
+                      : formatTextWithOneParam(
+                          label.l_score_param0,
+                          widget.historyLocalStorage
+                                  .getWonQuestions(campaignLevel.difficulty)
+                                  .length
+                                  .toString() +
+                              "/" +
+                              widget.totalNrOfQuestionsForCampaignLevel
+                                  .get<QuestionDifficulty, int>(
+                                      campaignLevel.difficulty)
+                                  .toString()),
                   fontConfig: FontConfig(
                       textColor: Colors.yellow,
                       fontWeight: FontWeight.normal,
@@ -118,6 +141,12 @@ class HistoryMainMenuScreenState extends State<HistoryMainMenuScreen>
               ])),
           SizedBox(width: paddingBetween),
         ]));
+
+    return Column(
+      children: [
+        myButton,
+      ],
+    );
   }
 
   Widget getBtnIcon(

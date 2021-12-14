@@ -3,7 +3,7 @@ import 'dart:collection';
 import 'package:flutter_app_quiz_game/Game/Question/Model/category_difficulty.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question.dart';
 import 'package:flutter_app_quiz_game/Game/Question/all_questions_service.dart';
-import 'package:flutter_app_quiz_game/Implementations/History/Constants/history_question_config.dart';
+import 'package:flutter_app_quiz_game/Implementations/History/Constants/history_game_question_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Constants/language.dart';
 
 class HistoryAllQuestions extends AllQuestionsService {
@@ -38,28 +38,28 @@ class HistoryAllQuestions extends AllQuestionsService {
           "United States Declaration of Independence:1776",
           "Napoleon is defeated at the Battle of Waterloo:1815",
           "First Steam Locomotive:1825",
-          // "Great Britain took over the rule of India:1858",
-          // "Edison invents electric light:1879",
-          // "Benz develops first petrol-driven car:1885",
-          // "Einstein announces the theory of relativity:1905",
-          // "Titanic, world’s biggest ship, sinks in North Atlantic:1912",
-          // "World War One begins:1914",
-          // "Russian Revolution:1917",
-          // "Hitler rises to power in Germany:1933",
-          // "World War Two begins:1939",
-          // "End of World War Two:1945",
-          // "Communist China is founded:1949",
-          // "Russia sends into space the first satellite, Sputnik 1:1957",
-          // "Yuri Gagarin becomes the first man to fly in space:1961",
-          // "Neil Armstrong becomes the first man to set foot on the moon:1969",
-          // "Chernobyl disaster:1986",
-          // "Fall of Communism in Eastern Europe:1989",
-          // "Unification of Germany:1990",
-          // "Soviet Union breaks up:1991",
-          // "End of Apartheid in South Africa:1994",
-          // "Google is founded:1998",
-          // "September 11 Terrorist Attacks:2001",
-          // "Introduction of the iPhone:2007"
+          "Great Britain took over the rule of India:1858",
+          "Edison invents electric light:1879",
+          "Benz develops first petrol-driven car:1885",
+          "Einstein announces the theory of relativity:1905",
+          "Titanic, world’s biggest ship, sinks in North Atlantic:1912",
+          "World War One begins:1914",
+          "Russian Revolution:1917",
+          "Hitler rises to power in Germany:1933",
+          "World War Two begins:1939",
+          "End of World War Two:1945",
+          "Communist China is founded:1949",
+          "Russia sends into space the first satellite, Sputnik 1:1957",
+          "Yuri Gagarin becomes the first man to fly in space:1961",
+          "Neil Armstrong becomes the first man to set foot on the moon:1969",
+          "Chernobyl disaster:1986",
+          "Fall of Communism in Eastern Europe:1989",
+          "Unification of Germany:1990",
+          "Soviet Union breaks up:1991",
+          "End of Apartheid in South Africa:1994",
+          "Google is founded:1998",
+          "September 11 Terrorist Attacks:2001",
+          "Introduction of the iPhone:2007"
         ]);
     addQuestions(
         result, //
@@ -74,14 +74,14 @@ class HistoryAllQuestions extends AllQuestionsService {
           "German Empire:1871,1918",
           "Ottoman Empire:1299,1922",
           "Empire of Japan:1868,1947",
-          // "Spanish Empire:1402,1975",
-          // "French empire:1534,1980",
-          // "Soviet Union:1922,1991",
-          // "British Empire:1603,1997",
-          // "Portuguese Empire:1415,1999",
-          // "United States:1776,x",
-          // "China:1949,x",
-          // "European Union:1993,x"
+          "Spanish Empire:1402,1975",
+          "French empire:1534,1980",
+          "Soviet Union:1922,1991",
+          "British Empire:1603,1997",
+          "Portuguese Empire:1415,1999",
+          "United States:1776,x",
+          "China:1949,x",
+          "European Union:1993,x"
         ]);
     addQuestions(
         result, //
@@ -90,7 +90,7 @@ class HistoryAllQuestions extends AllQuestionsService {
         questionConfig.diff0, //
         [
           "Battle of Waterloo:Belgium:2,3,5:0",
-          "Battle of Gettysburg:USA:5,6,7:0",
+          "Battle of Gettysburg:United States:5,6,7:0",
           "Siege of Stalingrad:Russia:6,8,9:0",
           "Invasion of Normandy:France:5,6,8:0",
           "The Battle of Okinawa:Japan:1,8,9:0",
@@ -107,13 +107,13 @@ class HistoryAllQuestions extends AllQuestionsService {
         questionConfig.diff0, //
         [
           "Which country was the first one to reach the south pole?::Norway##United Kingdom##Denmark##Russia::0",
-          "Which European country still around had the largest land empire in history?::Russia##United Kingdom##Italy##Spain::1",
-          "Which one of these African countries at one point was controlled by Germany?::Benin##Angola##Djibouti##Tanzania::3",
+          "Which European country had the largest empire in history?::Russia##United Kingdom##Italy##Spain::1",
+          "Which one of these African countries was controlled by Germany?::Benin##Angola##Djibouti##Tanzania::3",
           "Who was the first Tsar of Russia?::Tsar Nicholas I##Tsar Alexander II##Tsar Ivan the Terrible##Tsar Paul I::2",
-          "What was the battle that effectively ended the Napoleonic Wars?::Battle of Vienna##Battle of Valmy##Battle of Verdun##Battle of Waterloo::3",
-          "Which of these countries, at one point, were part of the USSR?::Slovakia##Mongolia##Afghanistan##Azerbaijan::3",
-          "Which one of these countries were never controlled by The United Kingdom?::Pakistan##Aghanistan##Nigeria##Jordan::1",
-          "What European country was blamed for World War 1?::Russia##the United Kingdom##Germany::2",
+          "What was the battle that ended the Napoleonic Wars?::Battle of Vienna##Battle of Valmy##Battle of Verdun##Battle of Waterloo::3",
+          "Which of these countries was part of the USSR?::Slovakia##Mongolia##Afghanistan##Azerbaijan::3",
+          "Which one of these countries were never controlled by The United Kingdom?::Pakistan##Afghanistan##Nigeria##Jordan::1",
+          "What European country was blamed for World War 1?::Russia##United Kingdom##Germany::2",
           "What country was neutral at the beginning of World War 2?::France##United States##Germany##Poland::1",
           "Which African anti-apartheid leader was released from jail in 1990, after more than 27 years?::Idi Amin##Nelson Mandela##Ferdinand Marcos##Joseph Atkinson::1",
           "Which US president was elected to office four times?::George Washington##Gerald Ford##Franklin D Roosevelt##Abraham Lincoln::2"
@@ -128,10 +128,7 @@ class HistoryAllQuestions extends AllQuestionsService {
           ":William Shakespeare::",
           ":Abraham Lincoln::",
           ":George Washington::",
-          ":Thomas Jefferson::",
           ":Charles Darwin::",
-          ":Martin Luther::",
-          ":Albert Einstein::",
           ":Isaac Newton::"
         ]);
     addQuestions(
@@ -173,12 +170,11 @@ class HistoryAllQuestions extends AllQuestionsService {
         [
           "Siege of Orleans:France:1,2,6:0",
           "Fall of Constantinople:Turkey:0,2,7:0",
-          "Battle of Hastings:England:0,1,5:0",
+          "Battle of Hastings:United Kingdom:0,1,5:0",
           "Machu Picchu:Peru:4,5,6:1",
           "Bagan:Myanmar:3,5,7:1",
           "Angkor:Cambodia:3,4,6:1",
-          "Taj Mahal:India:4,5,7:1",
-          "The Great Wall:China:3,5,6:1"
+          "Taj Mahal:India:4,5,7:1"
         ]);
     addQuestions(
         result, //
@@ -188,7 +184,7 @@ class HistoryAllQuestions extends AllQuestionsService {
         [
           "The First Crusade had the intended goal of capturing which city?::Jerusalem##Cairo##Mecca##Rome::0",
           "What did the Magna Carta accomplish?::it limited the power of the lords##it limited the power of knights##it increased the power of peasants and serfs##it limited the power of the monarch::3",
-          "How did the Bubonic Plague spread?::Bad water##Fleas on rats##Polluted air##Volcano ash::1",
+          "How did the Bubonic Plague spread?::Bad water##Fleas from rats##Polluted air##Volcano ash::1",
           "This city was on a crossroads between Europe and the Middle East::Cairo##Constantinople##Paris##Moscow::1",
           "What was the cause of the Crusades?::To liberate the Holy land of Jerusalem from the Muslims##A revolt of peasants##The Black Death spreading over Europe##Trading wars along the Silk Road::0",
           "Holy prophet of the Muslim religion?::Jesus Christ##Buddha##Muhammad::2",
@@ -204,10 +200,7 @@ class HistoryAllQuestions extends AllQuestionsService {
           ":Charlemagne::",
           ":Leonardo da Vinci::",
           ":Genghis Khan::",
-          ":Galileo Galilei::",
-          ":Ferdinand Magellan::",
-          ":Nicolaus Copernicus::",
-          ":Michelangelo::"
+          ":Galileo Galilei::"
         ]);
     addQuestions(
         result, //
@@ -264,7 +257,7 @@ class HistoryAllQuestions extends AllQuestionsService {
           "How many of the Seven Wonders of the Ancient World still exist?::3##2##1##0::2",
           "Who is credited with making the first map of the known world?::Archimedes##Anaximander##Euclid##Christopher Columbus::1",
           "In ancient Rome what does a consul's right to reject each other's decisions called?::Tax##Veto##Oversee##Affirm::1",
-          "Approximately how old is the great wall of china?::1000 years##2000 years##3000 years##5000 years::2"
+          "Approximately how old is the Great Wall of China?::1000 years##2000 years##3000 years##5000 years::2"
         ]);
     addQuestions(
         result, //
@@ -274,10 +267,8 @@ class HistoryAllQuestions extends AllQuestionsService {
         [
           ":Alexander the Great::",
           ":Julius Caesar::",
-          ":Plato::",
           ":Aristotle::",
-          ":Confucius::",
-          ":Socrates::"
+          ":Confucius::"
         ]);
     addQuestions(
         result, //
@@ -300,7 +291,7 @@ class HistoryAllQuestions extends AllQuestionsService {
           "Göbekli Tepe:Turkey::1",
           "Lascaux cave:France::1",
           "Sumer:Iraq::1",
-          "Stonehenge:England::1"
+          "Stonehenge:United Kingdom::1"
         ]);
     addQuestions(
         result, //
@@ -308,11 +299,10 @@ class HistoryAllQuestions extends AllQuestionsService {
         questionConfig.cat3, //
         questionConfig.diff3, //
         [
-          "what animal from the stone age is extinct now?::cheetah##mammoth##antelope##Anteater::1",
-          "what stage came before the stone age?::Mud Age##Dinosaur Age##Ice Age##The Big Bang::2",
+          "What animal from the stone age is extinct now?::cheetah##mammoth##antelope##Anteater::1",
+          "What stage came before the stone age?::Mud Age##Dinosaur Age##Ice Age##The Big Bang::2",
           "What is a hominid?::a tool##an early ancestor of humans ##a collection of ancient bones ##a fishhook::1",
-          "Which early hominid migrated out of Africa to Asia and Europe?::Australopithecus##Homo Habilis##Homo Erectus##Homo Sapiens::2",
-          "Hominids and humans migrated around the world from what continent?::Africa##Asia##Australia ##Europe::0",
+          "Humans migrated around the world from what continent?::Africa##Asia##Australia ##Europe::0",
           "Which of the following defines Homo erectus?::thinking man##modern man##wise man##upright man::3"
         ]);
   }

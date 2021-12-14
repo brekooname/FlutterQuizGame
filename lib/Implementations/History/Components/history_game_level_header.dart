@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app_quiz_game/Game/Game/campaign_level.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question.dart';
-import 'package:flutter_app_quiz_game/Implementations/History/Constants/history_question_config.dart';
-
+import 'package:flutter_app_quiz_game/Implementations/History/Constants/history_game_question_config.dart';
+import 'package:flutter_app_quiz_game/Lib/Animation/animation_fade_in_fade_out_text.dart';
 import 'package:flutter_app_quiz_game/Lib/Animation/animation_zoom_in_zoom_out_text.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/hint_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_back_button.dart';
@@ -13,22 +14,25 @@ import '../../../Lib/Font/font_config.dart';
 class HistoryGameLevelHeader extends StatelessWidget {
   String score;
   bool animateScore;
+  bool animateQuestionText;
   int availableHints;
   double? questionContainerHeight;
   Question? question;
   VoidCallback hintButtonOnClick;
   bool isRewardedAdLoaded;
-  ScreenDimensionsService screenDimensions;
+  CampaignLevel campaignLevel;
+  ScreenDimensionsService screenDimensions = ScreenDimensionsService();
 
   HistoryGameLevelHeader(
       {required this.score,
+      required this.campaignLevel,
       this.questionContainerHeight,
       this.animateScore = false,
+      this.animateQuestionText = false,
       this.isRewardedAdLoaded = false,
       required this.hintButtonOnClick,
       required this.availableHints,
-      required this.question,
-      required this.screenDimensions});
+      required this.question});
 
   @override
   Widget build(BuildContext context) {
@@ -58,15 +62,19 @@ class HistoryGameLevelHeader extends StatelessWidget {
     if ((questionToBeDisplayed ?? "").isEmpty) {
       questionText = Container();
     } else {
+      var text = MyText(
+        width: screenDimensions.w(99),
+        maxLines:
+            question?.category == HistoryGameQuestionConfig().cat3 ? 4 : 2,
+        text: questionToBeDisplayed ?? "",
+        fontSize: FontConfig.getCustomFontSize(1.2),
+      );
       questionText = Padding(
           padding: EdgeInsets.fromLTRB(horizMargin, 0, horizMargin, 0),
-          child: MyText(
-            width: screenDimensions.w(99),
-            maxLines:
-                question?.category == HistoryGameQuestionConfig().cat3 ? 4 : 2,
-            text: questionToBeDisplayed ?? "",
-            fontSize: FontConfig.getCustomFontSize(1.2),
-          ));
+          child: animateQuestionText
+              ? AnimateFadeInFadeOutText(
+                  fadeInFadeOutOnce: true, toAnimateText: text)
+              : text);
     }
     var questionColumn = Column(
       mainAxisAlignment: MainAxisAlignment.center,

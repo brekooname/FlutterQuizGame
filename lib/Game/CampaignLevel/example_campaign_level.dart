@@ -1,6 +1,6 @@
 import 'package:flutter_app_quiz_game/Game/Game/campaign_level.dart';
 
-import 'package:flutter_app_quiz_game/Implementations/History/Constants/history_question_config.dart';
+import 'package:flutter_app_quiz_game/Implementations/History/Constants/history_game_question_config.dart';
 
 class ExampleCampaignLevel {
   late CampaignLevel level_0_0;

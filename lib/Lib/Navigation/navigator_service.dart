@@ -10,11 +10,11 @@ class NavigatorService {
 
   NavigatorService.internal();
 
-  void goTo(
-      BuildContext context, StatefulWidget screen, VoidCallback setState) {
+  void goTo(BuildContext context, StatefulWidget screen,
+      VoidCallback setStateForRefresh) {
     Navigator.push(context, MaterialPageRoute(builder: (context) => screen))
         .then((value) {
-      // setState.call();
+      setStateForRefresh.call();
     });
   }
 

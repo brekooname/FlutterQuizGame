@@ -15,13 +15,12 @@ class ImageService {
 
   Image getSpecificImage(
       {required String imageName,
+      String imageExtension = "png",
       String? module,
       double? maxWidth,
       double? maxHeight}) {
     String path = _assetsService.getSpecificAssetPath(
-        assetName: imageName,
-        assetExtension: "png",
-        module: module);
+        assetName: imageName, assetExtension: imageExtension, module: module);
     return getByImagePath(path, maxWidth, maxHeight);
   }
 

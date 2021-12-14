@@ -5,11 +5,11 @@ import 'campaign_level.dart';
 
 abstract class CampaignLevelService {
 
-  List<CampaignLevel> allLevels();
+  List<CampaignLevel> get allLevels;
 
   CampaignLevel campaignLevel(
       QuestionDifficulty difficulty, QuestionCategory category) {
-    return allLevels().firstWhere((element) =>
+    return allLevels.firstWhere((element) =>
     element.difficulty == difficulty &&
         element.category.contains(category));
   }

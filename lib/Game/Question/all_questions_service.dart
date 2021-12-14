@@ -11,21 +11,35 @@ import '../../main.dart';
 import 'Model/category_difficulty.dart';
 
 abstract class AllQuestionsService {
-  Map<CategoryDifficulty, List<Question>>? allQuestionsCache;
+  Map<CategoryDifficulty, List<Question>>? _allQuestionsCache;
 
   Map<CategoryDifficulty, List<Question>> get allQuestions {
-    if (allQuestionsCache == null) {
+    if (_allQuestionsCache == null) {
       Language language = Language.values
           .firstWhere((element) => element.name() == MyApp.languageCode);
 
-      allQuestionsCache = getAllQuestionsWithLanguages()
+      _allQuestionsCache = getAllQuestionsWithLanguages()
               .get<Language, Map<CategoryDifficulty, List<Question>>>(
                   language) ??
           getAllQuestionsWithLanguages()
               .get<Language, Map<CategoryDifficulty, List<Question>>>(
                   Language.en);
     }
-    return allQuestionsCache!;
+    return _allQuestionsCache!;
+  }
+
+  List<Question> getAllQuestionsForCategory(QuestionCategory category) {
+    return allQuestions.values
+        .expand((element) => element)
+        .where((element) => element.category == category)
+        .toList();
+  }
+
+  List<Question> getAllQuestionsForDifficulty(QuestionDifficulty difficulty) {
+    return allQuestions.values
+        .expand((element) => element)
+        .where((element) => element.difficulty == difficulty)
+        .toList();
   }
 
   Map<Language, Map<CategoryDifficulty, List<Question>>>

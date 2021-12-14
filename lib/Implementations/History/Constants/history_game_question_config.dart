@@ -26,11 +26,9 @@ class HistoryGameQuestionConfig extends GameQuestionConfig {
     //
     //CATEGORIES
     singleton.cat0 = QuestionCategory(
-        index: 0,
-        questionCategoryService: HistoryCategoryQuestionService());
+        index: 0, questionCategoryService: HistoryCategoryQuestionService());
     singleton.cat1 = QuestionCategory(
-        index: 1,
-        questionCategoryService: HistoryCategoryQuestionService());
+        index: 1, questionCategoryService: HistoryCategoryQuestionService());
     singleton.cat2 = QuestionCategory(
         index: 2,
         questionCategoryService: DependentAnswersCategoryQuestionService());
@@ -56,24 +54,24 @@ class HistoryGameQuestionConfig extends GameQuestionConfig {
   HistoryGameQuestionConfig.internal();
 
   @override
-  List<QuestionDifficulty> get difficulties => [diff0];
+  List<QuestionDifficulty> get difficulties => [diff0, diff1, diff2, diff3];
 
   @override
-  List<QuestionCategory> get categories => [cat0, cat1];
+  List<QuestionCategory> get categories => [cat0, cat1, cat2, cat3, cat4];
 
   @override
   Map<QuestionCategoryWithPrefixCode, String> get prefixLabelForCode {
     Map<QuestionCategoryWithPrefixCode, String> res = HashMap();
     res.putIfAbsent(QuestionCategoryWithPrefixCode(cat0, 0),
-            () => label.l_when_did_the_event_take_place);
+        () => label.l_when_did_the_event_take_place);
     res.putIfAbsent(QuestionCategoryWithPrefixCode(cat1, 0),
-            () => label.l_between_what_years_did_this_empire_exist);
+        () => label.l_between_what_years_did_this_empire_exist);
     res.putIfAbsent(QuestionCategoryWithPrefixCode(cat2, 0),
         () => label.l_where_did_the_event_take_place);
     res.putIfAbsent(QuestionCategoryWithPrefixCode(cat2, 1),
-            () => label.l_in_what_modern_country_is_it_located);
+        () => label.l_in_what_modern_country_is_it_located);
     res.putIfAbsent(QuestionCategoryWithPrefixCode(cat4, 0),
-            () => label.l_identify_the_historical_figure);
+        () => label.l_identify_the_historical_figure);
     return res;
   }
 }

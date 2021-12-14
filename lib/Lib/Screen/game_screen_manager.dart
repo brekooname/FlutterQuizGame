@@ -18,10 +18,10 @@ abstract class GameScreenManager<TGameContext extends GameContext> {
   StatefulWidget getScreenForConfig(TGameContext gameContext,
       QuestionDifficulty difficulty, QuestionCategory category);
 
-  void showNewGameScreen(CampaignLevel campaignLevel) {
+  void showNewGameScreen(CampaignLevel campaignLevel, VoidCallback setStateForRefresh) {
     TGameContext gameContext = createGameContext(campaignLevel);
     navigatorService.goTo(
-        buildContext, getScreen(campaignLevel, gameContext), () {});
+        buildContext, getScreen(campaignLevel, gameContext), setStateForRefresh);
   }
 
   void showNextGameScreen(

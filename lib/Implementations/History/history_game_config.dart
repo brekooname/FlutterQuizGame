@@ -4,7 +4,7 @@ import 'package:flutter_app_quiz_game/Game/Question/all_questions_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Questions/history_all_questions.dart';
 import 'package:flutter_app_quiz_game/Lib/Constants/language.dart';
 
-import 'Constants/history_question_config.dart';
+import 'Constants/history_game_question_config.dart';
 
 class HistoryGameConfig extends GameConfig {
   static final HistoryGameConfig singleton = HistoryGameConfig.internal();

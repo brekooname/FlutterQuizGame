@@ -1,6 +1,6 @@
 import 'package:flutter_app_quiz_game/Game/Game/campaign_level.dart';
 import 'package:flutter_app_quiz_game/Game/Game/campaign_level_service.dart';
-import 'package:flutter_app_quiz_game/Implementations/History/Constants/history_question_config.dart';
+import 'package:flutter_app_quiz_game/Implementations/History/Constants/history_game_question_config.dart';
 
 class HistoryCampaignLevel extends CampaignLevelService {
   late CampaignLevel level_0;
@@ -46,10 +46,8 @@ class HistoryCampaignLevel extends CampaignLevelService {
       difficulty: questionConfig.diff3,
       category: [
         questionConfig.cat0,
-        questionConfig.cat1,
         questionConfig.cat2,
         questionConfig.cat3,
-        questionConfig.cat4
       ],
     );
     return singleton;
@@ -58,7 +56,5 @@ class HistoryCampaignLevel extends CampaignLevelService {
   HistoryCampaignLevel.internal();
 
   @override
-  List<CampaignLevel> allLevels() {
-    return [level_0, level_1, level_2, level_3];
-  }
+  List<CampaignLevel> get allLevels => [level_0, level_1, level_2, level_3];
 }

@@ -1,6 +1,7 @@
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_app_quiz_game/Game/Question/Model/question.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_info.dart';
@@ -90,7 +91,11 @@ class HistoryGameQuestionScreenState extends State<HistoryGameQuestionScreen>
 
       var mainColumn = Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[header, createImageContainer(), btnContainer],
+        children: <Widget>[
+          header,
+          createImageContainer(currentQuestionInfo.question),
+          btnContainer
+        ],
       );
 
       return createScreen(mainColumn);
@@ -99,11 +104,14 @@ class HistoryGameQuestionScreenState extends State<HistoryGameQuestionScreen>
     }
   }
 
-  Widget createImageContainer() {
+  Widget createImageContainer(Question question) {
     return Expanded(
         child: Container(
             child: imageService.getSpecificImage(
-                imageName: "timeline_opt_unknown")));
+                module: getQuestionImagePath(
+                    question.difficulty, question.category),
+                imageExtension: "jpeg",
+                imageName: "i" + question.index.toString())));
   }
 
   Widget createPossibleAnswerButton(
@@ -138,6 +146,8 @@ class HistoryGameQuestionScreenState extends State<HistoryGameQuestionScreen>
                   audioPlayer.playSuccess();
                   widget.correctAnswerPressed = true;
                   widget.gameContext.gameUser.setWonQuestion(questionInfo);
+                  widget.historyLocalStorage
+                      .setWonQuestion(questionInfo.question);
                 } else {
                   audioPlayer.playFail();
                   widget.wrongPressedAnswer = answerBtnText;
@@ -165,17 +175,21 @@ class HistoryGameQuestionScreenState extends State<HistoryGameQuestionScreen>
 
   HistoryGameLevelHeader createHeader(QuestionInfo questionInfo) {
     var header = HistoryGameLevelHeader(
+      campaignLevel: widget.campaignLevel,
       availableHints: widget.gameContext.amountAvailableHints,
       question: questionInfo.question,
       animateScore: widget.correctAnswerPressed,
       score: formatTextWithOneParam(
           label.l_score_param0,
-          widget.gameContext.gameUser
-              .countAllQuestions([QuestionInfoStatus.WON])),
+          widget.historyLocalStorage
+                  .getWonQuestions(widget.difficulty)
+                  .length
+                  .toString() +
+              "/" +
+              widget.gameContext.totalNrOfQuestionsForCampaignLevel.toString()),
       hintButtonOnClick: () {
         onHintButtonClick(questionInfo);
       },
-      screenDimensions: screenDimensions,
     );
     return header;
   }
@@ -193,8 +207,9 @@ class HistoryGameQuestionScreenState extends State<HistoryGameQuestionScreen>
   }
 
   void onHintButtonClick(QuestionInfo questionInfo) {
-    widget.gameContext.amountAvailableHints =
-        widget.gameContext.amountAvailableHints - 1;
+    widget.gameContext.amountAvailableHints--;
+    widget.historyLocalStorage.setRemainingHints(
+        widget.difficulty, widget.gameContext.amountAvailableHints);
 
     var optionsToDisable = List.of(widget.possibleAnswers);
     optionsToDisable.shuffle();
