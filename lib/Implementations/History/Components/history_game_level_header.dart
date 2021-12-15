@@ -20,7 +20,7 @@ class HistoryGameLevelHeader extends StatelessWidget {
   Question? question;
   VoidCallback hintButtonOnClick;
   VoidCallback onBackButtonRefreshMainScreenCallback;
-  bool isRewardedAdLoaded;
+  bool disableHintBtn;
   CampaignLevel campaignLevel;
   ScreenDimensionsService screenDimensions = ScreenDimensionsService();
 
@@ -30,7 +30,7 @@ class HistoryGameLevelHeader extends StatelessWidget {
       this.questionContainerHeight,
       this.animateScore = false,
       this.animateQuestionText = false,
-      this.isRewardedAdLoaded = false,
+      this.disableHintBtn = false,
       required this.hintButtonOnClick,
       required this.onBackButtonRefreshMainScreenCallback,
       required this.availableHints,
@@ -55,7 +55,7 @@ class HistoryGameLevelHeader extends StatelessWidget {
               (questionToBeDisplayed ?? "").isEmpty ? 0 : vertMargin * 2),
           child: MyText(
             width: screenDimensions.w(99),
-            maxLines: 1,
+            maxLines: 2,
             text: questionPrefixToBeDisplayed ?? "",
             fontSize: FontConfig.getCustomFontSize(1.0),
           ));
@@ -69,7 +69,7 @@ class HistoryGameLevelHeader extends StatelessWidget {
         maxLines:
             question?.category == HistoryGameQuestionConfig().cat3 ? 4 : 2,
         text: questionToBeDisplayed ?? "",
-        fontSize: FontConfig.getCustomFontSize(1.2),
+        fontSize: FontConfig.getCustomFontSize(1.15),
       );
       questionText = Padding(
           padding: EdgeInsets.fromLTRB(horizMargin, 0, horizMargin, 0),
@@ -101,7 +101,7 @@ class HistoryGameLevelHeader extends StatelessWidget {
               border: Border.all(
                   color: Colors.green.shade200, width: screenDimensions.w(1)),
               borderRadius:
-                  BorderRadius.circular(FontConfig.getStandardBorderRadius())),
+                  BorderRadius.circular(FontConfig.standardBorderRadius)),
           child: questionColumn,
         ),
         SizedBox(height: screenDimensions.h(1)),
@@ -117,7 +117,7 @@ class HistoryGameLevelHeader extends StatelessWidget {
     var hintBtn = HintButton(
         onClick: this.hintButtonOnClick,
         availableHints: this.availableHints,
-        disabled: false,
+        disabled: disableHintBtn,
         watchRewardedAdForHint: true,
         showAvailableHintsText: true);
 
@@ -129,7 +129,7 @@ class HistoryGameLevelHeader extends StatelessWidget {
       fontConfig: FontConfig(
           textColor: Colors.yellow,
           borderColor: Colors.black,
-          fontSize: FontConfig.getBigFontSize()),
+          fontSize: FontConfig.bigFontSize),
     );
 
     return Container(

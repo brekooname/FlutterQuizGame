@@ -16,7 +16,7 @@ abstract class AllQuestionsService {
   Map<CategoryDifficulty, List<Question>> get allQuestions {
     if (_allQuestionsCache == null) {
       Language language = Language.values
-          .firstWhere((element) => element.name() == MyApp.languageCode);
+          .firstWhere((element) => element.name == MyApp.languageCode);
 
       _allQuestionsCache = getAllQuestionsWithLanguages()
               .get<Language, Map<CategoryDifficulty, List<Question>>>(

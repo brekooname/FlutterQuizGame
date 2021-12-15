@@ -12,7 +12,6 @@ import 'package:flutter_app_quiz_game/Lib/Button/floating_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Color/color_util.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/map_extension.dart';
-import 'package:flutter_app_quiz_game/Lib/Popup/reset_content_popup.dart';
 import 'package:flutter_app_quiz_game/Lib/Popup/settings_popup.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/standard_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/game_title.dart';
@@ -51,7 +50,7 @@ class HistoryMainMenuScreenState extends State<HistoryMainMenuScreen>
       fontConfig: FontConfig(
           textColor: Colors.lightGreenAccent,
           fontWeight: FontWeight.normal,
-          fontSize: FontConfig.getBigFontSize(),
+          fontSize: FontConfig.bigFontSize,
           borderColor: Colors.green),
       backgroundImagePath: assetsService.getSpecificAssetPath(
           assetExtension: "png", assetName: "title_clouds_background"),
@@ -96,7 +95,10 @@ class HistoryMainMenuScreenState extends State<HistoryMainMenuScreen>
             iconName: "btn_settings",
             myPopupToDisplay: SettingsPopup(
               resetContent: () {
-                widget.historyLocalStorage.clear();
+                widget.historyLocalStorage.clearAll();
+              },
+              refreshScreenCallback: () {
+                setState(() {});
               },
             ),
           ),
@@ -110,10 +112,22 @@ class HistoryMainMenuScreenState extends State<HistoryMainMenuScreen>
     var paddingBetween = btnSize.width / 20;
     var iconWidth = screenDimensions.w(15);
 
+    int totalQuestionsForCampaignLevel = widget
+            .totalNrOfQuestionsForCampaignLevel
+            .get<QuestionDifficulty, int>(campaignLevel.difficulty) ??
+        0;
+    var totalWonQuestions = widget.historyLocalStorage
+        .getTotalWonQuestions(campaignLevel.difficulty);
     var myButton = MyButton(
         contentLocked: contentLocked,
         size: btnSize,
         onClick: () {
+          if (widget.historyLocalStorage
+                  .getWonQuestions(campaignLevel.difficulty)
+                  .length ==
+              totalQuestionsForCampaignLevel) {
+            widget.historyLocalStorage.resetLevel(campaignLevel.difficulty);
+          }
           HistoryGameScreenManager(buildContext: context)
               .showNewGameScreen(campaignLevel, () {
             setState(() {});
@@ -134,17 +148,14 @@ class HistoryMainMenuScreenState extends State<HistoryMainMenuScreen>
                       ? ""
                       : formatTextWithOneParam(
                           label.l_score_param0,
-                          widget.historyLocalStorage
-                                  .getWonQuestions(campaignLevel.difficulty)
-                                  .length
-                                  .toString() +
+                          totalWonQuestions.toString() +
                               "/" +
-                              widget.totalNrOfQuestionsForCampaignLevel
-                                  .get<QuestionDifficulty, int>(
-                                      campaignLevel.difficulty)
-                                  .toString()),
+                              totalQuestionsForCampaignLevel.toString()),
                   fontConfig: FontConfig(
-                      textColor: Colors.yellow,
+                      textColor:
+                          totalWonQuestions == totalQuestionsForCampaignLevel
+                              ? Colors.greenAccent
+                              : Colors.yellow,
                       fontWeight: FontWeight.normal,
                       borderColor: Colors.black),
                 )

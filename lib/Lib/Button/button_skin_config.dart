@@ -33,7 +33,7 @@ class ButtonSkinConfig {
         : Colors.transparent;
     this.borderWidth = borderColor == Colors.transparent
         ? 0
-        : FontConfig.getStandardBorderWidth();
+        : FontConfig.standardBorderWidth;
   }
 
   Widget? get image {

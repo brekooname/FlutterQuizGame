@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_app_quiz_game/Implementations/History/Constants/history_campaign_level.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Service/history_game_screen_manager.dart';
+import 'package:flutter_app_quiz_game/Lib/Extensions/enum_extension.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -18,6 +18,16 @@ void main() {
 }
 
 class MyApp extends StatefulWidget {
+  //
+  //////
+  ////////////
+  static String _appKey = "history";
+  static Language _language = Language.ja;
+
+  ////////////
+  //////
+  //
+
   static const platform = MethodChannel('main.flutter');
   static late double screenWidth;
   static late double screenHeight;
@@ -38,18 +48,19 @@ class MyAppState extends State<MyApp> {
   init(BuildContext context) async {
     String appTitle;
     String appKey;
+    String languageCode;
     bool isPro;
     if (kIsWeb) {
-      //
-      var appId = AppIds().getAppId("history");
-      //
-      appTitle = appId.gameConfig.getTitle(Language.en);
+      var appId = AppIds().getAppId(MyApp._appKey);
+      appTitle = appId.gameConfig.getTitle(MyApp._language);
       appKey = appId.appKey;
       isPro = false;
+      languageCode = MyApp._language.name;
     } else {
       appTitle = await MyApp.platform.invokeMethod('getAppTitle');
       appKey = await MyApp.platform.invokeMethod('getAppKey');
       isPro = await MyApp.platform.invokeMethod('isPro');
+      languageCode = WidgetsBinding.instance!.window.locale.languageCode;
     }
     if (!widget.initCompleted) {
       GoogleFonts.config.allowRuntimeFetching = false;
@@ -62,8 +73,7 @@ class MyAppState extends State<MyApp> {
         MyApp.appId = AppIds().getAppId(appKey);
         MyApp.appTitle = appTitle;
         MyApp.isPro = isPro;
-        MyApp.languageCode =
-            WidgetsBinding.instance!.window.locale.languageCode;
+        MyApp.languageCode = languageCode;
         MyApp.localStorage = localStorage;
       });
     }
@@ -93,7 +103,9 @@ class MyAppState extends State<MyApp> {
 
     var materialApp = MaterialApp(
         localizationsDelegates: AppLocalizations.localizationsDelegates,
-        supportedLocales: AppLocalizations.supportedLocales,
+        supportedLocales: kIsWeb
+            ? [Locale(MyApp._language.name)]
+            : AppLocalizations.supportedLocales,
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           visualDensity: VisualDensity.adaptivePlatformDensity,

@@ -26,12 +26,15 @@ class ImageService {
 
   Image getMainImage(
       {required String imageName,
+      String imageExtension = "png",
       String? module,
       double? maxWidth,
       double? maxHeight}) {
     return getByImagePath(
         _assetsService.getMainAssetPath(
-            module: module, assetName: imageName, assetExtension: "png"),
+            module: module,
+            assetName: imageName,
+            assetExtension: imageExtension),
         maxWidth,
         maxHeight);
   }
@@ -39,6 +42,7 @@ class ImageService {
   Image getByImagePath(String imagePath, double? maxWidth, double? maxHeight) {
     return Image.asset(
       imagePath,
+
       alignment: Alignment.center,
       height: maxHeight,
       width: maxWidth,

@@ -54,7 +54,7 @@ class InAppPurchasesPopup extends StatelessWidget with MyPopup {
             module: "popup",
             maxWidth: defaultBackgroundImageWidth),
         SizedBox(height: screenDimensions.h(5)),
-        MyText(fontConfig: FontConfig(fontSize: FontConfig.getBigFontSize()),
+        MyText(fontConfig: FontConfig(fontSize: FontConfig.bigFontSize),
             text: _inAppPurchaseDescription ?? label.l_extra_content_ad_free),
         SizedBox(height: screenDimensions.h(5)),
         MyButton(

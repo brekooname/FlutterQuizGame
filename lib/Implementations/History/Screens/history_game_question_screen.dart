@@ -5,7 +5,6 @@ import 'package:flutter_app_quiz_game/Game/Question/Model/question.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_info.dart';
-import 'package:flutter_app_quiz_game/Game/Question/Model/question_info_status.dart';
 import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/question_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Components/history_game_level_header.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Constants/history_campaign_level.dart';
@@ -15,7 +14,6 @@ import 'package:flutter_app_quiz_game/Implementations/History/Service/history_ga
 import 'package:flutter_app_quiz_game/Lib/Button/button_skin_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Color/color_util.dart';
-import 'package:flutter_app_quiz_game/Lib/Popup/game_finished_popup.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/game_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/standard_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
@@ -172,7 +170,7 @@ class HistoryGameQuestionScreenState extends State<HistoryGameQuestionScreen>
                 backgroundColor: btnBackgr),
             customContent: MyText(
               text: answerBtnText,
-              maxLines: 3,
+              maxLines: 4,
               width: btnSize.width / 1.1,
             )));
   }
@@ -184,6 +182,7 @@ class HistoryGameQuestionScreenState extends State<HistoryGameQuestionScreen>
       availableHints: widget.gameContext.amountAvailableHints,
       question: questionInfo.question,
       animateScore: widget.correctAnswerPressed,
+      disableHintBtn: widget.hintDisabledPossibleAnswers.isNotEmpty,
       score: formatTextWithOneParam(
           label.l_score_param0,
           widget.historyLocalStorage

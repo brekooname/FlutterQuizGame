@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Lib/Animation/animation_zoom_in_zoom_out.dart';
 import 'package:flutter_app_quiz_game/Lib/Image/image_service.dart';
+import 'package:flutter_app_quiz_game/Lib/Internet/internet_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Popup/watch_rewarded_ad_popup.dart';
 import 'package:flutter_app_quiz_game/Lib/ScreenDimensions/screen_dimensions_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
@@ -9,8 +10,9 @@ import '../../Lib/Button/button_skin_config.dart';
 import '../../Lib/Font/font_config.dart';
 import 'my_button.dart';
 
-class HintButton extends StatelessWidget {
+class HintButton extends StatefulWidget {
   ScreenDimensionsService screenDimensions = ScreenDimensionsService();
+  InternetService _internetService = InternetService();
   late Size buttonSize;
   VoidCallback onClick;
   bool disabled;
@@ -30,20 +32,38 @@ class HintButton extends StatelessWidget {
   }
 
   @override
+  State<HintButton> createState() => HintButtonState();
+}
+
+class HintButtonState extends State<HintButton> {
+  @override
+  void initState() {
+    if (widget.watchRewardedAdForHint) {
+      widget._internetService.hasInternet().then((hasInternet) {
+        setState(() {
+          widget.watchRewardedAdForHint = false;
+        });
+      });
+    }
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    var shouldShowRewardedAd = availableHints <= 0 && watchRewardedAdForHint;
+    var shouldShowRewardedAd =
+        widget.availableHints <= 0 && widget.watchRewardedAdForHint;
     var icon = ImageService().getMainImage(
         imageName: shouldShowRewardedAd ? "btn_hint_ad" : "btn_hint",
         module: "buttons",
-        maxWidth: buttonSize.width);
+        maxWidth: widget.buttonSize.width);
 
-    if (availableHints <= 0 && !watchRewardedAdForHint) {
-      this.disabled = true;
+    if (widget.availableHints <= 0 && !widget.watchRewardedAdForHint) {
+      this.widget.disabled = true;
     }
 
     var btn = MyButton(
-        size: buttonSize,
-        disabled: disabled,
+        size: widget.buttonSize,
+        disabled: widget.disabled,
         onClick: shouldShowRewardedAd
             ? () {
                 Future.delayed(
@@ -55,21 +75,21 @@ class HintButton extends StatelessWidget {
                           return buildWatchRewardedAdPopup(context);
                         }));
               }
-            : onClick,
+            : widget.onClick,
         buttonSkinConfig: ButtonSkinConfig(image: icon),
         fontConfig: FontConfig());
 
     var fittedBtn = SizedBox(
-        width: buttonSize.width,
-        height: buttonSize.height,
-        child: disabled
+        width: widget.buttonSize.width,
+        height: widget.buttonSize.height,
+        child: widget.disabled
             ? btn
             : AnimateZoomInZoomOut(
-                toAnimateWidgetSize: buttonSize,
+                toAnimateWidgetSize: widget.buttonSize,
                 toAnimateWidget: btn,
               ));
 
-    return this.showAvailableHintsText && !shouldShowRewardedAd
+    return widget.showAvailableHintsText && !shouldShowRewardedAd
         ? Stack(
             children: [fittedBtn, createHintAmountText()],
           )
@@ -77,20 +97,20 @@ class HintButton extends StatelessWidget {
   }
 
   Widget buildWatchRewardedAdPopup(BuildContext context) {
-    return WatchRewardedAdPopup(onUserEarnedReward: this.onClick);
+    return WatchRewardedAdPopup(onUserEarnedReward: widget.onClick);
   }
 
   Container createHintAmountText() {
     return Container(
-        width: buttonSize.width,
-        height: buttonSize.height,
+        width: widget.buttonSize.width,
+        height: widget.buttonSize.height,
         child: MyText(
           alignmentInsideContainer: Alignment.bottomRight,
-          text: availableHints.toString(),
+          text: widget.availableHints.toString(),
           fontConfig: FontConfig(
-              fontSize: FontConfig.getNormalFontSize(),
+              fontSize: FontConfig.normalFontSize,
               textColor: Colors.lightGreenAccent,
-              borderWidth: FontConfig.getStandardBorderWidth() * 1.2,
+              borderWidth: FontConfig.standardBorderWidth * 1.2,
               borderColor: Colors.black),
         ));
   }

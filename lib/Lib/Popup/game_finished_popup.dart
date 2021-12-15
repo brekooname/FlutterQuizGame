@@ -69,8 +69,8 @@ class GameFinishedPopup extends StatelessWidget with MyPopup {
       fontConfig: FontConfig(
           textColor: Colors.lightGreenAccent,
           fontWeight: FontWeight.normal,
-          borderWidth: FontConfig.getStandardBorderWidth() * 1.2,
-          fontSize: FontConfig.getNormalFontSize(),
+          borderWidth: FontConfig.standardBorderWidth * 1.2,
+          fontSize: FontConfig.normalFontSize,
           borderColor: Colors.green),
       width: width / 1.2,
     );

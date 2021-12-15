@@ -49,6 +49,14 @@ class HistoryLocalStorage extends MyLocalStorage {
     localStorage.setInt(_getRemainingHintsFieldName(diff), hints);
   }
 
+  int getTotalWonQuestions(QuestionDifficulty diff) {
+    return localStorage.getInt(_getTotalWonQuestionsFieldName(diff)) ?? 0;
+  }
+
+  void setTotalWonQuestions(QuestionDifficulty diff, int val) {
+    localStorage.setInt(_getTotalWonQuestionsFieldName(diff), val);
+  }
+
   void setWonQuestion(Question question) {
     List<String> list = getWonQuestions(question.difficulty);
     var qKey = getQuestionStorageKey(
@@ -58,6 +66,9 @@ class HistoryLocalStorage extends MyLocalStorage {
     }
     localStorage.setStringList(
         _getWonQuestionsFieldName(question.difficulty), list);
+    if (list.length > getTotalWonQuestions(question.difficulty)) {
+      setTotalWonQuestions(question.difficulty, list.length);
+    }
   }
 
   String getQuestionStorageKey(
@@ -66,6 +77,10 @@ class HistoryLocalStorage extends MyLocalStorage {
 
   String _getWonQuestionsFieldName(QuestionDifficulty difficulty) {
     return localStorageName + "_" + difficulty.name + "_finishedQ";
+  }
+
+  String _getTotalWonQuestionsFieldName(QuestionDifficulty difficulty) {
+    return localStorageName + "_" + difficulty.name + "_TotalWonQuestions";
   }
 
   String _getRemainingHintsFieldName(QuestionDifficulty difficulty) {
@@ -79,12 +94,16 @@ class HistoryLocalStorage extends MyLocalStorage {
         "_TimelineShownImagesHint";
   }
 
-  void clear() {
+  void clearAll() {
     for (var diff in HistoryGameQuestionConfig().difficulties) {
-      localStorage.setStringList(_getWonQuestionsFieldName(diff), []);
-      localStorage
-          .setStringList(_getTimelineShownImagesHintFieldName(diff), []);
-      localStorage.setInt(_getRemainingHintsFieldName(diff), -1);
+      resetLevel(diff);
+      localStorage.setInt(_getTotalWonQuestionsFieldName(diff), 0);
     }
+  }
+
+  void resetLevel(QuestionDifficulty diff) {
+    localStorage.setStringList(_getWonQuestionsFieldName(diff), []);
+    localStorage.setStringList(_getTimelineShownImagesHintFieldName(diff), []);
+    localStorage.setInt(_getRemainingHintsFieldName(diff), -1);
   }
 }

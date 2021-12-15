@@ -228,7 +228,7 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
     var header = HistoryGameLevelHeader(
       onBackButtonRefreshMainScreenCallback: widget.refreshMainScreenCallback,
       campaignLevel: widget.campaignLevel,
-      questionContainerHeight: screenDimensions.h(17),
+      questionContainerHeight: screenDimensions.h(18),
       availableHints: widget.gameContext.amountAvailableHints,
       question: shouldGoToNextGameScreen()
           ? mostRecentQ?.question

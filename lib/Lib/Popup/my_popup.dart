@@ -44,7 +44,7 @@ mixin MyPopup {
             Container(
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(
-                        FontConfig.getStandardBorderRadius()),
+                        FontConfig.standardBorderRadius),
                     color: Colors.white),
                 width: width,
                 child: Padding(

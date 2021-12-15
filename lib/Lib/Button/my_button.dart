@@ -125,7 +125,7 @@ class MyButtonState extends State<MyButton> {
 
   Widget buildContentLocked(Widget buttonContent) {
     var decoration = BoxDecoration(
-      borderRadius: BorderRadius.circular(FontConfig.getStandardBorderRadius()),
+      borderRadius: BorderRadius.circular(FontConfig.standardBorderRadius),
       color: Colors.grey.shade400.withOpacity(0.5),
     );
 
@@ -159,8 +159,7 @@ class MyButtonState extends State<MyButton> {
   BoxDecoration? createImageButtonDecoration() {
     return BoxDecoration(
         boxShadow: [createImageButtonShadow()],
-        borderRadius:
-            BorderRadius.circular(FontConfig.getStandardBorderRadius()));
+        borderRadius: BorderRadius.circular(FontConfig.standardBorderRadius));
   }
 
   BoxDecoration? createGradientButtonDecoration() {
@@ -178,8 +177,7 @@ class MyButtonState extends State<MyButton> {
 
     return BoxDecoration(
         boxShadow: [createButtonShadow()],
-        borderRadius:
-            BorderRadius.circular(FontConfig.getStandardBorderRadius()),
+        borderRadius: BorderRadius.circular(FontConfig.standardBorderRadius),
         gradient: widget.pressed
             ? buttonSkinConfig.backgroundGradient == null
                 ? null
@@ -195,8 +193,8 @@ class MyButtonState extends State<MyButton> {
         color: widget.pressed
             ? Colors.grey.withOpacity(0.6)
             : Colors.grey.withOpacity(0.2),
-        spreadRadius: FontConfig.getStandardShadowRadius(),
-        blurRadius: FontConfig.getStandardShadowRadius());
+        spreadRadius: FontConfig.standardShadowRadius,
+        blurRadius: FontConfig.standardShadowRadius);
   }
 
   BoxShadow createButtonShadow() {
@@ -208,14 +206,13 @@ class MyButtonState extends State<MyButton> {
               ? 1
               : 3,
       blurRadius: widget.pressed
-          ? FontConfig.getStandardShadowOffset()
-          : FontConfig.getStandardShadowOffset() * 2,
+          ? FontConfig.standardShadowOffset
+          : FontConfig.standardShadowOffset * 2,
       offset: Offset(
           0,
           widget.pressed
               ? 0
-              : FontConfig
-                  .getStandardShadowOffset()), // changes position of shadow
+              : FontConfig.standardShadowOffset), // changes position of shadow
     );
   }
 

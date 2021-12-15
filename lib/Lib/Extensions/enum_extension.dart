@@ -1,6 +1,3 @@
 extension EnumExtension on Enum {
-  String name() {
-    return this.toString().split('.').last;
-  }
-
+  String get name => this.toString().split('.').last;
 }

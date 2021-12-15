@@ -46,14 +46,17 @@ abstract class GameScreenManager<TGameContext extends GameContext> {
 
   StatefulWidget getScreen(CampaignLevel campaignLevel,
       TGameContext gameContext, VoidCallback refreshMainScreenCallback) {
-    return getScreenForConfig(
-        gameContext,
-        campaignLevel.difficulty,
-        _getNotPlayedRandomQuestionCategory(gameContext),
-        refreshMainScreenCallback);
+    var randomQuestionCategory =
+        _getNotPlayedRandomQuestionCategory(gameContext);
+    if (randomQuestionCategory == null) {
+      return getMainScreen();
+    } else {
+      return getScreenForConfig(gameContext, campaignLevel.difficulty,
+          randomQuestionCategory, refreshMainScreenCallback);
+    }
   }
 
-  QuestionCategory _getNotPlayedRandomQuestionCategory(
+  QuestionCategory? _getNotPlayedRandomQuestionCategory(
       TGameContext gameContext) {
     var allQuestions = gameContext.gameUser.getAllQuestions([]);
     allQuestions
@@ -67,7 +70,7 @@ abstract class GameScreenManager<TGameContext extends GameContext> {
 
     if (availableCategories.isEmpty) {
       //GAME OVER
-      return availableCategories.first;
+      return null;
     } else if (availableCategories.length == 1) {
       return availableCategories.first;
     } else {

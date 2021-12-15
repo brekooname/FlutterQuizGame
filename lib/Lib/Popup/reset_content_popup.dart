@@ -8,8 +8,9 @@ import 'my_popup.dart';
 
 class ResetContentPopup extends StatefulWidget with MyPopup {
   VoidCallback resetContent;
+  VoidCallback _refreshScreenCallback;
 
-  ResetContentPopup(this.resetContent);
+  ResetContentPopup(this.resetContent, this._refreshScreenCallback);
 
   @override
   State<ResetContentPopup> createState() => ResetContentPopupState();
@@ -32,6 +33,7 @@ class ResetContentPopupState extends State<ResetContentPopup> with MyPopup {
               text: label.l_yes,
               backgroundColor: Colors.redAccent.shade200,
               onClick: () {
+                widget._refreshScreenCallback.call();
                 widget.resetContent.call();
                 closePopup(context);
               },
