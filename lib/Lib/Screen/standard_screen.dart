@@ -25,9 +25,7 @@ mixin StandardScreen {
   bool isInterstitialAdLoaded = false;
 
   void initScreen(BuildContext buildContext) {
-    if (!kIsWeb) {
-      initAds(buildContext);
-    }
+    initAds(buildContext);
   }
 
   void disposeScreen() {
@@ -67,36 +65,41 @@ mixin StandardScreen {
 
   void initAds(BuildContext buildContext) {
     initInterstitialAd();
-    bannerAd = BannerAd(
-      adUnitId: adService.bannerAdUnitId,
-      size: AdSize.banner,
-      request: AdRequest(),
-      listener: BannerAdListener(
-        onAdLoaded: (_) {},
-        onAdFailedToLoad: (ad, error) {
-          ad.dispose();
-          print('Ad load failed (code=${error.code} message=${error.message})');
-        },
-      ),
-    );
-    bannerAd?.load();
+    if (!kIsWeb && MyApp.isExtraContentLocked) {
+      bannerAd = BannerAd(
+        adUnitId: adService.bannerAdUnitId,
+        size: AdSize.banner,
+        request: AdRequest(),
+        listener: BannerAdListener(
+          onAdLoaded: (_) {},
+          onAdFailedToLoad: (ad, error) {
+            ad.dispose();
+            print(
+                'Ad load failed (code=${error.code} message=${error.message})');
+          },
+        ),
+      );
+      bannerAd?.load();
+    }
   }
 
   void initInterstitialAd() {
-    interstitialAd?.dispose();
-    isInterstitialAdLoaded = false;
-    InterstitialAd.load(
-        adUnitId: adService.interstitialAdUnitId,
-        request: AdRequest(),
-        adLoadCallback: InterstitialAdLoadCallback(
-          onAdLoaded: (InterstitialAd ad) {
-            interstitialAd = ad;
-            isInterstitialAdLoaded = true;
-          },
-          onAdFailedToLoad: (LoadAdError error) {
-            print('InterstitialAd failed to load: $error');
-          },
-        ));
+    if (!kIsWeb && MyApp.isExtraContentLocked) {
+      interstitialAd?.dispose();
+      isInterstitialAdLoaded = false;
+      InterstitialAd.load(
+          adUnitId: adService.interstitialAdUnitId,
+          request: AdRequest(),
+          adLoadCallback: InterstitialAdLoadCallback(
+            onAdLoaded: (InterstitialAd ad) {
+              interstitialAd = ad;
+              isInterstitialAdLoaded = true;
+            },
+            onAdFailedToLoad: (LoadAdError error) {
+              print('InterstitialAd failed to load: $error');
+            },
+          ));
+    }
   }
 
   Color getBackgroundColor() {
@@ -105,12 +108,18 @@ mixin StandardScreen {
 
   Widget createScreen(Widget mainContent) {
     Container bannerAdContainer;
-    if (bannerAd != null) {
+    if (kIsWeb && MyApp.isExtraContentLocked) {
       bannerAdContainer = Container(
         color: Colors.red,
+        width: bannerAd?.size.width.toDouble(),
+        height: MyApp.bannerAdHeightPx,
+        alignment: Alignment.center,
+      );
+    } else if (bannerAd != null && MyApp.isExtraContentLocked) {
+      bannerAdContainer = Container(
         child: AdWidget(ad: bannerAd!),
         width: bannerAd?.size.width.toDouble(),
-        height: screenDimensions.h(MyApp.bannerAdHeightPercent),
+        height: MyApp.bannerAdHeightPx,
         alignment: Alignment.center,
       );
     } else {

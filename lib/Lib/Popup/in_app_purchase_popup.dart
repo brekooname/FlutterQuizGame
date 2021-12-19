@@ -172,6 +172,21 @@ class _InAppPurchaseState extends State<InAppPurchasePopup> with MyPopup {
   }
 
   Future<void> initStoreInfo() async {
+    if (kIsWeb) {
+      setState(() {
+        _products = [
+          ProductDetails(
+              id: "1",
+              title: "Title",
+              description: "Extra Content + Ad free",
+              price: "0.99",
+              rawPrice: 0.99,
+              currencyCode: "EUR")
+        ];
+      });
+      return;
+    }
+
     final bool isAvailable = await widget._inAppPurchase.isAvailable();
     if (!isAvailable) {
       setState(() {
@@ -222,19 +237,7 @@ class _InAppPurchaseState extends State<InAppPurchasePopup> with MyPopup {
 
     setState(() {
       _isAvailable = isAvailable;
-      if (kIsWeb) {
-        _products = [
-          ProductDetails(
-              id: "1",
-              title: "Title",
-              description: "Extra Content + Ad free",
-              price: "0.99",
-              rawPrice: 0.99,
-              currencyCode: "EUR")
-        ];
-      } else {
-        _products = productDetailResponse.productDetails;
-      }
+      _products = productDetailResponse.productDetails;
       _notFoundIds = productDetailResponse.notFoundIDs;
       _purchasePending = false;
       _loading = false;
@@ -284,6 +287,7 @@ class _InAppPurchaseState extends State<InAppPurchasePopup> with MyPopup {
                 widget._inAppPurchaseLocalStorage
                     .savePurchase(productDetails.id);
                 closePopup(context);
+                showSnackBar(label.l_purchased);
                 return;
               }
               if (Platform.isAndroid) {
@@ -330,7 +334,12 @@ class _InAppPurchaseState extends State<InAppPurchasePopup> with MyPopup {
 
   void showSnackBar(String message) {
     var snackBar = SnackBar(
-      content: MyText(text: message),
+      content: Container(
+        height: screenDimensions.h(5),
+        child: Center(child: MyText(text: message)),
+      ),
+      duration: Duration(seconds: 3),
+      backgroundColor: Colors.white,
     );
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
@@ -358,12 +367,14 @@ class _InAppPurchaseState extends State<InAppPurchasePopup> with MyPopup {
 
   @override
   void dispose() {
-    if (Platform.isIOS) {
-      var iosPlatformAddition = widget._inAppPurchase
-          .getPlatformAddition<InAppPurchaseStoreKitPlatformAddition>();
-      iosPlatformAddition.setDelegate(null);
+    if (!kIsWeb) {
+      if (Platform.isIOS) {
+        var iosPlatformAddition = widget._inAppPurchase
+            .getPlatformAddition<InAppPurchaseStoreKitPlatformAddition>();
+        iosPlatformAddition.setDelegate(null);
+      }
+      _subscription.cancel();
     }
-    _subscription.cancel();
     super.dispose();
   }
 }

@@ -77,7 +77,7 @@ class ScreenDimensionsService {
     var height = MediaQuery.of(buildContext).size.height;
     if (MyApp.isExtraContentLocked) {
       height =
-          height - _getValueForPercent(height, MyApp.bannerAdHeightPercent);
+          height - MyApp.bannerAdHeightPx;
     }
     return height;
   }
