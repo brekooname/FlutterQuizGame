@@ -48,7 +48,7 @@ class RateAppPopup extends StatelessWidget with MyPopup {
 
   @override
   AlertDialog build(BuildContext context) {
-    initPopup(context);
+    initPopup(context: context);
 
     return createDialog(Column(
       mainAxisAlignment: MainAxisAlignment.end,

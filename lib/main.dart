@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -6,6 +8,7 @@ import 'package:flutter_app_quiz_game/Lib/Extensions/enum_extension.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:in_app_purchase_android/in_app_purchase_android.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'Game/Constants/app_id.dart';
@@ -14,6 +17,14 @@ import 'Lib/ScreenDimensions/screen_dimensions_service.dart';
 import 'Lib/Storage/rate_app_local_storage.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  if (!kIsWeb) {
+    if (Platform.isAndroid) {
+      InAppPurchaseAndroidPlatform.registerPlatform();
+    } else if (Platform.isIOS) {}
+  }
+
   runApp(MyApp());
 }
 
@@ -21,13 +32,14 @@ class MyApp extends StatefulWidget {
   //
   //////
   ////////////
-  static String _appKey = "history";
-  static Language _language = Language.ja;
+  static const String _appKey = "history";
+  static const Language _language = Language.en;
 
   ////////////
   //////
   //
 
+  static const double bannerAdHeightPercent = 5;
   static const platform = MethodChannel('main.flutter');
   static late double screenWidth;
   static late double screenHeight;
@@ -36,15 +48,26 @@ class MyApp extends StatefulWidget {
   static late AppId appId;
   static late String appTitle;
   static late String languageCode;
+  static late String extraContentProductId;
   static late bool isPro;
+  static late bool isExtraContentLocked = true;
 
-  bool initCompleted = false;
+  bool _initCompleted = false;
+
+  static void extraContentBought(BuildContext context) {
+    context.findAncestorStateOfType<MyAppState>()!.extraContentBought();
+  }
 
   @override
   State<MyApp> createState() => MyAppState();
 }
 
 class MyAppState extends State<MyApp> {
+  void extraContentBought() {
+    MyApp.isExtraContentLocked = false;
+    setState(() {});
+  }
+
   init(BuildContext context) async {
     String appTitle;
     String appKey;
@@ -62,19 +85,21 @@ class MyAppState extends State<MyApp> {
       isPro = await MyApp.platform.invokeMethod('isPro');
       languageCode = WidgetsBinding.instance!.window.locale.languageCode;
     }
-    if (!widget.initCompleted) {
+    if (!widget._initCompleted) {
       GoogleFonts.config.allowRuntimeFetching = false;
       if (!kIsWeb) {
         MobileAds.instance.initialize();
       }
       SharedPreferences localStorage = await SharedPreferences.getInstance();
       setState(() {
-        widget.initCompleted = true;
-        MyApp.appId = AppIds().getAppId(appKey);
+        widget._initCompleted = true;
+        var appId = AppIds().getAppId(appKey);
+        MyApp.appId = appId;
         MyApp.appTitle = appTitle;
         MyApp.isPro = isPro;
         MyApp.languageCode = languageCode;
         MyApp.localStorage = localStorage;
+        MyApp.extraContentProductId = appId.gameConfig.extraContentProductId;
       });
     }
   }
@@ -82,7 +107,7 @@ class MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     Widget widgetToShow;
-    if (widget.initCompleted) {
+    if (widget._initCompleted) {
       RateAppLocalStorage rateAppLocalStorage = RateAppLocalStorage();
       rateAppLocalStorage.incrementAppLaunchedCount();
 

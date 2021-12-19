@@ -1,15 +1,18 @@
+import 'dart:async';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'my_local_storage.dart';
 
-class InAppPurchasesPreferencesLocalStorage extends MyLocalStorage {
-  static final InAppPurchasesPreferencesLocalStorage singleton =
-      InAppPurchasesPreferencesLocalStorage.internal();
+class InAppPurchaseLocalStorage extends MyLocalStorage {
 
-  factory InAppPurchasesPreferencesLocalStorage() {
+  static final InAppPurchaseLocalStorage singleton =
+  InAppPurchaseLocalStorage.internal();
+
+  factory InAppPurchaseLocalStorage() {
     return singleton;
   }
 
-  InAppPurchasesPreferencesLocalStorage.internal();
+  InAppPurchaseLocalStorage.internal();
 
   InAppPurchasesPreferencesService() {
     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 
-
 import '../../main.dart';
 
 class ScreenDimensionsService {
@@ -75,14 +74,19 @@ class ScreenDimensionsService {
   }
 
   static double _getExternalDeviceHeight(BuildContext buildContext) {
-    return MediaQuery.of(buildContext).size.height;
+    var height = MediaQuery.of(buildContext).size.height;
+    if (MyApp.isExtraContentLocked) {
+      height =
+          height - _getValueForPercent(height, MyApp.bannerAdHeightPercent);
+    }
+    return height;
   }
 
   static double _getExternalDeviceWidth(BuildContext buildContext) {
     return MediaQuery.of(buildContext).size.width;
   }
 
-  double _getValueForPercent(double val, double percent) {
+  static double _getValueForPercent(double val, double percent) {
     return val * (percent / 100);
   }
 }

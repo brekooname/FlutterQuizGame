@@ -46,7 +46,7 @@ class SettingsPopupState extends State<SettingsPopup> with MyPopup {
 
   @override
   AlertDialog build(BuildContext context) {
-    initPopup(context);
+    initPopup(context: context);
 
     var vertMargin = screenDimensions.h(2);
     return createDialog(Column(

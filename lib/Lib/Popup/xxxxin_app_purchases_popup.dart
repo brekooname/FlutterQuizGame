@@ -7,8 +7,8 @@ import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 import 'my_popup.dart';
 
 class InAppPurchasesPopupService {
-  late InAppPurchasesPreferencesLocalStorage
-      _inAppPurchasesPreferencesLocalStorage;
+  InAppPurchaseLocalStorage _inAppPurchaseLocalStorage =
+      InAppPurchaseLocalStorage();
   late BuildContext context;
 
   static final InAppPurchasesPopupService singleton =
@@ -16,8 +16,6 @@ class InAppPurchasesPopupService {
 
   factory InAppPurchasesPopupService({required BuildContext buildContext}) {
     singleton.context = buildContext;
-    singleton._inAppPurchasesPreferencesLocalStorage =
-        InAppPurchasesPreferencesLocalStorage();
     return singleton;
   }
 
@@ -29,22 +27,21 @@ class InAppPurchasesPopupService {
         () => showDialog(
             context: context,
             builder: (BuildContext context) {
-              return InAppPurchasesPopup(_inAppPurchasesPreferencesLocalStorage,
-                  inAppPurchaseDescription);
+              return InAppPurchasesPopup(inAppPurchaseDescription);
             }));
   }
 }
 
 class InAppPurchasesPopup extends StatelessWidget with MyPopup {
-  InAppPurchasesPreferencesLocalStorage _inAppPurchasesPreferencesLocalStorage;
+  InAppPurchaseLocalStorage _inAppPurchaseLocalStorage =
+      InAppPurchaseLocalStorage();
   String? _inAppPurchaseDescription;
 
-  InAppPurchasesPopup(this._inAppPurchasesPreferencesLocalStorage,
-      this._inAppPurchaseDescription);
+  InAppPurchasesPopup(this._inAppPurchaseDescription);
 
   @override
   AlertDialog build(BuildContext context) {
-    initPopup(context);
+    initPopup(context: context);
 
     return createDialog(Column(
       mainAxisAlignment: MainAxisAlignment.end,
@@ -54,7 +51,8 @@ class InAppPurchasesPopup extends StatelessWidget with MyPopup {
             module: "popup",
             maxWidth: defaultBackgroundImageWidth),
         SizedBox(height: screenDimensions.h(5)),
-        MyText(fontConfig: FontConfig(fontSize: FontConfig.bigFontSize),
+        MyText(
+            fontConfig: FontConfig(fontSize: FontConfig.bigFontSize),
             text: _inAppPurchaseDescription ?? label.l_extra_content_ad_free),
         SizedBox(height: screenDimensions.h(5)),
         MyButton(

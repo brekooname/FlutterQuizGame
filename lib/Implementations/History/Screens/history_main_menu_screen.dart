@@ -5,7 +5,7 @@ import 'package:flutter_app_quiz_game/Game/Game/campaign_level.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Constants/history_campaign_level.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Constants/history_game_question_config.dart';
-import 'package:flutter_app_quiz_game/Implementations/History/Questions/history_all_questions.dart';
+import 'package:flutter_app_quiz_game/Implementations/History/Questions/AllContent/history_all_questions.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Service/history_game_local_storage.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Service/history_game_screen_manager.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/floating_button.dart';
@@ -65,7 +65,7 @@ class HistoryMainMenuScreenState extends State<HistoryMainMenuScreen>
     var level2 = createLevelButton(context, historyCampaignLevel.level_2,
         Colors.red.shade300, label.l_ancient_history, false);
     var level3 = createLevelButton(context, historyCampaignLevel.level_3,
-        Colors.yellow.shade300, label.l_prehistory, true);
+        Colors.yellow.shade300, label.l_prehistory, MyApp.isExtraContentLocked);
 
     var btnMargin = screenDimensions.h(3);
     var mainColumn = Container(

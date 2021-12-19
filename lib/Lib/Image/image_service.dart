@@ -39,10 +39,24 @@ class ImageService {
         maxHeight);
   }
 
+  AssetImage getMainAssetImage({
+    required String imageName,
+    String imageExtension = "png",
+    String? module,
+  }) {
+    return getAssetByImagePath(
+      _assetsService.getMainAssetPath(
+          module: module, assetName: imageName, assetExtension: imageExtension),
+    );
+  }
+
+  AssetImage getAssetByImagePath(String imagePath) {
+    return AssetImage(imagePath);
+  }
+
   Image getByImagePath(String imagePath, double? maxWidth, double? maxHeight) {
     return Image.asset(
       imagePath,
-
       alignment: Alignment.center,
       height: maxHeight,
       width: maxWidth,

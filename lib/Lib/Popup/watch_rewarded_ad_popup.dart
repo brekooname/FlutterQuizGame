@@ -7,7 +7,7 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 import 'my_popup.dart';
 
-class WatchRewardedAdPopup extends StatefulWidget with MyPopup {
+class WatchRewardedAdPopup extends StatefulWidget {
   AdService adService = AdService();
   bool watchVideoForExtraHint;
   VoidCallback onUserEarnedReward;
@@ -25,9 +25,8 @@ class WatchRewardedAdPopupState extends State<WatchRewardedAdPopup>
     with MyPopup {
   @override
   AlertDialog build(BuildContext context) {
-    initPopup(context);
+    initPopup(context: context);
 
-    double loadingGifSide = screenDimensions.h(5);
     return createDialog(Column(
       mainAxisAlignment: MainAxisAlignment.end,
       children: <Widget>[
@@ -57,14 +56,10 @@ class WatchRewardedAdPopupState extends State<WatchRewardedAdPopup>
                       widget.onUserEarnedReward.call();
                     });
                   }),
-              !widget.isRewardedAdLoaded
-                  ? imageService.getMainImage(
-                      imageName: "loading",
-                      module: "general",
-                      imageExtension: "gif",
-                      maxHeight: loadingGifSide,
-                      maxWidth: loadingGifSide)
-                  : Container()
+              SizedBox(width:screenDimensions.w(1)),
+              widget.isRewardedAdLoaded
+                  ? Container()
+                  : CircularProgressIndicator()
             ]),
         SizedBox(height: screenDimensions.h(5)),
         MyButton(

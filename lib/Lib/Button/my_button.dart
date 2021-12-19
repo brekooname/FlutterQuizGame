@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Lib/Animation/animation_zoom_in_zoom_out.dart';
 import 'package:flutter_app_quiz_game/Lib/Color/color_util.dart';
 import 'package:flutter_app_quiz_game/Lib/Image/image_service.dart';
-import 'package:flutter_app_quiz_game/Lib/Popup/in_app_purchases_popup.dart';
+import 'package:flutter_app_quiz_game/Lib/Popup/in_app_purchase_popup.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
 import '../../Lib/Button/button_skin_config.dart';
@@ -34,12 +34,17 @@ class MyButton extends StatefulWidget {
     Color? disabledBackgroundColor,
     VoidCallback? onClick,
     Size? size,
+    double? width,
     FontConfig? fontConfig,
     Color? backgroundColor,
     ButtonSkinConfig? buttonSkinConfig,
     this.customContent,
   }) : super(key: key) {
-    this.size = size ?? _buttonSize.normalSize;
+    this.size = size == null
+        ? width == null
+            ? _buttonSize.normalSize
+            : Size(width, _buttonSize.normalSize.height)
+        : size;
     this.fontConfig = fontConfig ?? FontConfig();
     this.onClick = onClick ?? () {};
     this.buttonSkinConfig = buttonSkinConfig ??

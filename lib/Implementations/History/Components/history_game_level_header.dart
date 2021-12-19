@@ -6,10 +6,13 @@ import 'package:flutter_app_quiz_game/Lib/Animation/animation_fade_in_fade_out_t
 import 'package:flutter_app_quiz_game/Lib/Animation/animation_zoom_in_zoom_out_text.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/hint_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_back_button.dart';
+import 'package:flutter_app_quiz_game/Lib/Constants/language.dart';
+import 'package:flutter_app_quiz_game/Lib/Extensions/enum_extension.dart';
 import 'package:flutter_app_quiz_game/Lib/ScreenDimensions/screen_dimensions_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
 import '../../../Lib/Font/font_config.dart';
+import '../../../main.dart';
 
 class HistoryGameLevelHeader extends StatelessWidget {
   String score;
@@ -69,7 +72,10 @@ class HistoryGameLevelHeader extends StatelessWidget {
         maxLines:
             question?.category == HistoryGameQuestionConfig().cat3 ? 4 : 2,
         text: questionToBeDisplayed ?? "",
-        fontSize: FontConfig.getCustomFontSize(1.15),
+        fontSize: FontConfig.getCustomFontSize(
+            [Language.ja.name, Language.ko.name].contains(MyApp.languageCode)
+                ? 1
+                : 1.15),
       );
       questionText = Padding(
           padding: EdgeInsets.fromLTRB(horizMargin, 0, horizMargin, 0),

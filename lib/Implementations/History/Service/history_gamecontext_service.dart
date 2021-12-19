@@ -5,7 +5,7 @@ import 'package:flutter_app_quiz_game/Game/Game/game_context_service.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
 import 'package:flutter_app_quiz_game/Game/Question/question_collector_service.dart';
-import 'package:flutter_app_quiz_game/Implementations/History/Questions/history_all_questions.dart';
+import 'package:flutter_app_quiz_game/Implementations/History/Questions/AllContent/history_all_questions.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Questions/history_game_context.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Service/history_game_local_storage.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/map_extension.dart';

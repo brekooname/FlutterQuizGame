@@ -78,7 +78,7 @@ class HistoryAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat3, //
         questionConfig.diff0, //
-        ["Která země jako první dosáhla jižního pólu?::Norsko##Spojené království##Dánsko##Rusko::0", "Která evropská země měla největší impérium v ​​historii?::Rusko##Spojené království##Itálie##Španělsko::1", "Kterou z těchto afrických zemí ovládalo Německo?::Benin##Angola##Džibutsko##Tanzanie::3", "Kdo byl prvním ruským carem?::Car Mikuláš I##Car Alexandr II##Car Ivan Hrozný##Car Pavel I::2", "Jaká byla bitva, která ukončila napoleonské války?::Bitva o Vídeň##Bitva o Valmy##Bitva u Verdunu##Bitva u Waterloo::3", "Která z těchto zemí byla součástí SSSR?::Slovensko##Mongolsko##Afghánistán##Ázerbajdžán::3", "Které z těchto zemí nebyly nikdy kontrolovány Spojeným královstvím?::Pákistán##Afghánistán##Nigérie##Jordán::1", "Která evropská země byla obviněna z 1. světové války?::Rusko##Spojené království##Německo::2", "Která země byla na začátku 2. světové války neutrální?::Francie##Spojené státy##Německo##Polsko::1", "Který africký vůdce boje proti apartheidu byl propuštěn z vězení v roce 1990, po více než 27 letech?::Idi Amin##Nelson Mandela##Ferdinand Marcos##Joseph Atkinson::1", "Který americký prezident byl zvolen do úřadu čtyřikrát?::George Washington##Geralda Forda##Franklin D Roosevelt##Abraham Lincoln::2"]);
+        ["Která země jako první dosáhla jižního pólu?::Norsko##Spojené království##Dánsko##Rusko::0", "Která evropská země měla největší impérium v ​​historii?::Rusko##Spojené království##Itálie##Španělsko::1", "Kterou z těchto afrických zemí ovládalo Německo?::Benin##Angola##Džibutsko##Tanzanie::3", "Kdo byl prvním ruským carem?::Car Mikuláš I##Car Alexandr II##Car Ivan Hrozný##Car Pavel I::2", "Jaká byla bitva, která ukončila napoleonské války?::Bitva o Vídeň##Bitva o Valmy##Bitva u Verdunu##Bitva u Waterloo::3", "Která z těchto zemí byla součástí SSSR?::Slovensko##Mongolsko##Afghánistán##Ázerbajdžán::3", "Které z těchto zemí nebyly nikdy kontrolovány Spojeným královstvím?::Pákistán##Afghánistán##Nigérie##Jordán::1", "Která evropská země byla obviněna z 1. světové války?::Rusko##Spojené království##Německo::2", "Která země byla na začátku 2. světové války neutrální?::Francie##Spojené státy##Německo##Polsko::1", "Který africký vůdce boje proti apartheidu byl propuštěn z vězení v roce 1990, po více než 27 letech?::Idi Amin##Nelson Mandela##Ferdinand Marcos##Joseph Atkinson::1", "Který americký prezident byl zvolen do úřadu čtyřikrát?::George Washington##Geralda Forda##Franklin D. Roosevelt##Abraham Lincoln::2"]);
     addQuestions(
         result, //
         language, //
@@ -114,7 +114,7 @@ class HistoryAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat4, //
         questionConfig.diff1, //
-        [":Kryštof Kolumbus::", ":Karla Velikého::", ":Leonardo da Vinci::", ":Čingischán::", ":Galileo Galilei::"]);
+        [":Kryštof Kolumbus::", ":Karel Veliký::", ":Leonardo da Vinci::", ":Čingischán::", ":Galileo Galilei::"]);
     addQuestions(
         result, //
         language, //
@@ -138,7 +138,7 @@ class HistoryAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat3, //
         questionConfig.diff2, //
-        ["Jaké bylo první hlavní město starověkého Egypta?::Memphis##Thebes##Alexandrie##Baltimore::0", "Na jakém ostrově vznikla starověká řecká civilizace?::Samos##Kréta##Olympia##Rhodos::1", "Kolik ze sedmi divů starověkého světa ještě existuje?::3##2##1##0::2", "Kdo se zasloužil o vytvoření první mapy známého světa?::Archimedes##Anaximander##Euklides##Kryštof Kolumbus::1", "Jak se ve starém Římě nazývalo právo konzula odmítat vzájemná rozhodnutí?::Daň##Vetovat##Dohlížet##Potvrdit::1", "Jak stará je přibližně Velká čínská zeď?::1000 let##2000 let##3000 let##5000 let::2"]);
+        ["Jaké bylo první hlavní město starověkého Egypta?::Mennofer##Veset##Alexandrie##Baltimore::0", "Na jakém ostrově vznikla starověká řecká civilizace?::Samos##Kréta##Olympia##Rhodos::1", "Kolik ze sedmi divů starověkého světa ještě existuje?::3##2##1##0::2", "Kdo se zasloužil o vytvoření první mapy známého světa?::Archimedes##Anaximandros##Euklides##Kryštof Kolumbus::1", "Jak se ve starém Římě nazývalo právo konzula odmítat vzájemná rozhodnutí?::Daň##Veto##Dohlížet##Potvrdit::1", "Jak stará je přibližně Velká čínská zeď?::1000 let##2000 let##3000 let##5000 let::2"]);
     addQuestions(
         result, //
         language, //
@@ -189,7 +189,7 @@ class HistoryAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat3, //
         questionConfig.diff0, //
-        ["Hvilket land var det første, der nåede sydpolen?::Norge##Det Forenede Kongerige##Danmark##Rusland::0", "Hvilket europæisk land havde det største imperium i historien?::Rusland##Det Forenede Kongerige##Italien##Spanien::1", "Hvilket af disse afrikanske lande blev kontrolleret af Tyskland?::Benin##Angola##Djibouti##Tanzania::3", "Hvem var den første zar af Rusland?::Zar Nicholas I##Zar Alexander II##Zar Ivan den Forfærdelige##Zar Paul I::2", "Hvad var slaget, der afsluttede Napoleonskrigene?::Slaget ved Wien##Slaget ved Valmy##Slaget ved Verdun##Slaget ved Waterloo::3", "Hvilket af disse lande var en del af USSR?::Slovakiet##Mongoliet##Afghanistan##Aserbajdsjan::3", "Hvilket af disse lande blev aldrig kontrolleret af Storbritannien?::Pakistan##Afghanistan##Nigeria##Jordan::1", "Hvilket europæisk land fik skylden for 1. Verdenskrig?::Rusland##Det Forenede Kongerige##Tyskland::2", "Hvilket land var neutralt i begyndelsen af ​​Anden Verdenskrig?::Frankrig##Forenede Stater##Tyskland##Polen::1", "Hvilken afrikansk anti-apartheid-leder blev løsladt fra fængslet i 1990 efter mere end 27 år?::Idi Amin##Nelson Mandela##Ferdinand Marcos##Joseph Atkinson::1", "Hvilken amerikansk præsident blev valgt til embedet fire gange?::George Washington##Gerald Ford##Franklin D Roosevelt##Abraham Lincoln::2"]);
+        ["Hvilket land var det første, der nåede sydpolen?::Norge##Det Forenede Kongerige##Danmark##Rusland::0", "Hvilket europæisk land havde det største imperium i historien?::Rusland##Det Forenede Kongerige##Italien##Spanien::1", "Hvilket af disse afrikanske lande blev kontrolleret af Tyskland?::Benin##Angola##Djibouti##Tanzania::3", "Hvem var den første zar af Rusland?::Zar Nicholas I##Zar Alexander II##Zar Ivan den Forfærdelige##Zar Paul I::2", "Hvad var slaget, der afsluttede Napoleonskrigene?::Slaget ved Wien##Slaget ved Valmy##Slaget ved Verdun##Slaget ved Waterloo::3", "Hvilket af disse lande var en del af USSR?::Slovakiet##Mongoliet##Afghanistan##Aserbajdsjan::3", "Hvilket af disse lande blev aldrig kontrolleret af Storbritannien?::Pakistan##Afghanistan##Nigeria##Jordan::1", "Hvilket europæisk land fik skylden for 1. Verdenskrig?::Rusland##Det Forenede Kongerige##Tyskland::2", "Hvilket land var neutralt i begyndelsen af ​​Anden Verdenskrig?::Frankrig##Forenede Stater##Tyskland##Polen::1", "Hvilken afrikansk anti-apartheid-leder blev løsladt fra fængslet i 1990 efter mere end 27 år?::Idi Amin##Nelson Mandela##Ferdinand Marcos##Joseph Atkinson::1", "Hvilken amerikansk præsident blev valgt til embedet fire gange?::George Washington##Gerald Ford##Franklin D. Roosevelt##Abraham Lincoln::2"]);
     addQuestions(
         result, //
         language, //
@@ -219,7 +219,7 @@ class HistoryAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat3, //
         questionConfig.diff1, //
-        ["Det første korstog havde det tilsigtede mål at erobre hvilken by?::Jerusalem##Cairo##Mekka##Rom::0", "Hvad udrettede Magna Carta?::det begrænsede herrernes magt##det begrænsede riddernes magt##det øgede bøndernes og livegnes magt##det begrænsede monarkens magt::3", "Hvordan spredte byllepesten sig?::Dårligt vand##Lopper fra rotter##Forurenet luft##Vulkanaske::1", "Denne by var på en korsvej mellem Europa og Mellemøsten::Cairo##Konstantinopel##Paris##Moskva::1", "Hvad var årsagen til korstogene?::At befri det hellige land Jerusalem fra muslimerne##Et oprør af bønder##Den sorte død breder sig over Europa##Handelskrige langs Silkevejen::0", "Den muslimske religions hellige profet?::Jesus Kristus##Buddha##Muhammed::2", "Middelalderens sociale struktur::Kastesystem##Feudalisme##Herregård::1"]);
+        ["Det første korstog havde det tilsigtede mål at erobre hvilken by?::Jerusalem##Cairo##Mekka##Rom::0", "Hvad udrettede Magna Carta?::det begrænsede herrernes magt##det begrænsede riddernes magt##det øgede bøndernes og livegnes magt##det begrænsede monarkens magt::3", "Hvordan spredte byllepesten sig?::Dårligt vand##Lopper fra rotter##Forurenet luft##Vulkanaske::1", "Denne by var på en korsvej mellem Europa og Mellemøsten::Kairo##Konstantinopel##Paris##Moskva::1", "Hvad var årsagen til korstogene?::At befri det hellige land Jerusalem fra muslimerne##Et oprør af bønder##Den sorte død breder sig over Europa##Handelskrige langs Silkevejen::0", "Den muslimske religions hellige profet?::Jesus Kristus##Buddha##Muhammed::2", "Middelalderens sociale struktur::Kastesystem##Feudalisme##Herregård::1"]);
     addQuestions(
         result, //
         language, //
@@ -360,7 +360,7 @@ class HistoryAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat3, //
         questionConfig.diff2, //
-        ["Was war die erste Hauptstadt des alten Ägyptens?::Memphis##Theben##Alexandria##Baltimore::0", "Auf welcher Insel entstand die antike griechische Zivilisation?::Samos##Kreta##Olympia##Rhodos::1", "Wie viele der sieben Weltwunder der Antike existieren noch?::3##2##1##0::2", "Wem wird zugeschrieben, die erste Karte der bekannten Welt gemacht zu haben?::Archimedes##Anaximander##Euklid##Christoph Kolumbus::1", "Wie heißt im alten Rom das Recht eines Konsuls, die Entscheidungen des anderen abzulehnen?::Steuer##Einspruch##Überwachen##Bestätigen::1", "Wie alt ist die Chinesische Mauer ungefähr?::1000 Jahre##2000 Jahre##3000 Jahre##5000 Jahre::2"]);
+        ["Was war die erste Hauptstadt des alten Ägyptens?::Memphis##Theben##Alexandria##Baltimore::0", "Auf welcher Insel entstand die antike griechische Zivilisation?::Samos##Kreta##Olympia##Rhodos::1", "Wie viele der sieben Weltwunder der Antike existieren noch?::3##2##1##0::2", "Wem wird zugeschrieben, die erste Karte der bekannten Welt gemacht zu haben?::Archimedes##Anaximander##Euklid##Christoph Kolumbus::1", "Wie heißt im alten Rom das Recht eines Konsuls, die Entscheidungen des anderen abzulehnen?::Steuer##Veto##Überwachen##Bestätigen::1", "Wie alt ist die Chinesische Mauer ungefähr?::1000 Jahre##2000 Jahre##3000 Jahre##5000 Jahre::2"]);
     addQuestions(
         result, //
         language, //
@@ -384,7 +384,7 @@ class HistoryAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat3, //
         questionConfig.diff3, //
-        ["Welches Tier aus der Steinzeit ist heute ausgestorben?::Gepard##Mammut-##Antilope##Ameisenbär::1", "Welche Phase kam vor der Steinzeit?::Schlammalter##Dinosaurier-Zeitalter##Eiszeit##Der Urknall::2", "Was ist ein Hominide?::ein Werkzeug##ein früher Vorfahr des Menschen##eine Sammlung alter Knochen##ein Angelhaken::1", "Von welchem ​​Kontinent sind die Menschen um die Welt gewandert?::Afrika##Asien##Australien##Europa::0", "Welche der folgenden Definitionen definiert Homo erectus?::denkender Mann##moderner Mann##weiser Mann##aufrechter Mann::3"]);
+        ["Welches Tier aus der Steinzeit ist heute ausgestorben?::Gepard##Mammut##Antilope##Ameisenbär::1", "Welche Phase kam vor der Steinzeit?::Schlammalter##Dinosaurier-Zeitalter##Eiszeit##Der Urknall::2", "Was ist ein Hominide?::ein Werkzeug##ein früher Vorfahr des Menschen##eine Sammlung alter Knochen##ein Angelhaken::1", "Von welchem ​​Kontinent sind die Menschen um die Welt gewandert?::Afrika##Asien##Australien##Europa::0", "Welche der folgenden Definitionen definiert Homo erectus?::denkender Mann##moderner Mann##weiser Mann##aufrechter Mann::3"]);
   }void addEL(Map<Language, Map<CategoryDifficulty, List<Question>>> result,
       HistoryGameQuestionConfig questionConfig) {
     var language = Language.el;
@@ -411,7 +411,7 @@ class HistoryAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat3, //
         questionConfig.diff0, //
-        ["Ποια χώρα ήταν η πρώτη που έφτασε στο νότιο πόλο;::Νορβηγία##Ηνωμένο Βασίλειο##Δανία##Ρωσία::0", "Ποια ευρωπαϊκή χώρα είχε τη μεγαλύτερη αυτοκρατορία στην ιστορία;::Ρωσία##Ηνωμένο Βασίλειο##Ιταλία##Ισπανία::1", "Ποια από αυτές τις αφρικανικές χώρες ελεγχόταν από τη Γερμανία;::Μπενίν##Αγκόλα##Τζιμπουτί##Τανζανία::3", "Ποιος ήταν ο πρώτος Τσάρος της Ρωσίας;::Τσάρος Νικόλαος Α΄##Τσάρος Αλέξανδρος Β&#39;##Ο Τσάρος Ιβάν ο Τρομερός##Τσάρος Παύλος Α&#39;::2", "Ποια ήταν η μάχη που τελείωσε τους Ναπολεόντειους Πολέμους;::Μάχη της Βιέννης##Μάχη του Βάλμι##Μάχη του Βερντέν##Μάχη του Βατερλώ::3", "Ποια από αυτές τις χώρες ήταν μέρος της ΕΣΣΔ;::Σλοβακία##Μογγολία##Αφγανιστάν##Αζερμπαϊτζάν::3", "Ποια από αυτές τις χώρες δεν ελεγχόταν ποτέ από το Ηνωμένο Βασίλειο;::Πακιστάν##Αφγανιστάν##Νιγηρία##Ιορδανία::1", "Ποια ευρωπαϊκή χώρα κατηγορήθηκε για τον Α&#39; Παγκόσμιο Πόλεμο;::Ρωσία##Ηνωμένο Βασίλειο##Γερμανία::2", "Ποια χώρα ήταν ουδέτερη στην αρχή του Β&#39; Παγκοσμίου Πολέμου;::Γαλλία##Ηνωμένες Πολιτείες##Γερμανία##Πολωνία::1", "Ποιος Αφρικανός ηγέτης κατά του απαρτχάιντ απελευθερώθηκε από τη φυλακή το 1990, μετά από περισσότερα από 27 χρόνια;::Ίντι Αμίν##Νέλσον Μαντέλα##Φερδινάνδος Μάρκος##Τζόζεφ Άτκινσον::1", "Ποιος πρόεδρος των ΗΠΑ εξελέγη τέσσερις φορές;::Γιώργος Ουάσιγκτον##Τζέραλντ Φορντ##Franklin D Roosevelt##Αβραάμ Λίνκολν::2"]);
+        ["Ποια χώρα ήταν η πρώτη που έφτασε στο νότιο πόλο;::Νορβηγία##Ηνωμένο Βασίλειο##Δανία##Ρωσία::0", "Ποια ευρωπαϊκή χώρα είχε τη μεγαλύτερη αυτοκρατορία στην ιστορία;::Ρωσία##Ηνωμένο Βασίλειο##Ιταλία##Ισπανία::1", "Ποια από αυτές τις αφρικανικές χώρες ελεγχόταν από τη Γερμανία;::Μπενίν##Αγκόλα##Τζιμπουτί##Τανζανία::3", "Ποιος ήταν ο πρώτος Τσάρος της Ρωσίας;::Τσάρος Νικόλαος Α'##Τσάρος Αλέξανδρος Β'##Ο Τσάρος Ιβάν ο Τρομερός##Τσάρος Παύλος Α'::2", "Ποια ήταν η μάχη που τελείωσε τους Ναπολεόντειους Πολέμους;::Μάχη της Βιέννης##Μάχη του Βάλμι##Μάχη του Βερντέν##Μάχη του Βατερλώ::3", "Ποια από αυτές τις χώρες ήταν μέρος της ΕΣΣΔ;::Σλοβακία##Μογγολία##Αφγανιστάν##Αζερμπαϊτζάν::3", "Ποια από αυτές τις χώρες δεν ελεγχόταν ποτέ από το Ηνωμένο Βασίλειο;::Πακιστάν##Αφγανιστάν##Νιγηρία##Ιορδανία::1", "Ποια ευρωπαϊκή χώρα κατηγορήθηκε για τον Α' Παγκόσμιο Πόλεμο;::Ρωσία##Ηνωμένο Βασίλειο##Γερμανία::2", "Ποια χώρα ήταν ουδέτερη στην αρχή του Β' Παγκοσμίου Πολέμου;::Γαλλία##Ηνωμένες Πολιτείες##Γερμανία##Πολωνία::1", "Ποιος Αφρικανός ηγέτης κατά του απαρτχάιντ απελευθερώθηκε από τη φυλακή το 1990, μετά από περισσότερα από 27 χρόνια;::Ίντι Αμίν##Νέλσον Μαντέλα##Φερδινάνδος Μάρκος##Τζόζεφ Άτκινσον::1", "Ποιος πρόεδρος των ΗΠΑ εξελέγη τέσσερις φορές;::Γιώργος Ουάσιγκτον##Τζέραλντ Φορντ##Φραγκλίνος Ρούζβελτ##Αβραάμ Λίνκολν::2"]);
     addQuestions(
         result, //
         language, //
@@ -435,19 +435,19 @@ class HistoryAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat2, //
         questionConfig.diff1, //
-        ["Πολιορκία της Ορλεάνης:Γαλλία:1,2,6:0", "Άλωση της Κωνσταντινούπολης:Τουρκία:0,2,7:0", "Μάχη του Χέιστινγκς:Ηνωμένο Βασίλειο:0,1,5:0", "Μάτσου Πίτσου:Περού:4,5,6:1", "Bagan:Μιανμάρ:3,5,7:1", "Angkor:Καμπότζη:3,4,6:1", "Ταζ Μαχάλ:Ινδία:4,5,7:1"]);
+        ["Πολιορκία της Ορλεάνης:Γαλλία:1,2,6:0", "Άλωση της Κωνσταντινούπολης:Τουρκία:0,2,7:0", "Μάχη του Χέιστινγκς:Ηνωμένο Βασίλειο:0,1,5:0", "Μάτσου Πίτσου:Περού:4,5,6:1", "Bagan:Μιανμάρ:3,5,7:1", "Άνγκορ:Καμπότζη:3,4,6:1", "Ταζ Μαχάλ:Ινδία:4,5,7:1"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat3, //
         questionConfig.diff1, //
-        ["Η Πρώτη Σταυροφορία είχε τον επιδιωκόμενο στόχο να καταλάβει ποια πόλη;::Ιερουσαλήμ##Κάιρο##Μέκκα##Ρώμη::0", "Τι πέτυχε η Magna Carta;::περιόριζε τη δύναμη των αρχόντων##περιόριζε τη δύναμη των ιπποτών##αύξησε τη δύναμη των αγροτών και των δουλοπάροικων##περιόριζε την εξουσία του μονάρχη::3", "Πώς εξαπλώθηκε η βουβωνική πανώλη;::Κακό νερό##Ψύλλοι από αρουραίους##Μολυσμένος αέρας##Τέφρα ηφαιστείου::1", "Αυτή η πόλη βρισκόταν σε ένα σταυροδρόμι μεταξύ Ευρώπης και Μέσης Ανατολής::Κάιρο##Κωνσταντινούπολη##Παρίσι##Μόσχα::1", "Ποια ήταν η αιτία των Σταυροφοριών;::Να απελευθερώσει την Ιερή γη της Ιερουσαλήμ από τους Μουσουλμάνους##Μια εξέγερση των αγροτών##Ο Μαύρος Θάνατος εξαπλώνεται στην Ευρώπη##Εμπορικοί πόλεμοι κατά μήκος του Δρόμου του Μεταξιού::0", "Άγιος προφήτης της μουσουλμανικής θρησκείας;::Ιησούς Χριστός##Βούδας##Μωάμεθ::2", "Κοινωνική δομή του Μεσαίωνα::Σύστημα κάστας##Φεουδαρχία##Μανορισμός::1"]);
+        ["Η Πρώτη Σταυροφορία είχε τον επιδιωκόμενο στόχο να καταλάβει ποια πόλη;::Ιερουσαλήμ##Κάιρο##Μέκκα##Ρώμη::0", "Τι πέτυχε η Μάγκνα Κάρτα;::περιόριζε τη δύναμη των αρχόντων##περιόριζε τη δύναμη των ιπποτών##αύξησε τη δύναμη των αγροτών και των δουλοπάροικων##περιόριζε την εξουσία του μονάρχη::3", "Πώς εξαπλώθηκε η βουβωνική πανώλη;::Κακό νερό##Ψύλλοι από αρουραίους##Μολυσμένος αέρας##Τέφρα ηφαιστείου::1", "Αυτή η πόλη βρισκόταν σε ένα σταυροδρόμι μεταξύ Ευρώπης και Μέσης Ανατολής::Κάιρο##Κωνσταντινούπολη##Παρίσι##Μόσχα::1", "Ποια ήταν η αιτία των Σταυροφοριών;::Να απελευθερώσει την Ιερή γη της Ιερουσαλήμ από τους Μουσουλμάνους##Μια εξέγερση των αγροτών##Ο Μαύρος Θάνατος εξαπλώνεται στην Ευρώπη##Εμπορικοί πόλεμοι κατά μήκος του Δρόμου του Μεταξιού::0", "Άγιος προφήτης της μουσουλμανικής θρησκείας;::Ιησούς Χριστός##Βούδας##Μωάμεθ::2", "Κοινωνική δομή του Μεσαίωνα::Σύστημα κάστας##Φεουδαρχία##Μανορισμός::1"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat4, //
         questionConfig.diff1, //
-        [":Χριστόφορος Κολόμβος::", ":Καρλομάγνος::", ":Λεονάρντο Ντα Βίντσι::", ":Τζένγκις Χαν::", ":Galileo Galilei::"]);
+        [":Χριστόφορος Κολόμβος::", ":Καρλομάγνος::", ":Λεονάρντο Ντα Βίντσι::", ":Τζένγκις Χαν::", ":Γαλιλαίος Γαλιλέι::"]);
     addQuestions(
         result, //
         language, //
@@ -489,13 +489,13 @@ class HistoryAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat2, //
         questionConfig.diff3, //
-        ["Göbekli Tepe:Τουρκία::1", "Σπήλαιο Lascaux:Γαλλία::1", "Σούμερ:Ιράκ::1", "Στόουνχεντζ:Ηνωμένο Βασίλειο::1"]);
+        ["Γκεμπεκλί Τεπέ:Τουρκία::1", "Σπήλαιο Λασκώ:Γαλλία::1", "Σουμέριοι:Ιράκ::1", "Στόουνχεντζ:Ηνωμένο Βασίλειο::1"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat3, //
         questionConfig.diff3, //
-        ["Ποιο ζώο από την λίθινη εποχή έχει εξαφανιστεί τώρα;::γατόπαρδος##μαμμούθ##αντιλόπη##Μυρμηγκοφάγος::1", "Ποιο στάδιο ήρθε πριν από την λίθινη εποχή;::Εποχή της Λάσπης##Εποχή Δεινοσαύρων##Εποχή των παγετώνων##Η μεγάλη έκρηξη::2", "Τι είναι ένα ανθρωποειδές;::ένα εργαλείο##ένας πρώιμος πρόγονος των ανθρώπων##μια συλλογή αρχαίων οστών##ένα αγκίστρι::1", "Από ποια ήπειρο μετανάστευσαν οι άνθρωποι σε όλο τον κόσμο;::Αφρική##Ασία##Αυστραλία##Ευρώπη::0", "Ποιο από τα παρακάτω ορίζει τον Homo erectus;::σκεπτόμενος ΑΝΘΡΩΠΟΣ##ΣΥΓΧΡΟΝΟΣ ΑΝΘΡΩΠΟΣ##σοφός άνθρωπος##όρθιος άνθρωπος::3"]);
+        ["Ποιο ζώο από την λίθινη εποχή έχει εξαφανιστεί τώρα;::γατόπαρδος##μαμμούθ##αντιλόπη##Μυρμηγκοφάγος::1", "Ποιο στάδιο ήρθε πριν από την λίθινη εποχή;::Εποχή της Λάσπης##Εποχή Δεινοσαύρων##Εποχή των παγετώνων##Η μεγάλη έκρηξη::2", "Τι είναι ένα ανθρωποειδές;::ένα εργαλείο##ένας πρώιμος πρόγονος των ανθρώπων##μια συλλογή αρχαίων οστών##ένα αγκίστρι::1", "Από ποια ήπειρο μετανάστευσαν οι άνθρωποι σε όλο τον κόσμο;::Αφρική##Ασία##Αυστραλία##Ευρώπη::0", "Ποιο από τα παρακάτω ορίζει τον Homo erectus;::σκεπτόμενος Ανθρωπος##Συγχρονος Ανθρωπος##σοφός άνθρωπος##όρθιος άνθρωπος::3"]);
   }void addEN(Map<Language, Map<CategoryDifficulty, List<Question>>> result,
       HistoryGameQuestionConfig questionConfig) {
     var language = Language.en;
@@ -522,7 +522,7 @@ class HistoryAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat3, //
         questionConfig.diff0, //
-        ["Which country was the first one to reach the south pole?::Norway##United Kingdom##Denmark##Russia::0", "Which European country had the largest empire in history?::Russia##United Kingdom##Italy##Spain::1", "Which one of these African countries was controlled by Germany?::Benin##Angola##Djibouti##Tanzania::3", "Who was the first Tsar of Russia?::Tsar Nicholas I##Tsar Alexander II##Tsar Ivan the Terrible##Tsar Paul I::2", "What was the battle that ended the Napoleonic Wars?::Battle of Vienna##Battle of Valmy##Battle of Verdun##Battle of Waterloo::3", "Which of these countries was part of the USSR?::Slovakia##Mongolia##Afghanistan##Azerbaijan::3", "Which one of these countries were never controlled by The United Kingdom?::Pakistan##Afghanistan##Nigeria##Jordan::1", "What European country was blamed for World War 1?::Russia##United Kingdom##Germany::2", "What country was neutral at the beginning of World War 2?::France##United States##Germany##Poland::1", "Which African anti-apartheid leader was released from jail in 1990, after more than 27 years?::Idi Amin##Nelson Mandela##Ferdinand Marcos##Joseph Atkinson::1", "Which US president was elected to office four times?::George Washington##Gerald Ford##Franklin D Roosevelt##Abraham Lincoln::2"]);
+        ["Which country was the first one to reach the south pole?::Norway##United Kingdom##Denmark##Russia::0", "Which European country had the largest empire in history?::Russia##United Kingdom##Italy##Spain::1", "Which one of these African countries was controlled by Germany?::Benin##Angola##Djibouti##Tanzania::3", "Who was the first Tsar of Russia?::Tsar Nicholas I##Tsar Alexander II##Tsar Ivan the Terrible##Tsar Paul I::2", "What was the battle that ended the Napoleonic Wars?::Battle of Vienna##Battle of Valmy##Battle of Verdun##Battle of Waterloo::3", "Which of these countries was part of the USSR?::Slovakia##Mongolia##Afghanistan##Azerbaijan::3", "Which one of these countries were never controlled by The United Kingdom?::Pakistan##Afghanistan##Nigeria##Jordan::1", "What European country was blamed for World War 1?::Russia##United Kingdom##Germany::2", "What country was neutral at the beginning of World War 2?::France##United States##Germany##Poland::1", "Which African anti-apartheid leader was released from jail in 1990, after more than 27 years?::Idi Amin##Nelson Mandela##Ferdinand Marcos##Joseph Atkinson::1", "Which US president was elected to office four times?::George Washington##Gerald Ford##Franklin D. Roosevelt##Abraham Lincoln::2"]);
     addQuestions(
         result, //
         language, //
@@ -693,7 +693,7 @@ class HistoryAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat3, //
         questionConfig.diff2, //
-        ["¿Cuál fue la primera capital del antiguo Egipto?::Memphis##Tebas##Alejandría##Baltimore::0", "¿En qué isla se originó la antigua civilización griega?::Samos##Creta##Olimpia##Rodas::1", "¿Cuántas de las Siete Maravillas del Mundo Antiguo aún existen?::3##2##1##0::2", "¿A quién se le atribuye haber realizado el primer mapa del mundo conocido?::Arquímedes##Anaximandro##Euclides##Cristobal colon::1", "En la antigua Roma, ¿cómo se llamaba el derecho de un cónsul a rechazar las decisiones de los demás?::Impuesto##Veto##Supervisar##Afirmar::1", "¿Aproximadamente cuántos años tiene la Gran Muralla China?::1000 años##2000 años##3000 años##5000 años::2"]);
+        ["¿Cuál fue la primera capital del antiguo Egipto?::Menfis##Tebas##Alejandría##Baltimore::0", "¿En qué isla se originó la antigua civilización griega?::Samos##Creta##Olimpia##Rodas::1", "¿Cuántas de las Siete Maravillas del Mundo Antiguo aún existen?::3##2##1##0::2", "¿A quién se le atribuye haber realizado el primer mapa del mundo conocido?::Arquímedes##Anaximandro##Euclides##Cristobal colon::1", "En la antigua Roma, ¿cómo se llamaba el derecho de un cónsul a rechazar las decisiones de los demás?::Impuesto##Veto##Supervisar##Afirmar::1", "¿Aproximadamente cuántos años tiene la Gran Muralla China?::1000 años##2000 años##3000 años##5000 años::2"]);
     addQuestions(
         result, //
         language, //
@@ -744,7 +744,7 @@ class HistoryAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat3, //
         questionConfig.diff0, //
-        ["Mikä maa pääsi ensimmäisenä etelänavalle?::Norja##Yhdistynyt kuningaskunta##Tanska##Venäjä::0", "Millä Euroopan maalla oli historian suurin imperiumi?::Venäjä##Yhdistynyt kuningaskunta##Italia##Espanja::1", "Mikä näistä Afrikan maista oli Saksan hallinnassa?::Benin##Angola##Djibouti##Tansania::3", "Kuka oli Venäjän ensimmäinen tsaari?::Tsaari Nikolai I##Tsaari Aleksanteri II##Tsaari Ivan Julma##Tsaari Paavali I::2", "Mikä oli taistelu, joka päätti Napoleonin sodat?::Wienin taistelu##Valmyn taistelu##Verdunin taistelu##Waterloon taistelu::3", "Mikä näistä maista oli osa Neuvostoliittoa?::slovakia##Mongolia##Afganistan##azerbaijan::3", "Mikä näistä maista ei ole koskaan ollut Yhdistyneen kuningaskunnan hallinnassa?::Pakistan##Afganistan##Nigeria##Jordania::1", "Mitä Euroopan maata syytettiin ensimmäisestä maailmansodasta?::Venäjä##Yhdistynyt kuningaskunta##Saksa::2", "Mikä maa oli neutraali toisen maailmansodan alussa?::Ranska##Yhdysvallat##Saksa##Puola::1", "Kuka afrikkalainen apartheidin vastainen johtaja vapautettiin vankilasta vuonna 1990 yli 27 vuoden jälkeen?::Idi Amin##Nelson Mandela##Ferdinand Marcos##Joseph Atkinson::1", "Kuka Yhdysvaltain presidentistä valittiin virkaan neljä kertaa?::George Washington##Gerald Ford##Franklin D Roosevelt##Abraham Lincoln::2"]);
+        ["Mikä maa pääsi ensimmäisenä etelänavalle?::Norja##Yhdistynyt kuningaskunta##Tanska##Venäjä::0", "Millä Euroopan maalla oli historian suurin imperiumi?::Venäjä##Yhdistynyt kuningaskunta##Italia##Espanja::1", "Mikä näistä Afrikan maista oli Saksan hallinnassa?::Benin##Angola##Djibouti##Tansania::3", "Kuka oli Venäjän ensimmäinen tsaari?::Tsaari Nikolai I##Tsaari Aleksanteri II##Tsaari Ivan Julma##Tsaari Paavali I::2", "Mikä oli taistelu, joka päätti Napoleonin sodat?::Wienin taistelu##Valmyn taistelu##Verdunin taistelu##Waterloon taistelu::3", "Mikä näistä maista oli osa Neuvostoliittoa?::slovakia##Mongolia##Afganistan##azerbaijan::3", "Mikä näistä maista ei ole koskaan ollut Yhdistyneen kuningaskunnan hallinnassa?::Pakistan##Afganistan##Nigeria##Jordania::1", "Mitä Euroopan maata syytettiin ensimmäisestä maailmansodasta?::Venäjä##Yhdistynyt kuningaskunta##Saksa::2", "Mikä maa oli neutraali toisen maailmansodan alussa?::Ranska##Yhdysvallat##Saksa##Puola::1", "Kuka afrikkalainen apartheidin vastainen johtaja vapautettiin vankilasta vuonna 1990 yli 27 vuoden jälkeen?::Idi Amin##Nelson Mandela##Ferdinand Marcos##Joseph Atkinson::1", "Kuka Yhdysvaltain presidentistä valittiin virkaan neljä kertaa?::George Washington##Gerald Ford##Franklin D. Roosevelt##Abraham Lincoln::2"]);
     addQuestions(
         result, //
         language, //
@@ -804,7 +804,7 @@ class HistoryAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat3, //
         questionConfig.diff2, //
-        ["Mikä oli muinaisen Egyptin ensimmäinen pääkaupunki?::Memphis##Thebes##Aleksandria##Baltimore::0", "Millä saarella antiikin kreikkalainen sivilisaatio syntyi?::Samos##Kreeta##Olympia##Rodos::1", "Kuinka monta muinaisen maailman seitsemästä ihmeestä on vielä olemassa?::3##2##1##0::2", "Kenen ansioksi luetaan ensimmäisen tunnetun maailman kartan tekeminen?::Archimedes##Anaksimander##Euclid##Kristoffer Kolumbus::1", "Mitä kutsutaan muinaisessa Roomassa konsulin oikeudeksi hylätä toistensa päätökset?::Verottaa##Veto##Valvoa##Vahvista::1", "Kuinka vanha Kiinan muuri suunnilleen on?::1000 vuotta##2000 vuotta##3000 vuotta##5000 vuotta::2"]);
+        ["Mikä oli muinaisen Egyptin ensimmäinen pääkaupunki?::Memfis##Theba##Aleksandria##Baltimore::0", "Millä saarella antiikin kreikkalainen sivilisaatio syntyi?::Samos##Kreeta##Olympia##Rodos::1", "Kuinka monta muinaisen maailman seitsemästä ihmeestä on vielä olemassa?::3##2##1##0::2", "Kenen ansioksi luetaan ensimmäisen tunnetun maailman kartan tekeminen?::Archimedes##Anaksimander##Euclid##Kristoffer Kolumbus::1", "Mitä kutsutaan muinaisessa Roomassa konsulin oikeudeksi hylätä toistensa päätökset?::Verottaa##Veto##Valvoa##Vahvista::1", "Kuinka vanha Kiinan muuri suunnilleen on?::1000 vuotta##2000 vuotta##3000 vuotta##5000 vuotta::2"]);
     addQuestions(
         result, //
         language, //
@@ -822,13 +822,13 @@ class HistoryAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat2, //
         questionConfig.diff3, //
-        ["Göbekli Tepe:Turkki::1", "Lascaux&#39;n luola:Ranska::1", "Sumer:Irak::1", "Stonehenge:Yhdistynyt kuningaskunta::1"]);
+        ["Göbekli Tepe:Turkki::1", "Lascaux'n luola:Ranska::1", "Sumer:Irak::1", "Stonehenge:Yhdistynyt kuningaskunta::1"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat3, //
         questionConfig.diff3, //
-        ["Mikä kivikauden eläin on nyt kuollut sukupuuttoon?::gepardi##mammutti##antilooppi##Muurahaiskarhu::1", "Mikä vaihe oli ennen kivikautta?::Mudan ikä##Dinosaurusten aikakausi##Jääkausi##Alkuräjähdys::2", "Mikä on hominidi?::työkalu##ihmisen varhainen esi-isä##kokoelma muinaisia ​​luita##kalakoukku::1", "Mistä mantereesta ihmiset muuttivat ympäri maailmaa?::Afrikka##Aasia##Australia##Eurooppa::0", "Mikä seuraavista määrittelee Homo erectuksen?::ajatteleva mies##moderni mies##viisas mies##suora mies::3"]);
+        ["Mikä kivikauden eläin on nyt kuollut sukupuuttoon?::gepardi##mammutti##antilooppi##Muurahaiskarhu::1", "Mikä vaihe oli ennen kivikautta?::Mudan ikä##Dinosaurusten aikakausi##Jääkausi##Alkuräjähdys::2", "Mikä on hominidi?::työkalu##ihmisen varhainen esi-isä##kokoelma muinaisia ​​luita##kalakoukku::1", "Mistä mantereesta ihmiset muuttivat ympäri maailmaa?::Afrikka##Aasia##Australia##Eurooppa::0", "Mikä seuraavista määrittelee Homo erectuksen?::ajatteleva mies##moderni mies##viisas mies##pystyihminen::3"]);
   }void addFR(Map<Language, Map<CategoryDifficulty, List<Question>>> result,
       HistoryGameQuestionConfig questionConfig) {
     var language = Language.fr;
@@ -849,13 +849,13 @@ class HistoryAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat2, //
         questionConfig.diff0, //
-        ["Bataille de Waterloo:Belgique:2,3,5:0", "Bataille de Gettysburg:États Unis:5,6,7:0", "Siège de Stalingrad:Russie:6,8,9:0", "Invasion de la Normandie:France:5,6,8:0", "La bataille d&#39;Okinawa:Japon:1,8,9:0", "La bataille de Vienne:L'Autriche:6,0,3:0", "Chute du mur de Berlin:Allemagne:0,5,3:0", "Traité de Versailles:France:1,0,5:0", "Assassinat de l&#39;archiduc François-Ferdinand:Bosnie Herzégovine:1,5,6:0", "Catastrophe de Tchernobyl:Ukraine:1,2,8:0"]);
+        ["Bataille de Waterloo:Belgique:2,3,5:0", "Bataille de Gettysburg:États Unis:5,6,7:0", "Siège de Stalingrad:Russie:6,8,9:0", "Invasion de la Normandie:France:5,6,8:0", "La bataille d'Okinawa:Japon:1,8,9:0", "La bataille de Vienne:L'Autriche:6,0,3:0", "Chute du mur de Berlin:Allemagne:0,5,3:0", "Traité de Versailles:France:1,0,5:0", "Assassinat de l'archiduc François-Ferdinand:Bosnie Herzégovine:1,5,6:0", "Catastrophe de Tchernobyl:Ukraine:1,2,8:0"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat3, //
         questionConfig.diff0, //
-        ["Quel pays a été le premier à atteindre le pôle sud ?::Norvège##Royaume-Uni##Danemark##Russie::0", "Quel pays européen avait le plus grand empire de l&#39;histoire ?::Russie##Royaume-Uni##Italie##Espagne::1", "Lequel de ces pays africains était contrôlé par l&#39;Allemagne ?::Bénin##Angola##Djibouti##Tanzanie::3", "Qui fut le premier tsar de Russie ?::Tsar Nicolas Ier##Tsar Alexandre II##Tsar Ivan le Terrible##Tsar Paul Ier::2", "Quelle a été la bataille qui a mis fin aux guerres napoléoniennes ?::Bataille de Vienne##Bataille de Valmy##Bataille de Verdun##Bataille de Waterloo::3", "Lequel de ces pays faisait partie de l&#39;URSS ?::Slovaquie##Mongolie##Afghanistan##Azerbaïdjan::3", "Lequel de ces pays n&#39;a jamais été contrôlé par le Royaume-Uni ?::Pakistan##Afghanistan##Nigeria##Jordan::1", "Quel pays européen a été blâmé pour la Première Guerre mondiale ?::Russie##Royaume-Uni##Allemagne::2", "Quel pays était neutre au début de la Seconde Guerre mondiale ?::France##États Unis##Allemagne##Pologne::1", "Quel leader africain anti-apartheid a été libéré de prison en 1990, après plus de 27 ans ?::Idi Amin##Nelson Mandela##Ferdinand Marcos##Joseph Atkinson::1", "Quel président américain a été élu quatre fois ?::George Washington##Gérald Ford##Franklin D Roosevelt##Abraham Lincoln::2"]);
+        ["Quel pays a été le premier à atteindre le pôle sud ?::Norvège##Royaume-Uni##Danemark##Russie::0", "Quel pays européen avait le plus grand empire de l'histoire ?::Russie##Royaume-Uni##Italie##Espagne::1", "Lequel de ces pays africains était contrôlé par l'Allemagne ?::Bénin##Angola##Djibouti##Tanzanie::3", "Qui fut le premier tsar de Russie ?::Tsar Nicolas Ier##Tsar Alexandre II##Tsar Ivan le Terrible##Tsar Paul Ier::2", "Quelle a été la bataille qui a mis fin aux guerres napoléoniennes ?::Bataille de Vienne##Bataille de Valmy##Bataille de Verdun##Bataille de Waterloo::3", "Lequel de ces pays faisait partie de l'URSS ?::Slovaquie##Mongolie##Afghanistan##Azerbaïdjan::3", "Lequel de ces pays n'a jamais été contrôlé par le Royaume-Uni ?::Pakistan##Afghanistan##Nigeria##Jordan::1", "Quel pays européen a été blâmé pour la Première Guerre mondiale ?::Russie##Royaume-Uni##Allemagne::2", "Quel pays était neutre au début de la Seconde Guerre mondiale ?::France##États Unis##Allemagne##Pologne::1", "Quel leader africain anti-apartheid a été libéré de prison en 1990, après plus de 27 ans ?::Idi Amin##Nelson Mandela##Ferdinand Marcos##Joseph Atkinson::1", "Quel président américain a été élu quatre fois ?::George Washington##Gérald Ford##Franklin D. Roosevelt##Abraham Lincoln::2"]);
     addQuestions(
         result, //
         language, //
@@ -879,13 +879,13 @@ class HistoryAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat2, //
         questionConfig.diff1, //
-        ["Siège d&#39;Orléans:France:1,2,6:0", "Chute de Constantinople:Turquie:0,2,7:0", "Bataille de Hastings:Royaume-Uni:0,1,5:0", "Machu Picchu:Pérou:4,5,6:1", "Bagan:Myanmar:3,5,7:1", "Angkor:Cambodge:3,4,6:1", "Taj Mahal:Inde:4,5,7:1"]);
+        ["Siège d'Orléans:France:1,2,6:0", "Chute de Constantinople:Turquie:0,2,7:0", "Bataille de Hastings:Royaume-Uni:0,1,5:0", "Machu Picchu:Pérou:4,5,6:1", "Bagan:Myanmar:3,5,7:1", "Angkor:Cambodge:3,4,6:1", "Taj Mahal:Inde:4,5,7:1"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat3, //
         questionConfig.diff1, //
-        ["La première croisade avait pour objectif de capturer quelle ville ?::Jérusalem##Caire##Mecque##Rome::0", "Qu&#39;a accompli la Magna Carta ?::il limitait le pouvoir des seigneurs##il a limité le pouvoir des chevaliers##il a augmenté le pouvoir des paysans et des serfs##il a limité le pouvoir du monarque::3", "Comment la peste bubonique s&#39;est-elle propagée ?::Mauvaise eau##Puces de rats##Air pollué##Cendres de volcan::1", "Cette ville était à la croisée des chemins entre l&#39;Europe et le Moyen-Orient::Caire##Constantinople##Paris##Moscou::1", "Quelle était la cause des croisades ?::Libérer la Terre Sainte de Jérusalem des musulmans##Une révolte de paysans##La peste noire se répand en Europe##Guerres commerciales le long de la route de la soie::0", "Saint prophète de la religion musulmane ?::Jésus Christ##Bouddha##Mahomet::2", "Structure sociale du Moyen Âge::Système de castes##Féodalisme##Manoir::1"]);
+        ["La première croisade avait pour objectif de capturer quelle ville ?::Jérusalem##Caire##Mecque##Rome::0", "Qu'a accompli la Magna Carta ?::il limitait le pouvoir des seigneurs##il a limité le pouvoir des chevaliers##il a augmenté le pouvoir des paysans et des serfs##il a limité le pouvoir du monarque::3", "Comment la peste bubonique s'est-elle propagée ?::Mauvaise eau##Puces de rats##Air pollué##Cendres de volcan::1", "Cette ville était à la croisée des chemins entre l'Europe et le Moyen-Orient::Caire##Constantinople##Paris##Moscou::1", "Quelle était la cause des croisades ?::Libérer la Terre Sainte de Jérusalem des musulmans##Une révolte de paysans##La peste noire se répand en Europe##Guerres commerciales le long de la route de la soie::0", "Saint prophète de la religion musulmane ?::Jésus Christ##Bouddha##Mahomet::2", "Structure sociale du Moyen Âge::Système de castes##Féodalisme##Manoir::1"]);
     addQuestions(
         result, //
         language, //
@@ -909,13 +909,13 @@ class HistoryAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat2, //
         questionConfig.diff2, //
-        ["Bataille de Marathon:Grèce::0", "Bataille de Zama:Tunisie::0", "Bataille de Gaugamela:Irak::0", "Pyramides de Gizeh:Egypte::1", "Pétra:Jordan::1", "Pompéi:Italie::1", "Bibliothèque d&#39;Alexandrie:Egypte::1"]);
+        ["Bataille de Marathon:Grèce::0", "Bataille de Zama:Tunisie::0", "Bataille de Gaugamela:Irak::0", "Pyramides de Gizeh:Egypte::1", "Pétra:Jordan::1", "Pompéi:Italie::1", "Bibliothèque d'Alexandrie:Egypte::1"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat3, //
         questionConfig.diff2, //
-        ["Quelle fut la première capitale de l&#39;Egypte ancienne ?::Memphis##Thèbes##Alexandrie##Baltimore::0", "Sur quelle île est née la civilisation grecque antique ?::Samos##Crète##Olympie##Rhodes::1", "Combien des sept merveilles du monde antique existent encore ?::3##2##1##0::2", "Qui est crédité d&#39;avoir fait la première carte du monde connu ?::Archimède##Anaximandre##Euclide##Christophe Colomb::1", "Dans la Rome antique, comment s&#39;appelait le droit d&#39;un consul de rejeter les décisions de l&#39;autre ?::Impôt##Veto##Superviser##Affirmer::1", "Quel est l&#39;âge approximatif de la Grande Muraille de Chine ?::1000 ans##2000 ans##3000 ans##5000 ans::2"]);
+        ["Quelle fut la première capitale de l'Egypte ancienne ?::Memphis##Thèbes##Alexandrie##Baltimore::0", "Sur quelle île est née la civilisation grecque antique ?::Samos##Crète##Olympie##Rhodes::1", "Combien des sept merveilles du monde antique existent encore ?::3##2##1##0::2", "Qui est crédité d'avoir fait la première carte du monde connu ?::Archimède##Anaximandre##Euclide##Christophe Colomb::1", "Dans la Rome antique, comment s'appelait le droit d'un consul de rejeter les décisions de l'autre ?::Impôt##Veto##Superviser##Affirmer::1", "Quel est l'âge approximatif de la Grande Muraille de Chine ?::1000 ans##2000 ans##3000 ans##5000 ans::2"]);
     addQuestions(
         result, //
         language, //
@@ -933,13 +933,13 @@ class HistoryAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat2, //
         questionConfig.diff3, //
-        ["Göbekli Tepe:Turquie::1", "Grotte de Lascaux:France::1", "été:Irak::1", "Stonehenge:Royaume-Uni::1"]);
+        ["Göbekli Tepe:Turquie::1", "Grotte de Lascaux:France::1", "Sumer:Irak::1", "Stonehenge:Royaume-Uni::1"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat3, //
         questionConfig.diff3, //
-        ["Quel animal de l&#39;âge de pierre est éteint maintenant ?::guépard##mammouth##antilope##Fourmilier::1", "Quelle étape a précédé l&#39;âge de pierre ?::Âge de la boue##Âge des dinosaures##Âge de glace##Le Big Bang::2", "Qu&#39;est-ce qu&#39;un hominidé ?::un outil##un ancêtre des humains##une collection d&#39;ossements anciens##un hameçon::1", "Les humains ont migré à travers le monde depuis quel continent ?::Afrique##Asie##Australie##L&#39;Europe ::0", "Lequel des énoncés suivants définit l&#39;Homo erectus ?::Homme qui pense##l&#39;homme moderne##homme sage##homme droit::3"]);
+        ["Quel animal de l'âge de pierre est éteint maintenant ?::guépard##mammouth##antilope##Fourmilier::1", "Quelle étape a précédé l'âge de pierre ?::Âge de la boue##Âge des dinosaures##Âge de glace##Le Big Bang::2", "Qu'est-ce qu'un hominidé ?::un outil##un ancêtre des humains##une collection d'ossements anciens##un hameçon::1", "Les humains ont migré à travers le monde depuis quel continent ?::Afrique##Asie##Australie##L'Europe ::0", "Lequel des énoncés suivants définit l'Homo erectus ?::Homme qui pense##l'homme moderne##homme sage##homme droit::3"]);
   }void addHI(Map<Language, Map<CategoryDifficulty, List<Question>>> result,
       HistoryGameQuestionConfig questionConfig) {
     var language = Language.hi;
@@ -1050,7 +1050,7 @@ class HistoryAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat3, //
         questionConfig.diff3, //
-        ["पाषाण युग का कौन सा जानवर अब विलुप्त हो गया है?::चीता##विशाल##मृग##एंटीटर::1", "पाषाण युग से पहले कौन सी अवस्था आई?::मिट्टी की उम्र##डायनासोर युग##हिम युग##महा विस्फोट::2", "एक होमिनिड क्या है?::एक उपकरण##मनुष्यों का एक प्रारंभिक पूर्वज##प्राचीन हड्डियों का संग्रह##एक फिशहुक::1", "मनुष्य विश्व भर में किस महाद्वीप से प्रवासित हुए हैं?::अफ्रीका##एशिया##ऑस्ट्रेलिया##यूरोप::0", "निम्नलिखित में से कौन होमो इरेक्टस को परिभाषित करता है?::सोचने वाला आदमी##आधुनिक आदमी##ज्ञानी##ईमानदार आदमी::3"]);
+        ["पाषाण युग का कौन सा जानवर अब विलुप्त हो गया है?::चीता##मैमथ##मृग##चींटीख़ोर::1", "पाषाण युग से पहले कौन सी अवस्था आई?::मिट्टी की उम्र##डायनासोर युग##हिम युग##महा विस्फोट::2", "एक होमिनिड क्या है?::एक उपकरण##मनुष्यों का एक प्रारंभिक पूर्वज##प्राचीन हड्डियों का संग्रह##एक फिशहुक::1", "मनुष्य विश्व भर में किस महाद्वीप से प्रवासित हुए हैं?::अफ्रीका##एशिया##ऑस्ट्रेलिया##यूरोप::0", "निम्नलिखित में से कौन होमो इरेक्टस को परिभाषित करता है?::सोचने वाला आदमी##आधुनिक आदमी##ज्ञानी##सीधे आदमी::3"]);
   }void addHR(Map<Language, Map<CategoryDifficulty, List<Question>>> result,
       HistoryGameQuestionConfig questionConfig) {
     var language = Language.hr;
@@ -1137,7 +1137,7 @@ class HistoryAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat3, //
         questionConfig.diff2, //
-        ["Koji je bio prvi glavni grad starog Egipta?::Memphis##Tebe##Aleksandrija##Baltimore::0", "Na kojem je otoku nastala starogrčka civilizacija?::Samos##Kreta##Olimpija##Rodos::1", "Koliko od sedam svjetskih čuda antičkog svijeta još postoji?::3##2##1##0::2", "Tko je zaslužan za izradu prve karte poznatog svijeta?::Arhimed##Anaksimandra##Euklid##Kristofer Kolumbo::1", "Kako se u starom Rimu zvalo pravo konzula da odbijaju odluke jednog drugog?::Porez##Veto##Nadgledati##Potvrditi::1", "Koliko je otprilike star Kineski zid?::1000 godina##2000 godina##3000 godina##5000 godina::2"]);
+        ["Koji je bio prvi glavni grad starog Egipta?::Memfis##Tebe##Aleksandrija##Baltimore::0", "Na kojem je otoku nastala starogrčka civilizacija?::Samos##Kreta##Olimpija##Rodos::1", "Koliko od sedam svjetskih čuda antičkog svijeta još postoji?::3##2##1##0::2", "Tko je zaslužan za izradu prve karte poznatog svijeta?::Arhimed##Anaksimandra##Euklid##Kristofer Kolumbo::1", "Kako se u starom Rimu zvalo pravo konzula da odbijaju odluke jednog drugog?::Porez##Veto##Nadgledati##Potvrditi::1", "Koliko je otprilike star Kineski zid?::1000 godina##2000 godina##3000 godina##5000 godina::2"]);
     addQuestions(
         result, //
         language, //
@@ -1188,7 +1188,7 @@ class HistoryAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat3, //
         questionConfig.diff0, //
-        ["Melyik ország érte el először a déli sarkot?::Norvégia##Egyesült Királyság##Dánia##Oroszország::0", "Melyik európai országnak volt a történelem legnagyobb birodalma?::Oroszország##Egyesült Királyság##Olaszország##Spanyolország::1", "Az afrikai országok közül melyiket irányította Németország?::Benin##Angola##Dzsibuti##Tanzánia::3", "Ki volt Oroszország első cárja?::I. Miklós cár##Sándor cár II##Rettegett Iván cár##I. Pál cár::2", "Mi volt az a csata, amely véget vetett a napóleoni háborúknak?::Bécsi csata##Valmy-i csata##Verduni csata##Waterloo-i csata::3", "Melyik ország volt a Szovjetunió része?::Szlovákia##Mongólia##Afganisztán##Azerbajdzsán::3", "Melyik ország volt soha az Egyesült Királyság ellenőrzése alatt?::Pakisztán##Afganisztán##Nigéria##Jordánia::1", "Melyik európai országot okolták az első világháborúért?::Oroszország##Egyesült Királyság##Németország::2", "Melyik ország volt semleges a második világháború elején?::Franciaország##Egyesült Államok##Németország##Lengyelország::1", "Melyik afrikai apartheidellenes vezetőt engedték ki a börtönből 1990-ben, több mint 27 év után?::Idi Amin##Nelson Mandela##Ferdinánd Marcos##Joseph Atkinson::1", "Melyik amerikai elnököt választották meg négyszer?::George Washington##Gerald Ford##Franklin D Roosevelt##Abraham Lincoln::2"]);
+        ["Melyik ország érte el először a déli sarkot?::Norvégia##Egyesült Királyság##Dánia##Oroszország::0", "Melyik európai országnak volt a történelem legnagyobb birodalma?::Oroszország##Egyesült Királyság##Olaszország##Spanyolország::1", "Az afrikai országok közül melyiket irányította Németország?::Benin##Angola##Dzsibuti##Tanzánia::3", "Ki volt Oroszország első cárja?::I. Miklós cár##Sándor cár II##Rettegett Iván cár##I. Pál cár::2", "Mi volt az a csata, amely véget vetett a napóleoni háborúknak?::Bécsi csata##Valmy-i csata##Verduni csata##Waterloo-i csata::3", "Melyik ország volt a Szovjetunió része?::Szlovákia##Mongólia##Afganisztán##Azerbajdzsán::3", "Melyik ország volt soha az Egyesült Királyság ellenőrzése alatt?::Pakisztán##Afganisztán##Nigéria##Jordánia::1", "Melyik európai országot okolták az első világháborúért?::Oroszország##Egyesült Királyság##Németország::2", "Melyik ország volt semleges a második világháború elején?::Franciaország##Egyesült Államok##Németország##Lengyelország::1", "Melyik afrikai apartheidellenes vezetőt engedték ki a börtönből 1990-ben, több mint 27 év után?::Idi Amin##Nelson Mandela##Ferdinánd Marcos##Joseph Atkinson::1", "Melyik amerikai elnököt választották meg négyszer?::George Washington##Gerald Ford##Franklin D. Roosevelt##Abraham Lincoln::2"]);
     addQuestions(
         result, //
         language, //
@@ -1248,7 +1248,7 @@ class HistoryAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat3, //
         questionConfig.diff2, //
-        ["Mi volt az ókori Egyiptom első fővárosa?::Memphis##Théba##Alexandria##Baltimore::0", "Melyik szigeten keletkezett az ókori görög civilizáció?::Samos##Kréta##Olympia##Rodosz::1", "Hány létezik még az ókori világ hét csodája közül?::3##2##1##0::2", "Ki nevéhez fűződik az ismert világ első térképének elkészítése?::Archimedes##Anaximander##Eukleidész##Kolumbusz Kristóf::1", "Hogyan nevezték az ókori Rómában a konzulok azon jogát, hogy elutasítsák egymás döntéseit?::Adó##Vétó##Felügyelni##Megerősít::1", "Körülbelül hány éves a Kínai Nagy Fal?::1000 év##2000 év##3000 év##5000 év::2"]);
+        ["Mi volt az ókori Egyiptom első fővárosa?::Memphisz##Théba##Alexandria##Baltimore::0", "Melyik szigeten keletkezett az ókori görög civilizáció?::Samos##Kréta##Olympia##Rodosz::1", "Hány létezik még az ókori világ hét csodája közül?::3##2##1##0::2", "Ki nevéhez fűződik az ismert világ első térképének elkészítése?::Archimedes##Anaximander##Eukleidész##Kolumbusz Kristóf::1", "Hogyan nevezték az ókori Rómában a konzulok azon jogát, hogy elutasítsák egymás döntéseit?::Adó##Vétó##Felügyelni##Megerősít::1", "Körülbelül hány éves a Kínai Nagy Fal?::1000 év##2000 év##3000 év##5000 év::2"]);
     addQuestions(
         result, //
         language, //
@@ -1272,7 +1272,7 @@ class HistoryAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat3, //
         questionConfig.diff3, //
-        ["Melyik kőkorszaki állat pusztult ki mára?::gepárd##mamut-##antilop##Hangyász::1", "Milyen szakasz következett be a kőkorszak előtt?::Sárkorszak##A dinoszauruszok kora##Jégkorszak##A nagy Bumm::2", "Mi az a hominida?::egy eszköz##az emberek korai őse##ősi csontok gyűjteménye##egy horogot::1", "Melyik kontinensről vándoroltak az emberek a világ körül?::Afrika##Ázsia##Ausztrália##Európa::0", "Az alábbiak közül melyik határozza meg a Homo erectust?::gondolkodó ember##modern ember##bölcs ember##egyenes ember::3"]);
+        ["Melyik kőkorszaki állat pusztult ki mára?::gepárd##mamut##antilop##Hangyász::1", "Milyen szakasz következett be a kőkorszak előtt?::Sárkorszak##A dinoszauruszok kora##Jégkorszak##A nagy Bumm::2", "Mi az a hominida?::egy eszköz##az emberek korai őse##ősi csontok gyűjteménye##egy horogot::1", "Melyik kontinensről vándoroltak az emberek a világ körül?::Afrika##Ázsia##Ausztrália##Európa::0", "Az alábbiak közül melyik határozza meg a Homo erectust?::gondolkodó ember##modern ember##bölcs ember##felegyenesedett ember::3"]);
   }void addID(Map<Language, Map<CategoryDifficulty, List<Question>>> result,
       HistoryGameQuestionConfig questionConfig) {
     var language = Language.id;
@@ -1299,7 +1299,7 @@ class HistoryAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat3, //
         questionConfig.diff0, //
-        ["Negara mana yang pertama kali mencapai kutub selatan?::Norway##Britania Raya##Denmark##Rusia::0", "Negara Eropa mana yang memiliki kerajaan terbesar dalam sejarah?::Rusia##Britania Raya##Italia##Spanyol::1", "Manakah dari negara-negara Afrika ini yang dikendalikan oleh Jerman?::Benin##Angola##Djibouti##Tanzania::3", "Siapa Tsar Rusia pertama?::Tsar Nicholas I##Tsar Alexander II##Tsar Ivan yang Mengerikan##Tsar Paul I::2", "Apa pertempuran yang mengakhiri Perang Napoleon?::Pertempuran Wina##Pertempuran Valmy##Pertempuran Verdun##Pertempuran Waterloo::3", "Manakah dari negara-negara ini yang merupakan bagian dari Uni Soviet?::Slovakia##Mongolia##Afganistan##Azerbaijan::3", "Manakah dari negara-negara ini yang tidak pernah dikendalikan oleh Inggris?::Pakistan##Afganistan##Nigeria##Yordania::1", "Apa negara Eropa yang disalahkan atas Perang Dunia 1?::Rusia##Britania Raya##Jerman::2", "Negara apa yang netral pada awal Perang Dunia 2?::Perancis##Amerika Serikat##Jerman##Polandia::1", "Pemimpin anti-apartheid Afrika mana yang dibebaskan dari penjara pada tahun 1990, setelah lebih dari 27 tahun?::Idi Amin##Nelson Mandela##Ferdinand Marcos##Joseph Atkinson::1", "Presiden AS mana yang terpilih untuk menjabat empat kali?::George Washington##Gerald Ford##Franklin D Roosevelt##Abraham Lincoln::2"]);
+        ["Negara mana yang pertama kali mencapai kutub selatan?::Norway##Britania Raya##Denmark##Rusia::0", "Negara Eropa mana yang memiliki kerajaan terbesar dalam sejarah?::Rusia##Britania Raya##Italia##Spanyol::1", "Manakah dari negara-negara Afrika ini yang dikendalikan oleh Jerman?::Benin##Angola##Djibouti##Tanzania::3", "Siapa Tsar Rusia pertama?::Tsar Nicholas I##Tsar Alexander II##Tsar Ivan yang Mengerikan##Tsar Paul I::2", "Apa pertempuran yang mengakhiri Perang Napoleon?::Pertempuran Wina##Pertempuran Valmy##Pertempuran Verdun##Pertempuran Waterloo::3", "Manakah dari negara-negara ini yang merupakan bagian dari Uni Soviet?::Slovakia##Mongolia##Afganistan##Azerbaijan::3", "Manakah dari negara-negara ini yang tidak pernah dikendalikan oleh Inggris?::Pakistan##Afganistan##Nigeria##Yordania::1", "Apa negara Eropa yang disalahkan atas Perang Dunia 1?::Rusia##Britania Raya##Jerman::2", "Negara apa yang netral pada awal Perang Dunia 2?::Perancis##Amerika Serikat##Jerman##Polandia::1", "Pemimpin anti-apartheid Afrika mana yang dibebaskan dari penjara pada tahun 1990, setelah lebih dari 27 tahun?::Idi Amin##Nelson Mandela##Ferdinand Marcos##Joseph Atkinson::1", "Presiden AS mana yang terpilih untuk menjabat empat kali?::George Washington##Gerald Ford##Franklin D. Roosevelt##Abraham Lincoln::2"]);
     addQuestions(
         result, //
         language, //
@@ -1383,7 +1383,7 @@ class HistoryAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat3, //
         questionConfig.diff3, //
-        ["Hewan apa dari zaman batu yang sudah punah sekarang?::Cheetah##mamut##kijang##Tenggiling::1", "Tahap apa yang terjadi sebelum zaman batu?::Zaman Lumpur##Zaman Dinosaurus##Zaman Es##Ledakan Besar::2", "Apa itu hominid?::sebuah alat##nenek moyang awal manusia##koleksi tulang kuno##sebuah kail ikan::1", "Manusia bermigrasi ke seluruh dunia dari benua apa?::Afrika##Asia##Australia##Eropa::0", "Manakah dari berikut ini yang mendefinisikan Homo erectus?::pria yang berpikir##pria modern##orang bijak##pria tegak::3"]);
+        ["Hewan apa dari zaman batu yang sudah punah sekarang?::Cheetah##mamut##kijang##Tenggiling::1", "Tahap apa yang terjadi sebelum zaman batu?::Zaman Lumpur##Zaman Dinosaurus##Zaman Es##Ledakan Besar::2", "Apa itu hominid?::sebuah alat##nenek moyang awal manusia##koleksi tulang kuno##sebuah kail ikan::1", "Manusia bermigrasi ke seluruh dunia dari benua apa?::Afrika##Asia##Australia##Eropa::0", "Manakah dari berikut ini yang mendefinisikan Homo erectus?::pria yang berpikir##pria modern##orang bijak##manusia yang berburung tegak::3"]);
   }void addIT(Map<Language, Map<CategoryDifficulty, List<Question>>> result,
       HistoryGameQuestionConfig questionConfig) {
     var language = Language.it;
@@ -1404,13 +1404,13 @@ class HistoryAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat2, //
         questionConfig.diff0, //
-        ["Battaglia di Waterloo:Belgio:2,3,5:0", "Battaglia di Gettysburg:Stati Uniti:5,6,7:0", "Assedio di Stalingrado:Russia:6,8,9:0", "Invasione della Normandia:Francia:5,6,8:0", "La battaglia di Okinawa:Giappone:1,8,9:0", "La battaglia di Vienna:Austria:6,0,3:0", "Caduta del muro di Berlino:Germania:0,5,3:0", "Trattato di Versailles:Francia:1,0,5:0", "Assassinio dell&#39;arciduca Francesco Ferdinando:Bosnia Erzegovina:1,5,6:0", "Il disastro di Chernobyl:Ucraina:1,2,8:0"]);
+        ["Battaglia di Waterloo:Belgio:2,3,5:0", "Battaglia di Gettysburg:Stati Uniti:5,6,7:0", "Assedio di Stalingrado:Russia:6,8,9:0", "Invasione della Normandia:Francia:5,6,8:0", "La battaglia di Okinawa:Giappone:1,8,9:0", "La battaglia di Vienna:Austria:6,0,3:0", "Caduta del muro di Berlino:Germania:0,5,3:0", "Trattato di Versailles:Francia:1,0,5:0", "Assassinio dell'arciduca Francesco Ferdinando:Bosnia Erzegovina:1,5,6:0", "Il disastro di Chernobyl:Ucraina:1,2,8:0"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat3, //
         questionConfig.diff0, //
-        ["Quale paese è stato il primo a raggiungere il polo sud?::Norvegia##Regno Unito##Danimarca##Russia::0", "Quale paese europeo ha avuto il più grande impero della storia?::Russia##Regno Unito##Italia##Spagna::1", "Quale di questi paesi africani era controllato dalla Germania?::Benin##angola##Gibuti##Tanzania::3", "Chi fu il primo zar di Russia?::lo zar Nicola I##lo zar Alessandro II##Lo zar Ivan il Terribile##lo zar Paolo I::2", "Qual è stata la battaglia che pose fine alle guerre napoleoniche?::Battaglia di Vienna##Battaglia di Valmy##Battaglia di Verdun##Battaglia di Waterloo::3", "Quale di questi paesi faceva parte dell&#39;URSS?::Slovacchia##Mongolia##afghanistan##Azerbaijan::3", "Quale di questi paesi non è mai stato controllato dal Regno Unito?::Pakistan##afghanistan##Nigeria##Giordania::1", "Quale paese europeo è stato accusato della prima guerra mondiale?::Russia##Regno Unito##Germania::2", "Quale paese era neutrale all&#39;inizio della seconda guerra mondiale?::Francia##Stati Uniti##Germania##Polonia::1", "Quale leader africano anti-apartheid è uscito di prigione nel 1990, dopo più di 27 anni?::Idi Amin##Nelson Mandela##Ferdinando Marcos##Joseph Atkinson::1", "Quale presidente degli Stati Uniti è stato eletto quattro volte?::George Washington##Gerald Ford##Franklin D Roosevelt##Abraham Lincoln::2"]);
+        ["Quale paese è stato il primo a raggiungere il polo sud?::Norvegia##Regno Unito##Danimarca##Russia::0", "Quale paese europeo ha avuto il più grande impero della storia?::Russia##Regno Unito##Italia##Spagna::1", "Quale di questi paesi africani era controllato dalla Germania?::Benin##angola##Gibuti##Tanzania::3", "Chi fu il primo zar di Russia?::lo zar Nicola I##lo zar Alessandro II##Lo zar Ivan il Terribile##lo zar Paolo I::2", "Qual è stata la battaglia che pose fine alle guerre napoleoniche?::Battaglia di Vienna##Battaglia di Valmy##Battaglia di Verdun##Battaglia di Waterloo::3", "Quale di questi paesi faceva parte dell'URSS?::Slovacchia##Mongolia##afghanistan##Azerbaijan::3", "Quale di questi paesi non è mai stato controllato dal Regno Unito?::Pakistan##afghanistan##Nigeria##Giordania::1", "Quale paese europeo è stato accusato della prima guerra mondiale?::Russia##Regno Unito##Germania::2", "Quale paese era neutrale all'inizio della seconda guerra mondiale?::Francia##Stati Uniti##Germania##Polonia::1", "Quale leader africano anti-apartheid è uscito di prigione nel 1990, dopo più di 27 anni?::Idi Amin##Nelson Mandela##Ferdinando Marcos##Joseph Atkinson::1", "Quale presidente degli Stati Uniti è stato eletto quattro volte?::George Washington##Gerald Ford##Franklin D. Roosevelt##Abraham Lincoln::2"]);
     addQuestions(
         result, //
         language, //
@@ -1440,7 +1440,7 @@ class HistoryAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat3, //
         questionConfig.diff1, //
-        ["La prima crociata aveva l&#39;obiettivo di catturare quale città?::Gerusalemme##Cairo##Mecca##Roma::0", "Cosa ha realizzato la Magna Carta?::limitava il potere dei signori##limitava il potere dei cavalieri##aumentò il potere dei contadini e dei servi##limitava il potere del monarca::3", "Come si è diffusa la peste bubbonica?::Cattive acque##Pulci dai topi##Aria inquinata##cenere di vulcano::1", "Questa città era un crocevia tra Europa e Medio Oriente::Cairo##Costantinopoli##Parigi##Mosca::1", "Qual è stata la causa delle crociate?::Per liberare la Terra Santa di Gerusalemme dai musulmani##Una rivolta di contadini##La peste nera si sta diffondendo in Europa##Guerre commerciali lungo la Via della Seta::0", "Santo profeta della religione musulmana?::Gesù Cristo##Buddha##Maometto::2", "Struttura sociale del Medioevo::Sistema delle caste##Feudalesimo##maniero::1"]);
+        ["La prima crociata aveva l'obiettivo di catturare quale città?::Gerusalemme##Cairo##Mecca##Roma::0", "Cosa ha realizzato la Magna Carta?::limitava il potere dei signori##limitava il potere dei cavalieri##aumentò il potere dei contadini e dei servi##limitava il potere del monarca::3", "Come si è diffusa la peste bubbonica?::Cattive acque##Pulci dai topi##Aria inquinata##cenere di vulcano::1", "Questa città era un crocevia tra Europa e Medio Oriente::Cairo##Costantinopoli##Parigi##Mosca::1", "Qual è stata la causa delle crociate?::Per liberare la Terra Santa di Gerusalemme dai musulmani##Una rivolta di contadini##La peste nera si sta diffondendo in Europa##Guerre commerciali lungo la Via della Seta::0", "Santo profeta della religione musulmana?::Gesù Cristo##Buddha##Maometto::2", "Struttura sociale del Medioevo::Sistema delle caste##Feudalesimo##maniero::1"]);
     addQuestions(
         result, //
         language, //
@@ -1470,7 +1470,7 @@ class HistoryAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat3, //
         questionConfig.diff2, //
-        ["Qual è stata la prima capitale dell&#39;antico Egitto?::Menfi##Tebe##Alessandria##Baltimora::0", "Su quale isola ha avuto origine l&#39;antica civiltà greca?::Samos##Creta##Olimpia##Rodi::1", "Quante delle Sette Meraviglie del Mondo Antico esistono ancora?::3##2##1##0::2", "A chi è attribuito il merito di aver realizzato la prima mappa del mondo conosciuto?::Archimede##Anassimandro##Euclide##Cristoforo Colombo::1", "Nell&#39;antica Roma come si chiamava il diritto di un console di respingere le decisioni dell&#39;altro?::Imposta##Veto##Sorvegliare##Affermare::1", "Quanti anni ha approssimativamente la Grande Muraglia Cinese?::1000 anni##2000 anni##3000 anni##5000 anni::2"]);
+        ["Qual è stata la prima capitale dell'antico Egitto?::Menfi##Tebe##Alessandria##Baltimora::0", "Su quale isola ha avuto origine l'antica civiltà greca?::Samos##Creta##Olimpia##Rodi::1", "Quante delle Sette Meraviglie del Mondo Antico esistono ancora?::3##2##1##0::2", "A chi è attribuito il merito di aver realizzato la prima mappa del mondo conosciuto?::Archimede##Anassimandro##Euclide##Cristoforo Colombo::1", "Nell'antica Roma come si chiamava il diritto di un console di respingere le decisioni dell'altro?::Imposta##Veto##Sorvegliare##Affermare::1", "Quanti anni ha approssimativamente la Grande Muraglia Cinese?::1000 anni##2000 anni##3000 anni##5000 anni::2"]);
     addQuestions(
         result, //
         language, //
@@ -1494,7 +1494,7 @@ class HistoryAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat3, //
         questionConfig.diff3, //
-        ["Quale animale dell&#39;età della pietra è estinto ora?::ghepardo##mammut##antilope##Formichiere::1", "Quale fase veniva prima dell&#39;età della pietra?::Età del fango##Età dei dinosauri##Era glaciale##Il big Bang::2", "Cos&#39;è un ominide?::uno strumento##un primo antenato dell&#39;uomo##una collezione di ossa antiche##un amo da pesca::1", "Gli esseri umani sono migrati in tutto il mondo da quale continente?::Africa##Asia##Australia##Europa::0", "Quale delle seguenti definizioni definisce l&#39;Homo erectus?::uomo pensante##uomo moderno##uomo saggio##uomo retto::3"]);
+        ["Quale animale dell'età della pietra è estinto ora?::ghepardo##mammut##antilope##Formichiere::1", "Quale fase veniva prima dell'età della pietra?::Età del fango##Età dei dinosauri##Era glaciale##Il big Bang::2", "Cos'è un ominide?::uno strumento##un primo antenato dell'uomo##una collezione di ossa antiche##un amo da pesca::1", "Gli esseri umani sono migrati in tutto il mondo da quale continente?::Africa##Asia##Australia##Europa::0", "Quale delle seguenti definizioni definisce l'Homo erectus?::uomo pensante##uomo moderno##uomo saggio##che sta dritto::3"]);
   }void addJA(Map<Language, Map<CategoryDifficulty, List<Question>>> result,
       HistoryGameQuestionConfig questionConfig) {
     var language = Language.ja;
@@ -1632,7 +1632,7 @@ class HistoryAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat3, //
         questionConfig.diff0, //
-        ["남극에 가장 먼저 도달한 나라는?::노르웨이##영국##덴마크##러시아::0", "역사상 가장 큰 제국을 가진 유럽 국가는?::러시아##영국##이탈리아##스페인::1", "이 아프리카 국가 중 독일이 지배한 국가는 어디입니까?::베냉##앙골라##지부티##탄자니아::3", "러시아의 첫 번째 차르는 누구였습니까?::차르 니콜라스 1세##차르 알렉산더 2세##차르 이반 끔찍한##차르 폴 1세::2", "나폴레옹 전쟁을 종식시킨 전투는 무엇입니까?::비엔나 전투##발미 전투##베르됭 전투##워털루 전투::3", "다음 중 소련의 일부였던 국가는 어디입니까?::슬로바키아##몽골리아##아프가니스탄##아제르바이잔::3", "다음 중 영국의 지배를 받지 않은 국가는 어디입니까?::파키스탄##아프가니스탄##나이지리아##요르단::1", "제1차 세계 대전의 책임이 유럽에 있는 국가는 어디입니까?::러시아##영국##독일::2", "2차 세계대전 초기에 중립국이었던 나라는?::프랑스##미국##독일##폴란드::1", "다음 중 27년이 넘는 기간 동안 1990년에 감옥에서 석방된 아프리카의 반 아파르트헤이트 지도자는 누구입니까?::이디 아민##넬슨 만델라##페르디난드 마르코스##조셉 앳킨슨::1", "4번 선출된 미국 대통령은?::조지 워싱턴##제럴드 포드##프랭클린 D 루즈벨트##아브라함 링컨::2"]);
+        ["남극에 가장 먼저 도달한 나라는?::노르웨이##영국##덴마크##러시아::0", "역사상 가장 큰 제국을 가진 유럽 국가는?::러시아##영국##이탈리아##스페인::1", "이 아프리카 국가 중 독일이 지배한 국가는 어디입니까?::베냉##앙골라##지부티##탄자니아::3", "러시아의 첫 번째 차르는 누구였습니까?::차르 니콜라스 1세##차르 알렉산더 2세##차르 이반 끔찍한##차르 폴 1세::2", "나폴레옹 전쟁을 종식시킨 전투는 무엇입니까?::비엔나 전투##발미 전투##베르됭 전투##워털루 전투::3", "다음 중 소련의 일부였던 국가는 어디입니까?::슬로바키아##몽골리아##아프가니스탄##아제르바이잔::3", "다음 중 영국의 지배를 받지 않은 국가는 어디입니까?::파키스탄##아프가니스탄##나이지리아##요르단::1", "제1차 세계 대전의 책임이 유럽에 있는 국가는 어디입니까?::러시아##영국##독일::2", "2차 세계대전 초기에 중립국이었던 나라는?::프랑스##미국##독일##폴란드::1", "다음 중 27년이 넘는 기간 동안 1990년에 감옥에서 석방된 아프리카의 반 아파르트헤이트 지도자는 누구입니까?::이디 아민##넬슨 만델라##페르디난드 마르코스##조셉 앳킨슨::1", "4번 선출된 미국 대통령은?::조지 워싱턴##제럴드 포드##프랭클린 D. 루즈벨트##아브라함 링컨::2"]);
     addQuestions(
         result, //
         language, //
@@ -1716,7 +1716,7 @@ class HistoryAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat3, //
         questionConfig.diff3, //
-        ["석기 시대의 어떤 동물이 지금 멸종되었습니까?::치타##거대한##영양##개미핥기::1", "석기 시대 이전에는 어떤 단계가 있었습니까?::진흙 시대##공룡시대##빙하 시대##빅뱅::2", "유인원이란 무엇입니까?::도구##인간의 초기 조상##고대 뼈 수집품##낚시 바늘::1", "인류는 어느 대륙에서 전 세계로 이주했습니까?::아프리카##아시아##호주##유럽::0", "다음 중 호모 에렉투스를 정의하는 것은?::생각하는 사람##현대인##현인##똑바른 사람::3"]);
+        ["석기 시대의 어떤 동물이 지금 멸종되었습니까?::치타##매머드##영양##개미핥기::1", "석기 시대 이전에는 어떤 단계가 있었습니까?::진흙 시대##공룡시대##빙하 시대##빅뱅::2", "유인원이란 무엇입니까?::도구##인간의 초기 조상##고대 뼈 수집품##낚시 바늘::1", "인류는 어느 대륙에서 전 세계로 이주했습니까?::아프리카##아시아##호주##유럽::0", "다음 중 호모 에렉투스를 정의하는 것은?::생각하는 사람##현대인##현인##서있는 남자::3"]);
   }void addMS(Map<Language, Map<CategoryDifficulty, List<Question>>> result,
       HistoryGameQuestionConfig questionConfig) {
     var language = Language.ms;
@@ -1743,7 +1743,7 @@ class HistoryAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat3, //
         questionConfig.diff0, //
-        ["Negara manakah yang pertama sampai ke kutub selatan?::Norway##Inggeris##Denmark##Rusia::0", "Negara Eropah manakah yang mempunyai empayar terbesar dalam sejarah?::Rusia##Inggeris##Itali##Sepanyol::1", "Antara negara Afrika yang manakah dikuasai oleh Jerman?::Benin##Angola##Djibouti##Tanzania::3", "Siapa Tsar pertama Rusia?::Tsar Nicholas I##Tsar Alexander II##Tsar Ivan the Terrible##Tsar Paul I::2", "Apakah pertempuran yang menamatkan Perang Napoleon?::Pertempuran Vienna##Pertempuran Valmy##Pertempuran Verdun##Pertempuran Waterloo::3", "Antara negara ini yang manakah merupakan sebahagian daripada USSR?::Slovakia##Mongolia##Afghanistan##Azerbaijan::3", "Mana satu antara negara ini yang tidak pernah dikawal oleh United Kingdom?::Pakistan##Afghanistan##Nigeria##Jordan::1", "Apakah negara Eropah yang dipersalahkan untuk Perang Dunia 1?::Rusia##Inggeris##Jerman::2", "Negara manakah yang berkecuali pada permulaan Perang Dunia Kedua?::Perancis##Amerika Syarikat##Jerman##Poland::1", "Pemimpin anti-apartheid Afrika mana yang dibebaskan dari penjara pada 1990, selepas lebih 27 tahun?::Idi Amin##Nelson Mandela##Ferdinand Marcos##Joseph Atkinson::1", "Presiden AS manakah yang dipilih untuk memegang jawatan empat kali?::George Washington##Gerald Ford##Franklin D Roosevelt##Abraham Lincoln::2"]);
+        ["Negara manakah yang pertama sampai ke kutub selatan?::Norway##Inggeris##Denmark##Rusia::0", "Negara Eropah manakah yang mempunyai empayar terbesar dalam sejarah?::Rusia##Inggeris##Itali##Sepanyol::1", "Antara negara Afrika yang manakah dikuasai oleh Jerman?::Benin##Angola##Djibouti##Tanzania::3", "Siapa Tsar pertama Rusia?::Nikolai I dari Rusia##Aleksandr II dari Rusia##Ivan IV dari Rusia##Pavel I dari Rusia::2", "Apakah pertempuran yang menamatkan Perang Napoleon?::Pertempuran Vienna##Pertempuran Valmy##Pertempuran Verdun##Pertempuran Waterloo::3", "Antara negara ini yang manakah merupakan sebahagian daripada USSR?::Slovakia##Mongolia##Afghanistan##Azerbaijan::3", "Mana satu antara negara ini yang tidak pernah dikawal oleh United Kingdom?::Pakistan##Afghanistan##Nigeria##Jordan::1", "Apakah negara Eropah yang dipersalahkan untuk Perang Dunia 1?::Rusia##Inggeris##Jerman::2", "Negara manakah yang berkecuali pada permulaan Perang Dunia Kedua?::Perancis##Amerika Syarikat##Jerman##Poland::1", "Pemimpin anti-apartheid Afrika mana yang dibebaskan dari penjara pada 1990, selepas lebih 27 tahun?::Idi Amin##Nelson Mandela##Ferdinand Marcos##Joseph Atkinson::1", "Presiden AS manakah yang dipilih untuk memegang jawatan empat kali?::George Washington##Gerald Ford##Franklin D. Roosevelt##Abraham Lincoln::2"]);
     addQuestions(
         result, //
         language, //
@@ -1809,7 +1809,7 @@ class HistoryAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat4, //
         questionConfig.diff2, //
-        [":Alexander the Great::", ":Julius Caesar::", ":Aristotle::", ":Confucius::"]);
+        [":Alexander Agung::", ":Julius Caesar::", ":Aristoteles::", ":Kongzi::"]);
     addQuestions(
         result, //
         language, //
@@ -1827,7 +1827,7 @@ class HistoryAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat3, //
         questionConfig.diff3, //
-        ["Apakah haiwan dari zaman batu yang telah pupus sekarang?::cheetah##raksasa##antelop##Anteater::1", "Tahap apakah yang datang sebelum zaman batu?::Zaman Lumpur##Zaman Dinosaur##Zaman ais##Letupan Besar::2", "Apakah hominid?::sebuah alat##nenek moyang awal manusia##koleksi tulang purba##mata kail::1", "Manusia berhijrah ke seluruh dunia dari benua apakah?::Afrika##Asia##Australia##Eropah::0", "Antara berikut, yang manakah mentakrifkan Homo erectus?::lelaki yang berfikir##manusia moden##lelaki bijak##lelaki tegak::3"]);
+        ["Apakah haiwan dari zaman batu yang telah pupus sekarang?::Citah##Mamot##antelop##Anteater::1", "Tahap apakah yang datang sebelum zaman batu?::Zaman Lumpur##Zaman Dinosaur##Zaman ais##Letupan Besar::2", "Apakah hominid?::sebuah alat##nenek moyang awal manusia##koleksi tulang purba##mata kail::1", "Manusia berhijrah ke seluruh dunia dari benua apakah?::Afrika##Asia##Australia##Eropah::0", "Antara berikut, yang manakah mentakrifkan Homo erectus?::lelaki yang berfikir##manusia moden##lelaki bijak##manusia yang mampu berdiri::3"]);
   }void addNL(Map<Language, Map<CategoryDifficulty, List<Question>>> result,
       HistoryGameQuestionConfig questionConfig) {
     var language = Language.nl;
@@ -1932,13 +1932,13 @@ class HistoryAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat2, //
         questionConfig.diff3, //
-        ["Göbekli Tepe:Turkije::1", "Grot van Lascaux:Frankrijk::1", "Zomer:Irak::1", "Stonehenge:Verenigd Koningkrijk::1"]);
+        ["Göbekli Tepe:Turkije::1", "Grot van Lascaux:Frankrijk::1", "Sumer:Irak::1", "Stonehenge:Verenigd Koningkrijk::1"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat3, //
         questionConfig.diff3, //
-        ["Welk dier uit het stenen tijdperk is nu uitgestorven?::Jachtluipaard##mammoet-##antilope##Miereneter::1", "Welk stadium kwam er vóór het stenen tijdperk?::Moddertijd:##dinosaurus tijdperk##Ijstijd##De oerknal::2", "Wat is een hominide?::een gereedschap##een vroege voorouder van de mens##een verzameling oude botten##een vishaak::1", "Vanuit welk continent migreerden mensen over de hele wereld?::Afrika##Azië##Australië##Europa::0", "Welke van de volgende definieert Homo erectus?::denkende man##moderne man##wijze man##oprechte man::3"]);
+        ["Welk dier uit het stenen tijdperk is nu uitgestorven?::Jachtluipaard##mammoet##antilope##Miereneter::1", "Welk stadium kwam er vóór het stenen tijdperk?::Moddertijd:##dinosaurus tijdperk##Ijstijd##De oerknal::2", "Wat is een hominide?::een gereedschap##een vroege voorouder van de mens##een verzameling oude botten##een vishaak::1", "Vanuit welk continent migreerden mensen over de hele wereld?::Afrika##Azië##Australië##Europa::0", "Welke van de volgende definieert Homo erectus?::denkende man##moderne man##wijze man##oprechte man::3"]);
   }void addNO(Map<Language, Map<CategoryDifficulty, List<Question>>> result,
       HistoryGameQuestionConfig questionConfig) {
     var language = Language.no;
@@ -1965,7 +1965,7 @@ class HistoryAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat3, //
         questionConfig.diff0, //
-        ["Hvilket land var det første som nådde sørpolen?::Norge##Storbritannia##Danmark##Russland::0", "Hvilket europeisk land hadde det største imperiet i historien?::Russland##Storbritannia##Italia##Spania::1", "Hvilket av disse afrikanske landene ble kontrollert av Tyskland?::Benin##Angola##Djibouti##Tanzania::3", "Hvem var den første tsaren i Russland?::Tsar Nicholas I##Tsar Alexander II##Tsar Ivan den grusomme##Tsar Paul I::2", "Hva var slaget som avsluttet Napoleonskrigene?::Slaget ved Wien##Slaget ved Valmy##Slaget ved Verdun##Slaget ved Waterloo::3", "Hvilket av disse landene var en del av USSR?::Slovakia##Mongolia##Afghanistan##Aserbajdsjan::3", "Hvilket av disse landene ble aldri kontrollert av Storbritannia?::Pakistan##Afghanistan##Nigeria##Jordan::1", "Hvilket europeisk land fikk skylden for første verdenskrig?::Russland##Storbritannia##Tyskland::2", "Hvilket land var nøytralt i begynnelsen av andre verdenskrig?::Frankrike##Forente Stater##Tyskland##Polen::1", "Hvilken afrikansk anti-apartheid-leder ble løslatt fra fengsel i 1990, etter mer enn 27 år?::Idi Amin##Nelson Mandela##Ferdinand Marcos##Joseph Atkinson::1", "Hvilken amerikansk president ble valgt til vervet fire ganger?::George Washington##Gerald Ford##Franklin D Roosevelt##Abraham Lincoln::2"]);
+        ["Hvilket land var det første som nådde sørpolen?::Norge##Storbritannia##Danmark##Russland::0", "Hvilket europeisk land hadde det største imperiet i historien?::Russland##Storbritannia##Italia##Spania::1", "Hvilket av disse afrikanske landene ble kontrollert av Tyskland?::Benin##Angola##Djibouti##Tanzania::3", "Hvem var den første tsaren i Russland?::Tsar Nicholas I##Tsar Alexander II##Tsar Ivan den grusomme##Tsar Paul I::2", "Hva var slaget som avsluttet Napoleonskrigene?::Slaget ved Wien##Slaget ved Valmy##Slaget ved Verdun##Slaget ved Waterloo::3", "Hvilket av disse landene var en del av USSR?::Slovakia##Mongolia##Afghanistan##Aserbajdsjan::3", "Hvilket av disse landene ble aldri kontrollert av Storbritannia?::Pakistan##Afghanistan##Nigeria##Jordan::1", "Hvilket europeisk land fikk skylden for første verdenskrig?::Russland##Storbritannia##Tyskland::2", "Hvilket land var nøytralt i begynnelsen av andre verdenskrig?::Frankrike##Forente Stater##Tyskland##Polen::1", "Hvilken afrikansk anti-apartheid-leder ble løslatt fra fengsel i 1990, etter mer enn 27 år?::Idi Amin##Nelson Mandela##Ferdinand Marcos##Joseph Atkinson::1", "Hvilken amerikansk president ble valgt til vervet fire ganger?::George Washington##Gerald Ford##Franklin D. Roosevelt##Abraham Lincoln::2"]);
     addQuestions(
         result, //
         language, //
@@ -2025,7 +2025,7 @@ class HistoryAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat3, //
         questionConfig.diff2, //
-        ["Hva var den første hovedstaden i det gamle Egypt?::Memphis##Theben##Alexandria##Baltimore::0", "På hvilken øy oppsto den gamle greske sivilisasjonen?::Samos##Kreta##Olympia##Rhodos::1", "Hvor mange av de syv underverkene i den antikke verden eksisterer fortsatt?::3##2##1##0::2", "Hvem er kreditert med å lage det første kartet over den kjente verden?::Arkimedes##Anaximander##Euklid##Christopher Columbus::1", "Hva kalles en konsuls rett til å avvise hverandres beslutninger i det gamle Roma?::Avgift##Veto##Overvåke##Bekrefte::1", "Omtrent hvor gammel er den kinesiske mur?::1000 år##2000 år##3000 år##5000 år::2"]);
+        ["Hva var den første hovedstaden i det gamle Egypt?::Memfis##Teben##Alexandria##Baltimore::0", "På hvilken øy oppsto den gamle greske sivilisasjonen?::Samos##Kreta##Olympia##Rhodos::1", "Hvor mange av de syv underverkene i den antikke verden eksisterer fortsatt?::3##2##1##0::2", "Hvem er kreditert med å lage det første kartet over den kjente verden?::Arkimedes##Anaximander##Euklid##Christopher Columbus::1", "Hva kalles en konsuls rett til å avvise hverandres beslutninger i det gamle Roma?::Avgift##Veto##Overvåke##Bekrefte::1", "Omtrent hvor gammel er den kinesiske mur?::1000 år##2000 år##3000 år##5000 år::2"]);
     addQuestions(
         result, //
         language, //
@@ -2043,13 +2043,13 @@ class HistoryAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat2, //
         questionConfig.diff3, //
-        ["Göbekli Tepe:Tyrkia::1", "Lascaux-hulen:Frankrike::1", "Sumer:Irak::1", "Stone henge:Storbritannia::1"]);
+        ["Göbekli Tepe:Tyrkia::1", "Lascaux-hulen:Frankrike::1", "Sumer:Irak::1", "Stonehenge:Storbritannia::1"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat3, //
         questionConfig.diff3, //
-        ["Hvilket dyr fra steinalderen er utryddet nå?::gepard##mammut##antilope##Myrsluker::1", "Hvilket stadium kom før steinalderen?::Mud Age##Dinosaurens alder##Istid##Det store smellet::2", "Hva er en hominid?::et verktøy##en tidlig stamfar til mennesker##en samling av eldgamle bein##en fiskekrok::1", "Mennesker migrerte rundt i verden fra hvilket kontinent?::Afrika##Asia##Australia##Europa::0", "Hvilket av følgende definerer Homo erectus?::tenkende mann##moderne mann##Vis mann##oppreist mann::3"]);
+        ["Hvilket dyr fra steinalderen er utryddet nå?::gepard##mammut##antilope##Myrsluker::1", "Hvilket stadium kom før steinalderen?::Gjørme alder##Dinosaurens alder##Istid##Det store smellet::2", "Hva er en hominid?::et verktøy##en tidlig stamfar til mennesker##en samling av eldgamle bein##en fiskekrok::1", "Mennesker migrerte rundt i verden fra hvilket kontinent?::Afrika##Asia##Australia##Europa::0", "Hvilket av følgende definerer Homo erectus?::tenkende mann##moderne mann##Vis mann##oppreist mann::3"]);
   }void addPL(Map<Language, Map<CategoryDifficulty, List<Question>>> result,
       HistoryGameQuestionConfig questionConfig) {
     var language = Language.pl;
@@ -2082,7 +2082,7 @@ class HistoryAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat4, //
         questionConfig.diff0, //
-        [":Napoleon Bonaparte::", ":William Szekspir::", ":Abraham Lincoln::", ":Jerzy Waszyngton::", ":Karol Darwin::", ":Izaak Newton::"]);
+        [":Napoleon Bonaparte::", ":William Shakespeare::", ":Abraham Lincoln::", ":George Washington::", ":Karol Darwin::", ":Izaak Newton::"]);
     addQuestions(
         result, //
         language, //
@@ -2136,7 +2136,7 @@ class HistoryAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat3, //
         questionConfig.diff2, //
-        ["Jaka była pierwsza stolica starożytnego Egiptu?::Memphis##Teby##Aleksandria##Baltimore::0", "Na jakiej wyspie powstała starożytna cywilizacja grecka?::Samos##Kreta##Olimpia##Rodos::1", "Ile z siedmiu cudów starożytnego świata nadal istnieje?::3##2##1##0::2", "Komu przypisuje się wykonanie pierwszej mapy znanego świata?::Archimedesa##Anaksymander##Euklides##Krzysztof Kolumb::1", "Jak nazywa się w starożytnym Rzymie prawo konsula do wzajemnego odrzucania swoich decyzji?::Podatek##Weto##Nadzorować##Potwierdzać::1", "Ile lat ma w przybliżeniu Wielki Mur Chiński?::1000 lat##2000 lat##3000 lat##5000 lat::2"]);
+        ["Jaka była pierwsza stolica starożytnego Egiptu?::Memfis##Teby##Aleksandria##Baltimore::0", "Na jakiej wyspie powstała starożytna cywilizacja grecka?::Samos##Kreta##Olimpia##Rodos::1", "Ile z siedmiu cudów starożytnego świata nadal istnieje?::3##2##1##0::2", "Komu przypisuje się wykonanie pierwszej mapy znanego świata?::Archimedesa##Anaksymander##Euklides##Krzysztof Kolumb::1", "Jak nazywa się w starożytnym Rzymie prawo konsula do wzajemnego odrzucania swoich decyzji?::Podatek##Weto##Nadzorować##Potwierdzać::1", "Ile lat ma w przybliżeniu Wielki Mur Chiński?::1000 lat##2000 lat##3000 lat##5000 lat::2"]);
     addQuestions(
         result, //
         language, //
@@ -2187,7 +2187,7 @@ class HistoryAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat3, //
         questionConfig.diff0, //
-        ["Qual país foi o primeiro a chegar ao pólo sul?::Noruega##Reino Unido##Dinamarca##Rússia::0", "Qual país europeu teve o maior império da história?::Rússia##Reino Unido##Itália##Espanha::1", "Qual desses países africanos era controlado pela Alemanha?::Benin##Angola##Djibuti##Tanzânia::3", "Quem foi o primeiro czar da Rússia?::Czar Nicolau I##Czar Alexandre II##Czar ivan, o terrível##Czar Paulo I::2", "Qual foi a batalha que encerrou as Guerras Napoleônicas?::Batalha de viena##Batalha de Valmy##Batalha de Verdun##Batalha de Waterloo::3", "Qual desses países fez parte da URSS?::Eslováquia##Mongólia##Afeganistão##Azerbaijão::3", "Qual desses países nunca foi controlado pelo Reino Unido?::Paquistão##Afeganistão##Nigéria##Jordânia::1", "Qual país europeu foi culpado pela Primeira Guerra Mundial?::Rússia##Reino Unido##Alemanha::2", "Que país era neutro no início da 2ª Guerra Mundial?::França##Estados Unidos##Alemanha##Polônia::1", "Qual líder africano anti-apartheid foi libertado da prisão em 1990, depois de mais de 27 anos?::Idi Amin##Nelson Mandela##Ferdinand Marcos##Joseph Atkinson::1", "Qual presidente dos EUA foi eleito quatro vezes?::George washington##Gerald Ford##Franklin D Roosevelt##Abraham Lincoln::2"]);
+        ["Qual país foi o primeiro a chegar ao pólo sul?::Noruega##Reino Unido##Dinamarca##Rússia::0", "Qual país europeu teve o maior império da história?::Rússia##Reino Unido##Itália##Espanha::1", "Qual desses países africanos era controlado pela Alemanha?::Benin##Angola##Djibuti##Tanzânia::3", "Quem foi o primeiro czar da Rússia?::Czar Nicolau I##Czar Alexandre II##Czar ivan, o terrível##Czar Paulo I::2", "Qual foi a batalha que encerrou as Guerras Napoleônicas?::Batalha de viena##Batalha de Valmy##Batalha de Verdun##Batalha de Waterloo::3", "Qual desses países fez parte da URSS?::Eslováquia##Mongólia##Afeganistão##Azerbaijão::3", "Qual desses países nunca foi controlado pelo Reino Unido?::Paquistão##Afeganistão##Nigéria##Jordânia::1", "Qual país europeu foi culpado pela Primeira Guerra Mundial?::Rússia##Reino Unido##Alemanha::2", "Que país era neutro no início da 2ª Guerra Mundial?::França##Estados Unidos##Alemanha##Polônia::1", "Qual líder africano anti-apartheid foi libertado da prisão em 1990, depois de mais de 27 anos?::Idi Amin##Nelson Mandela##Ferdinand Marcos##Joseph Atkinson::1", "Qual presidente dos EUA foi eleito quatro vezes?::George washington##Gerald Ford##Franklin D. Roosevelt##Abraham Lincoln::2"]);
     addQuestions(
         result, //
         language, //
@@ -2247,7 +2247,7 @@ class HistoryAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat3, //
         questionConfig.diff2, //
-        ["Qual foi a primeira capital do antigo Egito?::Memphis##Tebas##Alexandria##Baltimore::0", "Em que ilha se originou a antiga civilização grega?::Samos##Creta##Olympia##Rodes::1", "Quantas das Sete Maravilhas do Mundo Antigo ainda existem?::3##2##1##0::2", "Quem é responsável por fazer o primeiro mapa do mundo conhecido?::Arquimedes##Anaximandro##Euclides##Cristóvão Colombo::1", "Na Roma antiga, o que significava o direito de um cônsul de rejeitar as decisões uns dos outros?::Imposto##Veto##Vigiar##Afirmar::1", "Aproximadamente quantos anos tem a Grande Muralha da China?::1000 anos##2000 anos##3000 anos##5000 anos::2"]);
+        ["Qual foi a primeira capital do antigo Egito?::Mênfis##Tebas##Alexandria##Baltimore::0", "Em que ilha se originou a antiga civilização grega?::Samos##Creta##Olympia##Rodes::1", "Quantas das Sete Maravilhas do Mundo Antigo ainda existem?::3##2##1##0::2", "Quem é responsável por fazer o primeiro mapa do mundo conhecido?::Arquimedes##Anaximandro##Euclides##Cristóvão Colombo::1", "Na Roma antiga, o que significava o direito de um cônsul de rejeitar as decisões uns dos outros?::Imposto##Veto##Vigiar##Afirmar::1", "Aproximadamente quantos anos tem a Grande Muralha da China?::1000 anos##2000 anos##3000 anos##5000 anos::2"]);
     addQuestions(
         result, //
         language, //
@@ -2265,13 +2265,13 @@ class HistoryAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat2, //
         questionConfig.diff3, //
-        ["Göbekli Tepe:Turquia::1", "Caverna Lascaux:França::1", "verão:Iraque::1", "Stonehenge:Reino Unido::1"]);
+        ["Göbekli Tepe:Turquia::1", "Caverna Lascaux:França::1", "Suméria:Iraque::1", "Stonehenge:Reino Unido::1"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat3, //
         questionConfig.diff3, //
-        ["Que animal da idade da pedra está extinto agora?::guepardo##mamute##antílope##Tamanduá::1", "Qual fase veio antes da idade da pedra?::Idade da lama##Idade dos Dinossauros##Era do Gelo##A grande explosão::2", "O que é um hominídeo?::uma ferramenta##um ancestral dos humanos##uma coleção de ossos antigos##um anzol::1", "Os humanos migraram ao redor do mundo de que continente?::África##Ásia##Austrália##Europa::0", "Qual das alternativas a seguir define o Homo erectus?::homem pensante##homem moderno##homem sábio##homem justo::3"]);
+        ["Que animal da idade da pedra está extinto agora?::guepardo##mamute##antílope##Tamanduá::1", "Qual fase veio antes da idade da pedra?::Idade da lama##Idade dos Dinossauros##Era do Gelo##A grande explosão::2", "O que é um hominídeo?::uma ferramenta##um ancestral dos humanos##uma coleção de ossos antigos##um anzol::1", "Os humanos migraram ao redor do mundo de que continente?::África##Ásia##Austrália##Europa::0", "Qual das alternativas a seguir define o Homo erectus?::homem pensante##homem moderno##homem sábio##homem de pé::3"]);
   }void addRO(Map<Language, Map<CategoryDifficulty, List<Question>>> result,
       HistoryGameQuestionConfig questionConfig) {
     var language = Language.ro;
@@ -2298,7 +2298,7 @@ class HistoryAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat3, //
         questionConfig.diff0, //
-        ["Care țară a ajuns prima la polul sud?::Norvegia##Regatul Unit##Danemarca##Rusia::0", "Care țară europeană a avut cel mai mare imperiu din istorie?::Rusia##Regatul Unit##Italia##Spania::1", "Care dintre aceste țări africane era controlată de Germania?::Benin##Angola##Djibouti##Tanzania::3", "Cine a fost primul țar al Rusiei?::Țarul Nicolae I##Țarul Alexandru al II-lea##Țarul Ivan cel Groaznic##Țarul Paul I::2", "Care a fost bătălia care a pus capăt războaielor napoleoniene?::Bătălia de la Viena##Bătălia de la Valmy##Bătălia de la Verdun##Bătălia de la Waterloo::3", "Care dintre aceste țări făcea parte din URSS?::Slovacia##Mongolia##Afganistan##Azerbaidjan::3", "Care dintre aceste țări nu a fost niciodată controlată de Regatul Unit?::Pakistan##Afganistan##Nigeria##Iordania::1", "Ce țară europeană a fost învinuită pentru Primul Război Mondial?::Rusia##Regatul Unit##Germania::2", "Ce țară a fost neutră la începutul celui de-al Doilea Război Mondial?::Franţa##Statele Unite##Germania##Polonia::1", "Care lider african anti-apartheid a fost eliberat din închisoare în 1990, după mai bine de 27 de ani?::Idi Amin##Nelson Mandela##Ferdinand Marcos##Joseph Atkinson::1", "Care președinte american a fost ales în funcție de patru ori?::George Washington##Gerald Ford##Franklin D Roosevelt##Abraham Lincoln::2"]);
+        ["Care țară a ajuns prima la polul sud?::Norvegia##Regatul Unit##Danemarca##Rusia::0", "Care țară europeană a avut cel mai mare imperiu din istorie?::Rusia##Regatul Unit##Italia##Spania::1", "Care dintre aceste țări africane era controlată de Germania?::Benin##Angola##Djibouti##Tanzania::3", "Cine a fost primul țar al Rusiei?::Țarul Nicolae I##Țarul Alexandru al II-lea##Țarul Ivan cel Groaznic##Țarul Paul I::2", "Care a fost bătălia care a pus capăt războaielor napoleoniene?::Bătălia de la Viena##Bătălia de la Valmy##Bătălia de la Verdun##Bătălia de la Waterloo::3", "Care dintre aceste țări făcea parte din URSS?::Slovacia##Mongolia##Afganistan##Azerbaidjan::3", "Care dintre aceste țări nu a fost niciodată controlată de Regatul Unit?::Pakistan##Afganistan##Nigeria##Iordania::1", "Ce țară europeană a fost învinuită pentru Primul Război Mondial?::Rusia##Regatul Unit##Germania::2", "Ce țară a fost neutră la începutul celui de-al Doilea Război Mondial?::Franţa##Statele Unite##Germania##Polonia::1", "Care lider african anti-apartheid a fost eliberat din închisoare în 1990, după mai bine de 27 de ani?::Idi Amin##Nelson Mandela##Ferdinand Marcos##Joseph Atkinson::1", "Care președinte american a fost ales în funcție de patru ori?::George Washington##Gerald Ford##Franklin D. Roosevelt##Abraham Lincoln::2"]);
     addQuestions(
         result, //
         language, //
@@ -2382,7 +2382,7 @@ class HistoryAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat3, //
         questionConfig.diff3, //
-        ["Ce animal din epoca de piatră a dispărut acum?::ghepard##mamut##antilope##Furnic::1", "Ce etapă a venit înainte de epoca de piatră?::Epoca noroiului##Epoca dinozaurilor##Epoca de gheata##Big Bang-ul::2", "Ce este un hominid?::o unealta##un strămoș timpuriu al oamenilor ##o colecție de oase antice ##un cârlig::1", "Oamenii au migrat în jurul lumii de pe ce continent?::Africa##Asia##Australia ##Europa::0", "Care dintre următoarele definește Homo erectus?::om gânditor##omul modern##om înțelept##om drept::3"]);
+        ["Ce animal din epoca de piatră a dispărut acum?::ghepard##mamut##antilope##Furnic::1", "Ce etapă a venit înainte de epoca de piatră?::Epoca noroiului##Epoca dinozaurilor##Epoca de gheata##Big Bang-ul::2", "Ce este un hominid?::o unealta##un strămoș timpuriu al oamenilor ##o colecție de oase antice ##un cârlig::1", "Oamenii au migrat în jurul lumii de pe ce continent?::Africa##Asia##Australia ##Europa::0", "Care dintre următoarele definește Homo erectus?::omul gânditor##omul modern##omul înțelept##omul drept::3"]);
   }void addRU(Map<Language, Map<CategoryDifficulty, List<Question>>> result,
       HistoryGameQuestionConfig questionConfig) {
     var language = Language.ru;
@@ -2493,7 +2493,7 @@ class HistoryAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat3, //
         questionConfig.diff3, //
-        ["Какое животное из каменного века вымерло сейчас?::гепард##мамонт##антилопа##Муравьед::1", "Какой этап предшествовал каменному веку?::Возраст грязи##Возраст динозавров##Ледниковый период##Большой взрыв::2", "Что такое гоминид?::инструмент##ранний предок людей##коллекция древних костей##рыболовный крючок::1", "С какого континента люди мигрировали по всему миру?::Африке##Азия##Австралия##Европа::0", "Что из перечисленного определяет Homo erectus?::думающий человек##современный человек##мудрец##честный человек::3"]);
+        ["Какое животное из каменного века вымерло сейчас?::гепард##мамонт##антилопа##Муравьед::1", "Какой этап предшествовал каменному веку?::Возраст грязи##Возраст динозавров##Ледниковый период##Большой взрыв::2", "Что такое гоминид?::инструмент##ранний предок людей##коллекция древних костей##рыболовный крючок::1", "С какого континента люди мигрировали по всему миру?::Африке##Азия##Австралия##Европа::0", "Что из перечисленного определяет Человек прямоходящий?::думающий человек##современный человек##мудрец##человек выпрямленный::3"]);
   }void addSK(Map<Language, Map<CategoryDifficulty, List<Question>>> result,
       HistoryGameQuestionConfig questionConfig) {
     var language = Language.sk;
@@ -2520,7 +2520,7 @@ class HistoryAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat3, //
         questionConfig.diff0, //
-        ["Ktorá krajina ako prvá dosiahla južný pól?::Nórsko##Spojene kralovstvo##Dánsko##Rusko::0", "Ktorá európska krajina mala najväčšie impérium v ​​histórii?::Rusko##Spojene kralovstvo##Taliansko##španielsko::1", "Ktorú z týchto afrických krajín ovládalo Nemecko?::Benin##Angola##Džibutsko##Tanzánia::3", "Kto bol prvým ruským cárom?::Cár Mikuláš I##Cár Alexander II##Cár Ivan Hrozný##Cár Pavol I::2", "Aká bola bitka, ktorá ukončila napoleonské vojny?::Bitka pri Viedni##Bitka o Valmy##Bitka pri Verdune##Bitka pri Waterloo::3", "Ktorá z týchto krajín bola súčasťou ZSSR?::Slovensko##Mongolsko##Afganistan##Azerbajdžan::3", "Ktorú z týchto krajín nikdy nekontrolovalo Spojené kráľovstvo?::Pakistan##Afganistan##Nigéria##Jordán::1", "Ktorá európska krajina bola obvinená z 1. svetovej vojny?::Rusko##Spojene kralovstvo##Nemecko::2", "Ktorá krajina bola neutrálna na začiatku 2. svetovej vojny?::Francúzsko##Spojené štáty##Nemecko##Poľsko::1", "Ktorý africký vodca boja proti apartheidu bol prepustený z väzenia v roku 1990, po viac ako 27 rokoch?::Idi Amin##Nelson Mandela##Ferdinand Marcos##Joseph Atkinson::1", "Ktorý prezident USA bol zvolený do úradu štyrikrát?::George Washington##Gerald Ford##Franklin D Roosevelt##Abrahám Lincoln::2"]);
+        ["Ktorá krajina ako prvá dosiahla južný pól?::Nórsko##Spojene kralovstvo##Dánsko##Rusko::0", "Ktorá európska krajina mala najväčšie impérium v ​​histórii?::Rusko##Spojene kralovstvo##Taliansko##španielsko::1", "Ktorú z týchto afrických krajín ovládalo Nemecko?::Benin##Angola##Džibutsko##Tanzánia::3", "Kto bol prvým ruským cárom?::Cár Mikuláš I##Cár Alexander II##Cár Ivan Hrozný##Cár Pavol I::2", "Aká bola bitka, ktorá ukončila napoleonské vojny?::Bitka pri Viedni##Bitka o Valmy##Bitka pri Verdune##Bitka pri Waterloo::3", "Ktorá z týchto krajín bola súčasťou ZSSR?::Slovensko##Mongolsko##Afganistan##Azerbajdžan::3", "Ktorú z týchto krajín nikdy nekontrolovalo Spojené kráľovstvo?::Pakistan##Afganistan##Nigéria##Jordán::1", "Ktorá európska krajina bola obvinená z 1. svetovej vojny?::Rusko##Spojene kralovstvo##Nemecko::2", "Ktorá krajina bola neutrálna na začiatku 2. svetovej vojny?::Francúzsko##Spojené štáty##Nemecko##Poľsko::1", "Ktorý africký vodca boja proti apartheidu bol prepustený z väzenia v roku 1990, po viac ako 27 rokoch?::Idi Amin##Nelson Mandela##Ferdinand Marcos##Joseph Atkinson::1", "Ktorý prezident USA bol zvolený do úradu štyrikrát?::George Washington##Gerald Ford##Franklin D. Roosevelt##Abrahám Lincoln::2"]);
     addQuestions(
         result, //
         language, //
@@ -2580,7 +2580,7 @@ class HistoryAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat3, //
         questionConfig.diff2, //
-        ["Aké bolo prvé hlavné mesto starovekého Egypta?::Memphis##Théby##Alexandria##Baltimore::0", "Na ktorom ostrove vznikla staroveká grécka civilizácia?::Samos##Kréta##Olympia##Rhodos::1", "Koľko zo siedmich divov starovekého sveta ešte existuje?::3##2##1##0::2", "Kto sa zaslúžil o vytvorenie prvej mapy známeho sveta?::Archimedes##Anaximander##Euklides##Krištof Kolumbus::1", "Ako sa v starovekom Ríme nazývalo právo konzula odmietnuť vzájomné rozhodnutia?::daň##Veto##Dohliadať##Potvrdiť::1", "Aký starý je približne Čínsky múr?::1000 rokov##2000 rokov##3000 rokov##5000 rokov::2"]);
+        ["Aké bolo prvé hlavné mesto starovekého Egypta?::Mennofer##Théby##Alexandria##Baltimore::0", "Na ktorom ostrove vznikla staroveká grécka civilizácia?::Samos##Kréta##Olympia##Rhodos::1", "Koľko zo siedmich divov starovekého sveta ešte existuje?::3##2##1##0::2", "Kto sa zaslúžil o vytvorenie prvej mapy známeho sveta?::Archimedes##Anaximander##Euklides##Krištof Kolumbus::1", "Ako sa v starovekom Ríme nazývalo právo konzula odmietnuť vzájomné rozhodnutia?::daň##Veto##Dohliadať##Potvrdiť::1", "Aký starý je približne Čínsky múr?::1000 rokov##2000 rokov##3000 rokov##5000 rokov::2"]);
     addQuestions(
         result, //
         language, //
@@ -2631,7 +2631,7 @@ class HistoryAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat3, //
         questionConfig.diff0, //
-        ["Vilket land var det första som nådde sydpolen?::Norge##Storbritannien##Danmark##ryssland::0", "Vilket europeiskt land hade historiens största imperium?::ryssland##Storbritannien##Italien##Spanien::1", "Vilket av dessa afrikanska länder kontrollerades av Tyskland?::Benin##Angola##Djibouti##Tanzania::3", "Vem var den första tsaren i Ryssland?::Tsar Nicholas I##Tsar Alexander II##Tsar Ivan den förskräcklige##Tsar Paul I::2", "Vad var slaget som avslutade Napoleonkrigen?::Slaget vid Wien##Slaget vid Valmy##Slaget vid Verdun##Slaget vid Waterloo::3", "Vilket av dessa länder var en del av Sovjetunionen?::Slovakien##mongoliet##Afghanistan##Azerbajdzjan::3", "Vilket av dessa länder kontrollerades aldrig av Storbritannien?::pakistan##Afghanistan##nigeria##Jordanien::1", "Vilket europeiskt land fick skulden för första världskriget?::ryssland##Storbritannien##Tyskland::2", "Vilket land var neutralt i början av andra världskriget?::Frankrike##Förenta staterna##Tyskland##polen::1", "Vilken afrikansk anti-apartheidledare släpptes från fängelset 1990, efter mer än 27 år?::Idi Amin##Nelson Mandela##Ferdinand Marcos##Joseph Atkinson::1", "Vilken amerikansk president valdes in fyra gånger?::George Washington##Gerald Ford##Franklin D Roosevelt##Abraham Lincoln::2"]);
+        ["Vilket land var det första som nådde sydpolen?::Norge##Storbritannien##Danmark##ryssland::0", "Vilket europeiskt land hade historiens största imperium?::ryssland##Storbritannien##Italien##Spanien::1", "Vilket av dessa afrikanska länder kontrollerades av Tyskland?::Benin##Angola##Djibouti##Tanzania::3", "Vem var den första tsaren i Ryssland?::Tsar Nikolaus I##Tsar Alexander II##Tsar Ivan den förskräcklige##Tsar Paul I::2", "Vad var slaget som avslutade Napoleonkrigen?::Slaget vid Wien##Slaget vid Valmy##Slaget vid Verdun##Slaget vid Waterloo::3", "Vilket av dessa länder var en del av Sovjetunionen?::Slovakien##mongoliet##Afghanistan##Azerbajdzjan::3", "Vilket av dessa länder kontrollerades aldrig av Storbritannien?::pakistan##Afghanistan##nigeria##Jordanien::1", "Vilket europeiskt land fick skulden för första världskriget?::ryssland##Storbritannien##Tyskland::2", "Vilket land var neutralt i början av andra världskriget?::Frankrike##Förenta staterna##Tyskland##polen::1", "Vilken afrikansk anti-apartheidledare släpptes från fängelset 1990, efter mer än 27 år?::Idi Amin##Nelson Mandela##Ferdinand Marcos##Joseph Atkinson::1", "Vilken amerikansk president valdes in fyra gånger?::George Washington##Gerald Ford##Franklin D. Roosevelt##Abraham Lincoln::2"]);
     addQuestions(
         result, //
         language, //
@@ -2691,7 +2691,7 @@ class HistoryAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat3, //
         questionConfig.diff2, //
-        ["Vilken var den första huvudstaden i det antika Egypten?::Memphis##Thebe##Alexandria##Baltimore::0", "På vilken ö uppstod den antika grekiska civilisationen?::Samos##Kreta##Olympia##Rhodos::1", "Hur många av den antika världens sju underverk finns fortfarande?::3##2##1##0::2", "Vem är krediterad för att göra den första kartan över den kända världen?::Arkimedes##Anaximander##Euklid##Christopher Columbus::1", "Vad kallas en konsuls rätt att avslå varandras beslut i det antika Rom?::Beskatta##Veto##Övervaka##Bekräfta::1", "Ungefär hur gammal är den kinesiska muren?::1000 år##2000 år##3000 år##5000 år::2"]);
+        ["Vilken var den första huvudstaden i det antika Egypten?::Memfis##Thebe##Alexandria##Baltimore::0", "På vilken ö uppstod den antika grekiska civilisationen?::Samos##Kreta##Olympia##Rhodos::1", "Hur många av den antika världens sju underverk finns fortfarande?::3##2##1##0::2", "Vem är krediterad för att göra den första kartan över den kända världen?::Arkimedes##Anaximander##Euklid##Christopher Columbus::1", "Vad kallas en konsuls rätt att avslå varandras beslut i det antika Rom?::Beskatta##Veto##Övervaka##Bekräfta::1", "Ungefär hur gammal är den kinesiska muren?::1000 år##2000 år##3000 år##5000 år::2"]);
     addQuestions(
         result, //
         language, //
@@ -2715,7 +2715,7 @@ class HistoryAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat3, //
         questionConfig.diff3, //
-        ["Vilket djur från stenåldern är utrotat nu?::gepard##mammut##antilop##Myrslok::1", "Vilket skede kom före stenåldern?::Mud Age##Dinosaurieåldern##Istid##Big Bang::2", "Vad är en hominid?::ett verktyg##en tidig förfader till människor##en samling gamla ben##en fiskkrok::1", "Människor migrerade runt i världen från vilken kontinent?::Afrika##Asien##Australien##Europa::0", "Vilket av följande definierar Homo erectus?::tänkande människa##modern man##vis man##upprätt man::3"]);
+        ["Vilket djur från stenåldern är utrotat nu?::gepard##mammut##antilop##Myrslok::1", "Vilket skede kom före stenåldern?::Lera ålder##Dinosaurieåldern##Istid##Big Bang::2", "Vad är en hominid?::ett verktyg##en tidig förfader till människor##en samling gamla ben##en fiskkrok::1", "Människor migrerade runt i världen från vilken kontinent?::Afrika##Asien##Australien##Europa::0", "Vilket av följande definierar Homo erectus?::tänkande människa##modern man##vis man##upprätt man::3"]);
   }void addTH(Map<Language, Map<CategoryDifficulty, List<Question>>> result,
       HistoryGameQuestionConfig questionConfig) {
     var language = Language.th;
@@ -2742,13 +2742,13 @@ class HistoryAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat3, //
         questionConfig.diff0, //
-        ["ประเทศใดเป็นประเทศแรกที่ไปถึงขั้วโลกใต้::นอร์เวย์##ประเทศอังกฤษ##เดนมาร์ก##รัสเซีย::0", "ประเทศในยุโรปใดมีอาณาจักรที่ใหญ่ที่สุดในประวัติศาสตร์::รัสเซีย##ประเทศอังกฤษ##อิตาลี##สเปน::1", "ประเทศใดในแอฟริกาเหล่านี้ถูกควบคุมโดยเยอรมนี::ประเทศเบนิน##แองโกลา##จิบูตี##ประเทศแทนซาเนีย::3", "ใครคือซาร์คนแรกของรัสเซีย?::พระเจ้าซาร์นิโคลัสที่ 1##พระเจ้าซาร์อเล็กซานเดอร์ที่ 2##ซาร์อีวานผู้น่ากลัว##พระเจ้าซาร์ปอลที่ 1::2", "อะไรคือการต่อสู้ที่ยุติสงครามนโปเลียน?::การต่อสู้ของเวียนนา##การต่อสู้ของ Valmy##การต่อสู้ของ Verdun##การต่อสู้ของวอเตอร์ลู::3", "ประเทศใดต่อไปนี้เป็นส่วนหนึ่งของสหภาพโซเวียต::สโลวะเกีย##ประเทศมองโกเลีย##อัฟกานิสถาน##อาเซอร์ไบจาน::3", "ประเทศใดเหล่านี้ไม่เคยถูกควบคุมโดยสหราชอาณาจักร::ปากีสถาน##อัฟกานิสถาน##ประเทศไนจีเรีย##จอร์แดน::1", "ประเทศใดในยุโรปที่ถูกตำหนิสำหรับสงครามโลกครั้งที่ 1?::รัสเซีย##ประเทศอังกฤษ##ประเทศเยอรมัน::2", "ประเทศใดเป็นกลางในตอนต้นของสงครามโลกครั้งที่ 2?::ฝรั่งเศส##สหรัฐ##ประเทศเยอรมัน##โปแลนด์::1", "ผู้นำต่อต้านการแบ่งแยกสีผิวชาวแอฟริกันคนใดที่ได้รับการปล่อยตัวจากคุกในปี 1990 หลังจากผ่านไปกว่า 27 ปี::Idi Amin##เนลสัน แมนเดลา##เฟอร์ดินานด์ มาร์กอส##โจเซฟ แอตกินสัน::1", "ประธานาธิบดีสหรัฐคนใดได้รับเลือกให้ดำรงตำแหน่งสี่ครั้ง?::จอร์จวอชิงตัน##เจอรัลด์ฟอร์ด##แฟรงคลิน ดี รูสเวลต์##อับราฮัมลินคอล์น::2"]);
+        ["ประเทศใดเป็นประเทศแรกที่ไปถึงขั้วโลกใต้::นอร์เวย์##ประเทศอังกฤษ##เดนมาร์ก##รัสเซีย::0", "ประเทศในยุโรปใดมีอาณาจักรที่ใหญ่ที่สุดในประวัติศาสตร์::รัสเซีย##ประเทศอังกฤษ##อิตาลี##สเปน::1", "ประเทศใดในแอฟริกาเหล่านี้ถูกควบคุมโดยเยอรมนี::ประเทศเบนิน##แองโกลา##จิบูตี##ประเทศแทนซาเนีย::3", "ใครคือซาร์คนแรกของรัสเซีย?::พระเจ้าซาร์นิโคลัสที่ 1##พระเจ้าซาร์อเล็กซานเดอร์ที่ 2##ซาร์อีวานผู้น่ากลัว##พระเจ้าซาร์ปอลที่ 1::2", "อะไรคือการต่อสู้ที่ยุติสงครามนโปเลียน?::การต่อสู้ของเวียนนา##การต่อสู้ของ Valmy##การต่อสู้ของ Verdun##การต่อสู้ของวอเตอร์ลู::3", "ประเทศใดต่อไปนี้เป็นส่วนหนึ่งของสหภาพโซเวียต::สโลวะเกีย##ประเทศมองโกเลีย##อัฟกานิสถาน##อาเซอร์ไบจาน::3", "ประเทศใดเหล่านี้ไม่เคยถูกควบคุมโดยสหราชอาณาจักร::ปากีสถาน##อัฟกานิสถาน##ประเทศไนจีเรีย##จอร์แดน::1", "ประเทศใดในยุโรปที่ถูกตำหนิสำหรับสงครามโลกครั้งที่ 1?::รัสเซีย##ประเทศอังกฤษ##ประเทศเยอรมัน::2", "ประเทศใดเป็นกลางในตอนต้นของสงครามโลกครั้งที่ 2?::ฝรั่งเศส##สหรัฐ##ประเทศเยอรมัน##โปแลนด์::1", "ผู้นำต่อต้านการแบ่งแยกสีผิวชาวแอฟริกันคนใดที่ได้รับการปล่อยตัวจากคุกในปี 1990 หลังจากผ่านไปกว่า 27 ปี::อีดี อามิน##เนลสัน แมนเดลา##เฟอร์ดินานด์ มาร์กอส##โจเซฟ แอตกินสัน::1", "ประธานาธิบดีสหรัฐคนใดได้รับเลือกให้ดำรงตำแหน่งสี่ครั้ง?::จอร์จวอชิงตัน##เจอรัลด์ฟอร์ด##แฟรงคลิน ดี รูสเวลต์##อับราฮัมลินคอล์น::2"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat4, //
         questionConfig.diff0, //
-        [":นโปเลียน โบนาปาร์ต::", ":วิลเลี่ยมเชคสเปียร์::", ":อับราฮัมลินคอล์น::", ":จอร์จวอชิงตัน::", ":Charles Darwin::", ":ไอแซกนิวตัน::"]);
+        [":นโปเลียน โบนาปาร์ต::", ":วิลเลี่ยมเชคสเปียร์::", ":อับราฮัมลินคอล์น::", ":จอร์จวอชิงตัน::", ":ชาลส์ ดาร์วิน::", ":ไอแซกนิวตัน::"]);
     addQuestions(
         result, //
         language, //
@@ -2772,7 +2772,7 @@ class HistoryAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat3, //
         questionConfig.diff1, //
-        ["สงครามครูเสดครั้งแรกมีเป้าหมายในการยึดเมืองใด::เยรูซาเลม##ไคโร##เมกกะ##โรม::0", "Magna Carta ทำอะไรสำเร็จ?::มันจำกัดอำนาจของขุนนาง##มันจำกัดพลังของอัศวิน##มันเพิ่มพลังของชาวนาและข้ารับใช้##มันจำกัดอำนาจของพระมหากษัตริย์::3", "กาฬโรคแพร่กระจายได้อย่างไร?::น้ำไม่ดี##หมัดจากหนู##อากาศเสีย##เถ้าภูเขาไฟ::1", "เมืองนี้อยู่บนทางแยกระหว่างยุโรปและตะวันออกกลาง::ไคโร##คอนสแตนติโนเปิล##ปารีส##มอสโก::1", "อะไรคือสาเหตุของสงครามครูเสด?::เพื่อปลดปล่อยดินแดนศักดิ์สิทธิ์แห่งเยรูซาเลมจากชาวมุสลิม##กบฏชาวนา##กาฬโรคแพร่กระจายไปทั่วยุโรป##สงครามการค้าบนเส้นทางสายไหม::0", "ผู้เผยพระวจนะศักดิ์สิทธิ์ของศาสนามุสลิม?::พระเยซูคริสต์##พระพุทธเจ้า##มูฮัมหมัด::2", "โครงสร้างทางสังคมของยุคกลาง::ระบบวรรณะ##ศักดินา##Manorism::1"]);
+        ["สงครามครูเสดครั้งแรกมีเป้าหมายในการยึดเมืองใด::เยรูซาเลม##ไคโร##เมกกะ##โรม::0", "มหากฎบัตร ทำอะไรสำเร็จ?::มันจำกัดอำนาจของขุนนาง##มันจำกัดพลังของอัศวิน##มันเพิ่มพลังของชาวนาและข้ารับใช้##มันจำกัดอำนาจของพระมหากษัตริย์::3", "กาฬโรคแพร่กระจายได้อย่างไร?::น้ำไม่ดี##หมัดจากหนู##อากาศเสีย##เถ้าภูเขาไฟ::1", "เมืองนี้อยู่บนทางแยกระหว่างยุโรปและตะวันออกกลาง::ไคโร##คอนสแตนติโนเปิล##ปารีส##มอสโก::1", "อะไรคือสาเหตุของสงครามครูเสด?::เพื่อปลดปล่อยดินแดนศักดิ์สิทธิ์แห่งเยรูซาเลมจากชาวมุสลิม##กบฏชาวนา##กาฬโรคแพร่กระจายไปทั่วยุโรป##สงครามการค้าบนเส้นทางสายไหม::0", "ผู้เผยพระวจนะศักดิ์สิทธิ์ของศาสนามุสลิม?::พระเยซูคริสต์##พระพุทธเจ้า##มูฮัมหมัด::2", "โครงสร้างทางสังคมของยุคกลาง::ระบบวรรณะ##ศักดินา##Manorism::1"]);
     addQuestions(
         result, //
         language, //
@@ -2820,13 +2820,13 @@ class HistoryAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat2, //
         questionConfig.diff3, //
-        ["Göbekli Tepe:ประเทศตุรกี::1", "ถ้ำลาสโกซ์:ฝรั่งเศส::1", "สุเมเรียน:อิรัก::1", "สโตนเฮนจ์:ประเทศอังกฤษ::1"]);
+        ["โกเบคลี เทเป:ประเทศตุรกี::1", "ถ้ำลาสโกซ์:ฝรั่งเศส::1", "สุเมเรียน:อิรัก::1", "สโตนเฮนจ์:ประเทศอังกฤษ::1"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat3, //
         questionConfig.diff3, //
-        ["สัตว์อะไรจากยุคหินที่สูญพันธุ์ไปแล้ว?::เสือชีตาห์##แมมมอธ##ละมั่ง##ตัวกินมด::1", "ยุคไหนมาก่อนยุคหิน?::ยุคโคลน##ยุคไดโนเสาร์##ยุคน้ำแข็ง##บิ๊กแบง::2", "โฮมินิดคืออะไร?::เครื่องมือ##บรรพบุรุษของมนุษย์ยุคแรก##ของสะสมกระดูกโบราณ##เบ็ดตกปลา::1", "มนุษย์อพยพมาจากทวีปใดทั่วโลก?::แอฟริกา##เอเชีย##ออสเตรเลีย##ยุโรป::0", "ข้อใดต่อไปนี้กำหนด Homo erectus::คนคิด##ผู้ชายสมัยใหม่##คนฉลาด##คนซื่อตรง::3"]);
+        ["สัตว์อะไรจากยุคหินที่สูญพันธุ์ไปแล้ว?::เสือชีตาห์##แมมมอธ##ละมั่ง##ตัวกินมด::1", "ยุคไหนมาก่อนยุคหิน?::ยุคโคลน##ยุคไดโนเสาร์##ยุคน้ำแข็ง##บิ๊กแบง::2", "โฮมินิดคืออะไร?::เครื่องมือ##บรรพบุรุษของมนุษย์ยุคแรก##ของสะสมกระดูกโบราณ##เบ็ดตกปลา::1", "มนุษย์อพยพมาจากทวีปใดทั่วโลก?::แอฟริกา##เอเชีย##ออสเตรเลีย##ยุโรป::0", "ข้อใดต่อไปนี้กำหนด โฮโม อีเร็กตัส::คนคิด##ผู้ชายสมัยใหม่##คนฉลาด##มนุษย์ที่ยืนตรง::3"]);
   }void addTR(Map<Language, Map<CategoryDifficulty, List<Question>>> result,
       HistoryGameQuestionConfig questionConfig) {
     var language = Language.tr;
@@ -2847,13 +2847,13 @@ class HistoryAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat2, //
         questionConfig.diff0, //
-        ["Waterloo Savaşı:Belçika:2,3,5:0", "Gettysburg Savaşı:Amerika Birleşik Devletleri:5,6,7:0", "Stalingrad Kuşatması:Rusya:6,8,9:0", "Normandiya&#39;nın işgali:Fransa:5,6,8:0", "Okinawa Savaşı:Japonya:1,8,9:0", "Viyana Savaşı:Avusturya:6,0,3:0", "Berlin Duvarı&#39;nın Yıkılışı:Almanya:0,5,3:0", "Versay antlaşması:Fransa:1,0,5:0", "Arşidük Franz Ferdinand suikastı:Bosna Hersek:1,5,6:0", "Çernobil felaketi:Ukrayna:1,2,8:0"]);
+        ["Waterloo Savaşı:Belçika:2,3,5:0", "Gettysburg Savaşı:Amerika Birleşik Devletleri:5,6,7:0", "Stalingrad Kuşatması:Rusya:6,8,9:0", "Normandiya'nın işgali:Fransa:5,6,8:0", "Okinawa Savaşı:Japonya:1,8,9:0", "Viyana Savaşı:Avusturya:6,0,3:0", "Berlin Duvarı'nın Yıkılışı:Almanya:0,5,3:0", "Versay antlaşması:Fransa:1,0,5:0", "Arşidük Franz Ferdinand suikastı:Bosna Hersek:1,5,6:0", "Çernobil felaketi:Ukrayna:1,2,8:0"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat3, //
         questionConfig.diff0, //
-        ["Güney kutbuna ilk ulaşan ülke hangisidir?::Norveç##Birleşik Krallık##Danimarka##Rusya::0", "Hangi Avrupa ülkesi tarihteki en büyük imparatorluğa sahipti?::Rusya##Birleşik Krallık##İtalya##ispanya::1", "Aşağıdaki Afrika ülkelerinden hangisi Almanya&#39;nın kontrolündeydi?::Benin##Angora##Cibuti##Tanzanya::3", "Rusya&#39;nın ilk Çarı kimdi?::Çar Nicholas I##Çar İskender II##Korkunç Çar İvan##Çar Paul I::2", "Napolyon Savaşlarını sona erdiren savaş hangisidir?::Viyana Savaşı##Valmy Savaşı##Verdun Savaşı##Waterloo Savaşı::3", "Bu ülkelerden hangisi SSCB&#39;nin bir parçasıydı?::Slovakya##Moğolistan##Afganistan##Azerbeycan::3", "Aşağıdaki ülkelerden hangisi Birleşik Krallık tarafından hiçbir zaman kontrol edilmemiştir?::Pakistan##Afganistan##Nijerya##Ürdün::1", "Birinci Dünya Savaşı&#39;ndan hangi Avrupa ülkesi sorumlu tutuldu?::Rusya##Birleşik Krallık##Almanya::2", "2. dünya savaşının başında hangi ülke tarafsızdı?::Fransa##Amerika Birleşik Devletleri##Almanya##Polonya::1", "Hangi Afrikalı apartheid karşıtı lider, 27 yıldan fazla bir süre sonra 1990&#39;da hapisten çıktı?::İdi Amin##Nelson Mandela##Ferdinand Marcos##Joseph Atkinson::1", "Hangi ABD başkanı dört kez göreve seçildi?::George Washington##Gerald Ford&#39;un##Franklin D. Roosevelt##Abraham Lincoln::2"]);
+        ["Güney kutbuna ilk ulaşan ülke hangisidir?::Norveç##Birleşik Krallık##Danimarka##Rusya::0", "Hangi Avrupa ülkesi tarihteki en büyük imparatorluğa sahipti?::Rusya##Birleşik Krallık##İtalya##ispanya::1", "Aşağıdaki Afrika ülkelerinden hangisi Almanya'nın kontrolündeydi?::Benin##Angora##Cibuti##Tanzanya::3", "Rusya'nın ilk Çarı kimdi?::Çar Nicholas I##Çar İskender II##Korkunç Çar İvan##Çar Paul I::2", "Napolyon Savaşlarını sona erdiren savaş hangisidir?::Viyana Savaşı##Valmy Savaşı##Verdun Savaşı##Waterloo Savaşı::3", "Bu ülkelerden hangisi SSCB'nin bir parçasıydı?::Slovakya##Moğolistan##Afganistan##Azerbeycan::3", "Aşağıdaki ülkelerden hangisi Birleşik Krallık tarafından hiçbir zaman kontrol edilmemiştir?::Pakistan##Afganistan##Nijerya##Ürdün::1", "Birinci Dünya Savaşı'ndan hangi Avrupa ülkesi sorumlu tutuldu?::Rusya##Birleşik Krallık##Almanya::2", "2. dünya savaşının başında hangi ülke tarafsızdı?::Fransa##Amerika Birleşik Devletleri##Almanya##Polonya::1", "Hangi Afrikalı apartheid karşıtı lider, 27 yıldan fazla bir süre sonra 1990'da hapisten çıktı?::İdi Amin##Nelson Mandela##Ferdinand Marcos##Joseph Atkinson::1", "Hangi ABD başkanı dört kez göreve seçildi?::George Washington##Gerald Ford'un##Franklin D. Roosevelt##Abraham Lincoln::2"]);
     addQuestions(
         result, //
         language, //
@@ -2877,13 +2877,13 @@ class HistoryAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat2, //
         questionConfig.diff1, //
-        ["Orleans Kuşatması:Fransa:1,2,6:0", "Konstantinopolis&#39;in Düşüşü:Türkiye:0,2,7:0", "Hastings Savaşı:Birleşik Krallık:0,1,5:0", "maçu picchu:Peru:4,5,6:1", "Bagan:Myanmar:3,5,7:1", "Angkor:Kamboçya:3,4,6:1", "taç Mahal:Hindistan:4,5,7:1"]);
+        ["Orleans Kuşatması:Fransa:1,2,6:0", "Konstantinopolis'in Düşüşü:Türkiye:0,2,7:0", "Hastings Savaşı:Birleşik Krallık:0,1,5:0", "maçu picchu:Peru:4,5,6:1", "Bagan:Myanmar:3,5,7:1", "Angkor:Kamboçya:3,4,6:1", "taç Mahal:Hindistan:4,5,7:1"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat3, //
         questionConfig.diff1, //
-        ["Birinci Haçlı Seferinin amacı hangi şehri ele geçirmekti?::Kudüs##Kahire##Mekke##Roma::0", "Magna Carta neyi başardı?::lordların gücünü sınırladı##şövalyelerin gücünü sınırladı##köylülerin ve serflerin gücünü artırdı##hükümdarın gücünü sınırladı::3", "Hıyarcıklı Veba nasıl yayıldı?::Kötü su##Farelerden gelen pireler##Kirli hava##volkan külü::1", "Bu şehir, Avrupa ile Orta Doğu arasında bir yol ayrımındaydı.::Kahire##İstanbul##Paris##Moskova::1", "Haçlı Seferlerinin nedeni neydi?::Kudüs&#39;ün kutsal topraklarını Müslümanlardan kurtarmak için##Köylülerin isyanı##Avrupa&#39;ya yayılan Kara Ölüm##İpek Yolu boyunca ticaret savaşları::0", "İslam dininin kutsal peygamberi?::İsa Mesih##Buda##Muhammed::2", "Ortaçağ&#39;ın sosyal yapısı::Kast sistemi##feodalizm##malikane::1"]);
+        ["Birinci Haçlı Seferinin amacı hangi şehri ele geçirmekti?::Kudüs##Kahire##Mekke##Roma::0", "Magna Carta neyi başardı?::lordların gücünü sınırladı##şövalyelerin gücünü sınırladı##köylülerin ve serflerin gücünü artırdı##hükümdarın gücünü sınırladı::3", "Hıyarcıklı Veba nasıl yayıldı?::Kötü su##Farelerden gelen pireler##Kirli hava##volkan külü::1", "Bu şehir, Avrupa ile Orta Doğu arasında bir yol ayrımındaydı.::Kahire##İstanbul##Paris##Moskova::1", "Haçlı Seferlerinin nedeni neydi?::Kudüs'ün kutsal topraklarını Müslümanlardan kurtarmak için##Köylülerin isyanı##Avrupa'ya yayılan Kara Ölüm##İpek Yolu boyunca ticaret savaşları::0", "İslam dininin kutsal peygamberi?::İsa Mesih##Buda##Muhammed::2", "Ortaçağ'ın sosyal yapısı::Kast sistemi##feodalizm##malikane::1"]);
     addQuestions(
         result, //
         language, //
@@ -2913,7 +2913,7 @@ class HistoryAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat3, //
         questionConfig.diff2, //
-        ["Eski Mısır&#39;ın ilk başkenti neresiydi?::Memphis##Teb##İskenderiye##Baltimore::0", "Antik Yunan uygarlığı hangi adada ortaya çıkmıştır?::Samos##Girit##olimpiya##Rodos::1", "Antik Dünyanın Yedi Harikasından kaç tanesi hala var?::3##2##1##0::2", "Bilinen dünyanın ilk haritasını yapan kişi kimdir?::Arşimet##Anaksimandros##Öklid##Kristof Kolomb::1", "Antik Roma&#39;da konsolosların birbirlerinin kararlarını reddetme hakkına ne denir?::Vergi##Veto##nezaret##onayla::1", "Çin Seddi yaklaşık olarak kaç yaşındadır?::1000 yıl##2000 yıl##3000 yıl##5000 yıl::2"]);
+        ["Eski Mısır'ın ilk başkenti neresiydi?::Memfis##Teb##İskenderiye##Baltimore::0", "Antik Yunan uygarlığı hangi adada ortaya çıkmıştır?::Samos##Girit##olimpiya##Rodos::1", "Antik Dünyanın Yedi Harikasından kaç tanesi hala var?::3##2##1##0::2", "Bilinen dünyanın ilk haritasını yapan kişi kimdir?::Arşimet##Anaksimandros##Öklid##Kristof Kolomb::1", "Antik Roma'da konsolosların birbirlerinin kararlarını reddetme hakkına ne denir?::Vergi##Veto##nezaret##onayla::1", "Çin Seddi yaklaşık olarak kaç yaşındadır?::1000 yıl##2000 yıl##3000 yıl##5000 yıl::2"]);
     addQuestions(
         result, //
         language, //
@@ -2931,13 +2931,13 @@ class HistoryAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat2, //
         questionConfig.diff3, //
-        ["Göbeklitepe:Türkiye::1", "Lascaux mağarası:Fransa::1", "Sümer:Irak::1", "Stonehenge:Birleşik Krallık::1"]);
+        ["Göbeklitepe:Türkiye::1", "Lascaux mağarası:Fransa::1", "Sümerler:Irak::1", "Stonehenge:Birleşik Krallık::1"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat3, //
         questionConfig.diff3, //
-        ["Taş devrinden hangi hayvanın soyu şimdi tükendi?::çita##mamut##antilop##karıncayiyen::1", "Taş devrinden önce hangi aşama geldi?::Çamur Çağı##dinozor yaşı##Buz Devri##Büyük patlama::2", "hominid nedir?::bir araç##insanların erken atası##antik kemikler topluluğu##bir olta::1", "İnsanlar dünyaya hangi kıtadan göç etmiştir?::Afrika##Asya##Avustralya##Avrupa::0", "Aşağıdakilerden hangisi Homo erectus&#39;u tanımlar?::düşünen Adam##modern adam##Bilge Adam##dürüst adam::3"]);
+        ["Taş devrinden hangi hayvanın soyu şimdi tükendi?::çita##mamut##antilop##karıncayiyen::1", "Taş devrinden önce hangi aşama geldi?::Çamur Çağı##dinozor yaşı##Buz Devri##Büyük patlama::2", "hominid nedir?::bir araç##insanların erken atası##antik kemikler topluluğu##bir olta::1", "İnsanlar dünyaya hangi kıtadan göç etmiştir?::Afrika##Asya##Avustralya##Avrupa::0", "Aşağıdakilerden hangisi Homo erectus'u tanımlar?::düşünen Adam##modern adam##Bilge Adam##dürüst adam::3"]);
   }void addUK(Map<Language, Map<CategoryDifficulty, List<Question>>> result,
       HistoryGameQuestionConfig questionConfig) {
     var language = Language.uk;
@@ -3048,7 +3048,7 @@ class HistoryAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat3, //
         questionConfig.diff3, //
-        ["Яка тварина кам’яного віку зараз вимерла?::гепард##мамонта##антилопа##мурахоїд::1", "Який етап був до кам’яного віку?::Вік грязі##Вік динозаврів##Льодовиковий період##Великий вибух::2", "Що таке гомінід?::інструмент##ранній предок людей##колекція стародавніх кісток##рибальський гачок::1", "З якого континенту люди мігрували по всьому світу?::Африка##Азії##Австралія##Європа::0", "Що з наведеного нижче визначає Homo erectus?::мисляча людина##сучасна людина##мудра людина##прямий чоловік::3"]);
+        ["Яка тварина кам’яного віку зараз вимерла?::гепард##мамонта##антилопа##мурахоїд::1", "Який етап був до кам’яного віку?::Вік грязі##Вік динозаврів##Льодовиковий період##Великий вибух::2", "Що таке гомінід?::інструмент##ранній предок людей##колекція стародавніх кісток##рибальський гачок::1", "З якого континенту люди мігрували по всьому світу?::Африка##Азії##Австралія##Європа::0", "Що з наведеного нижче визначає Людина прямоходяча?::мисляча людина##сучасна людина##мудра людина##стоїть людина::3"]);
   }void addVI(Map<Language, Map<CategoryDifficulty, List<Question>>> result,
       HistoryGameQuestionConfig questionConfig) {
     var language = Language.vi;
@@ -3075,7 +3075,7 @@ class HistoryAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat3, //
         questionConfig.diff0, //
-        ["Nước nào đầu tiên đến cực nam?::Na Uy##Vương quốc Anh##Đan mạch##Nga::0", "Quốc gia Châu Âu nào có đế chế lớn nhất trong lịch sử?::Nga##Vương quốc Anh##Nước Ý##Tây Ban Nha::1", "Đức nào trong số các quốc gia châu Phi này do Đức kiểm soát?::Bénin##Ăng-gô##Djibouti##Tanzania::3", "Sa hoàng đầu tiên của Nga là ai?::Sa hoàng Nicholas I##Sa hoàng Alexander II##Sa hoàng Ivan Bạo chúa##Sa hoàng Paul I::2", "Trận chiến kết thúc Chiến tranh Napoléon là gì?::Trận chiến Vienna##Trận chiến của Valmy##Trận Verdun##Trận Waterloo::3", "Quốc gia nào sau đây là một phần của Liên Xô?::Slovakia##Mông Cổ##Afghanistan##Ailen::3", "Quốc gia nào trong số những quốc gia này chưa từng bị Vương quốc Anh kiểm soát?::Pakistan##Afghanistan##Nigeria##Jordan::1", "Quốc gia châu Âu nào bị đổ lỗi cho Thế chiến 1?::Nga##Vương quốc Anh##nước Đức::2", "Nước nào trung lập vào đầu Thế chiến 2?::Pháp##Hoa Kỳ##nước Đức##Ba Lan::1", "Nhà lãnh đạo chống chủ nghĩa phân biệt chủng tộc Châu Phi nào đã được ra tù vào năm 1990, sau hơn 27 năm?::Idi Amin##Nelson Mandela##Ferdinand Marcos##Joseph Atkinson::1", "Tổng thống Mỹ nào đã được bầu vào chức vụ bốn lần?::George Washington##Gerald Ford##Franklin D Roosevelt##Abraham Lincoln::2"]);
+        ["Nước nào đầu tiên đến cực nam?::Na Uy##Vương quốc Anh##Đan mạch##Nga::0", "Quốc gia Châu Âu nào có đế chế lớn nhất trong lịch sử?::Nga##Vương quốc Anh##Nước Ý##Tây Ban Nha::1", "Đức nào trong số các quốc gia châu Phi này do Đức kiểm soát?::Bénin##Ăng-gô##Djibouti##Tanzania::3", "Sa hoàng đầu tiên của Nga là ai?::Sa hoàng Nicholas I##Sa hoàng Alexander II##Sa hoàng Ivan Bạo chúa##Sa hoàng Paul I::2", "Trận chiến kết thúc Chiến tranh Napoléon là gì?::Trận chiến Vienna##Trận chiến của Valmy##Trận Verdun##Trận Waterloo::3", "Quốc gia nào sau đây là một phần của Liên Xô?::Slovakia##Mông Cổ##Afghanistan##Ailen::3", "Quốc gia nào trong số những quốc gia này chưa từng bị Vương quốc Anh kiểm soát?::Pakistan##Afghanistan##Nigeria##Jordan::1", "Quốc gia châu Âu nào bị đổ lỗi cho Thế chiến 1?::Nga##Vương quốc Anh##nước Đức::2", "Nước nào trung lập vào đầu Thế chiến 2?::Pháp##Hoa Kỳ##nước Đức##Ba Lan::1", "Nhà lãnh đạo chống chủ nghĩa phân biệt chủng tộc Châu Phi nào đã được ra tù vào năm 1990, sau hơn 27 năm?::Idi Amin##Nelson Mandela##Ferdinand Marcos##Joseph Atkinson::1", "Tổng thống Mỹ nào đã được bầu vào chức vụ bốn lần?::George Washington##Gerald Ford##Franklin D. Roosevelt##Abraham Lincoln::2"]);
     addQuestions(
         result, //
         language, //
@@ -3099,7 +3099,7 @@ class HistoryAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat2, //
         questionConfig.diff1, //
-        ["Cuộc vây hãm Orleans:Pháp:1,2,6:0", "Sự sụp đổ của Constantinople:Thổ Nhĩ Kỳ:0,2,7:0", "Trận chiến Hastings:Vương quốc Anh:0,1,5:0", "Machu picchu:Peru:4,5,6:1", "Bagan:Myanmar:3,5,7:1", "Angkor:Campuchia:3,4,6:1", "Taj Mahal:Ấn Độ:4,5,7:1"]);
+        ["Cuộc vây hãm Orleans:Pháp:1,2,6:0", "Sự sụp đổ của Constantinopolis:Thổ Nhĩ Kỳ:0,2,7:0", "Trận chiến Hastings:Vương quốc Anh:0,1,5:0", "Machu picchu:Peru:4,5,6:1", "Bagan:Myanmar:3,5,7:1", "Angkor:Campuchia:3,4,6:1", "Taj Mahal:Ấn Độ:4,5,7:1"]);
     addQuestions(
         result, //
         language, //
@@ -3186,7 +3186,7 @@ class HistoryAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat3, //
         questionConfig.diff0, //
-        ["哪个国家是第一个到达南极的国家？::挪威##英国##丹麦##俄国::0", "欧洲哪个国家拥有历史上最大的帝国？::俄国##英国##意大利##西班牙::1", "这些非洲国家中哪一个被德国控制？::贝宁##安哥拉##吉布地##坦桑尼亚::3", "谁是俄罗斯的第一位沙皇？::沙皇尼古拉一世##沙皇亚历山大二世##沙皇伊凡雷帝##沙皇保罗一世::2", "结束拿破仑战争的战役是什么？::维也纳之战##瓦尔米之战##凡尔登战役##滑铁卢战役::3", "这些国家中哪些是苏联的一部分？::斯洛伐克##蒙古##阿富汗##阿塞拜疆::3", "以下哪个国家从未受英国控制？::巴基斯坦##阿富汗##奈及利亚##约旦::1", "第一次世界大战的罪魁祸首是哪个欧洲国家？::俄国##英国##德国::2", "第二次世界大战开始时哪个国家是中立的？::法国##美国##德国##波兰::1", "哪个非洲反种族隔离领导人在 1990 年被释放超过 27 年？::伊迪·阿明##纳尔逊·曼德拉##费迪南德·马科斯##约瑟夫·阿特金森::1", "Which US president was elected to office four times?::乔治华盛顿##杰拉尔德福特##富兰克林·D·罗斯福##亚伯拉罕·林肯::2"]);
+        ["哪个国家是第一个到达南极的国家？::挪威##英国##丹麦##俄国::0", "欧洲哪个国家拥有历史上最大的帝国？::俄国##英国##意大利##西班牙::1", "这些非洲国家中哪一个被德国控制？::贝宁##安哥拉##吉布地##坦桑尼亚::3", "谁是俄罗斯的第一位沙皇？::沙皇尼古拉一世##沙皇亚历山大二世##沙皇伊凡雷帝##沙皇保罗一世::2", "结束拿破仑战争的战役是什么？::维也纳之战##瓦尔米之战##凡尔登战役##滑铁卢战役::3", "这些国家中哪些是苏联的一部分？::斯洛伐克##蒙古##阿富汗##阿塞拜疆::3", "以下哪个国家从未受英国控制？::巴基斯坦##阿富汗##奈及利亚##约旦::1", "第一次世界大战的罪魁祸首是哪个欧洲国家？::俄国##英国##德国::2", "第二次世界大战开始时哪个国家是中立的？::法国##美国##德国##波兰::1", "哪个非洲反种族隔离领导人在 1990 年被释放超过 27 年？::伊迪·阿明##纳尔逊·曼德拉##费迪南德·马科斯##约瑟夫·阿特金森::1", "哪位美国总统曾四次当选？::乔治华盛顿##杰拉尔德福特##富兰克林·D·罗斯福##亚伯拉罕·林肯::2"]);
     addQuestions(
         result, //
         language, //
@@ -3270,6 +3270,6 @@ class HistoryAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat3, //
         questionConfig.diff3, //
-        ["石器时代的什么动物现在已经灭绝了？::猎豹##长毛象##羚羊##食蚁兽::1", "石器时代之前是什么阶段？::泥浆时代##恐龙时代##冰河世纪##大爆炸::2", "什么是人科？::一个工具##人类的早期祖先##古代骨头的集合##一个鱼钩::1", "人类从哪个大陆迁徙到世界各地？::非洲##亚洲##澳大利亚##欧洲::0", "以下哪个定义了直立人？::有思想的人##现代人##聪明人##正直的人::3"]);
+        ["石器时代的什么动物现在已经灭绝了？::猎豹##长毛象##羚羊##食蚁兽::1", "石器时代之前是什么阶段？::泥浆时代##恐龙时代##冰河世纪##大爆炸::2", "什么是人科？::一个工具##人类的早期祖先##古代骨头的集合##一个鱼钩::1", "人类从哪个大陆迁徙到世界各地？::非洲##亚洲##澳大利亚##欧洲::0", "以下哪个定义了直立人？::有思想的人##现代人##聪明人##直立猿人::3"]);
   }
 }

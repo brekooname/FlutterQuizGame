@@ -1,7 +1,7 @@
 import 'package:flutter_app_quiz_game/Game/GameType/game_question_config.dart';
 import 'package:flutter_app_quiz_game/Game/GameType/game_config.dart';
 import 'package:flutter_app_quiz_game/Game/Question/all_questions_service.dart';
-import 'package:flutter_app_quiz_game/Implementations/History/Questions/history_all_questions.dart';
+import 'package:flutter_app_quiz_game/Implementations/History/Questions/AllContent/history_all_questions.dart';
 import 'package:flutter_app_quiz_game/Lib/Constants/language.dart';
 
 import 'Constants/history_game_question_config.dart';

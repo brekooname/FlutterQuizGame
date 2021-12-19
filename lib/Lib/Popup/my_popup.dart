@@ -20,9 +20,11 @@ mixin MyPopup {
   ImageService imageService = ImageService();
   ButtonSize buttonSize = ButtonSize();
   ScreenDimensionsService screenDimensions = ScreenDimensionsService();
+  String? backgroundImageName;
 
-  void initPopup(BuildContext context) {
+  void initPopup({required BuildContext context, String? backgroundImageName}) {
     this.buildContext = context;
+    this.backgroundImageName = backgroundImageName;
     this._navigatorService = NavigatorService();
     this.width = screenDimensions.w(100);
   }
@@ -32,6 +34,20 @@ mixin MyPopup {
   AlertDialog createDialog(Widget mainContent,
       {VoidCallback? onCloseBtnClick}) {
     double margin = screenDimensions.h(3);
+
+    DecorationImage? decorationImage;
+    if (backgroundImageName != null) {
+      decorationImage = DecorationImage(
+        fit: BoxFit.cover,
+        colorFilter: ColorFilter.mode(
+            Colors.white.withOpacity(0.175), BlendMode.dstATop),
+        image: imageService.getMainAssetImage(
+          imageName: backgroundImageName!,
+          module: "popup",
+        ),
+      );
+    }
+
     return AlertDialog(
         contentPadding: EdgeInsets.all(0),
         insetPadding: EdgeInsets.all(0),
@@ -43,9 +59,11 @@ mixin MyPopup {
           children: [
             Container(
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(
-                        FontConfig.standardBorderRadius),
-                    color: Colors.white),
+                  borderRadius:
+                      BorderRadius.circular(FontConfig.standardBorderRadius),
+                  color: Colors.white,
+                  image: decorationImage,
+                ),
                 width: width,
                 child: Padding(
                   padding:
@@ -62,7 +80,7 @@ mixin MyPopup {
         ));
   }
 
-  void closePopup(BuildContext context){
+  void closePopup(BuildContext context) {
     _navigatorService.pop(context);
   }
 

@@ -107,9 +107,10 @@ mixin StandardScreen {
     Container bannerAdContainer;
     if (bannerAd != null) {
       bannerAdContainer = Container(
+        color: Colors.red,
         child: AdWidget(ad: bannerAd!),
         width: bannerAd?.size.width.toDouble(),
-        height: 55.0,
+        height: screenDimensions.h(MyApp.bannerAdHeightPercent),
         alignment: Alignment.center,
       );
     } else {
