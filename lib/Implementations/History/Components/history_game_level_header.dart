@@ -8,6 +8,7 @@ import 'package:flutter_app_quiz_game/Lib/Button/hint_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_back_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Constants/language.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/enum_extension.dart';
+import 'package:flutter_app_quiz_game/Lib/Popup/watch_rewarded_ad_popup.dart';
 import 'package:flutter_app_quiz_game/Lib/ScreenDimensions/screen_dimensions_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
@@ -23,6 +24,7 @@ class HistoryGameLevelHeader extends StatelessWidget {
   Question? question;
   VoidCallback hintButtonOnClick;
   VoidCallback onBackButtonRefreshMainScreenCallback;
+  WatchRewardedAdPopup? watchRewardedAdPopup;
   bool disableHintBtn;
   CampaignLevel campaignLevel;
   ScreenDimensionsService screenDimensions = ScreenDimensionsService();
@@ -31,6 +33,7 @@ class HistoryGameLevelHeader extends StatelessWidget {
       {required this.score,
       required this.campaignLevel,
       this.questionContainerHeight,
+      this.watchRewardedAdPopup,
       this.animateScore = false,
       this.animateQuestionText = false,
       this.disableHintBtn = false,
@@ -124,10 +127,11 @@ class HistoryGameLevelHeader extends StatelessWidget {
         onClick: this.hintButtonOnClick,
         availableHints: this.availableHints,
         disabled: disableHintBtn,
-        watchRewardedAdForHint: true,
+        watchRewardedAdForHint: MyApp.isExtraContentLocked,
+        watchRewardedAdPopup: watchRewardedAdPopup,
         showAvailableHintsText: true);
 
-    var scoreTextWidth = screenDimensions.w(40);
+    var scoreTextWidth = screenDimensions.w(60);
     var scoreText = MyText(
       maxLines: 1,
       width: scoreTextWidth,

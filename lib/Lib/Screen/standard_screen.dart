@@ -6,6 +6,7 @@ import 'package:flutter_app_quiz_game/Lib/Audio/my_audio_player.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/button_size.dart';
 import 'package:flutter_app_quiz_game/Lib/Image/image_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Localization/localization_service.dart';
+import 'package:flutter_app_quiz_game/Lib/Popup/watch_rewarded_ad_popup.dart';
 import 'package:flutter_app_quiz_game/Lib/ScreenDimensions/screen_dimensions_service.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -22,10 +23,18 @@ mixin StandardScreen {
   AdService adService = AdService();
   BannerAd? bannerAd;
   InterstitialAd? interstitialAd;
+  WatchRewardedAdPopup? watchRewardedAdPopup;
+  VoidCallback? onUserEarnedReward;
   bool isInterstitialAdLoaded = false;
+  bool screenInitialized = false;
 
-  void initScreen(BuildContext buildContext) {
-    initAds(buildContext);
+  void initScreen(BuildContext buildContext,
+      {VoidCallback? onUserEarnedReward}) {
+    if (!screenInitialized) {
+      screenInitialized = true;
+      this.onUserEarnedReward = onUserEarnedReward;
+      initAds(buildContext);
+    }
   }
 
   void disposeScreen() {
@@ -46,8 +55,12 @@ mixin StandardScreen {
         .formatTextWithParams(labelText, [param1, param2]);
   }
 
-  void showPopupAd(BuildContext buildContext, VoidCallback executeAfterClose) {
-    if (interstitialAd != null && isInterstitialAdLoaded) {
+  void showInterstitialAd(BuildContext buildContext, bool showPopupAd,
+      VoidCallback executeAfterClose) {
+    if (showPopupAd &&
+        MyApp.isExtraContentLocked &&
+        interstitialAd != null &&
+        isInterstitialAdLoaded) {
       interstitialAd!.show();
       interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
           onAdDismissedFullScreenContent: (interstitialAd) {
@@ -65,6 +78,10 @@ mixin StandardScreen {
 
   void initAds(BuildContext buildContext) {
     initInterstitialAd();
+    if (onUserEarnedReward != null) {
+      watchRewardedAdPopup =
+          WatchRewardedAdPopup(onUserEarnedReward: onUserEarnedReward!);
+    }
     if (!kIsWeb && MyApp.isExtraContentLocked) {
       bannerAd = BannerAd(
         adUnitId: adService.bannerAdUnitId,
@@ -112,14 +129,14 @@ mixin StandardScreen {
       bannerAdContainer = Container(
         color: Colors.red,
         width: bannerAd?.size.width.toDouble(),
-        height: MyApp.bannerAdHeightPx,
+        height: bannerAd?.size.height.toDouble(),
         alignment: Alignment.center,
       );
     } else if (bannerAd != null && MyApp.isExtraContentLocked) {
       bannerAdContainer = Container(
         child: AdWidget(ad: bannerAd!),
         width: bannerAd?.size.width.toDouble(),
-        height: MyApp.bannerAdHeightPx,
+        height: bannerAd?.size.height.toDouble(),
         alignment: Alignment.center,
       );
     } else {

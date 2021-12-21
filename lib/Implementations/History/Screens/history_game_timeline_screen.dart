@@ -27,6 +27,7 @@ import '../../../Lib/Font/font_config.dart';
 
 class HistoryGameTimelineScreen extends StatefulWidget
     with GameScreen<HistoryGameContext> {
+  static final int show_interstitial_ad_every_n_questions = 5;
   static final int default_questions_to_play_until_next_category = 3;
   int questionsToPlayUntilNextCategory =
       default_questions_to_play_until_next_category;
@@ -51,6 +52,7 @@ class HistoryGameTimelineScreen extends StatefulWidget
 
     currentQuestionInfo =
         gameContext.gameUser.getRandomQuestion(difficulty, category);
+    gameLocalStorage.incrementTotalPlayedQuestions();
   }
 
   @override
@@ -97,11 +99,6 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
 
   @override
   Widget build(BuildContext context) {
-    initScreen(context);
-
-    int zoomInZoomOutAnswerDuration = 500;
-    Size answerBtnSize = getButtonSizeForCat();
-
     var allQuestionsForConfig = widget.gameContext.gameUser
         .getAllQuestionsForConfig(widget.difficulty, widget.category);
     allQuestionsForConfig
@@ -114,6 +111,19 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
         .where((element) => element.status == QuestionInfoStatus.LOST)
         .map((e) => e.question.index)
         .toList();
+
+    VoidCallback? earnedReward;
+    if (widget.currentQuestionInfo != null) {
+      earnedReward = () {
+        onHintButtonClick(
+            levelsWon, levelsLost, widget.currentQuestionInfo!.question);
+      };
+    }
+    initScreen(context, onUserEarnedReward: earnedReward);
+
+    int zoomInZoomOutAnswerDuration = 500;
+    Size answerBtnSize = getButtonSizeForCat();
+
     for (QuestionInfo qi in allQuestionsForConfig) {
       var disabled = false;
 
@@ -230,6 +240,7 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
       campaignLevel: widget.campaignLevel,
       questionContainerHeight: screenDimensions.h(18),
       availableHints: widget.gameContext.amountAvailableHints,
+      watchRewardedAdPopup: watchRewardedAdPopup,
       question: shouldGoToNextGameScreen()
           ? mostRecentQ?.question
           : widget.currentQuestionInfo?.question,
@@ -260,10 +271,19 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
   }
 
   void goToNextGameScreen(BuildContext context) {
-    return HistoryGameScreenManager(buildContext: context).showNextGameScreen(
-        widget.campaignLevel,
-        widget.gameContext,
-        widget.refreshMainScreenCallback);
+    var playedQ = widget.gameLocalStorage.getTotalPlayedQuestions();
+    showInterstitialAd(
+        context,
+        playedQ > 0 &&
+            playedQ %
+                    HistoryGameTimelineScreen
+                        .show_interstitial_ad_every_n_questions ==
+                0, () {
+      HistoryGameScreenManager(buildContext: context).showNextGameScreen(
+          widget.campaignLevel,
+          widget.gameContext,
+          widget.refreshMainScreenCallback);
+    });
   }
 
   MyButton createAnswerButton(

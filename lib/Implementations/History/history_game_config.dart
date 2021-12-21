@@ -22,7 +22,7 @@ class HistoryGameConfig extends GameConfig {
   AllQuestionsService get allQuestionsService => HistoryAllQuestions();
 
   @override
-  String get extraContentProductId => "";
+  String get extraContentProductId => "extracontent.history";
 
   @override
   String getTitle(Language language) {

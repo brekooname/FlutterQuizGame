@@ -39,7 +39,6 @@ class MyApp extends StatefulWidget {
   //////
   //
 
-  static const double bannerAdHeightPx = 55;
   static const platform = MethodChannel('main.flutter');
   static late double screenWidth;
   static late double screenHeight;

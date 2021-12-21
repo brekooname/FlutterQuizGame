@@ -4,6 +4,7 @@ import 'package:flutter_app_quiz_game/Game/Game/campaign_level_service.dart';
 import 'package:flutter_app_quiz_game/Game/Game/game_context.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
+import 'package:flutter_app_quiz_game/Lib/Storage/game_local_storage.dart';
 
 mixin GameScreen<TGameContext extends GameContext> {
   TGameContext? _gameContext;
@@ -11,6 +12,7 @@ mixin GameScreen<TGameContext extends GameContext> {
   QuestionDifficulty? _difficulty;
   QuestionCategory? _category;
   VoidCallback? _refreshMainScreenCallback;
+  GameLocalStorage gameLocalStorage = GameLocalStorage();
 
   void initScreen(
       CampaignLevelService campaignLevelService,

@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 import '../../main.dart';
 
@@ -76,8 +77,7 @@ class ScreenDimensionsService {
   static double _getExternalDeviceHeight(BuildContext buildContext) {
     var height = MediaQuery.of(buildContext).size.height;
     if (MyApp.isExtraContentLocked) {
-      height =
-          height - MyApp.bannerAdHeightPx;
+      height = height - AdSize.banner.height;
     }
     return height;
   }

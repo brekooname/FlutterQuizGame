@@ -18,6 +18,8 @@ import 'package:flutter_app_quiz_game/Lib/Screen/game_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/standard_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
+import 'history_game_timeline_screen.dart';
+
 class HistoryGameQuestionScreen extends StatefulWidget
     with GameScreen<HistoryGameContext> {
   late HistoryLocalStorage historyLocalStorage;
@@ -41,6 +43,7 @@ class HistoryGameQuestionScreen extends StatefulWidget
 
     currentQuestionInfo =
         gameContext.gameUser.getRandomQuestion(difficulty, category);
+    gameLocalStorage.incrementTotalPlayedQuestions();
 
     if (currentQuestionInfo != null) {
       questionService = currentQuestionInfo!.question.questionService;
@@ -60,7 +63,13 @@ class HistoryGameQuestionScreenState extends State<HistoryGameQuestionScreen>
     with StandardScreen {
   @override
   Widget build(BuildContext context) {
-    initScreen(context);
+    VoidCallback? earnedReward;
+    if (widget.currentQuestionInfo != null) {
+      earnedReward = () {
+        onHintButtonClick(widget.currentQuestionInfo!);
+      };
+    }
+    initScreen(context, onUserEarnedReward: earnedReward);
 
     if (widget.currentQuestionInfo != null) {
       var currentQuestionInfo = widget.currentQuestionInfo!;
@@ -155,15 +164,8 @@ class HistoryGameQuestionScreenState extends State<HistoryGameQuestionScreen>
                 }
               });
 
-              Future.delayed(
-                  Duration(milliseconds: 1100),
-                  () => {
-                        HistoryGameScreenManager(buildContext: context)
-                            .showNextGameScreen(
-                                widget.campaignLevel,
-                                widget.gameContext,
-                                widget.refreshMainScreenCallback)
-                      });
+              Future.delayed(Duration(milliseconds: 1100),
+                  () => goToNextGameScreen(context));
             },
             buttonSkinConfig: ButtonSkinConfig(
                 borderColor: ColorUtil.colorDarken(btnBackgr, 0.1),
@@ -175,6 +177,22 @@ class HistoryGameQuestionScreenState extends State<HistoryGameQuestionScreen>
             )));
   }
 
+  void goToNextGameScreen(BuildContext context) {
+    var playedQ = widget.gameLocalStorage.getTotalPlayedQuestions();
+    showInterstitialAd(
+        context,
+        playedQ > 0 &&
+            playedQ %
+                HistoryGameTimelineScreen
+                    .show_interstitial_ad_every_n_questions ==
+                0, () {
+      HistoryGameScreenManager(buildContext: context).showNextGameScreen(
+          widget.campaignLevel,
+          widget.gameContext,
+          widget.refreshMainScreenCallback);
+    });
+  }
+
   HistoryGameLevelHeader createHeader(QuestionInfo questionInfo) {
     var header = HistoryGameLevelHeader(
       onBackButtonRefreshMainScreenCallback: widget.refreshMainScreenCallback,
@@ -183,6 +201,7 @@ class HistoryGameQuestionScreenState extends State<HistoryGameQuestionScreen>
       question: questionInfo.question,
       animateScore: widget.correctAnswerPressed,
       disableHintBtn: widget.hintDisabledPossibleAnswers.isNotEmpty,
+      watchRewardedAdPopup: watchRewardedAdPopup,
       score: formatTextWithOneParam(
           label.l_score_param0,
           widget.historyLocalStorage

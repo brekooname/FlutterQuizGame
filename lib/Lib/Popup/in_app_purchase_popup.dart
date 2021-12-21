@@ -144,33 +144,6 @@ class _InAppPurchaseState extends State<InAppPurchasePopup> with MyPopup {
     )));
   }
 
-  Widget _buildRestoreButton(
-      double btnWidth, double iconWidth, double paddingBetween) {
-    // if (_loading) {
-    //   return Container();
-    // }
-
-    return MyButton(
-      backgroundColor: Colors.lightBlueAccent,
-      width: btnWidth,
-      customContent: Row(children: [
-        SizedBox(width: paddingBetween),
-        imageService.getMainImage(
-          imageName: "btn_restore_purchase",
-          module: "buttons",
-          maxWidth: iconWidth,
-        ),
-        MyText(
-          text: label.l_restore_purchase,
-          maxLines: 2,
-          width: btnWidth - iconWidth - paddingBetween * 5,
-          alignmentInsideContainer: Alignment.center,
-        ),
-      ]),
-      onClick: () => widget._inAppPurchase.restorePurchases(),
-    );
-  }
-
   Future<void> initStoreInfo() async {
     if (kIsWeb) {
       setState(() {
@@ -248,6 +221,33 @@ class _InAppPurchaseState extends State<InAppPurchasePopup> with MyPopup {
     setState(() {
       _purchasePending = true;
     });
+  }
+
+  Widget _buildRestoreButton(
+      double btnWidth, double iconWidth, double paddingBetween) {
+    // if (_loading) {
+    //   return Container();
+    // }
+
+    return MyButton(
+      backgroundColor: Colors.lightBlueAccent,
+      width: btnWidth,
+      customContent: Row(children: [
+        SizedBox(width: paddingBetween),
+        imageService.getMainImage(
+          imageName: "btn_restore_purchase",
+          module: "buttons",
+          maxWidth: iconWidth,
+        ),
+        MyText(
+          text: label.l_restore_purchase,
+          maxLines: 2,
+          width: btnWidth - iconWidth - paddingBetween * 5,
+          alignmentInsideContainer: Alignment.center,
+        ),
+      ]),
+      onClick: () => widget._inAppPurchase.restorePurchases(),
+    );
   }
 
   Container _buildProductList(

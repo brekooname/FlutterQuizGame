@@ -64,8 +64,11 @@ class HistoryMainMenuScreenState extends State<HistoryMainMenuScreen>
         Colors.green.shade300, label.l_middle_ages, false);
     var level2 = createLevelButton(context, historyCampaignLevel.level_2,
         Colors.red.shade300, label.l_ancient_history, false);
+    // var level3 = createLevelButton(context, historyCampaignLevel.level_3,
+    //     Colors.yellow.shade300, label.l_prehistory, MyApp.isExtraContentLocked);
+
     var level3 = createLevelButton(context, historyCampaignLevel.level_3,
-        Colors.yellow.shade300, label.l_prehistory, MyApp.isExtraContentLocked);
+        Colors.yellow.shade300, label.l_prehistory, false);
 
     var btnMargin = screenDimensions.h(3);
     var mainColumn = Container(
@@ -108,9 +111,9 @@ class HistoryMainMenuScreenState extends State<HistoryMainMenuScreen>
 
   Widget createLevelButton(BuildContext context, CampaignLevel campaignLevel,
       Color btnColor, String labelText, bool contentLocked) {
-    var btnSize = Size(screenDimensions.w(80), screenDimensions.h(11));
+    var btnSize = Size(screenDimensions.w(84), screenDimensions.h(12));
     var paddingBetween = btnSize.width / 20;
-    var iconWidth = screenDimensions.w(15);
+    var iconWidth = screenDimensions.w(14);
 
     int totalQuestionsForCampaignLevel = widget
             .totalNrOfQuestionsForCampaignLevel

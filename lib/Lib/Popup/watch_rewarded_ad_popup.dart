@@ -1,9 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Lib/Ads/ad_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Font/font_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 import 'my_popup.dart';
 
@@ -15,7 +18,30 @@ class WatchRewardedAdPopup extends StatefulWidget {
   bool isRewardedAdLoaded = false;
 
   WatchRewardedAdPopup(
-      {this.watchVideoForExtraHint = true, required this.onUserEarnedReward});
+      {this.watchVideoForExtraHint = true, required this.onUserEarnedReward}) {
+    initRewardedAd();
+  }
+
+  void initRewardedAd() {
+    if (kIsWeb) {
+      isRewardedAdLoaded = true;
+      return;
+    }
+    rewardedAd?.dispose();
+    isRewardedAdLoaded = false;
+    RewardedAd.load(
+        adUnitId: adService.rewardedAdUnitId,
+        request: AdRequest(),
+        rewardedAdLoadCallback: RewardedAdLoadCallback(
+          onAdLoaded: (RewardedAd ad) {
+            rewardedAd = ad;
+            isRewardedAdLoaded = true;
+          },
+          onAdFailedToLoad: (LoadAdError error) {
+            print('RewardedAd failed to load: $error');
+          },
+        ));
+  }
 
   @override
   State<WatchRewardedAdPopup> createState() => WatchRewardedAdPopupState();
@@ -26,6 +52,14 @@ class WatchRewardedAdPopupState extends State<WatchRewardedAdPopup>
   @override
   AlertDialog build(BuildContext context) {
     initPopup(context: context);
+
+    Timer.periodic(Duration(seconds: 1), (timer) {
+      if (!widget.isRewardedAdLoaded) {
+        setState(() {});
+      } else {
+        timer.cancel();
+      }
+    });
 
     return createDialog(Column(
       mainAxisAlignment: MainAxisAlignment.end,
@@ -56,7 +90,7 @@ class WatchRewardedAdPopupState extends State<WatchRewardedAdPopup>
                       widget.onUserEarnedReward.call();
                     });
                   }),
-              SizedBox(width:screenDimensions.w(1)),
+              SizedBox(width: screenDimensions.w(1)),
               widget.isRewardedAdLoaded
                   ? Container()
                   : CircularProgressIndicator()
@@ -75,42 +109,25 @@ class WatchRewardedAdPopupState extends State<WatchRewardedAdPopup>
 
   void showRewardedAd(
       BuildContext buildContext, VoidCallback executeAfterClose) {
+    if (kIsWeb) {
+      executeAfterClose.call();
+      return;
+    }
     if (widget.rewardedAd != null && widget.isRewardedAdLoaded) {
       widget.rewardedAd!.show(
           onUserEarnedReward: (RewardedAd ad, RewardItem rewardItem) {
         executeAfterClose.call();
-        initRewardedAd();
       });
       widget.rewardedAd!.fullScreenContentCallback = FullScreenContentCallback(
-          onAdDismissedFullScreenContent: (interstitialAd) {
-        initRewardedAd();
-      }, onAdFailedToShowFullScreenContent: (RewardedAd ad, AdError error) {
-        initRewardedAd();
-      });
-    } else {
-      initRewardedAd();
+          onAdDismissedFullScreenContent: (interstitialAd) {},
+          onAdFailedToShowFullScreenContent: (RewardedAd ad, AdError error) {});
     }
   }
 
-  void initRewardedAd() {
+  @override
+  void dispose() {
     widget.rewardedAd?.dispose();
-    setState(() {
-      widget.isRewardedAdLoaded = false;
-    });
-    RewardedAd.load(
-        adUnitId: widget.adService.rewardedAdUnitId,
-        request: AdRequest(),
-        rewardedAdLoadCallback: RewardedAdLoadCallback(
-          onAdLoaded: (RewardedAd ad) {
-            setState(() {
-              widget.rewardedAd = ad;
-              widget.isRewardedAdLoaded = true;
-            });
-          },
-          onAdFailedToLoad: (LoadAdError error) {
-            print('RewardedAd failed to load: $error');
-          },
-        ));
+    super.dispose();
   }
 
   String getText() {

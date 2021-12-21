@@ -12,12 +12,12 @@ import 'my_button.dart';
 
 class HintButton extends StatefulWidget {
   ScreenDimensionsService screenDimensions = ScreenDimensionsService();
-  InternetService _internetService = InternetService();
   late Size buttonSize;
   VoidCallback onClick;
   bool disabled;
   bool showAvailableHintsText;
   bool watchRewardedAdForHint;
+  WatchRewardedAdPopup? watchRewardedAdPopup;
   int availableHints;
 
   HintButton(
@@ -26,9 +26,12 @@ class HintButton extends StatefulWidget {
       required this.onClick,
       this.disabled = false,
       this.watchRewardedAdForHint = false,
+      this.watchRewardedAdPopup,
       this.showAvailableHintsText = false}) {
     var side = screenDimensions.w(14);
     this.buttonSize = buttonSize ?? Size(side, side);
+    assert(!watchRewardedAdForHint ||
+        watchRewardedAdForHint && watchRewardedAdPopup != null);
   }
 
   @override
@@ -36,18 +39,6 @@ class HintButton extends StatefulWidget {
 }
 
 class HintButtonState extends State<HintButton> {
-  @override
-  void initState() {
-    if (widget.watchRewardedAdForHint) {
-      widget._internetService.hasInternet().then((hasInternet) {
-        setState(() {
-          widget.watchRewardedAdForHint = false;
-        });
-      });
-    }
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     var shouldShowRewardedAd =
@@ -72,7 +63,7 @@ class HintButtonState extends State<HintButton> {
                         barrierDismissible: false,
                         context: context,
                         builder: (BuildContext context) {
-                          return buildWatchRewardedAdPopup(context);
+                          return widget.watchRewardedAdPopup!;
                         }));
               }
             : widget.onClick,
@@ -94,10 +85,6 @@ class HintButtonState extends State<HintButton> {
             children: [fittedBtn, createHintAmountText()],
           )
         : fittedBtn;
-  }
-
-  Widget buildWatchRewardedAdPopup(BuildContext context) {
-    return WatchRewardedAdPopup(onUserEarnedReward: widget.onClick);
   }
 
   Container createHintAmountText() {
