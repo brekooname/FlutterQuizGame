@@ -72,8 +72,8 @@ android {
 /////////////////////////////////////////////////////////////////////////////
         history {
             applicationIdSuffix ".history"
-            versionCode 2
-            versionName "1.1"
+            versionCode 7
+            versionName "1.15"
             dimension "game"
             manifestPlaceholders = [appIcon: "@drawable/history_icon"]
         }

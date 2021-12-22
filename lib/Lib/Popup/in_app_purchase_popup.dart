@@ -60,12 +60,8 @@ class InAppPurchasePopup extends StatefulWidget {
 
 class _InAppPurchaseState extends State<InAppPurchasePopup> with MyPopup {
   late StreamSubscription<List<PurchaseDetails>> _subscription;
-  List<String> _notFoundIds = [];
   List<ProductDetails> _products = [];
-  List<PurchaseDetails> _purchases = [];
-  bool _isAvailable = false;
   bool _purchasePending = false;
-  bool _loading = true;
   String? _queryProductError;
 
   @override
@@ -75,7 +71,6 @@ class _InAppPurchaseState extends State<InAppPurchasePopup> with MyPopup {
           widget._inAppPurchase.purchaseStream;
       _subscription = purchaseUpdated.listen((purchaseDetailsList) {
         if (purchaseDetailsList.isEmpty) {
-          closePopup(context);
           showSnackBar(label.l_nothing_to_restore);
         } else {
           _listenToPurchaseUpdated(purchaseDetailsList);
@@ -164,12 +159,8 @@ class _InAppPurchaseState extends State<InAppPurchasePopup> with MyPopup {
     });
     if (!isAvailable) {
       setState(() {
-        _isAvailable = isAvailable;
         _products = [];
-        _purchases = [];
-        _notFoundIds = [];
         _purchasePending = false;
-        _loading = false;
       });
       return;
     }
@@ -186,12 +177,8 @@ class _InAppPurchaseState extends State<InAppPurchasePopup> with MyPopup {
     if (productDetailResponse.error != null) {
       setState(() {
         _queryProductError = productDetailResponse.error!.message;
-        _isAvailable = isAvailable;
         _products = productDetailResponse.productDetails;
-        _purchases = [];
-        _notFoundIds = productDetailResponse.notFoundIDs;
         _purchasePending = false;
-        _loading = false;
       });
       return;
     }
@@ -199,22 +186,15 @@ class _InAppPurchaseState extends State<InAppPurchasePopup> with MyPopup {
     if (productDetailResponse.productDetails.isEmpty) {
       setState(() {
         _queryProductError = null;
-        _isAvailable = isAvailable;
         _products = productDetailResponse.productDetails;
-        _purchases = [];
-        _notFoundIds = productDetailResponse.notFoundIDs;
         _purchasePending = false;
-        _loading = false;
       });
       return;
     }
 
     setState(() {
-      _isAvailable = isAvailable;
       _products = productDetailResponse.productDetails;
-      _notFoundIds = productDetailResponse.notFoundIDs;
       _purchasePending = false;
-      _loading = false;
     });
   }
 
@@ -260,7 +240,6 @@ class _InAppPurchaseState extends State<InAppPurchasePopup> with MyPopup {
               if (kIsWeb) {
                 widget._inAppPurchaseLocalStorage
                     .savePurchase(productDetails.id);
-                closePopup(context);
                 MyApp.extraContentBought(context);
                 showSnackBar(label.l_purchased);
                 return;
@@ -323,7 +302,9 @@ class _InAppPurchaseState extends State<InAppPurchasePopup> with MyPopup {
   void deliverProduct(PurchaseDetails purchaseDetails) {
     if (purchaseDetails.productID == InAppPurchasePopup._kNonConsumableId) {
       widget._inAppPurchaseLocalStorage
-          .savePurchase(purchaseDetails.purchaseID!);
+          .savePurchase(purchaseDetails.productID);
+      showSnackBar(label.l_purchased);
+      MyApp.extraContentBought(context);
       setState(() {
         _purchasePending = false;
       });
@@ -334,10 +315,11 @@ class _InAppPurchaseState extends State<InAppPurchasePopup> with MyPopup {
     setState(() {
       _purchasePending = false;
     });
-    showSnackBar("Error " + error.message);
+    showSnackBar("Error");
   }
 
   void showSnackBar(String message) {
+    closePopup(context);
     var snackBar = SnackBar(
       content: Container(
         height: screenDimensions.h(5),
@@ -363,10 +345,8 @@ class _InAppPurchaseState extends State<InAppPurchasePopup> with MyPopup {
           handleError(purchaseDetails.error!);
         } else if (purchaseDetails.status == PurchaseStatus.purchased) {
           deliverProduct(purchaseDetails);
-          showSnackBar(label.l_purchased);
         } else if (purchaseDetails.status == PurchaseStatus.restored) {
           deliverProduct(purchaseDetails);
-          showSnackBar(label.l_purchased);
         }
         if (purchaseDetails.pendingCompletePurchase) {
           await widget._inAppPurchase.completePurchase(purchaseDetails);

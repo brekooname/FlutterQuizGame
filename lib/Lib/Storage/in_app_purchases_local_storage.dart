@@ -18,21 +18,21 @@ class InAppPurchaseLocalStorage extends MyLocalStorage {
     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     //!!!!!!!!!!!!! TODO should be disabled !!!!!!!!!!!!!!
     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    localStorage.setBool(_getPurchaseIdKey(""), false);
+    localStorage.setBool(_getProductIdKey(""), false);
     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   }
 
-  bool isPurchased(String purchaseId) {
-    return localStorage.getBool(_getPurchaseIdKey(purchaseId)) ?? false;
+  bool isPurchased(String productId) {
+    return localStorage.getBool(_getProductIdKey(productId)) ?? false;
   }
 
-  void savePurchase(String purchaseId) {
-    localStorage.setBool(_getPurchaseIdKey(purchaseId), true);
+  void savePurchase(String productId) {
+    localStorage.setBool(_getProductIdKey(productId), true);
   }
 
-  String _getPurchaseIdKey(String purchaseId) {
-    return localStorageName + "_PurchaseIdKey_" + purchaseId;
+  String _getProductIdKey(String productId) {
+    return localStorageName + "_ProductIdKey_" + productId;
   }
 }
