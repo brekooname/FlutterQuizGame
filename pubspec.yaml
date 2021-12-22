@@ -102,9 +102,8 @@ flutter:
     - assets/main/general/
     - assets/main/popup/
     - assets/main/audio/
-    - assets/google_fonts/
     ########################
-    ###### HISTORY ########
+    ###### HISTORY #########
     ########################
     - assets/implementations/history/
     - assets/implementations/history/buttons/

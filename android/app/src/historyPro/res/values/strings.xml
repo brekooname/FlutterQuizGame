@@ -5,10 +5,10 @@
     <string name="language">en</string>
     <string name="game_id">history</string>
 
-    <string name="admob_banner_id">xxx</string>
-    <string name="admob_inter_id">xxx</string>
-    <string name="admob_video_id">xxx</string>
-    <string name="admob_app_id">xxx</string>
+    <string name="admob_banner_id"></string>
+    <string name="admob_inter_id"></string>
+    <string name="admob_video_id"></string>
+    <string name="admob_app_id">ca-app-pub-3940256099942544~3347511713</string>
 
     <bool name="is_pro">true</bool>
 </resources>

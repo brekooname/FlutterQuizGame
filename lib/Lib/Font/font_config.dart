@@ -32,13 +32,13 @@ class FontConfig {
     return standardBorderWidth * (fontSize / normalFontSize);
   }
 
-  static double get standardBorderWidth => displayDimensionScale / 400;
+  static double get standardBorderWidth => displayDimensionScale / 150;
 
-  static double get standardBorderRadius => displayDimensionScale / 45;
+  static double get standardBorderRadius => displayDimensionScale / 20;
 
-  static double get standardShadowOffset => displayDimensionScale / 260;
+  static double get standardShadowOffset => displayDimensionScale / 100;
 
-  static double get standardShadowRadius => displayDimensionScale / 260;
+  static double get standardShadowRadius => displayDimensionScale / 100;
 
   static double getCustomFontSize(double val) {
     return normalFontSize * val;
@@ -48,10 +48,9 @@ class FontConfig {
 
   static double get veryBigFontSize => normalFontSize * 2;
 
-  static double get normalFontSize => displayDimensionScale / 55;
+  static double get normalFontSize => displayDimensionScale / 18;
 
   static double get smallFontSize => normalFontSize / 2;
 
-  static double get displayDimensionScale =>
-      (MyApp.screenWidth + MyApp.screenHeight);
+  static double get displayDimensionScale => MyApp.screenWidth;
 }

@@ -128,15 +128,15 @@ mixin StandardScreen {
     if (kIsWeb && MyApp.isExtraContentLocked) {
       bannerAdContainer = Container(
         color: Colors.red,
-        width: bannerAd?.size.width.toDouble(),
-        height: bannerAd?.size.height.toDouble(),
+        width: AdSize.banner.width.toDouble(),
+        height: AdSize.banner.height.toDouble(),
         alignment: Alignment.center,
       );
     } else if (bannerAd != null && MyApp.isExtraContentLocked) {
       bannerAdContainer = Container(
         child: AdWidget(ad: bannerAd!),
-        width: bannerAd?.size.width.toDouble(),
-        height: bannerAd?.size.height.toDouble(),
+        width: AdSize.banner.width.toDouble(),
+        height: AdSize.banner.height.toDouble(),
         alignment: Alignment.center,
       );
     } else {
@@ -151,8 +151,6 @@ mixin StandardScreen {
             assetExtension: "png", assetName: "background_texture")),
       )),
       alignment: Alignment.center,
-      width: double.infinity,
-      height: 100.0,
       child: AspectRatio(
         aspectRatio: 9 / 16,
         child: Container(

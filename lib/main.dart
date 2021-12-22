@@ -14,6 +14,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'Game/Constants/app_id.dart';
 import 'Lib/Constants/language.dart';
 import 'Lib/ScreenDimensions/screen_dimensions_service.dart';
+import 'Lib/Storage/in_app_purchases_local_storage.dart';
 import 'Lib/Storage/rate_app_local_storage.dart';
 
 void main() {
@@ -33,7 +34,7 @@ class MyApp extends StatefulWidget {
   //////
   ////////////
   static const String _appKey = "history";
-  static const Language _language = Language.en;
+  static const Language _language = Language.ro;
 
   ////////////
   //////
@@ -47,9 +48,7 @@ class MyApp extends StatefulWidget {
   static late AppId appId;
   static late String appTitle;
   static late String languageCode;
-  static late String extraContentProductId;
-  static late bool isPro;
-  static late bool isExtraContentLocked = true;
+  static bool isExtraContentLocked = true;
 
   bool _initCompleted = false;
 
@@ -85,21 +84,21 @@ class MyAppState extends State<MyApp> {
       languageCode = WidgetsBinding.instance!.window.locale.languageCode;
     }
     if (!widget._initCompleted) {
-      GoogleFonts.config.allowRuntimeFetching = false;
-      if (!kIsWeb) {
-        MobileAds.instance.initialize();
-      }
+      var appId = AppIds().getAppId(appKey);
       SharedPreferences localStorage = await SharedPreferences.getInstance();
       setState(() {
         widget._initCompleted = true;
-        var appId = AppIds().getAppId(appKey);
         MyApp.appId = appId;
         MyApp.appTitle = appTitle;
-        MyApp.isPro = isPro;
         MyApp.languageCode = languageCode;
         MyApp.localStorage = localStorage;
-        MyApp.extraContentProductId = appId.gameConfig.extraContentProductId;
+        MyApp.isExtraContentLocked = !isPro &&
+            !InAppPurchaseLocalStorage()
+                .isPurchased(appId.gameConfig.extraContentProductId);
       });
+      if (!kIsWeb && MyApp.isExtraContentLocked) {
+        MobileAds.instance.initialize();
+      }
     }
   }
 
@@ -132,6 +131,9 @@ class MyAppState extends State<MyApp> {
             : AppLocalizations.supportedLocales,
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
+          textTheme: GoogleFonts.robotoTextTheme(
+            Theme.of(context).textTheme,
+          ),
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
         home: Builder(builder: (BuildContext context) {

@@ -38,7 +38,7 @@ class MyAudioPlayer {
       AudioPlayer audioPlayer = AudioPlayer();
       await audioPlayer.play(assetPath, isLocal: true, volume: volume);
     } else {
-      AudioCache player = AudioCache();
+      AudioCache player = AudioCache(prefix: "");
       player.play(assetPath, volume: volume);
     }
   }

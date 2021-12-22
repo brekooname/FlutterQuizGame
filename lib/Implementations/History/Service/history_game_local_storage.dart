@@ -46,7 +46,9 @@ class HistoryLocalStorage extends MyLocalStorage {
   }
 
   void setRemainingHints(QuestionDifficulty diff, int hints) {
-    localStorage.setInt(_getRemainingHintsFieldName(diff), hints);
+    if (hints >= 0) {
+      localStorage.setInt(_getRemainingHintsFieldName(diff), hints);
+    }
   }
 
   int getTotalWonQuestions(QuestionDifficulty diff) {

@@ -53,13 +53,18 @@ class HistoryGameLevelHeader extends StatelessWidget {
     var questionPrefixToBeDisplayed = question?.questionPrefixToBeDisplayed;
     var questionToBeDisplayed = question?.questionToBeDisplayed;
     Widget questionPrefix;
+    var questionColor = Colors.grey.shade900;
+    var questionToBeDisplayedIsEmpty = (questionToBeDisplayed ?? "").isEmpty;
     if ((questionPrefixToBeDisplayed ?? "").isEmpty) {
       questionPrefix = Container();
     } else {
       questionPrefix = Padding(
           padding: EdgeInsets.fromLTRB(horizMargin, 0, horizMargin,
-              (questionToBeDisplayed ?? "").isEmpty ? 0 : vertMargin * 2),
+              questionToBeDisplayedIsEmpty ? 0 : vertMargin * 2),
           child: MyText(
+            textColor: questionToBeDisplayedIsEmpty
+                ? questionColor
+                : Colors.grey.shade700,
             width: screenDimensions.w(99),
             maxLines: 2,
             text: questionPrefixToBeDisplayed ?? "",
@@ -67,18 +72,22 @@ class HistoryGameLevelHeader extends StatelessWidget {
           ));
     }
     Widget questionText;
-    if ((questionToBeDisplayed ?? "").isEmpty) {
+    if (questionToBeDisplayedIsEmpty) {
       questionText = Container();
     } else {
       var text = MyText(
-        width: screenDimensions.w(99),
+        textColor: questionColor,
+        width: screenDimensions.w(95),
         maxLines:
             question?.category == HistoryGameQuestionConfig().cat3 ? 4 : 2,
         text: questionToBeDisplayed ?? "",
-        fontSize: FontConfig.getCustomFontSize(
-            [Language.ja.name, Language.ko.name].contains(MyApp.languageCode)
-                ? 1
-                : 1.15),
+        fontSize: FontConfig.getCustomFontSize([
+          Language.ja.name,
+          Language.ko.name,
+          Language.th.name
+        ].contains(MyApp.languageCode)
+            ? 1
+            : 1.15),
       );
       questionText = Padding(
           padding: EdgeInsets.fromLTRB(horizMargin, 0, horizMargin, 0),

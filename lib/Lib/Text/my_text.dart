@@ -18,11 +18,12 @@ class MyText extends StatelessWidget {
   MyText(
       {FontConfig? fontConfig,
       double? fontSize,
+      Color? textColor,
       required String text,
       this.alignmentInsideContainer = Alignment.center,
       this.width,
       this.maxLines = 2}) {
-    this.fontConfig = fontConfig ?? FontConfig(fontSize: fontSize);
+    this.fontConfig = fontConfig ?? FontConfig(fontSize: fontSize, textColor: textColor);
     this.text = text;
   }
 
@@ -56,11 +57,12 @@ class MyText extends StatelessWidget {
 
     while (hasTextOverflow(this.text, textStyle,
         maxWidth: width ?? double.infinity, maxLines: maxLines)) {
+      fontConfig.fontSize = fontConfig.fontSize / 1.1;
       textStyle = TextStyle(
           decoration: TextDecoration.none,
           fontWeight: fontConfig.fontWeight,
           color: fontConfig.textColor,
-          fontSize: textStyle.fontSize! / 1.1);
+          fontSize: fontConfig.fontSize);
     }
     return textStyle;
   }
@@ -132,9 +134,10 @@ class MyTextCreatorService {
   Text createText(String text, TextStyle textStyle, TextAlign? textAlign) {
     return Text(
       text,
+      textScaleFactor: 1,
       overflow: TextOverflow.fade,
       textAlign: textAlign,
-      style: GoogleFonts.lato(textStyle: textStyle),
+      style: GoogleFonts.roboto(textStyle: textStyle),
     );
   }
 }

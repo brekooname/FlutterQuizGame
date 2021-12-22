@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Font/font_config.dart';
@@ -8,11 +9,9 @@ import 'package:flutter_app_quiz_game/Lib/Storage/in_app_purchases_local_storage
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 import 'package:flutter_app_quiz_game/main.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
-import 'package:in_app_purchase_android/billing_client_wrappers.dart';
 import 'package:in_app_purchase_android/in_app_purchase_android.dart';
 import 'package:in_app_purchase_storekit/in_app_purchase_storekit.dart';
 import 'package:in_app_purchase_storekit/store_kit_wrappers.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
 
 import 'my_popup.dart';
 
@@ -41,8 +40,9 @@ class InAppPurchasesPopupService {
 }
 
 class InAppPurchasePopup extends StatefulWidget {
-  static const String _kNonConsumableId = 'consumable';
-  static const List<String> _kProductIds = <String>[
+  static String _kNonConsumableId =
+      MyApp.appId.gameConfig.extraContentProductId;
+  static List<String> _kProductIds = <String>[
     _kNonConsumableId,
   ];
 
@@ -74,7 +74,12 @@ class _InAppPurchaseState extends State<InAppPurchasePopup> with MyPopup {
       final Stream<List<PurchaseDetails>> purchaseUpdated =
           widget._inAppPurchase.purchaseStream;
       _subscription = purchaseUpdated.listen((purchaseDetailsList) {
-        _listenToPurchaseUpdated(purchaseDetailsList);
+        if (purchaseDetailsList.isEmpty) {
+          closePopup(context);
+          showSnackBar(label.l_nothing_to_restore);
+        } else {
+          _listenToPurchaseUpdated(purchaseDetailsList);
+        }
       }, onDone: () {
         _subscription.cancel();
       }, onError: (error) {
@@ -94,9 +99,6 @@ class _InAppPurchaseState extends State<InAppPurchasePopup> with MyPopup {
     List<Widget> stack = [];
     var popupHeight = screenDimensions.h(45);
     if (_queryProductError == null && _products.isNotEmpty) {
-      var btnWidth = screenDimensions.w(65);
-      var paddingBetween = screenDimensions.w(1);
-      var iconWidth = screenDimensions.w(8);
       stack.add(
         SizedBox(
             height: popupHeight,
@@ -104,11 +106,7 @@ class _InAppPurchaseState extends State<InAppPurchasePopup> with MyPopup {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                _buildProductList(btnWidth, iconWidth, paddingBetween),
-                SizedBox(
-                  height: screenDimensions.h(3),
-                ),
-                _buildRestoreButton(btnWidth, iconWidth, paddingBetween),
+                _buildProductList(),
               ],
             )),
       );
@@ -149,7 +147,7 @@ class _InAppPurchaseState extends State<InAppPurchasePopup> with MyPopup {
       setState(() {
         _products = [
           ProductDetails(
-              id: "1",
+              id: MyApp.appId.gameConfig.extraContentProductId,
               title: "Title",
               description: "Extra Content + Ad free",
               price: "0.99",
@@ -160,7 +158,10 @@ class _InAppPurchaseState extends State<InAppPurchasePopup> with MyPopup {
       return;
     }
 
-    final bool isAvailable = await widget._inAppPurchase.isAvailable();
+    final bool isAvailable =
+        await widget._inAppPurchase.isAvailable().catchError((e) {
+      print('Got error: $e'); // Finally, callback fires.
+    });
     if (!isAvailable) {
       setState(() {
         _isAvailable = isAvailable;
@@ -223,35 +224,11 @@ class _InAppPurchaseState extends State<InAppPurchasePopup> with MyPopup {
     });
   }
 
-  Widget _buildRestoreButton(
-      double btnWidth, double iconWidth, double paddingBetween) {
-    // if (_loading) {
-    //   return Container();
-    // }
+  Container _buildProductList() {
+    var btnWidth = screenDimensions.w(65);
+    var paddingBetween = screenDimensions.w(1);
+    var iconWidth = screenDimensions.w(8);
 
-    return MyButton(
-      backgroundColor: Colors.lightBlueAccent,
-      width: btnWidth,
-      customContent: Row(children: [
-        SizedBox(width: paddingBetween),
-        imageService.getMainImage(
-          imageName: "btn_restore_purchase",
-          module: "buttons",
-          maxWidth: iconWidth,
-        ),
-        MyText(
-          text: label.l_restore_purchase,
-          maxLines: 2,
-          width: btnWidth - iconWidth - paddingBetween * 5,
-          alignmentInsideContainer: Alignment.center,
-        ),
-      ]),
-      onClick: () => widget._inAppPurchase.restorePurchases(),
-    );
-  }
-
-  Container _buildProductList(
-      double btnWidth, double iconWidth, double paddingBetween) {
     List<Column> productList = <Column>[];
     productList.addAll(_products.map(
       (ProductDetails productDetails) {
@@ -280,39 +257,67 @@ class _InAppPurchaseState extends State<InAppPurchasePopup> with MyPopup {
               ),
             ]),
             onClick: () {
-              late PurchaseParam purchaseParam;
-
               if (kIsWeb) {
-                MyApp.extraContentBought(context);
                 widget._inAppPurchaseLocalStorage
                     .savePurchase(productDetails.id);
                 closePopup(context);
+                MyApp.extraContentBought(context);
                 showSnackBar(label.l_purchased);
                 return;
               }
-              if (Platform.isAndroid) {
-                purchaseParam = GooglePlayPurchaseParam(
-                  productDetails: productDetails,
-                  applicationUserName: null,
-                );
-              } else {
-                purchaseParam = PurchaseParam(
-                  productDetails: productDetails,
-                  applicationUserName: null,
-                );
-              }
 
               if (productDetails.id == InAppPurchasePopup._kNonConsumableId) {
-                widget._inAppPurchase
-                    .buyNonConsumable(purchaseParam: purchaseParam);
+                widget._inAppPurchase.buyNonConsumable(
+                    purchaseParam: getPurchaseParam(productDetails));
               }
             },
           ),
+          SizedBox(height: screenDimensions.h(3)),
+          _buildRestoreButton(btnWidth, iconWidth, paddingBetween),
         ]);
       },
     ));
 
     return Container(child: Column(children: productList));
+  }
+
+  Widget _buildRestoreButton(
+      double btnWidth, double iconWidth, double paddingBetween) {
+    return MyButton(
+      backgroundColor: Colors.lightBlueAccent,
+      width: btnWidth,
+      customContent: Row(children: [
+        SizedBox(width: paddingBetween),
+        imageService.getMainImage(
+          imageName: "btn_restore_purchase",
+          module: "buttons",
+          maxWidth: iconWidth,
+        ),
+        MyText(
+          text: label.l_restore_purchase,
+          maxLines: 2,
+          width: btnWidth - iconWidth - paddingBetween * 5,
+          alignmentInsideContainer: Alignment.center,
+        ),
+      ]),
+      onClick: () => widget._inAppPurchase.restorePurchases(),
+    );
+  }
+
+  PurchaseParam getPurchaseParam(ProductDetails productDetails) {
+    PurchaseParam purchaseParam;
+    if (Platform.isAndroid) {
+      purchaseParam = GooglePlayPurchaseParam(
+        productDetails: productDetails,
+        applicationUserName: null,
+      );
+    } else {
+      purchaseParam = PurchaseParam(
+        productDetails: productDetails,
+        applicationUserName: null,
+      );
+    }
+    return purchaseParam;
   }
 
   void deliverProduct(PurchaseDetails purchaseDetails) {
@@ -336,7 +341,12 @@ class _InAppPurchaseState extends State<InAppPurchasePopup> with MyPopup {
     var snackBar = SnackBar(
       content: Container(
         height: screenDimensions.h(5),
-        child: Center(child: MyText(text: message)),
+        child: Center(
+            child: MyText(
+          text: message,
+          width: screenDimensions.w(99),
+          maxLines: 1,
+        )),
       ),
       duration: Duration(seconds: 3),
       backgroundColor: Colors.white,

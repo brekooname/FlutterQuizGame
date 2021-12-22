@@ -71,7 +71,7 @@ class HistoryGameContextService {
         historyLocalStorage.getRemainingHints(campaignLevel.difficulty);
     if (currentHints == -1) {
       historyLocalStorage.setRemainingHints(campaignLevel.difficulty,
-          (totalNrOfQuestions / (MyApp.isPro ? 4 : 8)).round());
+          (totalNrOfQuestions / (MyApp.isExtraContentLocked ? 8 : 4)).round());
     }
     return historyLocalStorage.getRemainingHints(campaignLevel.difficulty);
   }

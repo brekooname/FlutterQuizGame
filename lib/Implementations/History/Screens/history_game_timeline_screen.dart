@@ -40,12 +40,11 @@ class HistoryGameTimelineScreen extends StatefulWidget
   bool alreadyWentToNextScreen = false;
   bool animateQuestionText = false;
 
-  HistoryGameTimelineScreen(
-      {Key? key,
-      required QuestionDifficulty difficulty,
-      required QuestionCategory category,
-      required HistoryGameContext gameContext,
-      required VoidCallback refreshMainScreenCallback})
+  HistoryGameTimelineScreen({Key? key,
+    required QuestionDifficulty difficulty,
+    required QuestionCategory category,
+    required HistoryGameContext gameContext,
+    required VoidCallback refreshMainScreenCallback})
       : super(key: key) {
     initScreen(HistoryCampaignLevel(), gameContext, difficulty, category,
         refreshMainScreenCallback);
@@ -143,7 +142,7 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
 
       var questionAnswer = qi.question.rawString.split(":")[1];
       String? correctAnswerText =
-          widget.currentQuestionInfo?.question.rawString.split(":")[1];
+      widget.currentQuestionInfo?.question.rawString.split(":")[1];
 
       if (shouldGoToNextGameScreen()) {
         disabled = true;
@@ -151,7 +150,7 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
           widget.alreadyWentToNextScreen = true;
           Future.delayed(
               Duration(milliseconds: zoomInZoomOutAnswerDuration * 2),
-              () => goToNextGameScreen(context));
+                  () => goToNextGameScreen(context));
         }
       }
 
@@ -172,7 +171,7 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
     HistoryGameLevelHeader header = createHeader(levelsWon, levelsLost);
 
     ScrollablePositionedList listView =
-        createListView(answerBtnSize, zoomInZoomOutAnswerDuration);
+    createListView(answerBtnSize, zoomInZoomOutAnswerDuration);
 
     var mainColumn = Column(
       children: <Widget>[header, Expanded(child: listView)],
@@ -181,31 +180,31 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
     return createScreen(mainColumn);
   }
 
-  Image createImageForQuestion(
-      int qIndex, double maxHeight, List<int> levelsLost) {
+  Image createImageForQuestion(int qIndex, double maxHeight,
+      List<int> levelsLost) {
     Image image = widget.gameContext.shownImagesForTimeLineHints
-            .getOrDefault<QuestionCategory, List<int>>(
-                widget.category, []).contains(qIndex)
+        .getOrDefault<QuestionCategory, List<int>>(
+        widget.category, []).contains(qIndex)
         ? imageService.getSpecificImage(
-            maxWidth: getImageWidth(),
-            maxHeight: maxHeight,
-            imageName: "i" + qIndex.toString(),
-            module: getQuestionImagePath(widget.difficulty, widget.category))
+        maxWidth: getImageWidth(),
+        maxHeight: maxHeight,
+        imageName: "i" + qIndex.toString(),
+        module: getQuestionImagePath(widget.difficulty, widget.category))
         : levelsLost.contains(qIndex)
-            ? histAnswWrong
-            : timelineOptUnknown;
+        ? histAnswWrong
+        : timelineOptUnknown;
     return image;
   }
 
-  ScrollablePositionedList createListView(
-      Size answerBtnSize, int zoomInZoomOutAnswerDuration) {
+  ScrollablePositionedList createListView(Size answerBtnSize,
+      int zoomInZoomOutAnswerDuration) {
     ScrollablePositionedList listView = ScrollablePositionedList.builder(
       physics: ClampingScrollPhysics(),
       itemCount: widget.questions.length,
       itemScrollController: itemScrollController,
       itemBuilder: (BuildContext context, int index) {
         HistoryQuestion question =
-            widget.questions.values.elementAt(getRevertedIndex(index));
+        getSortedYearValues().elementAt(getRevertedIndex(index));
 
         if (widget.category == HistoryGameQuestionConfig().cat0) {
           return createOptionItemCat0(
@@ -229,10 +228,16 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
     return listView;
   }
 
+  List<HistoryQuestion> getSortedYearValues() {
+    List<HistoryQuestion> list = List.of(widget.questions.values);
+    list.sort((a, b) => a.questionIndex.compareTo(b.questionIndex));
+    return list;
+  }
+
   int getRevertedIndex(int index) => widget.questions.length - index - 1;
 
-  HistoryGameLevelHeader createHeader(
-      List<int> levelsWon, List<int> levelsLost) {
+  HistoryGameLevelHeader createHeader(List<int> levelsWon,
+      List<int> levelsLost) {
     QuestionInfo? mostRecentQ = getMostRecentAnswered();
 
     var header = HistoryGameLevelHeader(
@@ -250,9 +255,9 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
       score: formatTextWithOneParam(
           label.l_score_param0,
           widget.historyLocalStorage
-                  .getWonQuestions(widget.difficulty)
-                  .length
-                  .toString() +
+              .getWonQuestions(widget.difficulty)
+              .length
+              .toString() +
               "/" +
               widget.gameContext.totalNrOfQuestionsForCampaignLevel.toString()),
       hintButtonOnClick: () {
@@ -276,8 +281,8 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
         context,
         playedQ > 0 &&
             playedQ %
-                    HistoryGameTimelineScreen
-                        .show_interstitial_ad_every_n_questions ==
+                HistoryGameTimelineScreen
+                    .show_interstitial_ad_every_n_questions ==
                 0, () {
       HistoryGameScreenManager(buildContext: context).showNextGameScreen(
           widget.campaignLevel,
@@ -286,8 +291,7 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
     });
   }
 
-  MyButton createAnswerButton(
-      Size answerBtnSize,
+  MyButton createAnswerButton(Size answerBtnSize,
       bool disabled,
       Color enabledBackgroundColor,
       Color disabledBackgroundColor,
@@ -315,11 +319,11 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
                     .setWonQuestion(currentQuestionInfo.question);
               } else {
                 audioPlayer.playFail();
-                var values = widget.questions.values;
+                var values = getSortedYearValues();
                 itemScrollController.scrollTo(
                     index: getRevertedIndex(values.toList().indexOf(
                         values.firstWhere((element) =>
-                            element.questionIndex == questionIndex))),
+                        element.questionIndex == questionIndex))),
                     duration: Duration(milliseconds: 600));
                 widget.gameContext.gameUser
                     .setLostQuestion(currentQuestionInfo);
@@ -340,8 +344,8 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
     return answerBtn;
   }
 
-  String getQuestionImagePath(
-          QuestionDifficulty difficulty, QuestionCategory category) =>
+  String getQuestionImagePath(QuestionDifficulty difficulty,
+      QuestionCategory category) =>
       "questions/images/" + difficulty.name + "/" + category.name;
 
   double getImageWidth() {
@@ -385,8 +389,8 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
     }
   }
 
-  void onHintButtonClick(
-      List<int> levelsWon, List<int> levelsLost, Question question) {
+  void onHintButtonClick(List<int> levelsWon, List<int> levelsLost,
+      Question question) {
     widget.correctAnswerPressed = false;
 
     widget.gameContext.amountAvailableHints--;
@@ -422,8 +426,7 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
     });
   }
 
-  Widget createOptionItemCat0(
-      MyButton answerBtn,
+  Widget createOptionItemCat0(MyButton answerBtn,
       Size answerBtnSize,
       bool? correctAnswer,
       Image questionImg,
@@ -454,8 +457,8 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
     var color = correctAnswer == null
         ? Colors.yellow.shade500
         : correctAnswer
-            ? Colors.green.shade200
-            : Colors.red.shade200;
+        ? Colors.green.shade200
+        : Colors.red.shade200;
     return color;
   }
 
@@ -463,21 +466,21 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
     if (widget.category == HistoryGameQuestionConfig().cat0) {
       return Container(
           child: Row(children: <Widget>[
-        SizedBox(
-          width: screenDimensions.w(2),
-        ),
-        Container(
-            width: screenDimensions.w(2),
-            height: answerBtnSize.height * 2,
-            color: correctAnswer == null
-                ? Colors.blueGrey
-                : correctAnswer
+            SizedBox(
+              width: screenDimensions.w(2),
+            ),
+            Container(
+                width: screenDimensions.w(2),
+                height: answerBtnSize.height * 2,
+                color: correctAnswer == null
+                    ? Colors.blueGrey
+                    : correctAnswer
                     ? Colors.green
                     : Colors.red),
-        SizedBox(
-          width: screenDimensions.w(2),
-        ),
-      ]));
+            SizedBox(
+              width: screenDimensions.w(2),
+            ),
+          ]));
     } else {
       return Container();
     }
@@ -490,8 +493,7 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
         category: widget.category);
   }
 
-  Widget createOptionItemCat1(
-      MyButton answerBtn,
+  Widget createOptionItemCat1(MyButton answerBtn,
       Size answerBtnSize,
       bool? correctAnswer,
       Image questionImg,
@@ -515,23 +517,22 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
         child: item, color: getColorOpacityForItemRowNr(index, color));
   }
 
-  Widget createBtnAnswerWithAnimation(
-      QuestionInfo? mostRecentAnswered,
+  Widget createBtnAnswerWithAnimation(QuestionInfo? mostRecentAnswered,
       int index,
       int millisForZoomInZoomOut,
       Size answerBtnSize,
       MyButton answerBtn) {
     Widget answerPart = (mostRecentAnswered != null &&
-            mostRecentAnswered.question.index == index &&
-            widget.questionsToPlayUntilNextCategory !=
-                HistoryGameTimelineScreen
-                    .default_questions_to_play_until_next_category)
+        mostRecentAnswered.question.index == index &&
+        widget.questionsToPlayUntilNextCategory !=
+            HistoryGameTimelineScreen
+                .default_questions_to_play_until_next_category)
         ? AnimateZoomInZoomOut(
-            zoomInZoomOutOnce: true,
-            duration: Duration(milliseconds: millisForZoomInZoomOut),
-            toAnimateWidgetSize: answerBtnSize,
-            toAnimateWidget: answerBtn,
-          )
+      zoomInZoomOutOnce: true,
+      duration: Duration(milliseconds: millisForZoomInZoomOut),
+      toAnimateWidgetSize: answerBtnSize,
+      toAnimateWidget: answerBtn,
+    )
         : answerBtn;
     return answerPart;
   }
@@ -540,7 +541,7 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
     if (widget.category == HistoryGameQuestionConfig().cat0) {
       int year = int.parse(yearString);
       String val =
-          year < 0 ? year.abs().formatIntEveryChars(4) : year.toString();
+      year < 0 ? year.abs().formatIntEveryChars(4) : year.toString();
       val = year < 0 ? formatTextWithOneParam(label.l_param0_bc, val) : val;
       return val;
     } else {
@@ -549,17 +550,19 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
       int year1 = int.parse(split[0]);
       int year2 = getYear2ForCat1(split2);
       String val1 =
-          year1 < 0 ? year1.abs().formatIntEveryChars(4) : year1.toString();
+      year1 < 0 ? year1.abs().formatIntEveryChars(4) : year1.toString();
       val1 = year1 < 0 ? formatTextWithOneParam(label.l_param0_bc, val1) : val1;
       String val2 =
-          year2 < 0 ? year2.abs().formatIntEveryChars(4) : year2.toString();
+      year2 < 0 ? year2.abs().formatIntEveryChars(4) : year2.toString();
       val2 = year2 < 0 ? formatTextWithOneParam(label.l_param0_bc, val2) : val2;
       return val1 + "-" + val2;
     }
   }
 
   int getYear2ForCat1(String yearString) {
-    return yearString == "x" ? DateTime.now().year : int.parse(yearString);
+    return yearString == "x" ? DateTime
+        .now()
+        .year : int.parse(yearString);
   }
 
   @override

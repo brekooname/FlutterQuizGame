@@ -64,11 +64,8 @@ class HistoryMainMenuScreenState extends State<HistoryMainMenuScreen>
         Colors.green.shade300, label.l_middle_ages, false);
     var level2 = createLevelButton(context, historyCampaignLevel.level_2,
         Colors.red.shade300, label.l_ancient_history, false);
-    // var level3 = createLevelButton(context, historyCampaignLevel.level_3,
-    //     Colors.yellow.shade300, label.l_prehistory, MyApp.isExtraContentLocked);
-
     var level3 = createLevelButton(context, historyCampaignLevel.level_3,
-        Colors.yellow.shade300, label.l_prehistory, false);
+        Colors.yellow.shade300, label.l_prehistory, MyApp.isExtraContentLocked);
 
     var btnMargin = screenDimensions.h(3);
     var mainColumn = Container(
@@ -145,7 +142,10 @@ class HistoryMainMenuScreenState extends State<HistoryMainMenuScreen>
           Container(
               width: btnSize.width - iconWidth - paddingBetween * 5,
               child: Column(children: [
-                MyText(text: labelText),
+                MyText(
+                  text: labelText,
+                  textColor: Colors.grey.shade800,
+                ),
                 MyText(
                   text: contentLocked
                       ? ""
