@@ -1,0 +1,28 @@
+PODS:
+  - Flutter (1.0.0)
+  - FlutterPluginRegistrant (0.0.1):
+    - Flutter
+  - ios_flutter_app_quiz_game (0.0.1):
+    - Flutter
+
+DEPENDENCIES:
+  - Flutter (from `../../ios_flutter_app_quiz_game/.ios/Flutter/engine`)
+  - FlutterPluginRegistrant (from `../../ios_flutter_app_quiz_game/.ios/Flutter/FlutterPluginRegistrant`)
+  - ios_flutter_app_quiz_game (from `../../ios_flutter_app_quiz_game/.ios/Flutter`)
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: "../../ios_flutter_app_quiz_game/.ios/Flutter/engine"
+  FlutterPluginRegistrant:
+    :path: "../../ios_flutter_app_quiz_game/.ios/Flutter/FlutterPluginRegistrant"
+  ios_flutter_app_quiz_game:
+    :path: "../../ios_flutter_app_quiz_game/.ios/Flutter"
+
+SPEC CHECKSUMS:
+  Flutter: bdfa2e8fe0e2880a2c6a58a0b1a8675c262a07af
+  FlutterPluginRegistrant: 2afd5ea46d3a949472c9b7da6462d8fbf7d8b16e
+  ios_flutter_app_quiz_game: acb134799571328d276ca3571a331c1445a177bf
+
+PODFILE CHECKSUM: 9b61122b6f10bf5ea4fb9b7f167e1bd866c3a917
+
+COCOAPODS: 1.11.2

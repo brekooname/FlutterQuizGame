@@ -34,7 +34,7 @@ class MyApp extends StatefulWidget {
   //////
   ////////////
   static const String _appKey = "history";
-  static const Language _language = Language.ro;
+  static const Language _language = Language.nb;
 
   ////////////
   //////
@@ -48,6 +48,9 @@ class MyApp extends StatefulWidget {
   static late AppId appId;
   static late String appTitle;
   static late String languageCode;
+  static late String adBannerId;
+  static late String adInterstitialId;
+  static late String adRewardedId;
   static bool isExtraContentLocked = true;
 
   bool _initCompleted = false;
@@ -71,17 +74,27 @@ class MyAppState extends State<MyApp> {
     String appKey;
     String languageCode;
     bool isPro;
+    String adBannerId;
+    String adInterstitialId;
+    String adRewardedId;
     if (kIsWeb) {
       var appId = AppIds().getAppId(MyApp._appKey);
       appTitle = appId.gameConfig.getTitle(MyApp._language);
       appKey = appId.appKey;
       isPro = false;
       languageCode = MyApp._language.name;
+      adBannerId = "";
+      adInterstitialId = "";
+      adRewardedId = "";
     } else {
       appTitle = await MyApp.platform.invokeMethod('getAppTitle');
       appKey = await MyApp.platform.invokeMethod('getAppKey');
       isPro = await MyApp.platform.invokeMethod('isPro');
-      languageCode = WidgetsBinding.instance!.window.locale.languageCode;
+      adBannerId = await MyApp.platform.invokeMethod('getAdBannerId');
+      adInterstitialId =
+          await MyApp.platform.invokeMethod('getAdInterstitialId');
+      adRewardedId = await MyApp.platform.invokeMethod('getAdRewardedId');
+      languageCode = await MyApp.platform.invokeMethod('getLanguageCode');
     }
     if (!widget._initCompleted) {
       var appId = AppIds().getAppId(appKey);
@@ -92,6 +105,9 @@ class MyAppState extends State<MyApp> {
         MyApp.appTitle = appTitle;
         MyApp.languageCode = languageCode;
         MyApp.localStorage = localStorage;
+        MyApp.adBannerId = adBannerId;
+        MyApp.adInterstitialId = adInterstitialId;
+        MyApp.adRewardedId = adRewardedId;
         MyApp.isExtraContentLocked = !isPro &&
             !InAppPurchaseLocalStorage()
                 .isPurchased(appId.gameConfig.extraContentProductId);
@@ -127,7 +143,12 @@ class MyAppState extends State<MyApp> {
     var materialApp = MaterialApp(
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: kIsWeb
-            ? [Locale(MyApp._language.name)]
+            ? [
+                Locale(AppLocalizations.supportedLocales
+                        .contains(Locale(MyApp._language.name))
+                    ? MyApp._language.name
+                    : Language.en.name)
+              ]
             : AppLocalizations.supportedLocales,
         debugShowCheckedModeBanner: false,
         theme: ThemeData(

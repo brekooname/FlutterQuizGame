@@ -60,15 +60,15 @@ class HistoryGameLevelHeader extends StatelessWidget {
     } else {
       questionPrefix = Padding(
           padding: EdgeInsets.fromLTRB(horizMargin, 0, horizMargin,
-              questionToBeDisplayedIsEmpty ? 0 : vertMargin * 2),
+              questionToBeDisplayedIsEmpty ? 0 : vertMargin),
           child: MyText(
             textColor: questionToBeDisplayedIsEmpty
                 ? questionColor
                 : Colors.grey.shade700,
-            width: screenDimensions.w(99),
-            maxLines: 2,
+            width: screenDimensions.w(95),
+            maxLines: question?.category == HistoryGameQuestionConfig().cat0 ? 1 : 2,
             text: questionPrefixToBeDisplayed ?? "",
-            fontSize: FontConfig.getCustomFontSize(1.0),
+            fontSize: FontConfig.getCustomFontSize(1),
           ));
     }
     Widget questionText;
@@ -86,8 +86,8 @@ class HistoryGameLevelHeader extends StatelessWidget {
           Language.ko.name,
           Language.th.name
         ].contains(MyApp.languageCode)
-            ? 1
-            : 1.15),
+            ? 0.8
+            : 1.1),
       );
       questionText = Padding(
           padding: EdgeInsets.fromLTRB(horizMargin, 0, horizMargin, 0),

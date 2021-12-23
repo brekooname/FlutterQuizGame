@@ -38,7 +38,7 @@ class HistoryAllQuestions extends AllQuestionsService {
     addKO(result, questionConfig);
     addMS(result, questionConfig);
     addNL(result, questionConfig);
-    addNO(result, questionConfig);
+    addNB(result, questionConfig);
     addPL(result, questionConfig);
     addPT(result, questionConfig);
     addRO(result, questionConfig);
@@ -1939,9 +1939,9 @@ class HistoryAllQuestions extends AllQuestionsService {
         questionConfig.cat3, //
         questionConfig.diff3, //
         ["Welk dier uit het stenen tijdperk is nu uitgestorven?::Jachtluipaard##mammoet##antilope##Miereneter::1", "Welk stadium kwam er vóór het stenen tijdperk?::Moddertijd:##dinosaurus tijdperk##Ijstijd##De oerknal::2", "Wat is een hominide?::een gereedschap##een vroege voorouder van de mens##een verzameling oude botten##een vishaak::1", "Vanuit welk continent migreerden mensen over de hele wereld?::Afrika##Azië##Australië##Europa::0", "Welke van de volgende definieert Homo erectus?::denkende man##moderne man##wijze man##oprechte man::3"]);
-  }void addNO(Map<Language, Map<CategoryDifficulty, List<Question>>> result,
+  }void addNB(Map<Language, Map<CategoryDifficulty, List<Question>>> result,
       HistoryGameQuestionConfig questionConfig) {
-    var language = Language.no;
+    var language = Language.nb;
     addQuestions(
         result, //
         language, //

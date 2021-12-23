@@ -32,6 +32,14 @@ class MainActivity : FlutterActivity() {
                 result.success(getAppKey())
             } else if (call.method == "isPro") {
                 result.success(isPro())
+            } else if (call.method == "getAdBannerId") {
+                result.success(getAdBannerId())
+            } else if (call.method == "getAdInterstitialId") {
+                result.success(getAdInterstitialId())
+            } else if (call.method == "getAdRewardedId") {
+                result.success(getAdRewardedId())
+            } else if (call.method == "getLanguageCode") {
+                result.success(getLanguageCode())
             }
         }
     }
@@ -42,6 +50,22 @@ class MainActivity : FlutterActivity() {
         decorView.systemUiVisibility = uiOptions
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
+    }
+
+    private fun getLanguageCode(): String {
+        return resources.getString(R.string.language)
+    }
+
+    private fun getAdBannerId(): String {
+        return resources.getString(R.string.admob_banner_id)
+    }
+
+    private fun getAdInterstitialId(): String {
+        return resources.getString(R.string.admob_inter_id)
+    }
+
+    private fun getAdRewardedId(): String {
+        return resources.getString(R.string.admob_video_id)
     }
 
     private fun getAppTitle(): String {

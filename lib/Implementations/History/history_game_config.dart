@@ -61,7 +61,7 @@ class HistoryGameConfig extends GameConfig {
         return "Permainan Sejarah";
       case Language.nl:
         return "Geschiedenis spel";
-      case Language.no:
+      case Language.nb:
         return "Historie spill";
       case Language.pl:
         return "Gra Historia";
@@ -85,7 +85,8 @@ class HistoryGameConfig extends GameConfig {
         return "Lịch sử";
       case Language.zh:
         return "历史游戏";
+      default:
+        return "History Game";
     }
   }
-
 }

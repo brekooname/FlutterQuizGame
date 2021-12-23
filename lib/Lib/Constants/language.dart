@@ -16,7 +16,7 @@ enum Language {
   ko,
   ms,
   nl,
-  no,
+  nb,
   pl,
   pt,
   ro,
