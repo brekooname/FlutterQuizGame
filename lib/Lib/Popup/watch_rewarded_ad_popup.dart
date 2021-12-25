@@ -52,55 +52,62 @@ class WatchRewardedAdPopup extends StatefulWidget {
 class WatchRewardedAdPopupState extends State<WatchRewardedAdPopup>
     with MyPopup {
   @override
-  AlertDialog build(BuildContext context) {
-    initPopup(context: context);
+  void initState() {
+    initPopup();
+    super.initState();
+  }
 
+  @override
+  AlertDialog build(BuildContext context) {
     refreshTimer();
 
-    return createDialog(Column(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: <Widget>[
-        imageService.getMainImage(
-            imageName: getImageName(),
-            module: "popup",
-            maxWidth: defaultBackgroundImageWidth),
-        SizedBox(height: screenDimensions.h(2)),
-        MyText(
-          text: getText(),
-          maxLines: 3,
-          width: width / 1.2,
-          fontSize: FontConfig.getCustomFontSize(1.2),
-        ),
-        SizedBox(height: screenDimensions.h(5)),
-        Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              MyButton(
-                  text: label.l_yes,
-                  disabled: !widget.isRewardedAdLoaded,
-                  backgroundColor: Colors.lightGreenAccent,
-                  onClick: () {
-                    closePopup(context);
-                    showRewardedAd(context, () {
-                      widget.onUserEarnedReward.call();
-                    });
-                  }),
-              SizedBox(width: screenDimensions.w(1)),
-              widget.isRewardedAdLoaded
-                  ? Container()
-                  : CircularProgressIndicator()
-            ]),
-        SizedBox(height: screenDimensions.h(5)),
-        MyButton(
-          text: label.l_no,
-          backgroundColor: Colors.grey.shade300,
-          onClick: () {
-            closePopup(context);
-          },
-        )
-      ],
-    ));
+    return createDialog(
+      Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: <Widget>[
+          imageService.getMainImage(
+              imageName: getImageName(),
+              module: "popup",
+              maxWidth: defaultBackgroundImageWidth),
+          SizedBox(height: screenDimensions.h(2)),
+          MyText(
+            text: getText(),
+            maxLines: 3,
+            width: width / 1.2,
+            fontSize: FontConfig.getCustomFontSize(1.2),
+          ),
+          SizedBox(height: screenDimensions.h(5)),
+          Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                MyButton(
+                    text: label.l_yes,
+                    disabled: !widget.isRewardedAdLoaded,
+                    backgroundColor: Colors.lightGreenAccent,
+                    onClick: () {
+                      closePopup(context);
+                      showRewardedAd(context, () {
+                        widget.onUserEarnedReward.call();
+                      });
+                    }),
+                SizedBox(width: screenDimensions.w(1)),
+                widget.isRewardedAdLoaded
+                    ? Container()
+                    : CircularProgressIndicator()
+              ]),
+          SizedBox(height: screenDimensions.h(5)),
+          MyButton(
+            text: label.l_no,
+            backgroundColor: Colors.grey.shade300,
+            onClick: () {
+              closePopup(context);
+            },
+          )
+        ],
+      ),
+      context: context,
+    );
   }
 
   void refreshTimer() {

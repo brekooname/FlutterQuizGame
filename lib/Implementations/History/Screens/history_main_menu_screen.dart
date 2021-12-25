@@ -45,6 +45,7 @@ class HistoryMainMenuScreenState extends State<HistoryMainMenuScreen>
   @override
   void initState() {
     initScreen();
+
     RatePopupService ratePopupService = RatePopupService(buildContext: context);
     ratePopupService.showRateAppPopup();
     super.initState();
@@ -52,6 +53,7 @@ class HistoryMainMenuScreenState extends State<HistoryMainMenuScreen>
 
   @override
   Widget build(BuildContext context) {
+
     var gameTitle = GameTitle(
       text: MyApp.appTitle,
       backgroundImageWidth: screenDimensions.w(70),

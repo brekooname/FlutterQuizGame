@@ -13,7 +13,8 @@ class SettingsPopup extends StatefulWidget with MyPopup {
   VoidCallback? resetContent;
   VoidCallback? refreshScreenCallback;
 
-  SettingsPopup({VoidCallback? resetContent, VoidCallback? refreshScreenCallback}) {
+  SettingsPopup(
+      {VoidCallback? resetContent, VoidCallback? refreshScreenCallback}) {
     _settingsLocalStorage = SettingsLocalStorage();
     this.resetContent = resetContent;
     this.refreshScreenCallback = refreshScreenCallback;
@@ -29,6 +30,7 @@ class SettingsPopupState extends State<SettingsPopup> with MyPopup {
 
   @override
   void initState() {
+    initPopup();
     var sideDimen = screenDimensions.w(20);
     soundOn = imageService.getMainImage(
         imageName: "btn_sound_on", module: "buttons", maxWidth: sideDimen);
@@ -46,52 +48,53 @@ class SettingsPopupState extends State<SettingsPopup> with MyPopup {
 
   @override
   AlertDialog build(BuildContext context) {
-    initPopup(context: context);
-
     var vertMargin = screenDimensions.h(2);
-    return createDialog(Column(
-      children: [
-        MyButton(
-          text: label.l_delete_progress,
-          backgroundColor: Colors.red.shade200,
-          onClick: () {
-            closePopup(context);
-            assert(widget.resetContent != null);
-            assert(widget.refreshScreenCallback != null);
-            Future.delayed(
-                Duration.zero,
-                () => showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return ResetContentPopup(
-                          widget.resetContent!, widget.refreshScreenCallback!);
-                    }));
-          },
-        ),
-        SizedBox(height: vertMargin * 2),
-        Container(
-          width: width,
-          height: screenDimensions.h(0.2),
-          color: Colors.grey,
-        ),
-        SizedBox(height: vertMargin * 2),
-        Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              widget._settingsLocalStorage.isSoundOn() ? soundOn : soundOff,
-              CupertinoSwitch(
-                value: widget._settingsLocalStorage.isSoundOn(),
-                onChanged: (value) {
-                  setState(() {
-                    widget._settingsLocalStorage.toggleSound();
-                    Future.delayed(
-                        Duration(milliseconds: 300), () => closePopup(context));
-                  });
-                },
-              ),
-            ]),
-      ],
-    ));
+    return createDialog(
+      Column(
+        children: [
+          MyButton(
+            text: label.l_delete_progress,
+            backgroundColor: Colors.red.shade200,
+            onClick: () {
+              closePopup(context);
+              assert(widget.resetContent != null);
+              assert(widget.refreshScreenCallback != null);
+              Future.delayed(
+                  Duration.zero,
+                  () => showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return ResetContentPopup(widget.resetContent!,
+                            widget.refreshScreenCallback!);
+                      }));
+            },
+          ),
+          SizedBox(height: vertMargin * 2),
+          Container(
+            width: width,
+            height: screenDimensions.h(0.2),
+            color: Colors.grey,
+          ),
+          SizedBox(height: vertMargin * 2),
+          Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                widget._settingsLocalStorage.isSoundOn() ? soundOn : soundOff,
+                CupertinoSwitch(
+                  value: widget._settingsLocalStorage.isSoundOn(),
+                  onChanged: (value) {
+                    setState(() {
+                      widget._settingsLocalStorage.toggleSound();
+                      Future.delayed(Duration(milliseconds: 300),
+                          () => closePopup(context));
+                    });
+                  },
+                ),
+              ]),
+        ],
+      ),
+      context: context,
+    );
   }
 }

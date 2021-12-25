@@ -18,9 +18,13 @@ class ResetContentPopup extends StatefulWidget with MyPopup {
 
 class ResetContentPopupState extends State<ResetContentPopup> with MyPopup {
   @override
-  AlertDialog build(BuildContext context) {
-    initPopup(context: context);
+  void initState() {
+    initPopup();
+    super.initState();
+  }
 
+  @override
+  AlertDialog build(BuildContext context) {
     return createDialog(
       Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -47,6 +51,7 @@ class ResetContentPopupState extends State<ResetContentPopup> with MyPopup {
               },
             ),
           ]),
+      context: context,
     );
   }
 }

@@ -26,8 +26,10 @@ mixin StandardScreen {
   WatchRewardedAdPopup? watchRewardedAdPopup;
   VoidCallback? onUserEarnedReward;
   bool isInterstitialAdLoaded = false;
+  late Image backgroundTexture;
 
   void initScreen({VoidCallback? onUserEarnedReward}) {
+    backgroundTexture = imageService.getSpecificImage(imageName: "background_texture");
     this.onUserEarnedReward = onUserEarnedReward;
     initAds();
   }
@@ -142,8 +144,7 @@ mixin StandardScreen {
       decoration: BoxDecoration(
           image: DecorationImage(
         repeat: ImageRepeat.repeat,
-        image: AssetImage(assetsService.getSpecificAssetPath(
-            assetExtension: "png", assetName: "background_texture")),
+        image: backgroundTexture.image,
       )),
       alignment: Alignment.center,
       child: AspectRatio(

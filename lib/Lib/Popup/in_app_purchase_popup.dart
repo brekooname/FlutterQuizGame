@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Font/font_config.dart';
+import 'package:flutter_app_quiz_game/Lib/SnackBar/snack_bar_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Storage/in_app_purchases_local_storage.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 import 'package:flutter_app_quiz_game/main.dart';
@@ -66,6 +67,8 @@ class _InAppPurchaseState extends State<InAppPurchasePopup> with MyPopup {
 
   @override
   void initState() {
+    initPopup(backgroundImageName: "popup_in_app_purchases_background");
+
     if (!kIsWeb) {
       final Stream<List<PurchaseDetails>> purchaseUpdated =
           widget._inAppPurchase.purchaseStream;
@@ -87,10 +90,6 @@ class _InAppPurchaseState extends State<InAppPurchasePopup> with MyPopup {
 
   @override
   Widget build(BuildContext context) {
-    initPopup(
-        context: context,
-        backgroundImageName: "popup_in_app_purchases_background");
-
     List<Widget> stack = [];
     var popupHeight = screenDimensions.h(45);
     if (_queryProductError == null && _products.isNotEmpty) {
@@ -131,10 +130,13 @@ class _InAppPurchaseState extends State<InAppPurchasePopup> with MyPopup {
       );
     }
 
-    return createDialog(Container(
-        child: Stack(
-      children: stack,
-    )));
+    return createDialog(
+      Container(
+          child: Stack(
+        children: stack,
+      )),
+      context: context,
+    );
   }
 
   Future<void> initStoreInfo() async {
@@ -263,24 +265,28 @@ class _InAppPurchaseState extends State<InAppPurchasePopup> with MyPopup {
   Widget _buildRestoreButton(
       double btnWidth, double iconWidth, double paddingBetween) {
     return MyButton(
-      backgroundColor: Colors.lightBlueAccent,
-      width: btnWidth,
-      customContent: Row(children: [
-        SizedBox(width: paddingBetween),
-        imageService.getMainImage(
-          imageName: "btn_restore_purchase",
-          module: "buttons",
-          maxWidth: iconWidth,
-        ),
-        MyText(
-          text: label.l_restore_purchase,
-          maxLines: 2,
-          width: btnWidth - iconWidth - paddingBetween * 5,
-          alignmentInsideContainer: Alignment.center,
-        ),
-      ]),
-      onClick: () => widget._inAppPurchase.restorePurchases(),
-    );
+        backgroundColor: Colors.lightBlueAccent,
+        width: btnWidth,
+        customContent: Row(children: [
+          SizedBox(width: paddingBetween),
+          imageService.getMainImage(
+            imageName: "btn_restore_purchase",
+            module: "buttons",
+            maxWidth: iconWidth,
+          ),
+          MyText(
+            text: label.l_restore_purchase,
+            maxLines: 2,
+            width: btnWidth - iconWidth - paddingBetween * 5,
+            alignmentInsideContainer: Alignment.center,
+          ),
+        ]),
+        onClick: () {
+          if (kIsWeb) {
+            return;
+          }
+          widget._inAppPurchase.restorePurchases();
+        });
   }
 
   PurchaseParam getPurchaseParam(ProductDetails productDetails) {
@@ -301,8 +307,7 @@ class _InAppPurchaseState extends State<InAppPurchasePopup> with MyPopup {
 
   void deliverProduct(PurchaseDetails purchaseDetails) {
     if (purchaseDetails.productID == InAppPurchasePopup._kNonConsumableId) {
-      widget._inAppPurchaseLocalStorage
-          .savePurchase(purchaseDetails.productID);
+      widget._inAppPurchaseLocalStorage.savePurchase(purchaseDetails.productID);
       showSnackBar(label.l_purchased);
       MyApp.extraContentBought(context);
       setState(() {
@@ -320,20 +325,7 @@ class _InAppPurchaseState extends State<InAppPurchasePopup> with MyPopup {
 
   void showSnackBar(String message) {
     closePopup(context);
-    var snackBar = SnackBar(
-      content: Container(
-        height: screenDimensions.h(5),
-        child: Center(
-            child: MyText(
-          text: message,
-          width: screenDimensions.w(99),
-          maxLines: 1,
-        )),
-      ),
-      duration: Duration(seconds: 3),
-      backgroundColor: Colors.white,
-    );
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    snackBarService.showSnackBar(message, context);
   }
 
   void _listenToPurchaseUpdated(List<PurchaseDetails> purchaseDetailsList) {

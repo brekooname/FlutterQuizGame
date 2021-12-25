@@ -19,8 +19,7 @@ class GameFinishedPopup extends StatelessWidget with MyPopup {
 
   @override
   AlertDialog build(BuildContext context) {
-    initPopup(context: context);
-
+    initPopup();
     return createDialog(
         Column(
           mainAxisAlignment: MainAxisAlignment.end,
@@ -53,6 +52,7 @@ class GameFinishedPopup extends StatelessWidget with MyPopup {
             SizedBox(height: screenDimensions.h(2)),
           ],
         ),
+        context: context,
         onCloseBtnClick: () => onClickGoBack(context));
   }
 

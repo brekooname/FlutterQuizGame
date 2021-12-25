@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
+import 'package:flutter_app_quiz_game/Lib/Internet/internet_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Storage/rate_app_local_storage.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
-import 'package:launch_review/launch_review.dart';
 
 import '../../main.dart';
 import 'my_popup.dart';
@@ -45,42 +45,44 @@ class RatePopupService {
 
 class RateAppPopup extends StatelessWidget with MyPopup {
   RateAppLocalStorage rateAppLocalStorage;
+  InternetService internetService = InternetService();
 
   RateAppPopup(this.rateAppLocalStorage);
 
   @override
   AlertDialog build(BuildContext context) {
-    initPopup(context: context);
+    initPopup();
 
-    return createDialog(Column(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: <Widget>[
-        imageService.getMainImage(
-            imageName: "popup_rate_app_stars_background",
-            module: "popup",
-            maxWidth: defaultBackgroundImageWidth),
-        SizedBox(height: screenDimensions.h(5)),
-        MyText(text: label.l_thanks_for_your_support),
-        SizedBox(height: screenDimensions.h(5)),
-        MyButton(
-          text: label.l_rate_now_the_app,
-          backgroundColor: Colors.lightGreenAccent,
-          onClick: () {
-            rateAppLocalStorage.setAlreadyRated();
-            LaunchReview.launch(
-                androidAppId: MyApp.appRatingPackage,
-                iOSAppId: MyApp.appRatingPackage);
-          },
-        ),
-        SizedBox(height: screenDimensions.h(5)),
-        MyButton(
-          text: label.l_rate_later,
-          backgroundColor: Colors.grey.shade300,
-          onClick: () {
-            closePopup(context);
-          },
-        ),
-      ],
-    ));
+    return createDialog(
+      Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: <Widget>[
+          imageService.getMainImage(
+              imageName: "popup_rate_app_stars_background",
+              module: "popup",
+              maxWidth: defaultBackgroundImageWidth),
+          SizedBox(height: screenDimensions.h(5)),
+          MyText(text: label.l_thanks_for_your_support),
+          SizedBox(height: screenDimensions.h(5)),
+          MyButton(
+            text: label.l_rate_now_the_app,
+            backgroundColor: Colors.lightGreenAccent,
+            onClick: () {
+              rateAppLocalStorage.setAlreadyRated();
+              internetService.openAppUrl(MyApp.appRatingPackage, true);
+            },
+          ),
+          SizedBox(height: screenDimensions.h(5)),
+          MyButton(
+            text: label.l_rate_later,
+            backgroundColor: Colors.grey.shade300,
+            onClick: () {
+              closePopup(context);
+            },
+          ),
+        ],
+      ),
+      context: context,
+    );
   }
 }

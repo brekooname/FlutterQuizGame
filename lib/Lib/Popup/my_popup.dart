@@ -8,23 +8,28 @@ import 'package:flutter_app_quiz_game/Lib/Image/image_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Localization/localization_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Navigation/navigator_service.dart';
 import 'package:flutter_app_quiz_game/Lib/ScreenDimensions/screen_dimensions_service.dart';
+import 'package:flutter_app_quiz_game/Lib/SnackBar/snack_bar_service.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../main.dart';
 
 mixin MyPopup {
   late double width;
-  late BuildContext buildContext;
   late NavigatorService _navigatorService;
+  SnackBarService snackBarService = SnackBarService();
   LocalizationService localizationService = LocalizationService();
   ImageService imageService = ImageService();
   ButtonSize buttonSize = ButtonSize();
   ScreenDimensionsService screenDimensions = ScreenDimensionsService();
-  String? backgroundImageName;
+  AssetImage? backgroundImage;
 
-  void initPopup({required BuildContext context, String? backgroundImageName}) {
-    this.buildContext = context;
-    this.backgroundImageName = backgroundImageName;
+  void initPopup({String? backgroundImageName}) {
+    if (backgroundImageName != null) {
+      this.backgroundImage = imageService.getMainAssetImage(
+        imageName: backgroundImageName,
+        module: "popup",
+      );
+    }
     this._navigatorService = NavigatorService();
     this.width = screenDimensions.w(100);
   }
@@ -32,19 +37,16 @@ mixin MyPopup {
   double get defaultBackgroundImageWidth => width / 3.4;
 
   AlertDialog createDialog(Widget mainContent,
-      {VoidCallback? onCloseBtnClick}) {
+      {required BuildContext context, VoidCallback? onCloseBtnClick}) {
     double margin = screenDimensions.h(3);
 
     DecorationImage? decorationImage;
-    if (backgroundImageName != null) {
+    if (backgroundImage != null) {
       decorationImage = DecorationImage(
         fit: BoxFit.cover,
         colorFilter: ColorFilter.mode(
             Colors.white.withOpacity(0.175), BlendMode.dstATop),
-        image: imageService.getMainAssetImage(
-          imageName: backgroundImageName!,
-          module: "popup",
-        ),
+        image: backgroundImage!,
       );
     }
 
@@ -71,8 +73,7 @@ mixin MyPopup {
                   child: Column(children: [
                     Container(
                         alignment: Alignment.topRight,
-                        child:
-                            createClosePopupBtn(buildContext, onCloseBtnClick)),
+                        child: createClosePopupBtn(context, onCloseBtnClick)),
                     mainContent
                   ]),
                 )),

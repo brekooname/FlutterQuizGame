@@ -66,6 +66,7 @@ class HistoryGameQuestionScreenState extends State<HistoryGameQuestionScreen>
     initScreen(onUserEarnedReward: () {
       onHintButtonClick();
     });
+    super.initState();
   }
 
   @override
