@@ -40,6 +40,8 @@ class MainActivity : FlutterActivity() {
                 result.success(getAdRewardedId())
             } else if (call.method == "getLanguageCode") {
                 result.success(getLanguageCode())
+            } else if (call.method == "getAppRatingPackage") {
+                result.success(getAppRatingPackage())
             }
         }
     }
@@ -50,6 +52,10 @@ class MainActivity : FlutterActivity() {
         decorView.systemUiVisibility = uiOptions
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
+    }
+
+    private fun getAppRatingPackage(): String {
+        return context.packageName
     }
 
     private fun getLanguageCode(): String {

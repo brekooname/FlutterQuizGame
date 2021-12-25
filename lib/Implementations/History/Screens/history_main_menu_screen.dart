@@ -12,6 +12,7 @@ import 'package:flutter_app_quiz_game/Lib/Button/floating_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Color/color_util.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/map_extension.dart';
+import 'package:flutter_app_quiz_game/Lib/Popup/rate_app_popup.dart';
 import 'package:flutter_app_quiz_game/Lib/Popup/settings_popup.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/standard_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/game_title.dart';
@@ -42,8 +43,15 @@ class HistoryMainMenuScreen extends StatefulWidget {
 class HistoryMainMenuScreenState extends State<HistoryMainMenuScreen>
     with StandardScreen {
   @override
+  void initState() {
+    initScreen();
+    RatePopupService ratePopupService = RatePopupService(buildContext: context);
+    ratePopupService.showRateAppPopup();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    initScreen(context);
     var gameTitle = GameTitle(
       text: MyApp.appTitle,
       backgroundImageWidth: screenDimensions.w(70),

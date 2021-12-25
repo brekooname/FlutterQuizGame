@@ -1,7 +1,2 @@
-/* 
-  InfoPlist.strings
-  Runner
-
-  Created by Macbook on 23/12/2021.
-  
-*/
+CFBundleDisplayName="Geschiedenis spel";
+language="nl";

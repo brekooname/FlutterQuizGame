@@ -26,15 +26,10 @@ mixin StandardScreen {
   WatchRewardedAdPopup? watchRewardedAdPopup;
   VoidCallback? onUserEarnedReward;
   bool isInterstitialAdLoaded = false;
-  bool screenInitialized = false;
 
-  void initScreen(BuildContext buildContext,
-      {VoidCallback? onUserEarnedReward}) {
-    if (!screenInitialized) {
-      screenInitialized = true;
-      this.onUserEarnedReward = onUserEarnedReward;
-      initAds(buildContext);
-    }
+  void initScreen({VoidCallback? onUserEarnedReward}) {
+    this.onUserEarnedReward = onUserEarnedReward;
+    initAds();
   }
 
   void disposeScreen() {
@@ -76,7 +71,7 @@ mixin StandardScreen {
     }
   }
 
-  void initAds(BuildContext buildContext) {
+  void initAds() {
     initInterstitialAd();
     if (onUserEarnedReward != null) {
       watchRewardedAdPopup =

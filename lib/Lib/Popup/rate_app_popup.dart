@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Storage/rate_app_local_storage.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
+import 'package:launch_review/launch_review.dart';
 
+import '../../main.dart';
 import 'my_popup.dart';
 
 class RatePopupService {
@@ -26,7 +28,7 @@ class RatePopupService {
   void showRateAppPopup() {
     if (rateAppLocalStorage.isAlreadyRated()) {
       //TODO ---VALUE CHANGED--- should be return
-      return;
+      // return;
     }
 
     if (rateAppLocalStorage.appLaunchedCount() % launches_until_prompt == 0) {
@@ -65,6 +67,9 @@ class RateAppPopup extends StatelessWidget with MyPopup {
           backgroundColor: Colors.lightGreenAccent,
           onClick: () {
             rateAppLocalStorage.setAlreadyRated();
+            LaunchReview.launch(
+                androidAppId: MyApp.appRatingPackage,
+                iOSAppId: MyApp.appRatingPackage);
           },
         ),
         SizedBox(height: screenDimensions.h(5)),

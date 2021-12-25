@@ -13,6 +13,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'Game/Constants/app_id.dart';
 import 'Lib/Constants/language.dart';
+import 'Lib/Popup/rate_app_popup.dart';
 import 'Lib/ScreenDimensions/screen_dimensions_service.dart';
 import 'Lib/Storage/in_app_purchases_local_storage.dart';
 import 'Lib/Storage/rate_app_local_storage.dart';
@@ -48,6 +49,7 @@ class MyApp extends StatefulWidget {
   static late AppId appId;
   static late String appTitle;
   static late String languageCode;
+  static late String appRatingPackage;
   static late String adBannerId;
   static late String adInterstitialId;
   static late String adRewardedId;
@@ -69,11 +71,12 @@ class MyAppState extends State<MyApp> {
     setState(() {});
   }
 
-  init(BuildContext context) async {
+  init() async {
     String appTitle;
     String appKey;
     String languageCode;
     bool isPro;
+    String appRatingPackage;
     String adBannerId;
     String adInterstitialId;
     String adRewardedId;
@@ -83,6 +86,7 @@ class MyAppState extends State<MyApp> {
       appKey = appId.appKey;
       isPro = false;
       languageCode = MyApp._language.name;
+      appRatingPackage = "";
       adBannerId = "";
       adInterstitialId = "";
       adRewardedId = "";
@@ -90,6 +94,7 @@ class MyAppState extends State<MyApp> {
       appTitle = await MyApp.platform.invokeMethod('getAppTitle');
       appKey = await MyApp.platform.invokeMethod('getAppKey');
       isPro = await MyApp.platform.invokeMethod('isPro');
+      appRatingPackage = await MyApp.platform.invokeMethod('getAppRatingPackage');
       adBannerId = await MyApp.platform.invokeMethod('getAdBannerId');
       adInterstitialId =
           await MyApp.platform.invokeMethod('getAdInterstitialId');
@@ -105,6 +110,7 @@ class MyAppState extends State<MyApp> {
         MyApp.appTitle = appTitle;
         MyApp.languageCode = languageCode;
         MyApp.localStorage = localStorage;
+        MyApp.appRatingPackage = appRatingPackage;
         MyApp.adBannerId = adBannerId;
         MyApp.adInterstitialId = adInterstitialId;
         MyApp.adRewardedId = adRewardedId;
@@ -115,6 +121,9 @@ class MyAppState extends State<MyApp> {
       if (!kIsWeb && MyApp.isExtraContentLocked) {
         MobileAds.instance.initialize();
       }
+
+      RateAppLocalStorage rateAppLocalStorage = RateAppLocalStorage();
+      rateAppLocalStorage.incrementAppLaunchedCount();
     }
   }
 
@@ -122,9 +131,6 @@ class MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     Widget widgetToShow;
     if (widget._initCompleted) {
-      RateAppLocalStorage rateAppLocalStorage = RateAppLocalStorage();
-      rateAppLocalStorage.incrementAppLaunchedCount();
-
       var historyGameScreenManager =
           HistoryGameScreenManager(buildContext: context);
       //
@@ -136,7 +142,7 @@ class MyAppState extends State<MyApp> {
       ////
       //
     } else {
-      init(context);
+      init();
       widgetToShow = Container();
     }
 

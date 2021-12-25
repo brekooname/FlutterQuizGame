@@ -62,15 +62,14 @@ class HistoryGameQuestionScreen extends StatefulWidget
 class HistoryGameQuestionScreenState extends State<HistoryGameQuestionScreen>
     with StandardScreen {
   @override
-  Widget build(BuildContext context) {
-    VoidCallback? earnedReward;
-    if (widget.currentQuestionInfo != null) {
-      earnedReward = () {
-        onHintButtonClick(widget.currentQuestionInfo!);
-      };
-    }
-    initScreen(context, onUserEarnedReward: earnedReward);
+  void initState() {
+    initScreen(onUserEarnedReward: () {
+      onHintButtonClick();
+    });
+  }
 
+  @override
+  Widget build(BuildContext context) {
     if (widget.currentQuestionInfo != null) {
       var currentQuestionInfo = widget.currentQuestionInfo!;
       HistoryGameLevelHeader header = createHeader(currentQuestionInfo);
@@ -183,8 +182,8 @@ class HistoryGameQuestionScreenState extends State<HistoryGameQuestionScreen>
         context,
         playedQ > 0 &&
             playedQ %
-                HistoryGameTimelineScreen
-                    .show_interstitial_ad_every_n_questions ==
+                    HistoryGameTimelineScreen
+                        .show_interstitial_ad_every_n_questions ==
                 0, () {
       HistoryGameScreenManager(buildContext: context).showNextGameScreen(
           widget.campaignLevel,
@@ -211,7 +210,7 @@ class HistoryGameQuestionScreenState extends State<HistoryGameQuestionScreen>
               "/" +
               widget.gameContext.totalNrOfQuestionsForCampaignLevel.toString()),
       hintButtonOnClick: () {
-        onHintButtonClick(questionInfo);
+        onHintButtonClick();
       },
     );
     return header;
@@ -221,20 +220,24 @@ class HistoryGameQuestionScreenState extends State<HistoryGameQuestionScreen>
           QuestionDifficulty difficulty, QuestionCategory category) =>
       "questions/images/" + difficulty.name + "/" + category.name;
 
-  void onHintButtonClick(QuestionInfo questionInfo) {
-    widget.gameContext.amountAvailableHints--;
-    widget.historyLocalStorage.setRemainingHints(
-        widget.difficulty, widget.gameContext.amountAvailableHints);
+  void onHintButtonClick() {
+    if (widget.currentQuestionInfo != null) {
+      widget.gameContext.amountAvailableHints--;
+      widget.historyLocalStorage.setRemainingHints(
+          widget.difficulty, widget.gameContext.amountAvailableHints);
 
-    var optionsToDisable = List.of(widget.possibleAnswers);
-    optionsToDisable.shuffle();
-    optionsToDisable.remove(questionInfo.question.correctAnswer);
+      var optionsToDisable = List.of(widget.possibleAnswers);
+      optionsToDisable.shuffle();
+      optionsToDisable
+          .remove(widget.currentQuestionInfo!.question.correctAnswer);
 
-    widget.hintDisabledPossibleAnswers
-        .add(optionsToDisable.first.toLowerCase());
-    widget.hintDisabledPossibleAnswers.add(optionsToDisable.last.toLowerCase());
+      widget.hintDisabledPossibleAnswers
+          .add(optionsToDisable.first.toLowerCase());
+      widget.hintDisabledPossibleAnswers
+          .add(optionsToDisable.last.toLowerCase());
 
-    setState(() {});
+      setState(() {});
+    }
   }
 
   @override
