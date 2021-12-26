@@ -9,7 +9,7 @@ import 'my_popup.dart';
 
 class RatePopupService {
   //TODO ---VALUE CHANGED--- should be 2
-  final int launches_until_prompt = 1;
+  final int launches_until_prompt = 2;
 
   late RateAppLocalStorage rateAppLocalStorage;
 
