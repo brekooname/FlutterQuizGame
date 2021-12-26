@@ -1,12 +1,12 @@
 import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
-import 'package:logger/logger.dart';
+import 'package:flutter_app_quiz_game/Lib/SnackBar/snack_bar_service.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class InternetService {
-  Logger logger = Logger(
-    printer: PrettyPrinter(),
-  );
+  SnackBarService _snackBarService = SnackBarService();
 
   static final InternetService singleton = InternetService.internal();
 
@@ -28,24 +28,38 @@ class InternetService {
     }
   }
 
-  void openAppUrl(String storeAppId, bool rateApp) async {
-    String url = "";
-
+  void openAppUrl(String storeAppId, bool rateApp, BuildContext context) async {
     if (!kIsWeb) {
       if (Platform.isAndroid) {
-        url = url + "market://details?id=";
+        String url = "market://details?id=" + storeAppId;
+        if (await canLaunch(url)) {
+          await launch(url);
+        }
       }
+
       if (Platform.isIOS) {
-        url = url + "itms-apps://itunes.apple.com/xy/app/foo/id";
+        try {
+          int version =
+              int.parse(Platform.operatingSystemVersion.split(".")[0]);
+          String url;
+          if (version < 7) {
+            url =
+                "itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=" +
+                    storeAppId;
+          } else if (version == 7) {
+            url = "itms-apps://itunes.apple.com/app/id" + storeAppId;
+          } else {
+            url = "itms-apps://itunes.apple.com/xy/app/foo/id" +
+                storeAppId +
+                "?action=write-review";
+          }
+          await launch(url);
+        } on Exception catch (exception) {
+          return;
+        } catch (error) {
+          return;
+        }
       }
-      url = url + storeAppId;
-      if (Platform.isIOS && rateApp) {
-        url = url + "?action=write-review";
-      }
-    }
-    logger.d('go to link ' + url);
-    if (await canLaunch(url)) {
-      await launch(url);
     }
   }
 }

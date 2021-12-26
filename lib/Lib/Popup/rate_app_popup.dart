@@ -9,7 +9,7 @@ import 'my_popup.dart';
 
 class RatePopupService {
   //TODO ---VALUE CHANGED--- should be 2
-  final int launches_until_prompt = 2;
+  final int launches_until_prompt = 1;
 
   late RateAppLocalStorage rateAppLocalStorage;
 
@@ -68,8 +68,9 @@ class RateAppPopup extends StatelessWidget with MyPopup {
             text: label.l_rate_now_the_app,
             backgroundColor: Colors.lightGreenAccent,
             onClick: () {
+              closePopup(context);
               rateAppLocalStorage.setAlreadyRated();
-              internetService.openAppUrl(MyApp.appRatingPackage, true);
+              internetService.openAppUrl(MyApp.appRatingPackage, true, context);
             },
           ),
           SizedBox(height: screenDimensions.h(5)),
