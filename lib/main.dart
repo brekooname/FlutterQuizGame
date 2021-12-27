@@ -43,6 +43,7 @@ class MyApp extends StatefulWidget {
   //////
   //
 
+  AdService adService = AdService();
   static const platform = MethodChannel('main.flutter');
   static late double screenWidth;
   static late double screenHeight;
@@ -127,13 +128,14 @@ class MyAppState extends State<MyApp> {
           !InAppPurchaseLocalStorage()
               .isPurchased(appId.gameConfig.extraContentProductId);
       MyApp.gameScreenManager = HistoryGameScreenManager();
-      widget.bannerAd = AdService().initBannerAd();
       widget.backgroundTexture =
           ImageService().getSpecificImage(imageName: "background_texture");
+      if (!kIsWeb && MyApp.isExtraContentLocked) {
+        MobileAds.instance.initialize();
+        widget.adService.initInterstitialAd();
+        widget.bannerAd = widget.adService.initBannerAd();
+      }
     });
-    if (!kIsWeb && MyApp.isExtraContentLocked) {
-      MobileAds.instance.initialize();
-    }
 
     RateAppLocalStorage rateAppLocalStorage = RateAppLocalStorage();
     rateAppLocalStorage.incrementAppLaunchedCount();
@@ -147,15 +149,18 @@ class MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     Widget widgetToShow;
-    //
-    ////
-    widgetToShow = createScreen(MyApp.gameScreenManager, widget.bannerAd);
-    // var campaignLevel = HistoryCampaignLevel().level_0;
-    // widgetToShow = createScreen(historyGameScreenManager.getScreen(campaignLevel,
-    //     historyGameScreenManager.createGameContext(campaignLevel));
-    ////
-    //
-
+    if (widget.initAsyncCompleted) {
+      //
+      ////
+      widgetToShow = createScreen(MyApp.gameScreenManager, widget.bannerAd);
+      // var campaignLevel = HistoryCampaignLevel().level_0;
+      // widgetToShow = createScreen(historyGameScreenManager.getScreen(campaignLevel,
+      //     historyGameScreenManager.createGameContext(campaignLevel));
+      ////
+      //
+    } else {
+      widgetToShow = Container();
+    }
     var materialApp = MaterialApp(
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: kIsWeb

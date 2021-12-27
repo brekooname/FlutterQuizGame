@@ -10,7 +10,8 @@ class AdService {
   //
   //////
   ////////////
-  static const bool isTest = true;
+  //TODO ---VALUE CHANGED--- should be false
+  static const bool isTest = false;
 
   ////////////
   //////
@@ -23,8 +24,6 @@ class AdService {
   static final AdService singleton = AdService.internal();
 
   factory AdService() {
-    singleton.initBannerAd();
-    singleton.initInterstitialAd();
     return singleton;
   }
 
@@ -102,7 +101,7 @@ class AdService {
 
   BannerAd? initBannerAd() {
     BannerAd? bannerAd;
-    if (!kIsWeb && MyApp.isExtraContentLocked) {
+    if (!kIsWeb && bannerAd == null && MyApp.isExtraContentLocked) {
       bannerAd = BannerAd(
         adUnitId: bannerAdUnitId,
         size: AdSize.banner,
