@@ -1,23 +1,23 @@
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_app_quiz_game/Game/Question/Model/question.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_info.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_info_status.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Components/history_game_level_header.dart';
-import 'package:flutter_app_quiz_game/Implementations/History/Constants/history_campaign_level.dart';
+import 'package:flutter_app_quiz_game/Implementations/History/Constants/history_campaign_level_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Constants/history_game_question_config.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Questions/history_game_context.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Service/history_game_local_storage.dart';
-import 'package:flutter_app_quiz_game/Implementations/History/Service/history_game_screen_manager.dart';
 import 'package:flutter_app_quiz_game/Lib/Animation/animation_zoom_in_zoom_out.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/int_extension.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/list_extension.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/map_extension.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/game_screen.dart';
+import 'package:flutter_app_quiz_game/Lib/Screen/game_screen_manager_state.dart';
+import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/standard_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
@@ -25,7 +25,7 @@ import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import '../../../Lib/Button/button_skin_config.dart';
 import '../../../Lib/Font/font_config.dart';
 
-class HistoryGameTimelineScreen extends StatefulWidget
+class HistoryGameTimelineScreen extends StandardScreen
     with GameScreen<HistoryGameContext> {
   static final int show_interstitial_ad_every_n_questions = 5;
   static final int default_questions_to_play_until_next_category = 3;
@@ -41,14 +41,18 @@ class HistoryGameTimelineScreen extends StatefulWidget
   bool animateQuestionText = false;
 
   HistoryGameTimelineScreen(
-      {Key? key,
-      required QuestionDifficulty difficulty,
-      required QuestionCategory category,
-      required HistoryGameContext gameContext,
-      required VoidCallback refreshMainScreenCallback})
-      : super(key: key) {
-    initScreen(HistoryCampaignLevel(), gameContext, difficulty, category,
-        refreshMainScreenCallback);
+    GameScreenManagerState gameScreenManagerState, {
+    Key? key,
+    required QuestionDifficulty difficulty,
+    required QuestionCategory category,
+    required HistoryGameContext gameContext,
+  }) : super(gameScreenManagerState, key: key) {
+    initScreen(
+      HistoryCampaignLevelService(),
+      gameContext,
+      difficulty,
+      category,
+    );
 
     currentQuestionInfo =
         gameContext.gameUser.getRandomQuestion(difficulty, category);
@@ -72,7 +76,7 @@ class HistoryQuestion {
 }
 
 class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
-    with StandardScreen {
+    with ScreenState {
   ItemScrollController itemScrollController = ItemScrollController();
   late Image timelineOptUnknown;
   late Image histAnswWrong;
@@ -80,6 +84,7 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
 
   @override
   void initState() {
+    super.initState();
     initScreen(onUserEarnedReward: () {
       onHintButtonClick();
     });
@@ -90,7 +95,6 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
         maxWidth: getImageWidth(), imageName: "hist_answ_wrong");
     arrowRight = imageService.getSpecificImage(
         imageName: "arrow_right", maxWidth: screenDimensions.w(10));
-    super.initState();
   }
 
   @override
@@ -173,7 +177,7 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
       children: <Widget>[header, Expanded(child: listView)],
     );
 
-    return createScreen(mainColumn);
+    return mainColumn;
   }
 
   Image createImageForQuestion(
@@ -237,7 +241,9 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
     QuestionInfo? mostRecentQ = getMostRecentAnswered();
 
     var header = HistoryGameLevelHeader(
-      onBackButtonRefreshMainScreenCallback: widget.refreshMainScreenCallback,
+      onBackButtonClick: () {
+        widget.gameScreenManagerState.goBack(widget);
+      },
       campaignLevel: widget.campaignLevel,
       questionContainerHeight: screenDimensions.h(18),
       availableHints: widget.gameContext.amountAvailableHints,
@@ -273,14 +279,11 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
     var playedQ = widget.gameLocalStorage.getTotalPlayedQuestions();
     var showOnNrOfQ =
         HistoryGameTimelineScreen.show_interstitial_ad_every_n_questions;
-    if (playedQ > 0 && playedQ % showOnNrOfQ == 0) {
-      adService.showInterstitialAd(context, () {
-        HistoryGameScreenManager(buildContext: context).showNextGameScreen(
-            widget.campaignLevel,
-            widget.gameContext,
-            widget.refreshMainScreenCallback);
-      });
-    }
+    adService.showInterstitialAd(
+        context, playedQ > 0 && playedQ % showOnNrOfQ == 0, () {
+      widget.gameScreenManagerState
+          .showNextGameScreen(widget.campaignLevel, widget.gameContext);
+    });
   }
 
   MyButton createAnswerButton(
@@ -560,11 +563,5 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
 
   int getYear2ForCat1(String yearString) {
     return yearString == "x" ? DateTime.now().year : int.parse(yearString);
-  }
-
-  @override
-  void dispose() {
-    disposeScreen();
-    super.dispose();
   }
 }

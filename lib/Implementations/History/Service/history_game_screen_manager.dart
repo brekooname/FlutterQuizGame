@@ -7,32 +7,65 @@ import 'package:flutter_app_quiz_game/Implementations/History/Questions/history_
 import 'package:flutter_app_quiz_game/Implementations/History/Screens/history_game_question_screen.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Screens/history_game_timeline_screen.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Screens/history_main_menu_screen.dart';
+import 'package:flutter_app_quiz_game/Lib/Popup/rate_app_popup.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/game_screen_manager.dart';
+import 'package:flutter_app_quiz_game/Lib/Screen/game_screen_manager_state.dart';
+import 'package:flutter_app_quiz_game/Lib/Screen/standard_screen.dart';
 
 import 'history_gamecontext_service.dart';
 
-class HistoryGameScreenManager extends GameScreenManager<HistoryGameContext> {
-  static final HistoryGameScreenManager singleton =
-      HistoryGameScreenManager.internal();
-
-  factory HistoryGameScreenManager({required BuildContext buildContext}) {
-    singleton.buildContext = buildContext;
-    return singleton;
-  }
-
-  HistoryGameScreenManager.internal();
-
-@override
-  StatefulWidget getMainScreen() {
-    return HistoryMainMenuScreen();
-  }
+class HistoryGameScreenManager extends GameScreenManager {
   @override
-  StatefulWidget getScreenForConfig(
-      HistoryGameContext gameContext,
-      QuestionDifficulty difficulty,
-      QuestionCategory category,
-      VoidCallback refreshMainScreenCallback) {
-    StatefulWidget goToScreen;
+  State<HistoryGameScreenManager> createState() =>
+      HistoryGameScreenManagerState();
+}
+
+class HistoryGameScreenManagerState extends State<HistoryGameScreenManager>
+    with GameScreenManagerState<HistoryGameContext> {
+  @override
+  void initState() {
+    super.initState();
+    RatePopupService ratePopupService = RatePopupService(buildContext: context);
+    ratePopupService.showRateAppPopup();
+
+    showMainScreen();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return showScreen(widget.currentScreen);
+  }
+
+  @override
+  bool goBack(StandardScreen standardScreen) {
+    if (standardScreen.runtimeType == HistoryMainMenuScreen) {
+      return true;
+    } else {
+      showMainScreen();
+      return false;
+    }
+  }
+
+  @override
+  StandardScreen createMainScreen() {
+    return HistoryMainMenuScreen(this);
+  }
+
+  @override
+  void setCurrentScreenState(StandardScreen statefulWidget) {
+    setState(() {
+      widget.currentScreen = statefulWidget;
+    });
+  }
+
+  @override
+  @protected
+  StandardScreen getScreenForConfig(
+    HistoryGameContext gameContext,
+    QuestionDifficulty difficulty,
+    QuestionCategory category,
+  ) {
+    StandardScreen goToScreen;
     var questionConfig = HistoryGameQuestionConfig();
     //
     ////
@@ -41,23 +74,26 @@ class HistoryGameScreenManager extends GameScreenManager<HistoryGameContext> {
     //
     if ([questionConfig.cat0, questionConfig.cat1].contains(category)) {
       goToScreen = HistoryGameTimelineScreen(
+        this,
+        key: UniqueKey(),
         gameContext: gameContext,
         difficulty: difficulty,
         category: category,
-        refreshMainScreenCallback: refreshMainScreenCallback,
       );
     } else {
       goToScreen = HistoryGameQuestionScreen(
+        this,
+        key: UniqueKey(),
         gameContext: gameContext,
         difficulty: difficulty,
         category: category,
-        refreshMainScreenCallback: refreshMainScreenCallback,
       );
     }
     return goToScreen;
   }
 
   @override
+  @protected
   HistoryGameContext createGameContext(CampaignLevel campaignLevel) {
     return HistoryGameContextService().createGameContext(campaignLevel);
   }

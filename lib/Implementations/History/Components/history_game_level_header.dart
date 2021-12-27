@@ -23,7 +23,7 @@ class HistoryGameLevelHeader extends StatelessWidget {
   double? questionContainerHeight;
   Question? question;
   VoidCallback hintButtonOnClick;
-  VoidCallback onBackButtonRefreshMainScreenCallback;
+  VoidCallback onBackButtonClick;
   bool disableHintBtn;
   CampaignLevel campaignLevel;
   ScreenDimensionsService screenDimensions = ScreenDimensionsService();
@@ -36,7 +36,7 @@ class HistoryGameLevelHeader extends StatelessWidget {
       this.animateQuestionText = false,
       this.disableHintBtn = false,
       required this.hintButtonOnClick,
-      required this.onBackButtonRefreshMainScreenCallback,
+      required this.onBackButtonClick,
       required this.availableHints,
       required this.question});
 
@@ -64,7 +64,8 @@ class HistoryGameLevelHeader extends StatelessWidget {
                 ? questionColor
                 : Colors.grey.shade700,
             width: screenDimensions.w(95),
-            maxLines: question?.category == HistoryGameQuestionConfig().cat0 ? 1 : 2,
+            maxLines:
+                question?.category == HistoryGameQuestionConfig().cat0 ? 1 : 2,
             text: questionPrefixToBeDisplayed ?? "",
             fontSize: FontConfig.getCustomFontSize(1),
           ));
@@ -126,10 +127,6 @@ class HistoryGameLevelHeader extends StatelessWidget {
   }
 
   Widget createScoreHeader(BuildContext context) {
-    var backBtn = MyBackButton(
-      context: context,
-      refreshGoToPageCallback: onBackButtonRefreshMainScreenCallback,
-    );
     var hintBtn = HintButton(
         onClick: this.hintButtonOnClick,
         availableHints: this.availableHints,
@@ -157,7 +154,7 @@ class HistoryGameLevelHeader extends StatelessWidget {
             padding: EdgeInsets.all(screenDimensions.w(1)),
             child: Row(
               children: <Widget>[
-                backBtn,
+                MyBackButton(),
                 SizedBox(width: screenDimensions.w(2)),
                 SizedBox(
                     width: scoreTextWidth,

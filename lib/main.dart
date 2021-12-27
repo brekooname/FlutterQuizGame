@@ -12,8 +12,10 @@ import 'package:in_app_purchase_android/in_app_purchase_android.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'Game/Constants/app_id.dart';
+import 'Lib/Ads/ad_service.dart';
 import 'Lib/Constants/language.dart';
-import 'Lib/Popup/rate_app_popup.dart';
+import 'Lib/Image/image_service.dart';
+import 'Lib/Screen/game_screen_manager.dart';
 import 'Lib/ScreenDimensions/screen_dimensions_service.dart';
 import 'Lib/Storage/in_app_purchases_local_storage.dart';
 import 'Lib/Storage/rate_app_local_storage.dart';
@@ -53,9 +55,12 @@ class MyApp extends StatefulWidget {
   static late String adBannerId;
   static late String adInterstitialId;
   static late String adRewardedId;
+  static late GameScreenManager gameScreenManager;
   static bool isExtraContentLocked = true;
 
-  bool _initCompleted = false;
+  BannerAd? bannerAd;
+  bool initAsyncCompleted = false;
+  late Image backgroundTexture;
 
   static void extraContentBought(BuildContext context) {
     context.findAncestorStateOfType<MyAppState>()!.extraContentBought();
@@ -66,12 +71,17 @@ class MyApp extends StatefulWidget {
 }
 
 class MyAppState extends State<MyApp> {
-  void extraContentBought() {
-    MyApp.isExtraContentLocked = false;
-    setState(() {});
+  @override
+  void initState() {
+    super.initState();
+    init().then((value) => {
+          setState(() {
+            widget.initAsyncCompleted = true;
+          })
+        });
   }
 
-  init() async {
+  Future<void> init() async {
     String appTitle;
     String appKey;
     String languageCode;
@@ -94,57 +104,57 @@ class MyAppState extends State<MyApp> {
       appTitle = await MyApp.platform.invokeMethod('getAppTitle');
       appKey = await MyApp.platform.invokeMethod('getAppKey');
       isPro = await MyApp.platform.invokeMethod('isPro');
-      appRatingPackage = await MyApp.platform.invokeMethod('getAppRatingPackage');
+      appRatingPackage =
+          await MyApp.platform.invokeMethod('getAppRatingPackage');
       adBannerId = await MyApp.platform.invokeMethod('getAdBannerId');
       adInterstitialId =
           await MyApp.platform.invokeMethod('getAdInterstitialId');
       adRewardedId = await MyApp.platform.invokeMethod('getAdRewardedId');
       languageCode = await MyApp.platform.invokeMethod('getLanguageCode');
     }
-    if (!widget._initCompleted) {
-      var appId = AppIds().getAppId(appKey);
-      SharedPreferences localStorage = await SharedPreferences.getInstance();
-      setState(() {
-        widget._initCompleted = true;
-        MyApp.appId = appId;
-        MyApp.appTitle = appTitle;
-        MyApp.languageCode = languageCode;
-        MyApp.localStorage = localStorage;
-        MyApp.appRatingPackage = appRatingPackage;
-        MyApp.adBannerId = adBannerId;
-        MyApp.adInterstitialId = adInterstitialId;
-        MyApp.adRewardedId = adRewardedId;
-        MyApp.isExtraContentLocked = !isPro &&
-            !InAppPurchaseLocalStorage()
-                .isPurchased(appId.gameConfig.extraContentProductId);
-      });
-      if (!kIsWeb && MyApp.isExtraContentLocked) {
-        MobileAds.instance.initialize();
-      }
-
-      RateAppLocalStorage rateAppLocalStorage = RateAppLocalStorage();
-      rateAppLocalStorage.incrementAppLaunchedCount();
+    var appId = AppIds().getAppId(appKey);
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+    setState(() {
+      MyApp.appId = appId;
+      MyApp.appTitle = appTitle;
+      MyApp.languageCode = languageCode;
+      MyApp.localStorage = localStorage;
+      MyApp.appRatingPackage = appRatingPackage;
+      MyApp.adBannerId = adBannerId;
+      MyApp.adInterstitialId = adInterstitialId;
+      MyApp.adRewardedId = adRewardedId;
+      MyApp.isExtraContentLocked = !isPro &&
+          !InAppPurchaseLocalStorage()
+              .isPurchased(appId.gameConfig.extraContentProductId);
+      MyApp.gameScreenManager = HistoryGameScreenManager();
+      widget.bannerAd = AdService().initBannerAd();
+      widget.backgroundTexture =
+          ImageService().getSpecificImage(imageName: "background_texture");
+    });
+    if (!kIsWeb && MyApp.isExtraContentLocked) {
+      MobileAds.instance.initialize();
     }
+
+    RateAppLocalStorage rateAppLocalStorage = RateAppLocalStorage();
+    rateAppLocalStorage.incrementAppLaunchedCount();
+  }
+
+  void extraContentBought() {
+    MyApp.isExtraContentLocked = false;
+    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
     Widget widgetToShow;
-    if (widget._initCompleted) {
-      var historyGameScreenManager =
-          HistoryGameScreenManager(buildContext: context);
-      //
-      ////
-      widgetToShow = historyGameScreenManager.getMainScreen();
-      // var campaignLevel = HistoryCampaignLevel().level_0;
-      // widgetToShow = historyGameScreenManager.getScreen(campaignLevel,
-      //     historyGameScreenManager.createGameContext(campaignLevel));
-      ////
-      //
-    } else {
-      init();
-      widgetToShow = Container();
-    }
+    //
+    ////
+    widgetToShow = createScreen(MyApp.gameScreenManager, widget.bannerAd);
+    // var campaignLevel = HistoryCampaignLevel().level_0;
+    // widgetToShow = createScreen(historyGameScreenManager.getScreen(campaignLevel,
+    //     historyGameScreenManager.createGameContext(campaignLevel));
+    ////
+    //
 
     var materialApp = MaterialApp(
         localizationsDelegates: AppLocalizations.localizationsDelegates,
@@ -173,5 +183,55 @@ class MyAppState extends State<MyApp> {
         }));
 
     return materialApp;
+  }
+
+  Widget createScreen(GameScreenManager gameScreenManager, BannerAd? bannerAd) {
+    Container bannerAdContainer;
+    if (kIsWeb && MyApp.isExtraContentLocked) {
+      bannerAdContainer = Container(
+        color: Colors.red,
+        width: AdSize.banner.width.toDouble(),
+        height: AdSize.banner.height.toDouble(),
+        alignment: Alignment.center,
+      );
+    } else if (bannerAd != null && MyApp.isExtraContentLocked) {
+      bannerAdContainer = Container(
+        child: AdWidget(ad: bannerAd),
+        width: AdSize.banner.width.toDouble(),
+        height: AdSize.banner.height.toDouble(),
+        alignment: Alignment.center,
+      );
+    } else {
+      bannerAdContainer = Container();
+    }
+    return WillPopScope(
+      onWillPop: () async {
+        var currentScreen = gameScreenManager.currentScreen;
+        return currentScreen!.gameScreenManagerState.goBack(currentScreen);
+      },
+      child: Container(
+        decoration: BoxDecoration(
+            image: DecorationImage(
+          repeat: ImageRepeat.repeat,
+          image: widget.backgroundTexture.image,
+        )),
+        alignment: Alignment.center,
+        child: AspectRatio(
+          aspectRatio: 9 / 16,
+          child: Container(
+            alignment: Alignment.center,
+            child: Column(
+              children: <Widget>[
+                bannerAdContainer,
+                Expanded(
+                    child: widget.initAsyncCompleted
+                        ? gameScreenManager
+                        : Container())
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }

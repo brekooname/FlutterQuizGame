@@ -11,26 +11,19 @@ mixin GameScreen<TGameContext extends GameContext> {
   CampaignLevel? _campaignLevel;
   QuestionDifficulty? _difficulty;
   QuestionCategory? _category;
-  VoidCallback? _refreshMainScreenCallback;
   GameLocalStorage gameLocalStorage = GameLocalStorage();
 
   void initScreen(
-      CampaignLevelService campaignLevelService,
-      TGameContext gameContext,
-      QuestionDifficulty difficulty,
-      QuestionCategory category,
-      VoidCallback refreshMainScreenCallback) {
+    CampaignLevelService campaignLevelService,
+    TGameContext gameContext,
+    QuestionDifficulty difficulty,
+    QuestionCategory category,
+  ) {
     this._difficulty = difficulty;
     this._category = category;
     this._gameContext = gameContext;
-    this._refreshMainScreenCallback = refreshMainScreenCallback;
     this._campaignLevel =
         campaignLevelService.campaignLevel(difficulty, category);
-  }
-
-  VoidCallback get refreshMainScreenCallback {
-    assert(_refreshMainScreenCallback != null);
-    return _refreshMainScreenCallback!;
   }
 
   TGameContext get gameContext {

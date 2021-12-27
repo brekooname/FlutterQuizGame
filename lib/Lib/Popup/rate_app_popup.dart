@@ -28,7 +28,7 @@ class RatePopupService {
   void showRateAppPopup() {
     if (rateAppLocalStorage.isAlreadyRated()) {
       //TODO ---VALUE CHANGED--- should be return
-      // return;
+      return;
     }
 
     if (rateAppLocalStorage.appLaunchedCount() % launches_until_prompt == 0) {

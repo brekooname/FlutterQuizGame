@@ -69,9 +69,11 @@ class AdService {
     throw UnsupportedError("Unsupported platform");
   }
 
-  void showInterstitialAd(
-      BuildContext buildContext, VoidCallback executeAfterClose) {
-    if (MyApp.isExtraContentLocked && isInterstitialAdLoaded) {
+  void showInterstitialAd(BuildContext buildContext, bool showInterstitialAd,
+      VoidCallback executeAfterClose) {
+    if (MyApp.isExtraContentLocked &&
+        isInterstitialAdLoaded &&
+        showInterstitialAd) {
       isInterstitialAdLoaded = false;
       interstitialAd?.show();
       interstitialAd?.fullScreenContentCallback = FullScreenContentCallback(
@@ -94,7 +96,7 @@ class AdService {
         watchRewardedAdPopup!.rewardedAd?.dispose();
       }
       watchRewardedAdPopup =
-          WatchRewardedAdPopup(onUserEarnedReward: onUserEarnedReward!);
+          WatchRewardedAdPopup(onUserEarnedReward: onUserEarnedReward);
     }
   }
 

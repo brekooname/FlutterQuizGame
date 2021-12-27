@@ -7,20 +7,21 @@ import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.da
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_info.dart';
 import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/question_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Components/history_game_level_header.dart';
-import 'package:flutter_app_quiz_game/Implementations/History/Constants/history_campaign_level.dart';
+import 'package:flutter_app_quiz_game/Implementations/History/Constants/history_campaign_level_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Questions/history_game_context.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Service/history_game_local_storage.dart';
-import 'package:flutter_app_quiz_game/Implementations/History/Service/history_game_screen_manager.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/button_skin_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Color/color_util.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/game_screen.dart';
+import 'package:flutter_app_quiz_game/Lib/Screen/game_screen_manager_state.dart';
+import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/standard_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
 import 'history_game_timeline_screen.dart';
 
-class HistoryGameQuestionScreen extends StatefulWidget
+class HistoryGameQuestionScreen extends StandardScreen
     with GameScreen<HistoryGameContext> {
   late HistoryLocalStorage historyLocalStorage;
   late QuestionInfo? currentQuestionInfo;
@@ -31,14 +32,18 @@ class HistoryGameQuestionScreen extends StatefulWidget
   Set<String> possibleAnswers = HashSet();
 
   HistoryGameQuestionScreen(
-      {Key? key,
-      required QuestionDifficulty difficulty,
-      required QuestionCategory category,
-      required HistoryGameContext gameContext,
-      required VoidCallback refreshMainScreenCallback})
-      : super(key: key) {
-    initScreen(HistoryCampaignLevel(), gameContext, difficulty, category,
-        refreshMainScreenCallback);
+    GameScreenManagerState gameScreenManagerState, {
+    Key? key,
+    required QuestionDifficulty difficulty,
+    required QuestionCategory category,
+    required HistoryGameContext gameContext,
+  }) : super(gameScreenManagerState, key: key) {
+    initScreen(
+      HistoryCampaignLevelService(),
+      gameContext,
+      difficulty,
+      category,
+    );
     historyLocalStorage = HistoryLocalStorage();
 
     currentQuestionInfo =
@@ -60,13 +65,13 @@ class HistoryGameQuestionScreen extends StatefulWidget
 }
 
 class HistoryGameQuestionScreenState extends State<HistoryGameQuestionScreen>
-    with StandardScreen {
+    with ScreenState {
   @override
   void initState() {
+    super.initState();
     initScreen(onUserEarnedReward: () {
       onHintButtonClick();
     });
-    super.initState();
   }
 
   @override
@@ -107,9 +112,9 @@ class HistoryGameQuestionScreenState extends State<HistoryGameQuestionScreen>
         ],
       );
 
-      return createScreen(mainColumn);
+      return mainColumn;
     } else {
-      return createScreen(Container());
+      return Container();
     }
   }
 
@@ -181,19 +186,18 @@ class HistoryGameQuestionScreenState extends State<HistoryGameQuestionScreen>
     var playedQ = widget.gameLocalStorage.getTotalPlayedQuestions();
     var showOnNrOfQ =
         HistoryGameTimelineScreen.show_interstitial_ad_every_n_questions;
-    if (playedQ > 0 && playedQ % showOnNrOfQ == 0) {
-      adService.showInterstitialAd(context, () {
-        HistoryGameScreenManager(buildContext: context).showNextGameScreen(
-            widget.campaignLevel,
-            widget.gameContext,
-            widget.refreshMainScreenCallback);
-      });
-    }
+    adService.showInterstitialAd(
+        context, playedQ > 0 && playedQ % showOnNrOfQ == 0, () {
+      widget.gameScreenManagerState
+          .showNextGameScreen(widget.campaignLevel, widget.gameContext);
+    });
   }
 
   HistoryGameLevelHeader createHeader(QuestionInfo questionInfo) {
     var header = HistoryGameLevelHeader(
-      onBackButtonRefreshMainScreenCallback: widget.refreshMainScreenCallback,
+      onBackButtonClick: () {
+        widget.gameScreenManagerState.goBack(widget);
+      },
       campaignLevel: widget.campaignLevel,
       availableHints: widget.gameContext.amountAvailableHints,
       question: questionInfo.question,
@@ -236,11 +240,5 @@ class HistoryGameQuestionScreenState extends State<HistoryGameQuestionScreen>
 
       setState(() {});
     }
-  }
-
-  @override
-  void dispose() {
-    disposeScreen();
-    super.dispose();
   }
 }
