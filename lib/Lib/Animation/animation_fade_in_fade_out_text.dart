@@ -15,7 +15,8 @@ class InternalAnimatedWidget extends AnimatedWidget {
   Widget build(BuildContext context) {
     final animation = listenable as Animation<double>;
 
-    return Opacity(
+    return AnimatedOpacity(
+        duration: Duration(milliseconds: 100),
         opacity: Tween<double>(begin: 1, end: 0.1).evaluate(animation),
         child: toAnimateText);
   }

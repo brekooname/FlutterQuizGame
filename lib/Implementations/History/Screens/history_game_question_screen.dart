@@ -179,18 +179,16 @@ class HistoryGameQuestionScreenState extends State<HistoryGameQuestionScreen>
 
   void goToNextGameScreen(BuildContext context) {
     var playedQ = widget.gameLocalStorage.getTotalPlayedQuestions();
-    showInterstitialAd(
-        context,
-        playedQ > 0 &&
-            playedQ %
-                    HistoryGameTimelineScreen
-                        .show_interstitial_ad_every_n_questions ==
-                0, () {
-      HistoryGameScreenManager(buildContext: context).showNextGameScreen(
-          widget.campaignLevel,
-          widget.gameContext,
-          widget.refreshMainScreenCallback);
-    });
+    var showOnNrOfQ =
+        HistoryGameTimelineScreen.show_interstitial_ad_every_n_questions;
+    if (playedQ > 0 && playedQ % showOnNrOfQ == 0) {
+      adService.showInterstitialAd(context, () {
+        HistoryGameScreenManager(buildContext: context).showNextGameScreen(
+            widget.campaignLevel,
+            widget.gameContext,
+            widget.refreshMainScreenCallback);
+      });
+    }
   }
 
   HistoryGameLevelHeader createHeader(QuestionInfo questionInfo) {
@@ -201,7 +199,6 @@ class HistoryGameQuestionScreenState extends State<HistoryGameQuestionScreen>
       question: questionInfo.question,
       animateScore: widget.correctAnswerPressed,
       disableHintBtn: widget.hintDisabledPossibleAnswers.isNotEmpty,
-      watchRewardedAdPopup: watchRewardedAdPopup,
       score: formatTextWithOneParam(
           label.l_score_param0,
           widget.historyLocalStorage

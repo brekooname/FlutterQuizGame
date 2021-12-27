@@ -24,7 +24,6 @@ class HistoryGameLevelHeader extends StatelessWidget {
   Question? question;
   VoidCallback hintButtonOnClick;
   VoidCallback onBackButtonRefreshMainScreenCallback;
-  WatchRewardedAdPopup? watchRewardedAdPopup;
   bool disableHintBtn;
   CampaignLevel campaignLevel;
   ScreenDimensionsService screenDimensions = ScreenDimensionsService();
@@ -33,7 +32,6 @@ class HistoryGameLevelHeader extends StatelessWidget {
       {required this.score,
       required this.campaignLevel,
       this.questionContainerHeight,
-      this.watchRewardedAdPopup,
       this.animateScore = false,
       this.animateQuestionText = false,
       this.disableHintBtn = false,
@@ -137,7 +135,6 @@ class HistoryGameLevelHeader extends StatelessWidget {
         availableHints: this.availableHints,
         disabled: disableHintBtn,
         watchRewardedAdForHint: MyApp.isExtraContentLocked,
-        watchRewardedAdPopup: watchRewardedAdPopup,
         showAvailableHintsText: true);
 
     var scoreTextWidth = screenDimensions.w(60);

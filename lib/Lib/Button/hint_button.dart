@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app_quiz_game/Lib/Ads/ad_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Animation/animation_zoom_in_zoom_out.dart';
 import 'package:flutter_app_quiz_game/Lib/Image/image_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Internet/internet_service.dart';
@@ -12,12 +13,12 @@ import 'my_button.dart';
 
 class HintButton extends StatefulWidget {
   ScreenDimensionsService screenDimensions = ScreenDimensionsService();
+  AdService _adService = AdService();
   late Size buttonSize;
   VoidCallback onClick;
   bool disabled;
   bool showAvailableHintsText;
   bool watchRewardedAdForHint;
-  WatchRewardedAdPopup? watchRewardedAdPopup;
   int availableHints;
 
   HintButton(
@@ -26,12 +27,11 @@ class HintButton extends StatefulWidget {
       required this.onClick,
       this.disabled = false,
       this.watchRewardedAdForHint = false,
-      this.watchRewardedAdPopup,
       this.showAvailableHintsText = false}) {
     var side = screenDimensions.w(14);
     this.buttonSize = buttonSize ?? Size(side, side);
     assert(!watchRewardedAdForHint ||
-        watchRewardedAdForHint && watchRewardedAdPopup != null);
+        watchRewardedAdForHint && _adService.watchRewardedAdPopup != null);
   }
 
   @override
@@ -63,7 +63,7 @@ class HintButtonState extends State<HintButton> {
                         barrierDismissible: false,
                         context: context,
                         builder: (BuildContext context) {
-                          return widget.watchRewardedAdPopup!;
+                          return widget._adService.watchRewardedAdPopup!;
                         }));
               }
             : widget.onClick,

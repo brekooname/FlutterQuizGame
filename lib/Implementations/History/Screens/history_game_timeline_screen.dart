@@ -241,7 +241,6 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
       campaignLevel: widget.campaignLevel,
       questionContainerHeight: screenDimensions.h(18),
       availableHints: widget.gameContext.amountAvailableHints,
-      watchRewardedAdPopup: watchRewardedAdPopup,
       question: shouldGoToNextGameScreen()
           ? mostRecentQ?.question
           : widget.currentQuestionInfo?.question,
@@ -272,18 +271,16 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
 
   void goToNextGameScreen(BuildContext context) {
     var playedQ = widget.gameLocalStorage.getTotalPlayedQuestions();
-    showInterstitialAd(
-        context,
-        playedQ > 0 &&
-            playedQ %
-                    HistoryGameTimelineScreen
-                        .show_interstitial_ad_every_n_questions ==
-                0, () {
-      HistoryGameScreenManager(buildContext: context).showNextGameScreen(
-          widget.campaignLevel,
-          widget.gameContext,
-          widget.refreshMainScreenCallback);
-    });
+    var showOnNrOfQ =
+        HistoryGameTimelineScreen.show_interstitial_ad_every_n_questions;
+    if (playedQ > 0 && playedQ % showOnNrOfQ == 0) {
+      adService.showInterstitialAd(context, () {
+        HistoryGameScreenManager(buildContext: context).showNextGameScreen(
+            widget.campaignLevel,
+            widget.gameContext,
+            widget.refreshMainScreenCallback);
+      });
+    }
   }
 
   MyButton createAnswerButton(
