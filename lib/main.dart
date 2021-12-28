@@ -36,7 +36,8 @@ class MyApp extends StatefulWidget {
   //
   //////
   ////////////
-  static const String _appKey = "history";
+  // static const String _appKey = "history";
+  static const String _appKey = "geoquiz";
   static const Language _language = Language.en;
 
   ////////////
@@ -127,7 +128,7 @@ class MyAppState extends State<MyApp> {
       MyApp.isExtraContentLocked = !isPro &&
           !InAppPurchaseLocalStorage()
               .isPurchased(appId.gameConfig.extraContentProductId);
-      MyApp.gameScreenManager = HistoryGameScreenManager();
+      MyApp.gameScreenManager = appId.gameConfig.gameScreenManager;
       widget.backgroundTexture =
           ImageService().getSpecificImage(imageName: "background_texture");
       if (!kIsWeb && MyApp.isExtraContentLocked) {

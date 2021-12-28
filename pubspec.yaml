@@ -106,6 +106,10 @@ flutter:
     - assets/main/popup/
     - assets/main/audio/
     ########################
+    ###### GEOQUIZ #########
+    ########################
+    - assets/implementations/geoquiz/
+    ########################
     ###### HISTORY #########
     ########################
     - assets/implementations/history/

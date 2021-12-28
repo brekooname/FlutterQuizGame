@@ -1,6 +1,7 @@
 import 'dart:collection';
 
 import 'package:flutter_app_quiz_game/Game/GameType/game_config.dart';
+import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/geoquiz_game_config.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/history_game_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/map_extension.dart';
 
@@ -12,6 +13,7 @@ class AppIds {
   factory AppIds() {
     //
     singleton.appIds.putIfAbsent("history", () => HistoryGameConfig());
+    singleton.appIds.putIfAbsent("geoquiz", () => GeoQuizGameConfig());
     //
     return singleton;
   }
