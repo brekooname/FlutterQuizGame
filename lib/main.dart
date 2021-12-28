@@ -37,7 +37,7 @@ class MyApp extends StatefulWidget {
   //////
   ////////////
   static const String _appKey = "history";
-  static const Language _language = Language.nb;
+  static const Language _language = Language.en;
 
   ////////////
   //////
@@ -143,11 +143,20 @@ class MyAppState extends State<MyApp> {
 
   void extraContentBought() {
     MyApp.isExtraContentLocked = false;
+    MyApp.gameScreenManager.currentScreen!.gameScreenManagerState
+        .showMainScreen();
     setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
+    Widget widgetToShow = _getWidgetToShow();
+    var materialApp = _buildMaterialApp(context, widgetToShow);
+
+    return materialApp;
+  }
+
+  Widget _getWidgetToShow() {
     Widget widgetToShow;
     if (widget.initAsyncCompleted) {
       //
@@ -161,16 +170,13 @@ class MyAppState extends State<MyApp> {
     } else {
       widgetToShow = Container();
     }
-    var materialApp = MaterialApp(
+    return widgetToShow;
+  }
+
+  MaterialApp _buildMaterialApp(BuildContext context, Widget widgetToShow) {
+    return MaterialApp(
         localizationsDelegates: AppLocalizations.localizationsDelegates,
-        supportedLocales: kIsWeb
-            ? [
-                Locale(AppLocalizations.supportedLocales
-                        .contains(Locale(MyApp._language.name))
-                    ? MyApp._language.name
-                    : Language.en.name)
-              ]
-            : AppLocalizations.supportedLocales,
+        supportedLocales: _getSupportedLocales(),
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           textTheme: GoogleFonts.robotoTextTheme(
@@ -186,29 +192,21 @@ class MyAppState extends State<MyApp> {
           MyApp.appLocalizations = AppLocalizations.of(context)!;
           return widgetToShow;
         }));
+  }
 
-    return materialApp;
+  List<Locale> _getSupportedLocales() {
+    return kIsWeb
+        ? [
+            Locale(AppLocalizations.supportedLocales
+                    .contains(Locale(MyApp._language.name))
+                ? MyApp._language.name
+                : Language.en.name)
+          ]
+        : AppLocalizations.supportedLocales;
   }
 
   Widget createScreen(GameScreenManager gameScreenManager, BannerAd? bannerAd) {
-    Container bannerAdContainer;
-    if (kIsWeb && MyApp.isExtraContentLocked) {
-      bannerAdContainer = Container(
-        color: Colors.red,
-        width: AdSize.banner.width.toDouble(),
-        height: AdSize.banner.height.toDouble(),
-        alignment: Alignment.center,
-      );
-    } else if (bannerAd != null && MyApp.isExtraContentLocked) {
-      bannerAdContainer = Container(
-        child: AdWidget(ad: bannerAd),
-        width: AdSize.banner.width.toDouble(),
-        height: AdSize.banner.height.toDouble(),
-        alignment: Alignment.center,
-      );
-    } else {
-      bannerAdContainer = Container();
-    }
+    Container bannerAdContainer = createBannerAdContainer(bannerAd);
     return WillPopScope(
       onWillPop: () async {
         var currentScreen = gameScreenManager.currentScreen;
@@ -238,5 +236,27 @@ class MyAppState extends State<MyApp> {
         ),
       ),
     );
+  }
+
+  Container createBannerAdContainer(BannerAd? bannerAd) {
+    Container bannerAdContainer;
+    if (kIsWeb && MyApp.isExtraContentLocked) {
+      bannerAdContainer = Container(
+        color: Colors.red,
+        width: AdSize.banner.width.toDouble(),
+        height: AdSize.banner.height.toDouble(),
+        alignment: Alignment.center,
+      );
+    } else if (bannerAd != null && MyApp.isExtraContentLocked) {
+      bannerAdContainer = Container(
+        child: AdWidget(ad: bannerAd),
+        width: AdSize.banner.width.toDouble(),
+        height: AdSize.banner.height.toDouble(),
+        alignment: Alignment.center,
+      );
+    } else {
+      bannerAdContainer = Container();
+    }
+    return bannerAdContainer;
   }
 }
