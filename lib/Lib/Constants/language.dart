@@ -1,4 +1,5 @@
 enum Language {
+  ar,
   cs,
   da,
   de,
@@ -7,6 +8,7 @@ enum Language {
   es,
   fi,
   fr,
+  he,
   hi,
   hr,
   hu,

@@ -26,9 +26,10 @@ class UniqueAnswersQuestionService extends QuestionService {
 
   @override
   List<String> getCorrectAnswers(Question question) {
-    int correctAnswer = int.parse(questionParser
+    int correctAnswer = questionParser
         .getCorrectAnswersFromRawString(question.rawString)
-        .first);
+        .first
+        .parseToInt();
     List<String> answerOptions = getAllAnswerOptionsForQuestionAsList(question);
     return [answerOptions[correctAnswer]];
   }

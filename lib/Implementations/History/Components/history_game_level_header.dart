@@ -80,13 +80,7 @@ class HistoryGameLevelHeader extends StatelessWidget {
         maxLines:
             question?.category == HistoryGameQuestionConfig().cat3 ? 4 : 2,
         text: questionToBeDisplayed ?? "",
-        fontSize: FontConfig.getCustomFontSize([
-          Language.ja.name,
-          Language.ko.name,
-          Language.th.name
-        ].contains(MyApp.languageCode)
-            ? 0.8
-            : 1.1),
+        fontSize: FontConfig.getCustomFontSize(1.1),
       );
       questionText = Padding(
           padding: EdgeInsets.fromLTRB(horizMargin, 0, horizMargin, 0),

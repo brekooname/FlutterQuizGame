@@ -32,6 +32,8 @@ class HistoryGameConfig extends GameConfig {
   @override
   String getTitle(Language language) {
     switch (language) {
+      case Language.ar:
+        return "لعبة التاريخ";
       case Language.cs:
         return "Dějiny";
       case Language.da:
@@ -48,6 +50,8 @@ class HistoryGameConfig extends GameConfig {
         return "Historiapeli";
       case Language.fr:
         return "Jeu d'histoire";
+      case Language.he:
+        return "משחק היסטוריה";
       case Language.hi:
         return "इतिहास";
       case Language.hr:

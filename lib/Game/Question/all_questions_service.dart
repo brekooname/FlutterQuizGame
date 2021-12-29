@@ -77,7 +77,7 @@ abstract class AllQuestionsService {
     List<Question> result = [];
     for (int i = 0; i < strings.length; i++) {
       result.add(Question(i, categoryDifficulty.difficulty,
-          categoryDifficulty.category, strings[i]));
+          categoryDifficulty.category, strings[i].replaceAll("‎", "")));
     }
     return result;
   }

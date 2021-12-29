@@ -7,8 +7,8 @@ import 'package:flutter_app_quiz_game/Lib/Extensions/string_extension.dart';
 import '../question_parser.dart';
 
 class DependentAnswersQuestionParser extends QuestionParser {
-
-  static final DependentAnswersQuestionParser singleton = DependentAnswersQuestionParser.internal();
+  static final DependentAnswersQuestionParser singleton =
+      DependentAnswersQuestionParser.internal();
 
   factory DependentAnswersQuestionParser() {
     return singleton;
@@ -30,7 +30,7 @@ class DependentAnswersQuestionParser extends QuestionParser {
 
   int getPrefixCodeForQuestion(String questionRawString) {
     var val = questionRawString.split(":")[3].trim();
-    return val.isEmpty ? 0 : int.parse(val);
+    return val.isEmpty ? 0 : val.parseToInt();
   }
 
   List<int> getAnswerReferences(String questionRawString) {
@@ -39,9 +39,7 @@ class DependentAnswersQuestionParser extends QuestionParser {
         .split(",")
         .where((element) => element.trim().isNotEmpty)
         .toList();
-    return answers.isEmpty
-        ? []
-        : answers.map((e) => int.parse(e.trim())).toList();
+    return answers.isEmpty ? [] : answers.map((e) => e.parseToInt()).toList();
   }
 
   Set<String> getAllPossibleAnswersForQuestion(

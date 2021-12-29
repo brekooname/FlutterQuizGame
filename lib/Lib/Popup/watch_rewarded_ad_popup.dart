@@ -53,14 +53,13 @@ class WatchRewardedAdPopupState extends State<WatchRewardedAdPopup>
     with MyPopup {
   @override
   void initState() {
-    initPopup();
     super.initState();
+    initPopup();
+    refreshTimer();
   }
 
   @override
   AlertDialog build(BuildContext context) {
-    refreshTimer();
-
     return createDialog(
       Column(
         mainAxisAlignment: MainAxisAlignment.end,
@@ -113,8 +112,10 @@ class WatchRewardedAdPopupState extends State<WatchRewardedAdPopup>
   void refreshTimer() {
     Timer.periodic(Duration(seconds: 1), (timer) {
       if (widget.isRewardedAdLoaded) {
-        setState(() {});
         timer.cancel();
+        if (mounted) {
+          setState(() {});
+        }
       }
     });
   }
@@ -122,7 +123,10 @@ class WatchRewardedAdPopupState extends State<WatchRewardedAdPopup>
   void showRewardedAd(
       BuildContext buildContext, VoidCallback executeAfterClose) {
     if (kIsWeb) {
+      widget.isRewardedAdLoaded = false;
       executeAfterClose.call();
+      widget.initRewardedAd();
+      refreshTimer();
       return;
     }
     if (widget.rewardedAd != null && widget.isRewardedAdLoaded) {

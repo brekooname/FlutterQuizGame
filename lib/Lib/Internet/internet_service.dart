@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:flutter_app_quiz_game/Lib/Extensions/string_extension.dart';
 import 'package:flutter_app_quiz_game/Lib/SnackBar/snack_bar_service.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -40,7 +41,7 @@ class InternetService {
       if (Platform.isIOS) {
         try {
           int version =
-              int.parse(Platform.operatingSystemVersion.split(".")[0]);
+              Platform.operatingSystemVersion.split(".")[0].parseToInt();
           String url;
           if (version < 7) {
             url =

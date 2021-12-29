@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_app_quiz_game/Implementations/History/Service/history_game_screen_manager.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/enum_extension.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -36,8 +35,8 @@ class MyApp extends StatefulWidget {
   //
   //////
   ////////////
-  // static const String _appKey = "history";
-  static const String _appKey = "geoquiz";
+  static const String _appKey = "history";
+  // static const String _appKey = "geoquiz";
   static const Language _language = Language.en;
 
   ////////////
@@ -96,7 +95,7 @@ class MyAppState extends State<MyApp> {
       var appId = AppIds().getAppId(MyApp._appKey);
       appTitle = appId.gameConfig.getTitle(MyApp._language);
       appKey = appId.appKey;
-      isPro = false;
+      isPro = true;
       languageCode = MyApp._language.name;
       appRatingPackage = "";
       adBannerId = "";
