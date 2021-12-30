@@ -38,10 +38,12 @@ class HistoryGameTimelineScreen extends StandardScreen
   late QuestionInfo? currentQuestionInfo;
 
   Map<int, HistoryQuestion> questions = HashMap<int, HistoryQuestion>();
+  Map<QuestionCategory, List<int>> shownImagesForTimeLineHints = HashMap();
   bool correctAnswerPressed = false;
   bool alreadyWentToNextScreen = false;
   bool animateQuestionText = false;
   int? lasPressedQuestionIndex;
+  Set<QuestionInfo> randomQuestionsToDisplay = HashSet();
 
   HistoryGameTimelineScreen(
     GameScreenManagerState gameScreenManagerState, {
@@ -57,9 +59,35 @@ class HistoryGameTimelineScreen extends StandardScreen
       category,
     );
 
+    List<QuestionInfo> allAvailableQuestions = gameContext.gameUser
+        .getOpenQuestionsForConfig(difficulty, category)
+        .toList();
     currentQuestionInfo =
         gameContext.gameUser.getRandomQuestion(difficulty, category);
+
+    if (currentQuestionInfo != null) {
+      randomQuestionsToDisplay =
+          getRandomIndexToDisplay(currentQuestionInfo!, allAvailableQuestions);
+    }
+
     gameLocalStorage.incrementTotalPlayedQuestions();
+  }
+
+  Set<QuestionInfo> getRandomIndexToDisplay(
+      QuestionInfo questionInfo, List<QuestionInfo> allAvailableQuestions) {
+    Set<QuestionInfo> res = HashSet();
+    res.add(questionInfo);
+    int totalNrOfQuestions = 4;
+    if (allAvailableQuestions.length <= totalNrOfQuestions) {
+      res.addAll(allAvailableQuestions);
+    } else {
+      while (res.length < totalNrOfQuestions &&
+          res.length <= allAvailableQuestions.length) {
+        res.add(allAvailableQuestions
+            .elementAt(Random().nextInt(allAvailableQuestions.length)));
+      }
+    }
+    return res;
   }
 
   @override
@@ -111,25 +139,10 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
 
   @override
   Widget build(BuildContext context) {
-    var allQuestionsForConfig = widget.gameContext.gameUser
-        .getAllQuestionsForConfig(widget.difficulty, widget.category)
-        .where((element) =>
-            element.status == QuestionInfoStatus.OPEN ||
-            element.question.index == (widget.lasPressedQuestionIndex ?? -1))
-        .toList();
-
-    if (!shouldGoToNextGameScreen()) {
-      allQuestionsForConfig = allQuestionsForConfig
-          .where((element) => element.status == QuestionInfoStatus.OPEN)
-          .toList();
-    }
-    allQuestionsForConfig
-        .sort((a, b) => a.question.index.compareTo(b.question.index));
-
     int zoomInZoomOutAnswerDuration = 500;
     Size answerBtnSize = getButtonSizeForCat();
 
-    for (QuestionInfo qi in allQuestionsForConfig) {
+    for (QuestionInfo qi in widget.randomQuestionsToDisplay) {
       var disabled = false;
 
       bool? correctAnswer;
@@ -189,7 +202,7 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
 
   Image createImageForQuestion(
       int qIndex, double maxHeight, bool isWrongAnswer) {
-    Image image = widget.gameContext.shownImagesForTimeLineHints
+    Image image = widget.shownImagesForTimeLineHints
             .getOrDefault<QuestionCategory, List<int>>(
                 widget.category, []).contains(qIndex)
         ? imageService.getSpecificImage(
@@ -310,9 +323,7 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
             setState(() {
               if (correctAnswerOptionText == optionTextToDisplay) {
                 audioPlayer.playSuccess();
-                var imagesForTimeLineHints =
-                    widget.gameContext.shownImagesForTimeLineHints;
-                imagesForTimeLineHints
+                widget.shownImagesForTimeLineHints
                     .putIfAbsent(widget.category, () => [])
                     .add(questionIndex);
                 widget.gameContext.gameUser.setWonQuestion(currentQuestionInfo);
@@ -407,84 +418,13 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
       widget.historyLocalStorage.setRemainingHints(
           widget.difficulty, widget.gameContext.amountAvailableHints);
 
-      var currentQuestionIndex = currentQuestionInfo.question.index;
-
-      List<int> availableQuestionsToShowImages = widget.gameContext.gameUser
-          .getOpenQuestionsForConfig(widget.difficulty, widget.category)
-          .map((e) => e.question.index)
-          .toList();
-      availableQuestionsToShowImages.sort((a, b) => a.compareTo(b));
-
-      var imagesToShowForHint = 3;
-
-      Set<int> randomIndexes = getRandomIndexToDisplay(
-          availableQuestionsToShowImages.indexOf(currentQuestionIndex),
-          availableQuestionsToShowImages.length,
-          imagesToShowForHint);
-      List<int> imagesToShow = randomIndexes
-          .map((e) => availableQuestionsToShowImages.elementAt(e))
-          .toList();
-      imagesToShow.sort((a, b) => a.compareTo(b));
-
-      itemScrollController.scrollTo(
-          index: getRevertedIndex(randomIndexes.reduce(max)),
-          duration: Duration(
-              milliseconds:
-                  HistoryGameTimelineScreen.scroll_to_item_duration_millis));
-
-      widget.gameContext.shownImagesForTimeLineHints
+      widget.shownImagesForTimeLineHints
           .putIfAbsent(widget.category, () => [])
-          .addAll(imagesToShow);
-      for (int qImgToShowIndex in imagesToShow) {
-        widget.historyLocalStorage.setTimelineShownImagesQuestion(
-            widget.difficulty, widget.category, qImgToShowIndex);
-      }
+          .addAll(widget.randomQuestionsToDisplay.map((e) => e.question.index));
       setState(() {
         widget.animateQuestionText = false;
       });
     }
-  }
-
-  Set<int> getRandomIndexToDisplay(
-      int mainIndex, int arrayLength, int nrOfTotalIndexes) {
-    Set<int> res = HashSet();
-    res.add(mainIndex);
-    if (arrayLength == 0) {
-      return res;
-    } else if (arrayLength == 1) {
-      res.add(0);
-    } else if (arrayLength == 2) {
-      res.add(0);
-      res.add(1);
-    } else if (arrayLength == 3) {
-      res.add(0);
-      res.add(1);
-      res.add(2);
-    } else if (mainIndex == 0) {
-      while (res.length < nrOfTotalIndexes && res.length <= arrayLength) {
-        res.add(res.reduce(max) + 1);
-      }
-    } else if (mainIndex == arrayLength - 1) {
-      while (res.length < nrOfTotalIndexes && res.length <= arrayLength) {
-        res.add(res.reduce(min) - 1);
-      }
-    } else {
-      int bufferAroundMainIndex = 2;
-      while (res.length < nrOfTotalIndexes && res.length <= arrayLength) {
-        var nextInt = Random().nextInt(bufferAroundMainIndex) + 1;
-        int randomNr;
-        if (Random().nextBool()) {
-          randomNr = mainIndex - nextInt;
-        } else {
-          randomNr = mainIndex + nextInt;
-        }
-        if (randomNr < 0 || randomNr > arrayLength - 1) {
-          continue;
-        }
-        res.add(randomNr);
-      }
-    }
-    return res;
   }
 
   Widget createOptionItemCat0(

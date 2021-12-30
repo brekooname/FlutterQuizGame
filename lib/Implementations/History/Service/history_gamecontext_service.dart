@@ -45,35 +45,15 @@ class HistoryGameContextService {
         HistoryAllQuestions()
             .getAllQuestionsForDifficulty(campaignLevel.difficulty)
             .length);
-    historyGameContext.shownImagesForTimeLineHints =
-        getShownImagesForTimeline(questions);
     return historyGameContext;
-  }
-
-  Map<QuestionCategory, List<int>> getShownImagesForTimeline(
-      List<Question> questions) {
-    Map<QuestionCategory, List<int>> res = HashMap();
-
-    for (Question q in questions) {
-      if (historyLocalStorage.isTimelineImageShown(q)) {
-        if (res.containsKey(q.category)) {
-          res.get<QuestionCategory, List<int>>(q.category)!.add(q.index);
-        } else {
-          res.putIfAbsent(q.category, () => [q.index]);
-        }
-      }
-    }
-
-    return res;
   }
 
   int calculateNrOfHints(int totalNrOfQuestions, CampaignLevel campaignLevel) {
     int currentHints =
         historyLocalStorage.getRemainingHints(campaignLevel.difficulty);
     if (currentHints == -1) {
-      historyLocalStorage.setRemainingHints(campaignLevel.difficulty, 99);
-      // historyLocalStorage.setRemainingHints(campaignLevel.difficulty,
-      //     (totalNrOfQuestions / (MyApp.isExtraContentLocked ? 8 : 4)).round());
+      historyLocalStorage.setRemainingHints(campaignLevel.difficulty,
+          (totalNrOfQuestions / (MyApp.isExtraContentLocked ? 8 : 4)).round());
     }
     return historyLocalStorage.getRemainingHints(campaignLevel.difficulty);
   }

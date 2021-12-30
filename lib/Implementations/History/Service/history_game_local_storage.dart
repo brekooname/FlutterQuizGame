@@ -21,23 +21,23 @@ class HistoryLocalStorage extends MyLocalStorage {
     return localStorage.getStringList(_getLostQuestionsFieldName(diff)) ?? [];
   }
 
-  List<String> _getTimelineShownImages(QuestionDifficulty diff) {
-    return localStorage
-            .getStringList(_getTimelineShownImagesHintFieldName(diff)) ??
-        [];
-  }
+  // List<String> _getTimelineShownImages(QuestionDifficulty diff) {
+  //   return localStorage
+  //           .getStringList(_getTimelineShownImagesHintFieldName(diff)) ??
+  //       [];
+  // }
 
-  void setTimelineShownImagesQuestion(
-      QuestionDifficulty diff, QuestionCategory cat, int qIndex) {
-    updateList(diff, cat, qIndex, _getTimelineShownImages(diff),
-        _getTimelineShownImagesHintFieldName(diff));
-  }
-
-  bool isTimelineImageShown(Question question) {
-    List<String> list = _getTimelineShownImages(question.difficulty);
-    return list.contains(getQuestionStorageKey(
-        question.category, question.difficulty, question.index));
-  }
+  // void setTimelineShownImagesQuestion(
+  //     QuestionDifficulty diff, QuestionCategory cat, int qIndex) {
+  //   updateList(diff, cat, qIndex, _getTimelineShownImages(diff),
+  //       _getTimelineShownImagesHintFieldName(diff));
+  // }
+  //
+  // bool isTimelineImageShown(Question question) {
+  //   List<String> list = _getTimelineShownImages(question.difficulty);
+  //   return list.contains(getQuestionStorageKey(
+  //       question.category, question.difficulty, question.index));
+  // }
 
   int getRemainingHints(QuestionDifficulty diff) {
     return localStorage.getInt(_getRemainingHintsFieldName(diff)) ?? -1;
@@ -104,12 +104,12 @@ class HistoryLocalStorage extends MyLocalStorage {
     return localStorageName + "_" + difficulty.name + "_RemainingHints";
   }
 
-  String _getTimelineShownImagesHintFieldName(QuestionDifficulty difficulty) {
-    return localStorageName +
-        "_" +
-        difficulty.name +
-        "_TimelineShownImagesHint";
-  }
+  // String _getTimelineShownImagesHintFieldName(QuestionDifficulty difficulty) {
+  //   return localStorageName +
+  //       "_" +
+  //       difficulty.name +
+  //       "_TimelineShownImagesHint";
+  // }
 
   void clearAll() {
     for (var diff in HistoryGameQuestionConfig().difficulties) {
@@ -120,7 +120,7 @@ class HistoryLocalStorage extends MyLocalStorage {
 
   void resetLevel(QuestionDifficulty diff) {
     localStorage.setStringList(_getWonQuestionsFieldName(diff), []);
-    localStorage.setStringList(_getTimelineShownImagesHintFieldName(diff), []);
+    // localStorage.setStringList(_getTimelineShownImagesHintFieldName(diff), []);
     localStorage.setInt(_getRemainingHintsFieldName(diff), -1);
   }
 }
