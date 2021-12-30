@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_app_quiz_game/Game/Game/campaign_level.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
+import 'package:flutter_app_quiz_game/Game/Question/Model/question_info_status.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Constants/history_game_question_config.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Questions/history_game_context.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Screens/history_game_question_screen.dart';
@@ -29,6 +30,16 @@ class HistoryGameScreenManagerState extends State<HistoryGameScreenManager>
     ratePopupService.showRateAppPopup();
 
     showMainScreen();
+  }
+
+  @override
+  void showNextGameScreen(
+      CampaignLevel campaignLevel, HistoryGameContext gameContext) {
+    gameContext.gameUser
+        .getAllQuestions([QuestionInfoStatus.LOST]).forEach((element) {
+      gameContext.gameUser.resetQuestion(element);
+    });
+    super.showNextGameScreen(campaignLevel, gameContext);
   }
 
   @override

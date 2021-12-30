@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_app_quiz_game/Implementations/History/Constants/history_campaign_level_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/enum_extension.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -36,6 +37,7 @@ class MyApp extends StatefulWidget {
   //////
   ////////////
   static const String _appKey = "history";
+
   // static const String _appKey = "geoquiz";
   static const Language _language = Language.en;
 
@@ -162,9 +164,12 @@ class MyAppState extends State<MyApp> {
       //
       ////
       widgetToShow = createScreen(MyApp.gameScreenManager, widget.bannerAd);
-      // var campaignLevel = HistoryCampaignLevel().level_0;
-      // widgetToShow = createScreen(historyGameScreenManager.getScreen(campaignLevel,
-      //     historyGameScreenManager.createGameContext(campaignLevel));
+      Future.delayed(Duration(milliseconds: 100), () {
+        var campaignLevel = HistoryCampaignLevelService().level_0;
+        MyApp.gameScreenManager.currentScreen!.gameScreenManagerState
+            .showNewGameScreen(campaignLevel);
+        widgetToShow = createScreen(MyApp.gameScreenManager, widget.bannerAd);
+      });
       ////
       //
     } else {

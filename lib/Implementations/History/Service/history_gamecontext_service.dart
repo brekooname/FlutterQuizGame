@@ -28,14 +28,15 @@ class HistoryGameContextService {
   HistoryGameContext createGameContext(CampaignLevel campaignLevel) {
     List<String> wonQuestions =
         historyLocalStorage.getWonQuestions(campaignLevel.difficulty);
-    var questions = _questionCollectorService
-        .getAllQuestionsForCategoriesAndDifficulties(
-          [campaignLevel.difficulty],
-          campaignLevel.category,
-        )
-        .where((q) => !wonQuestions.contains(historyLocalStorage
-            .getQuestionStorageKey(q.category, q.difficulty, q.index)))
-        .toList();
+    var questions =
+        _questionCollectorService.getAllQuestionsForCategoriesAndDifficulties(
+      [campaignLevel.difficulty],
+      campaignLevel.category,
+    ).where((q) {
+      var questionStorageKey = historyLocalStorage.getQuestionStorageKey(
+          q.category, q.difficulty, q.index);
+      return !wonQuestions.contains(questionStorageKey);
+    }).toList();
     var gameContext = GameContextService()
         .createGameContextWithHintsAndQuestions(
             calculateNrOfHints(questions.length, campaignLevel), questions);
@@ -70,8 +71,9 @@ class HistoryGameContextService {
     int currentHints =
         historyLocalStorage.getRemainingHints(campaignLevel.difficulty);
     if (currentHints == -1) {
-      historyLocalStorage.setRemainingHints(campaignLevel.difficulty,
-          (totalNrOfQuestions / (MyApp.isExtraContentLocked ? 8 : 4)).round());
+      historyLocalStorage.setRemainingHints(campaignLevel.difficulty, 99);
+      // historyLocalStorage.setRemainingHints(campaignLevel.difficulty,
+      //     (totalNrOfQuestions / (MyApp.isExtraContentLocked ? 8 : 4)).round());
     }
     return historyLocalStorage.getRemainingHints(campaignLevel.difficulty);
   }

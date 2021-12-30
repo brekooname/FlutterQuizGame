@@ -166,6 +166,8 @@ class HistoryGameQuestionScreenState extends State<HistoryGameQuestionScreen>
                   audioPlayer.playFail();
                   widget.wrongPressedAnswer = answerBtnText;
                   widget.gameContext.gameUser.setLostQuestion(questionInfo);
+                  widget.historyLocalStorage
+                      .setLostQuestion(questionInfo.question);
                 }
               });
 

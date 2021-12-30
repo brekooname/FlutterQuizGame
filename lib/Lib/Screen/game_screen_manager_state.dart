@@ -76,10 +76,6 @@ mixin GameScreenManagerState<TGameContext extends GameContext> {
   QuestionCategory? _getNotPlayedRandomQuestionCategory(
       TGameContext gameContext) {
     var allQuestions = gameContext.gameUser.getAllQuestions([]);
-    allQuestions
-        .where((element) => element.status == QuestionInfoStatus.OPEN)
-        .length
-        .toString();
     List<QuestionCategory> availableCategories = List.of(allQuestions
         .where((element) => element.status == QuestionInfoStatus.OPEN)
         .map((e) => e.question.category)

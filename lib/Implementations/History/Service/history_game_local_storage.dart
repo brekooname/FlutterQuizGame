@@ -17,6 +17,10 @@ class HistoryLocalStorage extends MyLocalStorage {
     return localStorage.getStringList(_getWonQuestionsFieldName(diff)) ?? [];
   }
 
+  List<String> getLostQuestions(QuestionDifficulty diff) {
+    return localStorage.getStringList(_getLostQuestionsFieldName(diff)) ?? [];
+  }
+
   List<String> _getTimelineShownImages(QuestionDifficulty diff) {
     return localStorage
             .getStringList(_getTimelineShownImagesHintFieldName(diff)) ??
@@ -25,13 +29,8 @@ class HistoryLocalStorage extends MyLocalStorage {
 
   void setTimelineShownImagesQuestion(
       QuestionDifficulty diff, QuestionCategory cat, int qIndex) {
-    List<String> list = _getTimelineShownImages(diff);
-    var qKey = getQuestionStorageKey(cat, diff, qIndex);
-    if (!list.contains(qKey)) {
-      list.add(qKey);
-    }
-    localStorage.setStringList(
-        _getTimelineShownImagesHintFieldName(diff), list);
+    updateList(diff, cat, qIndex, _getTimelineShownImages(diff),
+        _getTimelineShownImagesHintFieldName(diff));
   }
 
   bool isTimelineImageShown(Question question) {
@@ -58,17 +57,30 @@ class HistoryLocalStorage extends MyLocalStorage {
     localStorage.setInt(_getTotalWonQuestionsFieldName(diff), val);
   }
 
+  void setLostQuestion(Question question) {
+    updateList(
+        question.difficulty,
+        question.category,
+        question.index,
+        getLostQuestions(question.difficulty),
+        _getLostQuestionsFieldName(question.difficulty));
+  }
+
   void setWonQuestion(Question question) {
     List<String> list = getWonQuestions(question.difficulty);
-    var qKey = getQuestionStorageKey(
-        question.category, question.difficulty, question.index);
-    if (!list.contains(qKey)) {
-      list.add(qKey);
-    }
-    localStorage.setStringList(
-        _getWonQuestionsFieldName(question.difficulty), list);
+    updateList(question.difficulty, question.category, question.index, list,
+        _getWonQuestionsFieldName(question.difficulty));
     if (list.length > getTotalWonQuestions(question.difficulty)) {
       setTotalWonQuestions(question.difficulty, list.length);
+    }
+  }
+
+  void updateList(QuestionDifficulty diff, QuestionCategory cat, int qIndex,
+      List<String> list, String fieldName) {
+    var qKey = getQuestionStorageKey(cat, diff, qIndex);
+    if (!list.contains(qKey)) {
+      list.add(qKey);
+      localStorage.setStringList(fieldName, list);
     }
   }
 
@@ -78,6 +90,10 @@ class HistoryLocalStorage extends MyLocalStorage {
 
   String _getWonQuestionsFieldName(QuestionDifficulty difficulty) {
     return localStorageName + "_" + difficulty.name + "_finishedQ";
+  }
+
+  String _getLostQuestionsFieldName(QuestionDifficulty difficulty) {
+    return localStorageName + "_" + difficulty.name + "_finishedLostQ";
   }
 
   String _getTotalWonQuestionsFieldName(QuestionDifficulty difficulty) {
