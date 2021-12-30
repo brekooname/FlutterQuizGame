@@ -269,6 +269,7 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
       question: shouldGoToNextGameScreen()
           ? mostRecentQ?.question
           : widget.currentQuestionInfo?.question,
+      disableHintBtn: widget.shownImagesForTimeLineHints.isNotEmpty,
       animateScore: widget.correctAnswerPressed,
       animateQuestionText: widget.animateQuestionText &&
           widget.questionsToPlayUntilNextCategory != 0,
