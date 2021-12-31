@@ -6,9 +6,6 @@ import 'package:flutter_app_quiz_game/Lib/Animation/animation_fade_in_fade_out_t
 import 'package:flutter_app_quiz_game/Lib/Animation/animation_zoom_in_zoom_out_text.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/hint_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_back_button.dart';
-import 'package:flutter_app_quiz_game/Lib/Constants/language.dart';
-import 'package:flutter_app_quiz_game/Lib/Extensions/enum_extension.dart';
-import 'package:flutter_app_quiz_game/Lib/Popup/watch_rewarded_ad_popup.dart';
 import 'package:flutter_app_quiz_game/Lib/ScreenDimensions/screen_dimensions_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 

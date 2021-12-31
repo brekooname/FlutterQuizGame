@@ -91,11 +91,12 @@ class AdService {
 
   void initRewardedAd(VoidCallback? onUserEarnedReward) {
     if (onUserEarnedReward != null) {
-      if (watchRewardedAdPopup != null) {
-        watchRewardedAdPopup!.rewardedAd?.dispose();
+      if (watchRewardedAdPopup == null) {
+        watchRewardedAdPopup =
+            WatchRewardedAdPopup(onUserEarnedReward: onUserEarnedReward);
+      } else {
+        watchRewardedAdPopup!.onUserEarnedReward = onUserEarnedReward;
       }
-      watchRewardedAdPopup =
-          WatchRewardedAdPopup(onUserEarnedReward: onUserEarnedReward);
     }
   }
 
