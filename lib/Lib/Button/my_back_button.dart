@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Lib/Constants/contrast.dart';
 import 'package:flutter_app_quiz_game/Lib/Image/image_service.dart';
 import 'package:flutter_app_quiz_game/Lib/ScreenDimensions/screen_dimensions_service.dart';
+import 'dart:math' as math;
 
 import '../../Lib/Button/button_skin_config.dart';
 import '../../Lib/Font/font_config.dart';
@@ -20,7 +21,7 @@ class MyBackButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var btn = MyButton(
+    Widget btn = MyButton(
         size: _button_size,
         onClick: () {
           var currentScreen = MyApp.gameScreenManager.currentScreen;
@@ -35,6 +36,13 @@ class MyBackButton extends StatelessWidget {
               maxWidth: _button_size.width)),
         ),
         fontConfig: FontConfig());
+
+    if (FontConfig.isRtlLanguage) {
+      btn = Transform.rotate(
+        angle: -math.pi,
+        child: btn,
+      );
+    }
 
     return btn;
   }
