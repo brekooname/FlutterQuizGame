@@ -26,7 +26,6 @@ class RatePopupService {
   RatePopupService.internal();
 
   void showRateAppPopup() {
-    return;
     if (rateAppLocalStorage.isAlreadyRated()) {
       //TODO ---VALUE CHANGED--- should be return
       return;

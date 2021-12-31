@@ -112,6 +112,7 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
   late Image timelineOptUnknown;
   late Image histAnswWrong;
   late Image timelineArrow;
+  late Size answerBtnSize;
 
   @override
   void initState() {
@@ -119,11 +120,12 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
     initScreen(onUserEarnedReward: () {
       onHintButtonClick();
     });
+    answerBtnSize = getButtonSizeForCat();
 
     timelineOptUnknown = imageService.getSpecificImage(
-        maxWidth: getImageWidth(), imageName: "timeline_opt_unknown");
+        maxWidth: getImageWidth(), maxHeight: getImageMaxHeight(), imageName: "timeline_opt_unknown");
     histAnswWrong = imageService.getSpecificImage(
-        maxWidth: getImageWidth(), imageName: "hist_answ_wrong");
+        maxWidth: getImageWidth(), maxHeight: getImageMaxHeight(), imageName: "hist_answ_wrong");
     timelineArrow = imageService.getSpecificImage(
         imageName: FontConfig.isRtlLanguage ? "arrow_left" : "arrow_right",
         maxWidth: screenDimensions.w(10));
@@ -140,7 +142,6 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
   @override
   Widget build(BuildContext context) {
     int zoomInZoomOutAnswerDuration = 500;
-    Size answerBtnSize = getButtonSizeForCat();
 
     for (QuestionInfo qi in widget.randomQuestionsToDisplay) {
       var disabled = false;
@@ -180,10 +181,8 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
           disabledAnswerBtnBackgroundColor,
           correctAnswerText == null ? "" : getOptionText(correctAnswerText),
           getOptionText(questionAnswer));
-      var imgRatio = 1.3;
-      var maxHeight = answerBtnSize.height * imgRatio;
       Image image = createImageForQuestion(
-          qIndex, maxHeight, correctAnswer != null && !correctAnswer);
+          qIndex, correctAnswer != null && !correctAnswer);
       widget.questions[qIndex] = HistoryQuestion(
           image, answerBtn, correctAnswer, questionAnswer, qIndex);
     }
@@ -200,14 +199,20 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
     return mainColumn;
   }
 
+  double getImageMaxHeight() {
+    var imgRatio = 1.3;
+    var maxHeight = answerBtnSize.height * imgRatio;
+    return maxHeight;
+  }
+
   Image createImageForQuestion(
-      int qIndex, double maxHeight, bool isWrongAnswer) {
+      int qIndex, bool isWrongAnswer) {
     Image image = widget.shownImagesForTimeLineHints
             .getOrDefault<QuestionCategory, List<int>>(
                 widget.category, []).contains(qIndex)
         ? imageService.getSpecificImage(
             maxWidth: getImageWidth(),
-            maxHeight: maxHeight,
+            maxHeight: getImageMaxHeight(),
             imageName: "i" + qIndex.toString(),
             module: getQuestionImagePath(widget.difficulty, widget.category))
         : isWrongAnswer
@@ -233,6 +238,7 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
               question.correctAnswer,
               question.image,
               question.questionIndex,
+              index,
               zoomInZoomOutAnswerDuration);
         } else {
           return createOptionItemCat1(
@@ -241,6 +247,7 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
               question.correctAnswer,
               question.image,
               question.questionIndex,
+              index,
               zoomInZoomOutAnswerDuration);
         }
       },
@@ -433,16 +440,19 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
       Size answerBtnSize,
       bool? correctAnswer,
       Image questionImg,
-      int index,
+      int questionIndex,
+      int listItemIndex,
       int millisForZoomInZoomOut) {
     var mostRecentAnswered = getMostRecentAnswered();
-    Widget answerPart = createBtnAnswerWithAnimation(mostRecentAnswered, index,
+    Widget answerPart = createBtnAnswerWithAnimation(mostRecentAnswered, questionIndex,
         millisForZoomInZoomOut, answerBtnSize, answerBtn);
 
+    var margin = screenDimensions.w(3);
     var item = Row(children: <Widget>[
       Spacer(),
       Padding(
-          padding: EdgeInsets.all(screenDimensions.w(3)), child: answerPart),
+          padding: EdgeInsets.fromLTRB(margin, 0, margin, 0),
+          child: answerPart),
       getQuestionSeparator(answerBtnSize, correctAnswer),
       questionImg,
       Spacer()
@@ -450,7 +460,7 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
 
     Color color = getColorForAnswerStatus(correctAnswer);
     return Container(
-        child: item, color: getColorOpacityForItemRowNr(index, color));
+        child: item, color: getColorOpacityForItemRowNr(listItemIndex, color));
   }
 
   Color getColorOpacityForItemRowNr(int index, Color color) =>
@@ -474,7 +484,7 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
         ),
         Container(
             width: screenDimensions.w(2),
-            height: answerBtnSize.height * 2,
+            height: answerBtnSize.height * 1.6,
             color: correctAnswer == null
                 ? Colors.blueGrey
                 : correctAnswer
@@ -501,10 +511,11 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
       Size answerBtnSize,
       bool? correctAnswer,
       Image questionImg,
-      int index,
+      int questionIndex,
+      int listItemIndex,
       int millisForZoomInZoomOut) {
     var mostRecentAnswered = getMostRecentAnswered();
-    Widget answerPart = createBtnAnswerWithAnimation(mostRecentAnswered, index,
+    Widget answerPart = createBtnAnswerWithAnimation(mostRecentAnswered, questionIndex,
         millisForZoomInZoomOut, answerBtnSize, answerBtn);
 
     var item = Row(children: <Widget>[
@@ -518,7 +529,7 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
 
     Color color = getColorForAnswerStatus(correctAnswer);
     return Container(
-        child: item, color: getColorOpacityForItemRowNr(index, color));
+        child: item, color: getColorOpacityForItemRowNr(listItemIndex, color));
   }
 
   Widget createBtnAnswerWithAnimation(

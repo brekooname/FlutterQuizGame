@@ -97,7 +97,8 @@ class MyAppState extends State<MyApp> {
       var appId = AppIds().getAppId(MyApp._appKey);
       appTitle = appId.gameConfig.getTitle(MyApp._language);
       appKey = appId.appKey;
-      isPro = true;
+      isPro = false;
+      // isPro = true;
       languageCode = MyApp._language.name;
       appRatingPackage = "";
       adBannerId = "";
