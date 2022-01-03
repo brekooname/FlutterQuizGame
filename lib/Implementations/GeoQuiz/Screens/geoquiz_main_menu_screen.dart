@@ -1,14 +1,21 @@
-
 import 'package:flutter/material.dart';
+import 'package:flutter_app_quiz_game/Game/Game/campaign_level.dart';
+import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Constants/geoquiz_campaign_level_service.dart';
+import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
+import 'package:flutter_app_quiz_game/Lib/ProgressBar/progress_bar.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/game_screen_manager_state.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/standard_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/game_title.dart';
+import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
 import '../../../Lib/Font/font_config.dart';
 import '../../../main.dart';
 
 class GeoQuizMainMenuScreen extends StandardScreen {
+  GeoQuizCampaignLevelService geoQuizCampaignLevelService =
+      GeoQuizCampaignLevelService();
+
   GeoQuizMainMenuScreen(GameScreenManagerState gameScreenManagerState,
       {Key? key})
       : super(gameScreenManagerState, key: key) {}
@@ -31,14 +38,83 @@ class GeoQuizMainMenuScreenState extends State<GeoQuizMainMenuScreen>
       text: MyApp.appTitle,
       backgroundImageWidth: screenDimensions.w(70),
       fontConfig: FontConfig(
-          textColor: Colors.lightGreenAccent,
+          textColor: Colors.grey.shade400,
           fontWeight: FontWeight.normal,
           fontSize: FontConfig.bigFontSize,
-          borderColor: Colors.green),
+          borderColor: Colors.black),
       backgroundImagePath: assetsService.getSpecificAssetPath(
           assetExtension: "png", assetName: "title_backgr"),
     );
 
-    return gameTitle;
+    Container mainContent = Container(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [gameTitle, createPlayerInfo()],
+      ),
+    );
+
+    return mainContent;
+  }
+
+  Container createPlayerInfo() {
+    Container info = Container(
+        child: Column(children: [
+      MyText(
+        text: formatTextWithOneParam(label.l_level_param0, "1"),
+      ),
+      ProgressBar(
+        width: screenDimensions.w(90),
+        height: screenDimensions.h(5),
+        percentFilled: 67,
+      )
+    ]));
+    return info;
+  }
+
+  Container createRows(GameTitle gameTitle) {
+    int levelsOnRow = 3;
+    int i = 0;
+    List<Row> levelRows = [];
+    List<Widget> rowButtons = [];
+    for (CampaignLevel campaignLevel
+        in widget.geoQuizCampaignLevelService.allLevels) {
+      rowButtons.add(createLevelBtn(campaignLevel, i));
+      i++;
+      if (i > 0 && i % levelsOnRow == 0) {
+        levelRows.add(Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: rowButtons,
+        ));
+        rowButtons = [];
+      }
+    }
+
+    List<Widget> columnChildren = [gameTitle];
+    columnChildren.addAll(levelRows);
+    Container mainContent = Container(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: columnChildren,
+      ),
+    );
+    return mainContent;
+  }
+
+  Widget createLevelBtn(CampaignLevel campaignLevel, int index) {
+    double btnSide = screenDimensions.w(20);
+
+    return Padding(
+        padding: EdgeInsets.all(screenDimensions.w(2)),
+        child: MyButton(
+          fontConfig: FontConfig(
+              borderColor: Colors.black,
+              textColor: Colors.white,
+              fontSize: FontConfig.getCustomFontSize(1.3)),
+          size: Size(btnSide, btnSide),
+          text: (index + 1).toString(),
+        ));
   }
 }

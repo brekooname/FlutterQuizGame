@@ -19,11 +19,11 @@ abstract class GameConfig {
 
   String get extraContentProductId;
 
+  Color get screenBackgroundColor;
+
   GameScreenManager get gameScreenManager;
 
-  Color get screenBackgroundColor => screenContrast == Contrast.LIGHT
-      ? Colors.lightBlue
-      : Colors.blue.shade600;
+  ImageRepeat get backgroundTextureRepeat => ImageRepeat.repeat;
 
   List<QuestionCategory> get questionCategories =>
       gameQuestionConfig.categories;

@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_app_quiz_game/Implementations/History/Constants/history_campaign_level_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/enum_extension.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -36,9 +35,8 @@ class MyApp extends StatefulWidget {
   //
   //////
   ////////////
-  static const String _appKey = "history";
-
-  // static const String _appKey = "geoquiz";
+  // static const String _appKey = "history";
+  static const String _appKey = "geoquiz";
   static const Language _language = Language.en;
 
   ////////////
@@ -214,34 +212,36 @@ class MyAppState extends State<MyApp> {
   Widget createScreen(GameScreenManager gameScreenManager, BannerAd? bannerAd) {
     Container bannerAdContainer = createBannerAdContainer(bannerAd);
     return WillPopScope(
-      onWillPop: () async {
-        var currentScreen = gameScreenManager.currentScreen;
-        return currentScreen!.gameScreenManagerState.goBack(currentScreen);
-      },
-      child: Container(
-        decoration: BoxDecoration(
-            image: DecorationImage(
-          repeat: ImageRepeat.repeat,
-          image: widget.backgroundTexture.image,
-        )),
-        alignment: Alignment.center,
-        child: AspectRatio(
-          aspectRatio: 9 / 16,
+        onWillPop: () async {
+          var currentScreen = gameScreenManager.currentScreen;
+          return currentScreen!.gameScreenManagerState.goBack(currentScreen);
+        },
+        child: Container(
+          color: MyApp.appId.gameConfig.screenBackgroundColor,
           child: Container(
+            decoration: BoxDecoration(
+                image: DecorationImage(
+              repeat: MyApp.appId.gameConfig.backgroundTextureRepeat,
+              image: widget.backgroundTexture.image,
+            )),
             alignment: Alignment.center,
-            child: Column(
-              children: <Widget>[
-                bannerAdContainer,
-                Expanded(
-                    child: widget.initAsyncCompleted
-                        ? gameScreenManager
-                        : Container())
-              ],
+            child: AspectRatio(
+              aspectRatio: 9 / 16,
+              child: Container(
+                alignment: Alignment.center,
+                child: Column(
+                  children: <Widget>[
+                    bannerAdContainer,
+                    Expanded(
+                        child: widget.initAsyncCompleted
+                            ? gameScreenManager
+                            : Container())
+                  ],
+                ),
+              ),
             ),
           ),
-        ),
-      ),
-    );
+        ));
   }
 
   Container createBannerAdContainer(BannerAd? bannerAd) {

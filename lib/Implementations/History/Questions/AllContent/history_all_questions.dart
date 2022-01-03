@@ -20,7 +20,13 @@ class HistoryAllQuestions extends AllQuestionsService {
       getAllQuestionsWithLanguages() {
     Map<Language, Map<CategoryDifficulty, List<Question>>> result =
         HashMap<Language, Map<CategoryDifficulty, List<Question>>>();
+    //
+    ////
+    ///////
     var questionConfig = HistoryGameQuestionConfig();
+    ///////
+    ////
+    //
     addAR(result, questionConfig);
     addCS(result, questionConfig);
     addDA(result, questionConfig);

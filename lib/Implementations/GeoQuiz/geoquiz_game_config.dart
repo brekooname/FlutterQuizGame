@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Game/GameType/game_config.dart';
 import 'package:flutter_app_quiz_game/Game/GameType/game_question_config.dart';
 import 'package:flutter_app_quiz_game/Game/Question/all_questions_service.dart';
@@ -24,6 +25,12 @@ class GeoQuizGameConfig extends GameConfig {
 
   @override
   GameScreenManager get gameScreenManager => GeoQuizGameScreenManager();
+
+  @override
+  ImageRepeat get backgroundTextureRepeat => ImageRepeat.noRepeat;
+
+  @override
+  Color get screenBackgroundColor => Colors.blue.shade100.withOpacity(0.8);
 
   //iOS
   // @override

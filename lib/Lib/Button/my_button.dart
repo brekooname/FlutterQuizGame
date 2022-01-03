@@ -58,6 +58,7 @@ class MyButton extends StatefulWidget {
     if (this.customContent == null && this.text != null) {
       this.customContent = MyText(
         text: this.text!,
+        fontConfig: this.fontConfig,
         maxLines: 2,
         width: this.size.width / 1.1,
       );
