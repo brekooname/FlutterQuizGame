@@ -12,13 +12,13 @@ class GameUser {
 
   void setWonQuestion(QuestionInfo gameQuestionInfo) {
     if (gameQuestionInfo.isQuestionOpen()) {
-      gameQuestionInfo.status = QuestionInfoStatus.WON;
+      gameQuestionInfo.updateStatus(QuestionInfoStatus.WON);
       _openQuestionInfos.remove(gameQuestionInfo);
     }
   }
 
   void resetQuestion(QuestionInfo gameQuestionInfo) {
-    gameQuestionInfo.status = QuestionInfoStatus.OPEN;
+    gameQuestionInfo.updateStatus(QuestionInfoStatus.OPEN);
     if (!_openQuestionInfos.contains(gameQuestionInfo)) {
       gameQuestionInfo.pressedAnswers.clear();
       _openQuestionInfos.add(gameQuestionInfo);
@@ -27,7 +27,7 @@ class GameUser {
 
   void setLostQuestion(QuestionInfo gameQuestionInfo) {
     if (gameQuestionInfo.isQuestionOpen()) {
-      gameQuestionInfo.status = QuestionInfoStatus.LOST;
+      gameQuestionInfo.updateStatus(QuestionInfoStatus.LOST);
       _openQuestionInfos.remove(gameQuestionInfo);
     }
   }

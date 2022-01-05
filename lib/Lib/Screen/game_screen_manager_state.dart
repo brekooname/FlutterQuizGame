@@ -87,11 +87,8 @@ mixin GameScreenManagerState<TGameContext extends GameContext> {
     } else if (availableCategories.length == 1) {
       return availableCategories.first;
     } else {
-      QuestionInfo? mostRecentQuestion = gameContext.gameUser
-          .getMostRecentAnsweredQuestion(questionInfoStatus: [
-        QuestionInfoStatus.WON,
-        QuestionInfoStatus.LOST
-      ]);
+      QuestionInfo? mostRecentQuestion =
+          gameContext.gameUser.getMostRecentAnsweredQuestion();
 
       if (mostRecentQuestion == null) {
         allQuestions.shuffle();

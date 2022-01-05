@@ -24,11 +24,14 @@ class MyButton extends StatefulWidget {
   bool disabled;
   bool contentLocked;
 
+  double allPadding;
+
   String? text;
 
   MyButton({
     Key? key,
     this.text,
+    this.allPadding = 0,
     this.disabled = false,
     this.contentLocked = false,
     Color? disabledBackgroundColor,
@@ -94,39 +97,41 @@ class MyButtonState extends State<MyButton> {
       };
     }
 
-    return GestureDetector(
-        onTapCancel: () {
-          if (!widget.disabled) {
-            setState(() {
-              widget.pressed = false;
-            });
-          }
-        },
-        onTapUp: (TapUpDetails details) {
-          if (!widget.disabled) {
-            setState(() {
-              widget.onClick.call();
-              widget.pressed = false;
-            });
-          }
-        },
-        onTapDown: (TapDownDetails details) {
-          if (!widget.disabled) {
-            setState(() {
-              widget.pressed = true;
-            });
-          }
-        },
-        child: AnimatedContainer(
-            duration: Duration(milliseconds: 100),
-            width: widget.size.width,
-            height: widget.size.height,
-            decoration: createButtonDecoration(),
-            alignment: Alignment.center,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [buttonContent],
-            )));
+    return Padding(
+        padding: EdgeInsets.all(widget.allPadding),
+        child: GestureDetector(
+            onTapCancel: () {
+              if (!widget.disabled) {
+                setState(() {
+                  widget.pressed = false;
+                });
+              }
+            },
+            onTapUp: (TapUpDetails details) {
+              if (!widget.disabled) {
+                setState(() {
+                  widget.onClick.call();
+                  widget.pressed = false;
+                });
+              }
+            },
+            onTapDown: (TapDownDetails details) {
+              if (!widget.disabled) {
+                setState(() {
+                  widget.pressed = true;
+                });
+              }
+            },
+            child: AnimatedContainer(
+                duration: Duration(milliseconds: 100),
+                width: widget.size.width,
+                height: widget.size.height,
+                decoration: createButtonDecoration(),
+                alignment: Alignment.center,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [buttonContent],
+                ))));
   }
 
   Widget buildContentLocked(Widget buttonContent) {

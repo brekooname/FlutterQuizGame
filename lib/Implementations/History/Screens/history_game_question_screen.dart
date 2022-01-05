@@ -26,7 +26,8 @@ class HistoryGameQuestionScreen extends GameScreen<HistoryGameContext>
   }) : super(gameScreenManagerState, HistoryCampaignLevelService(), gameContext,
             difficulty, category,
             key: key) {
-    initQuizOptionsScreen(gameContext, HistoryLocalStorage(), difficulty, category);
+    initQuizOptionsScreen(
+        gameContext, HistoryLocalStorage(), difficulty, category);
   }
 
   @override
@@ -59,11 +60,7 @@ class HistoryGameQuestionScreenState extends State<HistoryGameQuestionScreen>
           widget.category == HistoryGameQuestionConfig().cat3 ? 4 : 2,
           null);
       Widget optionsRows = widget.createOptionRows(
-        setStateCallback,
-        () {
-          widget.goToNextGameScreen(context);
-        },
-      );
+          setStateCallback, widget.goToNextGameScreenCallBack(context));
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[header, questionContainer, optionsRows],

@@ -1,6 +1,6 @@
 import 'package:flutter_app_quiz_game/Game/Game/campaign_level.dart';
 import 'package:flutter_app_quiz_game/Game/Game/campaign_level_service.dart';
-import 'package:flutter_app_quiz_game/Implementations/History/Constants/history_game_question_config.dart';
+import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Constants/geoquiz_game_question_config.dart';
 
 class GeoQuizCampaignLevelService extends CampaignLevelService {
   late CampaignLevel level_0;
@@ -20,7 +20,7 @@ class GeoQuizCampaignLevelService extends CampaignLevelService {
       GeoQuizCampaignLevelService.internal();
 
   factory GeoQuizCampaignLevelService() {
-    var questionConfig = HistoryGameQuestionConfig();
+    var questionConfig = GeoQuizGameQuestionConfig();
     singleton.level_0 = CampaignLevel(
       difficulty: questionConfig.diff0,
       category: [

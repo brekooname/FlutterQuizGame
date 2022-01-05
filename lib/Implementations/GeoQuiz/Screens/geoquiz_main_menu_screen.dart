@@ -50,7 +50,14 @@ class GeoQuizMainMenuScreenState extends State<GeoQuizMainMenuScreen>
           assetExtension: "png", assetName: "title_backgr"),
     );
 
-    MyButton newGame = MyButton(text: label.l_new_game);
+    MyButton newGame = MyButton(
+      text: label.l_new_game,
+      onClick: () {
+        widget.geoQuizLocalStorage.clearAll();
+        widget.gameScreenManagerState
+            .showNewGameScreen(GeoQuizCampaignLevelService().level_0);
+      },
+    );
 
     var bottomMargin = screenDimensions.h(10);
     Container mainContent = Container(

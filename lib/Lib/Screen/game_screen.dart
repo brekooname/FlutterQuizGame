@@ -43,6 +43,12 @@ abstract class GameScreen<TGameContext extends GameContext>
     });
   }
 
+  VoidCallback goToNextGameScreenCallBack(BuildContext context) {
+    return () {
+      goToNextGameScreen(context);
+    };
+  }
+
   TGameContext get gameContext {
     assert(_gameContext != null);
     return _gameContext!;

@@ -18,11 +18,9 @@ class QuestionInfo {
 
   QuestionInfoStatus get status => _status;
 
-  set status(QuestionInfoStatus questionInfoStatus) {
+  void updateStatus(QuestionInfoStatus questionInfoStatus) {
     if (questionInfoStatus != QuestionInfoStatus.OPEN) {
       questionAnsweredAt = DateTime.now();
-    } else {
-      questionAnsweredAt = null;
     }
     _status = questionInfoStatus;
   }

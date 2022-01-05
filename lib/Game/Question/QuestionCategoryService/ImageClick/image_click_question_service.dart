@@ -113,11 +113,6 @@ class ImageClickQuestionService extends QuestionService {
   }
 
   @override
-  int getNrOfWrongAnswersPressed(Set<String> pressedAnswers) {
-    return 0;
-  }
-
-  @override
   String getRandomUnpressedCorrectAnswerFromQuestion(
       Question question, Set<String> pressedAnswers) {
     List<String> answers = getAnswers(question);

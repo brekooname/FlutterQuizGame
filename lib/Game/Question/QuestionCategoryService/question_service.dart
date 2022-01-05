@@ -80,7 +80,7 @@ abstract class QuestionService {
     return answers;
   }
 
-  int getNrOfWrongAnswersPressed(Set<String> pressedAnswers) {
+  int getNrOfWrongAnswersPressed(Question question, Set<String> pressedAnswers) {
     return 0;
   }
 

@@ -1,34 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
-import 'package:flutter_app_quiz_game/Implementations/History/Constants/history_campaign_level_service.dart';
-import 'package:flutter_app_quiz_game/Implementations/History/Questions/history_game_context.dart';
-import 'package:flutter_app_quiz_game/Implementations/History/Service/history_game_local_storage.dart';
+import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Constants/geoquiz_campaign_level_service.dart';
+import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Questions/geoquiz_game_context.dart';
+import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Service/geoquiz_local_storage.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/game_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/game_screen_manager_state.dart';
-import 'package:flutter_app_quiz_game/Lib/Screen/quiz_options_game_screen.dart';
-import 'package:flutter_app_quiz_game/Lib/Screen/quiz_question_game_screen.dart';
+import 'package:flutter_app_quiz_game/Lib/Screen/quiz_hangman_game_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
 
+class GeoQuizHangmanScreen extends GameScreen<GeoQuizGameContext>
+    with QuizHangmanGameScreen<GeoQuizGameContext> {
+  static final int show_interstitial_ad_every_n_questions = 8;
 
-class GeoQuizHangmanScreen extends GameScreen<HistoryGameContext>
-    with QuizOptionsGameScreen<HistoryGameContext>, QuizQuestionGameScreen {
-  GeoQuizHangmanScreen(
-    GameScreenManagerState gameScreenManagerState, {
+  GeoQuizHangmanScreen(GameScreenManagerState gameScreenManagerState, {
     Key? key,
     required QuestionDifficulty difficulty,
     required QuestionCategory category,
-    required HistoryGameContext gameContext,
-  }) : super(gameScreenManagerState, HistoryCampaignLevelService(), gameContext,
-            difficulty, category,
-            key: key) {
-    initQuizOptionsScreen(
-        gameContext, HistoryLocalStorage(), difficulty, category);
+    required GeoQuizGameContext gameContext,
+  }) : super(gameScreenManagerState, GeoQuizCampaignLevelService(), gameContext,
+      difficulty, category,
+      key: key) {
+    initQuizHangmanScreen(
+        gameContext, GeoQuizLocalStorage(), difficulty, category);
   }
 
   @override
   int nrOfQuestionsToShowInterstitialAd() {
-    return 8;
+    return show_interstitial_ad_every_n_questions;
   }
 
   @override
@@ -48,17 +47,15 @@ class GeoQuizHangmanScreenState extends State<GeoQuizHangmanScreen>
   @override
   Widget build(BuildContext context) {
     if (widget.currentQuestionInfo != null) {
-      Widget questionContainer = widget.createQuestionTextContainer(
-          widget.currentQuestionInfo!.question, 2, 4, null);
-      Widget optionsRows = widget.createOptionRows(
-        setStateCallback,
-        () {
-          widget.goToNextGameScreen(context);
-        },
+      Widget wordContainer = widget.getHangmanWordContainer();
+      Widget letters = widget.createLettersRows(
+          setStateCallback,
+          widget.goToNextGameScreenCallBack(context)
       );
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[questionContainer, optionsRows],
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[wordContainer, letters],
       );
     } else {
       return Container();

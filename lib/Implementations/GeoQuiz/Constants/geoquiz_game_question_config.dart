@@ -1,11 +1,11 @@
 import 'dart:collection';
 
 import 'package:flutter_app_quiz_game/Game/GameType/game_question_config.dart';
-import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/DependentAnswers/dependent_answers_question_category_service.dart';
-import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/UniqueAnswers/unqiue_answers_question_category_service.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
-import 'package:flutter_app_quiz_game/Implementations/History/Questions/history_question_category_service.dart';
+import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/DependentAnswers/dependent_answers_question_category_service.dart';
+import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/Hangman/hangman_question_category_service.dart';
+import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/UniqueAnswers/unqiue_answers_question_category_service.dart';
 
 class GeoQuizGameQuestionConfig extends GameQuestionConfig {
   late QuestionCategory cat0;
@@ -26,9 +26,9 @@ class GeoQuizGameQuestionConfig extends GameQuestionConfig {
     //
     //CATEGORIES
     singleton.cat0 = QuestionCategory(
-        index: 0, questionCategoryService: HistoryCategoryQuestionService());
+        index: 0, questionCategoryService: HangmanCategoryQuestionService());
     singleton.cat1 = QuestionCategory(
-        index: 1, questionCategoryService: HistoryCategoryQuestionService());
+        index: 1, questionCategoryService: DependentAnswersCategoryQuestionService());
     singleton.cat2 = QuestionCategory(
         index: 2,
         questionCategoryService: DependentAnswersCategoryQuestionService());
@@ -62,16 +62,6 @@ class GeoQuizGameQuestionConfig extends GameQuestionConfig {
   @override
   Map<QuestionCategoryWithPrefixCode, String> get prefixLabelForCode {
     Map<QuestionCategoryWithPrefixCode, String> res = HashMap();
-    res.putIfAbsent(QuestionCategoryWithPrefixCode(cat0, 0),
-        () => label.l_when_did_this_event_occur);
-    res.putIfAbsent(QuestionCategoryWithPrefixCode(cat1, 0),
-        () => label.l_between_what_years_did_this_empire_exist);
-    res.putIfAbsent(QuestionCategoryWithPrefixCode(cat2, 0),
-        () => label.l_in_which_modern_country_did_this_event_occur);
-    res.putIfAbsent(QuestionCategoryWithPrefixCode(cat2, 1),
-        () => label.l_in_which_modern_country_is_this_location);
-    res.putIfAbsent(QuestionCategoryWithPrefixCode(cat4, 0),
-        () => label.l_identify_the_historical_figure);
     return res;
   }
 }

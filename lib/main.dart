@@ -11,6 +11,7 @@ import 'package:in_app_purchase_android/in_app_purchase_android.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'Game/Constants/app_id.dart';
+import 'Implementations/GeoQuiz/Constants/geoquiz_campaign_level_service.dart';
 import 'Lib/Ads/ad_service.dart';
 import 'Lib/Constants/language.dart';
 import 'Lib/Image/image_service.dart';
@@ -163,12 +164,12 @@ class MyAppState extends State<MyApp> {
       //
       ////
       widgetToShow = createScreen(MyApp.gameScreenManager, widget.bannerAd);
-      // Future.delayed(Duration(milliseconds: 100), () {
-      //   var campaignLevel = HistoryCampaignLevelService().level_0;
-      //   MyApp.gameScreenManager.currentScreen!.gameScreenManagerState
-      //       .showNewGameScreen(campaignLevel);
-      //   widgetToShow = createScreen(MyApp.gameScreenManager, widget.bannerAd);
-      // });
+      Future.delayed(Duration(milliseconds: 100), () {
+        var campaignLevel = GeoQuizCampaignLevelService().level_0;
+        MyApp.gameScreenManager.currentScreen!.gameScreenManagerState
+            .showNewGameScreen(campaignLevel);
+        widgetToShow = createScreen(MyApp.gameScreenManager, widget.bannerAd);
+      });
       ////
       //
     } else {

@@ -3,8 +3,8 @@ import 'package:flutter_app_quiz_game/Game/GameType/game_config.dart';
 import 'package:flutter_app_quiz_game/Game/GameType/game_question_config.dart';
 import 'package:flutter_app_quiz_game/Game/Question/all_questions_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Constants/geoquiz_game_question_config.dart';
+import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Questions/AllContent/geoquiz_all_questions.dart';
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Service/geoquiz_game_screen_manager.dart';
-import 'package:flutter_app_quiz_game/Implementations/History/Questions/AllContent/history_all_questions.dart';
 import 'package:flutter_app_quiz_game/Lib/Constants/language.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/game_screen_manager.dart';
 
@@ -21,7 +21,7 @@ class GeoQuizGameConfig extends GameConfig {
   GameQuestionConfig get gameQuestionConfig => GeoQuizGameQuestionConfig();
 
   @override
-  AllQuestionsService get allQuestionsService => HistoryAllQuestions();
+  AllQuestionsService get allQuestionsService => GeoQuizAllQuestions();
 
   @override
   GameScreenManager get gameScreenManager => GeoQuizGameScreenManager();

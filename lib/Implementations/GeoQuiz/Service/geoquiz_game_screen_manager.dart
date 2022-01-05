@@ -1,15 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_app_quiz_game/Game/Game/campaign_level.dart';
-import 'package:flutter_app_quiz_game/Game/Game/game_context.dart';
-import 'package:flutter_app_quiz_game/Game/Game/game_context_service.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Constants/geoquiz_game_question_config.dart';
+import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Questions/geoquiz_game_context.dart';
+import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Screens/geoquiz_game_hangman_screen.dart';
+import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Screens/geoquiz_game_question_screen.dart';
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Screens/geoquiz_main_menu_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Popup/rate_app_popup.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/game_screen_manager.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/game_screen_manager_state.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/standard_screen.dart';
+
+import 'geoquiz_gamecontext_service.dart';
 
 class GeoQuizGameScreenManager extends GameScreenManager {
   @override
@@ -18,7 +21,7 @@ class GeoQuizGameScreenManager extends GameScreenManager {
 }
 
 class GeoQuizGameScreenManagerState extends State<GeoQuizGameScreenManager>
-    with GameScreenManagerState<GameContext> {
+    with GameScreenManagerState<GeoQuizGameContext> {
   @override
   void initState() {
     super.initState();
@@ -58,7 +61,7 @@ class GeoQuizGameScreenManagerState extends State<GeoQuizGameScreenManager>
   @override
   @protected
   StandardScreen getScreenForConfig(
-    GameContext gameContext,
+    GeoQuizGameContext gameContext,
     QuestionDifficulty difficulty,
     QuestionCategory category,
   ) {
@@ -66,16 +69,34 @@ class GeoQuizGameScreenManagerState extends State<GeoQuizGameScreenManager>
     var questionConfig = GeoQuizGameQuestionConfig();
     //
     ////
-    // category = questionConfig.cat1;
+    category = questionConfig.cat0;
     ////
     //
 
-    return GeoQuizMainMenuScreen(this);
+    if ([questionConfig.cat0].contains(category)) {
+      goToScreen = GeoQuizHangmanScreen(
+        this,
+        key: UniqueKey(),
+        gameContext: gameContext,
+        difficulty: difficulty,
+        category: category,
+      );
+    } else {
+      goToScreen = GeoQuizQuestionScreen(
+        this,
+        key: UniqueKey(),
+        gameContext: gameContext,
+        difficulty: difficulty,
+        category: category,
+      );
+    }
+
+    return goToScreen;
   }
 
   @override
   @protected
-  GameContext createGameContext(CampaignLevel campaignLevel) {
-    return GameContextService().createGameContextWithQuestions([]);
+  GeoQuizGameContext createGameContext(CampaignLevel campaignLevel) {
+    return GeoQuizGameContextService().createGameContext(campaignLevel);
   }
 }
