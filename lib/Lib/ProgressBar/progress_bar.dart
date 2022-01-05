@@ -16,12 +16,18 @@ class ProgressBar extends StatelessWidget {
       width: width * (percentFilled / 100),
       height: height,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(FontConfig.standardBorderRadius),
-        color: Colors.yellow.shade400,
+          borderRadius: BorderRadius.circular(FontConfig.standardBorderRadius),
+          gradient: LinearGradient(
+            begin: Alignment.topRight,
+            end: Alignment.bottomLeft,
+            colors: [
+              Colors.lightGreenAccent.withOpacity(0.5),
+              Colors.lightGreenAccent,
+            ],
+          ),
           border: Border.all(
-              color: Colors.yellow.shade800,
-              width: FontConfig.standardBorderWidth)
-      ),
+              color: Colors.lightGreen.shade600,
+              width: FontConfig.standardBorderWidth)),
     );
     var emptyBar = Container(
       width: width,

@@ -23,7 +23,7 @@ class AppIds {
   AppId getAppId(String appKey) {
     var gameConfig = appIds.get<String, GameConfig>(appKey);
     if (gameConfig == null) {
-      throw UnsupportedError("unsupported app key " + appKey);
+      throw UnsupportedError("Unsupported app key ======> " + appKey);
     }
     return AppId(appKey, gameConfig);
   }

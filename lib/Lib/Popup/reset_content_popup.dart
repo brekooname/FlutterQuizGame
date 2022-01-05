@@ -4,13 +4,13 @@ import 'package:flutter_app_quiz_game/Lib/Button/button_size.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
+import '../../main.dart';
 import 'my_popup.dart';
 
 class ResetContentPopup extends StatefulWidget with MyPopup {
   VoidCallback resetContent;
-  VoidCallback _refreshScreenCallback;
 
-  ResetContentPopup(this.resetContent, this._refreshScreenCallback);
+  ResetContentPopup(this.resetContent);
 
   @override
   State<ResetContentPopup> createState() => ResetContentPopupState();
@@ -37,7 +37,8 @@ class ResetContentPopupState extends State<ResetContentPopup> with MyPopup {
               text: label.l_yes,
               backgroundColor: Colors.redAccent.shade200,
               onClick: () {
-                widget._refreshScreenCallback.call();
+                MyApp.gameScreenManager.currentScreen!.gameScreenManagerState
+                    .showMainScreen();
                 widget.resetContent.call();
                 closePopup(context);
               },

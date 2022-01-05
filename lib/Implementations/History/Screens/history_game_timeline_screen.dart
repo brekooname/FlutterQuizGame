@@ -12,25 +12,27 @@ import 'package:flutter_app_quiz_game/Implementations/History/Constants/history_
 import 'package:flutter_app_quiz_game/Implementations/History/Questions/history_game_context.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Service/history_game_local_storage.dart';
 import 'package:flutter_app_quiz_game/Lib/Animation/animation_zoom_in_zoom_out.dart';
+import 'package:flutter_app_quiz_game/Lib/Audio/my_audio_player.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/int_extension.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/map_extension.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/string_extension.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/game_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/game_screen_manager_state.dart';
+import 'package:flutter_app_quiz_game/Lib/Screen/quiz_question_game_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
-import 'package:flutter_app_quiz_game/Lib/Screen/standard_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 import '../../../Lib/Button/button_skin_config.dart';
 import '../../../Lib/Font/font_config.dart';
 
-class HistoryGameTimelineScreen extends StandardScreen
-    with GameScreen<HistoryGameContext> {
+class HistoryGameTimelineScreen extends GameScreen<HistoryGameContext>
+    with QuizQuestionGameScreen {
   static final int scroll_to_item_duration_millis = 600;
   static final int show_interstitial_ad_every_n_questions = 8;
   static final int default_questions_to_play_until_next_category = 1;
+  MyAudioPlayer _audioPlayer = MyAudioPlayer();
   int questionsToPlayUntilNextCategory =
       default_questions_to_play_until_next_category;
 
@@ -51,14 +53,9 @@ class HistoryGameTimelineScreen extends StandardScreen
     required QuestionDifficulty difficulty,
     required QuestionCategory category,
     required HistoryGameContext gameContext,
-  }) : super(gameScreenManagerState, key: key) {
-    initScreen(
-      HistoryCampaignLevelService(),
-      gameContext,
-      difficulty,
-      category,
-    );
-
+  }) : super(gameScreenManagerState, HistoryCampaignLevelService(), gameContext,
+            difficulty, category,
+            key: key) {
     List<QuestionInfo> allAvailableQuestions = gameContext.gameUser
         .getOpenQuestionsForConfig(difficulty, category)
         .toList();
@@ -69,8 +66,6 @@ class HistoryGameTimelineScreen extends StandardScreen
       randomQuestionsToDisplay =
           getRandomIndexToDisplay(currentQuestionInfo!, allAvailableQuestions);
     }
-
-    gameLocalStorage.incrementTotalPlayedQuestions();
   }
 
   Set<QuestionInfo> getRandomIndexToDisplay(
@@ -93,6 +88,11 @@ class HistoryGameTimelineScreen extends StandardScreen
   @override
   State<HistoryGameTimelineScreen> createState() =>
       HistoryGameTimelineScreenState();
+
+  @override
+  int nrOfQuestionsToShowInterstitialAd() {
+    return HistoryGameTimelineScreen.show_interstitial_ad_every_n_questions;
+  }
 }
 
 class HistoryQuestion {
@@ -117,15 +117,19 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
   @override
   void initState() {
     super.initState();
-    initScreen(onUserEarnedReward: () {
+    initScreenState(onUserEarnedReward: () {
       onHintButtonClick();
     });
     answerBtnSize = getButtonSizeForCat();
 
     timelineOptUnknown = imageService.getSpecificImage(
-        maxWidth: getImageWidth(), maxHeight: getImageMaxHeight(), imageName: "timeline_opt_unknown");
+        maxWidth: getImageWidth(),
+        maxHeight: getImageMaxHeight(),
+        imageName: "timeline_opt_unknown");
     histAnswWrong = imageService.getSpecificImage(
-        maxWidth: getImageWidth(), maxHeight: getImageMaxHeight(), imageName: "hist_answ_wrong");
+        maxWidth: getImageWidth(),
+        maxHeight: getImageMaxHeight(),
+        imageName: "hist_answ_wrong");
     timelineArrow = imageService.getSpecificImage(
         imageName: FontConfig.isRtlLanguage ? "arrow_left" : "arrow_right",
         maxWidth: screenDimensions.w(10));
@@ -188,12 +192,20 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
     }
 
     HistoryGameLevelHeader header = createHeader();
+    QuestionInfo? mostRecentQ = getMostRecentAnswered();
+    Widget questionContainer = widget.createQuestionTextContainer(
+        shouldGoToNextGameScreen()
+            ? mostRecentQ?.question
+            : widget.currentQuestionInfo?.question,
+        widget.category == HistoryGameQuestionConfig().cat0 ? 1 : 2,
+        widget.category == HistoryGameQuestionConfig().cat3 ? 4 : 2,
+        screenDimensions.h(18));
 
     ScrollablePositionedList listView =
         createListView(answerBtnSize, zoomInZoomOutAnswerDuration);
 
     var mainColumn = Column(
-      children: <Widget>[header, Expanded(child: listView)],
+      children: <Widget>[header, questionContainer, Expanded(child: listView)],
     );
 
     return mainColumn;
@@ -205,8 +217,7 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
     return maxHeight;
   }
 
-  Image createImageForQuestion(
-      int qIndex, bool isWrongAnswer) {
+  Image createImageForQuestion(int qIndex, bool isWrongAnswer) {
     Image image = widget.shownImagesForTimeLineHints
             .getOrDefault<QuestionCategory, List<int>>(
                 widget.category, []).contains(qIndex)
@@ -264,22 +275,14 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
   int getRevertedIndex(int index) => widget.questions.length - index - 1;
 
   HistoryGameLevelHeader createHeader() {
-    QuestionInfo? mostRecentQ = getMostRecentAnswered();
-
     var header = HistoryGameLevelHeader(
       onBackButtonClick: () {
         widget.gameScreenManagerState.goBack(widget);
       },
       campaignLevel: widget.campaignLevel,
-      questionContainerHeight: screenDimensions.h(18),
       availableHints: widget.gameContext.amountAvailableHints,
-      question: shouldGoToNextGameScreen()
-          ? mostRecentQ?.question
-          : widget.currentQuestionInfo?.question,
       disableHintBtn: widget.shownImagesForTimeLineHints.isNotEmpty,
       animateScore: widget.correctAnswerPressed,
-      animateQuestionText: widget.animateQuestionText &&
-          widget.questionsToPlayUntilNextCategory != 0,
       score: formatTextWithOneParam(
           label.l_score_param0,
           widget.historyLocalStorage
@@ -330,7 +333,7 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
             int questionIndex = currentQuestionInfo.question.index;
             setState(() {
               if (correctAnswerOptionText == optionTextToDisplay) {
-                audioPlayer.playSuccess();
+                widget._audioPlayer.playSuccess();
                 widget.shownImagesForTimeLineHints
                     .putIfAbsent(widget.category, () => [])
                     .add(questionIndex);
@@ -339,7 +342,7 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
                 widget.historyLocalStorage
                     .setWonQuestion(currentQuestionInfo.question);
               } else {
-                audioPlayer.playFail();
+                widget._audioPlayer.playFail();
                 var values = getSortedYearValues();
                 itemScrollController.scrollTo(
                     index: getRevertedIndex(values.toList().indexOf(
@@ -444,8 +447,8 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
       int listItemIndex,
       int millisForZoomInZoomOut) {
     var mostRecentAnswered = getMostRecentAnswered();
-    Widget answerPart = createBtnAnswerWithAnimation(mostRecentAnswered, questionIndex,
-        millisForZoomInZoomOut, answerBtnSize, answerBtn);
+    Widget answerPart = createBtnAnswerWithAnimation(mostRecentAnswered,
+        questionIndex, millisForZoomInZoomOut, answerBtnSize, answerBtn);
 
     var margin = screenDimensions.w(3);
     var item = Row(children: <Widget>[
@@ -515,8 +518,8 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
       int listItemIndex,
       int millisForZoomInZoomOut) {
     var mostRecentAnswered = getMostRecentAnswered();
-    Widget answerPart = createBtnAnswerWithAnimation(mostRecentAnswered, questionIndex,
-        millisForZoomInZoomOut, answerBtnSize, answerBtn);
+    Widget answerPart = createBtnAnswerWithAnimation(mostRecentAnswered,
+        questionIndex, millisForZoomInZoomOut, answerBtnSize, answerBtn);
 
     var item = Row(children: <Widget>[
       Spacer(),

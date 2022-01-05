@@ -23,7 +23,7 @@ import '../../../Lib/Font/font_config.dart';
 import '../../../main.dart';
 
 class HistoryMainMenuScreen extends StandardScreen {
-  late HistoryLocalStorage historyLocalStorage = HistoryLocalStorage();
+  HistoryLocalStorage historyLocalStorage = HistoryLocalStorage();
   HistoryGameQuestionConfig historyGameQuestionConfig =
       HistoryGameQuestionConfig();
   HistoryAllQuestions allQuestions = HistoryAllQuestions();
@@ -47,7 +47,7 @@ class HistoryMainMenuScreenState extends State<HistoryMainMenuScreen>
   @override
   void initState() {
     super.initState();
-    initScreen();
+    initScreenState();
   }
 
   @override
@@ -104,9 +104,6 @@ class HistoryMainMenuScreenState extends State<HistoryMainMenuScreen>
             myPopupToDisplay: SettingsPopup(
               resetContent: () {
                 widget.historyLocalStorage.clearAll();
-              },
-              refreshScreenCallback: () {
-                setState(() {});
               },
             ),
           ),

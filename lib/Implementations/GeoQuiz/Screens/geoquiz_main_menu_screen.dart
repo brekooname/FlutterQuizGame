@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Game/Game/campaign_level.dart';
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Constants/geoquiz_campaign_level_service.dart';
+import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Service/geoquiz_local_storage.dart';
+import 'package:flutter_app_quiz_game/Lib/Button/floating_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
+import 'package:flutter_app_quiz_game/Lib/Popup/settings_popup.dart';
 import 'package:flutter_app_quiz_game/Lib/ProgressBar/progress_bar.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/game_screen_manager_state.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
@@ -13,6 +16,7 @@ import '../../../Lib/Font/font_config.dart';
 import '../../../main.dart';
 
 class GeoQuizMainMenuScreen extends StandardScreen {
+  GeoQuizLocalStorage geoQuizLocalStorage = GeoQuizLocalStorage();
   GeoQuizCampaignLevelService geoQuizCampaignLevelService =
       GeoQuizCampaignLevelService();
 
@@ -29,7 +33,7 @@ class GeoQuizMainMenuScreenState extends State<GeoQuizMainMenuScreen>
   @override
   void initState() {
     super.initState();
-    initScreen();
+    initScreenState();
   }
 
   @override
@@ -46,15 +50,40 @@ class GeoQuizMainMenuScreenState extends State<GeoQuizMainMenuScreen>
           assetExtension: "png", assetName: "title_backgr"),
     );
 
+    MyButton newGame = MyButton(text: label.l_new_game);
+
+    var bottomMargin = screenDimensions.h(10);
     Container mainContent = Container(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
-        children: [gameTitle, createPlayerInfo()],
+        children: [
+          SizedBox(height: bottomMargin),
+          gameTitle,
+          SizedBox(height: bottomMargin),
+          createPlayerInfo(),
+          SizedBox(height: bottomMargin / 2),
+          newGame,
+          Spacer(),
+        ],
       ),
     );
 
-    return mainContent;
+    return Scaffold(
+        body: mainContent,
+        backgroundColor: Colors.transparent,
+        floatingActionButton: Row(children: [
+          FloatingButton(
+            context: context,
+            iconName: "btn_settings",
+            myPopupToDisplay: SettingsPopup(
+              resetContent: () {
+                widget.geoQuizLocalStorage.clearAll();
+              },
+            ),
+          ),
+        ]),
+        floatingActionButtonLocation: FloatingActionButtonLocation.startTop);
   }
 
   Container createPlayerInfo() {

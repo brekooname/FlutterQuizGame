@@ -11,13 +11,10 @@ class SettingsPopup extends StatefulWidget with MyPopup {
   late SettingsLocalStorage _settingsLocalStorage;
   ButtonSize buttonSize = ButtonSize();
   VoidCallback? resetContent;
-  VoidCallback? refreshScreenCallback;
 
-  SettingsPopup(
-      {VoidCallback? resetContent, VoidCallback? refreshScreenCallback}) {
+  SettingsPopup({VoidCallback? resetContent}) {
     _settingsLocalStorage = SettingsLocalStorage();
     this.resetContent = resetContent;
-    this.refreshScreenCallback = refreshScreenCallback;
   }
 
   @override
@@ -58,21 +55,19 @@ class SettingsPopupState extends State<SettingsPopup> with MyPopup {
             onClick: () {
               closePopup(context);
               assert(widget.resetContent != null);
-              assert(widget.refreshScreenCallback != null);
               Future.delayed(
                   Duration.zero,
                   () => showDialog(
                       context: context,
                       builder: (BuildContext context) {
-                        return ResetContentPopup(widget.resetContent!,
-                            widget.refreshScreenCallback!);
+                        return ResetContentPopup(widget.resetContent!);
                       }));
             },
           ),
           SizedBox(height: vertMargin * 2),
-          Container(
-            width: width,
+          Divider(
             height: screenDimensions.h(0.2),
+            thickness: screenDimensions.h(0.2),
             color: Colors.grey,
           ),
           SizedBox(height: vertMargin * 2),

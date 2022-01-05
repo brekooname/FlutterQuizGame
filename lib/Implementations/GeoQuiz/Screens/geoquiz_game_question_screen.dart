@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
-import 'package:flutter_app_quiz_game/Game/Question/Model/question_info.dart';
-import 'package:flutter_app_quiz_game/Implementations/History/Components/history_game_level_header.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Constants/history_campaign_level_service.dart';
-import 'package:flutter_app_quiz_game/Implementations/History/Constants/history_game_question_config.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Questions/history_game_context.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Service/history_game_local_storage.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/game_screen.dart';
@@ -13,11 +10,10 @@ import 'package:flutter_app_quiz_game/Lib/Screen/quiz_options_game_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/quiz_question_game_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
 
-import 'history_game_timeline_screen.dart';
 
-class HistoryGameQuestionScreen extends GameScreen<HistoryGameContext>
+class GeoQuizQuestionScreen extends GameScreen<HistoryGameContext>
     with QuizOptionsGameScreen<HistoryGameContext>, QuizQuestionGameScreen {
-  HistoryGameQuestionScreen(
+  GeoQuizQuestionScreen(
     GameScreenManagerState gameScreenManagerState, {
     Key? key,
     required QuestionDifficulty difficulty,
@@ -26,20 +22,20 @@ class HistoryGameQuestionScreen extends GameScreen<HistoryGameContext>
   }) : super(gameScreenManagerState, HistoryCampaignLevelService(), gameContext,
             difficulty, category,
             key: key) {
-    initQuizOptionsScreen(gameContext, HistoryLocalStorage(), difficulty, category);
+    initQuizOptionsScreen(
+        gameContext, HistoryLocalStorage(), difficulty, category);
   }
 
   @override
   int nrOfQuestionsToShowInterstitialAd() {
-    return HistoryGameTimelineScreen.show_interstitial_ad_every_n_questions;
+    return 8;
   }
 
   @override
-  State<HistoryGameQuestionScreen> createState() =>
-      HistoryGameQuestionScreenState();
+  State<GeoQuizQuestionScreen> createState() => GeoQuizQuestionScreenState();
 }
 
-class HistoryGameQuestionScreenState extends State<HistoryGameQuestionScreen>
+class GeoQuizQuestionScreenState extends State<GeoQuizQuestionScreen>
     with ScreenState {
   @override
   void initState() {
@@ -52,12 +48,8 @@ class HistoryGameQuestionScreenState extends State<HistoryGameQuestionScreen>
   @override
   Widget build(BuildContext context) {
     if (widget.currentQuestionInfo != null) {
-      HistoryGameLevelHeader header = createHeader(widget.currentQuestionInfo!);
       Widget questionContainer = widget.createQuestionTextContainer(
-          widget.currentQuestionInfo!.question,
-          widget.category == HistoryGameQuestionConfig().cat0 ? 1 : 2,
-          widget.category == HistoryGameQuestionConfig().cat3 ? 4 : 2,
-          null);
+          widget.currentQuestionInfo!.question, 2, 4, null);
       Widget optionsRows = widget.createOptionRows(
         setStateCallback,
         () {
@@ -66,35 +58,11 @@ class HistoryGameQuestionScreenState extends State<HistoryGameQuestionScreen>
       );
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[header, questionContainer, optionsRows],
+        children: <Widget>[questionContainer, optionsRows],
       );
     } else {
       return Container();
     }
-  }
-
-  HistoryGameLevelHeader createHeader(QuestionInfo questionInfo) {
-    var header = HistoryGameLevelHeader(
-      onBackButtonClick: () {
-        widget.gameScreenManagerState.goBack(widget);
-      },
-      campaignLevel: widget.campaignLevel,
-      availableHints: widget.gameContext.amountAvailableHints,
-      animateScore: widget.correctAnswerPressed,
-      disableHintBtn: widget.hintDisabledPossibleAnswers.isNotEmpty,
-      score: formatTextWithOneParam(
-          label.l_score_param0,
-          widget.quizGameLocalStorage
-                  .getWonQuestions(widget.difficulty)
-                  .length
-                  .toString() +
-              "/" +
-              widget.gameContext.totalNrOfQuestionsForCampaignLevel.toString()),
-      hintButtonOnClick: () {
-        widget.onHintButtonClick(setStateCallback);
-      },
-    );
-    return header;
   }
 
   void setStateCallback() {
