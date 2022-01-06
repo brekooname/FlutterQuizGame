@@ -6,7 +6,7 @@ import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Constants/geoquiz_
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Questions/AllContent/geoquiz_all_questions.dart';
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Service/geoquiz_game_screen_manager.dart';
 import 'package:flutter_app_quiz_game/Lib/Constants/language.dart';
-import 'package:flutter_app_quiz_game/Lib/Screen/game_screen_manager.dart';
+import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen_manager.dart';
 
 class GeoQuizGameConfig extends GameConfig {
   static final GeoQuizGameConfig singleton = GeoQuizGameConfig.internal();

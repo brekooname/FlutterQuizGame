@@ -9,6 +9,7 @@ import 'package:flutter_app_quiz_game/Implementations/History/Questions/AllConte
 import 'package:flutter_app_quiz_game/Implementations/History/Questions/history_game_context.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Service/history_game_local_storage.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/map_extension.dart';
+import 'package:flutter_app_quiz_game/Lib/Storage/quiz_game_local_storage.dart';
 import 'package:flutter_app_quiz_game/main.dart';
 
 class HistoryGameContextService {
@@ -26,16 +27,15 @@ class HistoryGameContextService {
   HistoryGameContextService.internal();
 
   HistoryGameContext createGameContext(CampaignLevel campaignLevel) {
-    List<String> wonQuestions =
-        historyLocalStorage.getWonQuestions(campaignLevel.difficulty);
+    List<QuestionKey> wonQuestions =
+        historyLocalStorage.getWonQuestionsForDiff(campaignLevel.difficulty);
     var questions =
         _questionCollectorService.getAllQuestionsForCategoriesAndDifficulties(
       [campaignLevel.difficulty],
       campaignLevel.category,
     ).where((q) {
-      var questionStorageKey = historyLocalStorage.getQuestionStorageKey(
-          q.category, q.difficulty, q.index);
-      return !wonQuestions.contains(questionStorageKey);
+      var questionKey = QuestionKey(q.category, q.difficulty, q.index);
+      return !wonQuestions.contains(questionKey);
     }).toList();
     var gameContext = GameContextService()
         .createGameContextWithHintsAndQuestions(

@@ -4,10 +4,10 @@ import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.da
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Constants/geoquiz_campaign_level_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Questions/geoquiz_game_context.dart';
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Service/geoquiz_local_storage.dart';
-import 'package:flutter_app_quiz_game/Lib/Screen/game_screen.dart';
-import 'package:flutter_app_quiz_game/Lib/Screen/game_screen_manager_state.dart';
-import 'package:flutter_app_quiz_game/Lib/Screen/quiz_options_game_screen.dart';
-import 'package:flutter_app_quiz_game/Lib/Screen/quiz_question_game_screen.dart';
+import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen.dart';
+import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen_manager_state.dart';
+import 'package:flutter_app_quiz_game/Lib/Screen/Game/Options/quiz_options_game_screen.dart';
+import 'package:flutter_app_quiz_game/Lib/Screen/Game/quiz_question_game_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
 
 import 'geoquiz_game_hangman_screen.dart';

@@ -6,6 +6,7 @@ import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.da
 import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/DependentAnswers/dependent_answers_question_category_service.dart';
 import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/Hangman/hangman_question_category_service.dart';
 import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/UniqueAnswers/unqiue_answers_question_category_service.dart';
+import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Questions/geoquiz_hangman_question_category_service.dart';
 
 class GeoQuizGameQuestionConfig extends GameQuestionConfig {
   late QuestionCategory cat0;
@@ -26,7 +27,7 @@ class GeoQuizGameQuestionConfig extends GameQuestionConfig {
     //
     //CATEGORIES
     singleton.cat0 = QuestionCategory(
-        index: 0, questionCategoryService: HangmanCategoryQuestionService());
+        index: 0, questionCategoryService: GeoQuizHangmanCategoryQuestionService());
     singleton.cat1 = QuestionCategory(
         index: 1, questionCategoryService: DependentAnswersCategoryQuestionService());
     singleton.cat2 = QuestionCategory(

@@ -10,8 +10,8 @@ import '../../Lib/Font/font_config.dart';
 import 'button_size.dart';
 
 class MyButton extends StatefulWidget {
-  ButtonSize _buttonSize = ButtonSize();
-  ImageService _imageService = ImageService();
+  final ButtonSize _buttonSize = ButtonSize();
+  final ImageService _imageService = ImageService();
 
   late FontConfig fontConfig;
   late Color disabledBackgroundColor;
@@ -22,6 +22,7 @@ class MyButton extends StatefulWidget {
 
   bool pressed = false;
   bool disabled;
+  bool visible;
   bool contentLocked;
 
   double allPadding;
@@ -33,6 +34,7 @@ class MyButton extends StatefulWidget {
     this.text,
     this.allPadding = 0,
     this.disabled = false,
+    this.visible = true,
     this.contentLocked = false,
     Color? disabledBackgroundColor,
     VoidCallback? onClick,
@@ -97,41 +99,44 @@ class MyButtonState extends State<MyButton> {
       };
     }
 
-    return Padding(
-        padding: EdgeInsets.all(widget.allPadding),
-        child: GestureDetector(
-            onTapCancel: () {
-              if (!widget.disabled) {
-                setState(() {
-                  widget.pressed = false;
-                });
-              }
-            },
-            onTapUp: (TapUpDetails details) {
-              if (!widget.disabled) {
-                setState(() {
-                  widget.onClick.call();
-                  widget.pressed = false;
-                });
-              }
-            },
-            onTapDown: (TapDownDetails details) {
-              if (!widget.disabled) {
-                setState(() {
-                  widget.pressed = true;
-                });
-              }
-            },
-            child: AnimatedContainer(
-                duration: Duration(milliseconds: 100),
-                width: widget.size.width,
-                height: widget.size.height,
-                decoration: createButtonDecoration(),
-                alignment: Alignment.center,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [buttonContent],
-                ))));
+    return Visibility(
+      visible: widget.visible,
+      child: Padding(
+          padding: EdgeInsets.all(widget.allPadding),
+          child: GestureDetector(
+              onTapCancel: () {
+                if (!widget.disabled) {
+                  setState(() {
+                    widget.pressed = false;
+                  });
+                }
+              },
+              onTapUp: (TapUpDetails details) {
+                if (!widget.disabled) {
+                  setState(() {
+                    widget.onClick.call();
+                    widget.pressed = false;
+                  });
+                }
+              },
+              onTapDown: (TapDownDetails details) {
+                if (!widget.disabled) {
+                  setState(() {
+                    widget.pressed = true;
+                  });
+                }
+              },
+              child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 100),
+                  width: widget.size.width,
+                  height: widget.size.height,
+                  decoration: createButtonDecoration(),
+                  alignment: Alignment.center,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [buttonContent],
+                  )))),
+    );
   }
 
   Widget buildContentLocked(Widget buttonContent) {

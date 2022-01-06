@@ -1,6 +1,5 @@
 import 'package:flutter_app_quiz_game/Game/Question/Model/question.dart';
 import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/UniqueAnswers/unique_answers_question_parser.dart';
-import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/question_parser.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/string_extension.dart';
 
 import '../question_service.dart';
@@ -29,7 +28,7 @@ class UniqueAnswersQuestionService extends QuestionService {
     int correctAnswer = questionParser
         .getCorrectAnswersFromRawString(question.rawString)
         .first
-        .parseToInt();
+        .parseToInt;
     List<String> answerOptions = getAllAnswerOptionsForQuestionAsList(question);
     return [answerOptions[correctAnswer]];
   }
@@ -49,7 +48,7 @@ class UniqueAnswersQuestionService extends QuestionService {
     return question.rawString
         .split("::")[1]
         .split("##")
-        .map((e) => e.trim().capitalize())
+        .map((e) => e.trim().capitalized)
         .where((element) => element.isNotEmpty)
         .toList();
   }

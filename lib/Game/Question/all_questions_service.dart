@@ -14,18 +14,19 @@ abstract class AllQuestionsService {
   Map<CategoryDifficulty, List<Question>>? _allQuestionsCache;
 
   Map<CategoryDifficulty, List<Question>> get allQuestions {
-    if (_allQuestionsCache == null) {
-      Language language = Language.values
-          .firstWhere((element) => element.name == MyApp.languageCode);
-
-      _allQuestionsCache = getAllQuestionsWithLanguages()
-              .get<Language, Map<CategoryDifficulty, List<Question>>>(
-                  language) ??
-          getAllQuestionsWithLanguages()
-              .get<Language, Map<CategoryDifficulty, List<Question>>>(
-                  Language.en);
-    }
+    _allQuestionsCache ??= getAllQuestionsWithLanguages()
+            .get<Language, Map<CategoryDifficulty, List<Question>>>(
+                getLanguage()) ??
+        getAllQuestionsWithLanguages()
+            .get<Language, Map<CategoryDifficulty, List<Question>>>(
+                Language.en);
     return _allQuestionsCache!;
+  }
+
+  Language getLanguage() {
+    Language language = Language.values
+        .firstWhere((element) => element.name == MyApp.languageCode);
+    return language;
   }
 
   List<Question> getAllQuestionsForCategory(QuestionCategory category) {

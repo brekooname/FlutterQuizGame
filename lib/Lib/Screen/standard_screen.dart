@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'game_screen_manager_state.dart';
+import 'Game/game_screen_manager_state.dart';
 
 abstract class StandardScreen extends StatefulWidget {
   GameScreenManagerState gameScreenManagerState;

@@ -27,7 +27,7 @@ class RandomQuestionCreatorService {
         randomLine,
         categoryAndDifficulty.difficulty,
         categoryAndDifficulty.category,
-        allQuestionsWithConfig[randomLine].rawString.capitalize());
+        allQuestionsWithConfig[randomLine].rawString.capitalized);
   }
 
   List<Question> createRandomQuestions(QuestionConfig questionConfig) {

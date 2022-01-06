@@ -4,7 +4,7 @@ import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.da
 import 'package:flutter_app_quiz_game/Game/Question/all_questions_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Constants/contrast.dart';
 import 'package:flutter_app_quiz_game/Lib/Constants/language.dart';
-import 'package:flutter_app_quiz_game/Lib/Screen/game_screen_manager.dart';
+import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen_manager.dart';
 
 import 'game_question_config.dart';
 

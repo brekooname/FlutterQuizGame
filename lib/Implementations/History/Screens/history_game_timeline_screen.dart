@@ -17,9 +17,9 @@ import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/int_extension.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/map_extension.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/string_extension.dart';
-import 'package:flutter_app_quiz_game/Lib/Screen/game_screen.dart';
-import 'package:flutter_app_quiz_game/Lib/Screen/game_screen_manager_state.dart';
-import 'package:flutter_app_quiz_game/Lib/Screen/quiz_question_game_screen.dart';
+import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen.dart';
+import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen_manager_state.dart';
+import 'package:flutter_app_quiz_game/Lib/Screen/Game/quiz_question_game_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
@@ -286,7 +286,7 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
       score: formatTextWithOneParam(
           label.l_score_param0,
           widget.historyLocalStorage
-                  .getWonQuestions(widget.difficulty)
+                  .getWonQuestionsForDiff(widget.difficulty)
                   .length
                   .toString() +
               "/" +
@@ -387,7 +387,7 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
 
   int getHistoryEraYear(List<String> optionStrings, int index) {
     if (widget.category == HistoryGameQuestionConfig().cat0) {
-      return optionStrings[index].parseToInt();
+      return optionStrings[index].parseToInt;
     } else {
       return getYear2ForCat1(optionStrings[index].split(",")[1]);
     }
@@ -558,7 +558,7 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
 
   String getOptionText(String yearString) {
     if (widget.category == HistoryGameQuestionConfig().cat0) {
-      int year = yearString.parseToInt();
+      int year = yearString.parseToInt;
       String val =
           year < 0 ? year.abs().formatIntEveryChars(4) : year.toString();
       val = year < 0 ? formatTextWithOneParam(label.l_param0_bc, val) : val;
@@ -566,7 +566,7 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
     } else {
       var split = yearString.split(",");
       var split2 = split[1];
-      int year1 = split[0].parseToInt();
+      int year1 = split[0].parseToInt;
       int year2 = getYear2ForCat1(split2);
       String val1 =
           year1 < 0 ? year1.abs().formatIntEveryChars(4) : year1.toString();
@@ -579,6 +579,6 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
   }
 
   int getYear2ForCat1(String yearString) {
-    return yearString == "x" ? DateTime.now().year : yearString.parseToInt();
+    return yearString == "x" ? DateTime.now().year : yearString.parseToInt;
   }
 }

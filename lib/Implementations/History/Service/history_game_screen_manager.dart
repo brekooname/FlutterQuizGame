@@ -9,8 +9,8 @@ import 'package:flutter_app_quiz_game/Implementations/History/Screens/history_ga
 import 'package:flutter_app_quiz_game/Implementations/History/Screens/history_game_timeline_screen.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Screens/history_main_menu_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Popup/rate_app_popup.dart';
-import 'package:flutter_app_quiz_game/Lib/Screen/game_screen_manager.dart';
-import 'package:flutter_app_quiz_game/Lib/Screen/game_screen_manager_state.dart';
+import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen_manager.dart';
+import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen_manager_state.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/standard_screen.dart';
 
 import 'history_gamecontext_service.dart';

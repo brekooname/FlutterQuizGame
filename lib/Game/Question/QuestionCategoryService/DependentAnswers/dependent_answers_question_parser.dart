@@ -30,7 +30,7 @@ class DependentAnswersQuestionParser extends QuestionParser {
 
   int getPrefixCodeForQuestion(String questionRawString) {
     var val = questionRawString.split(":")[3].trim();
-    return val.isEmpty ? 0 : val.parseToInt();
+    return val.isEmpty ? 0 : val.parseToInt;
   }
 
   List<int> getAnswerReferences(String questionRawString) {
@@ -39,7 +39,7 @@ class DependentAnswersQuestionParser extends QuestionParser {
         .split(",")
         .where((element) => element.trim().isNotEmpty)
         .toList();
-    return answers.isEmpty ? [] : answers.map((e) => e.parseToInt()).toList();
+    return answers.isEmpty ? [] : answers.map((e) => e.parseToInt).toList();
   }
 
   Set<String> getAllPossibleAnswersForQuestion(
@@ -65,7 +65,7 @@ class DependentAnswersQuestionParser extends QuestionParser {
       possibleAnswersResult.addAll(getPossibleAnswersForSpecifiedReferences(
           answerReferences, allQuestionsForCategory));
     }
-    return possibleAnswersResult.map((e) => e.capitalize()).toSet();
+    return possibleAnswersResult.map((e) => e.capitalized).toSet();
   }
 
   List<Question> getQuestionsToChooseAsPossibleAnswers(

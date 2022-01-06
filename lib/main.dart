@@ -15,7 +15,7 @@ import 'Implementations/GeoQuiz/Constants/geoquiz_campaign_level_service.dart';
 import 'Lib/Ads/ad_service.dart';
 import 'Lib/Constants/language.dart';
 import 'Lib/Image/image_service.dart';
-import 'Lib/Screen/game_screen_manager.dart';
+import 'Lib/Screen/Game/game_screen_manager.dart';
 import 'Lib/ScreenDimensions/screen_dimensions_service.dart';
 import 'Lib/Storage/in_app_purchases_local_storage.dart';
 import 'Lib/Storage/rate_app_local_storage.dart';

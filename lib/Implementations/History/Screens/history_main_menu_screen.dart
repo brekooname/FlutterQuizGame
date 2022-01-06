@@ -12,7 +12,7 @@ import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Color/color_util.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/map_extension.dart';
 import 'package:flutter_app_quiz_game/Lib/Popup/settings_popup.dart';
-import 'package:flutter_app_quiz_game/Lib/Screen/game_screen_manager_state.dart';
+import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen_manager_state.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/standard_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/game_title.dart';
@@ -128,7 +128,7 @@ class HistoryMainMenuScreenState extends State<HistoryMainMenuScreen>
         size: btnSize,
         onClick: () {
           if (widget.historyLocalStorage
-                  .getWonQuestions(campaignLevel.difficulty)
+                  .getWonQuestionsForDiff(campaignLevel.difficulty)
                   .length ==
               totalQuestionsForCampaignLevel) {
             widget.historyLocalStorage.resetLevel(campaignLevel.difficulty);

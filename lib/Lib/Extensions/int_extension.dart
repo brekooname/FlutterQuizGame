@@ -16,7 +16,7 @@ extension IntExtension on int {
           j++;
         }
       }
-      result = result.reverse();
+      result = result.reversed;
     }
     if (result[0] == '.') {
       result = result.substring(1);

@@ -8,8 +8,8 @@ import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Screens/geoquiz_ga
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Screens/geoquiz_game_question_screen.dart';
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Screens/geoquiz_main_menu_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Popup/rate_app_popup.dart';
-import 'package:flutter_app_quiz_game/Lib/Screen/game_screen_manager.dart';
-import 'package:flutter_app_quiz_game/Lib/Screen/game_screen_manager_state.dart';
+import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen_manager.dart';
+import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen_manager_state.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/standard_screen.dart';
 
 import 'geoquiz_gamecontext_service.dart';

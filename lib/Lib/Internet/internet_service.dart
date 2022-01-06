@@ -41,7 +41,7 @@ class InternetService {
       if (Platform.isIOS) {
         try {
           int version =
-              Platform.operatingSystemVersion.split(".")[0].parseToInt();
+              Platform.operatingSystemVersion.split(".")[0].parseToInt;
           String url;
           if (version < 7) {
             url =
