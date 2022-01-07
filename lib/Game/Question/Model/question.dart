@@ -23,6 +23,23 @@ class Question {
       questionService.getPrefixToBeDisplayedForQuestion(this);
 
   @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is Question &&
+          runtimeType == other.runtimeType &&
+          index == other.index &&
+          difficulty == other.difficulty &&
+          category == other.category &&
+          rawString == other.rawString;
+
+  @override
+  int get hashCode =>
+      index.hashCode ^
+      difficulty.hashCode ^
+      category.hashCode ^
+      rawString.hashCode;
+
+  @override
   String toString() {
     return 'Question{lineInFile: $index, difficulty: $difficulty, category: $category, rawString: $rawString}';
   }

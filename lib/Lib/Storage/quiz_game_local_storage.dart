@@ -124,6 +124,11 @@ class QuestionKey {
   }
 
   @override
+  String toString() {
+    return cat.name + "_" + diff.name + "_" + index.toString();
+  }
+
+  @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is QuestionKey &&

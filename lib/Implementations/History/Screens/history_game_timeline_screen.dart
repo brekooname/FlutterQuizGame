@@ -173,8 +173,8 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
         disabled = true;
         if (!widget.alreadyWentToNextScreen) {
           widget.alreadyWentToNextScreen = true;
-          Future.delayed(
-              Duration(milliseconds: 1100), () => goToNextGameScreen(context));
+          Future.delayed(Duration(milliseconds: 1100),
+              () => widget.goToNextGameScreen(context));
         }
       }
 
@@ -303,17 +303,6 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
   bool shouldGoToNextGameScreen() {
     return widget.currentQuestionInfo == null ||
         widget.questionsToPlayUntilNextCategory == 0;
-  }
-
-  void goToNextGameScreen(BuildContext context) {
-    var playedQ = widget.gameLocalStorage.getTotalPlayedQuestions();
-    var showOnNrOfQ =
-        HistoryGameTimelineScreen.show_interstitial_ad_every_n_questions;
-    adService.showInterstitialAd(
-        context, playedQ > 0 && playedQ % showOnNrOfQ == 0, () {
-      widget.gameScreenManagerState
-          .showNextGameScreen(widget.campaignLevel, widget.gameContext);
-    });
   }
 
   MyButton createAnswerButton(

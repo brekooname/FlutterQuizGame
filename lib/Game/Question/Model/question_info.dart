@@ -30,6 +30,17 @@ class QuestionInfo {
   }
 
   @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is QuestionInfo &&
+          runtimeType == other.runtimeType &&
+          question == other.question &&
+          _status == other._status;
+
+  @override
+  int get hashCode => question.hashCode ^ _status.hashCode;
+
+  @override
   String toString() {
     return 'QuestionInfo{question: $question, _status: $_status, pressedAnswers: $pressedAnswers}';
   }

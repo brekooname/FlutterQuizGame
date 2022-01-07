@@ -39,13 +39,9 @@ class QuestionCollectorService {
     List<Question> questions = [];
     for (QuestionCategory category in categories) {
       for (QuestionDifficulty difficultyLevel in difficultyLevels) {
-        List<Question> categQ =
-            allQuestionsWithConfig.get<CategoryDifficulty, List<Question>>(
-                    CategoryDifficulty(category, difficultyLevel)) ??
-                [];
-        for (int i = 0; i < categQ.length; i++) {
-          questions.add(categQ[i]);
-        }
+        questions.addAll(allQuestionsWithConfig
+            .getOrDefault<CategoryDifficulty, List<Question>>(
+                CategoryDifficulty(category, difficultyLevel), []));
       }
     }
     return questions;

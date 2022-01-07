@@ -5,6 +5,7 @@ import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
 import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/Hangman/hangman_service.dart';
 import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/question_service.dart';
+import 'package:flutter_app_quiz_game/Game/Question/question_collector_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Service/geoquiz_local_storage.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/map_extension.dart';
 
@@ -13,6 +14,8 @@ import 'geoquiz_hangman_question_parser.dart';
 class GeoQuizHangmanQuestionService extends QuestionService {
   final HangmanService _hangmanService = HangmanService();
   final GeoQuizLocalStorage _geoQuizLocalStorage = GeoQuizLocalStorage();
+  final QuestionCollectorService _questionCollectorService =
+      QuestionCollectorService();
   late GeoQuizHangmanQuestionParser questionParser;
 
   static final GeoQuizHangmanQuestionService singleton =
@@ -76,17 +79,21 @@ class GeoQuizHangmanQuestionService extends QuestionService {
     return questionParser.getCountryName(questionRawString);
   }
 
-  Set<String> getAlreadyFoundCountries(
+  List<String> getAlreadyFoundCountries(
       QuestionDifficulty diff, QuestionCategory cat, bool withSynonyms) {
     var wonQ = _geoQuizLocalStorage.getWonQuestionsForDiffAndCat(diff, cat);
-    var allCountries = questionParser.allCountries;
 
-    var allFoundCountries = wonQ.map((e) {
-      return allCountries.elementAt(e.index);
-    }).toSet();
+    var questions = _questionCollectorService
+        .getAllQuestionsForCategoriesAndDifficulties([diff], [cat]);
+
+    var allFoundCountries = wonQ.map((q) {
+      return questionParser.getCountryName(questions
+          .firstWhere((element) => element.index == q.index)
+          .rawString);
+    }).toList();
 
     if (withSynonyms) {
-      Set<String> result = HashSet();
+      List<String> result = [];
       result.addAll(allFoundCountries);
       for (String country in allFoundCountries) {
         result.addAll(_getCountrySynonyms(country));

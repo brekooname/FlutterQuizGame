@@ -1,34 +1,29 @@
 import 'package:collection/src/iterable_extensions.dart';
-import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/question_service.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_info.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_info_status.dart';
+import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/question_service.dart';
+import 'package:flutter_app_quiz_game/Lib/Extensions/list_extension.dart';
 
 class GameUser {
-  List<QuestionInfo> _openQuestionInfos = [];
   List<QuestionInfo> _allQuestionInfos = [];
 
   void setWonQuestion(QuestionInfo gameQuestionInfo) {
     if (gameQuestionInfo.isQuestionOpen()) {
       gameQuestionInfo.updateStatus(QuestionInfoStatus.WON);
-      _openQuestionInfos.remove(gameQuestionInfo);
     }
   }
 
   void resetQuestion(QuestionInfo gameQuestionInfo) {
     gameQuestionInfo.updateStatus(QuestionInfoStatus.OPEN);
-    if (!_openQuestionInfos.contains(gameQuestionInfo)) {
-      gameQuestionInfo.pressedAnswers.clear();
-      _openQuestionInfos.add(gameQuestionInfo);
-    }
+    gameQuestionInfo.pressedAnswers.clear();
   }
 
   void setLostQuestion(QuestionInfo gameQuestionInfo) {
     if (gameQuestionInfo.isQuestionOpen()) {
       gameQuestionInfo.updateStatus(QuestionInfoStatus.LOST);
-      _openQuestionInfos.remove(gameQuestionInfo);
     }
   }
 
@@ -71,10 +66,14 @@ class GameUser {
         .first;
   }
 
+  Iterable<QuestionInfo> getOpenQuestions() {
+    return _allQuestionInfos
+        .where((element) => element.status == QuestionInfoStatus.OPEN);
+  }
+
   Iterable<QuestionInfo> getOpenQuestionsForConfig(
       QuestionDifficulty difficulty, QuestionCategory category) {
-    return _allQuestionInfos.where((element) =>
-        element.status == QuestionInfoStatus.OPEN &&
+    return getOpenQuestions().where((element) =>
         element.question.category == category &&
         element.question.difficulty == difficulty);
   }
@@ -123,8 +122,11 @@ class GameUser {
     }
   }
 
+  void removeQuestionInfos(List<QuestionInfo> gameQuestionInfos) {
+    _allQuestionInfos.removeAll(gameQuestionInfos);
+  }
+
   void addQuestionInfoToList(QuestionInfo gameQuestionInfo) {
     _allQuestionInfos.add(gameQuestionInfo);
-    _openQuestionInfos.add(gameQuestionInfo);
   }
 }

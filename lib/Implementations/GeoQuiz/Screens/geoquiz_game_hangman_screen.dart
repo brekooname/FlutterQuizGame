@@ -26,6 +26,8 @@ class GeoQuizHangmanScreen extends GameScreen<GeoQuizGameContext> {
   List<String> pressedAnswers = [];
   List<QuestionInfo> currentQuestions = [];
   List<String> currentQuestionsCountryNames = [];
+  List<String> alreadyFoundCountryNames = [];
+  bool answerFound = false;
 
   GeoQuizHangmanScreen(
     GameScreenManagerState gameScreenManagerState, {
@@ -44,6 +46,8 @@ class GeoQuizHangmanScreen extends GameScreen<GeoQuizGameContext> {
     currentQuestionsCountryNames = currentQuestions
         .map((e) => questionService.getCountryName(e.question.rawString))
         .toList();
+    alreadyFoundCountryNames =
+        questionService.getAlreadyFoundCountries(difficulty, category, false);
   }
 
   @override
@@ -80,10 +84,8 @@ class GeoQuizHangmanScreenState extends State<GeoQuizHangmanScreen>
   }
 
   Widget createFoundCountriesContainer() {
-    List<MyText> foundCountries = widget.currentQuestions
-        .where((element) => element.status == QuestionInfoStatus.WON)
-        .map((e) => MyText(
-            text: widget.questionService.getCountryName(e.question.rawString)))
+    List<MyText> foundCountries = widget.alreadyFoundCountryNames
+        .map((country) => MyText(text: country))
         .toList();
     return Column(children: foundCountries);
   }
@@ -121,39 +123,47 @@ class GeoQuizHangmanScreenState extends State<GeoQuizHangmanScreen>
   @override
   void clickAnswerBtn(String btnLetter, VoidCallback goToNextScreenAfterPress,
       VoidCallback refreshSetState) {
-    setState(() {
-      widget.pressedAnswers.add(btnLetter);
-      String pressedAnswer = widget.pressedAnswers.join();
+    if (!widget.answerFound) {
+      setState(() {
+        widget.pressedAnswers.add(btnLetter);
+        String pressedAnswer = widget.pressedAnswers.join();
 
-      var correctPressedCountries = widget.questionService
-          .getCorrectPressedCountries(
-              pressedAnswer, widget.currentQuestionsCountryNames, true);
+        var correctPressedCountries = widget.questionService
+            .getCorrectPressedCountries(
+                pressedAnswer, widget.currentQuestionsCountryNames, true);
 
-      var minLengthToCheck = 3;
-      correctPressedCountries = pressedAnswer.length > minLengthToCheck &&
-              correctPressedCountries.isEmpty
-          ? widget.questionService.getCorrectPressedCountries(
-              pressedAnswer, widget.currentQuestionsCountryNames, false)
-          : correctPressedCountries;
+        var minLengthToCheck = 3;
+        correctPressedCountries = pressedAnswer.length > minLengthToCheck &&
+                correctPressedCountries.isEmpty
+            ? widget.questionService.getCorrectPressedCountries(
+                pressedAnswer, widget.currentQuestionsCountryNames, false)
+            : correctPressedCountries;
 
-      if (correctPressedCountries.isNotEmpty) {
-        if (correctPressedCountries.length == 1) {
-          widget._audioPlayer.playSuccess();
-          QuestionInfo foundCountry = widget.currentQuestions.firstWhere(
-              (element) =>
-                  widget.questionService
-                      .getCountryName(element.question.rawString) ==
-                  correctPressedCountries.first);
-          widget.gameContext.gameUser.setWonQuestion(foundCountry);
-          widget._geoQuizLocalStorage.setWonQuestion(foundCountry.question);
+        if (correctPressedCountries.isNotEmpty) {
+          if (correctPressedCountries.length == 1) {
+            widget.answerFound = true;
+            widget._audioPlayer.playSuccess();
+            QuestionInfo foundCountry = widget.currentQuestions.firstWhere(
+                (element) =>
+                    widget.questionService
+                        .getCountryName(element.question.rawString) ==
+                    correctPressedCountries.first);
+            widget.gameContext.gameUser.setWonQuestion(foundCountry);
+            widget._geoQuizLocalStorage.setWonQuestion(foundCountry.question);
+            widget.pressedAnswers.clear();
+            widget.alreadyFoundCountryNames = widget.questionService
+                .getAlreadyFoundCountries(
+                    widget.difficulty, widget.category, false);
+            Future.delayed(Duration(milliseconds: 500),
+                () => widget.goToNextGameScreen(context));
+          }
+        } else if (pressedAnswer.length > minLengthToCheck &&
+            correctPressedCountries.isEmpty) {
+          widget._audioPlayer.playFail();
           widget.pressedAnswers.clear();
         }
-      } else if (pressedAnswer.length > minLengthToCheck &&
-          correctPressedCountries.isEmpty) {
-        widget._audioPlayer.playFail();
-        widget.pressedAnswers.clear();
-      }
-    });
+      });
+    }
   }
 
   void setStateCallback() {

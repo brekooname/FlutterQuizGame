@@ -15,6 +15,9 @@ import 'package:flutter_app_quiz_game/Lib/Screen/standard_screen.dart';
 import 'geoquiz_gamecontext_service.dart';
 
 class GeoQuizGameScreenManager extends GameScreenManager {
+  GeoQuizGameContextService _geoQuizGameContextService =
+      GeoQuizGameContextService();
+
   @override
   State<GeoQuizGameScreenManager> createState() =>
       GeoQuizGameScreenManagerState();
@@ -44,6 +47,14 @@ class GeoQuizGameScreenManagerState extends State<GeoQuizGameScreenManager>
       showMainScreen();
       return false;
     }
+  }
+
+  @override
+  void showNextGameScreen(
+      CampaignLevel campaignLevel, GeoQuizGameContext gameContext) {
+    widget._geoQuizGameContextService
+        .removeStatsQuestionsIfAlreadyPlayed(gameContext, campaignLevel);
+    super.showNextGameScreen(campaignLevel, gameContext);
   }
 
   @override
