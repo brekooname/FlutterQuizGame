@@ -48,18 +48,14 @@ class GeoQuizQuestionScreenState extends State<GeoQuizQuestionScreen>
 
   @override
   Widget build(BuildContext context) {
-    if (widget.currentQuestionInfo != null) {
-      Widget questionContainer = widget.createQuestionTextContainer(
-          widget.currentQuestionInfo!.question, 2, 4, null);
-      Widget optionsRows = widget.createOptionRows(
-          setStateCallback, widget.goToNextGameScreenCallBack(context));
-      return Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[questionContainer, optionsRows],
-      );
-    } else {
-      return Container();
-    }
+    Widget questionContainer = widget.createQuestionTextContainer(
+        widget.currentQuestionInfo.question, 2, 4, null);
+    Widget optionsRows = widget.createOptionRows(
+        setStateCallback, widget.goToNextGameScreenCallBack(context));
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[questionContainer, optionsRows],
+    );
   }
 
   void setStateCallback() {

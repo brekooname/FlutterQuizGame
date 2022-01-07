@@ -7,6 +7,7 @@ import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Constants/geoquiz_
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Questions/geoquiz_game_context.dart';
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Questions/geoquiz_hangman_question_category_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Questions/geoquiz_hangman_question_service.dart';
+import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Service/geoquiz_gamecontext_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Service/geoquiz_local_storage.dart';
 import 'package:flutter_app_quiz_game/Lib/Audio/my_audio_player.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/button_skin_config.dart';
@@ -40,12 +41,18 @@ class GeoQuizHangmanScreen extends GameScreen<GeoQuizGameContext> {
             key: key) {
     questionService =
         GeoQuizHangmanCategoryQuestionService().getQuestionService();
-    currentQuestions = gameContext.gameUser
-        .getOpenQuestionsForConfig(difficulty, category)
-        .toList();
-    currentQuestionsCountryNames = currentQuestions
-        .map((e) => questionService.getCountryName(e.question.rawString))
-        .toList();
+    GeoQuizGameContextService gameContextService = GeoQuizGameContextService();
+    if (gameContextService.categoriesWithStatsCriteria.keys
+        .contains(category)) {
+      currentQuestions = gameContext.gameUser
+          .getOpenQuestionsForConfig(difficulty, category)
+          .toList();
+      currentQuestionsCountryNames = currentQuestions
+          .map((e) => questionService.getCountryName(e.question.rawString))
+          .toList();
+    } else {
+      currentQuestions = [gameContext.gameUser.getRandomQuestion(difficulty, category)];
+    }
     alreadyFoundCountryNames =
         questionService.getAlreadyFoundCountries(difficulty, category, false);
   }

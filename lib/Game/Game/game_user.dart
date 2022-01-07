@@ -27,16 +27,15 @@ class GameUser {
     }
   }
 
-  QuestionInfo? getRandomQuestion(
+  QuestionInfo getRandomQuestion(
       QuestionDifficulty difficulty, QuestionCategory category) {
     List<QuestionInfo> res =
         getOpenQuestionsForConfig(difficulty, category).toList();
+    res.shuffle();
     if (res.isEmpty) {
-      return null;
-    } else {
-      res.shuffle();
-      return res.first;
+      int i = 0;
     }
+    return res.first;
   }
 
   QuestionInfo getFirstOpenQuestion(
@@ -50,7 +49,8 @@ class GameUser {
       QuestionCategory? category}) {
     var questionInfo = _allQuestionInfos
         .where((element) =>
-            (questionInfoStatus ?? []).contains(element.status) &&
+            (questionInfoStatus ?? QuestionInfoStatus.values)
+                .contains(element.status) &&
             element.questionAnsweredAt != null &&
             (category == null || element.question.category == category) &&
             (difficulty == null || element.question.difficulty == difficulty))

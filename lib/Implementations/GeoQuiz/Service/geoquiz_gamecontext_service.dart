@@ -13,7 +13,7 @@ import 'package:flutter_app_quiz_game/Lib/Extensions/string_extension.dart';
 import 'package:flutter_app_quiz_game/Lib/Storage/quiz_game_local_storage.dart';
 
 class GeoQuizGameContextService {
-  Map<QuestionCategory, int> categoriesWithCriteria = HashMap();
+  Map<QuestionCategory, int> categoriesWithStatsCriteria = HashMap();
   final GeoQuizLocalStorage _geoQuizLocalStorage = GeoQuizLocalStorage();
   final QuestionCollectorService _questionCollectorService =
       QuestionCollectorService();
@@ -24,7 +24,7 @@ class GeoQuizGameContextService {
   factory GeoQuizGameContextService() {
     var questionConfig = GeoQuizGameQuestionConfig();
     //Population > 1.000.000.00
-    singleton.categoriesWithCriteria
+    singleton.categoriesWithStatsCriteria
         .putIfAbsent(questionConfig.cat0, () => 100000000);
     return singleton;
   }
@@ -49,7 +49,7 @@ class GeoQuizGameContextService {
   }
 
   void _filterStatsQuestionsAfterCriteria(List<Question> questions) {
-    categoriesWithCriteria.forEach((cat, criteria) {
+    categoriesWithStatsCriteria.forEach((cat, criteria) {
       questions.removeWhere((q) =>
           q.category == cat && q.rawString.split(":")[1].parseToInt < criteria);
     });
@@ -60,10 +60,8 @@ class GeoQuizGameContextService {
     List<QuestionKey> finishedQuestions =
         _geoQuizLocalStorage.getWonQuestionsForDiff(campaignLevel.difficulty);
     int nrOfStatsQuestionsToIncludePerCat = 5;
-    var questionConfig = GeoQuizGameQuestionConfig();
-    List<QuestionCategory> statsCategories = [questionConfig.cat0];
 
-    for (QuestionCategory statsCat in statsCategories) {
+    for (QuestionCategory statsCat in categoriesWithStatsCriteria.keys) {
       int finishedQuestionsForCat =
           finishedQuestions.where((element) => element.cat == statsCat).length;
       if (finishedQuestionsForCat >= nrOfStatsQuestionsToIncludePerCat) {

@@ -17,10 +17,10 @@ import 'package:flutter_app_quiz_game/Lib/Storage/quiz_game_local_storage.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
 mixin QuizOptionsGameScreen<TGameContext extends GameContext> {
-  ScreenDimensionsService _screenDimensions = ScreenDimensionsService();
-  MyAudioPlayer _audioPlayer = MyAudioPlayer();
-  ImageService _imageService = ImageService();
-  late QuestionInfo? currentQuestionInfo;
+  final ScreenDimensionsService _screenDimensions = ScreenDimensionsService();
+  final MyAudioPlayer _audioPlayer = MyAudioPlayer();
+  final ImageService _imageService = ImageService();
+  late QuestionInfo currentQuestionInfo;
   late QuizGameLocalStorage quizGameLocalStorage;
   late TGameContext gameContext;
   bool correctAnswerPressed = false;
@@ -38,19 +38,15 @@ mixin QuizOptionsGameScreen<TGameContext extends GameContext> {
     currentQuestionInfo =
         gameContext.gameUser.getRandomQuestion(difficulty, category);
 
-    if (currentQuestionInfo != null) {
-      var questionService = currentQuestionInfo!.question.questionService;
-      var list = List.of(questionService
-          .getAllAnswerOptionsForQuestion(currentQuestionInfo!.question));
-      list.shuffle();
-      _possibleAnswers = HashSet.of(list);
-    }
+    var questionService = currentQuestionInfo.question.questionService;
+    var list = List.of(questionService
+        .getAllAnswerOptionsForQuestion(currentQuestionInfo.question));
+    list.shuffle();
+    _possibleAnswers = HashSet.of(list);
   }
 
   Widget createOptionRows(
       VoidCallback refreshSetState, VoidCallback goToNextScreenAfterPress) {
-    var currentQuestionInfo = this.currentQuestionInfo!;
-
     List<Row> answerRows = [];
     int answersOnRow = 2;
     List<Widget> answerBtns = [];
@@ -100,7 +96,6 @@ mixin QuizOptionsGameScreen<TGameContext extends GameContext> {
 
   Widget createPossibleAnswerButton(VoidCallback refreshSetState,
       VoidCallback goToNextScreenAfterPress, String answerBtnText) {
-    var currentQuestionInfo = this.currentQuestionInfo!;
     var btnBackgr = Colors.lightBlueAccent;
     var btnSize = Size(_screenDimensions.w(45), _screenDimensions.h(15));
     var disabled = wrongPressedAnswer != null ||
@@ -139,7 +134,7 @@ mixin QuizOptionsGameScreen<TGameContext extends GameContext> {
                     .setLostQuestion(currentQuestionInfo.question);
               }
               refreshSetState.call();
-              Future.delayed(Duration(milliseconds: 1100),
+              Future.delayed(const Duration(milliseconds: 1100),
                   () => goToNextScreenAfterPress.call());
             },
             buttonSkinConfig: ButtonSkinConfig(
@@ -153,20 +148,18 @@ mixin QuizOptionsGameScreen<TGameContext extends GameContext> {
   }
 
   void onHintButtonClick(VoidCallback refreshSetState) {
-    if (currentQuestionInfo != null) {
-      gameContext.amountAvailableHints--;
-      quizGameLocalStorage.setRemainingHints(
-          currentQuestionInfo!.question.difficulty,
-          gameContext.amountAvailableHints);
+    gameContext.amountAvailableHints--;
+    quizGameLocalStorage.setRemainingHints(
+        currentQuestionInfo.question.difficulty,
+        gameContext.amountAvailableHints);
 
-      var optionsToDisable = List.of(_possibleAnswers);
-      optionsToDisable.shuffle();
-      optionsToDisable.remove(currentQuestionInfo!.question.correctAnswer);
+    var optionsToDisable = List.of(_possibleAnswers);
+    optionsToDisable.shuffle();
+    optionsToDisable.remove(currentQuestionInfo.question.correctAnswer);
 
-      hintDisabledPossibleAnswers.add(optionsToDisable.first.toLowerCase());
-      hintDisabledPossibleAnswers.add(optionsToDisable.last.toLowerCase());
+    hintDisabledPossibleAnswers.add(optionsToDisable.first.toLowerCase());
+    hintDisabledPossibleAnswers.add(optionsToDisable.last.toLowerCase());
 
-      refreshSetState.call();
-    }
+    refreshSetState.call();
   }
 }

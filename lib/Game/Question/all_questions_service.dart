@@ -15,11 +15,10 @@ abstract class AllQuestionsService {
 
   Map<CategoryDifficulty, List<Question>> get allQuestions {
     _allQuestionsCache ??= getAllQuestionsWithLanguages()
-            .get<Language, Map<CategoryDifficulty, List<Question>>>(
-                getLanguage()) ??
-        getAllQuestionsWithLanguages()
-            .get<Language, Map<CategoryDifficulty, List<Question>>>(
-                Language.en);
+        .getOrDefault<Language, Map<CategoryDifficulty, List<Question>>>(
+            getLanguage(),
+            getAllQuestionsWithLanguages().getOrDefault<Language,
+                Map<CategoryDifficulty, List<Question>>>(Language.en, {}));
     return _allQuestionsCache!;
   }
 

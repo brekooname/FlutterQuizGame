@@ -75,11 +75,9 @@ mixin GameScreenManagerState<TGameContext extends GameContext> {
 
   QuestionCategory? _getNotPlayedRandomQuestionCategory(
       TGameContext gameContext) {
-    var allQuestions = gameContext.gameUser.getAllQuestions([]);
-    List<QuestionCategory> availableCategories = List.of(allQuestions
-        .where((element) => element.status == QuestionInfoStatus.OPEN)
-        .map((e) => e.question.category)
-        .toSet());
+    var allOpenQuestions = gameContext.gameUser.getOpenQuestions().toList();
+    List<QuestionCategory> availableCategories =
+        allOpenQuestions.map((e) => e.question.category).toSet().toList();
 
     if (availableCategories.isEmpty) {
       //GAME OVER
@@ -91,8 +89,8 @@ mixin GameScreenManagerState<TGameContext extends GameContext> {
           gameContext.gameUser.getMostRecentAnsweredQuestion();
 
       if (mostRecentQuestion == null) {
-        allQuestions.shuffle();
-        return allQuestions.first.question.category;
+        allOpenQuestions.shuffle();
+        return allOpenQuestions.first.question.category;
       } else {
         availableCategories.remove(mostRecentQuestion.question.category);
         availableCategories.shuffle();

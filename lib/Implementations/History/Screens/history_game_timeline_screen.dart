@@ -37,7 +37,7 @@ class HistoryGameTimelineScreen extends GameScreen<HistoryGameContext>
       default_questions_to_play_until_next_category;
 
   HistoryLocalStorage historyLocalStorage = HistoryLocalStorage();
-  late QuestionInfo? currentQuestionInfo;
+  late QuestionInfo currentQuestionInfo;
 
   Map<int, HistoryQuestion> questions = HashMap<int, HistoryQuestion>();
   Map<QuestionCategory, List<int>> shownImagesForTimeLineHints = HashMap();
@@ -62,10 +62,8 @@ class HistoryGameTimelineScreen extends GameScreen<HistoryGameContext>
     currentQuestionInfo =
         gameContext.gameUser.getRandomQuestion(difficulty, category);
 
-    if (currentQuestionInfo != null) {
-      randomQuestionsToDisplay =
-          getRandomIndexToDisplay(currentQuestionInfo!, allAvailableQuestions);
-    }
+    randomQuestionsToDisplay =
+        getRandomIndexToDisplay(currentQuestionInfo, allAvailableQuestions);
   }
 
   Set<QuestionInfo> getRandomIndexToDisplay(
@@ -166,8 +164,8 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
       }
 
       var questionAnswer = qi.question.rawString.split(":")[1];
-      String? correctAnswerText =
-          widget.currentQuestionInfo?.question.rawString.split(":")[1];
+      String correctAnswerText =
+          widget.currentQuestionInfo.question.rawString.split(":")[1];
 
       if (shouldGoToNextGameScreen()) {
         disabled = true;
@@ -183,7 +181,7 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
           disabled,
           enabledAnswerBtnBackgroundColor,
           disabledAnswerBtnBackgroundColor,
-          correctAnswerText == null ? "" : getOptionText(correctAnswerText),
+          getOptionText(correctAnswerText),
           getOptionText(questionAnswer));
       Image image = createImageForQuestion(
           qIndex, correctAnswer != null && !correctAnswer);
@@ -196,7 +194,7 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
     Widget questionContainer = widget.createQuestionTextContainer(
         shouldGoToNextGameScreen()
             ? mostRecentQ?.question
-            : widget.currentQuestionInfo?.question,
+            : widget.currentQuestionInfo.question,
         widget.category == HistoryGameQuestionConfig().cat0 ? 1 : 2,
         widget.category == HistoryGameQuestionConfig().cat3 ? 4 : 2,
         screenDimensions.h(18));
@@ -292,17 +290,14 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
               "/" +
               widget.gameContext.totalNrOfQuestionsForCampaignLevel.toString()),
       hintButtonOnClick: () {
-        if (widget.currentQuestionInfo != null) {
-          onHintButtonClick();
-        }
+        onHintButtonClick();
       },
     );
     return header;
   }
 
   bool shouldGoToNextGameScreen() {
-    return widget.currentQuestionInfo == null ||
-        widget.questionsToPlayUntilNextCategory == 0;
+    return widget.questionsToPlayUntilNextCategory == 0;
   }
 
   MyButton createAnswerButton(
@@ -317,42 +312,37 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
         disabled: disabled,
         disabledBackgroundColor: disabledBackgroundColor,
         onClick: () {
-          if (widget.currentQuestionInfo != null) {
-            var currentQuestionInfo = widget.currentQuestionInfo!;
-            int questionIndex = currentQuestionInfo.question.index;
-            setState(() {
-              if (correctAnswerOptionText == optionTextToDisplay) {
-                widget._audioPlayer.playSuccess();
-                widget.shownImagesForTimeLineHints
-                    .putIfAbsent(widget.category, () => [])
-                    .add(questionIndex);
-                widget.gameContext.gameUser.setWonQuestion(currentQuestionInfo);
-                widget.correctAnswerPressed = true;
-                widget.historyLocalStorage
-                    .setWonQuestion(currentQuestionInfo.question);
-              } else {
-                widget._audioPlayer.playFail();
-                var values = getSortedYearValues();
-                itemScrollController.scrollTo(
-                    index: getRevertedIndex(values.toList().indexOf(
-                        values.firstWhere((element) =>
-                            element.questionIndex == questionIndex))),
-                    duration: Duration(
-                        milliseconds: HistoryGameTimelineScreen
-                            .scroll_to_item_duration_millis));
-                widget.gameContext.gameUser
-                    .setLostQuestion(currentQuestionInfo);
-                widget.correctAnswerPressed = false;
-                widget.historyLocalStorage
-                    .setLostQuestion(currentQuestionInfo.question);
-              }
-            });
-            widget.lasPressedQuestionIndex = currentQuestionInfo.question.index;
-            widget.animateQuestionText = true;
-            widget.questionsToPlayUntilNextCategory--;
-            widget.currentQuestionInfo = widget.gameContext.gameUser
-                .getRandomQuestion(widget.difficulty, widget.category);
-          }
+          var currentQuestionInfo = widget.currentQuestionInfo;
+          int questionIndex = currentQuestionInfo.question.index;
+          setState(() {
+            if (correctAnswerOptionText == optionTextToDisplay) {
+              widget._audioPlayer.playSuccess();
+              widget.shownImagesForTimeLineHints
+                  .putIfAbsent(widget.category, () => [])
+                  .add(questionIndex);
+              widget.gameContext.gameUser.setWonQuestion(currentQuestionInfo);
+              widget.correctAnswerPressed = true;
+              widget.historyLocalStorage
+                  .setWonQuestion(currentQuestionInfo.question);
+            } else {
+              widget._audioPlayer.playFail();
+              var values = getSortedYearValues();
+              itemScrollController.scrollTo(
+                  index: getRevertedIndex(values.toList().indexOf(
+                      values.firstWhere((element) =>
+                          element.questionIndex == questionIndex))),
+                  duration: Duration(
+                      milliseconds: HistoryGameTimelineScreen
+                          .scroll_to_item_duration_millis));
+              widget.gameContext.gameUser.setLostQuestion(currentQuestionInfo);
+              widget.correctAnswerPressed = false;
+              widget.historyLocalStorage
+                  .setLostQuestion(currentQuestionInfo.question);
+            }
+          });
+          widget.lasPressedQuestionIndex = currentQuestionInfo.question.index;
+          widget.animateQuestionText = true;
+          widget.questionsToPlayUntilNextCategory--;
         },
         buttonSkinConfig: ButtonSkinConfig(
             borderColor: Colors.blue.shade600,
@@ -409,22 +399,18 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
   }
 
   void onHintButtonClick() {
-    var currentQuestionInfo = widget.currentQuestionInfo;
+    widget.correctAnswerPressed = false;
 
-    if (currentQuestionInfo != null) {
-      widget.correctAnswerPressed = false;
+    widget.gameContext.amountAvailableHints--;
+    widget.historyLocalStorage.setRemainingHints(
+        widget.difficulty, widget.gameContext.amountAvailableHints);
 
-      widget.gameContext.amountAvailableHints--;
-      widget.historyLocalStorage.setRemainingHints(
-          widget.difficulty, widget.gameContext.amountAvailableHints);
-
-      widget.shownImagesForTimeLineHints
-          .putIfAbsent(widget.category, () => [])
-          .addAll(widget.randomQuestionsToDisplay.map((e) => e.question.index));
-      setState(() {
-        widget.animateQuestionText = false;
-      });
-    }
+    widget.shownImagesForTimeLineHints
+        .putIfAbsent(widget.category, () => [])
+        .addAll(widget.randomQuestionsToDisplay.map((e) => e.question.index));
+    setState(() {
+      widget.animateQuestionText = false;
+    });
   }
 
   Widget createOptionItemCat0(

@@ -14,20 +14,20 @@ abstract class GameScreen<TGameContext extends GameContext>
     extends StandardScreen {
   GameLocalStorage gameLocalStorage = GameLocalStorage();
   AdService adService = AdService();
-  TGameContext? _gameContext;
-  CampaignLevel? _campaignLevel;
-  QuestionDifficulty? _difficulty;
-  QuestionCategory? _category;
+  late CampaignLevel campaignLevel;
+  TGameContext gameContext;
+  QuestionDifficulty difficulty;
+  QuestionCategory category;
 
   GameScreen(
       GameScreenManagerState gameScreenManagerState,
       CampaignLevelService campaignLevelService,
-      this._gameContext,
-      this._difficulty,
-      this._category,
+      this.gameContext,
+      this.difficulty,
+      this.category,
       {Key? key})
       : super(gameScreenManagerState, key: key) {
-    this._campaignLevel =
+    this.campaignLevel =
         campaignLevelService.campaignLevel(difficulty, category);
     gameLocalStorage.incrementTotalPlayedQuestions();
   }
@@ -47,25 +47,5 @@ abstract class GameScreen<TGameContext extends GameContext>
     return () {
       goToNextGameScreen(context);
     };
-  }
-
-  TGameContext get gameContext {
-    assert(_gameContext != null);
-    return _gameContext!;
-  }
-
-  QuestionDifficulty get difficulty {
-    assert(_difficulty != null);
-    return _difficulty!;
-  }
-
-  QuestionCategory get category {
-    assert(_category != null);
-    return _category!;
-  }
-
-  CampaignLevel get campaignLevel {
-    assert(_campaignLevel != null);
-    return _campaignLevel!;
   }
 }

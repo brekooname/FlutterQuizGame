@@ -7,9 +7,9 @@ import 'package:flutter_app_quiz_game/Implementations/History/Constants/history_
 import 'package:flutter_app_quiz_game/Implementations/History/Constants/history_game_question_config.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Questions/history_game_context.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Service/history_game_local_storage.dart';
+import 'package:flutter_app_quiz_game/Lib/Screen/Game/Options/quiz_options_game_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen_manager_state.dart';
-import 'package:flutter_app_quiz_game/Lib/Screen/Game/Options/quiz_options_game_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/quiz_question_game_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
 
@@ -52,22 +52,18 @@ class HistoryGameQuestionScreenState extends State<HistoryGameQuestionScreen>
 
   @override
   Widget build(BuildContext context) {
-    if (widget.currentQuestionInfo != null) {
-      HistoryGameLevelHeader header = createHeader(widget.currentQuestionInfo!);
-      Widget questionContainer = widget.createQuestionTextContainer(
-          widget.currentQuestionInfo!.question,
-          widget.category == HistoryGameQuestionConfig().cat0 ? 1 : 2,
-          widget.category == HistoryGameQuestionConfig().cat3 ? 4 : 2,
-          null);
-      Widget optionsRows = widget.createOptionRows(
-          setStateCallback, widget.goToNextGameScreenCallBack(context));
-      return Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[header, questionContainer, optionsRows],
-      );
-    } else {
-      return Container();
-    }
+    HistoryGameLevelHeader header = createHeader(widget.currentQuestionInfo);
+    Widget questionContainer = widget.createQuestionTextContainer(
+        widget.currentQuestionInfo.question,
+        widget.category == HistoryGameQuestionConfig().cat0 ? 1 : 2,
+        widget.category == HistoryGameQuestionConfig().cat3 ? 4 : 2,
+        null);
+    Widget optionsRows = widget.createOptionRows(
+        setStateCallback, widget.goToNextGameScreenCallBack(context));
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[header, questionContainer, optionsRows],
+    );
   }
 
   HistoryGameLevelHeader createHeader(QuestionInfo questionInfo) {
