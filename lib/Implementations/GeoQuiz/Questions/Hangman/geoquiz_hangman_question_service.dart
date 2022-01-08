@@ -1,4 +1,3 @@
-import 'dart:collection';
 
 import 'package:flutter_app_quiz_game/Game/Question/Model/question.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
@@ -9,9 +8,11 @@ import 'package:flutter_app_quiz_game/Game/Question/question_collector_service.d
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Service/geoquiz_local_storage.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/map_extension.dart';
 
+import '../geoquiz_country_utils.dart';
 import 'geoquiz_hangman_question_parser.dart';
 
 class GeoQuizHangmanQuestionService extends QuestionService {
+  final GeoQuizCountryUtils _geoQuizCountryUtils = GeoQuizCountryUtils();
   final HangmanService _hangmanService = HangmanService();
   final GeoQuizLocalStorage _geoQuizLocalStorage = GeoQuizLocalStorage();
   final QuestionCollectorService _questionCollectorService =
@@ -76,7 +77,11 @@ class GeoQuizHangmanQuestionService extends QuestionService {
   }
 
   String getCountryName(String questionRawString) {
-    return questionParser.getCountryName(questionRawString);
+    return _geoQuizCountryUtils.getCountryName(questionRawString);
+  }
+
+  List<String> getCountryNamesForOptions(String questionRawString) {
+    return _geoQuizCountryUtils.getCountryNamesForOptions(questionRawString);
   }
 
   List<String> getAlreadyFoundCountries(
@@ -87,7 +92,7 @@ class GeoQuizHangmanQuestionService extends QuestionService {
         .getAllQuestionsForCategoriesAndDifficulties([diff], [cat]);
 
     var allFoundCountries = wonQ.map((q) {
-      return questionParser.getCountryName(questions
+      return _geoQuizCountryUtils.getCountryName(questions
           .firstWhere((element) => element.index == q.index)
           .rawString);
     }).toList();
@@ -114,8 +119,8 @@ class GeoQuizHangmanQuestionService extends QuestionService {
   }
 
   List<String> _getCountrySynonyms(String country) {
-    int countryIndex = questionParser.allCountries.indexOf(country);
-    return questionParser.allSynonyms
+    int countryIndex = _geoQuizCountryUtils.getCountryIndexForName(country);
+    return _geoQuizCountryUtils.allSynonyms
         .getOrDefault<int, List<String>>(countryIndex, []);
   }
 

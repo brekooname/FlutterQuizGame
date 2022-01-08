@@ -5,8 +5,8 @@ import 'package:flutter_app_quiz_game/Game/Question/Model/question_info.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_info_status.dart';
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Constants/geoquiz_campaign_level_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Questions/geoquiz_game_context.dart';
-import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Questions/geoquiz_hangman_question_category_service.dart';
-import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Questions/geoquiz_hangman_question_service.dart';
+import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Questions/Hangman/geoquiz_hangman_question_category_service.dart';
+import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Questions/Hangman/geoquiz_hangman_question_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Service/geoquiz_gamecontext_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Service/geoquiz_local_storage.dart';
 import 'package:flutter_app_quiz_game/Lib/Audio/my_audio_player.dart';
@@ -20,9 +20,9 @@ import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
 class GeoQuizHangmanScreen extends GameScreen<GeoQuizGameContext> {
-  static final int show_interstitial_ad_every_n_questions = 8;
-  GeoQuizLocalStorage _geoQuizLocalStorage = GeoQuizLocalStorage();
-  MyAudioPlayer _audioPlayer = MyAudioPlayer();
+  static const int show_interstitial_ad_every_n_questions = 8;
+  final GeoQuizLocalStorage _geoQuizLocalStorage = GeoQuizLocalStorage();
+  final MyAudioPlayer _audioPlayer = MyAudioPlayer();
   late GeoQuizHangmanQuestionService questionService;
   List<String> pressedAnswers = [];
   List<QuestionInfo> currentQuestions = [];
@@ -41,20 +41,28 @@ class GeoQuizHangmanScreen extends GameScreen<GeoQuizGameContext> {
             key: key) {
     questionService =
         GeoQuizHangmanCategoryQuestionService().getQuestionService();
-    GeoQuizGameContextService gameContextService = GeoQuizGameContextService();
-    if (gameContextService.categoriesWithStatsCriteria.keys
-        .contains(category)) {
+    if (isStatsCategory()) {
       currentQuestions = gameContext.gameUser
           .getOpenQuestionsForConfig(difficulty, category)
           .toList();
       currentQuestionsCountryNames = currentQuestions
           .map((e) => questionService.getCountryName(e.question.rawString))
           .toList();
+      alreadyFoundCountryNames =
+          questionService.getAlreadyFoundCountries(difficulty, category, false);
     } else {
-      currentQuestions = [gameContext.gameUser.getRandomQuestion(difficulty, category)];
+      var randomQuestion =
+          gameContext.gameUser.getRandomQuestion(difficulty, category);
+      currentQuestions = [randomQuestion];
+      currentQuestionsCountryNames = questionService
+          .getCountryNamesForOptions(randomQuestion.question.rawString);
     }
-    alreadyFoundCountryNames =
-        questionService.getAlreadyFoundCountries(difficulty, category, false);
+  }
+
+  bool isStatsCategory() {
+    GeoQuizGameContextService gameContextService = GeoQuizGameContextService();
+    return gameContextService.categoriesWithStatsCriteria.keys
+        .contains(category);
   }
 
   @override
@@ -148,21 +156,15 @@ class GeoQuizHangmanScreenState extends State<GeoQuizHangmanScreen>
 
         if (correctPressedCountries.isNotEmpty) {
           if (correctPressedCountries.length == 1) {
+            var countryFound = correctPressedCountries.first;
+            if (widget.isStatsCategory()) {
+              processFoundStatsQuestion(countryFound);
+            } else {
+              processFoundOptionQuestion(countryFound);
+            }
             widget.answerFound = true;
             widget._audioPlayer.playSuccess();
-            QuestionInfo foundCountry = widget.currentQuestions.firstWhere(
-                (element) =>
-                    widget.questionService
-                        .getCountryName(element.question.rawString) ==
-                    correctPressedCountries.first);
-            widget.gameContext.gameUser.setWonQuestion(foundCountry);
-            widget._geoQuizLocalStorage.setWonQuestion(foundCountry.question);
             widget.pressedAnswers.clear();
-            widget.alreadyFoundCountryNames = widget.questionService
-                .getAlreadyFoundCountries(
-                    widget.difficulty, widget.category, false);
-            Future.delayed(Duration(milliseconds: 500),
-                () => widget.goToNextGameScreen(context));
           }
         } else if (pressedAnswer.length > minLengthToCheck &&
             correctPressedCountries.isEmpty) {
@@ -171,6 +173,31 @@ class GeoQuizHangmanScreenState extends State<GeoQuizHangmanScreen>
         }
       });
     }
+  }
+
+  void processFoundOptionQuestion(String countryFound) {
+    widget.alreadyFoundCountryNames.add(countryFound);
+    widget.currentQuestionsCountryNames.remove(countryFound);
+    if (widget.currentQuestionsCountryNames.isEmpty) {
+      setWonQuestion(widget.currentQuestions.first);
+    }
+  }
+
+  void processFoundStatsQuestion(String countryFound) {
+    QuestionInfo foundQuestionInfo = widget.currentQuestions.firstWhere(
+        (element) =>
+            widget.questionService.getCountryName(element.question.rawString) ==
+            countryFound);
+    widget.alreadyFoundCountryNames = widget.questionService
+        .getAlreadyFoundCountries(widget.difficulty, widget.category, false);
+    setWonQuestion(foundQuestionInfo);
+  }
+
+  void setWonQuestion(QuestionInfo questionInfo) {
+    widget.gameContext.gameUser.setWonQuestion(questionInfo);
+    widget._geoQuizLocalStorage.setWonQuestion(questionInfo.question);
+    Future.delayed(
+        const Duration(milliseconds: 500), () => widget.goToNextGameScreen(context));
   }
 
   void setStateCallback() {

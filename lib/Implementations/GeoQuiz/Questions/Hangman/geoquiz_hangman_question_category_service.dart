@@ -1,7 +1,7 @@
 import 'package:flutter_app_quiz_game/Game/Constants/hint_button_type.dart';
 import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/question_category_service.dart';
-import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Questions/geoquiz_hangman_question_parser.dart';
-import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Questions/geoquiz_hangman_question_service.dart';
+import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Questions/Hangman/geoquiz_hangman_question_parser.dart';
+import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Questions/Hangman/geoquiz_hangman_question_service.dart';
 
 class GeoQuizHangmanCategoryQuestionService extends QuestionCategoryService {
   static final GeoQuizHangmanCategoryQuestionService singleton =

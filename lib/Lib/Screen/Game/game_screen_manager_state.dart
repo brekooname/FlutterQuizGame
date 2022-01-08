@@ -3,8 +3,6 @@ import 'package:flutter_app_quiz_game/Game/Game/campaign_level.dart';
 import 'package:flutter_app_quiz_game/Game/Game/game_context.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
-import 'package:flutter_app_quiz_game/Game/Question/Model/question_info.dart';
-import 'package:flutter_app_quiz_game/Game/Question/Model/question_info_status.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/standard_screen.dart';
 
 mixin GameScreenManagerState<TGameContext extends GameContext> {
@@ -64,39 +62,12 @@ mixin GameScreenManagerState<TGameContext extends GameContext> {
   StandardScreen getScreen(
       CampaignLevel campaignLevel, TGameContext gameContext) {
     var randomQuestionCategory =
-        _getNotPlayedRandomQuestionCategory(gameContext);
+        gameContext.gameUser.getNotPlayedRandomQuestionCategory();
     if (randomQuestionCategory == null) {
       return createMainScreen();
     } else {
       return getScreenForConfig(
           gameContext, campaignLevel.difficulty, randomQuestionCategory);
-    }
-  }
-
-  QuestionCategory? _getNotPlayedRandomQuestionCategory(
-      TGameContext gameContext) {
-    var allOpenQuestions = gameContext.gameUser.getOpenQuestions().toList();
-    List<QuestionCategory> availableCategories =
-        allOpenQuestions.map((e) => e.question.category).toSet().toList();
-
-    if (availableCategories.isEmpty) {
-      //GAME OVER
-      return null;
-    } else if (availableCategories.length == 1) {
-      return availableCategories.first;
-    } else {
-      QuestionInfo? mostRecentQuestion =
-          gameContext.gameUser.getMostRecentAnsweredQuestion();
-
-      if (mostRecentQuestion == null) {
-        allOpenQuestions.shuffle();
-        return allOpenQuestions.first.question.category;
-      } else {
-        availableCategories.remove(mostRecentQuestion.question.category);
-        availableCategories.shuffle();
-
-        return availableCategories.first;
-      }
     }
   }
 }

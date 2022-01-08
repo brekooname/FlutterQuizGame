@@ -8,7 +8,7 @@ import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/ques
 import 'package:flutter_app_quiz_game/Lib/Extensions/list_extension.dart';
 
 class GameUser {
-  List<QuestionInfo> _allQuestionInfos = [];
+  final List<QuestionInfo> _allQuestionInfos = [];
 
   void setWonQuestion(QuestionInfo gameQuestionInfo) {
     if (gameQuestionInfo.isQuestionOpen()) {
@@ -32,29 +32,20 @@ class GameUser {
     List<QuestionInfo> res =
         getOpenQuestionsForConfig(difficulty, category).toList();
     res.shuffle();
-    if (res.isEmpty) {
-      int i = 0;
-    }
     return res.first;
-  }
-
-  QuestionInfo getFirstOpenQuestion(
-      QuestionDifficulty difficulty, QuestionCategory category) {
-    return getOpenQuestionsForConfig(difficulty, category).first;
   }
 
   QuestionInfo? getMostRecentAnsweredQuestion(
       {List<QuestionInfoStatus>? questionInfoStatus,
       QuestionDifficulty? difficulty,
       QuestionCategory? category}) {
-    var questionInfo = _allQuestionInfos
-        .where((element) =>
-            (questionInfoStatus ?? QuestionInfoStatus.values)
-                .contains(element.status) &&
-            element.questionAnsweredAt != null &&
-            (category == null || element.question.category == category) &&
-            (difficulty == null || element.question.difficulty == difficulty))
-        .toList();
+    var questionStatusToCheck = questionInfoStatus ?? QuestionInfoStatus.values;
+    var questionInfo = _allQuestionInfos.where((element) {
+      return questionStatusToCheck.contains(element.status) &&
+          element.questionAnsweredAt != null &&
+          (category == null || element.question.category == category) &&
+          (difficulty == null || element.question.difficulty == difficulty);
+    }).toList();
     questionInfo
         .sort((a, b) => b.questionAnsweredAt!.compareTo(a.questionAnsweredAt!));
     return questionInfo.firstOrNull;
@@ -67,8 +58,7 @@ class GameUser {
   }
 
   Iterable<QuestionInfo> getOpenQuestions() {
-    return _allQuestionInfos
-        .where((element) => element.status == QuestionInfoStatus.OPEN);
+    return getAllQuestions([QuestionInfoStatus.OPEN]);
   }
 
   Iterable<QuestionInfo> getOpenQuestionsForConfig(
@@ -93,11 +83,12 @@ class GameUser {
 
   List<QuestionInfo> getAllQuestions(
       List<QuestionInfoStatus> questionInfoStatus) {
-    return questionInfoStatus.isEmpty
-        ? _allQuestionInfos
-        : _allQuestionInfos
-            .where((e) => questionInfoStatus.contains(e.status))
-            .toList();
+    var questionStatusToCheck = questionInfoStatus.isEmpty
+        ? QuestionInfoStatus.values
+        : questionInfoStatus;
+    return _allQuestionInfos
+        .where((e) => questionStatusToCheck.contains(e.status))
+        .toList();
   }
 
   bool addAnswerToQuestionInfo(Question question, String answerId) {
@@ -118,6 +109,31 @@ class GameUser {
           gameQuestionInfo.question, gameQuestionInfo.pressedAnswers);
       if (userFail) {
         setLostQuestion(gameQuestionInfo);
+      }
+    }
+  }
+
+  QuestionCategory? getNotPlayedRandomQuestionCategory() {
+    var allOpenQuestions = getOpenQuestions().toList();
+    List<QuestionCategory> availableCategories =
+        allOpenQuestions.map((e) => e.question.category).toSet().toList();
+
+    if (availableCategories.isEmpty) {
+      //GAME OVER
+      return null;
+    } else if (availableCategories.length == 1) {
+      return availableCategories.first;
+    } else {
+      QuestionInfo? mostRecentQuestion = getMostRecentAnsweredQuestion();
+
+      if (mostRecentQuestion == null) {
+        allOpenQuestions.shuffle();
+        return allOpenQuestions.first.question.category;
+      } else {
+        availableCategories.remove(mostRecentQuestion.question.category);
+        availableCategories.shuffle();
+
+        return availableCategories.first;
       }
     }
   }
