@@ -1,23 +1,24 @@
 import 'package:flutter_app_quiz_game/Game/Question/Model/question.dart';
 import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/question_service.dart';
+import 'package:flutter_app_quiz_game/Lib/Extensions/string_extension.dart';
 
 import '../geoquiz_country_utils.dart';
-import 'geoquiz_countries_question_parser.dart';
+import 'geoquiz_countries_multiple_options_question_parser.dart';
 
-class GeoQuizCountriesQuestionService extends QuestionService {
+class GeoQuizCountriesMultipleOptionsQuestionService extends QuestionService {
   final GeoQuizCountryUtils _geoQuizCountryUtils = GeoQuizCountryUtils();
-  late GeoQuizCountriesQuestionParser questionParser;
+  late GeoQuizCountriesMultipleOptionsQuestionParser questionParser;
 
-  static final GeoQuizCountriesQuestionService singleton =
-      GeoQuizCountriesQuestionService.internal();
+  static final GeoQuizCountriesMultipleOptionsQuestionService singleton =
+      GeoQuizCountriesMultipleOptionsQuestionService.internal();
 
-  factory GeoQuizCountriesQuestionService(
-      {required GeoQuizCountriesQuestionParser questionParser}) {
+  factory GeoQuizCountriesMultipleOptionsQuestionService(
+      {required GeoQuizCountriesMultipleOptionsQuestionParser questionParser}) {
     singleton.questionParser = questionParser;
     return singleton;
   }
 
-  GeoQuizCountriesQuestionService.internal();
+  GeoQuizCountriesMultipleOptionsQuestionService.internal();
 
   @override
   String getQuestionToBeDisplayed(Question question) {
@@ -44,6 +45,13 @@ class GeoQuizCountriesQuestionService extends QuestionService {
 
   @override
   Set<String> getAllAnswerOptionsForQuestion(Question question) {
-    return {};
+    var correctAnswers = getCorrectAnswers(question);
+    return questionParser.getAllPossibleAnswersForQuestion(
+        _geoQuizCountryUtils.getCountryNameForIndex(
+            question.rawString.split(":")[0].parseToInt),
+        correctAnswers.toSet(),
+        {},
+        true,
+        correctAnswers.length + 3);
   }
 }

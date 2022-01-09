@@ -24,7 +24,7 @@ class GeoQuizCampaignLevelService extends CampaignLevelService {
     singleton.level_0 = CampaignLevel(
       difficulty: questionConfig.diff0,
       category: [
-        questionConfig.cat0,
+        questionConfig.cat3,
       ],
     );
     singleton.level_1 = CampaignLevel(

@@ -1,4 +1,4 @@
-import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Questions/CountriesQuiz/geoquiz_countries_question_parser.dart';
+import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Questions/CountriesMultipleOptions/geoquiz_countries_multiple_options_question_parser.dart';
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Questions/geoquiz_country_utils.dart';
 import 'package:flutter_app_quiz_game/Lib/Constants/language.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/enum_extension.dart';
@@ -6,12 +6,12 @@ import 'package:flutter_app_quiz_game/main.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  test('GameContext is tested', () {
+  test('getAllPossibleAnswersForQuestion is tested', () {
     MyApp.languageCode = Language.en.name;
     GeoQuizCountryUtils geoQuizCountryUtils = GeoQuizCountryUtils();
 
-    GeoQuizCountriesQuestionParser geoQuizCountriesQuestionParser =
-        GeoQuizCountriesQuestionParser();
+    GeoQuizCountriesMultipleOptionsQuestionParser geoQuizCountriesQuestionParser =
+    GeoQuizCountriesMultipleOptionsQuestionParser();
 
     int opt1 = 0;
     int opt2 = 0;
@@ -19,7 +19,7 @@ void main() {
     for (int i = 0; i < triesToTest; i++) {
       Set<String> res =
           geoQuizCountriesQuestionParser.getAllPossibleAnswersForQuestion(
-              "Italy", {"Austria", "Germany"}, {"Switzerland"}, 4);
+              "Italy", {"Austria", "Germany"}, {"Switzerland"}, false, 4);
 
       expect(res.length, 4);
       expect(res.contains("Italy"), false);
@@ -39,7 +39,7 @@ void main() {
     for (int i = 0; i < triesToTest; i++) {
       Set<String> res =
           geoQuizCountriesQuestionParser.getAllPossibleAnswersForQuestion(
-              "Italy", {"Austria"}, {"Germany"}, 4);
+              "Italy", {"Austria"}, {"Germany"}, false, 4);
 
       expect(res.length, 4);
       expect(res.contains("Italy"), false);

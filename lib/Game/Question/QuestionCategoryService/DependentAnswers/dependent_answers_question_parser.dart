@@ -51,7 +51,7 @@ class DependentAnswersQuestionParser extends QuestionParser {
 
     var answerReferences = getAnswerReferences(question.rawString);
 
-    Set<String> possibleAnswersResult = Set();
+    Set<String> possibleAnswersResult = {};
     var correctAnswerForCurrentQuestion =
         getCorrectAnswersFromRawString(question.rawString).first;
     possibleAnswersResult.add(correctAnswerForCurrentQuestion);

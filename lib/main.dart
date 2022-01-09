@@ -36,9 +36,8 @@ class MyApp extends StatefulWidget {
   //
   //////
   ////////////
-  static const String _appKey = "history";
-
-  // static const String _appKey = "geoquiz";
+  // static const String _appKey = "history";
+  static const String _appKey = "geoquiz";
   static const Language _language = Language.en;
 
   ////////////
@@ -169,12 +168,12 @@ class MyAppState extends State<MyApp> {
       //
       ////
       widgetToShow = createScreen(MyApp.gameScreenManager, widget.bannerAd);
-      // Future.delayed(Duration(milliseconds: 100), () {
-      //   var campaignLevel = GeoQuizCampaignLevelService().level_0;
-      //   MyApp.gameScreenManager.currentScreen!.gameScreenManagerState
-      //       .showNewGameScreen(campaignLevel);
-      //   widgetToShow = createScreen(MyApp.gameScreenManager, widget.bannerAd);
-      // });
+      Future.delayed(Duration(milliseconds: 100), () {
+        var campaignLevel = GeoQuizCampaignLevelService().level_0;
+        MyApp.gameScreenManager.currentScreen!.gameScreenManagerState
+            .showNewGameScreen(campaignLevel);
+        widgetToShow = createScreen(MyApp.gameScreenManager, widget.bannerAd);
+      });
       ////
       //
       ////

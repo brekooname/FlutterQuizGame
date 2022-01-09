@@ -1,38 +1,44 @@
 import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/question_parser.dart';
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Questions/AllContent/geoquiz_all_questions.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/list_extension.dart';
+import 'package:flutter_app_quiz_game/Lib/Extensions/string_extension.dart';
 
 import '../geoquiz_country_utils.dart';
 
-class GeoQuizCountriesQuestionParser extends QuestionParser {
+class GeoQuizCountriesMultipleOptionsQuestionParser extends QuestionParser {
   final GeoQuizCountryUtils _geoQuizCountryUtils = GeoQuizCountryUtils();
   final GeoQuizAllQuestions _allQuestions = GeoQuizAllQuestions();
 
-  static final GeoQuizCountriesQuestionParser singleton =
-      GeoQuizCountriesQuestionParser.internal();
+  static final GeoQuizCountriesMultipleOptionsQuestionParser singleton =
+      GeoQuizCountriesMultipleOptionsQuestionParser.internal();
 
-  factory GeoQuizCountriesQuestionParser() {
+  factory GeoQuizCountriesMultipleOptionsQuestionParser() {
     return singleton;
   }
 
-  GeoQuizCountriesQuestionParser.internal();
+  GeoQuizCountriesMultipleOptionsQuestionParser.internal();
 
-  //We return a list in case of multiple correct answers
-  // but for this case there is only one correct answer
   @override
   List<String> getCorrectAnswersFromRawString(String questionString) {
-    return [questionString.split(":")[1].trim()];
+    return questionString
+        .split(":")[1]
+        .trim()
+        .split(",")
+        .map((e) => _geoQuizCountryUtils.getCountryNameForIndex(e.parseToInt))
+        .toList();
   }
 
   @override
   String getQuestionToBeDisplayed(String questionRawString) {
-    return questionRawString.split(":")[0].trim();
+    return _geoQuizCountryUtils.getCountryNameForIndex(
+        questionRawString.split(":")[0].trim().parseToInt);
   }
 
   Set<String> getAllPossibleAnswersForQuestion(
       String currentCountry,
       Set<String> correctAnswers,
       Set<String> alreadyUsedCountries,
+      bool useAllCorrectAnswersAsOptions,
       int nrOfPossibleAnswers) {
     Set<String> possibleAnswersResult = Set();
 
@@ -52,14 +58,19 @@ class GeoQuizCountriesQuestionParser extends QuestionParser {
 
     countryRangeIndexes.shuffle();
     countryRangeIndexes.remove(currentCountryIndex);
-    countryRangeIndexes.removeAll(alreadyUsedCountries.map((e) => _geoQuizCountryUtils.getCountryIndexForName(e)));
-    countryRangeIndexes.removeAll(correctAnswers.map((e) => _geoQuizCountryUtils.getCountryIndexForName(e)));
+    countryRangeIndexes.removeAll(alreadyUsedCountries
+        .map((e) => _geoQuizCountryUtils.getCountryIndexForName(e)));
+    countryRangeIndexes.removeAll(correctAnswers
+        .map((e) => _geoQuizCountryUtils.getCountryIndexForName(e)));
 
-    var correctAnswersList = correctAnswers.toList();
-    correctAnswersList.shuffle();
-    possibleAnswersResult.add(correctAnswersList.first);
-    while (possibleAnswersResult.length <
-            nrOfPossibleAnswers &&
+    if (useAllCorrectAnswersAsOptions) {
+      possibleAnswersResult.addAll(correctAnswers);
+    } else {
+      var correctAnswersList = correctAnswers.toList();
+      correctAnswersList.shuffle();
+      possibleAnswersResult.add(correctAnswersList.first);
+    }
+    while (possibleAnswersResult.length < nrOfPossibleAnswers &&
         countryRangeIndexes.isNotEmpty) {
       var firstIndex = countryRangeIndexes.first;
       possibleAnswersResult

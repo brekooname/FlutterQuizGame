@@ -23,6 +23,7 @@ mixin QuizOptionsGameScreen<TGameContext extends GameContext> {
   late QuestionInfo currentQuestionInfo;
   late QuizGameLocalStorage quizGameLocalStorage;
   late TGameContext gameContext;
+  late bool isMultipleCorrectAnswersScreen;
   bool correctAnswerPressed = false;
   String? wrongPressedAnswer;
   Set<String> hintDisabledPossibleAnswers = HashSet();
@@ -32,7 +33,10 @@ mixin QuizOptionsGameScreen<TGameContext extends GameContext> {
       TGameContext gameContext,
       QuizGameLocalStorage quizGameLocalStorage,
       QuestionDifficulty difficulty,
-      QuestionCategory category) {
+      QuestionCategory category,
+      {bool? isMultipleCorrectAnswersScreen}) {
+    this.isMultipleCorrectAnswersScreen =
+        isMultipleCorrectAnswersScreen ?? false;
     this.quizGameLocalStorage = quizGameLocalStorage;
     this.gameContext = gameContext;
     currentQuestionInfo =
@@ -97,7 +101,7 @@ mixin QuizOptionsGameScreen<TGameContext extends GameContext> {
   Widget createPossibleAnswerButton(VoidCallback refreshSetState,
       VoidCallback goToNextScreenAfterPress, String answerBtnText) {
     var btnBackgr = Colors.lightBlueAccent;
-    var btnSize = Size(_screenDimensions.w(45), _screenDimensions.h(15));
+    var btnSize = _getAnswerBtnSize();
     var disabled = wrongPressedAnswer != null ||
         correctAnswerPressed ||
         hintDisabledPossibleAnswers.contains(answerBtnText.toLowerCase());
@@ -142,9 +146,31 @@ mixin QuizOptionsGameScreen<TGameContext extends GameContext> {
                 backgroundColor: btnBackgr),
             customContent: MyText(
               text: answerBtnText,
-              maxLines: 4,
+              maxLines: _getAnswerBtnMaxLines(),
               width: btnSize.width / 1.1,
             )));
+  }
+
+  int _getAnswerBtnMaxLines() {
+    return _possibleAnswers.length <= 4
+        ? 4
+        : _possibleAnswers.length <= 6
+            ? 3
+            : _possibleAnswers.length <= 8
+                ? 2
+                : 1;
+  }
+
+  Size _getAnswerBtnSize() {
+    return Size(
+        _screenDimensions.w(45),
+        _screenDimensions.h(_possibleAnswers.length <= 4
+            ? 15
+            : _possibleAnswers.length <= 6
+                ? 12
+                : _possibleAnswers.length <= 8
+                    ? 8
+                    : 5));
   }
 
   void onHintButtonClick(VoidCallback refreshSetState) {

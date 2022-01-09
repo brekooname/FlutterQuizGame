@@ -6,6 +6,7 @@ import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.da
 import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/DependentAnswers/dependent_answers_question_category_service.dart';
 import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/Hangman/hangman_question_category_service.dart';
 import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/UniqueAnswers/unqiue_answers_question_category_service.dart';
+import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Questions/CountriesMultipleOptions/geoquiz_countries_multiple_options_question_category_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Questions/Hangman/geoquiz_hangman_question_category_service.dart';
 
 class GeoQuizGameQuestionConfig extends GameQuestionConfig {
@@ -14,6 +15,7 @@ class GeoQuizGameQuestionConfig extends GameQuestionConfig {
   late QuestionCategory cat2;
   late QuestionCategory cat3;
   late QuestionCategory cat4;
+  late QuestionCategory cat5;
 
   late QuestionDifficulty diff0;
   late QuestionDifficulty diff1;
@@ -35,9 +37,12 @@ class GeoQuizGameQuestionConfig extends GameQuestionConfig {
         questionCategoryService: DependentAnswersCategoryQuestionService());
     singleton.cat3 = QuestionCategory(
         index: 3,
-        questionCategoryService: UniqueAnswersCategoryQuestionService());
+        questionCategoryService: GeoQuizCountriesMultipleOptionsCategoryQuestionService());
     singleton.cat4 = QuestionCategory(
         index: 4,
+        questionCategoryService: DependentAnswersCategoryQuestionService());
+    singleton.cat5 = QuestionCategory(
+        index: 5,
         questionCategoryService: DependentAnswersCategoryQuestionService());
     //
     //DIFFICULTIES
@@ -58,7 +63,7 @@ class GeoQuizGameQuestionConfig extends GameQuestionConfig {
   List<QuestionDifficulty> get difficulties => [diff0, diff1, diff2, diff3];
 
   @override
-  List<QuestionCategory> get categories => [cat0, cat1, cat2, cat3, cat4];
+  List<QuestionCategory> get categories => [cat0, cat1, cat2, cat3, cat4, cat5];
 
   @override
   Map<QuestionCategoryWithPrefixCode, String> get prefixLabelForCode {

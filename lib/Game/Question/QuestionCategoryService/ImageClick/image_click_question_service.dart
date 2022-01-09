@@ -85,7 +85,7 @@ class ImageClickQuestionService extends QuestionService {
 
   @override
   Set<String> getAllAnswerOptionsForQuestion(Question question) {
-    return Set();
+    return {};
   }
 
   @override
