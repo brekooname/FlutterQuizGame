@@ -4,8 +4,8 @@ import 'package:flutter_app_quiz_game/Lib/Extensions/enum_extension.dart';
 import '../../../../main.dart';
 
 class HangmanService {
-  static const String standard_letters = "abcdefghijklmnopqrstuvwxyz";
-  static const List<String> _chars_to_be_ignored = [" ", "-", "'"];
+  static const String standardLetters = "abcdefghijklmnopqrstuvwxyz";
+  static const List<String> _charsToBeIgnored = [" ", "-", "'"];
 
   late String availableLetters;
 
@@ -48,7 +48,7 @@ class HangmanService {
   }
 
   bool availableLettersHaveSpecialCharacters() {
-    return availableLetters.replaceAll(",", "") != standard_letters;
+    return availableLetters.replaceAll(",", "") != standardLetters;
   }
 
   String getCurrentWordState(String hangmanWord, Iterable<String> answerIds) {
@@ -84,7 +84,7 @@ class HangmanService {
   }
 
   String removeCharsToBeIgnored(String string) {
-    for (String charToBeIgnored in _chars_to_be_ignored) {
+    for (String charToBeIgnored in _charsToBeIgnored) {
       string = string.replaceAll(charToBeIgnored, "");
     }
     return string;

@@ -9,10 +9,9 @@ import 'my_popup.dart';
 
 class SettingsPopup extends StatefulWidget with MyPopup {
   late SettingsLocalStorage _settingsLocalStorage;
-  ButtonSize buttonSize = ButtonSize();
   VoidCallback? resetContent;
 
-  SettingsPopup({VoidCallback? resetContent}) {
+  SettingsPopup({Key? key, VoidCallback? resetContent}) : super(key: key) {
     _settingsLocalStorage = SettingsLocalStorage();
     this.resetContent = resetContent;
   }
@@ -81,7 +80,7 @@ class SettingsPopupState extends State<SettingsPopup> with MyPopup {
                   onChanged: (value) {
                     setState(() {
                       widget._settingsLocalStorage.toggleSound();
-                      Future.delayed(Duration(milliseconds: 300),
+                      Future.delayed(const Duration(milliseconds: 300),
                           () => closePopup(context));
                     });
                   },

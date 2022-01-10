@@ -8,7 +8,7 @@ class ProgressBar extends StatelessWidget {
   double width;
 
   ProgressBar(
-      {required this.percentFilled, required this.width, required this.height});
+      {Key? key, required this.percentFilled, required this.width, required this.height}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +39,7 @@ class ProgressBar extends StatelessWidget {
               color: Colors.grey.shade400,
               width: FontConfig.standardBorderWidth)),
       child: Row(
-        children: [filledBar, Spacer()],
+        children: [filledBar, const Spacer()],
       ),
     );
     return emptyBar;

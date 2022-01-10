@@ -1,5 +1,5 @@
 extension StringExtension on String {
-  String get capitalized => "${this[0].toUpperCase()}${this.substring(1)}";
+  String get capitalized => "${this[0].toUpperCase()}${substring(1)}";
 
   String get reversed => split('').reversed.join('');
 

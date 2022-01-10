@@ -12,18 +12,18 @@ class GameUser {
 
   void setWonQuestion(QuestionInfo gameQuestionInfo) {
     if (gameQuestionInfo.isQuestionOpen()) {
-      gameQuestionInfo.updateStatus(QuestionInfoStatus.WON);
+      gameQuestionInfo.updateStatus(QuestionInfoStatus.won);
     }
   }
 
   void resetQuestion(QuestionInfo gameQuestionInfo) {
-    gameQuestionInfo.updateStatus(QuestionInfoStatus.OPEN);
+    gameQuestionInfo.updateStatus(QuestionInfoStatus.open);
     gameQuestionInfo.clearPressedAnswers();
   }
 
   void setLostQuestion(QuestionInfo gameQuestionInfo) {
     if (gameQuestionInfo.isQuestionOpen()) {
-      gameQuestionInfo.updateStatus(QuestionInfoStatus.LOST);
+      gameQuestionInfo.updateStatus(QuestionInfoStatus.lost);
     }
   }
 
@@ -58,7 +58,7 @@ class GameUser {
   }
 
   Iterable<QuestionInfo> getOpenQuestions() {
-    return getAllQuestions([QuestionInfoStatus.OPEN]);
+    return getAllQuestions([QuestionInfoStatus.open]);
   }
 
   Iterable<QuestionInfo> getOpenQuestionsForConfig(
@@ -95,7 +95,7 @@ class GameUser {
     QuestionInfo questionInfo = getQuestionInfo(question);
     questionInfo.addPressedAnswer(answerId);
     setQuestionFinishedStatus(questionInfo);
-    return questionInfo.status == QuestionInfoStatus.WON;
+    return questionInfo.status == QuestionInfoStatus.won;
   }
 
   void setQuestionFinishedStatus(QuestionInfo gameQuestionInfo) {

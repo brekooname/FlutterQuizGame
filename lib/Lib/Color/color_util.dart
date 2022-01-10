@@ -33,7 +33,7 @@ class ColorFilterGenerator {
   static List<double> hueAdjustMatrix({required double value}) {
     value = value * 3.14;
 
-    if (value == 0)
+    if (value == 0) {
       return [
         1,
         0,
@@ -56,6 +56,7 @@ class ColorFilterGenerator {
         1,
         0,
       ];
+    }
 
     double cosVal = cos(value);
     double sinVal = sin(value);
@@ -88,12 +89,13 @@ class ColorFilterGenerator {
   }
 
   static List<double> brightnessAdjustMatrix({required double value}) {
-    if (value <= 0)
+    if (value <= 0) {
       value = value * 255;
-    else
+    } else {
       value = value * 100;
+    }
 
-    if (value == 0)
+    if (value == 0) {
       return [
         1,
         0,
@@ -116,6 +118,7 @@ class ColorFilterGenerator {
         1,
         0,
       ];
+    }
 
     return List<double>.from(<double>[
       1,
@@ -144,7 +147,7 @@ class ColorFilterGenerator {
   static List<double> saturationAdjustMatrix({required double value}) {
     value = value * 100;
 
-    if (value == 0)
+    if (value == 0) {
       return [
         1,
         0,
@@ -167,6 +170,7 @@ class ColorFilterGenerator {
         1,
         0,
       ];
+    }
 
     double x =
         ((1 + ((value > 0) ? ((3 * value) / 100) : (value / 100)))).toDouble();

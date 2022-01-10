@@ -36,7 +36,7 @@ class InternalAnimatedWidget extends AnimatedWidget {
 }
 
 class AnimateZoomInZoomOutText extends StatefulWidget {
-  static const double default_zoom_amount = 1.1;
+  static const double defaultZoomAmount = 1.1;
   MyText toAnimateText;
   double zoomAmount;
   bool zoomInZoomOutOnce;
@@ -44,7 +44,7 @@ class AnimateZoomInZoomOutText extends StatefulWidget {
 
   AnimateZoomInZoomOutText(
       {Key? key,
-      this.zoomAmount = default_zoom_amount,
+      this.zoomAmount = defaultZoomAmount,
       this.zoomInZoomOutOnce = false,
       this.duration = const Duration(milliseconds: 500),
       required this.toAnimateText})

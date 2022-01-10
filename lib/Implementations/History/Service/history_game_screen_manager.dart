@@ -16,6 +16,8 @@ import 'package:flutter_app_quiz_game/Lib/Screen/standard_screen.dart';
 import 'history_gamecontext_service.dart';
 
 class HistoryGameScreenManager extends GameScreenManager {
+  HistoryGameScreenManager({Key? key}) : super(key: key);
+
   @override
   State<HistoryGameScreenManager> createState() =>
       HistoryGameScreenManagerState();
@@ -36,7 +38,7 @@ class HistoryGameScreenManagerState extends State<HistoryGameScreenManager>
   void showNextGameScreen(
       CampaignLevel campaignLevel, HistoryGameContext gameContext) {
     gameContext.gameUser
-        .getAllQuestions([QuestionInfoStatus.LOST]).forEach((element) {
+        .getAllQuestions([QuestionInfoStatus.lost]).forEach((element) {
       gameContext.gameUser.resetQuestion(element);
     });
     super.showNextGameScreen(campaignLevel, gameContext);

@@ -9,6 +9,6 @@ class GameContext {
   QuestionConfig questionConfig;
 
   GameContext(this.gameUser, this.questionConfig) {
-    this.amountAvailableHints = questionConfig.hints;
+    amountAvailableHints = questionConfig.hints;
   }
 }

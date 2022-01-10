@@ -19,14 +19,14 @@ class ButtonSkinConfig {
       double borderWidth = 0,
       this.withBorder = true}) {
     if (backgroundColor != null) {
-      this.backgroundGradient = RadialGradient(radius: 4, colors: [
+      backgroundGradient = RadialGradient(radius: 4, colors: [
         ColorUtil.colorDarken(backgroundColor, -0.05),
         backgroundColor,
       ]);
     } else {
-      this.withBorder = false;
-      this._image = image;
-      this._icon = icon;
+      withBorder = false;
+      _image = image;
+      _icon = icon;
     }
     this.borderColor = withBorder
         ? borderColor ?? ColorUtil.colorDarken(backgroundColor!, -0.15)

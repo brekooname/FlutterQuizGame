@@ -106,7 +106,7 @@ class AdService {
       bannerAd = BannerAd(
         adUnitId: bannerAdUnitId,
         size: AdSize.banner,
-        request: AdRequest(),
+        request: const AdRequest(),
         listener: BannerAdListener(
           onAdLoaded: (_) {},
           onAdFailedToLoad: (ad, error) {
@@ -126,7 +126,7 @@ class AdService {
       interstitialAd?.dispose();
       InterstitialAd.load(
           adUnitId: interstitialAdUnitId,
-          request: AdRequest(),
+          request: const AdRequest(),
           adLoadCallback: InterstitialAdLoadCallback(
             onAdLoaded: (InterstitialAd ad) {
               interstitialAd = ad;

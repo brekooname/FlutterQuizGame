@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app_quiz_game/Lib/Button/button_size.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
@@ -10,7 +9,7 @@ import 'my_popup.dart';
 class ResetContentPopup extends StatefulWidget with MyPopup {
   VoidCallback resetContent;
 
-  ResetContentPopup(this.resetContent);
+  ResetContentPopup(this.resetContent, {Key? key}) : super(key: key);
 
   @override
   State<ResetContentPopup> createState() => ResetContentPopupState();

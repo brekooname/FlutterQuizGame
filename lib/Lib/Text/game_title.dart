@@ -6,21 +6,17 @@ import 'my_text.dart';
 
 class GameTitle extends StatelessWidget {
   late double backgroundImageWidth;
-  late FontConfig fontConfig;
-
-  late String text;
-
-  late String backgroundImagePath;
+  FontConfig fontConfig;
+  String text;
+  String backgroundImagePath;
 
   GameTitle({
-    required FontConfig fontConfig,
-    required String text,
-    required String backgroundImagePath,
+    Key? key,
+    required this.fontConfig,
+    required this.text,
+    required this.backgroundImagePath,
     double? backgroundImageWidth,
-  }) {
-    this.fontConfig = fontConfig;
-    this.text = text;
-    this.backgroundImagePath = backgroundImagePath;
+  }) : super(key: key) {
     this.backgroundImageWidth =
         backgroundImageWidth ?? ScreenDimensionsService().w(85);
   }
@@ -36,10 +32,10 @@ class GameTitle extends StatelessWidget {
         width: backgroundImageWidth,
       ),
       MyText(
-        text: this.text,
+        text: text,
         width: backgroundImageWidth / 1.4,
-        maxLines: this.text.contains(" ") ? 2 : 1,
-        fontConfig: this.fontConfig,
+        maxLines: text.contains(" ") ? 2 : 1,
+        fontConfig: fontConfig,
       ),
     ]);
 

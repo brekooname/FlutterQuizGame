@@ -20,13 +20,13 @@ class HistoryGameLevelHeader extends StatelessWidget {
   ScreenDimensionsService screenDimensions = ScreenDimensionsService();
 
   HistoryGameLevelHeader(
-      {required this.score,
+      {Key? key, required this.score,
       required this.campaignLevel,
       this.animateScore = false,
       this.disableHintBtn = false,
       required this.hintButtonOnClick,
       required this.onBackButtonClick,
-      required this.availableHints});
+      required this.availableHints}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -35,8 +35,8 @@ class HistoryGameLevelHeader extends StatelessWidget {
 
   Widget createLevelHeader(BuildContext context) {
     var hintBtn = HintButton(
-        onClick: this.hintButtonOnClick,
-        availableHints: this.availableHints,
+        onClick: hintButtonOnClick,
+        availableHints: availableHints,
         disabled: disableHintBtn,
         watchRewardedAdForHint: MyApp.isExtraContentLocked,
         showAvailableHintsText: true);
@@ -45,7 +45,7 @@ class HistoryGameLevelHeader extends StatelessWidget {
     var scoreText = MyText(
       maxLines: 1,
       width: scoreTextWidth,
-      text: this.score.toString(),
+      text: score.toString(),
       fontConfig: FontConfig(
           textColor: Colors.yellow,
           borderColor: Colors.black,
@@ -71,7 +71,7 @@ class HistoryGameLevelHeader extends StatelessWidget {
                             zoomInZoomOutOnce: true,
                             toAnimateText: scoreText)
                         : scoreText),
-                Spacer(),
+                const Spacer(),
                 hintBtn,
               ],
             )));

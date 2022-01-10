@@ -9,7 +9,7 @@ import 'my_popup.dart';
 
 class RatePopupService {
   //TODO ---VALUE CHANGED--- should be 2
-  final int launches_until_prompt = 2;
+  final int launchesUntilPrompt = 2;
 
   late RateAppLocalStorage rateAppLocalStorage;
 
@@ -32,7 +32,7 @@ class RatePopupService {
       return;
     }
 
-    if (rateAppLocalStorage.appLaunchedCount() % launches_until_prompt == 0) {
+    if (rateAppLocalStorage.appLaunchedCount() % launchesUntilPrompt == 0) {
       Future.delayed(
           Duration.zero,
           () => showDialog(
@@ -48,7 +48,7 @@ class RateAppPopup extends StatelessWidget with MyPopup {
   RateAppLocalStorage rateAppLocalStorage;
   InternetService internetService = InternetService();
 
-  RateAppPopup(this.rateAppLocalStorage);
+  RateAppPopup(this.rateAppLocalStorage, {Key? key}) : super(key: key);
 
   @override
   AlertDialog build(BuildContext context) {

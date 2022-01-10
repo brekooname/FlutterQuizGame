@@ -8,7 +8,7 @@ class SnackBarService {
 
   void showSnackBar(String message, BuildContext context) {
     var snackBar = SnackBar(
-      content: Container(
+      content: SizedBox(
         height: screenDimensions.h(5),
         child: Center(
             child: MyText(
@@ -17,7 +17,7 @@ class SnackBarService {
               maxLines: 1,
             )),
       ),
-      duration: Duration(seconds: 3),
+      duration: const Duration(seconds: 3),
       backgroundColor: Colors.white,
     );
     ScaffoldMessenger.of(context).showSnackBar(snackBar);

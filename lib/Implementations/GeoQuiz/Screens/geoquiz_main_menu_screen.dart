@@ -22,7 +22,7 @@ class GeoQuizMainMenuScreen extends StandardScreen {
 
   GeoQuizMainMenuScreen(GameScreenManagerState gameScreenManagerState,
       {Key? key})
-      : super(gameScreenManagerState, key: key) {}
+      : super(gameScreenManagerState, key: key);
 
   @override
   State<GeoQuizMainMenuScreen> createState() => GeoQuizMainMenuScreenState();

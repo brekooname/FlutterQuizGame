@@ -19,12 +19,12 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../../../main.dart';
 
 mixin HangmanGameScreen<TGameContext extends GameContext> {
-  ScreenDimensionsService _screenDimensions = ScreenDimensionsService();
-  MyAudioPlayer _audioPlayer = MyAudioPlayer();
-  ImageService _imageService = ImageService();
-  HangmanCategoryQuestionService _hangmanCategoryQuestionService =
+  final ScreenDimensionsService _screenDimensions = ScreenDimensionsService();
+  final MyAudioPlayer _audioPlayer = MyAudioPlayer();
+  final ImageService _imageService = ImageService();
+  final HangmanCategoryQuestionService _hangmanCategoryQuestionService =
       HangmanCategoryQuestionService();
-  HangmanService _hangmanService = HangmanService();
+  final HangmanService _hangmanService = HangmanService();
   late QuestionInfo currentQuestionInfo;
   late QuizGameLocalStorage quizGameLocalStorage;
   late TGameContext gameContext;
@@ -45,21 +45,17 @@ mixin HangmanGameScreen<TGameContext extends GameContext> {
   AppLocalizations get label => MyApp.appLocalizations;
 
   Widget getHangmanWordContainer() {
-    if (currentQuestionInfo != null) {
-      return Container(
-        height: _screenDimensions.h(15),
-        child: MyText(
-          maxLines: 1,
-          width: _screenDimensions.w(98),
-          fontSize: FontConfig.bigFontSize,
-          text: _hangmanService.getCurrentWordState(
-              currentQuestionInfo.question.questionToBeDisplayed,
-              currentQuestionInfo.pressedAnswers),
-        ),
-      );
-    } else {
-      return Container();
-    }
+    return SizedBox(
+      height: _screenDimensions.h(15),
+      child: MyText(
+        maxLines: 1,
+        width: _screenDimensions.w(98),
+        fontSize: FontConfig.bigFontSize,
+        text: _hangmanService.getCurrentWordState(
+            currentQuestionInfo.question.questionToBeDisplayed,
+            currentQuestionInfo.pressedAnswers),
+      ),
+    );
   }
 
   void clickAnswerBtn(String btnLetter, VoidCallback goToNextScreenAfterPress,
@@ -75,7 +71,7 @@ mixin HangmanGameScreen<TGameContext extends GameContext> {
             question, currentQuestionInfo.pressedAnswers)) {
           gameContext.gameUser.setWonQuestion(currentQuestionInfo);
           quizGameLocalStorage.setWonQuestion(currentQuestionInfo.question);
-          Future.delayed(Duration(milliseconds: 1100),
+          Future.delayed(const Duration(milliseconds: 1100),
               () => goToNextScreenAfterPress.call());
         }
       } else {

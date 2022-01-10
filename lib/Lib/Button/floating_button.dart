@@ -1,8 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Lib/Image/image_service.dart';
-import 'package:flutter_app_quiz_game/Lib/Popup/my_popup.dart';
-import 'package:flutter_app_quiz_game/Lib/Popup/settings_popup.dart';
 import 'package:flutter_app_quiz_game/Lib/ScreenDimensions/screen_dimensions_service.dart';
 
 import '../../Lib/Button/button_skin_config.dart';
@@ -10,18 +8,18 @@ import '../../Lib/Font/font_config.dart';
 import 'my_button.dart';
 
 class FloatingButton extends StatelessWidget {
-  ImageService _imageService = ImageService();
-  ScreenDimensionsService _screenDimensions = ScreenDimensionsService();
+  final ImageService _imageService = ImageService();
+  final ScreenDimensionsService _screenDimensions = ScreenDimensionsService();
   StatefulWidget myPopupToDisplay;
   String iconName;
-  late Size _button_size;
+  late Size _buttonSize;
 
   FloatingButton(
-      {required BuildContext context,
+      {Key? key, required BuildContext context,
       required this.myPopupToDisplay,
-      required this.iconName}) {
+      required this.iconName}) : super(key: key) {
     var side = _screenDimensions.w(12);
-    _button_size = Size(side, side);
+    _buttonSize = Size(side, side);
   }
 
   @override
@@ -51,12 +49,12 @@ class FloatingButton extends StatelessWidget {
                             return myPopupToDisplay;
                           }));
                 },
-                size: _button_size,
+                size: _buttonSize,
                 buttonSkinConfig: ButtonSkinConfig(
                   image: (_imageService.getMainImage(
                       imageName: iconName,
                       module: "buttons",
-                      maxWidth: _button_size.width)),
+                      maxWidth: _buttonSize.width)),
                 ),
                 fontConfig: FontConfig())));
 

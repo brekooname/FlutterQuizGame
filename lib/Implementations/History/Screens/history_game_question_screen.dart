@@ -33,7 +33,7 @@ class HistoryGameQuestionScreen extends GameScreen<HistoryGameContext>
 
   @override
   int nrOfQuestionsToShowInterstitialAd() {
-    return HistoryGameTimelineScreen.show_interstitial_ad_every_n_questions;
+    return HistoryGameTimelineScreen.showInterstitialAdEveryNQuestions;
   }
 
   @override

@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_app_quiz_game/Game/Game/campaign_level.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
-import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/Hangman/hangman_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Constants/geoquiz_game_question_config.dart';
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Questions/Hangman/geoquiz_hangman_question_category_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Questions/geoquiz_game_context.dart';
@@ -17,8 +16,10 @@ import 'package:flutter_app_quiz_game/Lib/Screen/standard_screen.dart';
 import 'geoquiz_gamecontext_service.dart';
 
 class GeoQuizGameScreenManager extends GameScreenManager {
-  GeoQuizGameContextService _geoQuizGameContextService =
+  final GeoQuizGameContextService _geoQuizGameContextService =
       GeoQuizGameContextService();
+
+  GeoQuizGameScreenManager({Key? key}) : super(key: key);
 
   @override
   State<GeoQuizGameScreenManager> createState() =>

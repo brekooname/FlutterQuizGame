@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app_quiz_game/Lib/Font/font_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
 class InternalAnimatedWidget extends AnimatedWidget {
@@ -16,7 +15,7 @@ class InternalAnimatedWidget extends AnimatedWidget {
     final animation = listenable as Animation<double>;
 
     return AnimatedOpacity(
-        duration: Duration(milliseconds: 100),
+        duration: const Duration(milliseconds: 100),
         opacity: Tween<double>(begin: 1, end: 0.1).evaluate(animation),
         child: toAnimateText);
   }

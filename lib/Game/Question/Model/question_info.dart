@@ -7,7 +7,7 @@ import 'package:flutter_app_quiz_game/Game/Question/Model/question_info_status.d
 class QuestionInfo {
   late Question question;
   final Set<String> _pressedAnswers = HashSet<String>();
-  QuestionInfoStatus _status = QuestionInfoStatus.OPEN;
+  QuestionInfoStatus _status = QuestionInfoStatus.open;
   DateTime? questionAnsweredAt;
 
   QuestionInfo(this.question);
@@ -25,14 +25,14 @@ class QuestionInfo {
   }
 
   void updateStatus(QuestionInfoStatus questionInfoStatus) {
-    if (questionInfoStatus != QuestionInfoStatus.OPEN) {
+    if (questionInfoStatus != QuestionInfoStatus.open) {
       questionAnsweredAt = DateTime.now();
     }
     _status = questionInfoStatus;
   }
 
   bool isQuestionOpen() {
-    return status == QuestionInfoStatus.OPEN;
+    return status == QuestionInfoStatus.open;
   }
 
   @override

@@ -19,7 +19,10 @@ class WatchRewardedAdPopup extends StatefulWidget {
   bool isRewardedAdLoaded = false;
 
   WatchRewardedAdPopup(
-      {this.watchVideoForExtraHint = true, required this.onUserEarnedReward}) {
+      {Key? key,
+      this.watchVideoForExtraHint = true,
+      required this.onUserEarnedReward})
+      : super(key: key) {
     initRewardedAd();
   }
 
@@ -32,7 +35,7 @@ class WatchRewardedAdPopup extends StatefulWidget {
       isRewardedAdLoaded = false;
       RewardedAd.load(
           adUnitId: adService.rewardedAdUnitId,
-          request: AdRequest(),
+          request: const AdRequest(),
           rewardedAdLoadCallback: RewardedAdLoadCallback(
             onAdLoaded: (RewardedAd ad) {
               rewardedAd = ad;
@@ -93,7 +96,7 @@ class WatchRewardedAdPopupState extends State<WatchRewardedAdPopup>
                 SizedBox(width: screenDimensions.w(1)),
                 widget.isRewardedAdLoaded
                     ? Container()
-                    : CircularProgressIndicator()
+                    : const CircularProgressIndicator()
               ]),
           SizedBox(height: screenDimensions.h(5)),
           MyButton(
@@ -110,7 +113,7 @@ class WatchRewardedAdPopupState extends State<WatchRewardedAdPopup>
   }
 
   void refreshTimer() {
-    Timer.periodic(Duration(seconds: 1), (timer) {
+    Timer.periodic(const Duration(seconds: 1), (timer) {
       if (widget.isRewardedAdLoaded) {
         timer.cancel();
         if (mounted) {

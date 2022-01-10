@@ -1,8 +1,8 @@
 import 'package:flutter_app_quiz_game/Game/Question/Model/question.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
-import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/Hangman/hangman_service.dart';
 import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/Base/question_service.dart';
+import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/Hangman/hangman_service.dart';
 import 'package:flutter_app_quiz_game/Game/Question/question_collector_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Service/geoquiz_local_storage.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/map_extension.dart';
@@ -61,7 +61,6 @@ class GeoQuizHangmanQuestionService extends QuestionService {
     return _hangmanService.availableLetters.split(",").toSet();
   }
 
-  @override
   bool compareAnswerStrings(String hangmanWord, String answer) {
     hangmanWord = _hangmanService.normalizeString(hangmanWord);
     answer = _hangmanService.normalizeString(answer);

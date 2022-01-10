@@ -29,12 +29,12 @@ import '../../../Lib/Font/font_config.dart';
 
 class HistoryGameTimelineScreen extends GameScreen<HistoryGameContext>
     with QuizQuestionGameScreen {
-  static final int scroll_to_item_duration_millis = 600;
-  static final int show_interstitial_ad_every_n_questions = 8;
-  static final int default_questions_to_play_until_next_category = 1;
-  MyAudioPlayer _audioPlayer = MyAudioPlayer();
+  static const int scrollToItemDurationMillis = 600;
+  static const int showInterstitialAdEveryNQuestions = 8;
+  static const int defaultQuestionsToPlayUntilNextCategory = 1;
+  final MyAudioPlayer _audioPlayer = MyAudioPlayer();
   int questionsToPlayUntilNextCategory =
-      default_questions_to_play_until_next_category;
+      defaultQuestionsToPlayUntilNextCategory;
 
   HistoryLocalStorage historyLocalStorage = HistoryLocalStorage();
   late QuestionInfo currentQuestionInfo;
@@ -89,7 +89,7 @@ class HistoryGameTimelineScreen extends GameScreen<HistoryGameContext>
 
   @override
   int nrOfQuestionsToShowInterstitialAd() {
-    return HistoryGameTimelineScreen.show_interstitial_ad_every_n_questions;
+    return HistoryGameTimelineScreen.showInterstitialAdEveryNQuestions;
   }
 }
 
@@ -171,7 +171,7 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
         disabled = true;
         if (!widget.alreadyWentToNextScreen) {
           widget.alreadyWentToNextScreen = true;
-          Future.delayed(Duration(milliseconds: 1100),
+          Future.delayed(const Duration(milliseconds: 1100),
               () => widget.goToNextGameScreen(context));
         }
       }
@@ -233,7 +233,7 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
   ScrollablePositionedList createListView(
       Size answerBtnSize, int zoomInZoomOutAnswerDuration) {
     ScrollablePositionedList listView = ScrollablePositionedList.builder(
-      physics: ClampingScrollPhysics(),
+      physics: const ClampingScrollPhysics(),
       itemCount: widget.questions.length,
       itemScrollController: itemScrollController,
       itemBuilder: (BuildContext context, int index) {
@@ -331,9 +331,9 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
                   index: getRevertedIndex(values.toList().indexOf(
                       values.firstWhere((element) =>
                           element.questionIndex == questionIndex))),
-                  duration: Duration(
+                  duration: const Duration(
                       milliseconds: HistoryGameTimelineScreen
-                          .scroll_to_item_duration_millis));
+                          .scrollToItemDurationMillis));
               widget.gameContext.gameUser.setLostQuestion(currentQuestionInfo);
               widget.correctAnswerPressed = false;
               widget.historyLocalStorage
@@ -427,13 +427,13 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
 
     var margin = screenDimensions.w(3);
     var item = Row(children: <Widget>[
-      Spacer(),
+      const Spacer(),
       Padding(
           padding: EdgeInsets.fromLTRB(margin, 0, margin, 0),
           child: answerPart),
       getQuestionSeparator(answerBtnSize, correctAnswer),
       questionImg,
-      Spacer()
+      const Spacer()
     ]);
 
     Color color = getColorForAnswerStatus(correctAnswer);
@@ -479,7 +479,7 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
 
   QuestionInfo? getMostRecentAnswered() {
     return widget.gameContext.gameUser.getMostRecentAnsweredQuestion(
-        questionInfoStatus: [QuestionInfoStatus.LOST, QuestionInfoStatus.WON],
+        questionInfoStatus: [QuestionInfoStatus.lost, QuestionInfoStatus.won],
         difficulty: widget.difficulty,
         category: widget.category);
   }
@@ -497,12 +497,12 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
         questionIndex, millisForZoomInZoomOut, answerBtnSize, answerBtn);
 
     var item = Row(children: <Widget>[
-      Spacer(),
+      const Spacer(),
       Padding(
           padding: EdgeInsets.all(screenDimensions.w(3)), child: answerPart),
       getQuestionSeparator(answerBtnSize, correctAnswer),
       questionImg,
-      Spacer()
+      const Spacer()
     ]);
 
     Color color = getColorForAnswerStatus(correctAnswer);
@@ -520,7 +520,7 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
             mostRecentAnswered.question.index == index &&
             widget.questionsToPlayUntilNextCategory !=
                 HistoryGameTimelineScreen
-                    .default_questions_to_play_until_next_category)
+                    .defaultQuestionsToPlayUntilNextCategory)
         ? AnimateZoomInZoomOut(
             zoomInZoomOutOnce: true,
             duration: Duration(milliseconds: millisForZoomInZoomOut),

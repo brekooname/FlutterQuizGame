@@ -17,6 +17,6 @@ class FontUtil {
 
   static Color getFontDefaultColorForContrastWithColors(
       Contrast contrast, Color darkContrastStyle, Color lightContrastStyle) {
-    return contrast == Contrast.LIGHT ? lightContrastStyle : darkContrastStyle;
+    return contrast == Contrast.light ? lightContrastStyle : darkContrastStyle;
   }
 }

@@ -5,7 +5,6 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Font/font_config.dart';
-import 'package:flutter_app_quiz_game/Lib/SnackBar/snack_bar_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Storage/in_app_purchases_local_storage.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 import 'package:flutter_app_quiz_game/main.dart';
@@ -41,17 +40,17 @@ class InAppPurchasesPopupService {
 }
 
 class InAppPurchasePopup extends StatefulWidget {
-  static String _kNonConsumableId =
+  static final String _kNonConsumableId =
       MyApp.appId.gameConfig.extraContentProductId;
-  static List<String> _kProductIds = <String>[
+  static final List<String> _kProductIds = <String>[
     _kNonConsumableId,
   ];
 
-  InAppPurchaseLocalStorage _inAppPurchaseLocalStorage =
+  final InAppPurchaseLocalStorage _inAppPurchaseLocalStorage =
       InAppPurchaseLocalStorage();
   late InAppPurchase _inAppPurchase;
 
-  InAppPurchasePopup() {
+  InAppPurchasePopup({Key? key}) : super(key: key) {
     _inAppPurchase = InAppPurchase.instance;
   }
 
@@ -115,11 +114,11 @@ class _InAppPurchaseState extends State<InAppPurchasePopup> with MyPopup {
         SizedBox(
           height: popupHeight,
           child: Stack(
-            children: [
+            children: const [
               Opacity(
                 opacity: 0.3,
                 child:
-                    const ModalBarrier(dismissible: false, color: Colors.grey),
+                    ModalBarrier(dismissible: false, color: Colors.grey),
               ),
               Center(
                 child: CircularProgressIndicator(),

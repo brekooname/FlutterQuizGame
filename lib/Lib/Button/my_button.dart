@@ -60,22 +60,24 @@ class MyButton extends StatefulWidget {
     this.disabledBackgroundColor =
         disabledBackgroundColor ?? Colors.grey.shade400;
 
-    if (this.customContent == null && this.text != null) {
-      this.customContent = MyText(
-        text: this.text!,
+    if (customContent == null && text != null) {
+      customContent = MyText(
+        text: text!,
         fontConfig: this.fontConfig,
         maxLines: 2,
         width: this.size.width / 1.1,
       );
-    } else if (this.buttonSkinConfig.image != null) {
-      this.customContent = createImageButtonContent();
+    } else {
+      if (this.buttonSkinConfig.image != null) {
+        customContent = createImageButtonContent();
+      }
     }
   }
 
   Widget createImageButtonContent() {
     return disabled
-        ? ColorUtil.imageToGreyScale(this.buttonSkinConfig.image!)
-        : this.buttonSkinConfig.image!;
+        ? ColorUtil.imageToGreyScale(buttonSkinConfig.image!)
+        : buttonSkinConfig.image!;
   }
 
   @override

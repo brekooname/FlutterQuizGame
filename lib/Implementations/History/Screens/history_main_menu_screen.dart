@@ -141,7 +141,7 @@ class HistoryMainMenuScreenState extends State<HistoryMainMenuScreen>
           SizedBox(width: paddingBetween),
           getBtnIcon(campaignLevel, btnColor, iconWidth),
           SizedBox(width: paddingBetween),
-          Container(
+          SizedBox(
               width: btnSize.width - iconWidth - paddingBetween * 5,
               child: Column(children: [
                 MyText(

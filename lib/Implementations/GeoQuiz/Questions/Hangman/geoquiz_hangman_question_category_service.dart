@@ -15,7 +15,7 @@ class GeoQuizHangmanCategoryQuestionService extends QuestionCategoryService {
 
   @override
   String getHintButtonType() {
-    return HintButtonType.hint_press_random_answer;
+    return HintButtonType.hintPressRandomAnswer;
   }
 
   @override

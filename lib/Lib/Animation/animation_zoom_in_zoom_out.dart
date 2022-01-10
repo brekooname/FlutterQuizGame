@@ -21,12 +21,12 @@ class InternalAnimatedWidget extends AnimatedWidget {
         height: Tween<double>(
                 begin: toAnimateWidgetSize.height,
                 end: toAnimateWidgetSize.height -
-                    (toAnimateWidgetSize.height / this.zoomAmount))
+                    (toAnimateWidgetSize.height / zoomAmount))
             .evaluate(animation),
         width: Tween<double>(
                 begin: toAnimateWidgetSize.width,
                 end: toAnimateWidgetSize.width -
-                    (toAnimateWidgetSize.width / this.zoomAmount))
+                    (toAnimateWidgetSize.width / zoomAmount))
             .evaluate(animation),
         child: toAnimateWidget,
       ),
@@ -35,7 +35,7 @@ class InternalAnimatedWidget extends AnimatedWidget {
 }
 
 class AnimateZoomInZoomOut extends StatefulWidget {
-  static const double default_zoom_amount = 5;
+  static const double defaultZoomAmount = 5;
   Widget toAnimateWidget;
   Size toAnimateWidgetSize;
   double zoomAmount;
@@ -44,7 +44,7 @@ class AnimateZoomInZoomOut extends StatefulWidget {
 
   AnimateZoomInZoomOut(
       {Key? key,
-      this.zoomAmount = default_zoom_amount,
+      this.zoomAmount = defaultZoomAmount,
       this.zoomInZoomOutOnce = false,
       this.duration = const Duration(seconds: 1),
       required this.toAnimateWidgetSize,

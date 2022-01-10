@@ -3,7 +3,7 @@ import 'package:flutter_app_quiz_game/Lib/Font/font_config.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class MyText extends StatelessWidget {
-  MyTextCreatorService _myTextCreatorService = MyTextCreatorService();
+  final MyTextCreatorService _myTextCreatorService = MyTextCreatorService();
 
   late FontConfig fontConfig;
 
@@ -13,27 +13,29 @@ class MyText extends StatelessWidget {
 
   Alignment alignmentInsideContainer;
 
-  late String text;
+  String text;
 
   MyText(
-      {FontConfig? fontConfig,
+      {Key? key,
+      FontConfig? fontConfig,
       double? fontSize,
       Color? textColor,
-      required String text,
+      required this.text,
       this.alignmentInsideContainer = Alignment.center,
       this.width,
-      this.maxLines = 2}) {
-    this.fontConfig = fontConfig ?? FontConfig(fontSize: fontSize, textColor: textColor);
-    this.text = text;
+      this.maxLines = 2})
+      : super(key: key) {
+    this.fontConfig =
+        fontConfig ?? FontConfig(fontSize: fontSize, textColor: textColor);
   }
 
   @override
   Widget build(BuildContext context) {
     var defaultText = _myTextCreatorService.createText(
-        this.text, getTextStyle(), TextAlign.center);
+        text, getTextStyle(), TextAlign.center);
 
     Widget result;
-    if (this.fontConfig.borderColor == Colors.transparent) {
+    if (fontConfig.borderColor == Colors.transparent) {
       result = defaultText;
     } else {
       result = OutlinedText(
@@ -55,7 +57,7 @@ class MyText extends StatelessWidget {
         color: fontConfig.textColor,
         fontSize: fontConfig.fontSize);
 
-    while (hasTextOverflow(this.text, textStyle,
+    while (hasTextOverflow(text, textStyle,
         maxWidth: width ?? double.infinity, maxLines: maxLines)) {
       fontConfig.fontSize = fontConfig.fontSize / 1.1;
       textStyle = TextStyle(
@@ -106,7 +108,7 @@ class OutlinedText extends StatelessWidget {
 
       var textControl = _myTextCreatorService.createText(
           text?.data ?? '',
-          (text?.style ?? TextStyle()).copyWith(
+          (text?.style ?? const TextStyle()).copyWith(
               foreground: Paint()
                 ..style = PaintingStyle.stroke
                 ..strokeWidth = widthSum
@@ -117,7 +119,7 @@ class OutlinedText extends StatelessWidget {
     }
 
     return Stack(
-      children: [...children.reversed, text ?? SizedBox.shrink()],
+      children: [...children.reversed, text ?? const SizedBox.shrink()],
     );
   }
 }

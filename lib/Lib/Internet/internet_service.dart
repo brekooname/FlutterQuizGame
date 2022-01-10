@@ -3,11 +3,9 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter_app_quiz_game/Lib/Extensions/string_extension.dart';
-import 'package:flutter_app_quiz_game/Lib/SnackBar/snack_bar_service.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class InternetService {
-  SnackBarService _snackBarService = SnackBarService();
 
   static final InternetService singleton = InternetService.internal();
 
@@ -55,7 +53,7 @@ class InternetService {
                 "?action=write-review";
           }
           await launch(url);
-        } on Exception catch (exception) {
+        } on Exception {
           return;
         } catch (error) {
           return;

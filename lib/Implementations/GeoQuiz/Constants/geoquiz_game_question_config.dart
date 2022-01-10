@@ -8,9 +8,7 @@ import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/Depe
 import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/Hangman/hangman_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Questions/CountriesMultipleOptions/geoquiz_countries_multiple_options_question_category_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Questions/Hangman/geoquiz_hangman_question_category_service.dart';
-import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Questions/geoquiz_country_utils.dart';
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Service/geoquiz_gamecontext_service.dart';
-import 'package:flutter_app_quiz_game/Lib/Extensions/int_extension.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/map_extension.dart';
 import 'package:flutter_app_quiz_game/Lib/Localization/localization_service.dart';
 

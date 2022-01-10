@@ -25,13 +25,13 @@ mixin MyPopup {
 
   void initPopup({String? backgroundImageName}) {
     if (backgroundImageName != null) {
-      this.backgroundImage = imageService.getMainAssetImage(
+      backgroundImage = imageService.getMainAssetImage(
         imageName: backgroundImageName,
         module: "popup",
       );
     }
-    this._navigatorService = NavigatorService();
-    this.width = screenDimensions.w(100);
+    _navigatorService = NavigatorService();
+    width = screenDimensions.w(100);
   }
 
   double get defaultBackgroundImageWidth => width / 3.4;
@@ -50,12 +50,13 @@ mixin MyPopup {
       );
     }
 
+    var edgeInsets = const EdgeInsets.all(0);
     return AlertDialog(
-        contentPadding: EdgeInsets.all(0),
-        insetPadding: EdgeInsets.all(0),
-        actionsPadding: EdgeInsets.all(0),
-        buttonPadding: EdgeInsets.all(0),
-        titlePadding: EdgeInsets.all(0),
+        contentPadding: edgeInsets,
+        insetPadding: edgeInsets,
+        actionsPadding: edgeInsets,
+        buttonPadding: edgeInsets,
+        titlePadding: edgeInsets,
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [

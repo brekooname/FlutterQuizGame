@@ -5,4 +5,6 @@ abstract class GameScreenManager extends StatefulWidget {
 
   StandardScreen? currentScreen;
 
+  GameScreenManager({Key? key}) : super(key: key);
+
 }

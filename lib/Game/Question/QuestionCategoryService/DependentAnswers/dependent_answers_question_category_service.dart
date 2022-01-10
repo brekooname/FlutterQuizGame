@@ -17,7 +17,7 @@ class DependentAnswersCategoryQuestionService
 
   @override
   String getHintButtonType() {
-    return HintButtonType.hint_disable_two_answers;
+    return HintButtonType.hintDisableTwoAnswers;
   }
 
   @override

@@ -12,10 +12,10 @@ class GameFinishedPopup extends StatelessWidget with MyPopup {
   VoidCallback goBackClick;
 
   GameFinishedPopup(
-      {this.isGameFinishedSuccess = true,
+      {Key? key, this.isGameFinishedSuccess = true,
       this.highScore,
       required this.playAgainClick,
-      required this.goBackClick});
+      required this.goBackClick}) : super(key: key);
 
   @override
   AlertDialog build(BuildContext context) {

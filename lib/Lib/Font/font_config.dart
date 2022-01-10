@@ -22,9 +22,8 @@ class FontConfig {
       double? fontSize,
       double? borderWidth,
       this.fontWeight = FontWeight.bold}) {
-    this.fontSize = fontSize == null ? normalFontSize : fontSize;
-    this.textColor =
-        textColor == null ? FontUtil.getFontDefaultColor() : textColor;
+    this.fontSize = fontSize ?? normalFontSize;
+    this.textColor = textColor ?? FontUtil.getFontDefaultColor();
     this.borderWidth = borderColor == Colors.transparent
         ? 0
         : borderWidth ?? getStandardBorderWidthBasedOnFontSize(this.fontSize);

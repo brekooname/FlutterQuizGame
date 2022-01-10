@@ -1,6 +1,6 @@
 enum QuestionInfoStatus {
 
-  OPEN,
-  WON,
-  LOST
+  open,
+  won,
+  lost
 }

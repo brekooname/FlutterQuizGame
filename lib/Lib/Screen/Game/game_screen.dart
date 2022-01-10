@@ -27,8 +27,7 @@ abstract class GameScreen<TGameContext extends GameContext>
       this.category,
       {Key? key})
       : super(gameScreenManagerState, key: key) {
-    this.campaignLevel =
-        campaignLevelService.campaignLevel(difficulty, category);
+    campaignLevel = campaignLevelService.campaignLevel(difficulty, category);
     gameLocalStorage.incrementTotalPlayedQuestions();
   }
 

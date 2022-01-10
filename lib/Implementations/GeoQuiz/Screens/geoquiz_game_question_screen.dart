@@ -29,7 +29,7 @@ class GeoQuizQuestionScreen extends GameScreen<GeoQuizGameContext>
 
   @override
   int nrOfQuestionsToShowInterstitialAd() {
-    return GeoQuizHangmanScreen.show_interstitial_ad_every_n_questions;
+    return GeoQuizHangmanScreen.showInterstitialAdEveryNQuestions;
   }
 
   @override

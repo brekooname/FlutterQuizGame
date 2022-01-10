@@ -36,8 +36,8 @@ class MyApp extends StatefulWidget {
   //
   //////
   ////////////
-  // static const String _appKey = "history";
-  static const String _appKey = "geoquiz";
+  static const String _appKey = "history";
+  // static const String _appKey = "geoquiz";
   static const Language _language = Language.en;
 
   ////////////
@@ -63,6 +63,8 @@ class MyApp extends StatefulWidget {
   BannerAd? bannerAd;
   bool initAsyncCompleted = false;
   late Image backgroundTexture;
+
+  MyApp({Key? key}) : super(key: key);
 
   static void extraContentBought(BuildContext context) {
     context.findAncestorStateOfType<MyAppState>()!.extraContentBought();

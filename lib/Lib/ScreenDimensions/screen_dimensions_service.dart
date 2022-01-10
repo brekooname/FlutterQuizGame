@@ -4,7 +4,7 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import '../../main.dart';
 
 class ScreenDimensionsService {
-  static final _standard_screen_ratio = 16 / 9;
+  static const _standardScreenRatio = 16 / 9;
 
   static final ScreenDimensionsService singleton =
       ScreenDimensionsService.internal();
@@ -40,8 +40,8 @@ class ScreenDimensionsService {
     if (!_isExternalGraphicsRatioGreaterThanStandard(
         buildContext, isPortrait)) {
       width = isPortrait
-          ? _getExternalDeviceHeight(buildContext) / _standard_screen_ratio
-          : _getExternalDeviceHeight(buildContext) * _standard_screen_ratio;
+          ? _getExternalDeviceHeight(buildContext) / _standardScreenRatio
+          : _getExternalDeviceHeight(buildContext) * _standardScreenRatio;
     }
     return width;
   }
@@ -52,8 +52,8 @@ class ScreenDimensionsService {
     //if TRUE, width is smaller, so height must be adjusted
     if (_isExternalGraphicsRatioGreaterThanStandard(buildContext, isPortrait)) {
       height = isPortrait
-          ? _getExternalDeviceWidth(buildContext) * _standard_screen_ratio
-          : _getExternalDeviceWidth(buildContext) / _standard_screen_ratio;
+          ? _getExternalDeviceWidth(buildContext) * _standardScreenRatio
+          : _getExternalDeviceWidth(buildContext) / _standardScreenRatio;
     }
     return height;
   }
@@ -62,7 +62,7 @@ class ScreenDimensionsService {
   static bool _isExternalGraphicsRatioGreaterThanStandard(
       BuildContext buildContext, bool isPortrait) {
     return _getExternalScreenRatio(buildContext, isPortrait) >
-        _standard_screen_ratio;
+        _standardScreenRatio;
   }
 
   static double _getExternalScreenRatio(

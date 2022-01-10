@@ -19,7 +19,7 @@ import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
 class GeoQuizHangmanScreen extends GameScreen<GeoQuizGameContext> {
-  static const int show_interstitial_ad_every_n_questions = 8;
+  static const int showInterstitialAdEveryNQuestions = 8;
   final GeoQuizLocalStorage _geoQuizLocalStorage = GeoQuizLocalStorage();
   final MyAudioPlayer _audioPlayer = MyAudioPlayer();
   final GeoQuizCountryUtils _geoQuizCountryUtils = GeoQuizCountryUtils();
@@ -61,7 +61,7 @@ class GeoQuizHangmanScreen extends GameScreen<GeoQuizGameContext> {
 
   @override
   int nrOfQuestionsToShowInterstitialAd() {
-    return show_interstitial_ad_every_n_questions;
+    return showInterstitialAdEveryNQuestions;
   }
 
   @override

@@ -15,7 +15,7 @@ abstract class GameConfig {
 
   String getTitle(Language language);
 
-  Contrast get screenContrast => Contrast.LIGHT;
+  Contrast get screenContrast => Contrast.light;
 
   String get extraContentProductId;
 

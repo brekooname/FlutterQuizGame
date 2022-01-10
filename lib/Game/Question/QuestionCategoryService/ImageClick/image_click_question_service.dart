@@ -4,7 +4,6 @@ import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/Base
 import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/Base/question_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
 
-import '../../Model/category_difficulty.dart';
 import '../../Model/question.dart';
 import '../../Model/question_category.dart';
 import '../../Model/question_difficulty.dart';
@@ -71,16 +70,6 @@ class ImageClickQuestionService extends QuestionService {
 
   List<String> getAnswers(Question question) {
     return questionParser.getCorrectAnswersFromRawString(question);
-  }
-
-  @override
-  int getImageToBeDisplayedPositionInString() {
-    return 5;
-  }
-
-  @override
-  int getQuestionToBeDisplayedPositionInString() {
-    return 2;
   }
 
   @override

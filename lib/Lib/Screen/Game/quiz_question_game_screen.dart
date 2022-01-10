@@ -6,7 +6,7 @@ import 'package:flutter_app_quiz_game/Lib/ScreenDimensions/screen_dimensions_ser
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
 mixin QuizQuestionGameScreen {
-  ScreenDimensionsService _screenDimensions = ScreenDimensionsService();
+  final ScreenDimensionsService _screenDimensions = ScreenDimensionsService();
 
   Widget createQuestionTextContainer(
       Question? question,

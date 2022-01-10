@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Lib/Ads/ad_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Animation/animation_zoom_in_zoom_out.dart';
 import 'package:flutter_app_quiz_game/Lib/Image/image_service.dart';
-import 'package:flutter_app_quiz_game/Lib/Internet/internet_service.dart';
-import 'package:flutter_app_quiz_game/Lib/Popup/watch_rewarded_ad_popup.dart';
 import 'package:flutter_app_quiz_game/Lib/ScreenDimensions/screen_dimensions_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
@@ -13,7 +11,7 @@ import 'my_button.dart';
 
 class HintButton extends StatefulWidget {
   ScreenDimensionsService screenDimensions = ScreenDimensionsService();
-  AdService _adService = AdService();
+  final AdService _adService = AdService();
   late Size buttonSize;
   VoidCallback onClick;
   bool disabled;
@@ -22,12 +20,12 @@ class HintButton extends StatefulWidget {
   int availableHints;
 
   HintButton(
-      {Size? buttonSize,
+      {Key? key, Size? buttonSize,
       this.availableHints = 1,
       required this.onClick,
       this.disabled = false,
       this.watchRewardedAdForHint = false,
-      this.showAvailableHintsText = false}) {
+      this.showAvailableHintsText = false}) : super(key: key) {
     var side = screenDimensions.w(14);
     this.buttonSize = buttonSize ?? Size(side, side);
     assert(!watchRewardedAdForHint ||
@@ -49,7 +47,7 @@ class HintButtonState extends State<HintButton> {
         maxWidth: widget.buttonSize.width);
 
     if (widget.availableHints <= 0 && !widget.watchRewardedAdForHint) {
-      this.widget.disabled = true;
+      widget.disabled = true;
     }
 
     var btn = MyButton(
@@ -87,8 +85,8 @@ class HintButtonState extends State<HintButton> {
         : fittedBtn;
   }
 
-  Container createHintAmountText() {
-    return Container(
+  SizedBox createHintAmountText() {
+    return SizedBox(
         width: widget.buttonSize.width,
         height: widget.buttonSize.height,
         child: MyText(
