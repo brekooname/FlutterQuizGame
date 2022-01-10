@@ -14,10 +14,10 @@ class HistoryGameQuestionConfig extends GameQuestionConfig {
   late QuestionCategory cat3;
   late QuestionCategory cat4;
 
-  late QuestionDifficulty diff0;
-  late QuestionDifficulty diff1;
-  late QuestionDifficulty diff2;
-  late QuestionDifficulty diff3;
+  QuestionDifficulty diff0 = QuestionDifficulty(index: 0);
+  QuestionDifficulty diff1 = QuestionDifficulty(index: 1);
+  QuestionDifficulty diff2 = QuestionDifficulty(index: 2);
+  QuestionDifficulty diff3 = QuestionDifficulty(index: 3);
 
   static final HistoryGameQuestionConfig singleton =
       HistoryGameQuestionConfig.internal();
@@ -39,15 +39,6 @@ class HistoryGameQuestionConfig extends GameQuestionConfig {
         index: 4,
         questionCategoryService: DependentAnswersCategoryQuestionService());
     //
-    //DIFFICULTIES
-    singleton.diff0 = QuestionDifficulty(
-        index: 0, categories: [singleton.cat0, singleton.cat1]);
-    singleton.diff1 = QuestionDifficulty(
-        index: 1, categories: [singleton.cat0, singleton.cat1]);
-    singleton.diff2 = QuestionDifficulty(
-        index: 2, categories: [singleton.cat0, singleton.cat1]);
-    singleton.diff3 = QuestionDifficulty(
-        index: 3, categories: [singleton.cat0, singleton.cat1]);
     return singleton;
   }
 
@@ -62,15 +53,20 @@ class HistoryGameQuestionConfig extends GameQuestionConfig {
   @override
   Map<QuestionCategoryWithPrefixCode, String> get prefixLabelForCode {
     Map<QuestionCategoryWithPrefixCode, String> res = HashMap();
-    res.putIfAbsent(QuestionCategoryWithPrefixCode(cat0, 0),
+    res.putIfAbsent(
+        QuestionCategoryWithPrefixCode(category: cat0, prefixCode: 0),
         () => label.l_when_did_this_event_occur);
-    res.putIfAbsent(QuestionCategoryWithPrefixCode(cat1, 0),
+    res.putIfAbsent(
+        QuestionCategoryWithPrefixCode(category: cat1, prefixCode: 0),
         () => label.l_between_what_years_did_this_empire_exist);
-    res.putIfAbsent(QuestionCategoryWithPrefixCode(cat2, 0),
+    res.putIfAbsent(
+        QuestionCategoryWithPrefixCode(category: cat2, prefixCode: 0),
         () => label.l_in_which_modern_country_did_this_event_occur);
-    res.putIfAbsent(QuestionCategoryWithPrefixCode(cat2, 1),
+    res.putIfAbsent(
+        QuestionCategoryWithPrefixCode(category: cat2, prefixCode: 1),
         () => label.l_in_which_modern_country_is_this_location);
-    res.putIfAbsent(QuestionCategoryWithPrefixCode(cat4, 0),
+    res.putIfAbsent(
+        QuestionCategoryWithPrefixCode(category: cat4, prefixCode: 0),
         () => label.l_identify_the_historical_figure);
     return res;
   }

@@ -1,7 +1,7 @@
 import 'dart:collection';
 
-import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/question_parser.dart';
-import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/question_service.dart';
+import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/Base/question_parser.dart';
+import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/Base/question_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
 
 import '../../Model/category_difficulty.dart';
@@ -43,7 +43,7 @@ class ImageClickQuestionService extends QuestionService {
         if (button.text != null &&
             (button.text ?? "").toLowerCase() ==
                 questionParser
-                    .getCorrectAnswersFromRawString(question.rawString)
+                    .getCorrectAnswersFromRawString(question)
                     .first
                     .toLowerCase()) {
           buttonWithCoordinates[button] =
@@ -70,7 +70,7 @@ class ImageClickQuestionService extends QuestionService {
   }
 
   List<String> getAnswers(Question question) {
-    return questionParser.getCorrectAnswersFromRawString(question.rawString);
+    return questionParser.getCorrectAnswersFromRawString(question);
   }
 
   @override

@@ -168,7 +168,7 @@ class MyAppState extends State<MyApp> {
       //
       ////
       widgetToShow = createScreen(MyApp.gameScreenManager, widget.bannerAd);
-      Future.delayed(Duration(milliseconds: 100), () {
+      Future.delayed(const Duration(milliseconds: 100), () {
         var campaignLevel = GeoQuizCampaignLevelService().level_0;
         MyApp.gameScreenManager.currentScreen!.gameScreenManagerState
             .showNewGameScreen(campaignLevel);

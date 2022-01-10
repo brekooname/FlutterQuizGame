@@ -1,5 +1,5 @@
 import 'package:flutter_app_quiz_game/Game/Question/Model/question.dart';
-import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/question_service.dart';
+import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/Base/question_service.dart';
 
 import 'history_question_parser.dart';
 
@@ -19,7 +19,7 @@ class HistoryQuestionService extends QuestionService {
 
   @override
   String getQuestionToBeDisplayed(Question question) {
-    return questionParser.getQuestionToBeDisplayed(question.rawString);
+    return questionParser.getQuestionToBeDisplayed(question);
   }
 
   @override

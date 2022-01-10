@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Game/Game/game_user.dart';
-import 'package:flutter_app_quiz_game/Game/GameType/game_question_config.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_info.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/list_extension.dart';
-import 'package:flutter_app_quiz_game/Lib/Extensions/map_extension.dart';
 
-import '../../../main.dart';
+import '../../../../main.dart';
 
 abstract class QuestionService {
   String getQuestionToBeDisplayed(Question question);
@@ -32,11 +30,9 @@ abstract class QuestionService {
   }
 
   String getPrefixToBeDisplayedForQuestion(Question question) {
-    return MyApp.appId.gameConfig.gameQuestionConfig.prefixLabelForCode
-            .get<QuestionCategoryWithPrefixCode, String>(
-                QuestionCategoryWithPrefixCode(
-                    question.category, getPrefixCodeForQuestion(question))) ??
-        "";
+    return MyApp.appId.gameConfig.gameQuestionConfig
+        .getPrefixToBeDisplayedForQuestion(
+            question.category, getPrefixCodeForQuestion(question));
   }
 
   bool addAnswerToGameInfo(

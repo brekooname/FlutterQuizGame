@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_info.dart';
-import 'package:flutter_app_quiz_game/Game/Question/Model/question_info_status.dart';
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Constants/geoquiz_campaign_level_service.dart';
-import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Questions/geoquiz_game_context.dart';
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Questions/Hangman/geoquiz_hangman_question_category_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Questions/Hangman/geoquiz_hangman_question_service.dart';
-import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Service/geoquiz_gamecontext_service.dart';
+import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Questions/geoquiz_country_utils.dart';
+import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Questions/geoquiz_game_context.dart';
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Service/geoquiz_local_storage.dart';
 import 'package:flutter_app_quiz_game/Lib/Audio/my_audio_player.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/button_skin_config.dart';
@@ -23,6 +22,7 @@ class GeoQuizHangmanScreen extends GameScreen<GeoQuizGameContext> {
   static const int show_interstitial_ad_every_n_questions = 8;
   final GeoQuizLocalStorage _geoQuizLocalStorage = GeoQuizLocalStorage();
   final MyAudioPlayer _audioPlayer = MyAudioPlayer();
+  final GeoQuizCountryUtils _geoQuizCountryUtils = GeoQuizCountryUtils();
   late GeoQuizHangmanQuestionService questionService;
   List<String> pressedAnswers = [];
   List<QuestionInfo> currentQuestions = [];
@@ -41,7 +41,7 @@ class GeoQuizHangmanScreen extends GameScreen<GeoQuizGameContext> {
             key: key) {
     questionService =
         GeoQuizHangmanCategoryQuestionService().getQuestionService();
-    if (isStatsCategory()) {
+    if (_geoQuizCountryUtils.isStatsCategory(category)) {
       currentQuestions = gameContext.gameUser
           .getOpenQuestionsForConfig(difficulty, category)
           .toList();
@@ -57,12 +57,6 @@ class GeoQuizHangmanScreen extends GameScreen<GeoQuizGameContext> {
       currentQuestionsCountryNames = questionService
           .getCountryNamesForOptions(randomQuestion.question.rawString);
     }
-  }
-
-  bool isStatsCategory() {
-    GeoQuizGameContextService gameContextService = GeoQuizGameContextService();
-    return gameContextService.categoriesWithStatsCriteria.keys
-        .contains(category);
   }
 
   @override
@@ -86,7 +80,6 @@ class GeoQuizHangmanScreenState extends State<GeoQuizHangmanScreen>
 
   @override
   Widget build(BuildContext context) {
-    print("==========> building <============");
     Widget foundCountriesContainer = createFoundCountriesContainer();
     Widget wordContainer = createWordContainer();
     Widget letters = createLettersRows(
@@ -157,7 +150,7 @@ class GeoQuizHangmanScreenState extends State<GeoQuizHangmanScreen>
         if (correctPressedCountries.isNotEmpty) {
           if (correctPressedCountries.length == 1) {
             var countryFound = correctPressedCountries.first;
-            if (widget.isStatsCategory()) {
+            if (widget._geoQuizCountryUtils.isStatsCategory(widget.category)) {
               processFoundStatsQuestion(countryFound);
             } else {
               processFoundOptionQuestion(countryFound);
@@ -196,8 +189,8 @@ class GeoQuizHangmanScreenState extends State<GeoQuizHangmanScreen>
   void setWonQuestion(QuestionInfo questionInfo) {
     widget.gameContext.gameUser.setWonQuestion(questionInfo);
     widget._geoQuizLocalStorage.setWonQuestion(questionInfo.question);
-    Future.delayed(
-        const Duration(milliseconds: 500), () => widget.goToNextGameScreen(context));
+    Future.delayed(const Duration(milliseconds: 500),
+        () => widget.goToNextGameScreen(context));
   }
 
   void setStateCallback() {

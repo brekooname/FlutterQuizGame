@@ -1,4 +1,4 @@
-import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/question_service.dart';
+import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/Base/question_service.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
 
@@ -11,13 +11,12 @@ class Question {
   Question(this.index, this.difficulty, this.category, this.rawString);
 
   QuestionService get questionService =>
-      category.questionCategoryService.getQuestionService();
+      category.getQuestionCategoryService(difficulty).getQuestionService();
 
   String get questionToBeDisplayed =>
       questionService.getQuestionToBeDisplayed(this);
 
-  List<String> get correctAnswers =>
-      questionService.getCorrectAnswers(this);
+  List<String> get correctAnswers => questionService.getCorrectAnswers(this);
 
   String get questionPrefixToBeDisplayed =>
       questionService.getPrefixToBeDisplayedForQuestion(this);

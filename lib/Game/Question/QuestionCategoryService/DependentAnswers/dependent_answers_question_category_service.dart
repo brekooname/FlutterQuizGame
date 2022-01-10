@@ -1,6 +1,6 @@
 import 'package:flutter_app_quiz_game/Game/Constants/hint_button_type.dart';
 import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/DependentAnswers/dependent_answers_question_service.dart';
-import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/question_category_service.dart';
+import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/Base/question_category_service.dart';
 
 import 'dependent_answers_question_parser.dart';
 

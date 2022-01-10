@@ -4,7 +4,7 @@ import 'package:collection/src/iterable_extensions.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/string_extension.dart';
 
-import '../question_parser.dart';
+import '../Base/question_parser.dart';
 
 class DependentAnswersQuestionParser extends QuestionParser {
   static final DependentAnswersQuestionParser singleton =
@@ -19,13 +19,13 @@ class DependentAnswersQuestionParser extends QuestionParser {
   //We return a list in case of multiple correct answers
   // but for this case there is only one correct answer
   @override
-  List<String> getCorrectAnswersFromRawString(String questionString) {
-    return [questionString.split(":")[1].trim()];
+  List<String> getCorrectAnswersFromRawString(Question question) {
+    return [question.rawString.split(":")[1].trim()];
   }
 
   @override
-  String getQuestionToBeDisplayed(String questionRawString) {
-    return questionRawString.split(":")[0].trim();
+  String getQuestionToBeDisplayed(Question question) {
+    return question.rawString.split(":")[0].trim();
   }
 
   int getPrefixCodeForQuestion(String questionRawString) {
@@ -53,7 +53,7 @@ class DependentAnswersQuestionParser extends QuestionParser {
 
     Set<String> possibleAnswersResult = {};
     var correctAnswerForCurrentQuestion =
-        getCorrectAnswersFromRawString(question.rawString).first;
+        getCorrectAnswersFromRawString(question).first;
     possibleAnswersResult.add(correctAnswerForCurrentQuestion);
     if (answerReferences.isEmpty) {
       possibleAnswersResult.addAll(
@@ -86,7 +86,7 @@ class DependentAnswersQuestionParser extends QuestionParser {
         continue;
       }
       possibleAnswersResult
-          .addAll(getCorrectAnswersFromRawString(questionForIndex.rawString));
+          .addAll(getCorrectAnswersFromRawString(questionForIndex));
     }
     return possibleAnswersResult;
   }
@@ -103,7 +103,7 @@ class DependentAnswersQuestionParser extends QuestionParser {
             defaultNrOfPossibleAnswersWithoutCorrectOne &&
         questionsToProcess.length >= i + 1) {
       String correctAnswerFromRawString =
-          getCorrectAnswersFromRawString(questionsToProcess[i].rawString).first;
+          getCorrectAnswersFromRawString(questionsToProcess[i]).first;
 
       if (correctAnswerForCurrentQuestion != correctAnswerFromRawString) {
         possibleAnswersResult.add(correctAnswerFromRawString);

@@ -1,3 +1,6 @@
+import 'package:flutter_app_quiz_game/Lib/Constants/language.dart';
+import 'package:flutter_app_quiz_game/Lib/Extensions/enum_extension.dart';
+
 import '../../../../main.dart';
 
 class HangmanService {
@@ -15,6 +18,20 @@ class HangmanService {
   }
 
   HangmanService.internal();
+
+  static bool isHangmanSupported() {
+    return false;
+
+    return [
+      Language.ar,
+      Language.hi,
+      Language.ja,
+      Language.ko,
+      Language.th,
+      Language.zh,
+      Language.vi,
+    ].where((element) => MyApp.languageCode == element.name).isEmpty;
+  }
 
   String getHangmanWordLastLetter(String hangmanWord) {
     return hangmanWord.substring(hangmanWord.length - 1).toLowerCase();

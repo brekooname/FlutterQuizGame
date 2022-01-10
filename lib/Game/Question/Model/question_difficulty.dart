@@ -1,11 +1,9 @@
-import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
+
 
 class QuestionDifficulty {
   int index;
-  List<QuestionCategory> categories;
 
-  QuestionDifficulty(
-      {required this.index,  required this.categories});
+  QuestionDifficulty({required this.index});
 
   String get name {
     return "diff" + index.toString();
@@ -19,14 +17,8 @@ class QuestionDifficulty {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-          other is QuestionDifficulty &&
-              index == other.index &&
-              name == other.name;
+      other is QuestionDifficulty && index == other.index && name == other.name;
 
   @override
-  int get hashCode =>
-      index.hashCode ^
-      name.hashCode ^
-      categories.hashCode;
-
+  int get hashCode => index.hashCode ^ name.hashCode;
 }

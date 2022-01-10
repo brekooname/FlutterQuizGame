@@ -1,5 +1,7 @@
 
-import '../question_parser.dart';
+import 'package:flutter_app_quiz_game/Game/Question/Model/question.dart';
+
+import '../Base/question_parser.dart';
 
 class HangmanQuestionParser extends QuestionParser {
   static final HangmanQuestionParser singleton =
@@ -12,13 +14,13 @@ class HangmanQuestionParser extends QuestionParser {
   HangmanQuestionParser.internal();
 
   @override
-  List<String> getCorrectAnswersFromRawString(String questionString) {
+  List<String> getCorrectAnswersFromRawString(Question question) {
     return [];
   }
 
   @override
-  String getQuestionToBeDisplayed(String questionRawString) {
-    return questionRawString.trim();
+  String getQuestionToBeDisplayed(Question question) {
+    return question.rawString.trim();
   }
 
 }

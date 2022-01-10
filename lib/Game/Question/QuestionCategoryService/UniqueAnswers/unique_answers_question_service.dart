@@ -2,7 +2,7 @@ import 'package:flutter_app_quiz_game/Game/Question/Model/question.dart';
 import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/UniqueAnswers/unique_answers_question_parser.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/string_extension.dart';
 
-import '../question_service.dart';
+import '../Base/question_service.dart';
 
 class UniqueAnswersQuestionService extends QuestionService {
   late UniqueAnswersQuestionParser questionParser;
@@ -20,13 +20,13 @@ class UniqueAnswersQuestionService extends QuestionService {
 
   @override
   String getQuestionToBeDisplayed(Question question) {
-    return questionParser.getQuestionToBeDisplayed(question.rawString);
+    return questionParser.getQuestionToBeDisplayed(question);
   }
 
   @override
   List<String> getCorrectAnswers(Question question) {
     int correctAnswer = questionParser
-        .getCorrectAnswersFromRawString(question.rawString)
+        .getCorrectAnswersFromRawString(question)
         .first
         .parseToInt;
     List<String> answerOptions = getAllAnswerOptionsForQuestionAsList(question);

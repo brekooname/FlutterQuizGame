@@ -2,7 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_app_quiz_game/Game/Game/campaign_level.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
+import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/Hangman/hangman_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Constants/geoquiz_game_question_config.dart';
+import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Questions/Hangman/geoquiz_hangman_question_category_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Questions/geoquiz_game_context.dart';
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Screens/geoquiz_game_hangman_screen.dart';
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Screens/geoquiz_game_question_screen.dart';
@@ -81,10 +83,12 @@ class GeoQuizGameScreenManagerState extends State<GeoQuizGameScreenManager>
     //
     ////
     category = questionConfig.cat3;
+    difficulty = questionConfig.diff0;
     ////
     //
 
-    if ([questionConfig.cat0].contains(category)) {
+    if (category.getQuestionCategoryService(difficulty)
+        is GeoQuizHangmanCategoryQuestionService) {
       goToScreen = GeoQuizHangmanScreen(
         this,
         key: UniqueKey(),

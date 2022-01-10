@@ -1,9 +1,10 @@
+import 'package:flutter_app_quiz_game/Game/Question/Model/question.dart';
 
-import '../question_parser.dart';
+import '../Base/question_parser.dart';
 
 class UniqueAnswersQuestionParser extends QuestionParser {
-
-  static final UniqueAnswersQuestionParser singleton = UniqueAnswersQuestionParser.internal();
+  static final UniqueAnswersQuestionParser singleton =
+      UniqueAnswersQuestionParser.internal();
 
   factory UniqueAnswersQuestionParser() {
     return singleton;
@@ -12,12 +13,12 @@ class UniqueAnswersQuestionParser extends QuestionParser {
   UniqueAnswersQuestionParser.internal();
 
   @override
-  List<String> getCorrectAnswersFromRawString(String questionString) {
-    return [questionString.split("::")[2].trim()];
+  List<String> getCorrectAnswersFromRawString(Question question) {
+    return [question.rawString.split("::")[2].trim()];
   }
 
   @override
-  String getQuestionToBeDisplayed(String questionRawString) {
-    return questionRawString.split("::")[0];
+  String getQuestionToBeDisplayed(Question question) {
+    return question.rawString.split("::")[0];
   }
 }

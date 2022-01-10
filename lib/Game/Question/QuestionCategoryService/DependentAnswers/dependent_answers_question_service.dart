@@ -1,7 +1,7 @@
 import 'package:flutter_app_quiz_game/Game/Question/Model/question.dart';
 import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/DependentAnswers/dependent_answers_question_parser.dart';
 
-import '../question_service.dart';
+import '../Base/question_service.dart';
 
 class DependentAnswersQuestionService extends QuestionService {
   late DependentAnswersQuestionParser questionParser;
@@ -19,7 +19,7 @@ class DependentAnswersQuestionService extends QuestionService {
 
   @override
   String getQuestionToBeDisplayed(Question question) {
-    return questionParser.getQuestionToBeDisplayed(question.rawString);
+    return questionParser.getQuestionToBeDisplayed(question);
   }
 
   @override
@@ -29,7 +29,7 @@ class DependentAnswersQuestionService extends QuestionService {
 
   @override
   List<String> getCorrectAnswers(Question question) {
-    return questionParser.getCorrectAnswersFromRawString(question.rawString);
+    return questionParser.getCorrectAnswersFromRawString(question);
   }
 
   @override

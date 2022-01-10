@@ -18,7 +18,7 @@ void main() {
     var triesToTest = 20;
     for (int i = 0; i < triesToTest; i++) {
       Set<String> res =
-          geoQuizCountriesQuestionParser.getAllPossibleAnswersForQuestion(
+          geoQuizCountriesQuestionParser.getAnswerOptionsForQuestion(
               "Italy", {"Austria", "Germany"}, {"Switzerland"}, false, 4);
 
       expect(res.length, 4);
@@ -38,7 +38,7 @@ void main() {
 
     for (int i = 0; i < triesToTest; i++) {
       Set<String> res =
-          geoQuizCountriesQuestionParser.getAllPossibleAnswersForQuestion(
+          geoQuizCountriesQuestionParser.getAnswerOptionsForQuestion(
               "Italy", {"Austria"}, {"Germany"}, false, 4);
 
       expect(res.length, 4);

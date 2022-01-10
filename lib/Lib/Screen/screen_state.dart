@@ -11,11 +11,11 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../main.dart';
 
 mixin ScreenState {
+  final LocalizationService _localizationService = LocalizationService();
   ButtonSize buttonSize = ButtonSize();
   AssetsService assetsService = AssetsService();
   AdService adService = AdService();
   ImageService imageService = ImageService();
-  LocalizationService _localizationService = LocalizationService();
   ScreenDimensionsService screenDimensions = ScreenDimensionsService();
 
   void initScreenState({VoidCallback? onUserEarnedReward}) {

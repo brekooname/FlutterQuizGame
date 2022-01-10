@@ -7,7 +7,7 @@ import 'package:flutter_app_quiz_game/Game/Question/Model/question.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_info.dart';
-import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/question_service.dart';
+import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/Base/question_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Audio/my_audio_player.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/button_skin_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
@@ -22,14 +22,14 @@ mixin QuizOptionsGameScreen<TGameContext extends GameContext> {
   final ScreenDimensionsService _screenDimensions = ScreenDimensionsService();
   final MyAudioPlayer _audioPlayer = MyAudioPlayer();
   final ImageService _imageService = ImageService();
+  final Set<String> _wrongPressedAnswer = HashSet();
   late QuestionInfo currentQuestionInfo;
   late QuizGameLocalStorage quizGameLocalStorage;
   late TGameContext gameContext;
-  final Set<String> _wrongPressedAnswer = HashSet();
-  Set<String> hintDisabledPossibleAnswers = HashSet();
-  Image? _questionImage;
   late Set<String> _possibleAnswers;
   late List<String> _correctAnswersForQuestion;
+  Set<String> hintDisabledPossibleAnswers = HashSet();
+  Image? _questionImage;
 
   void initQuizOptionsScreen(
       TGameContext gameContext,
