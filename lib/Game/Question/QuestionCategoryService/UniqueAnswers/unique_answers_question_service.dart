@@ -40,7 +40,7 @@ class UniqueAnswersQuestionService extends QuestionService {
   }
 
   @override
-  Set<String> getAllAnswerOptionsForQuestion(Question question) {
+  Set<String> getQuizAnswerOptions(Question question) {
     return getAllAnswerOptionsForQuestionAsList(question).toSet();
   }
 

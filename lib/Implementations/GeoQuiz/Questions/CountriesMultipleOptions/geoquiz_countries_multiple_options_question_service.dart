@@ -31,20 +31,12 @@ class GeoQuizCountriesMultipleOptionsQuestionService extends QuestionService {
   }
 
   @override
-  String getRandomUnpressedCorrectAnswerFromQuestion(
-      Question question, Set<String> pressedAnswers) {
-    List<String> answers = getCorrectAnswers(question);
-    answers.shuffle();
-    return answers.first;
-  }
-
-  @override
   List<String> getCorrectAnswers(Question question) {
     return questionParser.getCorrectAnswersFromRawString(question.rawString);
   }
 
   @override
-  Set<String> getAllAnswerOptionsForQuestion(Question question) {
+  Set<String> getQuizAnswerOptions(Question question) {
     var correctAnswers = getCorrectAnswers(question);
     return questionParser.getAllPossibleAnswersForQuestion(
         _geoQuizCountryUtils.getCountryNameForIndex(
@@ -53,5 +45,17 @@ class GeoQuizCountriesMultipleOptionsQuestionService extends QuestionService {
         {},
         true,
         correctAnswers.length + 3);
+  }
+
+  @override
+  Set<String> getQuizAnswerOptionsWithSingleCorrectAnswer(
+      String correctAnswer, Question question) {
+    return questionParser.getAllPossibleAnswersForQuestion(
+        _geoQuizCountryUtils.getCountryNameForIndex(
+            question.rawString.split(":")[0].parseToInt),
+        {correctAnswer},
+        {},
+        true,
+        4);
   }
 }

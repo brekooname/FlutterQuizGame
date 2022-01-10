@@ -27,7 +27,8 @@ class HistoryGameQuestionScreen extends GameScreen<HistoryGameContext>
             difficulty, category,
             key: key) {
     initQuizOptionsScreen(
-        gameContext, HistoryLocalStorage(), difficulty, category);
+        gameContext, HistoryLocalStorage(), difficulty, category,
+        shouldHaveQuestionImage: true);
   }
 
   @override
@@ -73,7 +74,7 @@ class HistoryGameQuestionScreenState extends State<HistoryGameQuestionScreen>
       },
       campaignLevel: widget.campaignLevel,
       availableHints: widget.gameContext.amountAvailableHints,
-      animateScore: widget.correctAnswerPressed,
+      animateScore: widget.isGameFinishedSuccessful(),
       disableHintBtn: widget.hintDisabledPossibleAnswers.isNotEmpty,
       score: formatTextWithOneParam(
           label.l_score_param0,

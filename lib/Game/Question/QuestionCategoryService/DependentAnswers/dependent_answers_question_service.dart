@@ -28,20 +28,12 @@ class DependentAnswersQuestionService extends QuestionService {
   }
 
   @override
-  String getRandomUnpressedCorrectAnswerFromQuestion(
-      Question question, Set<String> pressedAnswers) {
-    List<String> answers = getCorrectAnswers(question);
-    answers.shuffle();
-    return answers.first;
-  }
-
-  @override
   List<String> getCorrectAnswers(Question question) {
     return questionParser.getCorrectAnswersFromRawString(question.rawString);
   }
 
   @override
-  Set<String> getAllAnswerOptionsForQuestion(Question question) {
+  Set<String> getQuizAnswerOptions(Question question) {
     return questionParser.getAllPossibleAnswersForQuestion(question, false, 3);
   }
 }

@@ -35,17 +35,10 @@ class HangmanQuestionService extends QuestionService {
   }
 
   @override
-  bool isGameFinishedSuccessful(Question question, Set<String> pressedAnswers) {
-    return pressedAnswers.containsAll(_hangmanService
+  bool isGameFinishedSuccessful(
+      Question question, Iterable<String> pressedAnswers) {
+    return pressedAnswers.toSet().containsAll(_hangmanService
         .getNormalizedWordLetters(question.questionToBeDisplayed));
-  }
-
-  @override
-  String getRandomUnpressedCorrectAnswerFromQuestion(
-      Question question, Set<String> pressedAnswers) {
-    List<String> answers = getCorrectAnswers(question);
-    answers.shuffle();
-    return answers.first;
   }
 
   @override
@@ -54,7 +47,7 @@ class HangmanQuestionService extends QuestionService {
   }
 
   @override
-  Set<String> getAllAnswerOptionsForQuestion(Question question) {
+  Set<String> getQuizAnswerOptions(Question question) {
     return _hangmanService.availableLetters.split(",").toSet();
   }
 

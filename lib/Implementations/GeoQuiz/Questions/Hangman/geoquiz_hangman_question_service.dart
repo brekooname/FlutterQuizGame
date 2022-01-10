@@ -1,4 +1,3 @@
-
 import 'package:flutter_app_quiz_game/Game/Question/Model/question.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
@@ -46,17 +45,10 @@ class GeoQuizHangmanQuestionService extends QuestionService {
   }
 
   @override
-  bool isGameFinishedSuccessful(Question question, Set<String> pressedAnswers) {
-    return pressedAnswers.containsAll(_hangmanService
+  bool isGameFinishedSuccessful(
+      Question question, Iterable<String> pressedAnswers) {
+    return pressedAnswers.toSet().containsAll(_hangmanService
         .getNormalizedWordLetters(question.questionToBeDisplayed));
-  }
-
-  @override
-  String getRandomUnpressedCorrectAnswerFromQuestion(
-      Question question, Set<String> pressedAnswers) {
-    List<String> answers = getCorrectAnswers(question);
-    answers.shuffle();
-    return answers.first;
   }
 
   @override
@@ -65,7 +57,7 @@ class GeoQuizHangmanQuestionService extends QuestionService {
   }
 
   @override
-  Set<String> getAllAnswerOptionsForQuestion(Question question) {
+  Set<String> getQuizAnswerOptions(Question question) {
     return _hangmanService.availableLetters.split(",").toSet();
   }
 

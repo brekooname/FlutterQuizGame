@@ -16,8 +16,8 @@ class Question {
   String get questionToBeDisplayed =>
       questionService.getQuestionToBeDisplayed(this);
 
-  String get correctAnswer =>
-      questionService.getCorrectAnswer(this);
+  List<String> get correctAnswers =>
+      questionService.getCorrectAnswers(this);
 
   String get questionPrefixToBeDisplayed =>
       questionService.getPrefixToBeDisplayedForQuestion(this);
@@ -41,6 +41,6 @@ class Question {
 
   @override
   String toString() {
-    return 'Question{lineInFile: $index, difficulty: $difficulty, category: $category, rawString: $rawString}';
+    return 'Question{index: $index, difficulty: $difficulty, category: $category, rawString: $rawString}';
   }
 }

@@ -18,7 +18,7 @@ class GameUser {
 
   void resetQuestion(QuestionInfo gameQuestionInfo) {
     gameQuestionInfo.updateStatus(QuestionInfoStatus.OPEN);
-    gameQuestionInfo.pressedAnswers.clear();
+    gameQuestionInfo.clearPressedAnswers();
   }
 
   void setLostQuestion(QuestionInfo gameQuestionInfo) {

@@ -6,17 +6,23 @@ import 'package:flutter_app_quiz_game/Game/Question/Model/question_info_status.d
 
 class QuestionInfo {
   late Question question;
+  final Set<String> _pressedAnswers = HashSet<String>();
   QuestionInfoStatus _status = QuestionInfoStatus.OPEN;
-  HashSet<String> pressedAnswers = HashSet<String>();
   DateTime? questionAnsweredAt;
 
   QuestionInfo(this.question);
 
   void addPressedAnswer(String answerId) {
-    pressedAnswers.add(answerId);
+    _pressedAnswers.add(answerId);
   }
 
   QuestionInfoStatus get status => _status;
+
+  Iterable<String> get pressedAnswers => _pressedAnswers;
+
+  void clearPressedAnswers() {
+    _pressedAnswers.clear();
+  }
 
   void updateStatus(QuestionInfoStatus questionInfoStatus) {
     if (questionInfoStatus != QuestionInfoStatus.OPEN) {

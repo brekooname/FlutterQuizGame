@@ -14,9 +14,18 @@ abstract class QuestionService {
   List<String> getCorrectAnswers(Question question);
 
   String getRandomUnpressedCorrectAnswerFromQuestion(
-      Question question, Set<String> pressedAnswers);
+      Question question, Set<String> pressedAnswers) {
+    List<String> answers = getCorrectAnswers(question);
+    answers.shuffle();
+    return answers.first;
+  }
 
-  Set<String> getAllAnswerOptionsForQuestion(Question question);
+  Set<String> getQuizAnswerOptions(Question question);
+
+  Set<String> getQuizAnswerOptionsWithSingleCorrectAnswer(
+      String correctAnswer, Question question) {
+    return getQuizAnswerOptions(question);
+  }
 
   int getPrefixCodeForQuestion(Question question) {
     return 0;
@@ -30,22 +39,9 @@ abstract class QuestionService {
         "";
   }
 
-  String getCorrectAnswer(Question question) {
-    return getCorrectAnswers(question).first;
-  }
-
   bool addAnswerToGameInfo(
       GameUser gameUser, Question question, String answer) {
     return gameUser.addAnswerToQuestionInfo(question, answer);
-  }
-
-  bool compareAnswerStrings(String answer1, String answer2) {
-    return answer1 == answer2;
-  }
-
-  bool isGameFinished(Question question, Set<String> pressedAnswers) {
-    return isGameFinishedSuccessful(question, pressedAnswers) ||
-        isGameFinishedFailed(question, pressedAnswers);
   }
 
   Image? getQuestionImage(Question question) {
@@ -69,8 +65,14 @@ abstract class QuestionService {
   }
 
   bool isAnswerCorrectInQuestion(Question question, String answer) {
-    return compareAnswerStrings(
-        answer.toLowerCase(), getCorrectAnswers(question).first.toLowerCase());
+    return isAnswerCorrectInOptionsList(getCorrectAnswers(question), answer);
+  }
+
+  bool isAnswerCorrectInOptionsList(
+      List<String> correctAnswers, String answer) {
+    return correctAnswers
+        .map((e) => e.toLowerCase())
+        .contains(answer.toLowerCase());
   }
 
   List<String> getUnpressedCorrectAnswers(
@@ -80,18 +82,48 @@ abstract class QuestionService {
     return answers;
   }
 
-  int getNrOfWrongAnswersPressed(Question question, Set<String> pressedAnswers) {
+  int getNrOfWrongAnswersPressed(
+      Question question, Set<String> pressedAnswers) {
     return 0;
   }
 
-  bool isGameFinishedSuccessful(Question question, Set<String> pressedAnswers) {
-    return pressedAnswers.isNotEmpty &&
-        isAnswerCorrectInQuestion(question, pressedAnswers.first);
+  bool isGameFinished(Question question, Set<String> pressedAnswers) {
+    return isGameFinishedWithOptionList(
+        getCorrectAnswers(question), pressedAnswers);
   }
 
-  bool isGameFinishedFailed(Question question, Set<String> pressedAnswers) {
-    return pressedAnswers.isNotEmpty &&
-        !isAnswerCorrectInQuestion(question, pressedAnswers.first);
+  bool isGameFinishedWithOptionList(
+      List<String> correctAnswers, Iterable<String> pressedAnswers) {
+    return isGameFinishedSuccessfulWithOptionList(
+            correctAnswers, pressedAnswers) ||
+        isGameFinishedFailedWithOptionList(correctAnswers, pressedAnswers);
+  }
+
+  bool isGameFinishedSuccessful(
+      Question question, Iterable<String> pressedAnswers) {
+    return isGameFinishedSuccessfulWithOptionList(
+        getCorrectAnswers(question), pressedAnswers);
+  }
+
+  bool isGameFinishedSuccessfulWithOptionList(
+      List<String> correctAnswers, Iterable<String> pressedAnswers) {
+    return !isGameFinishedFailedWithOptionList(
+            correctAnswers, pressedAnswers) &&
+        pressedAnswers.toSet().containsAll(correctAnswers);
+  }
+
+  bool isGameFinishedFailed(
+      Question question, Iterable<String> pressedAnswers) {
+    return isGameFinishedFailedWithOptionList(
+        getCorrectAnswers(question), pressedAnswers);
+  }
+
+  bool isGameFinishedFailedWithOptionList(
+      List<String> correctAnswers, Iterable<String> pressedAnswers) {
+    return pressedAnswers
+        .where(
+            (element) => !isAnswerCorrectInOptionsList(correctAnswers, element))
+        .isNotEmpty;
   }
 
   void processNewQuestionInfo(

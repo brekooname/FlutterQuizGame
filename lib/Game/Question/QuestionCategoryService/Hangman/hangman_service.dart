@@ -34,7 +34,7 @@ class HangmanService {
     return availableLetters.replaceAll(",", "") != standard_letters;
   }
 
-  String getCurrentWordState(String hangmanWord, Set<String> answerIds) {
+  String getCurrentWordState(String hangmanWord, Iterable<String> answerIds) {
     Set<String> wordLettersToProcess = getNormalizedWordLetters(hangmanWord);
     wordLettersToProcess.removeAll(answerIds);
     String processedHangmanWord = normalizeString(hangmanWord);

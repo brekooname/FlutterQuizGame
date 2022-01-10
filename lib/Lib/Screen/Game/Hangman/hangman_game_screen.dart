@@ -25,7 +25,7 @@ mixin HangmanGameScreen<TGameContext extends GameContext> {
   HangmanCategoryQuestionService _hangmanCategoryQuestionService =
       HangmanCategoryQuestionService();
   HangmanService _hangmanService = HangmanService();
-  late QuestionInfo? currentQuestionInfo;
+  late QuestionInfo currentQuestionInfo;
   late QuizGameLocalStorage quizGameLocalStorage;
   late TGameContext gameContext;
   String? wrongPressedAnswer;
@@ -53,8 +53,8 @@ mixin HangmanGameScreen<TGameContext extends GameContext> {
           width: _screenDimensions.w(98),
           fontSize: FontConfig.bigFontSize,
           text: _hangmanService.getCurrentWordState(
-              currentQuestionInfo!.question.questionToBeDisplayed,
-              currentQuestionInfo!.pressedAnswers),
+              currentQuestionInfo.question.questionToBeDisplayed,
+              currentQuestionInfo.pressedAnswers),
         ),
       );
     } else {
@@ -65,16 +65,16 @@ mixin HangmanGameScreen<TGameContext extends GameContext> {
   void clickAnswerBtn(String btnLetter, VoidCallback goToNextScreenAfterPress,
       VoidCallback refreshSetState) {
     var questionService = _hangmanCategoryQuestionService.getQuestionService();
-    var question = currentQuestionInfo!.question;
+    var question = currentQuestionInfo.question;
     if (!questionService.isGameFinishedSuccessful(
-        question, currentQuestionInfo!.pressedAnswers)) {
-      currentQuestionInfo!.addPressedAnswer(btnLetter);
+        question, currentQuestionInfo.pressedAnswers)) {
+      currentQuestionInfo.addPressedAnswer(btnLetter);
       if (questionService.isAnswerCorrectInQuestion(question, btnLetter)) {
         _audioPlayer.playSuccess();
         if (questionService.isGameFinishedSuccessful(
-            question, currentQuestionInfo!.pressedAnswers)) {
-          gameContext.gameUser.setWonQuestion(currentQuestionInfo!);
-          quizGameLocalStorage.setWonQuestion(currentQuestionInfo!.question);
+            question, currentQuestionInfo.pressedAnswers)) {
+          gameContext.gameUser.setWonQuestion(currentQuestionInfo);
+          quizGameLocalStorage.setWonQuestion(currentQuestionInfo.question);
           Future.delayed(Duration(milliseconds: 1100),
               () => goToNextScreenAfterPress.call());
         }

@@ -84,24 +84,25 @@ class ImageClickQuestionService extends QuestionService {
   }
 
   @override
-  Set<String> getAllAnswerOptionsForQuestion(Question question) {
+  Set<String> getQuizAnswerOptions(Question question) {
     return {};
   }
 
   @override
   bool isAnswerCorrectInQuestion(Question question, String answer) {
-    return compareAnswerStrings(
-        answer.toLowerCase(), getAnswers(question).first.toLowerCase());
+    return true;
   }
 
   @override
-  bool isGameFinishedFailed(Question question, Set<String> pressedAnswers) {
+  bool isGameFinishedFailed(
+      Question question, Iterable<String> pressedAnswers) {
     return pressedAnswers.isNotEmpty &&
         !isAnswerCorrectInQuestion(question, pressedAnswers.first);
   }
 
   @override
-  bool isGameFinishedSuccessful(Question question, Set<String> pressedAnswers) {
+  bool isGameFinishedSuccessful(
+      Question question, Iterable<String> pressedAnswers) {
     return pressedAnswers.isNotEmpty &&
         isAnswerCorrectInQuestion(question, pressedAnswers.first);
   }
@@ -110,14 +111,6 @@ class ImageClickQuestionService extends QuestionService {
   List<String> getUnpressedCorrectAnswers(
       Question question, Set<String> pressedAnswers) {
     return getAnswers(question);
-  }
-
-  @override
-  String getRandomUnpressedCorrectAnswerFromQuestion(
-      Question question, Set<String> pressedAnswers) {
-    List<String> answers = getAnswers(question);
-    answers.shuffle();
-    return answers.first;
   }
 
   @override

@@ -28,13 +28,7 @@ class HistoryQuestionService extends QuestionService {
   }
 
   @override
-  String getRandomUnpressedCorrectAnswerFromQuestion(
-      Question question, Set<String> pressedAnswers) {
-    throw UnimplementedError();
-  }
-
-  @override
-  Set<String> getAllAnswerOptionsForQuestion(Question question) {
+  Set<String> getQuizAnswerOptions(Question question) {
     throw UnimplementedError();
   }
 }
