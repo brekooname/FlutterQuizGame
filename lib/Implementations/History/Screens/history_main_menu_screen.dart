@@ -52,6 +52,7 @@ class HistoryMainMenuScreenState extends State<HistoryMainMenuScreen>
 
   @override
   Widget build(BuildContext context) {
+    debugPrint("build main menu");
     var gameTitle = GameTitle(
       text: MyApp.appTitle,
       backgroundImageWidth: screenDimensions.w(70),

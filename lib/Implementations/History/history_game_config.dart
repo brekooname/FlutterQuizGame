@@ -1,8 +1,8 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_app_quiz_game/Game/GameType/game_question_config.dart';
 import 'package:flutter_app_quiz_game/Game/GameType/game_config.dart';
+import 'package:flutter_app_quiz_game/Game/GameType/game_question_config.dart';
 import 'package:flutter_app_quiz_game/Game/Question/all_questions_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Questions/AllContent/history_all_questions.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Service/history_game_screen_manager.dart';
@@ -27,7 +27,8 @@ class HistoryGameConfig extends GameConfig {
   AllQuestionsService get allQuestionsService => HistoryAllQuestions();
 
   @override
-  GameScreenManager get gameScreenManager => HistoryGameScreenManager();
+  GameScreenManager get gameScreenManager =>
+      HistoryGameScreenManager(key: UniqueKey());
 
   @override
   Color get screenBackgroundColor => Colors.amber.shade100;

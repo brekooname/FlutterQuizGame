@@ -23,7 +23,7 @@ import 'Lib/Storage/rate_app_local_storage.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
-  if (!kIsWeb) {
+  if (MyApp.kIsMobile) {
     if (Platform.isAndroid) {
       InAppPurchaseAndroidPlatform.registerPlatform();
     } else if (Platform.isIOS) {}
@@ -36,9 +36,13 @@ class MyApp extends StatefulWidget {
   //
   //////
   ////////////
-  static const String _appKey = "history";
-  // static const String _appKey = "geoquiz";
-  static const Language _language = Language.en;
+  static bool kIsTest = false;
+
+  ////////////
+  static String webAppKey = "history";
+
+  // static const String webAppKey = "geoquiz";
+  static Language webLanguage = Language.en;
 
   ////////////
   //////
@@ -70,6 +74,8 @@ class MyApp extends StatefulWidget {
     context.findAncestorStateOfType<MyAppState>()!.extraContentBought();
   }
 
+  static bool get kIsMobile => !kIsWeb && !MyApp.kIsTest;
+
   @override
   State<MyApp> createState() => MyAppState();
 }
@@ -78,71 +84,79 @@ class MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    init().then((value) => {
+    _init().then((value) => {
           setState(() {
             widget.initAsyncCompleted = true;
           })
         });
   }
 
-  Future<void> init() async {
-    String appTitle;
-    String appKey;
-    String languageCode;
-    bool isPro;
-    String appRatingPackage;
-    String adBannerId;
-    String adInterstitialId;
-    String adRewardedId;
-    if (kIsWeb) {
-      var appId = AppIds().getAppId(MyApp._appKey);
-      appTitle = appId.gameConfig.getTitle(MyApp._language);
-      appKey = appId.appKey;
-      // isPro = false;
-      isPro = true;
-      languageCode = MyApp._language.name;
-      appRatingPackage = "";
-      adBannerId = "";
-      adInterstitialId = "";
-      adRewardedId = "";
-    } else {
-      appTitle = await MyApp.platform.invokeMethod('getAppTitle');
-      appKey = await MyApp.platform.invokeMethod('getAppKey');
-      isPro = await MyApp.platform.invokeMethod('isPro');
-      appRatingPackage =
-          await MyApp.platform.invokeMethod('getAppRatingPackage');
-      adBannerId = await MyApp.platform.invokeMethod('getAdBannerId');
-      adInterstitialId =
-          await MyApp.platform.invokeMethod('getAdInterstitialId');
-      adRewardedId = await MyApp.platform.invokeMethod('getAdRewardedId');
-      languageCode = await MyApp.platform.invokeMethod('getLanguageCode');
+  Future<void> _init() async {
+    AppConfig appConfig =
+        MyApp.kIsMobile ? await _createMobileAppConfig() : createWebAppConfig();
+
+    await initAppConfig(appConfig);
+
+    widget.backgroundTexture =
+        ImageService().getSpecificImage(imageName: "background_texture");
+    if (MyApp.kIsMobile && MyApp.isExtraContentLocked) {
+      MobileAds.instance.initialize();
+      widget.adService.initInterstitialAd();
+      widget.bannerAd = widget.adService.initBannerAd();
     }
-    var appId = AppIds().getAppId(appKey);
-    SharedPreferences localStorage = await SharedPreferences.getInstance();
-    setState(() {
-      MyApp.appId = appId;
-      MyApp.appTitle = appTitle;
-      MyApp.languageCode = languageCode;
-      MyApp.localStorage = localStorage;
-      MyApp.appRatingPackage = appRatingPackage;
-      MyApp.adBannerId = adBannerId;
-      MyApp.adInterstitialId = adInterstitialId;
-      MyApp.adRewardedId = adRewardedId;
-      MyApp.isExtraContentLocked = !isPro &&
-          !InAppPurchaseLocalStorage()
-              .isPurchased(appId.gameConfig.extraContentProductId);
-      MyApp.gameScreenManager = appId.gameConfig.gameScreenManager;
-      widget.backgroundTexture =
-          ImageService().getSpecificImage(imageName: "background_texture");
-      if (!kIsWeb && MyApp.isExtraContentLocked) {
-        MobileAds.instance.initialize();
-        widget.adService.initInterstitialAd();
-        widget.bannerAd = widget.adService.initBannerAd();
-      }
-    });
+
+    setState(() {});
 
     RateAppLocalStorage rateAppLocalStorage = RateAppLocalStorage();
     rateAppLocalStorage.incrementAppLaunchedCount();
+  }
+
+  Future<AppConfig> _createMobileAppConfig() async {
+    return AppConfig(
+      appTitle: await MyApp.platform.invokeMethod('getAppTitle'),
+      appKey: await MyApp.platform.invokeMethod('getAppKey'),
+      languageCode: await MyApp.platform.invokeMethod('getLanguageCode'),
+      appRatingPackage:
+          await MyApp.platform.invokeMethod('getAppRatingPackage'),
+      adBannerId: await MyApp.platform.invokeMethod('getAdBannerId'),
+      adInterstitialId:
+          await MyApp.platform.invokeMethod('getAdInterstitialId'),
+      adRewardedId: await MyApp.platform.invokeMethod('getAdRewardedId'),
+      isPro: await MyApp.platform.invokeMethod('isPro'),
+    );
+  }
+
+  static AppConfig createWebAppConfig() {
+    var appId = AppIds().getAppId(MyApp.webAppKey);
+    return AppConfig(
+      appTitle: appId.gameConfig.getTitle(MyApp.webLanguage),
+      appKey: appId.appKey,
+      languageCode: MyApp.webLanguage.name,
+      appRatingPackage: "",
+      adBannerId: "",
+      adInterstitialId: "",
+      adRewardedId: "",
+      // isPro: false,
+      isPro: true,
+    );
+  }
+
+  static Future<void> initAppConfig(AppConfig appConfig) async {
+    var appId = AppIds().getAppId(appConfig.appKey);
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+
+    MyApp.appId = appId;
+    MyApp.appTitle = appConfig.appTitle;
+    MyApp.languageCode = appConfig.languageCode;
+    MyApp.localStorage = localStorage;
+    MyApp.appRatingPackage = appConfig.appRatingPackage;
+    MyApp.adBannerId = appConfig.adBannerId;
+    MyApp.adInterstitialId = appConfig.adInterstitialId;
+    MyApp.adRewardedId = appConfig.adRewardedId;
+    MyApp.isExtraContentLocked = !appConfig.isPro &&
+        !InAppPurchaseLocalStorage()
+            .isPurchased(appId.gameConfig.extraContentProductId);
+    MyApp.gameScreenManager = appId.gameConfig.gameScreenManager;
   }
 
   void extraContentBought() {
@@ -155,7 +169,7 @@ class MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     Widget widgetToShow = _getWidgetToShow();
-    var materialApp = _buildMaterialApp(context, widgetToShow);
+    var materialApp = buildMaterialApp(context, widgetToShow);
 
     return materialApp;
   }
@@ -187,7 +201,8 @@ class MyAppState extends State<MyApp> {
     return widgetToShow;
   }
 
-  MaterialApp _buildMaterialApp(BuildContext context, Widget widgetToShow) {
+  static MaterialApp buildMaterialApp(
+      BuildContext context, Widget widgetToShow) {
     return MaterialApp(
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: _getSupportedLocales(),
@@ -198,25 +213,29 @@ class MyAppState extends State<MyApp> {
           ),
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        home: Builder(builder: (BuildContext context) {
-          MyApp.screenWidth =
-              ScreenDimensionsService.calculateScreenWidth(context, true);
-          MyApp.screenHeight =
-              ScreenDimensionsService.calculateScreenHeight(context, true);
-          MyApp.appLocalizations = AppLocalizations.of(context)!;
-          return widgetToShow;
-        }));
+        home: builder(widgetToShow));
   }
 
-  List<Locale> _getSupportedLocales() {
-    return kIsWeb
-        ? [
+  static Builder builder(Widget widgetToShow) {
+    return Builder(builder: (BuildContext context) {
+      MyApp.screenWidth =
+          ScreenDimensionsService.calculateScreenWidth(context, true);
+      MyApp.screenHeight =
+          ScreenDimensionsService.calculateScreenHeight(context, true);
+      MyApp.appLocalizations = AppLocalizations.of(context)!;
+      return widgetToShow;
+    });
+  }
+
+  static List<Locale> _getSupportedLocales() {
+    return MyApp.kIsMobile
+        ? AppLocalizations.supportedLocales
+        : [
             Locale(AppLocalizations.supportedLocales
-                    .contains(Locale(MyApp._language.name))
-                ? MyApp._language.name
+                    .contains(Locale(MyApp.webLanguage.name))
+                ? MyApp.webLanguage.name
                 : Language.en.name)
-          ]
-        : AppLocalizations.supportedLocales;
+          ];
   }
 
   Widget createScreen(GameScreenManager gameScreenManager, BannerAd? bannerAd) {
@@ -256,7 +275,7 @@ class MyAppState extends State<MyApp> {
 
   Container createBannerAdContainer(BannerAd? bannerAd) {
     Container bannerAdContainer;
-    if (kIsWeb && MyApp.isExtraContentLocked) {
+    if (!MyApp.kIsMobile && MyApp.isExtraContentLocked) {
       bannerAdContainer = Container(
         color: Colors.red,
         width: AdSize.banner.width.toDouble(),
@@ -275,4 +294,25 @@ class MyAppState extends State<MyApp> {
     }
     return bannerAdContainer;
   }
+}
+
+class AppConfig {
+  String appTitle;
+  String appKey;
+  String languageCode;
+  String appRatingPackage;
+  String adBannerId;
+  String adInterstitialId;
+  String adRewardedId;
+  bool isPro;
+
+  AppConfig(
+      {required this.appTitle,
+      required this.appKey,
+      required this.languageCode,
+      required this.appRatingPackage,
+      required this.adBannerId,
+      required this.adInterstitialId,
+      required this.adRewardedId,
+      required this.isPro});
 }

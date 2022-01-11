@@ -53,6 +53,7 @@ class HistoryGameQuestionScreenState extends State<HistoryGameQuestionScreen>
 
   @override
   Widget build(BuildContext context) {
+    debugPrint("build question");
     HistoryGameLevelHeader header = createHeader(widget.currentQuestionInfo);
     Widget questionContainer = widget.createQuestionTextContainer(
         widget.currentQuestionInfo.question,

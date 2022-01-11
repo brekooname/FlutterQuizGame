@@ -143,6 +143,7 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
 
   @override
   Widget build(BuildContext context) {
+    debugPrint("build timeline ");
     int zoomInZoomOutAnswerDuration = 500;
 
     for (QuestionInfo qi in widget.randomQuestionsToDisplay) {

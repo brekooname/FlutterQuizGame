@@ -6,6 +6,15 @@ import '../../main.dart';
 import 'font_util.dart';
 
 class FontConfig {
+  static var fontScale = [
+    Language.ja.name,
+    Language.ko.name,
+    Language.th.name,
+    Language.he.name
+  ].contains(MyApp.languageCode)
+      ? 19
+      : 18;
+
   late Color textColor;
 
   late Color borderColor;
@@ -50,15 +59,7 @@ class FontConfig {
   static double get veryBigFontSize => normalFontSize * 2;
 
   static double get normalFontSize {
-    var scale = [
-      Language.ja.name,
-      Language.ko.name,
-      Language.th.name,
-      Language.he.name
-    ].contains(MyApp.languageCode)
-        ? 19
-        : 18;
-    return displayDimensionScale / scale;
+    return displayDimensionScale / fontScale;
   }
 
   static double get smallFontSize => normalFontSize / 2;

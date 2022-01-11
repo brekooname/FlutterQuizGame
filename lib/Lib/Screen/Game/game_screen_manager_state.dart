@@ -5,6 +5,8 @@ import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/standard_screen.dart';
 
+import 'game_screen.dart';
+
 mixin GameScreenManagerState<TGameContext extends GameContext> {
   @protected
   StandardScreen createMainScreen();
@@ -19,37 +21,34 @@ mixin GameScreenManagerState<TGameContext extends GameContext> {
   }
 
   void showNewGameScreen(CampaignLevel campaignLevel) {
-    setCurrentScreenState(createNewGameScreen(campaignLevel));
+    TGameContext gameContext = createGameContext(campaignLevel);
+    showGameScreenWithConfig(campaignLevel.difficulty,
+        gameContext.gameUser.getNotPlayedRandomQuestionCategory(), gameContext);
   }
 
   void showNextGameScreen(
       CampaignLevel campaignLevel, TGameContext gameContext) {
-    setCurrentScreenState(createNextGameScreen(campaignLevel, gameContext));
+    showGameScreenWithConfig(campaignLevel.difficulty,
+        gameContext.gameUser.getNotPlayedRandomQuestionCategory(), gameContext);
   }
 
-  @protected
-  StandardScreen createNewGameScreen(CampaignLevel campaignLevel) {
-    TGameContext gameContext = createGameContext(campaignLevel);
-    return getScreen(campaignLevel, gameContext);
-  }
-
-  @protected
-  StandardScreen createNextGameScreen(
-      CampaignLevel campaignLevel, TGameContext gameContext) {
-    return getScreen(campaignLevel, gameContext);
+  void showGameScreenWithConfig(QuestionDifficulty difficulty,
+      QuestionCategory? category, TGameContext gameContext) {
+    setCurrentScreenState(_getScreen(difficulty, category, gameContext));
   }
 
   @protected
   TGameContext createGameContext(CampaignLevel campaignLevel);
 
   @protected
-  StandardScreen getScreenForConfig(TGameContext gameContext,
+  GameScreen getScreenForConfig(TGameContext gameContext,
       QuestionDifficulty difficulty, QuestionCategory category);
 
   @protected
   Widget showScreen(StandardScreen? currentScreen) {
     return currentScreen != null
         ? AnimatedSwitcher(
+            key: UniqueKey(),
             duration: const Duration(milliseconds: 200),
             transitionBuilder: (Widget child, Animation<double> animation) {
               return FadeTransition(child: child, opacity: animation);
@@ -59,15 +58,16 @@ mixin GameScreenManagerState<TGameContext extends GameContext> {
         : Container();
   }
 
-  StandardScreen getScreen(
-      CampaignLevel campaignLevel, TGameContext gameContext) {
-    var randomQuestionCategory =
-        gameContext.gameUser.getNotPlayedRandomQuestionCategory();
-    if (randomQuestionCategory == null) {
+  StandardScreen _getScreen(QuestionDifficulty difficulty,
+      QuestionCategory? category, TGameContext gameContext) {
+    debugPrint("get screen for config " +
+        difficulty.name +
+        " " +
+        (category?.name ?? "no category"));
+    if (category == null) {
       return createMainScreen();
     } else {
-      return getScreenForConfig(
-          gameContext, campaignLevel.difficulty, randomQuestionCategory);
+      return getScreenForConfig(gameContext, difficulty, category);
     }
   }
 }

@@ -24,7 +24,8 @@ class GeoQuizGameConfig extends GameConfig {
   AllQuestionsService get allQuestionsService => GeoQuizAllQuestions();
 
   @override
-  GameScreenManager get gameScreenManager => GeoQuizGameScreenManager();
+  GameScreenManager get gameScreenManager =>
+      GeoQuizGameScreenManager(key: UniqueKey());
 
   @override
   ImageRepeat get backgroundTextureRepeat => ImageRepeat.noRepeat;
