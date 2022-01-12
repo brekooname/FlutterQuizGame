@@ -4,14 +4,13 @@ import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/Base
 import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/Base/question_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
 
+import '../../../../main.dart';
 import '../../Model/question.dart';
 import '../../Model/question_category.dart';
 import '../../Model/question_difficulty.dart';
 import '../../question_collector_service.dart';
 
 class ImageClickQuestionService extends QuestionService {
-  final QuestionCollectorService _questionCollectorService =
-      QuestionCollectorService();
   late QuestionParser questionParser;
 
   static final ImageClickQuestionService singleton =
@@ -33,8 +32,9 @@ class ImageClickQuestionService extends QuestionService {
       List<MyButton> allAnswerOptionsButtons,
       QuestionDifficulty questionDifficultyLevel,
       QuestionCategory questionCategory) {
-    List<Question> allQuestions =
-        _questionCollectorService.getAllQuestionsForCategory(questionCategory);
+    List<Question> allQuestions = MyApp
+        .appId.gameConfig.questionCollectorService
+        .getAllQuestionsForCategory(questionCategory);
     Map<MyButton, ImageClickInfo> buttonWithCoordinates =
         HashMap<MyButton, ImageClickInfo>();
     for (Question question in allQuestions) {

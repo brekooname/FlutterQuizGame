@@ -64,20 +64,20 @@ abstract class AllQuestionsService {
 
   void _addQuestions(result, QuestionCategory cat, QuestionDifficulty diff,
       List<String> strings) {
-    var categoryDifficulty = CategoryDifficulty(
-      cat,
-      diff,
-    );
-    result.putIfAbsent(categoryDifficulty,
-        () => _createQuestions(categoryDifficulty, strings));
+    result.putIfAbsent(
+        CategoryDifficulty(
+          cat,
+          diff,
+        ),
+        () => createQuestions(diff, cat, strings));
   }
 
-  List<Question> _createQuestions(
-      CategoryDifficulty categoryDifficulty, List<String> strings) {
+  List<Question> createQuestions(QuestionDifficulty difficulty,
+      QuestionCategory category, List<String> strings) {
     List<Question> result = [];
     for (int i = 0; i < strings.length; i++) {
-      result.add(Question(i, categoryDifficulty.difficulty,
-          categoryDifficulty.category, strings[i].replaceAll("‎", "")));
+      result.add(
+          Question(i, difficulty, category, strings[i].replaceAll("‎", "")));
     }
     return result;
   }

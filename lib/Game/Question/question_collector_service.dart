@@ -1,4 +1,3 @@
-
 import 'package:flutter_app_quiz_game/Game/Question/Model/question.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
@@ -6,22 +5,23 @@ import 'package:flutter_app_quiz_game/Lib/Extensions/map_extension.dart';
 
 import '../../main.dart';
 import 'Model/category_difficulty.dart';
+import 'all_questions_service.dart';
 
-class QuestionCollectorService {
-  static final QuestionCollectorService singleton =
-      QuestionCollectorService.internal();
+abstract class QuestionCollectorService<
+    TAllQuestionsService extends AllQuestionsService> {
+  late TAllQuestionsService allQuestionsService;
 
-  factory QuestionCollectorService() {
-    return singleton;
+  late Map<CategoryDifficulty, List<Question>> allQuestions;
+
+  QuestionCollectorService() {
+    allQuestionsService =
+        MyApp.appId.gameConfig.allQuestionsService as TAllQuestionsService;
+    allQuestions = allQuestionsService.allQuestions;
   }
 
-  QuestionCollectorService.internal();
-
   List<Question> getAllQuestionsForCategory(QuestionCategory questionCategory) {
-    var allQuestionsWithConfig =
-        MyApp.appId.gameConfig.allQuestionsService.allQuestions;
     var difficulties =
-        allQuestionsWithConfig.entries.map((e) => e.key.difficulty).toList();
+        allQuestions.entries.map((e) => e.key.difficulty).toList();
     return getAllQuestionsForCategoriesAndDifficulties(
       difficulties,
       [questionCategory],
@@ -32,12 +32,10 @@ class QuestionCollectorService {
     List<QuestionDifficulty> difficultyLevels,
     List<QuestionCategory> categories,
   ) {
-    var allQuestionsWithConfig =
-        MyApp.appId.gameConfig.allQuestionsService.allQuestions;
     List<Question> questions = [];
     for (QuestionCategory category in categories) {
       for (QuestionDifficulty difficultyLevel in difficultyLevels) {
-        questions.addAll(allQuestionsWithConfig
+        questions.addAll(allQuestions
             .getOrDefault<CategoryDifficulty, List<Question>>(
                 CategoryDifficulty(category, difficultyLevel), []));
       }

@@ -1,4 +1,3 @@
-
 import 'package:flutter_app_quiz_game/Game/Game/campaign_level.dart';
 import 'package:flutter_app_quiz_game/Game/Game/game_context_service.dart';
 import 'package:flutter_app_quiz_game/Game/Question/question_collector_service.dart';
@@ -10,8 +9,6 @@ import 'package:flutter_app_quiz_game/main.dart';
 
 class HistoryGameContextService {
   HistoryLocalStorage historyLocalStorage = HistoryLocalStorage();
-  final QuestionCollectorService _questionCollectorService =
-      QuestionCollectorService();
 
   static final HistoryGameContextService singleton =
       HistoryGameContextService.internal();
@@ -25,8 +22,8 @@ class HistoryGameContextService {
   HistoryGameContext createGameContext(CampaignLevel campaignLevel) {
     List<QuestionKey> wonQuestions =
         historyLocalStorage.getWonQuestionsForDiff(campaignLevel.difficulty);
-    var questions =
-        _questionCollectorService.getAllQuestionsForCategoriesAndDifficulties(
+    var questions = MyApp.appId.gameConfig.questionCollectorService
+        .getAllQuestionsForCategoriesAndDifficulties(
       [campaignLevel.difficulty],
       campaignLevel.category,
     ).where((q) {

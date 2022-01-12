@@ -6,6 +6,7 @@ import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.da
 import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/Base/question_category_service.dart';
 import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/DependentAnswers/dependent_answers_question_category_service.dart';
 import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/Hangman/hangman_service.dart';
+import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Questions/AllContent/geoquiz_question_collector_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Questions/CountriesMultipleOptions/geoquiz_countries_multiple_options_question_category_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Questions/Hangman/geoquiz_hangman_question_category_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Service/geoquiz_gamecontext_service.dart';
@@ -13,13 +14,12 @@ import 'package:flutter_app_quiz_game/Lib/Extensions/map_extension.dart';
 import 'package:flutter_app_quiz_game/Lib/Localization/localization_service.dart';
 
 class GeoQuizGameQuestionConfig extends GameQuestionConfig {
-  Map<QuestionCategory, int> categoriesWithStatsCriteria = HashMap();
   final LocalizationService _localizationService = LocalizationService();
 
-  //POPULATION ===> over X
+  //POPULATION ===> top 10
   late QuestionCategory cat0;
 
-  //AREA ===> top 5
+  //AREA ===> top 10
   late QuestionCategory cat1;
 
   //NEIGHBOURS ===>
@@ -102,14 +102,6 @@ class GeoQuizGameQuestionConfig extends GameQuestionConfig {
         index: 9,
         questionCategoryService: DependentAnswersCategoryQuestionService());
 
-    //Population > 1.000.000.00
-    singleton.categoriesWithStatsCriteria
-        .putIfAbsent(singleton.cat0, () => 100000000);
-
-    //Area > 8.000.000
-    singleton.categoriesWithStatsCriteria
-        .putIfAbsent(singleton.cat1, () => 8000000);
-
     return singleton;
   }
 
@@ -134,13 +126,17 @@ class GeoQuizGameQuestionConfig extends GameQuestionConfig {
     res.putIfAbsent(
         QuestionCategoryWithPrefixCode(category: cat0, prefixCode: 0),
         () => _localizationService.formatTextWithParams(
-            label.l_countries_with_more_than_param0_million_people,
-            [(categoriesWithStatsCriteria.get(cat0) / 1000000).toString()]));
+                label.l_countries_with_more_than_param0_million_people, [
+              GeoQuizQuestionCollectorService
+                  .numberOfQuestionsForStatisticsCategory
+                  .toString()
+            ]));
     res.putIfAbsent(
         QuestionCategoryWithPrefixCode(category: cat1, prefixCode: 0),
         () => _localizationService.formatTextWithParams(
                 label.l_top_param0_largest_countries_in_the_world_by_area, [
-              GeoQuizGameContextService.numberOfQuestionsForStatisticsCategory
+              GeoQuizQuestionCollectorService
+                  .numberOfQuestionsForStatisticsCategory
                   .toString()
             ]));
     res.putIfAbsent(

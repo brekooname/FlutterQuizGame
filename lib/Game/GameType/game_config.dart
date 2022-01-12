@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
 import 'package:flutter_app_quiz_game/Game/Question/all_questions_service.dart';
+import 'package:flutter_app_quiz_game/Game/Question/question_collector_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Constants/contrast.dart';
 import 'package:flutter_app_quiz_game/Lib/Constants/language.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen_manager.dart';
@@ -12,6 +13,8 @@ abstract class GameConfig {
   GameQuestionConfig get gameQuestionConfig;
 
   AllQuestionsService get allQuestionsService;
+
+  QuestionCollectorService get questionCollectorService;
 
   String getTitle(Language language);
 

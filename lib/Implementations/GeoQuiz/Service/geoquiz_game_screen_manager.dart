@@ -54,14 +54,6 @@ class GeoQuizGameScreenManagerState extends State<GeoQuizGameScreenManager>
   }
 
   @override
-  void showNextGameScreen(
-      CampaignLevel campaignLevel, GeoQuizGameContext gameContext) {
-    widget._geoQuizGameContextService
-        .removeStatsQuestionsIfAlreadyPlayed(gameContext, campaignLevel);
-    super.showNextGameScreen(campaignLevel, gameContext);
-  }
-
-  @override
   StandardScreen createMainScreen() {
     return GeoQuizMainMenuScreen(this);
   }

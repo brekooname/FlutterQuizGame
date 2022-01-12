@@ -7,6 +7,7 @@ import 'package:flutter_app_quiz_game/Game/Question/question_collector_service.d
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Service/geoquiz_local_storage.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/map_extension.dart';
 
+import '../../../../main.dart';
 import '../geoquiz_country_utils.dart';
 import 'geoquiz_hangman_question_parser.dart';
 
@@ -14,8 +15,6 @@ class GeoQuizHangmanQuestionService extends QuestionService {
   final GeoQuizCountryUtils _geoQuizCountryUtils = GeoQuizCountryUtils();
   final HangmanService _hangmanService = HangmanService();
   final GeoQuizLocalStorage _geoQuizLocalStorage = GeoQuizLocalStorage();
-  final QuestionCollectorService _questionCollectorService =
-      QuestionCollectorService();
   late GeoQuizHangmanQuestionParser questionParser;
 
   static final GeoQuizHangmanQuestionService singleton =
@@ -79,7 +78,7 @@ class GeoQuizHangmanQuestionService extends QuestionService {
       QuestionDifficulty diff, QuestionCategory cat, bool withSynonyms) {
     var wonQ = _geoQuizLocalStorage.getWonQuestionsForDiffAndCat(diff, cat);
 
-    var questions = _questionCollectorService
+    var questions = MyApp.appId.gameConfig.questionCollectorService
         .getAllQuestionsForCategoriesAndDifficulties([diff], [cat]);
 
     var allFoundCountries = wonQ.map((q) {

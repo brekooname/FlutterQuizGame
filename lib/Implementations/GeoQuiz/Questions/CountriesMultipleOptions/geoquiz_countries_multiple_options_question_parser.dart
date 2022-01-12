@@ -2,12 +2,15 @@ import 'package:flutter_app_quiz_game/Game/Question/Model/question.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
 import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/Base/question_parser.dart';
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Questions/AllContent/geoquiz_all_questions.dart';
+import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Questions/AllContent/geoquiz_question_collector_service.dart';
+import 'package:flutter_app_quiz_game/Implementations/History/Questions/AllContent/history_question_collector_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/list_extension.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/string_extension.dart';
 
 import '../geoquiz_country_utils.dart';
 
-class GeoQuizCountriesMultipleOptionsQuestionParser extends QuestionParser {
+class GeoQuizCountriesMultipleOptionsQuestionParser
+    extends QuestionParser<GeoQuizQuestionCollectorService> {
   final GeoQuizCountryUtils _geoQuizCountryUtils = GeoQuizCountryUtils();
   final GeoQuizAllQuestions _allQuestions = GeoQuizAllQuestions();
 
@@ -48,9 +51,12 @@ class GeoQuizCountriesMultipleOptionsQuestionParser extends QuestionParser {
   Set<String> getAnswerOptionsForStatisticsQuestion(QuestionCategory category,
       String currentCountry, int nrOfPossibleAnswers) {
     Set<String> possibleAnswersResult = {currentCountry};
-    List<int> allWrongOptions = _geoQuizCountryUtils
-        .getAllQuestionsForCriteria(category, false)
-        .sublist(0, 20)
+    var numberOfQuestionsForStatisticsCategory =
+        GeoQuizQuestionCollectorService.numberOfQuestionsForStatisticsCategory;
+    List<int> allWrongOptions = questionCollectorService
+        .getStatsQuestions(category)
+        .sublist(numberOfQuestionsForStatisticsCategory,
+            numberOfQuestionsForStatisticsCategory + 10)
         .map((e) => e.rawString.split(":")[0].parseToInt)
         .toList();
     allWrongOptions.shuffle();

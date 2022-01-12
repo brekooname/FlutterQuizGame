@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Game/GameType/game_config.dart';
 import 'package:flutter_app_quiz_game/Game/GameType/game_question_config.dart';
 import 'package:flutter_app_quiz_game/Game/Question/all_questions_service.dart';
+import 'package:flutter_app_quiz_game/Game/Question/question_collector_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Constants/geoquiz_game_question_config.dart';
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Questions/AllContent/geoquiz_all_questions.dart';
+import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Questions/AllContent/geoquiz_question_collector_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Service/geoquiz_game_screen_manager.dart';
 import 'package:flutter_app_quiz_game/Lib/Constants/language.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen_manager.dart';
@@ -16,6 +18,10 @@ class GeoQuizGameConfig extends GameConfig {
   }
 
   GeoQuizGameConfig.internal();
+
+  @override
+  QuestionCollectorService get questionCollectorService =>
+      GeoQuizQuestionCollectorService();
 
   @override
   GameQuestionConfig get gameQuestionConfig => GeoQuizGameQuestionConfig();
