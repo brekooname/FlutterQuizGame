@@ -4,6 +4,7 @@ import 'package:flutter_app_quiz_game/Game/Game/campaign_level_service.dart';
 import 'package:flutter_app_quiz_game/Game/Game/game_context.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
+import 'package:flutter_app_quiz_game/Game/Question/Model/question_info.dart';
 import 'package:flutter_app_quiz_game/Lib/Ads/ad_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/standard_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Storage/game_local_storage.dart';
@@ -18,6 +19,7 @@ abstract class GameScreen<TGameContext extends GameContext>
   TGameContext gameContext;
   QuestionDifficulty difficulty;
   QuestionCategory category;
+  final List<QuestionInfo> _currentQuestionInfos;
 
   GameScreen(
       GameScreenManagerState gameScreenManagerState,
@@ -25,11 +27,22 @@ abstract class GameScreen<TGameContext extends GameContext>
       this.gameContext,
       this.difficulty,
       this.category,
+      this._currentQuestionInfos,
       {Key? key})
       : super(gameScreenManagerState, key: key) {
     campaignLevel = campaignLevelService.campaignLevel(difficulty, category);
     gameLocalStorage.incrementTotalPlayedQuestions();
   }
+
+  QuestionInfo get currentQuestionInfo {
+    if (_currentQuestionInfos.length != 1) {
+      throw UnsupportedError(
+          "!!!! DON'T USE !!!! THIS METHOD. There is more than 1 current question info.");
+    }
+    return _currentQuestionInfos.first;
+  }
+
+  List<QuestionInfo> get listOfCurrentQuestionInfo => _currentQuestionInfos;
 
   int nrOfQuestionsToShowInterstitialAd();
 

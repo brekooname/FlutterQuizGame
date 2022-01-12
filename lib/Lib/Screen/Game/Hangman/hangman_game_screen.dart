@@ -25,9 +25,9 @@ mixin HangmanGameScreen<TGameContext extends GameContext> {
   final HangmanCategoryQuestionService _hangmanCategoryQuestionService =
       HangmanCategoryQuestionService();
   final HangmanService _hangmanService = HangmanService();
-  late QuestionInfo currentQuestionInfo;
+  late QuestionInfo _currentQuestionInfo;
   late QuizGameLocalStorage quizGameLocalStorage;
-  late TGameContext gameContext;
+  late TGameContext _gameContext;
   String? wrongPressedAnswer;
   Set<String> hintDisabledPossibleAnswers = HashSet();
 
@@ -37,8 +37,8 @@ mixin HangmanGameScreen<TGameContext extends GameContext> {
       QuestionDifficulty difficulty,
       QuestionCategory category) {
     this.quizGameLocalStorage = quizGameLocalStorage;
-    this.gameContext = gameContext;
-    currentQuestionInfo =
+    this._gameContext = gameContext;
+    _currentQuestionInfo =
         gameContext.gameUser.getRandomQuestion(difficulty, category);
   }
 
@@ -52,8 +52,8 @@ mixin HangmanGameScreen<TGameContext extends GameContext> {
         width: _screenDimensions.w(98),
         fontSize: FontConfig.bigFontSize,
         text: _hangmanService.getCurrentWordState(
-            currentQuestionInfo.question.questionToBeDisplayed,
-            currentQuestionInfo.pressedAnswers),
+            _currentQuestionInfo.question.questionToBeDisplayed,
+            _currentQuestionInfo.pressedAnswers),
       ),
     );
   }
@@ -61,16 +61,16 @@ mixin HangmanGameScreen<TGameContext extends GameContext> {
   void clickAnswerBtn(String btnLetter, VoidCallback goToNextScreenAfterPress,
       VoidCallback refreshSetState) {
     var questionService = _hangmanCategoryQuestionService.getQuestionService();
-    var question = currentQuestionInfo.question;
+    var question = _currentQuestionInfo.question;
     if (!questionService.isGameFinishedSuccessful(
-        question, currentQuestionInfo.pressedAnswers)) {
-      currentQuestionInfo.addPressedAnswer(btnLetter);
+        question, _currentQuestionInfo.pressedAnswers)) {
+      _currentQuestionInfo.addPressedAnswer(btnLetter);
       if (questionService.isAnswerCorrectInQuestion(question, btnLetter)) {
         _audioPlayer.playSuccess();
         if (questionService.isGameFinishedSuccessful(
-            question, currentQuestionInfo.pressedAnswers)) {
-          gameContext.gameUser.setWonQuestion(currentQuestionInfo);
-          quizGameLocalStorage.setWonQuestion(currentQuestionInfo.question);
+            question, _currentQuestionInfo.pressedAnswers)) {
+          _gameContext.gameUser.setWonQuestion(_currentQuestionInfo);
+          quizGameLocalStorage.setWonQuestion(_currentQuestionInfo.question);
           Future.delayed(const Duration(milliseconds: 1100),
               () => goToNextScreenAfterPress.call());
         }

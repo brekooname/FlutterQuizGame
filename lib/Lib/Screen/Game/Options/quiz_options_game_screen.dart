@@ -22,25 +22,23 @@ mixin QuizOptionsGameScreen<TGameContext extends GameContext> {
   final MyAudioPlayer _audioPlayer = MyAudioPlayer();
   final ImageService _imageService = ImageService();
   final Set<String> _wrongPressedAnswer = HashSet();
-  late QuestionInfo currentQuestionInfo;
   late QuizGameLocalStorage quizGameLocalStorage;
-  late TGameContext gameContext;
+  late TGameContext _gameContext;
   late Set<String> _possibleAnswers;
   late List<String> _correctAnswersForQuestion;
+  late QuestionInfo _currentQuestionInfo;
   Set<String> hintDisabledPossibleAnswers = HashSet();
   Image? _questionImage;
 
   void initQuizOptionsScreen(
       TGameContext gameContext,
       QuizGameLocalStorage quizGameLocalStorage,
-      QuestionDifficulty difficulty,
-      QuestionCategory category,
+      QuestionInfo currentQuestionInfo,
       {bool shouldHaveQuestionImage = false,
       bool isOneCorrectAnswerEnoughToWin = false}) {
     this.quizGameLocalStorage = quizGameLocalStorage;
-    this.gameContext = gameContext;
-    currentQuestionInfo =
-        gameContext.gameUser.getRandomQuestion(difficulty, category);
+    _gameContext = gameContext;
+    _currentQuestionInfo = currentQuestionInfo;
 
     var question = currentQuestionInfo.question;
     var questionService = question.questionService;
@@ -54,7 +52,7 @@ mixin QuizOptionsGameScreen<TGameContext extends GameContext> {
   }
 
   void initQuestionImage() {
-    Question question = currentQuestionInfo.question;
+    Question question = _currentQuestionInfo.question;
     _questionImage = _imageService.getSpecificImage(
         module: _getQuestionImagePath(question.difficulty, question.category),
         imageExtension: "jpeg",
@@ -90,7 +88,7 @@ mixin QuizOptionsGameScreen<TGameContext extends GameContext> {
         child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        _createImageContainer(currentQuestionInfo.question),
+        _createImageContainer(_currentQuestionInfo.question),
         btnContainer
       ],
     ));
@@ -108,13 +106,13 @@ mixin QuizOptionsGameScreen<TGameContext extends GameContext> {
 
   Widget _createPossibleAnswerButton(VoidCallback refreshSetState,
       VoidCallback goToNextScreenAfterPress, String answerBtnText) {
-    var question = currentQuestionInfo.question;
+    var question = _currentQuestionInfo.question;
     var questionService = question.questionService;
     var btnBackgr = Colors.lightBlueAccent;
     var btnSize = _getAnswerBtnSize();
     var answerBtnDisabled = _wrongPressedAnswer.isNotEmpty ||
         _correctAnswersForQuestion.contains(answerBtnText) &&
-            currentQuestionInfo.pressedAnswers.contains(answerBtnText) ||
+            _currentQuestionInfo.pressedAnswers.contains(answerBtnText) ||
         _isGameFinished() ||
         hintDisabledPossibleAnswers.contains(answerBtnText.toLowerCase());
 
@@ -134,7 +132,7 @@ mixin QuizOptionsGameScreen<TGameContext extends GameContext> {
             disabled: answerBtnDisabled,
             disabledBackgroundColor: disabledBackgroundColor,
             onClick: () {
-              gameContext.gameUser
+              _gameContext.gameUser
                   .addAnswerToQuestionInfo(question, answerBtnText);
               if (questionService.isAnswerCorrectInOptionsList(
                   _correctAnswersForQuestion, answerBtnText)) {
@@ -158,7 +156,7 @@ mixin QuizOptionsGameScreen<TGameContext extends GameContext> {
 
   List<String> _getPossibleAnswerOption(bool oneCorrectAnswerEnoughToWin) {
     List<String> possibleAnswers;
-    var question = currentQuestionInfo.question;
+    var question = _currentQuestionInfo.question;
     var questionService = question.questionService;
     if (oneCorrectAnswerEnoughToWin) {
       _correctAnswersForQuestion.shuffle();
@@ -183,33 +181,33 @@ mixin QuizOptionsGameScreen<TGameContext extends GameContext> {
                   1100, 1600, 1700, 1800, false)),
           () => goToNextScreenAfterPress.call());
       if (isGameFinishedSuccessful()) {
-        gameContext.gameUser.setWonQuestion(currentQuestionInfo);
+        _gameContext.gameUser.setWonQuestion(_currentQuestionInfo);
         quizGameLocalStorage.setWonQuestion(question);
       } else if (questionService.isGameFinishedFailedWithOptionList(
-          _correctAnswersForQuestion, currentQuestionInfo.pressedAnswers)) {
-        gameContext.gameUser.setLostQuestion(currentQuestionInfo);
+          _correctAnswersForQuestion, _currentQuestionInfo.pressedAnswers)) {
+        _gameContext.gameUser.setLostQuestion(_currentQuestionInfo);
         quizGameLocalStorage.setLostQuestion(question);
       }
     }
   }
 
   bool isGameFinishedSuccessful() {
-    return currentQuestionInfo.question.questionService
+    return _currentQuestionInfo.question.questionService
         .isGameFinishedSuccessfulWithOptionList(
-            _correctAnswersForQuestion, currentQuestionInfo.pressedAnswers);
+            _correctAnswersForQuestion, _currentQuestionInfo.pressedAnswers);
   }
 
   bool _isGameFinished() {
-    return currentQuestionInfo.question.questionService
+    return _currentQuestionInfo.question.questionService
         .isGameFinishedWithOptionList(
-            _correctAnswersForQuestion, currentQuestionInfo.pressedAnswers);
+            _correctAnswersForQuestion, _currentQuestionInfo.pressedAnswers);
   }
 
   void onHintButtonClick(VoidCallback refreshSetState) {
-    gameContext.amountAvailableHints--;
+    _gameContext.amountAvailableHints--;
     quizGameLocalStorage.setRemainingHints(
-        currentQuestionInfo.question.difficulty,
-        gameContext.amountAvailableHints);
+        _currentQuestionInfo.question.difficulty,
+        _gameContext.amountAvailableHints);
 
     var optionsToDisable = List.of(_possibleAnswers);
     optionsToDisable.shuffle();

@@ -20,11 +20,16 @@ class GeoQuizQuestionScreen extends GameScreen<GeoQuizGameContext>
     required QuestionDifficulty difficulty,
     required QuestionCategory category,
     required GeoQuizGameContext gameContext,
-  }) : super(gameScreenManagerState, GeoQuizCampaignLevelService(), gameContext,
-            difficulty, category,
+  }) : super(
+            gameScreenManagerState,
+            GeoQuizCampaignLevelService(),
+            gameContext,
+            difficulty,
+            category,
+            [gameContext.gameUser.getRandomQuestion(difficulty, category)],
             key: key) {
     initQuizOptionsScreen(
-        gameContext, GeoQuizLocalStorage(), difficulty, category);
+        gameContext, GeoQuizLocalStorage(), currentQuestionInfo);
   }
 
   @override

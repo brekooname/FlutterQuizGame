@@ -134,7 +134,7 @@ class GeoQuizQuestionCollectorService
 
   List<Question> sortQuestionListAfterRankedCountries(
       List<Question> questions, int? countryPositionInRawString) {
-    List<String> allCountriesIndexesRanked = getRankedCountries();
+    List<String> allCountriesIndexesRanked = getAllCountriesSortedAfterRank();
     questions.sort((a, b) => allCountriesIndexesRanked
         .indexOf(getIndexOfCountry(a, countryPositionInRawString))
         .compareTo(allCountriesIndexesRanked
@@ -147,7 +147,7 @@ class GeoQuizQuestionCollectorService
           ? _geoQuizCountryUtils.getCountryIndexForName(q.rawString).toString()
           : q.rawString.split(":")[countryPositionInRawString];
 
-  List<String> getRankedCountries() {
+  List<String> getAllCountriesSortedAfterRank() {
     List<String> allCountriesRanked = allQuestionsService.allCountriesRanked;
     allCountriesRanked.sort((a, b) =>
         a.split(":")[1].parseToInt.compareTo(b.split(":")[1].parseToInt));

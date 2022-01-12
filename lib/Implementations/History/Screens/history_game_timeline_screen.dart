@@ -37,7 +37,6 @@ class HistoryGameTimelineScreen extends GameScreen<HistoryGameContext>
       defaultQuestionsToPlayUntilNextCategory;
 
   HistoryLocalStorage historyLocalStorage = HistoryLocalStorage();
-  late QuestionInfo currentQuestionInfo;
 
   Map<int, HistoryQuestion> questions = HashMap<int, HistoryQuestion>();
   Map<QuestionCategory, List<int>> shownImagesForTimeLineHints = HashMap();
@@ -53,14 +52,17 @@ class HistoryGameTimelineScreen extends GameScreen<HistoryGameContext>
     required QuestionDifficulty difficulty,
     required QuestionCategory category,
     required HistoryGameContext gameContext,
-  }) : super(gameScreenManagerState, HistoryCampaignLevelService(), gameContext,
-            difficulty, category,
+  }) : super(
+            gameScreenManagerState,
+            HistoryCampaignLevelService(),
+            gameContext,
+            difficulty,
+            category,
+            [gameContext.gameUser.getRandomQuestion(difficulty, category)],
             key: key) {
     List<QuestionInfo> allAvailableQuestions = gameContext.gameUser
         .getOpenQuestionsForConfig(difficulty, category)
         .toList();
-    currentQuestionInfo =
-        gameContext.gameUser.getRandomQuestion(difficulty, category);
 
     randomQuestionsToDisplay =
         getRandomIndexToDisplay(currentQuestionInfo, allAvailableQuestions);

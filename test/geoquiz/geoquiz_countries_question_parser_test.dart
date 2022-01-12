@@ -5,9 +5,12 @@ import 'package:flutter_app_quiz_game/Lib/Extensions/enum_extension.dart';
 import 'package:flutter_app_quiz_game/main.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../util/test_util.dart';
+
 void main() {
-  test('getAllPossibleAnswersForQuestion is tested', () {
-    MyApp.languageCode = Language.en.name;
+  test('getAllPossibleAnswersForQuestion is tested', () async {
+    await TestUtil.initApp(Language.en, "geoquiz");
+
     GeoQuizCountryUtils geoQuizCountryUtils = GeoQuizCountryUtils();
 
     GeoQuizCountriesMultipleOptionsQuestionParser geoQuizCountriesQuestionParser =

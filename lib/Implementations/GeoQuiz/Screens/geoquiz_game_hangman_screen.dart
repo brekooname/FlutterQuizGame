@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app_quiz_game/Game/Game/game_context.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_info.dart';
@@ -25,7 +26,6 @@ class GeoQuizHangmanScreen extends GameScreen<GeoQuizGameContext> {
   final GeoQuizCountryUtils _geoQuizCountryUtils = GeoQuizCountryUtils();
   late GeoQuizHangmanQuestionService questionService;
   List<String> pressedAnswers = [];
-  List<QuestionInfo> currentQuestions = [];
   List<String> currentQuestionsCountryNames = [];
   List<String> alreadyFoundCountryNames = [];
   bool answerFound = false;
@@ -36,27 +36,37 @@ class GeoQuizHangmanScreen extends GameScreen<GeoQuizGameContext> {
     required QuestionDifficulty difficulty,
     required QuestionCategory category,
     required GeoQuizGameContext gameContext,
-  }) : super(gameScreenManagerState, GeoQuizCampaignLevelService(), gameContext,
-            difficulty, category,
+  }) : super(
+            gameScreenManagerState,
+            GeoQuizCampaignLevelService(),
+            gameContext,
+            difficulty,
+            category,
+            getCurrentQuestionInfos(difficulty, category, gameContext),
             key: key) {
     questionService =
         GeoQuizHangmanCategoryQuestionService().getQuestionService();
     if (_geoQuizCountryUtils.isStatsCategory(category)) {
-      currentQuestions = gameContext.gameUser
-          .getOpenQuestionsForConfig(difficulty, category)
-          .toList();
-      currentQuestionsCountryNames = currentQuestions
+      currentQuestionsCountryNames = listOfCurrentQuestionInfo
           .map((e) => questionService.getCountryName(e.question.rawString))
           .toList();
       alreadyFoundCountryNames =
           questionService.getAlreadyFoundCountries(difficulty, category, false);
     } else {
-      var randomQuestion =
-          gameContext.gameUser.getRandomQuestion(difficulty, category);
-      currentQuestions = [randomQuestion];
       currentQuestionsCountryNames = questionService
-          .getCountryNamesForOptions(randomQuestion.question.rawString);
+          .getCountryNamesForOptions(currentQuestionInfo.question.rawString);
     }
+  }
+
+  static List<QuestionInfo> getCurrentQuestionInfos(
+      QuestionDifficulty difficulty,
+      QuestionCategory category,
+      GameContext gameContext) {
+    return GeoQuizCountryUtils().isStatsCategory(category)
+        ? gameContext.gameUser
+            .getOpenQuestionsForConfig(difficulty, category)
+            .toList()
+        : [gameContext.gameUser.getRandomQuestion(difficulty, category)];
   }
 
   @override
@@ -172,13 +182,13 @@ class GeoQuizHangmanScreenState extends State<GeoQuizHangmanScreen>
     widget.alreadyFoundCountryNames.add(countryFound);
     widget.currentQuestionsCountryNames.remove(countryFound);
     if (widget.currentQuestionsCountryNames.isEmpty) {
-      setWonQuestion(widget.currentQuestions.first);
+      setWonQuestion(widget.listOfCurrentQuestionInfo.first);
     }
   }
 
   void processFoundStatsQuestion(String countryFound) {
-    QuestionInfo foundQuestionInfo = widget.currentQuestions.firstWhere(
-        (element) =>
+    QuestionInfo foundQuestionInfo = widget.listOfCurrentQuestionInfo
+        .firstWhere((element) =>
             widget.questionService.getCountryName(element.question.rawString) ==
             countryFound);
     widget.alreadyFoundCountryNames = widget.questionService

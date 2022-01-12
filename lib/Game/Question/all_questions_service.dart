@@ -22,6 +22,10 @@ abstract class AllQuestionsService {
     return _allQuestionsCache!;
   }
 
+  void clearCache() {
+    _allQuestionsCache = null;
+  }
+
   Language getLanguage() {
     Language language = Language.values
         .firstWhere((element) => element.name == MyApp.languageCode);

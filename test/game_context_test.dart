@@ -7,14 +7,14 @@ import 'package:flutter_app_quiz_game/Game/Question/Model/question_info_status.d
 import 'package:flutter_app_quiz_game/Implementations/History/Constants/history_game_question_config.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Questions/AllContent/history_all_questions.dart';
 import 'package:flutter_app_quiz_game/Lib/Constants/language.dart';
-import 'package:flutter_app_quiz_game/Lib/Extensions/enum_extension.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/map_extension.dart';
-import 'package:flutter_app_quiz_game/main.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import 'util/test_util.dart';
+
 void main() {
-  test('GameContext is tested', () {
-    MyApp.languageCode = Language.en.name;
+  test('GameContext is tested', () async {
+    await TestUtil.initApp(Language.en, "history");
     GameContextService gameContextService = GameContextService();
 
     var config = HistoryGameQuestionConfig();

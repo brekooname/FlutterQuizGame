@@ -11,12 +11,9 @@ abstract class QuestionCollectorService<
     TAllQuestionsService extends AllQuestionsService> {
   late TAllQuestionsService allQuestionsService;
 
-  late Map<CategoryDifficulty, List<Question>> allQuestions;
-
   QuestionCollectorService() {
     allQuestionsService =
         MyApp.appId.gameConfig.allQuestionsService as TAllQuestionsService;
-    allQuestions = allQuestionsService.allQuestions;
   }
 
   List<Question> getAllQuestionsForCategory(QuestionCategory questionCategory) {
@@ -27,6 +24,9 @@ abstract class QuestionCollectorService<
       [questionCategory],
     );
   }
+
+  Map<CategoryDifficulty, List<Question>> get allQuestions =>
+      allQuestionsService.allQuestions;
 
   List<Question> getAllQuestionsForCategoriesAndDifficulties(
     List<QuestionDifficulty> difficultyLevels,

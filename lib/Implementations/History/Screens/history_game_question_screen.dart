@@ -23,11 +23,16 @@ class HistoryGameQuestionScreen extends GameScreen<HistoryGameContext>
     required QuestionDifficulty difficulty,
     required QuestionCategory category,
     required HistoryGameContext gameContext,
-  }) : super(gameScreenManagerState, HistoryCampaignLevelService(), gameContext,
-            difficulty, category,
+  }) : super(
+            gameScreenManagerState,
+            HistoryCampaignLevelService(),
+            gameContext,
+            difficulty,
+            category,
+            [gameContext.gameUser.getRandomQuestion(difficulty, category)],
             key: key) {
     initQuizOptionsScreen(
-        gameContext, HistoryLocalStorage(), difficulty, category,
+        gameContext, HistoryLocalStorage(), currentQuestionInfo,
         shouldHaveQuestionImage: true);
   }
 
