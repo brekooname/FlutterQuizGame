@@ -6,36 +6,33 @@ import 'package:flutter_app_quiz_game/Lib/Localization/localization_service.dart
 
 import '../../../../main.dart';
 import '../geoquiz_country_utils.dart';
-import 'geoquiz_countries_multiple_options_question_parser.dart';
+import 'geoquiz_options_question_parser.dart';
 
-class GeoQuizCountriesMultipleOptionsQuestionService extends QuestionService {
+class GeoQuizOptionsQuestionService extends QuestionService {
   final GeoQuizCountryUtils _geoQuizCountryUtils = GeoQuizCountryUtils();
   final GeoQuizGameQuestionConfig _questionConfig = GeoQuizGameQuestionConfig();
   final LocalizationService _localizationService = LocalizationService();
-  late GeoQuizCountriesMultipleOptionsQuestionParser questionParser;
+  late GeoQuizOptionsQuestionParser questionParser;
 
-  static final GeoQuizCountriesMultipleOptionsQuestionService singleton =
-      GeoQuizCountriesMultipleOptionsQuestionService.internal();
+  static final GeoQuizOptionsQuestionService singleton =
+      GeoQuizOptionsQuestionService.internal();
 
-  factory GeoQuizCountriesMultipleOptionsQuestionService(
-      {required GeoQuizCountriesMultipleOptionsQuestionParser questionParser}) {
+  factory GeoQuizOptionsQuestionService(
+      {required GeoQuizOptionsQuestionParser questionParser}) {
     singleton.questionParser = questionParser;
     return singleton;
   }
 
-  GeoQuizCountriesMultipleOptionsQuestionService.internal();
+  GeoQuizOptionsQuestionService.internal();
 
   @override
   String getQuestionToBeDisplayed(Question question) {
-    return "";
+    return questionParser.getQuestionToBeDisplayed(question);
   }
 
   @override
   int getPrefixCodeForQuestion(Question question) {
-    return question.category == _questionConfig.cat2 &&
-            question.difficulty == _questionConfig.diff1
-        ? 1
-        : 0;
+    return questionParser.isCategoryFindAnswerByQuestionName(question) ? 1 : 0;
   }
 
   @override
@@ -46,15 +43,36 @@ class GeoQuizCountriesMultipleOptionsQuestionService extends QuestionService {
   @override
   Set<String> getQuizAnswerOptions(Question question) {
     var correctAnswers = getCorrectAnswers(question);
-    var countryNameForIndex = _geoQuizCountryUtils
-        .getCountryNameForIndex(question.rawString.split(":")[0].parseToInt);
     if (_geoQuizCountryUtils.isStatsCategory(question.category)) {
+      var countryNameForIndex = _geoQuizCountryUtils
+          .getCountryNameForIndex(question.rawString.split(":")[0].parseToInt);
       return questionParser.getAnswerOptionsForStatisticsQuestion(
           question.category, countryNameForIndex, 4);
+    } else if (questionParser.isCategoryFindAnswerByQuestionName(question) &&
+        _questionConfig.cat2 != question.category) {
+      return questionParser.getDependentAnswerOptionsForQuestion(
+          question, correctAnswers.first, 4);
     } else {
-      return questionParser.getAnswerOptionsForQuestion(countryNameForIndex,
-          correctAnswers.toSet(), {}, true, correctAnswers.length + 3);
+      String currentCountryToSearchRange =
+          getCurrentCountryToSearchRange(question);
+      return questionParser.getAnswerOptionsInCountryRange(
+          currentCountryToSearchRange,
+          correctAnswers.toSet(),
+          {},
+          true,
+          correctAnswers.length + 3);
     }
+  }
+
+  String getCurrentCountryToSearchRange(Question question) {
+    String currentCountryToSearchRange = _geoQuizCountryUtils
+            .isGeographicalRegionOrEmpireCategory(question.category)
+        ? questionParser
+            .getCountryNamesFromQuestionOptions(question)
+            .elementAt(0)
+        : _geoQuizCountryUtils.getCountryNameForIndex(
+            question.rawString.split(":")[0].parseToInt);
+    return currentCountryToSearchRange;
   }
 
   @override

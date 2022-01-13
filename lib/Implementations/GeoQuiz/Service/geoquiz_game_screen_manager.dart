@@ -17,8 +17,6 @@ import 'package:flutter_app_quiz_game/Lib/Screen/standard_screen.dart';
 import 'geoquiz_gamecontext_service.dart';
 
 class GeoQuizGameScreenManager extends GameScreenManager {
-  final GeoQuizGameContextService _geoQuizGameContextService =
-      GeoQuizGameContextService();
 
   GeoQuizGameScreenManager({Key? key}) : super(key: key);
 

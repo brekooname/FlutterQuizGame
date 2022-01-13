@@ -13,8 +13,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'util/test_util.dart';
 
 void main() {
-  test('GameContext is tested', () async {
-    await TestUtil.initApp(Language.en, "history");
+  testWidgets('GameContext is tested', (WidgetTester tester) async {
+    await TestUtil.initApp(Language.en, "history", tester);
     GameContextService gameContextService = GameContextService();
 
     var config = HistoryGameQuestionConfig();

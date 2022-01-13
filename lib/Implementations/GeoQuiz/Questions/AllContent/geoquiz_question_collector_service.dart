@@ -58,19 +58,24 @@ class GeoQuizQuestionCollectorService
           allQuestions.get<CategoryDifficulty, List<Question>>(
               CategoryDifficulty(category, _gameQuestionConfig.diff0))!,
           0);
+      //because we have multiple playing types depending on the difficulty level
+      //here we show only easy countries diff0
       result = _percentOfListForDifficulty
-          .get<QuestionDifficulty, PercentRangeForList>(difficulty)!
+          .get<QuestionDifficulty, PercentRangeForList>(
+              _gameQuestionConfig.diff0)!
           .getQuestionsForRange(sortedAfterRank);
     } else
     //------------- CAT 3 ------------- GEOGRAPHICAL REGION
     if (category == _gameQuestionConfig.cat3 &&
             (difficulty == _gameQuestionConfig.diff0 ||
-                difficulty == _gameQuestionConfig.diff1)
+                difficulty == _gameQuestionConfig.diff1 ||
+                difficulty == _gameQuestionConfig.diff2)
         //
         ||
         //------------- CAT 4 ------------- EMPIRE
         category == _gameQuestionConfig.cat4 &&
-            (difficulty == _gameQuestionConfig.diff2 ||
+            (difficulty == _gameQuestionConfig.diff1 ||
+                difficulty == _gameQuestionConfig.diff2 ||
                 difficulty == _gameQuestionConfig.diff3)) {
       result = allQuestions.get<CategoryDifficulty, List<Question>>(
           CategoryDifficulty(category, _gameQuestionConfig.diff0))!;
@@ -121,20 +126,38 @@ class GeoQuizQuestionCollectorService
         CategoryDifficulty(category, _gameQuestionConfig.diff0))!;
   }
 
+  @override
   List<Question> getAllQuestionsForCategory(QuestionCategory questionCategory) {
-    return [];
+    return getAllQuestionsForCategoriesAndDifficulties(
+        _gameQuestionConfig.difficulties, [questionCategory]);
   }
 
+  @override
   List<Question> getAllQuestionsForCategoriesAndDifficulties(
     List<QuestionDifficulty> difficultyLevels,
     List<QuestionCategory> categories,
   ) {
-    return [];
+    List<Question> result = [];
+    for (QuestionDifficulty diff in difficultyLevels) {
+      for (QuestionCategory questionCategory in categories) {
+        result.addAll(
+            getAllQuestionsForCategoryAndDifficulty(questionCategory, diff));
+      }
+    }
+    return result;
+  }
+
+  List<int> sortCountryIndexListAfterRankedCountries(List<int> countryIndexes) {
+    List<int> allCountriesIndexesRanked = getAllCountriesSortedAfterRank();
+    countryIndexes.sort((a, b) => allCountriesIndexesRanked
+        .indexOf(a)
+        .compareTo(allCountriesIndexesRanked.indexOf(b)));
+    return countryIndexes;
   }
 
   List<Question> sortQuestionListAfterRankedCountries(
       List<Question> questions, int? countryPositionInRawString) {
-    List<String> allCountriesIndexesRanked = getAllCountriesSortedAfterRank();
+    List<int> allCountriesIndexesRanked = getAllCountriesSortedAfterRank();
     questions.sort((a, b) => allCountriesIndexesRanked
         .indexOf(getIndexOfCountry(a, countryPositionInRawString))
         .compareTo(allCountriesIndexesRanked
@@ -142,18 +165,16 @@ class GeoQuizQuestionCollectorService
     return questions;
   }
 
-  String getIndexOfCountry(Question q, int? countryPositionInRawString) =>
+  int getIndexOfCountry(Question q, int? countryPositionInRawString) =>
       countryPositionInRawString == null
-          ? _geoQuizCountryUtils.getCountryIndexForName(q.rawString).toString()
-          : q.rawString.split(":")[countryPositionInRawString];
+          ? _geoQuizCountryUtils.getCountryIndexForName(q.rawString)
+          : q.rawString.split(":")[countryPositionInRawString].parseToInt;
 
-  List<String> getAllCountriesSortedAfterRank() {
+  List<int> getAllCountriesSortedAfterRank() {
     List<String> allCountriesRanked = allQuestionsService.allCountriesRanked;
     allCountriesRanked.sort((a, b) =>
         a.split(":")[1].parseToInt.compareTo(b.split(":")[1].parseToInt));
-    allCountriesRanked =
-        allCountriesRanked.map((e) => e.split(":")[0]).toList();
-    return allCountriesRanked;
+    return allCountriesRanked.map((e) => e.split(":")[0].parseToInt).toList();
   }
 }
 

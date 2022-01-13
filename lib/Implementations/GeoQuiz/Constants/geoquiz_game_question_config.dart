@@ -7,19 +7,19 @@ import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/Base
 import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/DependentAnswers/dependent_answers_question_category_service.dart';
 import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/Hangman/hangman_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Questions/AllContent/geoquiz_question_collector_service.dart';
-import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Questions/CountriesMultipleOptions/geoquiz_countries_multiple_options_question_category_service.dart';
+import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Questions/AnswerOptions/geoquiz_options_question_category_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Questions/Hangman/geoquiz_hangman_question_category_service.dart';
-import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Service/geoquiz_gamecontext_service.dart';
-import 'package:flutter_app_quiz_game/Lib/Extensions/map_extension.dart';
 import 'package:flutter_app_quiz_game/Lib/Localization/localization_service.dart';
 
 class GeoQuizGameQuestionConfig extends GameQuestionConfig {
   final LocalizationService _localizationService = LocalizationService();
 
   //POPULATION ===> top 10
+  //diff0
   late QuestionCategory cat0;
 
   //AREA ===> top 10
+  //diff1
   late QuestionCategory cat1;
 
   //NEIGHBOURS ===>
@@ -31,12 +31,14 @@ class GeoQuizGameQuestionConfig extends GameQuestionConfig {
 
   //GEOGRAPHICAL REGION ===>
   //// diff 0 ----> find one
-  //// diff 1 ----> find all
+  //// diff 1 ----> find by geo region
+  //// diff 2 ----> find at least 5
   late QuestionCategory cat3;
 
   //EMPIRE ===>
-  //// diff 2 ----> find one
-  //// diff 3 ----> find all
+  //// diff 1 ----> find one
+  //// diff 2 ----> find by empire
+  //// diff 3 ----> find at least 5
   late QuestionCategory cat4;
 
   //LANDMARKS
@@ -66,26 +68,28 @@ class GeoQuizGameQuestionConfig extends GameQuestionConfig {
     //
     //CATEGORIES
     singleton.cat0 = QuestionCategory(
-        index: 0,
-        questionCategoryService: getGeoQuizStatisticsCategoryQuestionService());
+      index: 0,
+      questionCategoryService:
+          GeoQuizOptionsCategoryQuestionService(),
+    );
     singleton.cat1 = QuestionCategory(
         index: 1,
         questionCategoryService: getGeoQuizStatisticsCategoryQuestionService());
     singleton.cat2 = QuestionCategory(
         index: 2,
         questionCategoryService:
-            GeoQuizCountriesMultipleOptionsCategoryQuestionService(),
+            GeoQuizOptionsCategoryQuestionService(),
         questionCategoryServiceMap: {
           singleton.diff3: getGeoQuizStatisticsCategoryQuestionService()
         });
     singleton.cat3 = QuestionCategory(
         index: 3,
         questionCategoryService:
-            GeoQuizCountriesMultipleOptionsCategoryQuestionService());
+            GeoQuizOptionsCategoryQuestionService());
     singleton.cat4 = QuestionCategory(
         index: 4,
         questionCategoryService:
-            GeoQuizCountriesMultipleOptionsCategoryQuestionService());
+            GeoQuizOptionsCategoryQuestionService());
     singleton.cat5 = QuestionCategory(
         index: 5,
         questionCategoryService: DependentAnswersCategoryQuestionService());
@@ -108,7 +112,7 @@ class GeoQuizGameQuestionConfig extends GameQuestionConfig {
   static QuestionCategoryService getGeoQuizStatisticsCategoryQuestionService() {
     return HangmanService.isHangmanSupported()
         ? GeoQuizHangmanCategoryQuestionService()
-        : GeoQuizCountriesMultipleOptionsCategoryQuestionService();
+        : GeoQuizOptionsCategoryQuestionService();
   }
 
   GeoQuizGameQuestionConfig.internal();
@@ -126,19 +130,23 @@ class GeoQuizGameQuestionConfig extends GameQuestionConfig {
     res.putIfAbsent(
         QuestionCategoryWithPrefixCode(category: cat0, prefixCode: 0),
         () => _localizationService.formatTextWithParams(
-                label.l_countries_with_more_than_param0_million_people, [
-              GeoQuizQuestionCollectorService
-                  .numberOfQuestionsForStatisticsCategory
-                  .toString()
-            ]));
+                label
+                    .l_which_country_is_among_the_top_param0_most_populous_countries_in_the_world,
+                [
+                  GeoQuizQuestionCollectorService
+                      .numberOfQuestionsForStatisticsCategory
+                      .toString()
+                ]));
     res.putIfAbsent(
         QuestionCategoryWithPrefixCode(category: cat1, prefixCode: 0),
         () => _localizationService.formatTextWithParams(
-                label.l_top_param0_largest_countries_in_the_world_by_area, [
-              GeoQuizQuestionCollectorService
-                  .numberOfQuestionsForStatisticsCategory
-                  .toString()
-            ]));
+                label
+                    .l_which_country_is_among_the_top_param0_largest_countries_in_the_world_by_land_area,
+                [
+                  GeoQuizQuestionCollectorService
+                      .numberOfQuestionsForStatisticsCategory
+                      .toString()
+                ]));
     res.putIfAbsent(
         QuestionCategoryWithPrefixCode(category: cat2, prefixCode: 0),
         () => label.l_which_country_is_a_neighbour_of_param0);
@@ -149,8 +157,14 @@ class GeoQuizGameQuestionConfig extends GameQuestionConfig {
         QuestionCategoryWithPrefixCode(category: cat3, prefixCode: 0),
         () => label.l_which_country_is_in_this_geographical_region);
     res.putIfAbsent(
+        QuestionCategoryWithPrefixCode(category: cat3, prefixCode: 1),
+        () => label.l_to_which_geographical_region_do_these_countries_belong);
+    res.putIfAbsent(
         QuestionCategoryWithPrefixCode(category: cat4, prefixCode: 0),
         () => label.l_which_country_was_in_this_empire);
+    res.putIfAbsent(
+        QuestionCategoryWithPrefixCode(category: cat4, prefixCode: 1),
+        () => label.l_to_which_empire_did_these_countries_belonged);
     res.putIfAbsent(
         QuestionCategoryWithPrefixCode(category: cat5, prefixCode: 0),
         () => label.l_where_is_this_landmark_located);

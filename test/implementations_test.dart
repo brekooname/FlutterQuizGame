@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_app_quiz_game/Game/Game/campaign_level.dart';
 import 'package:flutter_app_quiz_game/Game/Game/campaign_level_service.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
-import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Constants/geoquiz_campaign_level_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Constants/history_campaign_level_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Constants/language.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen.dart';
@@ -33,8 +32,7 @@ List<TestAppConfig> getAppsToTest() {
 
 Future<void> testApp(WidgetTester tester, String appKey, Language lang,
     CampaignLevelService campaignLevelService) async {
-  await TestUtil.initApp(lang, appKey);
-  await pumpWidget(tester, MyApp.gameScreenManager);
+  await TestUtil.initApp(lang, appKey, tester);
   debugPrint("testing =======> " +
       appKey +
       " lang: " +
@@ -47,7 +45,7 @@ Future<void> testAllCampaignLevels(
   for (CampaignLevel campaignLevel in campaignLevelService.allLevels) {
     MyApp.gameScreenManager.currentScreen!.gameScreenManagerState
         .showNewGameScreen(campaignLevel);
-    await pumpWidget(tester, MyApp.gameScreenManager);
+    await TestUtil.pumpWidget(tester, MyApp.gameScreenManager);
 
     for (QuestionCategory category in campaignLevel.category) {
       MyApp.gameScreenManager.currentScreen!.gameScreenManagerState
@@ -56,7 +54,7 @@ Future<void> testAllCampaignLevels(
               category,
               (MyApp.gameScreenManager.currentScreen! as GameScreen)
                   .gameContext);
-      await pumpWidget(tester, MyApp.gameScreenManager);
+      await TestUtil.pumpWidget(tester, MyApp.gameScreenManager);
 
       debugPrint("-----" +
           (MyApp.gameScreenManager.currentScreen! as GameScreen)
@@ -68,14 +66,6 @@ Future<void> testAllCampaignLevels(
   }
   MyApp.gameScreenManager.currentScreen!.gameScreenManagerState
       .showMainScreen();
-}
-
-Future<void> pumpWidget(WidgetTester tester, Widget widget) async {
-  await tester.pumpWidget(Builder(
-    builder: (BuildContext context) {
-      return MyAppState.buildMaterialApp(context, widget);
-    },
-  ));
 }
 
 void _startApp() {

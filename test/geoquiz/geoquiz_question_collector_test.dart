@@ -18,8 +18,9 @@ GeoQuizQuestionCollectorService collectorService =
     GeoQuizQuestionCollectorService();
 
 void main() {
-  test('GeoQuizQuestionCollectorService is tested', () async {
-    await TestUtil.initApp(Language.en, "geoquiz");
+  testWidgets('GeoQuizQuestionCollectorService is tested',
+      (WidgetTester tester) async {
+    await TestUtil.initApp(Language.en, "geoquiz", tester);
 
     testStatisticsQuestions(
         questionConfig.cat0, questionConfig.diff0, questionConfig.diff1);
@@ -39,7 +40,6 @@ void testCapitalsFlagsMaps() {
     questionConfig.cat9
   ]) {
     for (QuestionDifficulty difficulty in questionConfig.difficulties) {
-
       debugPrint("===> FLAGS CAPITALS MAPS FOR DIFF " + difficulty.name + "\n");
       var result = collectorService.getAllQuestionsForCategoryAndDifficulty(
           category, difficulty);
@@ -84,7 +84,7 @@ void testGeoRegionAndEmpire() {
     debugPrint(q.rawString);
   }
   result = collectorService.getAllQuestionsForCategoryAndDifficulty(
-      questionConfig.cat3, questionConfig.diff2);
+      questionConfig.cat3, questionConfig.diff3);
   expect(result.isEmpty, true);
 
   result = collectorService.getAllQuestionsForCategoryAndDifficulty(

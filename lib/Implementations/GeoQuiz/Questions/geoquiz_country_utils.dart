@@ -51,6 +51,13 @@ class GeoQuizCountryUtils {
     return statsCategories.contains(category);
   }
 
+  bool isGeographicalRegionOrEmpireCategory(QuestionCategory category) {
+    return geographicalRegionOrEmpireCategory.contains(category);
+  }
+
   List<QuestionCategory> get statsCategories =>
       [_questionConfig.cat0, _questionConfig.cat1];
+
+  List<QuestionCategory> get geographicalRegionOrEmpireCategory =>
+      [_questionConfig.cat3, _questionConfig.cat4];
 }
