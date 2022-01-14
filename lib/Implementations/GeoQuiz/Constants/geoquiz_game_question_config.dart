@@ -95,16 +95,16 @@ class GeoQuizGameQuestionConfig extends GameQuestionConfig {
         questionCategoryService: DependentAnswersCategoryQuestionService());
     singleton.cat6 = QuestionCategory(
         index: 6,
-        questionCategoryService: DependentAnswersCategoryQuestionService());
+        questionCategoryService: GeoQuizOptionsCategoryQuestionService());
     singleton.cat7 = QuestionCategory(
         index: 7,
-        questionCategoryService: DependentAnswersCategoryQuestionService());
+        questionCategoryService: GeoQuizOptionsCategoryQuestionService());
     singleton.cat8 = QuestionCategory(
         index: 8,
         questionCategoryService: DependentAnswersCategoryQuestionService());
     singleton.cat9 = QuestionCategory(
         index: 9,
-        questionCategoryService: DependentAnswersCategoryQuestionService());
+        questionCategoryService: GeoQuizOptionsCategoryQuestionService());
 
     return singleton;
   }
@@ -161,16 +161,16 @@ class GeoQuizGameQuestionConfig extends GameQuestionConfig {
         () => label.l_to_which_geographical_region_do_these_countries_belong);
     res.putIfAbsent(
         QuestionCategoryWithPrefixCode(category: cat4, prefixCode: 0),
-        () => label.l_which_country_was_in_this_empire);
+        () => label.l_which_country_or_part_of_this_country_was_part_of_this_empire);
     res.putIfAbsent(
         QuestionCategoryWithPrefixCode(category: cat4, prefixCode: 1),
-        () => label.l_to_which_empire_did_these_countries_belonged);
+        () => label.l_to_which_empire_did_these_countries_or_part_of_these_countries_belong);
     res.putIfAbsent(
         QuestionCategoryWithPrefixCode(category: cat5, prefixCode: 0),
         () => label.l_where_is_this_landmark_located);
     res.putIfAbsent(
         QuestionCategoryWithPrefixCode(category: cat6, prefixCode: 0),
-        () => label.l_which_is_the_capital_of_param0);
+        () => label.l_which_country_has_this_capital);
     res.putIfAbsent(
         QuestionCategoryWithPrefixCode(category: cat7, prefixCode: 0),
         () => label.l_which_country_has_this_flag);

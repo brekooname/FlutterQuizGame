@@ -88,22 +88,30 @@ class GeoQuizQuestionCollectorService
         category == _gameQuestionConfig.cat8) {
       result = allQuestions.get<CategoryDifficulty, List<Question>>(
           CategoryDifficulty(category, difficulty))!;
-    } else
+    }
+    var capitalsCategory = _gameQuestionConfig.cat6;
+    var flagsCategory = _gameQuestionConfig.cat7;
+    var mapsCategory = _gameQuestionConfig.cat9;
     //------------- CAT 6 ------------- CAPITALS
-    if (category == _gameQuestionConfig.cat6
+    if (category == capitalsCategory
         //
         ||
         //------------- CAT 7------------- FLAGS
-        category == _gameQuestionConfig.cat7
+        category == flagsCategory
         //
         ||
         //------------- CAT 9------------- MAPS
-        category == _gameQuestionConfig.cat9) {
-      var sortedAfterRank = sortQuestionListAfterRankedCountries(
-          transformAllCountriesStringToQuestion(category, difficulty), null);
-      result = _percentOfListForDifficulty
-          .get<QuestionDifficulty, PercentRangeForList>(difficulty)!
-          .getQuestionsForRange(sortedAfterRank);
+        category == mapsCategory) {
+      Map<QuestionCategory, List<String>> countryIndexesForCategory = {
+        capitalsCategory: allQuestionsService.allCapitalIndexes,
+        flagsCategory: allQuestionsService.allFlags,
+        mapsCategory: allQuestionsService.allMaps,
+      };
+      result = createQuestionsForCountryIndexes(
+          countryIndexesForCategory
+              .get<QuestionCategory, List<String>>(category)!,
+          category,
+          difficulty);
     }
     for (var element in result) {
       element.category = category;
@@ -112,10 +120,23 @@ class GeoQuizQuestionCollectorService
     return result;
   }
 
-  List<Question> transformAllCountriesStringToQuestion(
+  List<Question> createQuestionsForCountryIndexes(List<String> countryIndexes,
+      QuestionCategory category, QuestionDifficulty difficulty) {
+    List<Question> result = [];
+    var questionsWithCountry = transformCountriesStringToQuestion(
+        countryIndexes, category, difficulty);
+    var sortedAfterRank =
+        sortQuestionListAfterRankedCountries(questionsWithCountry, 0);
+    result = _percentOfListForDifficulty
+        .get<QuestionDifficulty, PercentRangeForList>(difficulty)!
+        .getQuestionsForRange(sortedAfterRank);
+    return result;
+  }
+
+  List<Question> transformCountriesStringToQuestion(List<String> countryIndexes,
       QuestionCategory category, QuestionDifficulty difficulty) {
     return allQuestionsService.createQuestions(
-        difficulty, category, allQuestionsService.allCountries);
+        difficulty, category, countryIndexes);
   }
 
   List<Question> getStatsQuestions(QuestionCategory category) {

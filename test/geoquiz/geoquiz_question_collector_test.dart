@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:flutter_app_quiz_game/Game/Question/Model/category_difficulty.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
@@ -22,13 +23,13 @@ void main() {
       (WidgetTester tester) async {
     await TestUtil.initApp(Language.en, "geoquiz", tester);
 
-    testStatisticsQuestions(
-        questionConfig.cat0, questionConfig.diff0, questionConfig.diff1);
-    testStatisticsQuestions(
-        questionConfig.cat1, questionConfig.diff1, questionConfig.diff0);
-    testNeighbours();
-    testGeoRegionAndEmpire();
-    testLandmarksAndNaturalWonders();
+    // testStatisticsQuestions(
+    //     questionConfig.cat0, questionConfig.diff0, questionConfig.diff1);
+    // testStatisticsQuestions(
+    //     questionConfig.cat1, questionConfig.diff1, questionConfig.diff0);
+    // testNeighbours();
+    // testGeoRegionAndEmpire();
+    // testLandmarksAndNaturalWonders();
     testCapitalsFlagsMaps();
   });
 }
@@ -39,23 +40,72 @@ void testCapitalsFlagsMaps() {
     questionConfig.cat7,
     questionConfig.cat9
   ]) {
+    debugPrint("");
     for (QuestionDifficulty difficulty in questionConfig.difficulties) {
-      debugPrint("===> FLAGS CAPITALS MAPS FOR DIFF " + difficulty.name + "\n");
+      debugPrint("===> FLAGS CAPITALS MAPS FOR DIFF " +
+          difficulty.name +
+          " and cat " +
+          category.name +
+          "\n");
       var result = collectorService.getAllQuestionsForCategoryAndDifficulty(
           category, difficulty);
-      var qStrings = result.map((e) => e.rawString);
+      var qStrings = result.map((e) =>
+          geoQuizCountryUtils.getCountryNameForIndex(e.rawString.parseToInt));
       for (String s in qStrings) {
         debugPrint(s);
       }
       debugPrint("\n\n");
-      testCountryRanking(result.length, difficulty, qStrings, {
-        questionConfig.diff0: const MapEntry(35, 40),
-        questionConfig.diff1: const MapEntry(35, 40),
-        questionConfig.diff2: const MapEntry(55, 60),
-        questionConfig.diff3: const MapEntry(55, 60),
-      });
+      testCountryRanking(
+          result.length,
+          CategoryDifficulty(category, difficulty),
+          qStrings,
+          expectedResultsForFlagsCapitalsMaps());
     }
   }
+}
+
+Map<CategoryDifficulty, ExpectedRankedCountries>
+    expectedResultsForFlagsCapitalsMaps() {
+  return {
+    CategoryDifficulty(questionConfig.cat6, questionConfig.diff0):
+        ExpectedRankedCountries(
+            30, 35, "Germany", "Romania", "Honduras", "Andorra"),
+    CategoryDifficulty(questionConfig.cat6, questionConfig.diff1):
+        ExpectedRankedCountries(
+            30, 35, "Germany", "Romania", "Honduras", "Andorra"),
+    CategoryDifficulty(questionConfig.cat6, questionConfig.diff2):
+        ExpectedRankedCountries(
+            45, 50, "Germany", "Romania", "Honduras", "Andorra"),
+    CategoryDifficulty(questionConfig.cat6, questionConfig.diff3):
+        ExpectedRankedCountries(
+            45, 50, "Germany", "Romania", "Honduras", "Andorra"),
+    //////////////////////////////////////////////////////////////
+    CategoryDifficulty(questionConfig.cat7, questionConfig.diff0):
+        ExpectedRankedCountries(
+            30, 35, "Germany", "Romania", "Honduras", "Andorra"),
+    CategoryDifficulty(questionConfig.cat7, questionConfig.diff1):
+        ExpectedRankedCountries(
+            30, 35, "Germany", "Romania", "Honduras", "Andorra"),
+    CategoryDifficulty(questionConfig.cat7, questionConfig.diff2):
+        ExpectedRankedCountries(
+            50, 55, "Germany", "Romania", "Honduras", "Andorra"),
+    CategoryDifficulty(questionConfig.cat7, questionConfig.diff3):
+        ExpectedRankedCountries(
+            50, 55, "Germany", "Romania", "Honduras", "Andorra"),
+    //////////////////////////////////////////////////////////////
+    CategoryDifficulty(questionConfig.cat9, questionConfig.diff0):
+        ExpectedRankedCountries(
+            20, 25, "Germany", "Romania", "Uzbekistan", "Honduras"),
+    CategoryDifficulty(questionConfig.cat9, questionConfig.diff1):
+        ExpectedRankedCountries(
+            20, 25, "Germany", "Romania", "Uzbekistan", "Honduras"),
+    CategoryDifficulty(questionConfig.cat9, questionConfig.diff2):
+        ExpectedRankedCountries(
+            30, 35, "Germany", "Romania", "Uzbekistan", "Honduras"),
+    CategoryDifficulty(questionConfig.cat9, questionConfig.diff3):
+        ExpectedRankedCountries(
+            30, 35, "Germany", "Romania", "Uzbekistan", "Honduras"),
+  };
 }
 
 void testLandmarksAndNaturalWonders() {
@@ -117,50 +167,57 @@ void testNeighboursDiff(QuestionDifficulty difficulty) {
   }
   debugPrint("\n\n");
 
-  testCountryRanking(result.length, difficulty, qStrings, {
-    questionConfig.diff0: const MapEntry(30, 35),
-    questionConfig.diff1: const MapEntry(30, 35),
-    questionConfig.diff2: const MapEntry(45, 50),
-    questionConfig.diff3: const MapEntry(45, 50),
+  //because we have multiple playing types depending on the difficulty level
+  //here we show only easy countries diff0
+  testCountryRanking(result.length,
+      CategoryDifficulty(questionConfig.cat2, questionConfig.diff0), qStrings, {
+    CategoryDifficulty(questionConfig.cat2, questionConfig.diff0):
+        ExpectedRankedCountries(
+            30, 45, "Germany", "Romania", "Honduras", "Andorra"),
+    CategoryDifficulty(questionConfig.cat2, questionConfig.diff1):
+        ExpectedRankedCountries(
+            30, 45, "Germany", "Romania", "Honduras", "Andorra"),
+    CategoryDifficulty(questionConfig.cat2, questionConfig.diff2):
+        ExpectedRankedCountries(
+            45, 50, "Germany", "Romania", "Honduras", "Andorra"),
+    CategoryDifficulty(questionConfig.cat2, questionConfig.diff3):
+        ExpectedRankedCountries(
+            45, 50, "Germany", "Romania", "Honduras", "Andorra"),
   });
 }
 
 void testCountryRanking(
     int resultLength,
-    QuestionDifficulty difficulty,
-    Iterable<String> countryNamesFromQuestion,
-    Map<QuestionDifficulty, MapEntry<int, int>>
+    CategoryDifficulty categoryDifficulty,
+    Iterable<String> countryNames,
+    Map<CategoryDifficulty, ExpectedRankedCountries>
         expectedResultsForRangedCountryList) {
-  String c0 = "Germany";
-  String c1 = "Romania";
-  String c2 = "Georgia";
-  String c3 = "Vatican City";
-  var expectedResLength = expectedResultsForRangedCountryList
-      .get<QuestionDifficulty, MapEntry<int, int>>(difficulty)!;
+  var expectedRes = expectedResultsForRangedCountryList
+      .get<CategoryDifficulty, ExpectedRankedCountries>(categoryDifficulty)!;
   expect(
-      resultLength > expectedResLength.key &&
-          resultLength < expectedResLength.value,
+      resultLength >= expectedRes.expectedMinRes &&
+          resultLength <= expectedRes.expectedMaxRes,
       true);
-  if (difficulty == questionConfig.diff0) {
-    expect(countryNamesFromQuestion.contains(c0), true);
-    expect(countryNamesFromQuestion.contains(c1), false);
-    expect(countryNamesFromQuestion.contains(c2), false);
-    expect(countryNamesFromQuestion.contains(c3), false);
-  } else if (difficulty == questionConfig.diff1) {
-    expect(countryNamesFromQuestion.contains(c0), false);
-    expect(countryNamesFromQuestion.contains(c1), true);
-    expect(countryNamesFromQuestion.contains(c2), false);
-    expect(countryNamesFromQuestion.contains(c3), false);
-  } else if (difficulty == questionConfig.diff2) {
-    expect(countryNamesFromQuestion.contains(c0), false);
-    expect(countryNamesFromQuestion.contains(c1), false);
-    expect(countryNamesFromQuestion.contains(c2), true);
-    expect(countryNamesFromQuestion.contains(c3), false);
-  } else if (difficulty == questionConfig.diff3) {
-    expect(countryNamesFromQuestion.contains(c0), false);
-    expect(countryNamesFromQuestion.contains(c1), false);
-    expect(countryNamesFromQuestion.contains(c2), false);
-    expect(countryNamesFromQuestion.contains(c3), true);
+  if (categoryDifficulty.difficulty == questionConfig.diff0) {
+    expect(countryNames.contains(expectedRes.exDiff0Country), true);
+    expect(countryNames.contains(expectedRes.exDiff1Country), false);
+    expect(countryNames.contains(expectedRes.exDiff2Country), false);
+    expect(countryNames.contains(expectedRes.exDiff3Country), false);
+  } else if (categoryDifficulty.difficulty == questionConfig.diff1) {
+    expect(countryNames.contains(expectedRes.exDiff0Country), false);
+    expect(countryNames.contains(expectedRes.exDiff1Country), true);
+    expect(countryNames.contains(expectedRes.exDiff2Country), false);
+    expect(countryNames.contains(expectedRes.exDiff3Country), false);
+  } else if (categoryDifficulty.difficulty == questionConfig.diff2) {
+    expect(countryNames.contains(expectedRes.exDiff0Country), false);
+    expect(countryNames.contains(expectedRes.exDiff1Country), false);
+    expect(countryNames.contains(expectedRes.exDiff2Country), true);
+    expect(countryNames.contains(expectedRes.exDiff3Country), false);
+  } else if (categoryDifficulty.difficulty == questionConfig.diff3) {
+    expect(countryNames.contains(expectedRes.exDiff0Country), false);
+    expect(countryNames.contains(expectedRes.exDiff1Country), false);
+    expect(countryNames.contains(expectedRes.exDiff2Country), false);
+    expect(countryNames.contains(expectedRes.exDiff3Country), true);
   }
 }
 
@@ -180,4 +237,21 @@ void testStatisticsQuestions(
       category, difficultyToNotFind);
   expect(result.length, 0);
   debugPrint("\n\n");
+}
+
+class ExpectedRankedCountries {
+  int expectedMinRes;
+  int expectedMaxRes;
+  String exDiff0Country;
+  String exDiff1Country;
+  String exDiff2Country;
+  String exDiff3Country;
+
+  ExpectedRankedCountries(
+      this.expectedMinRes,
+      this.expectedMaxRes,
+      this.exDiff0Country,
+      this.exDiff1Country,
+      this.exDiff2Country,
+      this.exDiff3Country);
 }

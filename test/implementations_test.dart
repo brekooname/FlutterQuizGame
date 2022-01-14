@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_app_quiz_game/Game/Game/campaign_level.dart';
 import 'package:flutter_app_quiz_game/Game/Game/campaign_level_service.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
+import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Constants/geoquiz_campaign_level_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Constants/history_campaign_level_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Constants/language.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen.dart';
@@ -9,6 +10,13 @@ import 'package:flutter_app_quiz_game/main.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'util/test_util.dart';
+
+List<TestAppConfig> getAppsToTest() {
+  return [
+    // TestAppConfig("history", Language.values, HistoryCampaignLevelService()),
+    TestAppConfig("geoquiz", [Language.en], GeoQuizCampaignLevelService()),
+  ];
+}
 
 void main() {
   testWidgets('all game implementations are tested',
@@ -21,13 +29,6 @@ void main() {
       }
     }
   });
-}
-
-List<TestAppConfig> getAppsToTest() {
-  return [
-    TestAppConfig("history", Language.values, HistoryCampaignLevelService()),
-    // TestAppConfig("geoquiz", [Language.en], GeoQuizCampaignLevelService()),
-  ];
 }
 
 Future<void> testApp(WidgetTester tester, String appKey, Language lang,

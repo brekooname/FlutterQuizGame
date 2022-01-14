@@ -23,10 +23,74 @@ void main() {
   testWidgets('question service is tested', (WidgetTester tester) async {
     await TestUtil.initApp(Language.en, "geoquiz", tester);
 
+    //CAT0
+    //CAT1
     testStatisticsCategories();
+    //CAT2
     testNeighboursCategory();
+    //CAT3
+    //CAT4
     testGeographicalRegionAndEmpireCategory();
+    //CAT5 -------> SKIPPED - is dependent question service
+    //CAT6
+    //CAT7
+    //CAT8 -------> SKIPPED - is dependent question service
+    //CAT9
+    testQuestionsWithCountryIndexes();
+
+    //The other categories use a different question service
   });
+}
+
+void testQuestionsWithCountryIndexes() {
+  testCapitals("United States", "Washington", questionConfig.diff0);
+  testCapitals("Sweden", "Stockholm", questionConfig.diff1);
+  testCapitals("Somalia", "Mogadishu", questionConfig.diff2);
+  testCapitals("Laos", "Vientiane", questionConfig.diff3);
+  verifyQuestion(
+    "Which country has this flag?",
+    "",
+    ["United States"],
+    ["United States", "", "", ""],
+    questionConfig.cat7,
+    questionConfig.diff0,
+  );
+  verifyQuestion(
+    "Which country has this flag?",
+    "",
+    ["Azerbaijan"],
+    ["Azerbaijan", "", "", ""],
+    questionConfig.cat7,
+    questionConfig.diff2,
+  );
+  verifyQuestion(
+    "Which country is shown on the map?",
+    "",
+    ["United States"],
+    ["United States", "", "", ""],
+    questionConfig.cat9,
+    questionConfig.diff0,
+  );
+  verifyQuestion(
+    "Which country is shown on the map?",
+    "",
+    ["Niger"],
+    ["Niger", "", "", ""],
+    questionConfig.cat9,
+    questionConfig.diff3,
+  );
+}
+
+void testCapitals(
+    String country, String capital, QuestionDifficulty difficulty) {
+  verifyQuestion(
+    "Which country has this capital?",
+    capital,
+    [country],
+    [country, "", "", ""],
+    questionConfig.cat6,
+    difficulty,
+  );
 }
 
 void testGeographicalRegionAndEmpireCategory() {
@@ -37,7 +101,7 @@ void testGeographicalRegionAndEmpireCategory() {
     verifyQuestion(
       "Which country is in this geographical region?",
       "Baltic states",
-      ["Estonia", "", ""],
+      ["Estonia", "Lithuania", "Latvia"],
       ["Estonia", "", "", "", "", ""],
       questionConfig.cat3,
       diff,
@@ -56,7 +120,7 @@ void testGeographicalRegionAndEmpireCategory() {
     questionConfig.diff3,
   ]) {
     verifyQuestion(
-        "Which country was in this empire?",
+        "Which country or part of this country was part of this empire?",
         "Mughal Empire",
         ["India", "Afghanistan", "Pakistan", "Bangladesh"],
         ["India", "", "", "", "", "", ""],
@@ -65,7 +129,7 @@ void testGeographicalRegionAndEmpireCategory() {
         questionAt: 1);
   }
   verifyQuestion(
-      "To which empire did these countries belonged?",
+      "To which empire did these countries or part of these countries belong?",
       "India, Afghanistan, Pakistan, Bangladesh",
       ["Mughal Empire"],
       ["Mughal Empire", "", "", ""],

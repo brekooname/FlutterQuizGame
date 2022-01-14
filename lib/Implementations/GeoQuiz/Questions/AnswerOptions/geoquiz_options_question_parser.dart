@@ -32,15 +32,18 @@ class GeoQuizOptionsQuestionParser
     if (_geoQuizCountryUtils.isStatsCategory(question.category)
         //
         ||
+        _geoQuizCountryUtils
+            .isCountryIndexesQuestionsCategory(question.category)
+        //
+        ||
         isCategoryFindAnswerByQuestionName(question)) {
       var countryAnswer = question.rawString.split(":")[0];
       if (_geoQuizCountryUtils
           .isGeographicalRegionOrEmpireCategory(question.category)) {
         result = [countryAnswer];
       } else {
-        var mainCountryIndex = countryAnswer.parseToInt;
         result = [
-          _geoQuizCountryUtils.getCountryNameForIndex(mainCountryIndex)
+          _geoQuizCountryUtils.getCountryNameForIndex(countryAnswer.parseToInt)
         ];
       }
     } else {
@@ -52,13 +55,17 @@ class GeoQuizOptionsQuestionParser
   @override
   String getQuestionToBeDisplayed(Question question) {
     String result;
-    if (_geoQuizCountryUtils.isStatsCategory(question.category)) {
+    if (_geoQuizCountryUtils.isStatsCategory(question.category) ||
+        _geoQuizCountryUtils.isFlagsOrMapsCategory(question.category)) {
       result = "";
     } else if (isCategoryFindAnswerByQuestionName(question)) {
       result = getCountryNamesFromQuestionOptions(question).join(", ");
     } else if (_geoQuizCountryUtils
         .isGeographicalRegionOrEmpireCategory(question.category)) {
       result = question.rawString.split(":")[0];
+    } else if (question.category == _gameQuestionConfig.cat6) {
+      result = _geoQuizCountryUtils
+          .getCapitalNameForCountryIndex(question.rawString.parseToInt);
     } else {
       result = _geoQuizCountryUtils.getCountryNameForIndex(
           question.rawString.split(":")[0].trim().parseToInt);

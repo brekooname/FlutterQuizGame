@@ -29,22 +29,22 @@ class GeoQuizAllQuestions extends AllQuestionsService {
 
   List<String> get allCapitals {
     _allCapitalsCache ??=
-        _getAllCapitals().get<Language, List<String>>(getLanguage()) ??
-            _getAllCapitals().get<Language, List<String>>(Language.en);
+        _getAllCapitals.get<Language, List<String>>(getLanguage()) ??
+            _getAllCapitals.get<Language, List<String>>(Language.en);
     return _allCapitalsCache!;
   }
 
   List<String> get allCountries {
     _allCountriesCache ??=
-        _getAllCountries().get<Language, List<String>>(getLanguage()) ??
-            _getAllCountries().get<Language, List<String>>(Language.en);
+        _getAllCountries.get<Language, List<String>>(getLanguage()) ??
+            _getAllCountries.get<Language, List<String>>(Language.en);
     return _allCountriesCache!;
   }
 
   List<String> get allSynonyms {
     _allSynonymsCache ??=
-        _getAllSynonyms().get<Language, List<String>>(getLanguage()) ??
-            _getAllSynonyms().get<Language, List<String>>(Language.en);
+        _getAllSynonyms.get<Language, List<String>>(getLanguage()) ??
+            _getAllSynonyms.get<Language, List<String>>(Language.en);
     return _allSynonymsCache!;
   }
 
@@ -91,45 +91,58 @@ class GeoQuizAllQuestions extends AllQuestionsService {
       CountryRanges(183, 194, 175, 194) ];
     return _allCountryRanges!;
   }
-  Map<Language, List<String>> _getAllCountries() {
+  Map<Language, List<String>> get _getAllCountries {
     Map<Language, List<String>> result = HashMap<Language, List<String>>();
-    result.putIfAbsent(Language.en, () => _allCountriesEN());
-    // result.putIfAbsent(Language.ro, () => _allCountriesRO());
+    result.putIfAbsent(Language.en, () => _allCountriesEN);
     return result;
   }
-  List<String> _allCountriesEN() {
-    return ["Germany","France","United Kingdom","Spain","Italy","Belgium","Austria","Portugal","Switzerland","Netherlands","Ireland","Monaco","Luxembourg","Liechtenstein","Andorra","San Marino","Vatican City","Sweden","Denmark","Finland","Norway","Iceland","Poland","Greece","Croatia","Hungary","Slovenia","Slovakia","Czech Republic","Estonia","Latvia","Lithuania","Ukraine","Russia","Romania","Bulgaria","Serbia","Bosnia and Herzegovina","Albania","Montenegro","Belarus","Moldova","North Macedonia","Cyprus","Malta","Iran","Turkey","Iraq","Israel","Georgia","Armenia","Azerbaijan","Syria","Jordan","Lebanon","Palestine","Saudi Arabia","United Arab Emirates","Qatar","Yemen","Oman","Kuwait","Bahrain","Kazakhstan","Afghanistan","Uzbekistan","Tajikistan","Kyrgyzstan","Turkmenistan","India","Pakistan","Nepal","Sri Lanka","Bangladesh","Bhutan","Maldives","Thailand","Indonesia","Vietnam","Malaysia","Philippines","Singapore","Myanmar","Laos","Cambodia","Brunei","China","Japan","South Korea","North Korea","Mongolia","Australia","New Zealand","Papua New Guinea","East Timor","Fiji","Solomon Islands","Vanuatu","Samoa","Kiribati","Micronesia","Tonga","Marshall Islands","Palau","Nauru","Tuvalu","Egypt","Algeria","Morocco","Tunisia","Libya","Nigeria","Ghana","Senegal","Mali","Cameroon","Uganda","Ivory Coast","Angola","Tanzania","Niger","Central African Republic","Democratic Republic of the Congo","Burkina Faso","Madagascar","Chad","Mozambique","Zambia","Benin","Guinea","Togo","Rwanda","Malawi","Burundi","Liberia","Zimbabwe","Sierra Leone","Gambia","Mauritania","Gabon","Congo","Guinea-Bissau","Equatorial Guinea","Mauritius","Seychelles","Comoros","Cape Verde","São Tomé and Príncipe","Somalia","Kenya","Ethiopia","Sudan","South Sudan","Eritrea","Djibouti","South Africa","Namibia","Botswana","Lesotho","Eswatini","United States","Canada","Mexico","Cuba","Guatemala","Costa Rica","Belize","Bahamas","Jamaica","Haiti","Dominican Republic","Panama","El Salvador","Nicaragua","Honduras","Saint Lucia","Grenada","Dominica","Trinidad and Tobago","Barbados","Saint Vincent and the Grenadines","Antigua and Barbuda","Saint Kitts and Nevis","Brazil","Argentina","Colombia","Chile","Peru","Venezuela","Ecuador","Uruguay","Bolivia","Paraguay","Guyana","Suriname"];
-  }
+  List<String> get _allCountriesEN =>
+      ["Germany","France","United Kingdom","Spain","Italy","Belgium","Austria","Portugal","Switzerland","Netherlands","Ireland","Monaco","Luxembourg","Liechtenstein","Andorra","San Marino","Vatican City","Sweden","Denmark","Finland","Norway","Iceland","Poland","Greece","Croatia","Hungary","Slovenia","Slovakia","Czech Republic","Estonia","Latvia","Lithuania","Ukraine","Russia","Romania","Bulgaria","Serbia","Bosnia and Herzegovina","Albania","Montenegro","Belarus","Moldova","North Macedonia","Cyprus","Malta","Iran","Turkey","Iraq","Israel","Georgia","Armenia","Azerbaijan","Syria","Jordan","Lebanon","Palestine","Saudi Arabia","United Arab Emirates","Qatar","Yemen","Oman","Kuwait","Bahrain","Kazakhstan","Afghanistan","Uzbekistan","Tajikistan","Kyrgyzstan","Turkmenistan","India","Pakistan","Nepal","Sri Lanka","Bangladesh","Bhutan","Maldives","Thailand","Indonesia","Vietnam","Malaysia","Philippines","Singapore","Myanmar","Laos","Cambodia","Brunei","China","Japan","South Korea","North Korea","Mongolia","Australia","New Zealand","Papua New Guinea","East Timor","Fiji","Solomon Islands","Vanuatu","Samoa","Kiribati","Micronesia","Tonga","Marshall Islands","Palau","Nauru","Tuvalu","Egypt","Algeria","Morocco","Tunisia","Libya","Nigeria","Ghana","Senegal","Mali","Cameroon","Uganda","Ivory Coast","Angola","Tanzania","Niger","Central African Republic","Democratic Republic of the Congo","Burkina Faso","Madagascar","Chad","Mozambique","Zambia","Benin","Guinea","Togo","Rwanda","Malawi","Burundi","Liberia","Zimbabwe","Sierra Leone","Gambia","Mauritania","Gabon","Congo","Guinea-Bissau","Equatorial Guinea","Mauritius","Seychelles","Comoros","Cape Verde","São Tomé and Príncipe","Somalia","Kenya","Ethiopia","Sudan","South Sudan","Eritrea","Djibouti","South Africa","Namibia","Botswana","Lesotho","Eswatini","United States","Canada","Mexico","Cuba","Guatemala","Costa Rica","Belize","Bahamas","Jamaica","Haiti","Dominican Republic","Panama","El Salvador","Nicaragua","Honduras","Saint Lucia","Grenada","Dominica","Trinidad and Tobago","Barbados","Saint Vincent and the Grenadines","Antigua and Barbuda","Saint Kitts and Nevis","Brazil","Argentina","Colombia","Chile","Peru","Venezuela","Ecuador","Uruguay","Bolivia","Paraguay","Guyana","Suriname"];
+
 
   List<String> get allCountriesRanked =>
       ["0:8","1:10","2:11","3:17","4:13","5:19","6:23","7:28","8:24","9:25","10:44","11:106","12:140","13:131","14:188","15:142","16:176","17:35","18:42","19:43","20:45","21:56","22:21","23:27","24:32","25:38","26:59","27:62","28:64","29:109","30:152","31:77","32:20","33:4","34:39","35:41","36:46","37:57","38:61","39:79","40:80","41:143","42:150","43:89","44:170","45:7","46:9","47:53","48:55","49:49","50:58","51:69","52:100","53:101","54:122","55:128","56:40","57:103","58:93","59:96","60:130","61:137","62:154","63:52","64:54","65:82","66:105","67:123","68:124","69:1","70:72","71:67","72:74","73:118","74:166","75:174","76:12","77:26","78:34","79:47","80:73","81:110","82:83","83:117","84:76","85:171","86:0","87:6","88:16","89:94","90:71","91:29","92:60","93:113","94:156","95:162","96:167","97:175","98:179","99:181","100:184","101:185","102:190","103:192","104:193","105:194","106:14","107:31","108:33","109:70","110:121","111:36","112:51","113:66","114:78","115:81","116:87","117:88","118:92","119:95","120:97","121:127","122:129","123:120","124:90","125:107","126:108","127:111","128:112","129:114","130:115","131:119","132:125","133:134","134:135","135:136","136:139","137:145","138:146","139:148","140:149","141:153","142:155","143:158","144:186","145:161","146:169","147:178","148:68","149:75","150:98","151:126","152:133","153:141","154:159","155:15","156:144","157:147","158:151","159:160","160:2","161:22","162:5","163:50","164:132","165:99","166:172","167:173","168:85","169:91","170:102","171:138","172:164","173:165","174:104","175:180","176:182","177:189","178:157","179:177","180:183","181:187","182:191","183:3","184:18","185:30","186:37","187:48","188:63","189:65","190:84","191:86","192:116","193:163","194:168"];
 
 
-  Map<Language, List<String>> _getAllCapitals() {
-    Map<Language, List<String>> result = HashMap<Language, List<String>>();
-    result.putIfAbsent(Language.en, () => _allCapitalsEN());
-    result.putIfAbsent(Language.ro, () => _allCapitalsRO());
-    return result;
-  }
-  List<String> _allCapitalsEN() {
-    return ["Beijing","New Delhi","Washington","Brasilia","Moscow","Mexico City","Tokyo","Tehran","Berlin","Ankara","Paris","London","Bangkok","Rome","Cairo","Pretoria","Seoul","Madrid","Buenos Aires","Brussels","Kiev","Warsaw","Ottawa","Vienna","Bern","Amsterdam","Jakarta","Athens","Lisbon","Canberra","Bogota","Algiers","Zagreb","Rabat","Hanoi","Stockholm","Abuja","Santiago","Budapest","Bucharest","Riyadh","Sofia","Copenhagen","Helsinki","Dublin","Oslo","Belgrade","Kuala Lumpur","Lima","Tbilisi","Havana","Accra","Astana","Baghdad","Kabul","Jerusalem","Reykjavik","Sarajevo","Yerevan","Ljubljana","Wellington","Tirana","Bratislava","Caracas","Prague","Quito","Dakar","Kathmandu","Mogadishu","Baku","Tunis","Ulan Bator","Islamabad","Manila","Colombo","Nairobi","Phnom Penh","Vilnius","Bamako","Podgorica","Minsk","Yaounde","Tashkent","Naypyidaw","Montevideo","Kingston","Sucre","Kampala","Yamoussoukro","Nicosia","Antananarivo","Port-au-Prince","Luanda","Doha","Pyongyang","Dodoma","Sanaa","Niamey","Addis Ababa","San Jose","Damascus","Amman","Santo Domingo","Abu Dhabi","Tegucigalpa","Dushanbe","Monaco","N'Djamena","Maputo","Tallinn","Singapore","Lusaka","Porto-Novo","Port Moresby","Conakry","Lome","Asuncion","Vientiane","Dhaka","Kigali","Ouagadougou","Tripoli","Beirut","Bishkek","Ashgabat","Lilongwe","Khartoum","Bangui","East Jerusalem","Kinshasa","Muscat","Vaduz","Guatemala City","Juba","Bujumbura","Monrovia","Harare","Kuwait City","Panama City","Freetown","Luxembourg","Asmara","San Marino","Chisinau","Windhoek","Banjul","Nouakchott","Gaborone","Libreville","Brazzaville","Skopje","Maseru","Riga","Bissau","Manama","Malabo","Dili","Port of Spain","Port Louis","Djibouti","Mbabane","Moroni","Suva","Georgetown","San Salvador","Managua","Thimphu","Honiara","Paramaribo","Praia","Valletta","Bandar Seri Begawan","Belmopan","Nassau","Malé","Port Vila","Bridgetown","São Tomé","Apia","Castries","Tarawa","St. George's","Kingstown","Palikir","Nuku'alofa","Victoria","St. John's","Andorra la Vella","Roseau","Majuro","Basseterre","Ngerulmud","Yaren","Funafuti"];
-  }
-  List<String> _allCapitalsRO() {
-    return ["86:Beijing","69:New Delhi","160:Washington","183:Brasilia","33:Moscova","162:Mexico City","87:Tokyo","45:Teheran","0:Berlin","46:Ankara","1:Paris","2:Londra","76:Bangkok","4:Roma","106:Cairo","155:Pretoria","88:Seul","3:Madrid","184:Buenos Aires","5:Bruxelles","32:Kiev","22:Varşovia","161:Ottawa","6:Viena","8:Berna","9:Amsterdam","77:Jakarta","23:Atena","7:Lisabona","91:Canberra","185:Bogota","107:Alger","24:Zagreb","108:Rabat","78:Hanoi","17:Stockholm","111:Abuja","186:Santiago","25:Budapesta","34:Bucureşti","56:Riad","35:Sofia","18:Copenhaga","19:Helsinki","10:Dublin","20:Oslo","36:Belgrad","79:Kuala Lumpur","187:Lima","49:Tbilisi","163:Havana","112:Accra","63:Astana","47:Bagdad","64:Kabul","48:Ierusalim","21:Reykjavik","37:Saraievo","50:Erevan","26:Ljubljana","92:Wellington","38:Tirana","27:Bratislava","188:Caracas","28:Praga","189:Quito","113:Dakar","71:Kathmandu","148:Mogadishu","51:Baku","109:Tunis","90:Ulan Bator","70:Islamabad","80:Manila","72:Colombo","149:Nairobi","84:Phnom Penh","31:Vilnius","114:Bamako","39:Podgorica","40:Minsk","115:Yaounde","65:Taşkent","82:Naypyidaw","190:Montevideo","168:Kingston","191:Sucre","116:Kampala","117:Yamoussoukro","43:Nicosia","124:Antananarivo","169:Port-au-Prince","118:Luanda","58:Doha","89:Phenian","119:Dodoma","59:Sanaa","120:Niamey","150:Addis Ababa","165:San Jose","52:Damasc","53:Amman","170:Santo Domingo","57:Abu Dhabi","174:Tegucigalpa","66:Dușanbe","11:Monaco","125:N'Djamena","126:Maputo","29:Tallinn","81:Singapore","127:Lusaka","128:Porto-Novo","93:Port Moresby","129:Conakry","130:Lome","192:Asuncion","83:Vientiane","73:Dhaka","131:Kigali","123:Ouagadougou","110:Tripoli","54:Beirut","67:Bishkek","68:Așgabat","132:Lilongwe","151:Khartum","121:Bangui","55:Ierusalimul de Est","122:Kinshasa","60:Muscat","13:Vaduz","164:Ciudad de Guatemala","152:Juba","133:Bujumbura","134:Monrovia","135:Harare","61:Kuwait City","171:Ciudad de Panamá","136:Freetown","12:Luxemburg","153:Asmara","15:San Marino","41:Chişinău","156:Windhoek","137:Banjul","138:Nouakchott","157:Gaborone","139:Libreville","140:Brazzaville","42:Skopie","158:Maseru","30:Riga","141:Bissau","62:Manama","142:Malabo","94:Dili","178:Port of Spain","143:Port Louis","154:Djibouti","159:Mbabane","145:Moroni","95:Suva","193:Georgetown","172:San salvador","173:Managua","74:Thimphu","96:Honiara","194:Paramaribo","146:Praia","44:Valletta","85:Bandar Seri Begawan","166:Belmopan","167:Nassau","75:Malé","97:Port Vila","179:Bridgetown","147:São Tomé","98:Apia","175:Castries","99:Tarawa","176:St. George's","180:Kingstown","100:Palikir","101:Nuku'alofa","144:Victoria","181:St. John's","14:Andorra la Vella","177:Roseau","102:Majuro","182:Basseterre","103:Ngerulmud","104:Yaren","105:Funafuti"];
-  }
-  Map<Language, List<String>> _getAllSynonyms() {
-    Map<Language, List<String>> result = HashMap<Language, List<String>>();
-    result.putIfAbsent(Language.en, () => _allSynonymsEN());
-    result.putIfAbsent(Language.ro, () => _allSynonymsRO());
-    return result;
-  }
-  List<String> _allSynonymsEN() {
-    return ["2:USA","103:UAE","129:DR Congo","183:Saint Vincent"];
-  }
+  List<String> get allFlags =>
+      ["0","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","56","57","58","59","60","61","62","63","64","65","66","67","68","69","70","71","72","73","74","76","77","78","79","80","81","82","83","84","85","86","87","88","89","90","91","92","93","95","97","103","104","106","107","108","109","110","111","112","113","114","115","116","117","118","119","120","121","122","123","124","126","127","128","129","130","131","132","134","135","136","138","140","144","148","149","150","151","152","155","156","157","160","161","162","163","164","165","166","167","168","169","170","171","173","174","175","176","178","179","181","183","184","185","186","187","188","189","190","191","192","193","194"];
 
-  List<String> _allSynonymsRO() {
-    return ["2:SUA","103:EAU","129:RD Congo"];
+
+  List<String> get allMaps =>
+      ["0","1","2","3","4","5","6","7","8","9","17","18","19","20","21","22","23","24","25","26","27","28","29","30","32","33","34","35","36","38","40","41","43","45","47","49","50","51","53","54","56","57","58","59","60","61","63","64","65","66","68","69","70","71","72","73","74","76","77","78","79","80","81","82","83","84","85","86","87","88","89","90","91","92","93","97","98","103","106","107","108","109","110","111","112","113","120","122","124","148","150","155","156","160","161","162","163","164","165","166","168","169","171","173","174","183","184","185","186","187","188","189","190","191","192","193","194"];
+
+
+  List<String> get allCapitalIndexes =>
+      ["86","69","160","183","33","162","87","45","0","46","1","2","76","4","106","155","88","3","184","5","32","22","161","6","8","9","77","23","7","91","185","107","24","108","78","17","111","186","25","34","56","35","18","19","10","20","36","79","187","49","163","112","63","47","64","48","21","37","50","26","92","38","27","188","28","189","113","71","148","51","109","90","70","80","72","149","84","31","114","39","40","115","65","82","190","168","191","116","117","43","124","169","118","58","89","119","59","120","150","165","52","53","170","57","174","66","11","125","126","29","81","127","128","93","129","130","192","83","73","131","123","110","54","67","68","132","151","121","122","60","13","164","152","133","134","135","61","171","136","12","153","15","41","156","138","157","139","140","42","158","30","141","62","94","143","154","193","172","44","166","179","144","14"];
+
+
+  Map<Language, List<String>> get _getAllCapitals {
+    Map<Language, List<String>> result = HashMap<Language, List<String>>();
+    result.putIfAbsent(Language.en, () => _allCapitalsEN);
+    result.putIfAbsent(Language.ro, () => _allCapitalsRO);
+    return result;
   }
+  List<String> get _allCapitalsEN =>
+      ["Beijing","New Delhi","Washington","Brasilia","Moscow","Mexico City","Tokyo","Tehran","Berlin","Ankara","Paris","London","Bangkok","Rome","Cairo","Pretoria","Seoul","Madrid","Buenos Aires","Brussels","Kiev","Warsaw","Ottawa","Vienna","Bern","Amsterdam","Jakarta","Athens","Lisbon","Canberra","Bogota","Algiers","Zagreb","Rabat","Hanoi","Stockholm","Abuja","Santiago","Budapest","Bucharest","Riyadh","Sofia","Copenhagen","Helsinki","Dublin","Oslo","Belgrade","Kuala Lumpur","Lima","Tbilisi","Havana","Accra","Astana","Baghdad","Kabul","Jerusalem","Reykjavik","Sarajevo","Yerevan","Ljubljana","Wellington","Tirana","Bratislava","Caracas","Prague","Quito","Dakar","Kathmandu","Mogadishu","Baku","Tunis","Ulan Bator","Islamabad","Manila","Colombo","Nairobi","Phnom Penh","Vilnius","Bamako","Podgorica","Minsk","Yaounde","Tashkent","Naypyidaw","Montevideo","Kingston","Sucre","Kampala","Yamoussoukro","Nicosia","Antananarivo","Port-au-Prince","Luanda","Doha","Pyongyang","Dodoma","Sanaa","Niamey","Addis Ababa","San Jose","Damascus","Amman","Santo Domingo","Abu Dhabi","Tegucigalpa","Dushanbe","Monaco","N'Djamena","Maputo","Tallinn","Singapore","Lusaka","Porto-Novo","Port Moresby","Conakry","Lome","Asuncion","Vientiane","Dhaka","Kigali","Ouagadougou","Tripoli","Beirut","Bishkek","Ashgabat","Lilongwe","Khartoum","Bangui","Kinshasa","Muscat","Vaduz","Guatemala City","Juba","Bujumbura","Monrovia","Harare","Kuwait City","Panama City","Freetown","Luxembourg","Asmara","San Marino","Chisinau","Windhoek","Nouakchott","Gaborone","Libreville","Brazzaville","Skopje","Maseru","Riga","Bissau","Manama","Dili","Port Louis","Djibouti","Georgetown","San Salvador","Valletta","Belmopan","Bridgetown","Victoria","Andorra la Vella"];
+
+
+  List<String> get _allCapitalsRO =>
+      ["Beijing","New Delhi","Washington","Brasilia","Moscova","Mexico City","Tokyo","Teheran","Berlin","Ankara","Paris","Londra","Bangkok","Roma","Cairo","Pretoria","Seul","Madrid","Buenos Aires","Bruxelles","Kiev","Varşovia","Ottawa","Viena","Berna","Amsterdam","Jakarta","Atena","Lisabona","Canberra","Bogota","Alger","Zagreb","Rabat","Hanoi","Stockholm","Abuja","Santiago","Budapesta","Bucureşti","Riad","Sofia","Copenhaga","Helsinki","Dublin","Oslo","Belgrad","Kuala Lumpur","Lima","Tbilisi","Havana","Accra","Astana","Bagdad","Kabul","Ierusalim","Reykjavik","Saraievo","Erevan","Ljubljana","Wellington","Tirana","Bratislava","Caracas","Praga","Quito","Dakar","Kathmandu","Mogadishu","Baku","Tunis","Ulan Bator","Islamabad","Manila","Colombo","Nairobi","Phnom Penh","Vilnius","Bamako","Podgorica","Minsk","Yaounde","Taşkent","Naypyidaw","Montevideo","Kingston","Sucre","Kampala","Yamoussoukro","Nicosia","Antananarivo","Port-au-Prince","Luanda","Doha","Phenian","Dodoma","Sanaa","Niamey","Addis Ababa","San Jose","Damasc","Amman","Santo Domingo","Abu Dhabi","Tegucigalpa","Dușanbe","Monaco","N'Djamena","Maputo","Tallinn","Singapore","Lusaka","Porto-Novo","Port Moresby","Conakry","Lome","Asuncion","Vientiane","Dhaka","Kigali","Ouagadougou","Tripoli","Beirut","Bishkek","Așgabat","Lilongwe","Khartum","Bangui","Kinshasa","Muscat","Vaduz","Ciudad de Guatemala","Juba","Bujumbura","Monrovia","Harare","Kuwait City","Ciudad de Panamá","Freetown","Luxemburg","Asmara","San Marino","Chişinău","Windhoek","Nouakchott","Gaborone","Libreville","Brazzaville","Skopie","Maseru","Riga","Bissau","Manama","Dili","Port Louis","Djibouti","Georgetown","San Salvador","Valletta","Belmopan","Bridgetown","Victoria","Andorra la Vella"];
+
+
+  Map<Language, List<String>> get _getAllSynonyms {
+    Map<Language, List<String>> result = HashMap<Language, List<String>>();
+    result.putIfAbsent(Language.en, () => _allSynonymsEN);
+    result.putIfAbsent(Language.ro, () => _allSynonymsRO);
+    return result;
+  }
+  List<String> get _allSynonymsEN =>
+      ["2:USA","103:UAE","129:DR Congo","183:Saint Vincent"];
+
+
+  List<String> get _allSynonymsRO =>
+      ["2:SUA","103:EAU","129:RD Congo"];
+
 
   void addEN(Map<Language, Map<CategoryDifficulty, List<Question>>> result,
       GeoQuizGameQuestionConfig questionConfig) {
@@ -169,49 +182,49 @@ class GeoQuizAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat5, //
         questionConfig.diff0, //
-        ["0::Eiffel Tower, Paris:1,4,8:0", "1::Colosseum, Rome:3,0,8:1", "2::Hollywood Sign, Los Angeles:21,25,17:2", "3::Great Pyramid of Giza, Egypt:1,23,24:3", "4::Statue of Liberty, New York:0,1,25:4", "5::Great Wall of China:6,7,11:5", "6::Angkor Wat, Cambodia:31,20,27:6", "7::Vatican City:26,20,19:7", "8::Leaning Tower of Pisa, Italy:0,1,4:8", "9::Christ the Redeemer, Rio de Janeiro:13,11,7:9", "10::Sydney Opera House, Sydney:32,30,26:10"]);
+        [":Eiffel Tower, Paris::0", ":Colosseum, Rome::0", ":Hollywood Sign, Los Angeles::0", ":Great Pyramid of Giza, Egypt::0", ":Statue of Liberty, New York::0", ":Great Wall of China::0", ":Angkor Wat, Cambodia::0", ":Vatican City::0", ":Leaning Tower of Pisa, Italy::0", ":Christ the Redeemer, Rio de Janeiro::0", ":Sydney Opera House, Sydney::0"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat5, //
         questionConfig.diff1, //
-        ["11::Acropolis, Athens:5,12,13:11", "12::Taj Mahal, India:11,14,15:12", "13::Blue Mosque, Istanbul:15,11,10:13", "14::Burj Khalifa, Dubai:8,15,23:14", "15::Louvre Museum, Paris:11,8,17:15", "16::Machu Picchu, Peru:31,32,28:16", "17::Berlin Wall:15,11,26:17", "18::Disneyland Resort, California:26,25,21:18"]);
+        [":Acropolis, Athens::0", ":Taj Mahal, India::0", ":Blue Mosque, Istanbul::0", ":Burj Khalifa, Dubai::0", ":Louvre Museum, Paris::0", ":Machu Picchu, Peru::0", ":Berlin Wall::0", ":Disneyland Resort, California::0"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat5, //
         questionConfig.diff2, //
-        ["19::Red Square, Moscow:26,25,33:19", "20::Petra, Jordan:22,1,5:20", "21::The Strip, Las Vegas:17,2,25:21", "22::Grand Palace, Bangkok:26,25,13:22", "23::La Sagrada Familia, Barcelona:7,8,9:23", "24::Terra Cotta Warriors, China:27,29,11:24", "25::Times Square, New York:21,19,10:25", "26::Forbidden City, Beijing:19,12,21:26"]);
+        [":Red Square, Moscow::0", ":Petra, Jordan::0", ":The Strip, Las Vegas::0", ":Grand Palace, Bangkok::0", ":La Sagrada Familia, Barcelona::0", ":Terra Cotta Warriors, China::0", ":Times Square, New York::0", ":Forbidden City, Beijing::0"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat5, //
         questionConfig.diff3, //
-        ["27::Borgund Stave Church, Norway:28,31,34:27", "28::Sheikh Zayed Mosque, Abu Dhabi:27,31,29:28", "29::Neuschwanstein Castle, Germany:13,14,18:29", "30::Oriental Pearl Tower, Shanghai:10,11,7:30", "31::Petronas Twin Towers, Malaysia:28,29,32:31", "32::Victoria Harbour, Hong Kong:26,25,24:32", "33::Library of Celsus, Ephesus:1,20,19:33", "34::Panama Canal, Panama:28,10,16:34"]);
+        [":Borgund Stave Church, Norway::0", ":Sheikh Zayed Mosque, Abu Dhabi::0", ":Neuschwanstein Castle, Germany::0", ":Oriental Pearl Tower, Shanghai::0", ":Petronas Twin Towers, Malaysia::0", ":Victoria Harbour, Hong Kong::0", ":Library of Celsus, Ephesus::0", ":Panama Canal, Panama::0"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat8, //
         questionConfig.diff0, //
-        ["0::Ha Long Bay, Vietnam:3,2,8:0", "1::Salar de Uyuni, Bolivia:5,2,9:1", "2::The Great Blue Hole, Belize:4,10,8:2", "3::Bali, Indonesia:6,10,2:3", "4::The Aurora Borealis, Norway:5,1,7:4", "5::Mount Fuji, Japan:3,1,11:5", "6::Harbor of Rio De Janeiro, Brazil:2,1,13:6", "7::Paria Canyon, United States:11,6,5:7", "8::Mount Everest, Nepal and Tibet:10,9,13:8", "9::Niagara Falls, Canada:2,6,11:9", "10::Lac Rose, Senegal:17,5,3:10", "11::The Black Forest, Germany:9,15,12:11"]);
+        [":Ha Long Bay, Vietnam::4", ":Salar de Uyuni, Bolivia::4", ":The Great Blue Hole, Belize::4", ":Bali, Indonesia::4", ":The Aurora Borealis, Norway::4", ":Mount Fuji, Japan::4", ":Harbor of Rio De Janeiro, Brazil::4", ":Paria Canyon, United States::4", ":Mount Everest, Nepal and Tibet::4", ":Niagara Falls, Canada::4", ":Lac Rose, Senegal::4", ":The Black Forest, Germany::4"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat8, //
         questionConfig.diff1, //
-        ["12::Angel Falls, Venezuela:10,9,18:12", "13::Mount Kilimanjaro, Tanzania:8,7,21:13", "14::Danube Delta, Romania:17,15,10:14", "15::Victoria Falls, Zimbabwe and Zambia:21,18,11:15", "16::Eye of the Sahara, Mauritania:13,8,23:16", "17::The Dead Sea, Israel:25,15,24:17", "18::Cliffs of Moher, Ireland:14,16,21:18", "19::Mud volcanoes, Azerbaijan:22,13,27:19", "20::Moraine Lake, Canada:16,22,25:20", "21::Devil's Marbles, Australia:24,13,23:21"]);
+        [":Angel Falls, Venezuela::4", ":Mount Kilimanjaro, Tanzania::4", ":Danube Delta, Romania::4", ":Victoria Falls, Zimbabwe and Zambia::4", ":Eye of the Sahara, Mauritania::4", ":The Dead Sea, Israel::4", ":Cliffs of Moher, Ireland::4", ":Mud volcanoes, Azerbaijan::4", ":Moraine Lake, Canada::4", ":Devil's Marbles, Australia::4"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat8, //
         questionConfig.diff2, //
-        ["22::Pamukkale, Turkey:16,14,18:22", "23::The River of Five Colors, Colombia:26,19,29:23", "24::Paricutín Volcano, Mexico:30,17,31:24", "25::Moeraki Boulders, New Zealand:31,32,29:25", "26::The Blue Grotto, Italy:28,31,29:26", "27::Marble Caves, Chile:19,25,20:27", "28::Crystal Cave, Bermuda:25,30,35:28"]);
+        [":Pamukkale, Turkey::4", ":The River of Five Colors, Colombia::4", ":Paricutín Volcano, Mexico::4", ":Moeraki Boulders, New Zealand::4", ":The Blue Grotto, Italy::4", ":Marble Caves, Chile::4", ":Crystal Cave, Bermuda::4"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat8, //
         questionConfig.diff3, //
-        ["29::Jeju Island, South Korea:31,25,27:29", "30::Iguazu Falls, Argentina and Brazil:22,23,29:30", "31::Matterhorn, Switzerland:25,28,34:31", "32::Table Mountain, South Africa:26,24,30:32", "33::Bu Tinah, United Arab Emirates:31,29,26:33", "34::Sundarbans, Bangladesh:33,31,28:34", "35::Verdon Gorge, France:32,33,34:35"]);
+        [":Jeju Island, South Korea::4", ":Iguazu Falls, Argentina and Brazil::4", ":Matterhorn, Switzerland::4", ":Table Mountain, South Africa::4", ":Bu Tinah, United Arab Emirates::4", ":Sundarbans, Bangladesh::4", ":Verdon Gorge, France::4"]);
   }
 
   void addRO(Map<Language, Map<CategoryDifficulty, List<Question>>> result,
@@ -234,50 +247,52 @@ class GeoQuizAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat5, //
         questionConfig.diff0, //
-        ["0::Turnul Eiffel, Paris:1,4,8:0", "1::Colosseum, Roma:3,0,8:1", "2::Semnul Hollywood, Los Angeles:21,25,17:2", "3::Marea Piramidă din Giza, Egipt:1,23,24:3", "4::Statuia Libertăţii, New York:0,1,25:4", "5::Marele Zid Chinezesc:6,7,11:5", "6::Angkor Wat, Cambodgia:31,20,27:6", "7::Vatican:26,20,19:7", "8::Turnul înclinat din Pisa, Italia:0,1,4:8", "9::Hristos Răscumpărătorul, Rio de Janeiro:13,11,7:9", "10::Sydney Opera House, Sydney:32,30,26:10"]);
+        [":Turnul Eiffel, Paris::0", ":Colosseum, Roma::0", ":Semnul Hollywood, Los Angeles::0", ":Marea Piramidă din Giza, Egipt::0", ":Statuia Libertăţii, New York::0", ":Marele Zid Chinezesc::0", ":Angkor Wat, Cambodgia::0", ":Vatican::0", ":Turnul înclinat din Pisa, Italia::0", ":Hristos Răscumpărătorul, Rio de Janeiro::0", ":Sydney Opera House, Sydney::0"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat5, //
         questionConfig.diff1, //
-        ["11::Acropola din Atena, Atena:5,12,13:11", "12::Taj Mahal, India:11,14,15:12", "13::Moscheea Albastră, Istanbul:15,11,10:13", "14::Burj Khalifa, Dubai:8,15,23:14", "15::Muzeul Luvru, Paris:11,8,17:15", "16::Machu Picchu, Peru:31,32,28:16", "17::Zidul Berlinului:15,11,26:17", "18::Disneyland Resort, California:26,25,21:18"]);
+        [":Acropola din Atena, Atena::0", ":Taj Mahal, India::0", ":Moscheea Albastră, Istanbul::0", ":Burj Khalifa, Dubai::0", ":Muzeul Luvru, Paris::0", ":Machu Picchu, Peru::0", ":Zidul Berlinului::0", ":Disneyland Resort, California::0"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat5, //
         questionConfig.diff2, //
-        ["19::Piaţa Roşie, Moscova:26,25,33:19", "20::Petra, Iordania:22,1,5:20", "21::Fâşia, Las Vegas:17,2,25:21", "22::Palatul Grand, Bangkok:26,25,13:22", "23::La Sagrada Familia, Barcelona:7,8,9:23", "24::Armata de Teracotă, China:27,29,11:24", "25::Times Square, New York:21,19,10:25", "26::Oraşul interzis, Beijing:19,12,21:26"]);
+        [":Piaţa Roşie, Moscova::0", ":Petra, Iordania::0", ":Fâşia, Las Vegas::0", ":Palatul Grand, Bangkok::0", ":La Sagrada Familia, Barcelona::0", ":Armata de Teracotă, China::0", ":Times Square, New York::0", ":Oraşul interzis, Beijing::0"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat5, //
         questionConfig.diff3, //
-        ["27::Biserica Borgund Stave, Norvegia:28,31,34:27", "28::Moscheea Șeicului Zayed , Abu Dhabi:27,31,29:28", "29::Castelul Neuschwanstein, Germania:13,14,18:29", "30::Turnul Pearl Oriental, Shanghai:10,11,7:30", "31::Turnurile Petronas, Malaezia:28,29,32:31", "32::Portul Victoria, Hong Kong:26,25,24:32", "33::Biblioteca lui Celsus, Efes:1,20,19:33", "34::Canalul Panama, Panama:28,10,16:34"]);
+        [":Biserica Borgund Stave, Norvegia::0", ":Moscheea Șeicului Zayed , Abu Dhabi::0", ":Castelul Neuschwanstein, Germania::0", ":Turnul Pearl Oriental, Shanghai::0", ":Turnurile Petronas, Malaezia::0", ":Portul Victoria, Hong Kong::0", ":Biblioteca lui Celsus, Efes::0", ":Canalul Panama, Panama::0"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat8, //
         questionConfig.diff0, //
-        ["0::Ha Long Bay, Vietnam:3,2,8:0", "1::Salar de Uyuni, Bolivia:5,2,9:1", "2::Marea Gaură Albastră, Belize:4,10,8:2", "3::Bali, Indonezia:6,10,2:3", "4::Auroră polară, Norvegia:5,1,7:4", "5::Muntele Fuji, Japonia:3,1,11:5", "6::Portul din Rio De Janeiro, Brazilia:2,1,13:6", "7::Canionul Paria, Statele Unite:11,6,5:7", "8::Muntele Everest, Nepal şi Tibet:10,9,13:8", "9::Cascada Niagara, Canada:2,6,11:9", "10::Lac Rose, Senegal:17,5,3:10", "11::Pădurea Neagră, Germania:9,15,12:11"]);
+        [":Ha Long Bay, Vietnam::4", ":Salar de Uyuni, Bolivia::4", ":Marea Gaură Albastră, Belize::4", ":Bali, Indonezia::4", ":Auroră polară, Norvegia::4", ":Muntele Fuji, Japonia::4", ":Portul din Rio De Janeiro, Brazilia::4", ":Canionul Paria, Statele Unite::4", ":Muntele Everest, Nepal şi Tibet::4", ":Cascada Niagara, Canada::4", ":Lac Rose, Senegal::4", ":Pădurea Neagră, Germania::4"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat8, //
         questionConfig.diff1, //
-        ["12::Cascada Angel, Venezuela:10,9,18:12", "13::Muntele Kilimanjaro, Tanzania:8,7,21:13", "14::Delta Dunării, România:17,15,10:14", "15::Cascadele din Victoria, Zimbabwe şi Zambia:21,18,11:15", "16::Ochiul Saharei, Mauritania:13,8,23:16", "17::Marea Moartă, Israel:25,15,24:17", "18::Stâncile din Moher, Irlanda:14,16,21:18", "19::Vulcanii noroi, Azerbaijan:22,13,27:19", "20::Lacul Moraine, Canada:16,22,25:20", "21::Pietrele Diavolului, Australia:24,13,23:21"]);
+        [":Cascada Angel, Venezuela::4", ":Muntele Kilimanjaro, Tanzania::4", ":Delta Dunării, România::4", ":Cascadele din Victoria, Zimbabwe şi Zambia::4", ":Ochiul Saharei, Mauritania::4", ":Marea Moartă, Israel::4", ":Stâncile din Moher, Irlanda::4", ":Vulcanii noroi, Azerbaijan::4", ":Lacul Moraine, Canada::4", ":Pietrele Diavolului, Australia::4"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat8, //
         questionConfig.diff2, //
-        ["22::Pamukkale, Turcia:16,14,18:22", "23::Râul cu Cinci Culori, Columbia:26,19,29:23", "24::Vulcan Paricutín, Mexic:30,17,31:24", "25::Bolovanii Moeraki, Noua Zeelandă:31,32,29:25", "26::Grota Albastră, Italia:28,31,29:26", "27::Peştera de marmură, Chile:19,25,20:27", "28::Peştera de cristal, Bermuda:25,30,35:28"]);
+        [":Pamukkale, Turcia::4", ":Râul cu Cinci Culori, Columbia::4", ":Vulcan Paricutín, Mexic::4", ":Bolovanii Moeraki, Noua Zeelandă::4", ":Grota Albastră, Italia::4", ":Peştera de marmură, Chile::4", ":Peştera de cristal, Bermuda::4"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat8, //
         questionConfig.diff3, //
-        ["29::Insula Jeju, Coreea de Sud:31,25,27:29", "30::Cascadele de pe Iguazú, Argentina şi Brazilia:22,23,29:30", "31::Matterhorn, Elveţia:25,28,34:31", "32::Muntele Masa, Africa de Sud:26,24,30:32", "33::Bu Tinah, Emiratele Arabe Unite:31,29,26:33", "34::Sundarbans, Bangladesh:33,31,28:34", "35::Cheile Verdon, Franţa:32,33,34:35"]);
+        [":Insula Jeju, Coreea de Sud::4", ":Cascadele de pe Iguazú, Argentina şi Brazilia::4", ":Matterhorn, Elveţia::4", ":Muntele Masa, Africa de Sud::4", ":Bu Tinah, Emiratele Arabe Unite::4", ":Sundarbans, Bangladesh::4", ":Cheile Verdon, Franţa::4"]);
   }
+
+
 
 }
 

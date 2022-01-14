@@ -44,24 +44,33 @@ class GeoQuizOptionsQuestionService extends QuestionService {
   Set<String> getQuizAnswerOptions(Question question) {
     var correctAnswers = getCorrectAnswers(question);
     if (_geoQuizCountryUtils.isStatsCategory(question.category)) {
-      var countryNameForIndex = _geoQuizCountryUtils
-          .getCountryNameForIndex(question.rawString.split(":")[0].parseToInt);
-      return questionParser.getAnswerOptionsForStatisticsQuestion(
-          question.category, countryNameForIndex, 4);
+      return _getStatsCategoryAnswerOptions(question);
     } else if (questionParser.isCategoryFindAnswerByQuestionName(question) &&
         _questionConfig.cat2 != question.category) {
       return questionParser.getDependentAnswerOptionsForQuestion(
           question, correctAnswers.first, 4);
     } else {
-      String currentCountryToSearchRange =
-          getCurrentCountryToSearchRange(question);
-      return questionParser.getAnswerOptionsInCountryRange(
-          currentCountryToSearchRange,
-          correctAnswers.toSet(),
-          {},
-          true,
-          correctAnswers.length + 3);
+      return _getCountriesInRangeAnswerOptions(question, correctAnswers);
     }
+  }
+
+  Set<String> _getCountriesInRangeAnswerOptions(
+      Question question, List<String> correctAnswers) {
+    String currentCountryToSearchRange =
+        getCurrentCountryToSearchRange(question);
+    return questionParser.getAnswerOptionsInCountryRange(
+        currentCountryToSearchRange,
+        correctAnswers.toSet(),
+        {},
+        true,
+        correctAnswers.length + 3);
+  }
+
+  Set<String> _getStatsCategoryAnswerOptions(Question question) {
+    var countryNameForIndex = _geoQuizCountryUtils
+        .getCountryNameForIndex(question.rawString.split(":")[0].parseToInt);
+    return questionParser.getAnswerOptionsForStatisticsQuestion(
+        question.category, countryNameForIndex, 4);
   }
 
   String getCurrentCountryToSearchRange(Question question) {
