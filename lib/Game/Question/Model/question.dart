@@ -3,15 +3,23 @@ import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
 
 class Question {
-  int index;
-  QuestionDifficulty difficulty;
-  QuestionCategory category;
-  String rawString;
+  final int _index;
+  final QuestionDifficulty _difficulty;
+  final QuestionCategory _category;
+  final String _rawString;
 
-  Question(this.index, this.difficulty, this.category, this.rawString);
+  Question(this._index, this._difficulty, this._category, this._rawString);
+
+  int get index => _index;
+
+  QuestionDifficulty get difficulty => _difficulty;
+
+  QuestionCategory get category => _category;
+
+  String get rawString => _rawString;
 
   QuestionService get questionService =>
-      category.getQuestionCategoryService(difficulty).getQuestionService();
+      _category.getQuestionCategoryService(_difficulty).getQuestionService();
 
   String get questionToBeDisplayed =>
       questionService.getQuestionToBeDisplayed(this);
@@ -26,20 +34,20 @@ class Question {
       identical(this, other) ||
       other is Question &&
           runtimeType == other.runtimeType &&
-          index == other.index &&
-          difficulty == other.difficulty &&
-          category == other.category &&
-          rawString == other.rawString;
+          _index == other._index &&
+          _difficulty == other._difficulty &&
+          _category == other._category &&
+          _rawString == other._rawString;
 
   @override
   int get hashCode =>
-      index.hashCode ^
-      difficulty.hashCode ^
-      category.hashCode ^
-      rawString.hashCode;
+      _index.hashCode ^
+      _difficulty.hashCode ^
+      _category.hashCode ^
+      _rawString.hashCode;
 
   @override
   String toString() {
-    return 'Question{index: $index, difficulty: $difficulty, category: $category, rawString: $rawString}';
+    return 'Question{_index: $_index, _difficulty: $_difficulty, _category: $_category, _rawString: $_rawString}';
   }
 }

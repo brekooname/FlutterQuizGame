@@ -33,12 +33,14 @@ void main() {
 
 Future<void> testApp(WidgetTester tester, String appKey, Language lang,
     CampaignLevelService campaignLevelService) async {
-  await TestUtil.initApp(lang, appKey, tester);
-  debugPrint("testing =======> " +
-      appKey +
-      " lang: " +
-      MyApp.appLocalizations.localeName);
-  await testAllCampaignLevels(tester, campaignLevelService);
+  for (int i = 0; i < 55; i++) {
+    await TestUtil.initApp(lang, appKey, tester);
+    debugPrint("testing =======> " +
+        appKey +
+        " lang: " +
+        MyApp.appLocalizations.localeName);
+    await testAllCampaignLevels(tester, campaignLevelService);
+  }
 }
 
 Future<void> testAllCampaignLevels(
@@ -65,8 +67,8 @@ Future<void> testAllCampaignLevels(
               .rawString);
     }
   }
-  MyApp.gameScreenManager.currentScreen!.gameScreenManagerState
-      .showMainScreen();
+  // MyApp.gameScreenManager.currentScreen!.gameScreenManagerState
+  //     .showMainScreen();
 }
 
 void _startApp() {

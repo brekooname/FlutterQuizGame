@@ -52,32 +52,28 @@ void testQuestionsWithCountryIndexes() {
     "",
     ["United States"],
     ["United States", "", "", ""],
-    questionConfig.cat7,
-    questionConfig.diff0,
+    getQuestion(questionConfig.cat7, questionConfig.diff0),
   );
   verifyQuestion(
     "Which country has this flag?",
     "",
     ["Azerbaijan"],
     ["Azerbaijan", "", "", ""],
-    questionConfig.cat7,
-    questionConfig.diff2,
+    getQuestion(questionConfig.cat7, questionConfig.diff2),
   );
   verifyQuestion(
     "Which country is shown on the map?",
     "",
     ["United States"],
     ["United States", "", "", ""],
-    questionConfig.cat9,
-    questionConfig.diff0,
+    getQuestion(questionConfig.cat9, questionConfig.diff0),
   );
   verifyQuestion(
     "Which country is shown on the map?",
     "",
     ["Niger"],
     ["Niger", "", "", ""],
-    questionConfig.cat9,
-    questionConfig.diff3,
+    getQuestion(questionConfig.cat9, questionConfig.diff3),
   );
 }
 
@@ -88,8 +84,7 @@ void testCapitals(
     capital,
     [country],
     [country, "", "", ""],
-    questionConfig.cat6,
-    difficulty,
+    getQuestion(questionConfig.cat6, difficulty),
   );
 }
 
@@ -103,8 +98,7 @@ void testGeographicalRegionAndEmpireCategory() {
       "Baltic states",
       ["Estonia", "Lithuania", "Latvia"],
       ["Estonia", "", "", "", "", ""],
-      questionConfig.cat3,
-      diff,
+      getQuestion(questionConfig.cat3, diff),
     );
   }
   verifyQuestion(
@@ -112,30 +106,50 @@ void testGeographicalRegionAndEmpireCategory() {
     "Lithuania, Estonia, Latvia",
     ["Baltic states"],
     ["Baltic states", "", "", ""],
-    questionConfig.cat3,
-    questionConfig.diff1,
+    getQuestion(questionConfig.cat3, questionConfig.diff1),
   );
   for (QuestionDifficulty diff in [
     questionConfig.diff1,
     questionConfig.diff3,
   ]) {
+    var question = getQuestion(questionConfig.cat4, diff, questionAt: 1);
+    var expectedCorrectOptions = [
+      "India",
+      "Afghanistan",
+      "Pakistan",
+      "Bangladesh"
+    ];
+    expect(
+        questionService.isGameFinishedSuccessfulWithOptionList(
+            expectedCorrectOptions, ["India", "Afghanistan", "Bangladesh"]),
+        false);
+    expect(
+        questionService.isGameFinishedFailedWithOptionList(
+            expectedCorrectOptions, ["India", "Afghanistan", "Bangladesh"]),
+        false);
+    expect(
+        questionService.isGameFinishedSuccessfulWithOptionList(
+            expectedCorrectOptions,
+            ["India", "Afghanistan", "Pakistan", "Bangladesh"]),
+        true);
+    expect(
+        questionService.isGameFinishedFailedWithOptionList(
+            expectedCorrectOptions,
+            ["India", "Afghanistan", "x", "Bangladesh"]),
+        true);
     verifyQuestion(
         "Which country or part of this country was part of this empire?",
         "Mughal Empire",
-        ["India", "Afghanistan", "Pakistan", "Bangladesh"],
+        expectedCorrectOptions,
         ["India", "", "", "", "", "", ""],
-        questionConfig.cat4,
-        diff,
-        questionAt: 1);
+        question);
   }
   verifyQuestion(
       "To which empire did these countries or part of these countries belong?",
       "India, Afghanistan, Pakistan, Bangladesh",
       ["Mughal Empire"],
       ["Mughal Empire", "", "", ""],
-      questionConfig.cat4,
-      questionConfig.diff2,
-      questionAt: 1);
+      getQuestion(questionConfig.cat4, questionConfig.diff2, questionAt: 1));
 }
 
 void testNeighboursCategory() {
@@ -172,9 +186,7 @@ void testNeighboursCategory() {
           "",
           "",
         ],
-        questionConfig.cat2,
-        diff,
-        questionAt: 7);
+        getQuestion(questionConfig.cat2, diff, questionAt: 7));
   }
 
   verifyQuestion(
@@ -183,28 +195,36 @@ void testNeighboursCategory() {
           " Luxembourg",
       ["Germany"],
       ["Germany", "", "", ""],
-      questionConfig.cat2,
-      questionConfig.diff1,
-      questionAt: 7);
+      getQuestion(questionConfig.cat2, questionConfig.diff1, questionAt: 7));
 }
 
 void testStatisticsCategories() {
-  verifyQuestion(
-    "Which country is among the top 10 most populous countries in the world?",
-    "",
-    ["United States"],
-    ["United States", "", "", ""],
+  var question = getQuestion(
     questionConfig.cat0,
     questionConfig.diff0,
   );
+  var expectedCorrectOptions = ["United States"];
+  expect(
+      questionService.isGameFinishedSuccessful(
+          question, expectedCorrectOptions),
+      true);
+  expect(questionService.isGameFinishedSuccessful(question, ["wrong"]), false);
+  expect(questionService.isGameFinishedFailed(question, ["wrong"]), true);
   verifyQuestion(
-    "Which country is among the top 10 largest countries in the world by land area?",
-    "",
-    ["China"],
-    ["China", "", "", ""],
-    questionConfig.cat1,
-    questionConfig.diff1,
-  );
+      "Which country is among the top 10 most populous countries in the world?",
+      "",
+      expectedCorrectOptions,
+      ["United States", "", "", ""],
+      question);
+  verifyQuestion(
+      "Which country is among the top 10 largest countries in the world by land area?",
+      "",
+      ["China"],
+      ["China", "", "", ""],
+      getQuestion(
+        questionConfig.cat1,
+        questionConfig.diff1,
+      ));
 }
 
 void verifyQuestion(
@@ -212,10 +232,7 @@ void verifyQuestion(
     String expectedQuestionToDisplay,
     List<String> expectedCorrectOptions,
     List<String> expectedAnswerOptions,
-    QuestionCategory category,
-    QuestionDifficulty difficulty,
-    {int? questionAt}) {
-  Question question = getQuestion(difficulty, category, questionAt: questionAt);
+    Question question) {
   expect(questionService.getPrefixToBeDisplayedForQuestion(question),
       expectedPrefix,
       reason: "wrong displayed prefix");
@@ -255,7 +272,7 @@ void verifyListOfCountries(List<String> expectedListOfCountries,
           actualListOfCountriesString);
 }
 
-Question getQuestion(QuestionDifficulty difficulty, QuestionCategory category,
+Question getQuestion(QuestionCategory category, QuestionDifficulty difficulty,
     {int? questionAt}) {
   List<Question> questions = questionCollectorService
       .getAllQuestionsForCategoriesAndDifficulties([difficulty], [category]);

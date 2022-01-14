@@ -23,13 +23,13 @@ void main() {
       (WidgetTester tester) async {
     await TestUtil.initApp(Language.en, "geoquiz", tester);
 
-    // testStatisticsQuestions(
-    //     questionConfig.cat0, questionConfig.diff0, questionConfig.diff1);
-    // testStatisticsQuestions(
-    //     questionConfig.cat1, questionConfig.diff1, questionConfig.diff0);
-    // testNeighbours();
-    // testGeoRegionAndEmpire();
-    // testLandmarksAndNaturalWonders();
+    testStatisticsQuestions(
+        questionConfig.cat0, questionConfig.diff0, questionConfig.diff1);
+    testStatisticsQuestions(
+        questionConfig.cat1, questionConfig.diff1, questionConfig.diff0);
+    testNeighbours();
+    testGeoRegionAndEmpire();
+    testLandmarksAndNaturalWonders();
     testCapitalsFlagsMaps();
   });
 }

@@ -22,8 +22,10 @@ mixin GameScreenManagerState<TGameContext extends GameContext> {
 
   void showNewGameScreen(CampaignLevel campaignLevel) {
     TGameContext gameContext = createGameContext(campaignLevel);
-    showGameScreenWithConfig(campaignLevel.difficulty,
-        gameContext.gameUser.getNotPlayedRandomQuestionCategory(), gameContext);
+    var notPlayedRandomQuestionCategory =
+        gameContext.gameUser.getNotPlayedRandomQuestionCategory();
+    showGameScreenWithConfig(
+        campaignLevel.difficulty, notPlayedRandomQuestionCategory, gameContext);
   }
 
   void showNextGameScreen(

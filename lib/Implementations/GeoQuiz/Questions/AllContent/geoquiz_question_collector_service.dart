@@ -113,11 +113,9 @@ class GeoQuizQuestionCollectorService
           category,
           difficulty);
     }
-    for (var element in result) {
-      element.category = category;
-      element.difficulty = difficulty;
-    }
-    return result;
+    return result
+        .map((e) => Question(e.index, difficulty, category, e.rawString))
+        .toList();
   }
 
   List<Question> createQuestionsForCountryIndexes(List<String> countryIndexes,
