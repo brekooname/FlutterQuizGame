@@ -65,6 +65,14 @@ class GeoQuizCountryUtils {
     return countryIndexesQuestionsCategory.contains(category);
   }
 
+  bool isCategoryWithImageQuestions(QuestionCategory category) {
+    return categoriesWithImageQuestions.contains(category);
+  }
+
+  bool isCategoryWithMultipleCorrectAnswers(QuestionCategory category) {
+    return categoriesWithMultipleCorrectAnswers.contains(category);
+  }
+
   bool isGeographicalRegionOrEmpireCategory(QuestionCategory category) {
     return geographicalRegionOrEmpireCategory.contains(category);
   }
@@ -74,6 +82,16 @@ class GeoQuizCountryUtils {
 
   List<QuestionCategory> get geographicalRegionOrEmpireCategory =>
       [_questionConfig.cat3, _questionConfig.cat4];
+
+  List<QuestionCategory> get categoriesWithMultipleCorrectAnswers =>
+      [_questionConfig.cat2, _questionConfig.cat3, _questionConfig.cat4];
+
+  List<QuestionCategory> get categoriesWithImageQuestions => [
+        _questionConfig.cat5,
+        _questionConfig.cat7,
+        _questionConfig.cat8,
+        _questionConfig.cat9
+      ];
 
   List<QuestionCategory> get flagsOrMapsCategory =>
       [_questionConfig.cat7, _questionConfig.cat9];

@@ -39,9 +39,8 @@ class MyApp extends StatefulWidget {
   static bool kIsTest = false;
 
   ////////////
-  static String webAppKey = "history";
-
-  // static const String webAppKey = "geoquiz";
+  // static String webAppKey = "history";
+  static String webAppKey = "geoquiz";
   static Language webLanguage = Language.en;
 
   ////////////

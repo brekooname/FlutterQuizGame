@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_app_quiz_game/Game/Game/game_context.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question.dart';
-import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
-import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_info.dart';
 import 'package:flutter_app_quiz_game/Lib/Audio/my_audio_player.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/button_skin_config.dart';
@@ -20,7 +18,6 @@ import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 mixin QuizOptionsGameScreen<TGameContext extends GameContext> {
   final ScreenDimensionsService _screenDimensions = ScreenDimensionsService();
   final MyAudioPlayer _audioPlayer = MyAudioPlayer();
-  final ImageService _imageService = ImageService();
   final Set<String> _wrongPressedAnswer = HashSet();
   late QuizGameLocalStorage quizGameLocalStorage;
   late TGameContext _gameContext;
@@ -34,10 +31,11 @@ mixin QuizOptionsGameScreen<TGameContext extends GameContext> {
       TGameContext gameContext,
       QuizGameLocalStorage quizGameLocalStorage,
       QuestionInfo currentQuestionInfo,
-      {bool shouldHaveQuestionImage = false,
-      bool isOneCorrectAnswerEnoughToWin = false}) {
+      {bool isOneCorrectAnswerEnoughToWin = false,
+      Image? questionImage}) {
     this.quizGameLocalStorage = quizGameLocalStorage;
     _gameContext = gameContext;
+    _questionImage = questionImage;
     _currentQuestionInfo = currentQuestionInfo;
 
     var question = currentQuestionInfo.question;
@@ -46,17 +44,6 @@ mixin QuizOptionsGameScreen<TGameContext extends GameContext> {
 
     _possibleAnswers =
         HashSet.of(_getPossibleAnswerOption(isOneCorrectAnswerEnoughToWin));
-    if (shouldHaveQuestionImage) {
-      initQuestionImage();
-    }
-  }
-
-  void initQuestionImage() {
-    Question question = _currentQuestionInfo.question;
-    _questionImage = _imageService.getSpecificImage(
-        module: _getQuestionImagePath(question.difficulty, question.category),
-        imageExtension: "jpeg",
-        imageName: "i" + question.index.toString());
   }
 
   Widget createOptionRows(
@@ -80,7 +67,7 @@ mixin QuizOptionsGameScreen<TGameContext extends GameContext> {
       children: answerBtns,
     ));
     Widget btnContainer = Expanded(
-        child: Column(
+        child: ListView(
       children: answerRows,
     ));
 
@@ -99,10 +86,6 @@ mixin QuizOptionsGameScreen<TGameContext extends GameContext> {
         ? Container()
         : Expanded(child: Container(child: _questionImage));
   }
-
-  String _getQuestionImagePath(
-          QuestionDifficulty difficulty, QuestionCategory category) =>
-      "questions/images/" + difficulty.name + "/" + category.name;
 
   Widget _createPossibleAnswerButton(VoidCallback refreshSetState,
       VoidCallback goToNextScreenAfterPress, String answerBtnText) {

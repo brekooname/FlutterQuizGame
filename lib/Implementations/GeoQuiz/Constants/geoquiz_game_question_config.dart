@@ -69,27 +69,23 @@ class GeoQuizGameQuestionConfig extends GameQuestionConfig {
     //CATEGORIES
     singleton.cat0 = QuestionCategory(
       index: 0,
-      questionCategoryService:
-          GeoQuizOptionsCategoryQuestionService(),
+      questionCategoryService: GeoQuizOptionsCategoryQuestionService(),
     );
     singleton.cat1 = QuestionCategory(
         index: 1,
         questionCategoryService: getGeoQuizStatisticsCategoryQuestionService());
     singleton.cat2 = QuestionCategory(
         index: 2,
-        questionCategoryService:
-            GeoQuizOptionsCategoryQuestionService(),
+        questionCategoryService: GeoQuizOptionsCategoryQuestionService(),
         questionCategoryServiceMap: {
           singleton.diff3: getGeoQuizStatisticsCategoryQuestionService()
         });
     singleton.cat3 = QuestionCategory(
         index: 3,
-        questionCategoryService:
-            GeoQuizOptionsCategoryQuestionService());
+        questionCategoryService: GeoQuizOptionsCategoryQuestionService());
     singleton.cat4 = QuestionCategory(
         index: 4,
-        questionCategoryService:
-            GeoQuizOptionsCategoryQuestionService());
+        questionCategoryService: GeoQuizOptionsCategoryQuestionService());
     singleton.cat5 = QuestionCategory(
         index: 5,
         questionCategoryService: DependentAnswersCategoryQuestionService());
@@ -149,22 +145,34 @@ class GeoQuizGameQuestionConfig extends GameQuestionConfig {
                 ]));
     res.putIfAbsent(
         QuestionCategoryWithPrefixCode(category: cat2, prefixCode: 0),
-        () => label.l_which_country_is_a_neighbour_of_param0);
+        () => label.l_find_a_neighbour_of_this_country);
     res.putIfAbsent(
         QuestionCategoryWithPrefixCode(category: cat2, prefixCode: 1),
+        () => label.l_find_all_neighbours_of_this_country);
+    res.putIfAbsent(
+        QuestionCategoryWithPrefixCode(category: cat2, prefixCode: 2),
         () => label.l_which_country_has_these_neighbours);
     res.putIfAbsent(
         QuestionCategoryWithPrefixCode(category: cat3, prefixCode: 0),
         () => label.l_which_country_is_in_this_geographical_region);
     res.putIfAbsent(
         QuestionCategoryWithPrefixCode(category: cat3, prefixCode: 1),
+        () => label.l_which_countries_are_in_this_geographical_region);
+    res.putIfAbsent(
+        QuestionCategoryWithPrefixCode(category: cat3, prefixCode: 2),
         () => label.l_to_which_geographical_region_do_these_countries_belong);
     res.putIfAbsent(
         QuestionCategoryWithPrefixCode(category: cat4, prefixCode: 0),
-        () => label.l_which_country_or_part_of_this_country_was_part_of_this_empire);
+        () => label
+            .l_which_country_or_part_of_this_country_was_part_of_this_empire);
     res.putIfAbsent(
         QuestionCategoryWithPrefixCode(category: cat4, prefixCode: 1),
-        () => label.l_to_which_empire_did_these_countries_or_part_of_these_countries_belong);
+        () => label
+            .l_which_countries_or_part_of_these_countries_were_part_of_this_empire);
+    res.putIfAbsent(
+        QuestionCategoryWithPrefixCode(category: cat4, prefixCode: 2),
+        () => label
+            .l_to_which_empire_did_these_countries_or_part_of_these_countries_belong);
     res.putIfAbsent(
         QuestionCategoryWithPrefixCode(category: cat5, prefixCode: 0),
         () => label.l_where_is_this_landmark_located);

@@ -5,7 +5,7 @@ import 'package:flutter_app_quiz_game/Lib/Font/font_config.dart';
 import 'package:flutter_app_quiz_game/Lib/ScreenDimensions/screen_dimensions_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
-mixin QuizQuestionGameScreen {
+mixin QuizQuestionContainer {
   final ScreenDimensionsService _screenDimensions = ScreenDimensionsService();
 
   Widget createQuestionTextContainer(

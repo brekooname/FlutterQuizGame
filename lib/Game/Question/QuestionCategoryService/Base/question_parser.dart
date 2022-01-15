@@ -17,7 +17,4 @@ abstract class QuestionParser<
 
   String getQuestionToBeDisplayed(Question question);
 
-  bool isQuestionValid(Question question) {
-    return true;
-  }
 }

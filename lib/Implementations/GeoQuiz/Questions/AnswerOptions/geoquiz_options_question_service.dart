@@ -32,7 +32,16 @@ class GeoQuizOptionsQuestionService extends QuestionService {
 
   @override
   int getPrefixCodeForQuestion(Question question) {
-    return questionParser.isCategoryFindAnswerByQuestionName(question) ? 1 : 0;
+    if (_geoQuizCountryUtils
+        .isCategoryWithMultipleCorrectAnswers(question.category)) {
+      return questionParser.isCategoryFindAnswerByQuestionName(question)
+          ? 2
+          : getCorrectAnswers(question).length > 1
+              ? 1
+              : 0;
+    } else {
+      return 0;
+    }
   }
 
   @override
@@ -86,17 +95,8 @@ class GeoQuizOptionsQuestionService extends QuestionService {
 
   @override
   String getPrefixToBeDisplayedForQuestion(Question question) {
-    var prefix = MyApp.appId.gameConfig.gameQuestionConfig
+    return MyApp.appId.gameConfig.gameQuestionConfig
         .getPrefixToBeDisplayedForQuestion(
-            question.category, getPrefixCodeForQuestion(question));
-
-    if (question.category == _questionConfig.cat2 &&
-            getPrefixCodeForQuestion(question) == 0 ||
-        question.category == _questionConfig.cat6) {
-      prefix = _localizationService.formatTextWithParams(
-          prefix, [questionParser.getQuestionToBeDisplayed(question)]);
-    }
-
-    return prefix;
+        question.category, getPrefixCodeForQuestion(question));
   }
 }

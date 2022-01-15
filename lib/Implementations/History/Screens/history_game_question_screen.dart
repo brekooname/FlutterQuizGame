@@ -16,7 +16,7 @@ import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
 import 'history_game_timeline_screen.dart';
 
 class HistoryGameQuestionScreen extends GameScreen<HistoryGameContext>
-    with QuizOptionsGameScreen<HistoryGameContext>, QuizQuestionGameScreen {
+    with QuizOptionsGameScreen<HistoryGameContext> {
   HistoryGameQuestionScreen(
     GameScreenManagerState gameScreenManagerState, {
     Key? key,
@@ -33,7 +33,10 @@ class HistoryGameQuestionScreen extends GameScreen<HistoryGameContext>
             key: key) {
     initQuizOptionsScreen(
         gameContext, HistoryLocalStorage(), currentQuestionInfo,
-        shouldHaveQuestionImage: true);
+        questionImage: imageService.getSpecificImage(
+            module: "questions/images/" + difficulty.name + "/" + category.name,
+            imageExtension: "jpeg",
+            imageName: "i" + currentQuestionInfo.question.index.toString()));
   }
 
   @override
@@ -47,7 +50,7 @@ class HistoryGameQuestionScreen extends GameScreen<HistoryGameContext>
 }
 
 class HistoryGameQuestionScreenState extends State<HistoryGameQuestionScreen>
-    with ScreenState {
+    with ScreenState, QuizQuestionContainer {
   @override
   void initState() {
     super.initState();
@@ -60,7 +63,7 @@ class HistoryGameQuestionScreenState extends State<HistoryGameQuestionScreen>
   Widget build(BuildContext context) {
     debugPrint("build question");
     HistoryGameLevelHeader header = createHeader(widget.currentQuestionInfo);
-    Widget questionContainer = widget.createQuestionTextContainer(
+    Widget questionContainer = createQuestionTextContainer(
         widget.currentQuestionInfo.question,
         widget.category == HistoryGameQuestionConfig().cat0 ? 1 : 2,
         widget.category == HistoryGameQuestionConfig().cat3 ? 4 : 2,

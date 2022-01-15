@@ -164,7 +164,7 @@ class GeoQuizAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat2, //
         questionConfig.diff0, //
-        ["0:6,5,28,18,1,12,9,22,8","160:161,162","49:50,51,33,46","184:191,183,186,192,190","86:64,74,69,63,89,67,83,90,82,71,33,66,78,70","122:118,133,121,140,131,152,119,116,127","6:28,0,25,4,13,27,26,8","1:14,5,0,4,12,11,3,8","33:51,40,86,29,19,49,63,89,30,31,90,20,22,32","36:37,35,24,25,39,42,34","119:133,122,149,132,126,131,116,127","46:50,51,35,49,23,45,47,52","127:118,157,122,132,126,156,119,135","107:110,114,138,108,120,109","25:6,24,34,36,27,26,32","69:73,74,86,82,71,70,72","45:64,50,51,47,70,46,68","114:107,123,117,129,138,120,113","183:184,191,185,193,192,187,194,190,188","120:107,128,123,125,110,114,111","22:40,28,0,31,33,27,32","56:47,53,61,60,58,57,59","151:121,125,106,153,150,110,152","32:40,25,41,22,34,33,27","64:86,45,70,66,68,65","123:128,117,112,114,120,130","115:121,125,140,142,139,111","121:115,125,122,140,152,151","125:115,121,110,120,111,151","150:154,153,149,148,152,151","129:117,141,134,114,113,136","47:45,53,61,56,52,46","4:6,1,15,26,8,16","110:107,125,106,120,151,109","126:159,132,155,119,127,135","155:157,159,158,126,156,135","152:121,122,150,149,151,116","51:50,49,45,33,46","40:30,31,22,33,32","191:184,183,186,192,187","35:23,42,34,36,46","185:183,189,171,187,188","140:118,115,121,122,139","117:123,112,129,134,114","24:37,25,39,36,26","48:106,55,53,54,52","53:47,48,56,52,55","63:86,67,33,68,65","149:150,148,152,119,116","83:84,86,82,76,78","39:38,37,24,36","82:73,86,69,83,76","42:38,35,23,36","187:191,183,186,185,189","34:35,25,41,36,32","113:137,129,141,114,138","27:6,28,25,22,32","3:14,1,7,108","8:6,1,4,13,0","52:47,48,53,54,46","116:122,149,131,152,119","65:64,63,67,66,68","38:23,42,39","118:122,140,156,127","50:51,49,45,46","5:1,0,12,9","128:123,120,111,130","157:156,155,127,135","28:6,0,22,27","106:55,48,110,151","23:38,35,46,42","164:166,172,174,162","67:86,63,66,65","30:40,29,31,33","31:40,30,22,33","138:107,114,113","156:118,157,155,127","111:128,115,125,120","70:64,69,45,86","131:133,122,119,116","26:6,24,4,25","66:64,86,67,65","76:84,83,79,82","68:64,45,63,65","135:157,126,155,127","37:24,39,36","133:122,131,119","84:83,76,78","186:184,191,187","154:153,150","153:154,150,151","19:20,17,33","139:115,140,142","112:123,117,130","193:183,194,188","174:164,172,173","77:94,79,93","89:86,88,33","134:129,117,136","12:5,1,0","132:126,119,127","79:85,77,76","162:166,164,160","108:107,3","9:5,0","20:19,17,33","60:56,57,59","55:106,48,53","192:184,191,183","148:154,150,149","194:183,193","130:128,123,112","188:183,185,193","78:84,86,83","14:1,3","73:69,82","166:164,162","74:86,69","165:173,171","189:185,187","172:164,174","142:115,139","29:30,33","159:126,155","141:129,113","61:47,56","54:48,52","13:6,8","41:34,32","90:86,33","71:86,69","173:165,174","171:185,165","136:129,134","17:19,20","109:107,110","57:60,56","190:184,183","59:60,56","85:79","161:160","18:0","170:169","94:77","137:113","169:170","10:2","88:89","158:155","11:1","93:77","7:3","58:56","15:4","2:10","16:4"]);
+        ["0:6,5,28,18,1,12,9,22,8","160:161,162","49:50,51,33,46","184:191,183,186,192,190","86:64,74,69,63,89,67,83,90,82,71,33,66,78,70","122:118,133,121,140,131,152,119,116,127","6:28,0,25,4,13,27,26,8","1:14,5,0,4,12,11,3,8","33:51,40,86,29,19,49,63,89,30,31,90,20,22,32","36:37,35,24,25,39,42,34","119:133,122,149,132,126,131,116,127","46:50,51,35,49,23,45,47,52","127:118,157,122,132,126,156,119,135","107:110,114,138,108,120,109","25:6,24,34,36,27,26,32","69:73,74,86,82,71,70,72","45:64,50,51,47,70,46,68","114:107,123,117,129,138,120,113","183:184,191,185,193,192,187,194,190,188","120:107,128,123,125,110,114,111","22:40,28,0,31,33,27,32","56:47,53,61,60,58,57,59","151:121,125,106,153,150,110,152","32:40,25,41,22,34,33,27","64:86,45,70,66,68,65","123:128,117,112,114,120,130","115:121,125,140,142,139,111","121:115,125,122,140,152,151","125:115,121,110,120,111,151","150:154,153,149,148,152,151","129:117,141,134,114,113,136","47:45,53,61,56,52,46","4:6,1,15,26,8,16","110:107,125,106,120,151,109","126:159,132,155,119,127,135","155:157,159,158,126,156,135","152:121,122,150,149,151,116","51:50,49,45,33,46","40:30,31,22,33,32","191:184,183,186,192,187","35:23,42,34,36,46","185:183,189,171,187,188","140:118,115,121,122,139","117:123,112,129,134,114","24:37,25,39,36,26","48:106,55,53,54,52","53:47,48,56,52,55","63:86,67,33,68,65","149:150,148,152,119,116","83:84,86,82,76,78","39:38,37,24,36","82:73,86,69,83,76","42:38,35,23,36","187:191,183,186,185,189","34:35,25,41,36,32","113:137,129,141,114,138","27:6,28,25,22,32","3:14,1,7,108","8:6,1,4,13,0","52:47,48,53,54,46","116:122,149,131,152,119","65:64,63,67,66,68","38:23,42,39","118:122,140,156,127","50:51,49,45,46","5:1,0,12,9","128:123,120,111,130","157:156,155,127,135","28:6,0,22,27","106:55,48,110,151","23:38,35,46,42","164:166,172,174,162","67:86,63,66,65","30:40,29,31,33","31:40,30,22,33","138:107,114,113","156:118,157,155,127","111:128,115,125,120","70:64,69,45,86","131:133,122,119,116","26:6,24,4,25","66:64,86,67,65","76:84,83,79,82","68:64,45,63,65","135:157,126,155,127","37:24,39,36","133:122,131,119","84:83,76,78","186:184,191,187","154:153,150","153:154,150,151","19:20,17,33","139:115,140,142","112:123,117,130","193:183,194,188","174:164,172,173","77:94,79,93","89:86,88,33","134:129,117,136","12:5,1,0","132:126,119,127","79:85,77,76","162:166,164,160","108:107,3","9:5,0","20:19,17,33","60:56,57,59","55:106,48,53","192:184,191,183","148:154,150,149","194:183,193","130:128,123,112","188:183,185,193","78:84,86,83","14:1,3","73:69,82","166:164,162","74:86,69","165:173,171","189:185,187","172:164,174","142:115,139","29:30,33","159:126,155","141:129,113","61:47,56","54:48,52","13:6,8","41:34,32","90:86,33","71:86,69","173:165,174","171:185,165","136:129,134","17:19,20","109:107,110","57:60,56","190:184,183","59:60,56","85:79","161:160","18:0","170:169","94:77","137:113","169:170","10:2","88:89","158:155","11:1","93:77","7:3","58:56","15:4","2:10","16:"]);
     addQuestions(
         result, //
         language, //
@@ -206,25 +206,25 @@ class GeoQuizAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat8, //
         questionConfig.diff0, //
-        [":Ha Long Bay, Vietnam::4", ":Salar de Uyuni, Bolivia::4", ":The Great Blue Hole, Belize::4", ":Bali, Indonesia::4", ":The Aurora Borealis, Norway::4", ":Mount Fuji, Japan::4", ":Harbor of Rio De Janeiro, Brazil::4", ":Paria Canyon, United States::4", ":Mount Everest, Nepal and Tibet::4", ":Niagara Falls, Canada::4", ":Lac Rose, Senegal::4", ":The Black Forest, Germany::4"]);
+        [":Ha Long Bay, Vietnam::", ":Salar de Uyuni, Bolivia::", ":The Great Blue Hole, Belize::", ":Bali, Indonesia::", ":The Aurora Borealis, Norway::", ":Mount Fuji, Japan::", ":Harbor of Rio De Janeiro, Brazil::", ":Paria Canyon, United States::", ":Mount Everest, Nepal and Tibet::", ":Niagara Falls, Canada::", ":Lac Rose, Senegal::", ":The Black Forest, Germany::"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat8, //
         questionConfig.diff1, //
-        [":Angel Falls, Venezuela::4", ":Mount Kilimanjaro, Tanzania::4", ":Danube Delta, Romania::4", ":Victoria Falls, Zimbabwe and Zambia::4", ":Eye of the Sahara, Mauritania::4", ":The Dead Sea, Israel::4", ":Cliffs of Moher, Ireland::4", ":Mud volcanoes, Azerbaijan::4", ":Moraine Lake, Canada::4", ":Devil's Marbles, Australia::4"]);
+        [":Angel Falls, Venezuela::", ":Mount Kilimanjaro, Tanzania::", ":Danube Delta, Romania::", ":Victoria Falls, Zimbabwe and Zambia::", ":Eye of the Sahara, Mauritania::", ":The Dead Sea, Israel::", ":Cliffs of Moher, Ireland::", ":Mud volcanoes, Azerbaijan::", ":Moraine Lake, Canada::", ":Devil's Marbles, Australia::"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat8, //
         questionConfig.diff2, //
-        [":Pamukkale, Turkey::4", ":The River of Five Colors, Colombia::4", ":Paricutín Volcano, Mexico::4", ":Moeraki Boulders, New Zealand::4", ":The Blue Grotto, Italy::4", ":Marble Caves, Chile::4", ":Crystal Cave, Bermuda::4"]);
+        [":Pamukkale, Turkey::", ":The River of Five Colors, Colombia::", ":Paricutín Volcano, Mexico::", ":Moeraki Boulders, New Zealand::", ":The Blue Grotto, Italy::", ":Marble Caves, Chile::", ":Crystal Cave, Bermuda::"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat8, //
         questionConfig.diff3, //
-        [":Jeju Island, South Korea::4", ":Iguazu Falls, Argentina and Brazil::4", ":Matterhorn, Switzerland::4", ":Table Mountain, South Africa::4", ":Bu Tinah, United Arab Emirates::4", ":Sundarbans, Bangladesh::4", ":Verdon Gorge, France::4"]);
+        [":Jeju Island, South Korea::", ":Iguazu Falls, Argentina and Brazil::", ":Matterhorn, Switzerland::", ":Table Mountain, South Africa::", ":Bu Tinah, United Arab Emirates::", ":Sundarbans, Bangladesh::", ":Verdon Gorge, France::"]);
   }
 
   void addRO(Map<Language, Map<CategoryDifficulty, List<Question>>> result,
@@ -271,25 +271,25 @@ class GeoQuizAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat8, //
         questionConfig.diff0, //
-        [":Ha Long Bay, Vietnam::4", ":Salar de Uyuni, Bolivia::4", ":Marea Gaură Albastră, Belize::4", ":Bali, Indonezia::4", ":Auroră polară, Norvegia::4", ":Muntele Fuji, Japonia::4", ":Portul din Rio De Janeiro, Brazilia::4", ":Canionul Paria, Statele Unite::4", ":Muntele Everest, Nepal şi Tibet::4", ":Cascada Niagara, Canada::4", ":Lac Rose, Senegal::4", ":Pădurea Neagră, Germania::4"]);
+        [":Ha Long Bay, Vietnam::4", ":Salar de Uyuni, Bolivia::4", ":Marea Gaură Albastră, Belize::4", ":Bali, Indonezia::4", ":Auroră polară, Norvegia::4", ":Muntele Fuji, Japonia::4", ":Portul din Rio De Janeiro, Brazilia::4", ":Canionul Paria, Statele Unite::4", ":Muntele Everest, Nepal şi Tibet::4", ":Cascada Niagara, Canada::4", ":Lac Rose, Senegal::4", ":Pădurea Neagră, Germania::"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat8, //
         questionConfig.diff1, //
-        [":Cascada Angel, Venezuela::4", ":Muntele Kilimanjaro, Tanzania::4", ":Delta Dunării, România::4", ":Cascadele din Victoria, Zimbabwe şi Zambia::4", ":Ochiul Saharei, Mauritania::4", ":Marea Moartă, Israel::4", ":Stâncile din Moher, Irlanda::4", ":Vulcanii noroi, Azerbaijan::4", ":Lacul Moraine, Canada::4", ":Pietrele Diavolului, Australia::4"]);
+        [":Cascada Angel, Venezuela::4", ":Muntele Kilimanjaro, Tanzania::4", ":Delta Dunării, România::4", ":Cascadele din Victoria, Zimbabwe şi Zambia::4", ":Ochiul Saharei, Mauritania::4", ":Marea Moartă, Israel::4", ":Stâncile din Moher, Irlanda::4", ":Vulcanii noroi, Azerbaijan::4", ":Lacul Moraine, Canada::4", ":Pietrele Diavolului, Australia::"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat8, //
         questionConfig.diff2, //
-        [":Pamukkale, Turcia::4", ":Râul cu Cinci Culori, Columbia::4", ":Vulcan Paricutín, Mexic::4", ":Bolovanii Moeraki, Noua Zeelandă::4", ":Grota Albastră, Italia::4", ":Peştera de marmură, Chile::4", ":Peştera de cristal, Bermuda::4"]);
+        [":Pamukkale, Turcia::4", ":Râul cu Cinci Culori, Columbia::4", ":Vulcan Paricutín, Mexic::4", ":Bolovanii Moeraki, Noua Zeelandă::4", ":Grota Albastră, Italia::4", ":Peştera de marmură, Chile::4", ":Peştera de cristal, Bermuda::"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat8, //
         questionConfig.diff3, //
-        [":Insula Jeju, Coreea de Sud::4", ":Cascadele de pe Iguazú, Argentina şi Brazilia::4", ":Matterhorn, Elveţia::4", ":Muntele Masa, Africa de Sud::4", ":Bu Tinah, Emiratele Arabe Unite::4", ":Sundarbans, Bangladesh::4", ":Cheile Verdon, Franţa::4"]);
+        [":Insula Jeju, Coreea de Sud::4", ":Cascadele de pe Iguazú, Argentina şi Brazilia::4", ":Matterhorn, Elveţia::4", ":Muntele Masa, Africa de Sud::4", ":Bu Tinah, Emiratele Arabe Unite::4", ":Sundarbans, Bangladesh::4", ":Cheile Verdon, Franţa::"]);
   }
 
 
