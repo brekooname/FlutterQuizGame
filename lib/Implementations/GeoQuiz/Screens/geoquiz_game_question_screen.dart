@@ -5,6 +5,8 @@ import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Constants/geoquiz_
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Questions/geoquiz_country_utils.dart';
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Questions/geoquiz_game_context.dart';
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Service/geoquiz_local_storage.dart';
+import 'package:flutter_app_quiz_game/Lib/Button/button_skin_config.dart';
+import 'package:flutter_app_quiz_game/Lib/Color/color_util.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/Options/quiz_options_game_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen_manager_state.dart';
@@ -33,7 +35,14 @@ class GeoQuizQuestionScreen extends GameScreen<GeoQuizGameContext>
             key: key) {
     initQuizOptionsScreen(
         gameContext, GeoQuizLocalStorage(), currentQuestionInfo,
-        questionImage: getQuestionImage(category));
+        questionImage: getQuestionImage(category),
+        buttonSkinConfig:
+            ButtonSkinConfig(backgroundGradient: RadialGradient(radius: 4, colors: [
+              ColorUtil.colorDarken(Colors.blue.shade100, 0.05),
+              Colors.blue.shade600,
+            ])),
+        multipleCorrectAnswersButtonSkinConfig:
+            ButtonSkinConfig(backgroundColor: Colors.purple.shade100));
   }
 
   @override

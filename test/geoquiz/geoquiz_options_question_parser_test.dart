@@ -20,7 +20,7 @@ void main() {
     for (int i = 0; i < triesToTest; i++) {
       Set<String> res =
           questionParser.getAnswerOptionsInCountryRange(
-              "Italy", {"Austria", "Germany"}, {"Switzerland"}, false, 4);
+              "Italy", {"Austria", "Germany"}, {"Switzerland"}, 1, 4);
 
       expect(res.length, 4);
       expect(res.contains("Italy"), false);
@@ -40,7 +40,7 @@ void main() {
     for (int i = 0; i < triesToTest; i++) {
       Set<String> res =
           questionParser.getAnswerOptionsInCountryRange(
-              "Italy", {"Austria"}, {"Germany"}, false, 4);
+              "Italy", {"Austria"}, {"Germany"}, 1, 4);
 
       expect(res.length, 4);
       expect(res.contains("Italy"), false);

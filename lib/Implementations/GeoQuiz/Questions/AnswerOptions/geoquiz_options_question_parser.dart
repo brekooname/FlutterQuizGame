@@ -154,10 +154,10 @@ class GeoQuizOptionsQuestionParser
 
   Set<String> getAnswerOptionsInCountryRange(
       String currentCountryToSearchRange,
-      Set<String> correctAnswers,
+      Set<String> allCorrectAnswers,
       Set<String> countriesAlreadyUsed,
-      bool useAllCorrectAnswersAsOptions,
-      int nrOfPossibleAnswers) {
+      int nrOfCorrectAnswerToUse,
+      int nrOfAnswerOptions) {
     Set<String> possibleAnswersResult = {};
 
     int currentCountryIndex = _geoQuizCountryUtils
@@ -178,17 +178,19 @@ class GeoQuizOptionsQuestionParser
     countryRangeIndexes.remove(currentCountryIndex);
     countryRangeIndexes.removeAll(countriesAlreadyUsed
         .map((e) => _geoQuizCountryUtils.getCountryIndexForName(e)));
-    countryRangeIndexes.removeAll(correctAnswers
+    countryRangeIndexes.removeAll(allCorrectAnswers
         .map((e) => _geoQuizCountryUtils.getCountryIndexForName(e)));
 
-    if (useAllCorrectAnswersAsOptions) {
-      possibleAnswersResult.addAll(correctAnswers);
-    } else {
-      var correctAnswersList = correctAnswers.toList();
-      correctAnswersList.shuffle();
-      possibleAnswersResult.add(correctAnswersList.first);
+    var correctAnswersList = allCorrectAnswers.toList();
+    correctAnswersList.shuffle();
+    while (possibleAnswersResult.length < nrOfCorrectAnswerToUse &&
+        correctAnswersList.isNotEmpty) {
+      var firstCorrectAnswer = correctAnswersList.first;
+      possibleAnswersResult.add(firstCorrectAnswer);
+      correctAnswersList.remove(firstCorrectAnswer);
     }
-    while (possibleAnswersResult.length < nrOfPossibleAnswers &&
+
+    while (possibleAnswersResult.length < nrOfAnswerOptions &&
         countryRangeIndexes.isNotEmpty) {
       var firstIndex = countryRangeIndexes.first;
       possibleAnswersResult

@@ -51,14 +51,14 @@ class GeoQuizOptionsQuestionService extends QuestionService {
 
   @override
   Set<String> getQuizAnswerOptions(Question question) {
-    var correctAnswers = getCorrectAnswers(question);
     if (_geoQuizCountryUtils.isStatsCategory(question.category)) {
       return _getStatsCategoryAnswerOptions(question);
     } else if (questionParser.isCategoryFindAnswerByQuestionName(question) &&
         _questionConfig.cat2 != question.category) {
       return questionParser.getDependentAnswerOptionsForQuestion(
-          question, correctAnswers.first, 4);
+          question, getCorrectAnswers(question).first, 4);
     } else {
+      var correctAnswers = getCorrectAnswers(question);
       return _getCountriesInRangeAnswerOptions(question, correctAnswers);
     }
   }
@@ -66,13 +66,15 @@ class GeoQuizOptionsQuestionService extends QuestionService {
   Set<String> _getCountriesInRangeAnswerOptions(
       Question question, List<String> correctAnswers) {
     String currentCountryToSearchRange =
-        getCurrentCountryToSearchRange(question);
+        _getCurrentCountryToSearchRange(question);
+    var nrOfCorrectAnswerToUse =
+        correctAnswers.length > 11 ? 11 : correctAnswers.length;
     return questionParser.getAnswerOptionsInCountryRange(
         currentCountryToSearchRange,
         correctAnswers.toSet(),
         {},
-        true,
-        correctAnswers.length + 3);
+        nrOfCorrectAnswerToUse,
+        nrOfCorrectAnswerToUse + 3);
   }
 
   Set<String> _getStatsCategoryAnswerOptions(Question question) {
@@ -82,7 +84,7 @@ class GeoQuizOptionsQuestionService extends QuestionService {
         question.category, countryNameForIndex, 4);
   }
 
-  String getCurrentCountryToSearchRange(Question question) {
+  String _getCurrentCountryToSearchRange(Question question) {
     String currentCountryToSearchRange = _geoQuizCountryUtils
             .isGeographicalRegionOrEmpireCategory(question.category)
         ? questionParser
@@ -97,6 +99,6 @@ class GeoQuizOptionsQuestionService extends QuestionService {
   String getPrefixToBeDisplayedForQuestion(Question question) {
     return MyApp.appId.gameConfig.gameQuestionConfig
         .getPrefixToBeDisplayedForQuestion(
-        question.category, getPrefixCodeForQuestion(question));
+            question.category, getPrefixCodeForQuestion(question));
   }
 }

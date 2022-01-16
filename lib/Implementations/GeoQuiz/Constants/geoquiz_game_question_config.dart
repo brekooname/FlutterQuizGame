@@ -148,34 +148,34 @@ class GeoQuizGameQuestionConfig extends GameQuestionConfig {
         () => label.l_find_a_neighbour_of_this_country);
     res.putIfAbsent(
         QuestionCategoryWithPrefixCode(category: cat2, prefixCode: 1),
-        () => label.l_find_all_neighbours_of_this_country);
+        () => label.l_find_all_the_neighbours_of_this_country);
     res.putIfAbsent(
         QuestionCategoryWithPrefixCode(category: cat2, prefixCode: 2),
         () => label.l_which_country_has_these_neighbours);
     res.putIfAbsent(
         QuestionCategoryWithPrefixCode(category: cat3, prefixCode: 0),
-        () => label.l_which_country_is_in_this_geographical_region);
+        () => label.l_which_country_is_located_in_this_geographical_region);
     res.putIfAbsent(
         QuestionCategoryWithPrefixCode(category: cat3, prefixCode: 1),
-        () => label.l_which_countries_are_in_this_geographical_region);
+        () => label.l_which_countries_are_located_in_this_geographical_region);
     res.putIfAbsent(
         QuestionCategoryWithPrefixCode(category: cat3, prefixCode: 2),
-        () => label.l_to_which_geographical_region_do_these_countries_belong);
+        () => label.l_which_geographical_region_do_these_countries_belong_to);
     res.putIfAbsent(
         QuestionCategoryWithPrefixCode(category: cat4, prefixCode: 0),
         () => label
-            .l_which_country_or_part_of_this_country_was_part_of_this_empire);
+            .l_which_country_was_partly_or_entirely_part_of_this_empire);
     res.putIfAbsent(
         QuestionCategoryWithPrefixCode(category: cat4, prefixCode: 1),
         () => label
-            .l_which_countries_or_part_of_these_countries_were_part_of_this_empire);
+            .l_which_countries_were_partly_or_entirely_part_of_this_empire);
     res.putIfAbsent(
         QuestionCategoryWithPrefixCode(category: cat4, prefixCode: 2),
         () => label
-            .l_to_which_empire_did_these_countries_or_part_of_these_countries_belong);
+            .l_which_empire_included_territories_from_these_countries);
     res.putIfAbsent(
         QuestionCategoryWithPrefixCode(category: cat5, prefixCode: 0),
-        () => label.l_where_is_this_landmark_located);
+        () => label.l_which_landmark_is_shown_in_the_photo);
     res.putIfAbsent(
         QuestionCategoryWithPrefixCode(category: cat6, prefixCode: 0),
         () => label.l_which_country_has_this_capital);
@@ -184,7 +184,7 @@ class GeoQuizGameQuestionConfig extends GameQuestionConfig {
         () => label.l_which_country_has_this_flag);
     res.putIfAbsent(
         QuestionCategoryWithPrefixCode(category: cat8, prefixCode: 0),
-        () => label.l_where_is_this_natural_wonder_located);
+        () => label.l_which_natural_wonder_is_shown_in_the_photo);
     res.putIfAbsent(
         QuestionCategoryWithPrefixCode(category: cat9, prefixCode: 0),
         () => label.l_which_country_is_shown_on_the_map);

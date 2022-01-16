@@ -8,9 +8,7 @@ import 'package:flutter_app_quiz_game/Game/Question/Model/question_info.dart';
 import 'package:flutter_app_quiz_game/Lib/Audio/my_audio_player.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/button_skin_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
-import 'package:flutter_app_quiz_game/Lib/Color/color_util.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/list_extension.dart';
-import 'package:flutter_app_quiz_game/Lib/Image/image_service.dart';
 import 'package:flutter_app_quiz_game/Lib/ScreenDimensions/screen_dimensions_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Storage/quiz_game_local_storage.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
@@ -24,14 +22,17 @@ mixin QuizOptionsGameScreen<TGameContext extends GameContext> {
   late Set<String> _possibleAnswers;
   late List<String> _correctAnswersForQuestion;
   late QuestionInfo _currentQuestionInfo;
-  Set<String> hintDisabledPossibleAnswers = HashSet();
   Image? _questionImage;
+  ButtonSkinConfig? _buttonSkinConfig;
+  Set<String> hintDisabledPossibleAnswers = HashSet();
 
   void initQuizOptionsScreen(
       TGameContext gameContext,
       QuizGameLocalStorage quizGameLocalStorage,
       QuestionInfo currentQuestionInfo,
       {bool isOneCorrectAnswerEnoughToWin = false,
+      ButtonSkinConfig? buttonSkinConfig,
+      ButtonSkinConfig? multipleCorrectAnswersButtonSkinConfig,
       Image? questionImage}) {
     this.quizGameLocalStorage = quizGameLocalStorage;
     _gameContext = gameContext;
@@ -41,6 +42,9 @@ mixin QuizOptionsGameScreen<TGameContext extends GameContext> {
     var question = currentQuestionInfo.question;
     var questionService = question.questionService;
     _correctAnswersForQuestion = questionService.getCorrectAnswers(question);
+    _buttonSkinConfig = _correctAnswersForQuestion.length == 1
+        ? buttonSkinConfig
+        : multipleCorrectAnswersButtonSkinConfig ?? buttonSkinConfig;
 
     _possibleAnswers =
         HashSet.of(_getPossibleAnswerOption(isOneCorrectAnswerEnoughToWin));
@@ -90,8 +94,6 @@ mixin QuizOptionsGameScreen<TGameContext extends GameContext> {
   Widget _createPossibleAnswerButton(VoidCallback refreshSetState,
       VoidCallback goToNextScreenAfterPress, String answerBtnText) {
     var question = _currentQuestionInfo.question;
-    var questionService = question.questionService;
-    var btnBackgr = Colors.lightBlueAccent;
     var btnSize = _getAnswerBtnSize();
     var answerBtnDisabled = _wrongPressedAnswer.isNotEmpty ||
         _correctAnswersForQuestion.contains(answerBtnText) &&
@@ -102,7 +104,7 @@ mixin QuizOptionsGameScreen<TGameContext extends GameContext> {
     var disabledBackgroundColor = answerBtnDisabled
         ? _wrongPressedAnswer.contains(answerBtnText)
             ? Colors.red
-            : questionService.isAnswerCorrectInOptionsList(
+            : question.questionService.isAnswerCorrectInOptionsList(
                     _correctAnswersForQuestion, answerBtnText)
                 ? Colors.green
                 : null
@@ -115,26 +117,33 @@ mixin QuizOptionsGameScreen<TGameContext extends GameContext> {
             disabled: answerBtnDisabled,
             disabledBackgroundColor: disabledBackgroundColor,
             onClick: () {
-              _gameContext.gameUser
-                  .addAnswerToQuestionInfo(question, answerBtnText);
-              if (questionService.isAnswerCorrectInOptionsList(
-                  _correctAnswersForQuestion, answerBtnText)) {
-                _audioPlayer.playSuccess();
-              } else {
-                _audioPlayer.playFail();
-                _wrongPressedAnswer.add(answerBtnText);
-              }
-              refreshSetState.call();
-              _processGameFinished(question, goToNextScreenAfterPress);
+              _onClickAnswerOptionBtn(question, answerBtnText, refreshSetState,
+                  goToNextScreenAfterPress);
             },
-            buttonSkinConfig: ButtonSkinConfig(
-                borderColor: ColorUtil.colorDarken(btnBackgr, 0.1),
-                backgroundColor: btnBackgr),
+            buttonSkinConfig: _buttonSkinConfig ?? _defaultButtonSkinConfig(),
             customContent: MyText(
               text: answerBtnText,
               maxLines: _getValueBasedOnNrOfPossibleAnswers(4, 3, 2, 1, true),
               width: btnSize.width / 1.1,
             )));
+  }
+
+  void _onClickAnswerOptionBtn(Question question, String answerBtnText,
+      VoidCallback refreshSetState, VoidCallback goToNextScreenAfterPress) {
+    _gameContext.gameUser.addAnswerToQuestionInfo(question, answerBtnText);
+    if (question.questionService.isAnswerCorrectInOptionsList(
+        _correctAnswersForQuestion, answerBtnText)) {
+      _audioPlayer.playSuccess();
+    } else {
+      _audioPlayer.playFail();
+      _wrongPressedAnswer.add(answerBtnText);
+    }
+    refreshSetState.call();
+    _processGameFinished(question, goToNextScreenAfterPress);
+  }
+
+  ButtonSkinConfig _defaultButtonSkinConfig() {
+    return ButtonSkinConfig(backgroundColor: Colors.lightBlueAccent);
   }
 
   List<String> _getPossibleAnswerOption(bool oneCorrectAnswerEnoughToWin) {
