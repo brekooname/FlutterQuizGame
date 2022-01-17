@@ -53,6 +53,7 @@ class FloatingButton extends StatelessWidget {
                 buttonSkinConfig: ButtonSkinConfig(
                   image: (_imageService.getMainImage(
                       imageName: iconName,
+                      imageExtension: "png",
                       module: "buttons",
                       maxWidth: _buttonSize.width)),
                 ),

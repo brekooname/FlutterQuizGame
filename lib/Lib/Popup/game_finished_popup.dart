@@ -27,6 +27,7 @@ class GameFinishedPopup extends StatelessWidget with MyPopup {
             imageService.getMainImage(
                 imageName: getImageName(),
                 module: "popup",
+                imageExtension: "png",
                 maxWidth: defaultBackgroundImageWidth),
             SizedBox(height: screenDimensions.h(2)),
             MyText(

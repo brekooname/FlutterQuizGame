@@ -1,26 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
-class InternalAnimatedWidget extends AnimatedWidget {
-  MyText toAnimateText;
-
-  InternalAnimatedWidget(
-      {Key? key,
-      required this.toAnimateText,
-      required Animation<double> animation})
-      : super(key: key, listenable: animation);
-
-  @override
-  Widget build(BuildContext context) {
-    final animation = listenable as Animation<double>;
-
-    return AnimatedOpacity(
-        duration: const Duration(milliseconds: 100),
-        opacity: Tween<double>(begin: 1, end: 0.1).evaluate(animation),
-        child: toAnimateText);
-  }
-}
-
 class AnimateFadeInFadeOutText extends StatefulWidget {
   MyText toAnimateText;
   bool fadeInFadeOutOnce;
@@ -68,5 +48,25 @@ class MyAnimatedWidgetState extends State<AnimateFadeInFadeOutText>
   void dispose() {
     controller.dispose();
     super.dispose();
+  }
+}
+
+class InternalAnimatedWidget extends AnimatedWidget {
+  MyText toAnimateText;
+
+  InternalAnimatedWidget(
+      {Key? key,
+      required this.toAnimateText,
+      required Animation<double> animation})
+      : super(key: key, listenable: animation);
+
+  @override
+  Widget build(BuildContext context) {
+    final animation = listenable as Animation<double>;
+
+    return AnimatedOpacity(
+        duration: const Duration(milliseconds: 100),
+        opacity: Tween<double>(begin: 1, end: 0.1).evaluate(animation),
+        child: toAnimateText);
   }
 }

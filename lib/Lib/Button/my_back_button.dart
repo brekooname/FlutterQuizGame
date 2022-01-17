@@ -32,6 +32,7 @@ class MyBackButton extends StatelessWidget {
               imageName: MyApp.appId.gameConfig.screenContrast == Contrast.light
                   ? "btn_back_up"
                   : "btn_back_up_white",
+              imageExtension: "png",
               module: "buttons",
               maxWidth: _buttonSize.width)),
         ),

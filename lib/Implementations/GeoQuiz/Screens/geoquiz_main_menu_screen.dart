@@ -102,7 +102,8 @@ class GeoQuizMainMenuScreenState extends State<GeoQuizMainMenuScreen>
       ProgressBar(
         width: screenDimensions.w(90),
         height: screenDimensions.h(5),
-        percentFilled: 67,
+        currentStep: 3,
+        widthPerStep: screenDimensions.w(15),
       )
     ]));
     return info;

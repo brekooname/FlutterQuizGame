@@ -125,13 +125,16 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
     timelineOptUnknown = imageService.getSpecificImage(
         maxWidth: getImageWidth(),
         maxHeight: getImageMaxHeight(),
-        imageName: "timeline_opt_unknown");
+        imageName: "timeline_opt_unknown",
+        imageExtension: "png");
     histAnswWrong = imageService.getSpecificImage(
         maxWidth: getImageWidth(),
         maxHeight: getImageMaxHeight(),
-        imageName: "hist_answ_wrong");
+        imageName: "hist_answ_wrong",
+        imageExtension: "png");
     timelineArrow = imageService.getSpecificImage(
         imageName: FontConfig.isRtlLanguage ? "arrow_left" : "arrow_right",
+        imageExtension: "png",
         maxWidth: screenDimensions.w(10));
   }
 
@@ -200,7 +203,7 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
             : widget.currentQuestionInfo.question,
         widget.category == HistoryGameQuestionConfig().cat0 ? 1 : 2,
         widget.category == HistoryGameQuestionConfig().cat3 ? 4 : 2,
-        screenDimensions.h(18));
+        questionContainerHeight: screenDimensions.h(18));
 
     ScrollablePositionedList listView =
         createListView(answerBtnSize, zoomInZoomOutAnswerDuration);
@@ -226,6 +229,7 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
             maxWidth: getImageWidth(),
             maxHeight: getImageMaxHeight(),
             imageName: "i" + qIndex.toString(),
+            imageExtension: "png",
             module: getQuestionImagePath(widget.difficulty, widget.category))
         : isWrongAnswer
             ? histAnswWrong
@@ -277,10 +281,6 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
 
   HistoryGameLevelHeader createHeader() {
     var header = HistoryGameLevelHeader(
-      onBackButtonClick: () {
-        widget.gameScreenManagerState.goBack(widget);
-      },
-      campaignLevel: widget.campaignLevel,
       availableHints: widget.gameContext.amountAvailableHints,
       disableHintBtn: widget.shownImagesForTimeLineHints.isNotEmpty,
       animateScore: widget.correctAnswerPressed,

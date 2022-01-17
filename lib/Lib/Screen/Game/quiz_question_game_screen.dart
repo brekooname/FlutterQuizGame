@@ -9,10 +9,9 @@ mixin QuizQuestionContainer {
   final ScreenDimensionsService _screenDimensions = ScreenDimensionsService();
 
   Widget createQuestionTextContainer(
-      Question? question,
-      int questionPrefixMaxLines,
-      int questionTextMaxLines,
-      double? questionContainerHeight) {
+      Question? question, int questionPrefixMaxLines, int questionTextMaxLines,
+      {double? questionContainerHeight,
+      BoxDecoration? questionContainerDecoration}) {
     var vertMargin = _screenDimensions.h(1);
     var horizMargin = _screenDimensions.w(1);
     var questionPrefixToBeDisplayed = question?.questionPrefixToBeDisplayed;
@@ -62,22 +61,23 @@ mixin QuizQuestionContainer {
       ],
     );
 
-    return Container(
-        child: Column(children: [
+    return Column(children: [
       SizedBox(height: _screenDimensions.h(1)),
       Column(mainAxisSize: MainAxisSize.min, children: [
         Container(
           height: questionContainerHeight,
-          decoration: BoxDecoration(
-              color: Colors.green.shade100.withAlpha(150),
-              border: Border.all(
-                  color: Colors.green.shade200, width: _screenDimensions.w(1)),
-              borderRadius:
-                  BorderRadius.circular(FontConfig.standardBorderRadius)),
+          decoration: questionContainerDecoration ??
+              BoxDecoration(
+                  color: Colors.green.shade100.withAlpha(150),
+                  border: Border.all(
+                      color: Colors.green.shade200,
+                      width: _screenDimensions.w(1)),
+                  borderRadius:
+                      BorderRadius.circular(FontConfig.standardBorderRadius)),
           child: questionColumn,
         ),
         SizedBox(height: _screenDimensions.h(1)),
       ])
-    ]));
+    ]);
   }
 }

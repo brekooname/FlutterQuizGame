@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
+import 'package:flutter_app_quiz_game/Game/Question/Model/question_info_status.dart';
+import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Components/geoquiz_game_level_header.dart';
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Constants/geoquiz_campaign_level_service.dart';
+import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Constants/geoquiz_game_question_config.dart';
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Questions/geoquiz_country_utils.dart';
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Questions/geoquiz_game_context.dart';
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Service/geoquiz_local_storage.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/button_skin_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Color/color_util.dart';
+import 'package:flutter_app_quiz_game/Lib/Font/font_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/Options/quiz_options_game_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen_manager_state.dart';
@@ -36,11 +40,12 @@ class GeoQuizQuestionScreen extends GameScreen<GeoQuizGameContext>
     initQuizOptionsScreen(
         gameContext, GeoQuizLocalStorage(), currentQuestionInfo,
         questionImage: getQuestionImage(category),
-        buttonSkinConfig:
-            ButtonSkinConfig(backgroundGradient: RadialGradient(radius: 4, colors: [
-              ColorUtil.colorDarken(Colors.blue.shade100, 0.05),
-              Colors.blue.shade600,
-            ])),
+        zoomableImage: GeoQuizGameQuestionConfig().cat9 == category,
+        buttonSkinConfig: ButtonSkinConfig(
+            backgroundGradient: RadialGradient(radius: 4, colors: [
+          ColorUtil.colorDarken(Colors.lightBlue.shade100, 0.05),
+          Colors.lightBlue.shade600,
+        ])),
         multipleCorrectAnswersButtonSkinConfig:
             ButtonSkinConfig(backgroundColor: Colors.purple.shade100));
   }
@@ -63,9 +68,7 @@ class GeoQuizQuestionScreen extends GameScreen<GeoQuizGameContext>
           ? "questions/images/" + category.name
           : "questions/images/" + difficulty.name + "/" + category.name;
       return imageService.getSpecificImage(
-          module: module,
-          imageExtension: flagsOrMaps ? "png" : "jpg",
-          imageName: imageName);
+          module: module, imageExtension: "jpg", imageName: imageName);
     }
     return null;
   }
@@ -84,13 +87,45 @@ class GeoQuizQuestionScreenState extends State<GeoQuizQuestionScreen>
   @override
   Widget build(BuildContext context) {
     Widget questionContainer = createQuestionTextContainer(
-        widget.currentQuestionInfo.question, 2, 4, null);
+        widget.currentQuestionInfo.question, 4, 4,
+        questionContainerDecoration: BoxDecoration(
+            gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  ColorUtil.colorDarken(Colors.blue.shade100, -0.1),
+                  Colors.blue.shade100,
+                ]),
+            border: Border.all(
+                color: Colors.blue.shade700, width: screenDimensions.w(0.3)),
+            borderRadius:
+                BorderRadius.circular(FontConfig.standardBorderRadius * 0.2)));
     Widget optionsRows = widget.createOptionRows(
         setStateCallback, widget.goToNextGameScreenCallBack(context));
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[questionContainer, optionsRows],
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: <Widget>[
+        createHeader(),
+        questionContainer,
+        optionsRows,
+        const Spacer(),
+      ],
     );
+  }
+
+  GeoQuizGameLevelHeader createHeader() {
+    var header = GeoQuizGameLevelHeader(
+      nrOfCorrectAnsweredQuestions: widget.gameContext.gameUser
+          .countAllQuestions([QuestionInfoStatus.won]),
+      availableHints: widget.gameContext.amountAvailableHints,
+      animateStepIncrease: widget.isGameFinishedSuccessful(),
+      disableHintBtn: widget.hintDisabledPossibleAnswers.isNotEmpty,
+      hintButtonOnClick: () {
+        widget.onHintButtonClick(setStateCallback);
+      },
+    );
+    return header;
   }
 
   void setStateCallback() {

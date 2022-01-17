@@ -69,6 +69,7 @@ class WatchRewardedAdPopupState extends State<WatchRewardedAdPopup>
         children: <Widget>[
           imageService.getMainImage(
               imageName: getImageName(),
+              imageExtension: "png",
               module: "popup",
               maxWidth: defaultBackgroundImageWidth),
           SizedBox(height: screenDimensions.h(2)),

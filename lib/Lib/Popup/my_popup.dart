@@ -27,6 +27,7 @@ mixin MyPopup {
     if (backgroundImageName != null) {
       backgroundImage = imageService.getMainAssetImage(
         imageName: backgroundImageName,
+        imageExtension: "png",
         module: "popup",
       );
     }

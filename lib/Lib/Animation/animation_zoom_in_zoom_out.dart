@@ -1,39 +1,5 @@
 import 'package:flutter/material.dart';
 
-class InternalAnimatedWidget extends AnimatedWidget {
-  Widget toAnimateWidget;
-  Size toAnimateWidgetSize;
-  double zoomAmount;
-
-  InternalAnimatedWidget(
-      {Key? key,
-      required this.zoomAmount,
-      required this.toAnimateWidgetSize,
-      required this.toAnimateWidget,
-      required Animation<double> animation})
-      : super(key: key, listenable: animation);
-
-  @override
-  Widget build(BuildContext context) {
-    final animation = listenable as Animation<double>;
-    return Center(
-      child: SizedBox(
-        height: Tween<double>(
-                begin: toAnimateWidgetSize.height,
-                end: toAnimateWidgetSize.height -
-                    (toAnimateWidgetSize.height / zoomAmount))
-            .evaluate(animation),
-        width: Tween<double>(
-                begin: toAnimateWidgetSize.width,
-                end: toAnimateWidgetSize.width -
-                    (toAnimateWidgetSize.width / zoomAmount))
-            .evaluate(animation),
-        child: toAnimateWidget,
-      ),
-    );
-  }
-}
-
 class AnimateZoomInZoomOut extends StatefulWidget {
   static const double defaultZoomAmount = 5;
   Widget toAnimateWidget;
@@ -58,7 +24,6 @@ class AnimateZoomInZoomOut extends StatefulWidget {
 class MyAnimatedWidgetState extends State<AnimateZoomInZoomOut>
     with SingleTickerProviderStateMixin {
   late Animation<double> animation;
-
   late AnimationController controller;
 
   @override
@@ -88,5 +53,39 @@ class MyAnimatedWidgetState extends State<AnimateZoomInZoomOut>
   void dispose() {
     controller.dispose();
     super.dispose();
+  }
+}
+
+class InternalAnimatedWidget extends AnimatedWidget {
+  Widget toAnimateWidget;
+  Size toAnimateWidgetSize;
+  double zoomAmount;
+
+  InternalAnimatedWidget(
+      {Key? key,
+        required this.zoomAmount,
+        required this.toAnimateWidgetSize,
+        required this.toAnimateWidget,
+        required Animation<double> animation})
+      : super(key: key, listenable: animation);
+
+  @override
+  Widget build(BuildContext context) {
+    final animation = listenable as Animation<double>;
+    return Center(
+      child: SizedBox(
+        height: Tween<double>(
+            begin: toAnimateWidgetSize.height,
+            end: toAnimateWidgetSize.height -
+                (toAnimateWidgetSize.height / zoomAmount))
+            .evaluate(animation),
+        width: Tween<double>(
+            begin: toAnimateWidgetSize.width,
+            end: toAnimateWidgetSize.width -
+                (toAnimateWidgetSize.width / zoomAmount))
+            .evaluate(animation),
+        child: toAnimateWidget,
+      ),
+    );
   }
 }

@@ -68,11 +68,16 @@ class GeoQuizOptionsQuestionService extends QuestionService {
     String currentCountryToSearchRange =
         _getCurrentCountryToSearchRange(question);
     var nrOfCorrectAnswerToUse =
-        correctAnswers.length > 11 ? 11 : correctAnswers.length;
+        correctAnswers.length > 9 ? 9 : correctAnswers.length;
     return questionParser.getAnswerOptionsInCountryRange(
         currentCountryToSearchRange,
         correctAnswers.toSet(),
-        {},
+        _geoQuizCountryUtils
+                .isCategoryWithMultipleCorrectAnswers(question.category)
+            ? questionParser
+                .getCountryNamesFromQuestionOptions(question)
+                .toSet()
+            : {},
         nrOfCorrectAnswerToUse,
         nrOfCorrectAnswerToUse + 3);
   }

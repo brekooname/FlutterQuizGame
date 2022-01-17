@@ -29,9 +29,15 @@ class SettingsPopupState extends State<SettingsPopup> with MyPopup {
     initPopup();
     var sideDimen = screenDimensions.w(20);
     soundOn = imageService.getMainImage(
-        imageName: "btn_sound_on", module: "buttons", maxWidth: sideDimen);
+        imageName: "btn_sound_on",
+        imageExtension: "png",
+        module: "buttons",
+        maxWidth: sideDimen);
     soundOff = imageService.getMainImage(
-        imageName: "btn_sound_off", module: "buttons", maxWidth: sideDimen);
+        imageName: "btn_sound_off",
+        imageExtension: "png",
+        module: "buttons",
+        maxWidth: sideDimen);
     super.initState();
   }
 

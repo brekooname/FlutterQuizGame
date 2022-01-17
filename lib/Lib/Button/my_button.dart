@@ -161,6 +161,7 @@ class MyButtonState extends State<MyButton> {
           toAnimateWidget: widget._imageService.getMainImage(
               imageName: "btn_locked",
               module: "buttons",
+              imageExtension: "png",
               maxHeight: lockedImageSide))
     ]);
     return stack;

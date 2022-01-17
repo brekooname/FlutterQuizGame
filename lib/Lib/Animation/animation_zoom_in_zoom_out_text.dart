@@ -2,39 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Lib/Font/font_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
-class InternalAnimatedWidget extends AnimatedWidget {
-  MyText toAnimateText;
-  double zoomAmount;
-
-  InternalAnimatedWidget(
-      {Key? key,
-      required this.zoomAmount,
-      required this.toAnimateText,
-      required Animation<double> animation})
-      : super(key: key, listenable: animation);
-
-  @override
-  Widget build(BuildContext context) {
-    final animation = listenable as Animation<double>;
-
-    var fontConfig = toAnimateText.fontConfig;
-    return MyText(
-        fontConfig: FontConfig(
-            textColor: fontConfig.textColor,
-            fontWeight: fontConfig.fontWeight,
-            borderWidth: fontConfig.borderWidth,
-            fontSize: Tween<double>(
-                    begin: fontConfig.fontSize,
-                    end: fontConfig.fontSize / zoomAmount)
-                .evaluate(animation),
-            borderColor: fontConfig.borderColor),
-        text: toAnimateText.text,
-        alignmentInsideContainer: toAnimateText.alignmentInsideContainer,
-        width: toAnimateText.width,
-        maxLines: toAnimateText.maxLines);
-  }
-}
-
 class AnimateZoomInZoomOutText extends StatefulWidget {
   static const double defaultZoomAmount = 1.1;
   MyText toAnimateText;
@@ -87,5 +54,38 @@ class MyAnimatedWidgetState extends State<AnimateZoomInZoomOutText>
   void dispose() {
     controller.dispose();
     super.dispose();
+  }
+}
+
+class InternalAnimatedWidget extends AnimatedWidget {
+  MyText toAnimateText;
+  double zoomAmount;
+
+  InternalAnimatedWidget(
+      {Key? key,
+        required this.zoomAmount,
+        required this.toAnimateText,
+        required Animation<double> animation})
+      : super(key: key, listenable: animation);
+
+  @override
+  Widget build(BuildContext context) {
+    final animation = listenable as Animation<double>;
+
+    var fontConfig = toAnimateText.fontConfig;
+    return MyText(
+        fontConfig: FontConfig(
+            textColor: fontConfig.textColor,
+            fontWeight: fontConfig.fontWeight,
+            borderWidth: fontConfig.borderWidth,
+            fontSize: Tween<double>(
+                begin: fontConfig.fontSize,
+                end: fontConfig.fontSize / zoomAmount)
+                .evaluate(animation),
+            borderColor: fontConfig.borderColor),
+        text: toAnimateText.text,
+        alignmentInsideContainer: toAnimateText.alignmentInsideContainer,
+        width: toAnimateText.width,
+        maxLines: toAnimateText.maxLines);
   }
 }

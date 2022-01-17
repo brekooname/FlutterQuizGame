@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app_quiz_game/Game/Game/campaign_level.dart';
 import 'package:flutter_app_quiz_game/Lib/Animation/animation_zoom_in_zoom_out_text.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/hint_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_back_button.dart';
@@ -14,18 +13,14 @@ class HistoryGameLevelHeader extends StatelessWidget {
   bool animateScore;
   int availableHints;
   VoidCallback hintButtonOnClick;
-  VoidCallback onBackButtonClick;
   bool disableHintBtn;
-  CampaignLevel campaignLevel;
   ScreenDimensionsService screenDimensions = ScreenDimensionsService();
 
   HistoryGameLevelHeader(
       {Key? key, required this.score,
-      required this.campaignLevel,
       this.animateScore = false,
       this.disableHintBtn = false,
       required this.hintButtonOnClick,
-      required this.onBackButtonClick,
       required this.availableHints}) : super(key: key);
 
   @override

@@ -9,12 +9,15 @@ import 'package:flutter_app_quiz_game/Lib/Audio/my_audio_player.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/button_skin_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/list_extension.dart';
+import 'package:flutter_app_quiz_game/Lib/Font/font_config.dart';
+import 'package:flutter_app_quiz_game/Lib/Image/image_service.dart';
 import 'package:flutter_app_quiz_game/Lib/ScreenDimensions/screen_dimensions_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Storage/quiz_game_local_storage.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
 mixin QuizOptionsGameScreen<TGameContext extends GameContext> {
   final ScreenDimensionsService _screenDimensions = ScreenDimensionsService();
+  final ImageService _imageService = ImageService();
   final MyAudioPlayer _audioPlayer = MyAudioPlayer();
   final Set<String> _wrongPressedAnswer = HashSet();
   late QuizGameLocalStorage quizGameLocalStorage;
@@ -23,6 +26,7 @@ mixin QuizOptionsGameScreen<TGameContext extends GameContext> {
   late List<String> _correctAnswersForQuestion;
   late QuestionInfo _currentQuestionInfo;
   Image? _questionImage;
+  bool? _zoomableImage;
   ButtonSkinConfig? _buttonSkinConfig;
   Set<String> hintDisabledPossibleAnswers = HashSet();
 
@@ -33,9 +37,11 @@ mixin QuizOptionsGameScreen<TGameContext extends GameContext> {
       {bool isOneCorrectAnswerEnoughToWin = false,
       ButtonSkinConfig? buttonSkinConfig,
       ButtonSkinConfig? multipleCorrectAnswersButtonSkinConfig,
-      Image? questionImage}) {
+      Image? questionImage,
+      bool? zoomableImage}) {
     this.quizGameLocalStorage = quizGameLocalStorage;
     _gameContext = gameContext;
+    _zoomableImage = zoomableImage;
     _questionImage = questionImage;
     _currentQuestionInfo = currentQuestionInfo;
 
@@ -70,25 +76,65 @@ mixin QuizOptionsGameScreen<TGameContext extends GameContext> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: answerBtns,
     ));
-    Widget btnContainer = Expanded(
+    var btnSize = _getAnswerBtnSize();
+    Widget btnContainer = Container(
+        height: (btnSize.height + getAnswerButtonPaddingBetween() * 2) *
+            (_possibleAnswers.length / 2).ceil(),
         child: ListView(
-      children: answerRows,
-    ));
+          children: answerRows,
+        ));
 
-    return Expanded(
-        child: Column(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         _createImageContainer(_currentQuestionInfo.question),
         btnContainer
       ],
-    ));
+    );
   }
 
   Widget _createImageContainer(Question question) {
-    return _questionImage == null
-        ? Container()
-        : Expanded(child: Container(child: _questionImage));
+    if (_questionImage == null) {
+      return Container();
+    }
+    return SizedBox(
+        width: _screenDimensions.w(98),
+        height: _screenDimensions.h(40),
+        child: _zoomableImage ?? false
+            ? createZoomableContainer()
+            : _questionImage!);
+  }
+
+  Widget createZoomableContainer() {
+    var pinchIconSideDimen = _screenDimensions.w(10);
+    Stack stack = Stack(
+      alignment: Alignment.center,
+      children: [
+        InteractiveViewer(
+          minScale: 1,
+          maxScale: 3,
+          child: _questionImage!,
+        ),
+        Padding(
+            padding: EdgeInsets.all(_screenDimensions.w(5)),
+            child: Container(
+                alignment: Alignment.bottomRight,
+                child: _imageService.getMainImage(
+                    imageName: "pinch",
+                    module: "general",
+                    imageExtension: "png",
+                    maxHeight: pinchIconSideDimen)))
+      ],
+    );
+    return Container(
+        decoration: BoxDecoration(
+            color: Colors.grey.shade200,
+            border: Border.all(
+                color: Colors.blue.shade700, width: _screenDimensions.w(0.3)),
+            borderRadius:
+                BorderRadius.circular(FontConfig.standardBorderRadius * 0.1)),
+        child: stack);
   }
 
   Widget _createPossibleAnswerButton(VoidCallback refreshSetState,
@@ -111,7 +157,7 @@ mixin QuizOptionsGameScreen<TGameContext extends GameContext> {
         : null;
 
     return Padding(
-        padding: EdgeInsets.all(_screenDimensions.w(1)),
+        padding: EdgeInsets.all(getAnswerButtonPaddingBetween()),
         child: MyButton(
             size: btnSize,
             disabled: answerBtnDisabled,
@@ -218,6 +264,8 @@ mixin QuizOptionsGameScreen<TGameContext extends GameContext> {
             _getValueBasedOnNrOfPossibleAnswers(15, 12, 8, 5, true)
                 .toDouble()));
   }
+
+  double getAnswerButtonPaddingBetween() => _screenDimensions.w(1);
 
   int _getValueBasedOnNrOfPossibleAnswers(
       int v4, int v6, int v8, int max, bool isSizeValue) {

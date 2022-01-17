@@ -226,6 +226,7 @@ class _InAppPurchaseState extends State<InAppPurchasePopup> with MyPopup {
               SizedBox(width: paddingBetween),
               imageService.getMainImage(
                 imageName: "btn_in_app_purchases_background",
+                imageExtension: "png",
                 module: "buttons",
                 maxWidth: iconWidth,
               ),
@@ -270,6 +271,7 @@ class _InAppPurchaseState extends State<InAppPurchasePopup> with MyPopup {
           SizedBox(width: paddingBetween),
           imageService.getMainImage(
             imageName: "btn_restore_purchase",
+            imageExtension: "png",
             module: "buttons",
             maxWidth: iconWidth,
           ),

@@ -62,12 +62,12 @@ class HistoryGameQuestionScreenState extends State<HistoryGameQuestionScreen>
   @override
   Widget build(BuildContext context) {
     debugPrint("build question");
-    HistoryGameLevelHeader header = createHeader(widget.currentQuestionInfo);
+    HistoryGameLevelHeader header = createHeader();
     Widget questionContainer = createQuestionTextContainer(
-        widget.currentQuestionInfo.question,
-        widget.category == HistoryGameQuestionConfig().cat0 ? 1 : 2,
-        widget.category == HistoryGameQuestionConfig().cat3 ? 4 : 2,
-        null);
+      widget.currentQuestionInfo.question,
+      widget.category == HistoryGameQuestionConfig().cat0 ? 1 : 2,
+      widget.category == HistoryGameQuestionConfig().cat3 ? 4 : 2,
+    );
     Widget optionsRows = widget.createOptionRows(
         setStateCallback, widget.goToNextGameScreenCallBack(context));
     return Column(
@@ -76,12 +76,8 @@ class HistoryGameQuestionScreenState extends State<HistoryGameQuestionScreen>
     );
   }
 
-  HistoryGameLevelHeader createHeader(QuestionInfo questionInfo) {
+  HistoryGameLevelHeader createHeader() {
     var header = HistoryGameLevelHeader(
-      onBackButtonClick: () {
-        widget.gameScreenManagerState.goBack(widget);
-      },
-      campaignLevel: widget.campaignLevel,
       availableHints: widget.gameContext.amountAvailableHints,
       animateScore: widget.isGameFinishedSuccessful(),
       disableHintBtn: widget.hintDisabledPossibleAnswers.isNotEmpty,

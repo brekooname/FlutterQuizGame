@@ -15,7 +15,7 @@ class ImageService {
 
   Image getSpecificImage(
       {required String imageName,
-      String imageExtension = "png",
+      required String imageExtension,
       String? module,
       double? maxWidth,
       double? maxHeight}) {
@@ -26,7 +26,7 @@ class ImageService {
 
   Image getMainImage(
       {required String imageName,
-      String imageExtension = "png",
+      required String imageExtension,
       String? module,
       double? maxWidth,
       double? maxHeight}) {
@@ -41,7 +41,7 @@ class ImageService {
 
   AssetImage getMainAssetImage({
     required String imageName,
-    String imageExtension = "png",
+    required String imageExtension,
     String? module,
   }) {
     return getAssetByImagePath(

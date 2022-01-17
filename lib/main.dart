@@ -96,8 +96,8 @@ class MyAppState extends State<MyApp> {
 
     await initAppConfig(appConfig);
 
-    widget.backgroundTexture =
-        ImageService().getSpecificImage(imageName: "background_texture");
+    widget.backgroundTexture = ImageService().getSpecificImage(
+        imageName: "background_texture", imageExtension: "png");
     if (MyApp.kIsMobile && MyApp.isExtraContentLocked) {
       MobileAds.instance.initialize();
       widget.adService.initInterstitialAd();
@@ -184,7 +184,7 @@ class MyAppState extends State<MyApp> {
       ////
       widgetToShow = createScreen(MyApp.gameScreenManager, widget.bannerAd);
       Future.delayed(const Duration(milliseconds: 100), () {
-        var campaignLevel = GeoQuizCampaignLevelService().level_0;
+        var campaignLevel = GeoQuizCampaignLevelService().level_1;
         MyApp.gameScreenManager.currentScreen!.gameScreenManagerState
             .showNewGameScreen(campaignLevel);
         widgetToShow = createScreen(MyApp.gameScreenManager, widget.bannerAd);

@@ -59,7 +59,12 @@ class GeoQuizOptionsQuestionParser
         _geoQuizCountryUtils.isFlagsOrMapsCategory(question.category)) {
       result = "";
     } else if (isCategoryFindAnswerByQuestionName(question)) {
-      result = getCountryNamesFromQuestionOptions(question).join(", ");
+      var options = getCountryNamesFromQuestionOptions(question);
+      var maxCountriesToShowInQuestion = 10;
+      result = (options.length > maxCountriesToShowInQuestion
+              ? options.sublist(0, maxCountriesToShowInQuestion)
+              : options)
+          .join(", ");
     } else if (_geoQuizCountryUtils
         .isGeographicalRegionOrEmpireCategory(question.category)) {
       result = question.rawString.split(":")[0];

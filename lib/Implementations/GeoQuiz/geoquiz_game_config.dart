@@ -37,7 +37,7 @@ class GeoQuizGameConfig extends GameConfig {
   ImageRepeat get backgroundTextureRepeat => ImageRepeat.noRepeat;
 
   @override
-  Color get screenBackgroundColor => Colors.blue.shade100.withOpacity(0.8);
+  Color get screenBackgroundColor => const Color.fromRGBO(198, 236, 255, 1);
 
   //iOS
   // @override

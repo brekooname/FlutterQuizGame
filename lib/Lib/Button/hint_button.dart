@@ -43,6 +43,7 @@ class HintButtonState extends State<HintButton> {
         widget.availableHints <= 0 && widget.watchRewardedAdForHint;
     var icon = ImageService().getMainImage(
         imageName: shouldShowRewardedAd ? "btn_hint_ad" : "btn_hint",
+        imageExtension: "png",
         module: "buttons",
         maxWidth: widget.buttonSize.width);
 

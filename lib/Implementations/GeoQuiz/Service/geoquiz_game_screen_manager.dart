@@ -74,7 +74,7 @@ class GeoQuizGameScreenManagerState extends State<GeoQuizGameScreenManager>
     var questionConfig = GeoQuizGameQuestionConfig();
     //
     ////
-    // category = questionConfig.cat3;
+    // category = questionConfig.cat9;
     // difficulty = questionConfig.diff0;
     ////
     //

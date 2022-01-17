@@ -188,6 +188,7 @@ class HistoryMainMenuScreenState extends State<HistoryMainMenuScreen>
       child: imageService.getSpecificImage(
           imageName:
               "history_btn_diff" + campaignLevel.difficulty.index.toString(),
+          imageExtension: "png",
           maxWidth: iconWidth / 1.2,
           module: "buttons"),
     );

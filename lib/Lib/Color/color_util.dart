@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'dart:math';
 
 class ColorUtil {
+  ///Positive amount => color will be more dark
+  ///Negative amount => color will be more light
   static Color colorDarken(Color color, [double amount = .1]) {
     final hsl = HSLColor.fromColor(color);
     final hslDark = hsl.withLightness((hsl.lightness - amount).clamp(0.0, 1.0));
@@ -21,7 +23,8 @@ class ColorUtil {
 
   static Widget imageToGreyScale(Widget image) {
     return ColorFiltered(
-      colorFilter: ColorFilter.matrix(ColorFilterGenerator.saturationAdjustMatrix(value: -1)),
+      colorFilter: ColorFilter.matrix(
+          ColorFilterGenerator.saturationAdjustMatrix(value: -1)),
       child: Container(
         child: image,
       ),

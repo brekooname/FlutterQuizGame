@@ -60,6 +60,7 @@ class RateAppPopup extends StatelessWidget with MyPopup {
         children: <Widget>[
           imageService.getMainImage(
               imageName: "popup_rate_app_stars_background",
+              imageExtension: "png",
               module: "popup",
               maxWidth: defaultBackgroundImageWidth),
           SizedBox(height: screenDimensions.h(5)),
