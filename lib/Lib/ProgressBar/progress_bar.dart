@@ -86,8 +86,6 @@ class InternalAnimatedWidget extends AnimatedWidget {
     double endWidth = currentStep * widthPerStep;
     double startWidth = max(endWidth - widthPerStep, 0);
 
-    print("w " + width.toString() + " ww " + endWidth.toString());
-
     var filledBar = Container(
       width: animateStepIncrease
           ? Tween<double>(begin: startWidth, end: endWidth).evaluate(animation)
