@@ -65,7 +65,7 @@ class HistoryGameLevelHeader extends StatelessWidget {
                     child: animateScore
                         ? AnimateZoomInZoomOutText(
                             zoomAmount: 1.4,
-                            zoomInZoomOutOnce: true,
+                            executeAnimationOnlyOnce: true,
                             toAnimateText: scoreText)
                         : scoreText),
                 const Spacer(),

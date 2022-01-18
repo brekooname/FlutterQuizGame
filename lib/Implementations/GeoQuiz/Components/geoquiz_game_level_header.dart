@@ -69,7 +69,6 @@ class GeoQuizGameLevelHeader extends StatelessWidget {
               ],
             )));
 
-    var lightGreenAccent = Colors.lightGreenAccent;
     var progressBarWidth = screenDimensions.w(65);
     Widget scoreContainer = SizedBox(
       width: progressBarWidth,
@@ -79,9 +78,7 @@ class GeoQuizGameLevelHeader extends StatelessWidget {
           SizedBox(
             width: screenDimensions.w(20),
           ),
-          const Spacer(),
           createScoreContainer(),
-          const Spacer(),
           createMultiplierContainer(),
           const Spacer(),
         ],
@@ -110,16 +107,16 @@ class GeoQuizGameLevelHeader extends StatelessWidget {
 
   Widget createScoreContainer() {
     var scoreText = MyText(
-      text: (score > 0 ? "+" : "") + score.toString(),
+      text: (score > 0 ? "" : "") + score.toString(),
       fontConfig: FontConfig(
-          textColor: Colors.lightGreenAccent,
+          textColor: Colors.yellow,
           borderColor: Colors.black,
           fontSize: FontConfig.bigFontSize),
     );
     return allQuestionsAnswered
         ? AnimateIncreaseNumberText(
             startNr: score,
-            endNr: score * (consecutiveCorrectAnswers + 1),
+            endNr: score * (consecutiveCorrectAnswers),
             toAnimateText: scoreText)
         : scoreText;
   }
@@ -127,11 +124,16 @@ class GeoQuizGameLevelHeader extends StatelessWidget {
   Widget createMultiplierContainer() {
     var multiplier = MyText(
       width: screenDimensions.w(20),
-      text: "x " + (consecutiveCorrectAnswers + 1).toString(),
+      text: consecutiveCorrectAnswers == 0 && !animateWrongAnswer
+          ? ""
+          : (consecutiveCorrectAnswers).toString() + "X",
       fontConfig: FontConfig(
-          textColor: Colors.white,
-          borderColor: Colors.black,
-          fontSize: FontConfig.getCustomFontSize(1.2)),
+          borderWidth: FontConfig.standardBorderWidth,
+          borderColor: Colors.green.shade900,
+          textColor: consecutiveCorrectAnswers == 0
+              ? Colors.white
+              : Colors.lightGreenAccent.shade200,
+          fontSize: FontConfig.getCustomFontSize(1.1)),
     );
     return animateScore
         ? _createAnimateZoomInZoomOutText(Colors.lightGreenAccent, multiplier)
@@ -144,7 +146,7 @@ class GeoQuizGameLevelHeader extends StatelessWidget {
       Color colorTo, MyText myText) {
     return AnimateZoomInZoomOutText(
         zoomAmount: 1.4,
-        zoomInZoomOutOnce: true,
+        executeAnimationOnlyOnce: true,
         colorTo: colorTo,
         toAnimateText: myText);
   }

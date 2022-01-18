@@ -41,7 +41,7 @@ class HintButtonState extends State<HintButton> {
   Widget build(BuildContext context) {
     var shouldShowRewardedAd =
         widget.availableHints <= 0 && widget.watchRewardedAdForHint;
-    var icon = ImageService().getMainImage(
+    Image icon = ImageService().getMainImage(
         imageName: shouldShowRewardedAd ? "btn_hint_ad" : "btn_hint",
         imageExtension: "png",
         module: "buttons",

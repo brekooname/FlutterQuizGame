@@ -24,6 +24,7 @@ import 'geoquiz_game_hangman_screen.dart';
 class GeoQuizQuestionScreen extends GameScreen<GeoQuizGameContext>
     with QuizOptionsGameScreen<GeoQuizGameContext> {
   final GeoQuizCountryUtils _geoQuizCountryUtils = GeoQuizCountryUtils();
+  bool animateWrongAnswer = false;
 
   GeoQuizQuestionScreen(
     GameScreenManagerState gameScreenManagerState, {
@@ -71,6 +72,10 @@ class GeoQuizQuestionScreen extends GameScreen<GeoQuizGameContext>
 
   @override
   void executeOnPressedWrongAnswer(String answerBtnText) {
+    super.executeOnPressedWrongAnswer(answerBtnText);
+    if (isGameFinishedFailed() && gameContext.consecutiveCorrectAnswers > 0) {
+      animateWrongAnswer = true;
+    }
     gameContext.consecutiveCorrectAnswers = 0;
   }
 
@@ -157,13 +162,14 @@ class GeoQuizQuestionScreenState extends State<GeoQuizQuestionScreen>
       availableHints: widget.gameContext.amountAvailableHints,
       allQuestionsAnswered: widget.allQuestionsAnswered,
       animateScore: gameFinishedSuccessful,
-      animateWrongAnswer: widget.isGameFinishedFailed(),
+      animateWrongAnswer: widget.animateWrongAnswer,
       animateStepIncrease: gameFinishedSuccessful,
       disableHintBtn: widget.hintDisabledPossibleAnswers.isNotEmpty,
       hintButtonOnClick: () {
         widget.onHintButtonClick(setStateCallback);
       },
     );
+    widget.animateWrongAnswer = false;
     return header;
   }
 

@@ -6,14 +6,14 @@ class AnimateZoomInZoomOutText extends StatefulWidget {
   static const double defaultZoomAmount = 1.1;
   MyText toAnimateText;
   double zoomAmount;
-  bool zoomInZoomOutOnce;
+  bool executeAnimationOnlyOnce;
   Duration duration;
   Color? colorTo;
 
   AnimateZoomInZoomOutText(
       {Key? key,
       this.zoomAmount = defaultZoomAmount,
-      this.zoomInZoomOutOnce = false,
+      this.executeAnimationOnlyOnce = false,
       this.colorTo,
       this.duration = const Duration(milliseconds: 500),
       required this.toAnimateText})
@@ -35,7 +35,7 @@ class MyAnimatedWidgetState extends State<AnimateZoomInZoomOutText>
       if (status == AnimationStatus.completed) {
         controller.reverse();
       } else if (status == AnimationStatus.dismissed &&
-          !widget.zoomInZoomOutOnce) {
+          !widget.executeAnimationOnlyOnce) {
         controller.forward();
       }
     });

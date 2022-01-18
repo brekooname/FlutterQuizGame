@@ -150,7 +150,7 @@ class GameUser {
     //
     ////
     //
-    // testCategories = [GeoQuizGameQuestionConfig().cat2];
+    // testCategories = [GeoQuizGameQuestionConfig().cat3];
     // testDifficulties = [GeoQuizGameQuestionConfig().diff0];
     ////
     //

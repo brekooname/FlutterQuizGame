@@ -128,7 +128,7 @@ class GeoQuizOptionsQuestionParser
     List<int> allWrongOptions = questionCollectorService
         .getStatsQuestions(category)
         .sublist(numberOfQuestionsForStatisticsCategory,
-            numberOfQuestionsForStatisticsCategory + 10)
+            numberOfQuestionsForStatisticsCategory + 20)
         .map((e) => e.rawString.split(":")[0].parseToInt)
         .toList();
     allWrongOptions.shuffle();
