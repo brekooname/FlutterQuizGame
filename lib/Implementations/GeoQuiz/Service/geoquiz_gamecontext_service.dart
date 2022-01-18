@@ -1,6 +1,7 @@
 import 'package:flutter_app_quiz_game/Game/Game/campaign_level.dart';
 import 'package:flutter_app_quiz_game/Game/Game/game_context.dart';
 import 'package:flutter_app_quiz_game/Game/Game/game_context_service.dart';
+import 'package:flutter_app_quiz_game/Game/Question/Model/question.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Questions/AllContent/geoquiz_question_collector_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Questions/geoquiz_country_utils.dart';
@@ -11,6 +12,8 @@ import 'package:flutter_app_quiz_game/Lib/Storage/quiz_game_local_storage.dart';
 import '../../../main.dart';
 
 class GeoQuizGameContextService {
+
+  static const int numberOfQuestionsPerGame = 10;
   final GeoQuizLocalStorage _geoQuizLocalStorage = GeoQuizLocalStorage();
   final GeoQuizCountryUtils _geoQuizCountryUtils = GeoQuizCountryUtils();
 
@@ -24,14 +27,17 @@ class GeoQuizGameContextService {
   GeoQuizGameContextService.internal();
 
   GeoQuizGameContext createGameContext(CampaignLevel campaignLevel) {
-    var questions = MyApp.appId.gameConfig.questionCollectorService
+    List<Question> questions = MyApp.appId.gameConfig.questionCollectorService
         .getAllQuestionsForCategoriesAndDifficulties(
       [campaignLevel.difficulty],
       campaignLevel.category,
     );
 
+    questions.shuffle();
+    questions = questions.sublist(0, numberOfQuestionsPerGame);
+
     var gameContext = GameContextService()
-        .createGameContextWithHintsAndQuestions(1, questions);
+        .createGameContextWithHintsAndQuestions(5, questions);
 
     return GeoQuizGameContext(gameContext);
   }

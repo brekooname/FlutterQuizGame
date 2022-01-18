@@ -48,7 +48,18 @@ class GeoQuizOptionsQuestionParser
       }
     } else {
       result = getCountryNamesFromQuestionOptions(question);
+      var maxNrOfCorrectAnswerToUse = 9;
+      result = result.length > maxNrOfCorrectAnswerToUse
+          ? result.sublist(0, maxNrOfCorrectAnswerToUse)
+          : result;
     }
+    var gameQuestionConfig = GeoQuizGameQuestionConfig();
+    if ([gameQuestionConfig.diff0, gameQuestionConfig.diff1]
+        .contains(question.difficulty)) {
+      result.shuffle();
+      result = [result.first];
+    }
+
     return result;
   }
 

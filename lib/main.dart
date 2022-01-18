@@ -11,6 +11,7 @@ import 'package:in_app_purchase_android/in_app_purchase_android.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'Game/Constants/app_id.dart';
+import 'Game/Game/campaign_level.dart';
 import 'Implementations/GeoQuiz/Constants/geoquiz_campaign_level_service.dart';
 import 'Lib/Ads/ad_service.dart';
 import 'Lib/Constants/language.dart';
@@ -39,6 +40,7 @@ class MyApp extends StatefulWidget {
   static bool kIsTest = false;
 
   ////////////
+  static CampaignLevel campaignLevel = GeoQuizCampaignLevelService().level_1;
   // static String webAppKey = "history";
   static String webAppKey = "geoquiz";
   static Language webLanguage = Language.en;
@@ -183,12 +185,11 @@ class MyAppState extends State<MyApp> {
       //
       ////
       widgetToShow = createScreen(MyApp.gameScreenManager, widget.bannerAd);
-      Future.delayed(const Duration(milliseconds: 100), () {
-        var campaignLevel = GeoQuizCampaignLevelService().level_1;
-        MyApp.gameScreenManager.currentScreen!.gameScreenManagerState
-            .showNewGameScreen(campaignLevel);
-        widgetToShow = createScreen(MyApp.gameScreenManager, widget.bannerAd);
-      });
+      // Future.delayed(const Duration(milliseconds: 100), () {
+      //   MyApp.gameScreenManager.currentScreen!.gameScreenManagerState
+      //       .showNewGameScreen(MyApp.campaignLevel);
+      //   widgetToShow = createScreen(MyApp.gameScreenManager, widget.bannerAd);
+      // });
       ////
       //
       ////

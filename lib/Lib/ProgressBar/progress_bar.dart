@@ -82,7 +82,7 @@ class InternalAnimatedWidget extends AnimatedWidget {
   @override
   Widget build(BuildContext context) {
     final animation = listenable as Animation<double>;
-    double widthPerStep = this.widthPerStep / 1.0225;
+    double widthPerStep = this.widthPerStep;
     double endWidth = currentStep * widthPerStep;
     double startWidth = max(endWidth - widthPerStep, 0);
 
@@ -110,12 +110,12 @@ class InternalAnimatedWidget extends AnimatedWidget {
       width: width,
       height: height,
       decoration: BoxDecoration(
-          borderRadius:
-              BorderRadius.circular(FontConfig.standardBorderRadius / 2),
-          color: Colors.grey.shade200.withOpacity(0.5),
-          border: Border.all(
-              color: Colors.grey.shade400.withOpacity(0.5),
-              width: FontConfig.standardBorderWidth)),
+        borderRadius:
+            BorderRadius.circular(FontConfig.standardBorderRadius / 2),
+        color: ColorUtil.colorDarken(
+            HSLColor.fromColor(fillBarColor).withSaturation(0.3).toColor(),
+            -0.05),
+      ),
       child: Row(
         children: [filledBar, const Spacer()],
       ),

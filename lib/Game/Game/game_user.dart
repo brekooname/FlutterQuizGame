@@ -5,6 +5,7 @@ import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.da
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_info.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_info_status.dart';
 import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/Base/question_service.dart';
+import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Constants/geoquiz_game_question_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/list_extension.dart';
 
 class GameUser {
@@ -115,6 +116,9 @@ class GameUser {
 
   QuestionCategory? getNotPlayedRandomQuestionCategory() {
     var allOpenQuestions = getOpenQuestions().toList();
+
+    allOpenQuestions = getQuestionsForTest(allOpenQuestions);
+
     List<QuestionCategory> availableCategories =
         allOpenQuestions.map((e) => e.question.category).toSet().toList();
 
@@ -136,6 +140,32 @@ class GameUser {
         return availableCategories.first;
       }
     }
+  }
+
+  List<QuestionInfo> getQuestionsForTest(List<QuestionInfo> allOpenQuestions) {
+    var testCategories = [];
+    var testDifficulties = [];
+
+    ////
+    //
+    ////
+    //
+    // testCategories = [GeoQuizGameQuestionConfig().cat2];
+    // testDifficulties = [GeoQuizGameQuestionConfig().diff0];
+    ////
+    //
+    ////
+    //
+
+    allOpenQuestions = allOpenQuestions
+        .where((e) =>
+            testCategories.isEmpty ||
+            testCategories.contains(e.question.category))
+        .where((e) =>
+            testDifficulties.isEmpty ||
+            testDifficulties.contains(e.question.difficulty))
+        .toList();
+    return allOpenQuestions;
   }
 
   void removeQuestionInfos(List<QuestionInfo> gameQuestionInfos) {

@@ -1,45 +1,38 @@
+import 'dart:math';
+
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
+import 'package:flutter_app_quiz_game/Lib/Audio/my_audio_player.dart';
 import 'package:flutter_app_quiz_game/Lib/Font/font_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
-class AnimateZoomInZoomOutText extends StatefulWidget {
+class AnimateColorInColorOutText extends StatefulWidget {
   static const double defaultZoomAmount = 1.1;
   MyText toAnimateText;
-  double zoomAmount;
-  bool zoomInZoomOutOnce;
-  Duration duration;
-  Color? colorTo;
+  Color colorTo;
 
-  AnimateZoomInZoomOutText(
-      {Key? key,
-      this.zoomAmount = defaultZoomAmount,
-      this.zoomInZoomOutOnce = false,
-      this.colorTo,
-      this.duration = const Duration(milliseconds: 500),
-      required this.toAnimateText})
+  AnimateColorInColorOutText(
+      {Key? key, required this.colorTo, required this.toAnimateText})
       : super(key: key);
 
   @override
   MyAnimatedWidgetState createState() => MyAnimatedWidgetState();
 }
 
-class MyAnimatedWidgetState extends State<AnimateZoomInZoomOutText>
+class MyAnimatedWidgetState extends State<AnimateColorInColorOutText>
     with TickerProviderStateMixin {
   late Animation<double> animation;
   late AnimationController controller;
 
   void startAnimation() {
-    controller = AnimationController(duration: widget.duration, vsync: this);
+    controller = AnimationController(
+        duration: const Duration(milliseconds: 300), vsync: this);
     animation = CurvedAnimation(parent: controller, curve: Curves.ease);
     animation.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
         controller.reverse();
-      } else if (status == AnimationStatus.dismissed &&
-          !widget.zoomInZoomOutOnce) {
-        controller.forward();
       }
     });
-
     controller.forward();
   }
 
@@ -47,9 +40,8 @@ class MyAnimatedWidgetState extends State<AnimateZoomInZoomOutText>
   Widget build(BuildContext context) {
     startAnimation();
     return InternalAnimatedWidget(
-        zoomAmount: widget.zoomAmount,
-        toAnimateText: widget.toAnimateText,
         colorTo: widget.colorTo,
+        toAnimateText: widget.toAnimateText,
         animation: animation);
   }
 
@@ -62,14 +54,12 @@ class MyAnimatedWidgetState extends State<AnimateZoomInZoomOutText>
 
 class InternalAnimatedWidget extends AnimatedWidget {
   MyText toAnimateText;
-  double zoomAmount;
-  Color? colorTo;
+  Color colorTo;
 
   InternalAnimatedWidget(
       {Key? key,
-      required this.zoomAmount,
+      required this.colorTo,
       required this.toAnimateText,
-      this.colorTo,
       required Animation<double> animation})
       : super(key: key, listenable: animation);
 
@@ -80,16 +70,11 @@ class InternalAnimatedWidget extends AnimatedWidget {
     var fontConfig = toAnimateText.fontConfig;
     return MyText(
         fontConfig: FontConfig(
-            textColor: colorTo == null
-                ? fontConfig.textColor
-                : ColorTween(begin: fontConfig.textColor, end: colorTo)
-                    .evaluate(animation),
+            textColor: ColorTween(begin: fontConfig.textColor, end: colorTo)
+                .evaluate(animation),
             fontWeight: fontConfig.fontWeight,
             borderWidth: fontConfig.borderWidth,
-            fontSize: Tween<double>(
-                    begin: fontConfig.fontSize,
-                    end: fontConfig.fontSize / zoomAmount)
-                .evaluate(animation),
+            fontSize: fontConfig.fontSize,
             borderColor: fontConfig.borderColor),
         text: toAnimateText.text,
         alignmentInsideContainer: toAnimateText.alignmentInsideContainer,

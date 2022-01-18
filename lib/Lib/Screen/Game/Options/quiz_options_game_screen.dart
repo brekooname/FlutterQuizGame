@@ -23,11 +23,11 @@ mixin QuizOptionsGameScreen<TGameContext extends GameContext> {
   late QuizGameLocalStorage quizGameLocalStorage;
   late TGameContext _gameContext;
   late Set<String> _possibleAnswers;
-  late List<String> _correctAnswersForQuestion;
   late QuestionInfo _currentQuestionInfo;
   Image? _questionImage;
   bool? _zoomableImage;
   ButtonSkinConfig? _buttonSkinConfig;
+  late List<String> correctAnswersForQuestion;
   Set<String> hintDisabledPossibleAnswers = HashSet();
 
   void initQuizOptionsScreen(
@@ -47,8 +47,8 @@ mixin QuizOptionsGameScreen<TGameContext extends GameContext> {
 
     var question = currentQuestionInfo.question;
     var questionService = question.questionService;
-    _correctAnswersForQuestion = questionService.getCorrectAnswers(question);
-    _buttonSkinConfig = _correctAnswersForQuestion.length == 1
+    correctAnswersForQuestion = questionService.getCorrectAnswers(question);
+    _buttonSkinConfig = correctAnswersForQuestion.length == 1
         ? buttonSkinConfig
         : multipleCorrectAnswersButtonSkinConfig ?? buttonSkinConfig;
 
@@ -142,7 +142,7 @@ mixin QuizOptionsGameScreen<TGameContext extends GameContext> {
     var question = _currentQuestionInfo.question;
     var btnSize = _getAnswerBtnSize();
     var answerBtnDisabled = _wrongPressedAnswer.isNotEmpty ||
-        _correctAnswersForQuestion.contains(answerBtnText) &&
+        correctAnswersForQuestion.contains(answerBtnText) &&
             _currentQuestionInfo.pressedAnswers.contains(answerBtnText) ||
         _isGameFinished() ||
         hintDisabledPossibleAnswers.contains(answerBtnText.toLowerCase());
@@ -151,7 +151,7 @@ mixin QuizOptionsGameScreen<TGameContext extends GameContext> {
         ? _wrongPressedAnswer.contains(answerBtnText)
             ? Colors.red
             : question.questionService.isAnswerCorrectInOptionsList(
-                    _correctAnswersForQuestion, answerBtnText)
+                    correctAnswersForQuestion, answerBtnText)
                 ? Colors.green
                 : null
         : null;
@@ -178,14 +178,22 @@ mixin QuizOptionsGameScreen<TGameContext extends GameContext> {
       VoidCallback refreshSetState, VoidCallback goToNextScreenAfterPress) {
     _gameContext.gameUser.addAnswerToQuestionInfo(question, answerBtnText);
     if (question.questionService.isAnswerCorrectInOptionsList(
-        _correctAnswersForQuestion, answerBtnText)) {
-      _audioPlayer.playSuccess();
+        correctAnswersForQuestion, answerBtnText)) {
+      executeOnPressedCorrectAnswer();
     } else {
-      _audioPlayer.playFail();
-      _wrongPressedAnswer.add(answerBtnText);
+      executeOnPressedWrongAnswer(answerBtnText);
     }
     refreshSetState.call();
     _processGameFinished(question, goToNextScreenAfterPress);
+  }
+
+  void executeOnPressedCorrectAnswer() {
+    _audioPlayer.playSuccess();
+  }
+
+  void executeOnPressedWrongAnswer(String answerBtnText) {
+    _audioPlayer.playFail();
+    _wrongPressedAnswer.add(answerBtnText);
   }
 
   ButtonSkinConfig _defaultButtonSkinConfig() {
@@ -197,11 +205,11 @@ mixin QuizOptionsGameScreen<TGameContext extends GameContext> {
     var question = _currentQuestionInfo.question;
     var questionService = question.questionService;
     if (oneCorrectAnswerEnoughToWin) {
-      _correctAnswersForQuestion.shuffle();
-      _correctAnswersForQuestion = [_correctAnswersForQuestion.first];
+      correctAnswersForQuestion.shuffle();
+      correctAnswersForQuestion = [correctAnswersForQuestion.first];
       possibleAnswers = List.of(
           questionService.getQuizAnswerOptionsWithSingleCorrectAnswer(
-              _correctAnswersForQuestion.first, question));
+              correctAnswersForQuestion.first, question));
     } else {
       possibleAnswers = List.of(questionService.getQuizAnswerOptions(question));
     }
@@ -214,31 +222,38 @@ mixin QuizOptionsGameScreen<TGameContext extends GameContext> {
     var questionService = question.questionService;
     if (_isGameFinished()) {
       Future.delayed(
-          Duration(
-              milliseconds: _getValueBasedOnNrOfPossibleAnswers(
-                  1100, 1600, 1700, 1800, false)),
-          () => goToNextScreenAfterPress.call());
+          durationGoToNextScreen, () => goToNextScreenAfterPress.call());
       if (isGameFinishedSuccessful()) {
         _gameContext.gameUser.setWonQuestion(_currentQuestionInfo);
         quizGameLocalStorage.setWonQuestion(question);
       } else if (questionService.isGameFinishedFailedWithOptionList(
-          _correctAnswersForQuestion, _currentQuestionInfo.pressedAnswers)) {
+          correctAnswersForQuestion, _currentQuestionInfo.pressedAnswers)) {
         _gameContext.gameUser.setLostQuestion(_currentQuestionInfo);
         quizGameLocalStorage.setLostQuestion(question);
       }
     }
   }
 
+  Duration get durationGoToNextScreen => Duration(
+      milliseconds:
+          _getValueBasedOnNrOfPossibleAnswers(1100, 1600, 1700, 1800, false));
+
   bool isGameFinishedSuccessful() {
     return _currentQuestionInfo.question.questionService
         .isGameFinishedSuccessfulWithOptionList(
-            _correctAnswersForQuestion, _currentQuestionInfo.pressedAnswers);
+            correctAnswersForQuestion, _currentQuestionInfo.pressedAnswers);
+  }
+
+  bool isGameFinishedFailed() {
+    return _currentQuestionInfo.question.questionService
+        .isGameFinishedFailedWithOptionList(
+            correctAnswersForQuestion, _currentQuestionInfo.pressedAnswers);
   }
 
   bool _isGameFinished() {
     return _currentQuestionInfo.question.questionService
         .isGameFinishedWithOptionList(
-            _correctAnswersForQuestion, _currentQuestionInfo.pressedAnswers);
+            correctAnswersForQuestion, _currentQuestionInfo.pressedAnswers);
   }
 
   void onHintButtonClick(VoidCallback refreshSetState) {
@@ -249,7 +264,7 @@ mixin QuizOptionsGameScreen<TGameContext extends GameContext> {
 
     var optionsToDisable = List.of(_possibleAnswers);
     optionsToDisable.shuffle();
-    optionsToDisable.removeAll(_correctAnswersForQuestion);
+    optionsToDisable.removeAll(correctAnswersForQuestion);
 
     hintDisabledPossibleAnswers.add(optionsToDisable.first.toLowerCase());
     hintDisabledPossibleAnswers.add(optionsToDisable.last.toLowerCase());

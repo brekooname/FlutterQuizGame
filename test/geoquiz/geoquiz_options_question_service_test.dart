@@ -90,11 +90,10 @@ void testCapitals(
 
 void testGeographicalRegionAndEmpireCategory() {
   for (QuestionDifficulty diff in [
-    questionConfig.diff0,
     questionConfig.diff2,
   ]) {
     verifyQuestion(
-      "Which country is in this geographical region?",
+      "Which countries are located in this geographical region?",
       "Baltic states",
       ["Estonia", "Lithuania", "Latvia"],
       ["Estonia", "", "", "", "", ""],
@@ -102,14 +101,13 @@ void testGeographicalRegionAndEmpireCategory() {
     );
   }
   verifyQuestion(
-    "To which geographical region do these countries belong?",
+    "Which geographical region do these countries belong to?",
     "Lithuania, Estonia, Latvia",
     ["Baltic states"],
     ["Baltic states", "", "", ""],
     getQuestion(questionConfig.cat3, questionConfig.diff1),
   );
   for (QuestionDifficulty diff in [
-    questionConfig.diff1,
     questionConfig.diff3,
   ]) {
     var question = getQuestion(questionConfig.cat4, diff, questionAt: 1);
@@ -138,14 +136,14 @@ void testGeographicalRegionAndEmpireCategory() {
             ["India", "Afghanistan", "x", "Bangladesh"]),
         true);
     verifyQuestion(
-        "Which country or part of this country was part of this empire?",
+        "Which countries were partly or entirely part of this empire?",
         "Mughal Empire",
         expectedCorrectOptions,
         ["India", "", "", "", "", "", ""],
         question);
   }
   verifyQuestion(
-      "To which empire did these countries or part of these countries belong?",
+      "Which empire included territories from these countries?",
       "India, Afghanistan, Pakistan, Bangladesh",
       ["Mughal Empire"],
       ["Mughal Empire", "", "", ""],
@@ -154,12 +152,11 @@ void testGeographicalRegionAndEmpireCategory() {
 
 void testNeighboursCategory() {
   for (QuestionDifficulty diff in [
-    questionConfig.diff0,
     questionConfig.diff2,
     questionConfig.diff3
   ]) {
     verifyQuestion(
-        "Which country is a neighbour of Germany?",
+        "Find all the neighbours of this country",
         "Germany",
         [
           "Austria",
@@ -188,6 +185,28 @@ void testNeighboursCategory() {
         ],
         getQuestion(questionConfig.cat2, diff, questionAt: 7));
   }
+  verifyQuestion(
+      "Find a neighbour of this country",
+      "Germany",
+      [],
+      [
+        "Austria",
+        "",
+        "",
+        "",
+      ],
+      getQuestion(questionConfig.cat2, questionConfig.diff0, questionAt: 7),
+      expectedAtLeastOneOfCorrectOptions: [
+        "Austria",
+        "Belgium",
+        "Czech Republic",
+        "Denmark",
+        "France",
+        "Luxembourg",
+        "Netherlands",
+        "Poland",
+        "Switzerland"
+      ]);
 
   verifyQuestion(
       "Which country has these neighbours?",
@@ -232,7 +251,9 @@ void verifyQuestion(
     String expectedQuestionToDisplay,
     List<String> expectedCorrectOptions,
     List<String> expectedAnswerOptions,
-    Question question) {
+    Question question,
+    {List<String>? expectedAtLeastOneOfCorrectOptions}) {
+  questionService.clearCache();
   expect(questionService.getPrefixToBeDisplayedForQuestion(question),
       expectedPrefix,
       reason: "wrong displayed prefix");
@@ -242,34 +263,62 @@ void verifyQuestion(
 
   List<String> correctAnswers = questionService.getCorrectAnswers(question);
   verifyListOfCountries(
-      expectedCorrectOptions, correctAnswers.toSet(), "CORRECT ANSWERS");
+      expectedCorrectOptions, correctAnswers.toSet(), "CORRECT ANSWERS",
+      expectedAtLeastOneOfThisListAsCorrectOption:
+          expectedAtLeastOneOfCorrectOptions);
   debugPrint("CORRECT ANSWERS " + correctAnswers.toString());
 
   Set<String> answerOptions = questionService.getQuizAnswerOptions(question);
-  verifyListOfCountries(expectedAnswerOptions, answerOptions, "OPTIONS");
+  verifyListOfCountries(expectedAnswerOptions, answerOptions, "OPTIONS",
+      expectedAtLeastOneOfThisListAsCorrectOption:
+          expectedAtLeastOneOfCorrectOptions);
   debugPrint("OPTIONS " + answerOptions.toString());
 }
 
 void verifyListOfCountries(List<String> expectedListOfCountries,
-    Set<String> actualListOfCountries, String typeOfList) {
+    Set<String> actualListOfCountries, String typeOfList,
+    {List<String>? expectedAtLeastOneOfThisListAsCorrectOption}) {
   var actualListOfCountriesString =
       actualListOfCountries.map((e) => "\"" + e + "\"").toString();
-  if (expectedListOfCountries.where((element) => element.isNotEmpty).length ==
+  var reason = typeOfList +
+      " expected countries are not same with actual " +
+      actualListOfCountriesString;
+  if (expectedAtLeastOneOfThisListAsCorrectOption != null) {
+    if (typeOfList == "CORRECT ANSWERS" && actualListOfCountries.length == 1) {
+      expect(
+          expectedAtLeastOneOfThisListAsCorrectOption
+              .contains(actualListOfCountries.first),
+          true,
+          reason: reason);
+    } else if (typeOfList == "OPTIONS") {
+      expect(
+          expectedAtLeastOneOfThisListAsCorrectOption
+              .contains(actualListOfCountries.first),
+          true,
+          reason: reason);
+      expect(actualListOfCountries.length, 4,
+          reason: typeOfList +
+              " expected a different amount of countries " +
+              actualListOfCountriesString);
+    }
+  } else if (expectedListOfCountries
+          .where((element) => element.isNotEmpty)
+          .length ==
       1) {
     expect(actualListOfCountries.contains(expectedListOfCountries.first), true,
+        reason: reason);
+    expect(actualListOfCountries.length, expectedListOfCountries.length,
         reason: typeOfList +
-            " expected countries are not same with actual" +
+            " expected a different amount of countries " +
             actualListOfCountriesString);
   } else {
     expect(actualListOfCountries.containsAll(expectedListOfCountries), true,
+        reason: reason);
+    expect(actualListOfCountries.length, expectedListOfCountries.length,
         reason: typeOfList +
-            " expected countries are not same with actual " +
+            " expected a different amount of countries " +
             actualListOfCountriesString);
   }
-  expect(actualListOfCountries.length, expectedListOfCountries.length,
-      reason: typeOfList +
-          " expected a different amount of countries " +
-          actualListOfCountriesString);
 }
 
 Question getQuestion(QuestionCategory category, QuestionDifficulty difficulty,

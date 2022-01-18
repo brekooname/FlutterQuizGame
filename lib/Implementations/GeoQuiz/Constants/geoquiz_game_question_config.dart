@@ -26,7 +26,7 @@ class GeoQuizGameQuestionConfig extends GameQuestionConfig {
   //// diff 0 ----> find one
   //// diff 1 ----> find by neighbours
   //// diff 2 ----> find all
-  //// diff 3 ----> find all hangman
+  //// diff 3 ----> find all
   late QuestionCategory cat2;
 
   //GEOGRAPHICAL REGION ===>
@@ -68,18 +68,14 @@ class GeoQuizGameQuestionConfig extends GameQuestionConfig {
     //
     //CATEGORIES
     singleton.cat0 = QuestionCategory(
-      index: 0,
-      questionCategoryService: GeoQuizOptionsCategoryQuestionService(),
-    );
+        index: 0,
+        questionCategoryService: GeoQuizOptionsCategoryQuestionService());
     singleton.cat1 = QuestionCategory(
         index: 1,
-        questionCategoryService: getGeoQuizStatisticsCategoryQuestionService());
+        questionCategoryService: GeoQuizOptionsCategoryQuestionService());
     singleton.cat2 = QuestionCategory(
         index: 2,
-        questionCategoryService: GeoQuizOptionsCategoryQuestionService(),
-        questionCategoryServiceMap: {
-          singleton.diff3: getGeoQuizStatisticsCategoryQuestionService()
-        });
+        questionCategoryService: GeoQuizOptionsCategoryQuestionService());
     singleton.cat3 = QuestionCategory(
         index: 3,
         questionCategoryService: GeoQuizOptionsCategoryQuestionService());
@@ -103,12 +99,6 @@ class GeoQuizGameQuestionConfig extends GameQuestionConfig {
         questionCategoryService: GeoQuizOptionsCategoryQuestionService());
 
     return singleton;
-  }
-
-  static QuestionCategoryService getGeoQuizStatisticsCategoryQuestionService() {
-    return HangmanService.isHangmanSupported()
-        ? GeoQuizHangmanCategoryQuestionService()
-        : GeoQuizOptionsCategoryQuestionService();
   }
 
   GeoQuizGameQuestionConfig.internal();
@@ -163,16 +153,14 @@ class GeoQuizGameQuestionConfig extends GameQuestionConfig {
         () => label.l_which_geographical_region_do_these_countries_belong_to);
     res.putIfAbsent(
         QuestionCategoryWithPrefixCode(category: cat4, prefixCode: 0),
-        () => label
-            .l_which_country_was_partly_or_entirely_part_of_this_empire);
+        () => label.l_which_country_was_partly_or_entirely_part_of_this_empire);
     res.putIfAbsent(
         QuestionCategoryWithPrefixCode(category: cat4, prefixCode: 1),
         () => label
             .l_which_countries_were_partly_or_entirely_part_of_this_empire);
     res.putIfAbsent(
         QuestionCategoryWithPrefixCode(category: cat4, prefixCode: 2),
-        () => label
-            .l_which_empire_included_territories_from_these_countries);
+        () => label.l_which_empire_included_territories_from_these_countries);
     res.putIfAbsent(
         QuestionCategoryWithPrefixCode(category: cat5, prefixCode: 0),
         () => label.l_which_landmark_is_shown_in_the_photo);

@@ -49,14 +49,14 @@ mixin GameScreenManagerState<TGameContext extends GameContext> {
   @protected
   Widget showScreen(StandardScreen? currentScreen) {
     return currentScreen != null
-        ? AnimatedSwitcher(
-            key: UniqueKey(),
+        ? SafeArea(
+            child: AnimatedSwitcher(
             duration: const Duration(milliseconds: 200),
             transitionBuilder: (Widget child, Animation<double> animation) {
               return FadeTransition(child: child, opacity: animation);
             },
             child: currentScreen,
-          )
+          ))
         : Container();
   }
 

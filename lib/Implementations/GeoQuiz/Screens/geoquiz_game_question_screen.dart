@@ -5,8 +5,10 @@ import 'package:flutter_app_quiz_game/Game/Question/Model/question_info_status.d
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Components/geoquiz_game_level_header.dart';
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Constants/geoquiz_campaign_level_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Constants/geoquiz_game_question_config.dart';
+import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Questions/AnswerOptions/geoquiz_options_question_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Questions/geoquiz_country_utils.dart';
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Questions/geoquiz_game_context.dart';
+import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Service/geoquiz_gamecontext_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Service/geoquiz_local_storage.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/button_skin_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Color/color_util.dart';
@@ -37,6 +39,13 @@ class GeoQuizQuestionScreen extends GameScreen<GeoQuizGameContext>
             category,
             [gameContext.gameUser.getRandomQuestion(difficulty, category)],
             key: key) {
+    if (currentQuestionInfo.question.questionService
+        is GeoQuizOptionsQuestionService) {
+      (currentQuestionInfo.question.questionService
+              as GeoQuizOptionsQuestionService)
+          .clearCache();
+    }
+
     initQuizOptionsScreen(
         gameContext, GeoQuizLocalStorage(), currentQuestionInfo,
         questionImage: getQuestionImage(category),
@@ -51,9 +60,33 @@ class GeoQuizQuestionScreen extends GameScreen<GeoQuizGameContext>
   }
 
   @override
+  void executeOnPressedCorrectAnswer() {
+    super.executeOnPressedCorrectAnswer();
+    if (isGameFinishedSuccessful()) {
+      gameContext.gameScore = gameContext.gameScore + 10;
+      gameContext.consecutiveCorrectAnswers =
+          gameContext.consecutiveCorrectAnswers + 1;
+    }
+  }
+
+  @override
+  void executeOnPressedWrongAnswer(String answerBtnText) {
+    gameContext.consecutiveCorrectAnswers = 0;
+  }
+
+  @override
+  Duration get durationGoToNextScreen => allQuestionsAnswered
+      ? const Duration(milliseconds: 2500)
+      : super.durationGoToNextScreen;
+
+  @override
   int nrOfQuestionsToShowInterstitialAd() {
     return GeoQuizHangmanScreen.showInterstitialAdEveryNQuestions;
   }
+
+  bool get allQuestionsAnswered =>
+      GeoQuizGameContextService.numberOfQuestionsPerGame ==
+      gameContext.gameUser.countAllQuestions([QuestionInfoStatus.won]);
 
   @override
   State<GeoQuizQuestionScreen> createState() => GeoQuizQuestionScreenState();
@@ -115,11 +148,17 @@ class GeoQuizQuestionScreenState extends State<GeoQuizQuestionScreen>
   }
 
   GeoQuizGameLevelHeader createHeader() {
+    var gameFinishedSuccessful = widget.isGameFinishedSuccessful();
     var header = GeoQuizGameLevelHeader(
+      score: widget.gameContext.gameScore,
       nrOfCorrectAnsweredQuestions: widget.gameContext.gameUser
           .countAllQuestions([QuestionInfoStatus.won]),
+      consecutiveCorrectAnswers: widget.gameContext.consecutiveCorrectAnswers,
       availableHints: widget.gameContext.amountAvailableHints,
-      animateStepIncrease: widget.isGameFinishedSuccessful(),
+      allQuestionsAnswered: widget.allQuestionsAnswered,
+      animateScore: gameFinishedSuccessful,
+      animateWrongAnswer: widget.isGameFinishedFailed(),
+      animateStepIncrease: gameFinishedSuccessful,
       disableHintBtn: widget.hintDisabledPossibleAnswers.isNotEmpty,
       hintButtonOnClick: () {
         widget.onHintButtonClick(setStateCallback);

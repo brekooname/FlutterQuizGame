@@ -2,7 +2,6 @@ import 'package:flutter_app_quiz_game/Game/Question/Model/question.dart';
 import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/Base/question_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Constants/geoquiz_game_question_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/string_extension.dart';
-import 'package:flutter_app_quiz_game/Lib/Localization/localization_service.dart';
 
 import '../../../../main.dart';
 import '../geoquiz_country_utils.dart';
@@ -11,8 +10,8 @@ import 'geoquiz_options_question_parser.dart';
 class GeoQuizOptionsQuestionService extends QuestionService {
   final GeoQuizCountryUtils _geoQuizCountryUtils = GeoQuizCountryUtils();
   final GeoQuizGameQuestionConfig _questionConfig = GeoQuizGameQuestionConfig();
-  final LocalizationService _localizationService = LocalizationService();
   late GeoQuizOptionsQuestionParser questionParser;
+  List<String>? questionCorrectAnswersCache;
 
   static final GeoQuizOptionsQuestionService singleton =
       GeoQuizOptionsQuestionService.internal();
@@ -46,7 +45,13 @@ class GeoQuizOptionsQuestionService extends QuestionService {
 
   @override
   List<String> getCorrectAnswers(Question question) {
-    return questionParser.getCorrectAnswersFromRawString(question);
+    questionCorrectAnswersCache ??=
+        questionParser.getCorrectAnswersFromRawString(question);
+    return questionCorrectAnswersCache!;
+  }
+
+  void clearCache() {
+    questionCorrectAnswersCache = null;
   }
 
   @override
@@ -67,8 +72,6 @@ class GeoQuizOptionsQuestionService extends QuestionService {
       Question question, List<String> correctAnswers) {
     String currentCountryToSearchRange =
         _getCurrentCountryToSearchRange(question);
-    var nrOfCorrectAnswerToUse =
-        correctAnswers.length > 9 ? 9 : correctAnswers.length;
     return questionParser.getAnswerOptionsInCountryRange(
         currentCountryToSearchRange,
         correctAnswers.toSet(),
@@ -78,8 +81,8 @@ class GeoQuizOptionsQuestionService extends QuestionService {
                 .getCountryNamesFromQuestionOptions(question)
                 .toSet()
             : {},
-        nrOfCorrectAnswerToUse,
-        nrOfCorrectAnswerToUse + 3);
+        correctAnswers.length,
+        correctAnswers.length + 3);
   }
 
   Set<String> _getStatsCategoryAnswerOptions(Question question) {

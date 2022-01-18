@@ -17,11 +17,13 @@ class HistoryGameLevelHeader extends StatelessWidget {
   ScreenDimensionsService screenDimensions = ScreenDimensionsService();
 
   HistoryGameLevelHeader(
-      {Key? key, required this.score,
+      {Key? key,
+      required this.score,
       this.animateScore = false,
       this.disableHintBtn = false,
       required this.hintButtonOnClick,
-      required this.availableHints}) : super(key: key);
+      required this.availableHints})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
