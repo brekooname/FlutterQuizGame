@@ -24,14 +24,14 @@ class GeoQuizQuestionCollectorService
 
   factory GeoQuizQuestionCollectorService() {
     singleton._percentOfListForDifficulty.putIfAbsent(
-        singleton._gameQuestionConfig.diff0, () => PercentRangeForList(0, 20));
+        singleton._gameQuestionConfig.diff0, () => PercentRangeForList(0, 10));
     singleton._percentOfListForDifficulty.putIfAbsent(
-        singleton._gameQuestionConfig.diff1, () => PercentRangeForList(20, 40));
+        singleton._gameQuestionConfig.diff1, () => PercentRangeForList(10, 25));
     singleton._percentOfListForDifficulty.putIfAbsent(
-        singleton._gameQuestionConfig.diff2, () => PercentRangeForList(40, 70));
+        singleton._gameQuestionConfig.diff2, () => PercentRangeForList(25, 50));
     singleton._percentOfListForDifficulty.putIfAbsent(
         singleton._gameQuestionConfig.diff3,
-        () => PercentRangeForList(70, 100));
+        () => PercentRangeForList(50, 100));
     return singleton;
   }
 

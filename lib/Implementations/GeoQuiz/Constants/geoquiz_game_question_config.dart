@@ -3,12 +3,9 @@ import 'dart:collection';
 import 'package:flutter_app_quiz_game/Game/GameType/game_question_config.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
-import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/Base/question_category_service.dart';
 import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/DependentAnswers/dependent_answers_question_category_service.dart';
-import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/Hangman/hangman_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Questions/AllContent/geoquiz_question_collector_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Questions/AnswerOptions/geoquiz_options_question_category_service.dart';
-import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Questions/Hangman/geoquiz_hangman_question_category_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Localization/localization_service.dart';
 
 class GeoQuizGameQuestionConfig extends GameQuestionConfig {
@@ -163,19 +160,19 @@ class GeoQuizGameQuestionConfig extends GameQuestionConfig {
         () => label.l_which_empire_included_territories_from_these_countries);
     res.putIfAbsent(
         QuestionCategoryWithPrefixCode(category: cat5, prefixCode: 0),
-        () => label.l_which_landmark_is_shown_in_the_photo);
+        () => label.l_landmarks);
     res.putIfAbsent(
         QuestionCategoryWithPrefixCode(category: cat6, prefixCode: 0),
-        () => label.l_which_country_has_this_capital);
+        () => label.l_capital_city);
     res.putIfAbsent(
         QuestionCategoryWithPrefixCode(category: cat7, prefixCode: 0),
-        () => label.l_which_country_has_this_flag);
+        () => label.l_flags);
     res.putIfAbsent(
         QuestionCategoryWithPrefixCode(category: cat8, prefixCode: 0),
-        () => label.l_which_natural_wonder_is_shown_in_the_photo);
+        () => label.l_natural_wonders);
     res.putIfAbsent(
         QuestionCategoryWithPrefixCode(category: cat9, prefixCode: 0),
-        () => label.l_which_country_is_shown_on_the_map);
+        () => label.l_find_on_map);
     return res;
   }
 }

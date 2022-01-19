@@ -9,12 +9,14 @@ class GameTitle extends StatelessWidget {
   FontConfig fontConfig;
   String text;
   String backgroundImagePath;
+  double? backgroundImageOpacity;
 
   GameTitle({
     Key? key,
     required this.fontConfig,
     required this.text,
     required this.backgroundImagePath,
+    this.backgroundImageOpacity,
     double? backgroundImageWidth,
   }) : super(key: key) {
     this.backgroundImageWidth =
@@ -25,12 +27,14 @@ class GameTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     var imageWithText =
         Stack(alignment: AlignmentDirectional.center, children: <Widget>[
-      Image.asset(
-        backgroundImagePath,
-        fit: BoxFit.fitWidth,
-        alignment: Alignment.center,
-        width: backgroundImageWidth,
-      ),
+      Opacity(
+          opacity: backgroundImageOpacity ?? 1,
+          child: Image.asset(
+            backgroundImagePath,
+            fit: BoxFit.fitWidth,
+            alignment: Alignment.center,
+            width: backgroundImageWidth,
+          )),
       MyText(
         text: text,
         width: backgroundImageWidth / 1.4,

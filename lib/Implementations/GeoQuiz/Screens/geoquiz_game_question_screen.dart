@@ -81,7 +81,7 @@ class GeoQuizQuestionScreen extends GameScreen<GeoQuizGameContext>
 
   @override
   Duration get durationGoToNextScreen => allQuestionsAnswered
-      ? const Duration(milliseconds: 2500)
+      ? const Duration(milliseconds: 3000)
       : super.durationGoToNextScreen;
 
   @override
