@@ -31,6 +31,7 @@ class GeoQuizCampaignLevelService extends CampaignLevelService {
         questionConfig.cat1,
         questionConfig.cat2,
         questionConfig.cat3,
+        questionConfig.cat4,
         questionConfig.cat5,
         questionConfig.cat6,
         questionConfig.cat7,
@@ -42,6 +43,7 @@ class GeoQuizCampaignLevelService extends CampaignLevelService {
       difficulty: questionConfig.diff2,
       category: [
         questionConfig.cat2,
+        questionConfig.cat3,
         questionConfig.cat4,
         questionConfig.cat5,
         questionConfig.cat6,

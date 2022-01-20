@@ -132,7 +132,7 @@ class HistoryMainMenuScreenState extends State<HistoryMainMenuScreen>
                   .getWonQuestionsForDiff(campaignLevel.difficulty)
                   .length ==
               totalQuestionsForCampaignLevel) {
-            widget.historyLocalStorage.resetLevel(campaignLevel.difficulty);
+            widget.historyLocalStorage.resetLevelQuestionsAndHints(campaignLevel.difficulty);
           }
           widget.gameScreenManagerState.showNewGameScreen(campaignLevel);
         },

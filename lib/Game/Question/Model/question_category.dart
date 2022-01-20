@@ -8,9 +8,11 @@ class QuestionCategory {
   late Map<QuestionDifficulty, QuestionCategoryService>
       _questionCategoryServiceMap;
   QuestionCategoryService? _questionCategoryService;
+  String? categoryLabel;
 
   QuestionCategory(
       {required this.index,
+      this.categoryLabel,
       QuestionCategoryService? questionCategoryService,
       Map<QuestionDifficulty, QuestionCategoryService>?
           questionCategoryServiceMap}) {
@@ -33,7 +35,7 @@ class QuestionCategory {
 
   @override
   String toString() {
-    return 'QuestionCategory{name: $name}';
+    return 'QuestionCategory{name: $name} ' + (categoryLabel ?? "");
   }
 
   @override

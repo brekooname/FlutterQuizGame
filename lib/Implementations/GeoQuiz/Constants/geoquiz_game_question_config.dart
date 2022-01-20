@@ -4,12 +4,9 @@ import 'package:flutter_app_quiz_game/Game/GameType/game_question_config.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
 import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/DependentAnswers/dependent_answers_question_category_service.dart';
-import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Questions/AllContent/geoquiz_question_collector_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Questions/AnswerOptions/geoquiz_options_question_category_service.dart';
-import 'package:flutter_app_quiz_game/Lib/Localization/localization_service.dart';
 
 class GeoQuizGameQuestionConfig extends GameQuestionConfig {
-  final LocalizationService _localizationService = LocalizationService();
 
   //POPULATION ===> top 10
   //diff0
@@ -66,33 +63,43 @@ class GeoQuizGameQuestionConfig extends GameQuestionConfig {
     //CATEGORIES
     singleton.cat0 = QuestionCategory(
         index: 0,
+        categoryLabel: "POPULATION",
         questionCategoryService: GeoQuizOptionsCategoryQuestionService());
     singleton.cat1 = QuestionCategory(
         index: 1,
+        categoryLabel: "AREA",
         questionCategoryService: GeoQuizOptionsCategoryQuestionService());
     singleton.cat2 = QuestionCategory(
         index: 2,
+        categoryLabel: "NEIGHBOURS",
         questionCategoryService: GeoQuizOptionsCategoryQuestionService());
     singleton.cat3 = QuestionCategory(
         index: 3,
+        categoryLabel: "GEOGRAPHICAL REGION",
         questionCategoryService: GeoQuizOptionsCategoryQuestionService());
     singleton.cat4 = QuestionCategory(
         index: 4,
+        categoryLabel: "EMPIRE",
         questionCategoryService: GeoQuizOptionsCategoryQuestionService());
     singleton.cat5 = QuestionCategory(
         index: 5,
+        categoryLabel: "LANDMARKS",
         questionCategoryService: DependentAnswersCategoryQuestionService());
     singleton.cat6 = QuestionCategory(
         index: 6,
+        categoryLabel: "CAPITALS",
         questionCategoryService: GeoQuizOptionsCategoryQuestionService());
     singleton.cat7 = QuestionCategory(
         index: 7,
+        categoryLabel: "FLAGS",
         questionCategoryService: GeoQuizOptionsCategoryQuestionService());
     singleton.cat8 = QuestionCategory(
         index: 8,
+        categoryLabel: "NATURAL WONDERS",
         questionCategoryService: DependentAnswersCategoryQuestionService());
     singleton.cat9 = QuestionCategory(
         index: 9,
+        categoryLabel: "MAPS",
         questionCategoryService: GeoQuizOptionsCategoryQuestionService());
 
     return singleton;
@@ -112,24 +119,11 @@ class GeoQuizGameQuestionConfig extends GameQuestionConfig {
     Map<QuestionCategoryWithPrefixCode, String> res = HashMap();
     res.putIfAbsent(
         QuestionCategoryWithPrefixCode(category: cat0, prefixCode: 0),
-        () => _localizationService.formatTextWithParams(
-                label
-                    .l_which_country_is_among_the_top_param0_most_populous_countries_in_the_world,
-                [
-                  GeoQuizQuestionCollectorService
-                      .numberOfQuestionsForStatisticsCategory
-                      .toString()
-                ]));
+        () => label.l_which_country_is_more_populous);
     res.putIfAbsent(
-        QuestionCategoryWithPrefixCode(category: cat1, prefixCode: 0),
-        () => _localizationService.formatTextWithParams(
-                label
-                    .l_which_country_is_among_the_top_param0_largest_countries_in_the_world_by_land_area,
-                [
-                  GeoQuizQuestionCollectorService
-                      .numberOfQuestionsForStatisticsCategory
-                      .toString()
-                ]));
+      QuestionCategoryWithPrefixCode(category: cat1, prefixCode: 0),
+      () => label.l_which_country_is_larger_in_size,
+    );
     res.putIfAbsent(
         QuestionCategoryWithPrefixCode(category: cat2, prefixCode: 0),
         () => label.l_find_a_neighbour_of_this_country);
@@ -141,13 +135,13 @@ class GeoQuizGameQuestionConfig extends GameQuestionConfig {
         () => label.l_which_country_has_these_neighbours);
     res.putIfAbsent(
         QuestionCategoryWithPrefixCode(category: cat3, prefixCode: 0),
-        () => label.l_which_country_is_located_in_this_geographical_region);
+        () => label.l_which_country_is_located_here);
     res.putIfAbsent(
         QuestionCategoryWithPrefixCode(category: cat3, prefixCode: 1),
-        () => label.l_which_countries_are_located_in_this_geographical_region);
+        () => label.l_which_countries_are_located_here);
     res.putIfAbsent(
         QuestionCategoryWithPrefixCode(category: cat3, prefixCode: 2),
-        () => label.l_which_geographical_region_do_these_countries_belong_to);
+        () => label.l_where_are_these_countries_located);
     res.putIfAbsent(
         QuestionCategoryWithPrefixCode(category: cat4, prefixCode: 0),
         () => label.l_which_country_was_partly_or_entirely_part_of_this_empire);
