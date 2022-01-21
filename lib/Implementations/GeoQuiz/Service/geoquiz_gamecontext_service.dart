@@ -31,7 +31,7 @@ class GeoQuizGameContextService {
     questions = questions.sublist(0, numberOfQuestionsPerGame);
 
     var gameContext = GameContextService()
-        .createGameContextWithHintsAndQuestions(5, questions);
+        .createGameContextWithHintsAndQuestions(3, questions);
 
     return GeoQuizGameContext(gameContext);
   }

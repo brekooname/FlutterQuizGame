@@ -17,6 +17,10 @@ class GeoQuizLocalStorage extends QuizGameLocalStorage {
     localStorage.setInt(_getExperienceFieldName(), value);
   }
 
+  void incrementExperience(int value) {
+    localStorage.setInt(_getExperienceFieldName(), getExperience() + value);
+  }
+
   int getExperienceBeforeLeavingMainScreen() {
     return localStorage
             .getInt(_getExperienceBeforeLeavingMainScreenFieldName()) ??
@@ -34,5 +38,11 @@ class GeoQuizLocalStorage extends QuizGameLocalStorage {
 
   String _getExperienceBeforeLeavingMainScreenFieldName() {
     return localStorageName + "_ExperienceBeforeLeavingMainScreen";
+  }
+  @override
+  void clearAll() {
+    super.clearAll();
+    setExperience(0);
+    setExperienceBeforeLeavingMainScreen(0);
   }
 }

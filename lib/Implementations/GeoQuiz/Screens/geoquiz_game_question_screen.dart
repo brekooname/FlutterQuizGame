@@ -3,6 +3,7 @@ import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_info_status.dart';
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Components/geoquiz_game_level_header.dart';
+import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Constants/geoquiz_campaign_level_experience_map.dart';
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Constants/geoquiz_campaign_level_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Constants/geoquiz_game_question_config.dart';
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Questions/AnswerOptions/geoquiz_options_question_service.dart';
@@ -24,6 +25,9 @@ import 'geoquiz_game_hangman_screen.dart';
 class GeoQuizQuestionScreen extends GameScreen<GeoQuizGameContext>
     with QuizOptionsGameScreen<GeoQuizGameContext> {
   final GeoQuizCountryUtils _geoQuizCountryUtils = GeoQuizCountryUtils();
+  final _geoQuizLocalStorage = GeoQuizLocalStorage();
+  final GeoQuizCampaignLevelExperienceMap _campaignLevelExperienceMap =
+      GeoQuizCampaignLevelExperienceMap();
   bool animateWrongAnswer = false;
 
   GeoQuizQuestionScreen(
@@ -48,7 +52,7 @@ class GeoQuizQuestionScreen extends GameScreen<GeoQuizGameContext>
     }
 
     initQuizOptionsScreen(
-        gameContext, GeoQuizLocalStorage(), currentQuestionInfo,
+        gameContext, _geoQuizLocalStorage, currentQuestionInfo,
         questionImage: getQuestionImage(category),
         zoomableImage: GeoQuizGameQuestionConfig().cat9 == category,
         buttonSkinConfig: ButtonSkinConfig(
@@ -64,9 +68,16 @@ class GeoQuizQuestionScreen extends GameScreen<GeoQuizGameContext>
   void executeOnPressedCorrectAnswer() {
     super.executeOnPressedCorrectAnswer();
     if (isGameFinishedSuccessful()) {
-      gameContext.gameScore = gameContext.gameScore + 10;
+      var amountToIncreaseScore = _campaignLevelExperienceMap
+          .getExperienceLevel(campaignLevel)
+          .increaseExperiencePerCorrectAnswerAmount;
       gameContext.consecutiveCorrectAnswers =
           gameContext.consecutiveCorrectAnswers + 1;
+      gameContext.gameScore = gameContext.gameScore + amountToIncreaseScore;
+      if (allQuestionsAnswered) {
+        _geoQuizLocalStorage.incrementExperience(
+            gameContext.gameScore * gameContext.consecutiveCorrectAnswers);
+      }
     }
   }
 

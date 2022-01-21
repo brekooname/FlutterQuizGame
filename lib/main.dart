@@ -13,6 +13,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'Game/Constants/app_id.dart';
 import 'Game/Game/campaign_level.dart';
 import 'Implementations/GeoQuiz/Constants/geoquiz_campaign_level_service.dart';
+import 'Implementations/GeoQuiz/Service/geoquiz_local_storage.dart';
 import 'Lib/Ads/ad_service.dart';
 import 'Lib/Constants/language.dart';
 import 'Lib/Image/image_service.dart';
@@ -184,6 +185,7 @@ class MyAppState extends State<MyApp> {
       ////
       //
       ////
+      // GeoQuizLocalStorage().setExperience(152000);
       widgetToShow = createScreen(MyApp.gameScreenManager, widget.bannerAd);
       // Future.delayed(const Duration(milliseconds: 100), () {
       //   MyApp.gameScreenManager.currentScreen!.gameScreenManagerState

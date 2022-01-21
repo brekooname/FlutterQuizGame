@@ -60,10 +60,7 @@ class GeoQuizQuestionCollectorService
           0);
       //because we have multiple playing types depending on the difficulty level
       //here we show only easy countries diff0
-      result = _percentOfListForDifficulty
-          .get<QuestionDifficulty, PercentRangeForList>(
-              _gameQuestionConfig.diff0)!
-          .getQuestionsForRange(sortedAfterRank);
+      result = sortedAfterRank.sublist(0, 10);
     } else
     //------------- CAT 3 ------------- GEOGRAPHICAL REGION
     if (category == _gameQuestionConfig.cat3 &&

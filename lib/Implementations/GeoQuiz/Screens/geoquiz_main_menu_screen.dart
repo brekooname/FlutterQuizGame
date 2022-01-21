@@ -1,8 +1,12 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Game/Game/campaign_level.dart';
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Constants/geoquiz_campaign_level_experience_map.dart';
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Constants/geoquiz_campaign_level_service.dart';
+import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Constants/geoquiz_game_question_config.dart';
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Service/geoquiz_local_storage.dart';
+import 'package:flutter_app_quiz_game/Lib/Animation/animation_increase_number_text.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/floating_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Color/color_util.dart';
@@ -19,12 +23,17 @@ import '../../../Lib/Font/font_config.dart';
 import '../../../main.dart';
 
 class GeoQuizMainMenuScreen extends StandardScreen {
+  final GeoQuizGameQuestionConfig _geoQuizGameQuestionConfig =
+      GeoQuizGameQuestionConfig();
   final GeoQuizLocalStorage _geoQuizLocalStorage = GeoQuizLocalStorage();
   final GeoQuizCampaignLevelService _geoQuizCampaignLevelService =
       GeoQuizCampaignLevelService();
   final GeoQuizCampaignLevelExperienceMap _campaignLevelExperienceMap =
       GeoQuizCampaignLevelExperienceMap();
   late Map<CampaignLevel, MapEntry<Color, Color>> _campaignLevelBackgrColor;
+  late MapEntry<CampaignLevel, ExperienceLevel>
+      _mostRecentUnlockedCampaignLevel;
+  late MapEntry<CampaignLevel, ExperienceLevel>? _previousUnlockedCampaignLevel;
 
   GeoQuizMainMenuScreen(GameScreenManagerState gameScreenManagerState,
       {Key? key})
@@ -39,6 +48,10 @@ class GeoQuizMainMenuScreen extends StandardScreen {
       _geoQuizCampaignLevelService.level_3:
           MapEntry(Colors.redAccent, Colors.redAccent.shade400),
     };
+    _mostRecentUnlockedCampaignLevel =
+        _campaignLevelExperienceMap.getMostRecentUnlockedCampaignLevel();
+    _previousUnlockedCampaignLevel =
+        _campaignLevelExperienceMap.getPreviousUnlockedCampaignLevel();
   }
 
   @override
@@ -94,7 +107,7 @@ class GeoQuizMainMenuScreenState extends State<GeoQuizMainMenuScreen>
           _createPlayerInfo(),
           SizedBox(height: bottomMargin / 2),
           _createLevelBtnColumn(),
-          Spacer(),
+          const Spacer(),
         ],
       ),
     );
@@ -109,6 +122,7 @@ class GeoQuizMainMenuScreenState extends State<GeoQuizMainMenuScreen>
             myPopupToDisplay: SettingsPopup(
               resetContent: () {
                 widget._geoQuizLocalStorage.clearAll();
+                widget.gameScreenManagerState.showMainScreen();
               },
             ),
           ),
@@ -123,11 +137,13 @@ class GeoQuizMainMenuScreenState extends State<GeoQuizMainMenuScreen>
       ProgressBar(
         width: progressBarWidth,
         height: screenDimensions.h(5),
-        currentStep: 3,
-        widthPerStep: screenDimensions.w(15),
+        totalNr: widget._campaignLevelExperienceMap
+            .getExperienceNeededForNextLevelToDisplay(),
+        startNr: getExperienceForCurrentLevelBeforeLeavingMainScreen(),
+        endNr: getExperienceForCurrentLevel(),
         fillBarColor: widget._campaignLevelBackgrColor
             .get<CampaignLevel, MapEntry<Color, Color>>(
-                mostRecentUnlockedCampaignLevel().key)!
+                widget._mostRecentUnlockedCampaignLevel.key)!
             .value
             .withOpacity(0.7),
       ),
@@ -144,18 +160,7 @@ class GeoQuizMainMenuScreenState extends State<GeoQuizMainMenuScreen>
             text: "XP",
           ),
           const Spacer(),
-          MyText(
-            fontConfig: FontConfig(
-                borderColor: Colors.black,
-                borderWidth: FontConfig.standardBorderWidth * 1.1,
-                textColor: Colors.white,
-                fontSize: FontConfig.getCustomFontSize(0.9)),
-            text: widget._geoQuizLocalStorage.getExperience().toString() +
-                " / " +
-                widget._campaignLevelExperienceMap
-                    .getExperienceNeededForNextLevelToDisplay()
-                    .toString(),
-          ),
+          createExperienceContainer(),
           const Spacer(),
           SizedBox(
             width: xpWidth,
@@ -166,9 +171,52 @@ class GeoQuizMainMenuScreenState extends State<GeoQuizMainMenuScreen>
     return info;
   }
 
-  MapEntry<CampaignLevel, ExperienceLevel> mostRecentUnlockedCampaignLevel() {
-    return widget._campaignLevelExperienceMap
-        .getMostRecentUnlockedCampaignLevel();
+  int getExperienceForCurrentLevel() {
+    var experience = widget._geoQuizLocalStorage.getExperience();
+    if (widget._previousUnlockedCampaignLevel != null) {
+      experience = experience -
+          widget._previousUnlockedCampaignLevel!.value
+              .experienceNeededForNextLevel;
+    }
+    return max(experience, 0);
+  }
+
+  int getExperienceForCurrentLevelBeforeLeavingMainScreen() {
+    var experience =
+        widget._geoQuizLocalStorage.getExperienceBeforeLeavingMainScreen();
+    if (widget._previousUnlockedCampaignLevel != null) {
+      experience = experience -
+          widget._previousUnlockedCampaignLevel!.value
+              .experienceNeededForNextLevel;
+    }
+    return max(experience, 0);
+  }
+
+  Widget createExperienceContainer() {
+    var fontConfig = FontConfig(
+        borderColor: Colors.black,
+        borderWidth: FontConfig.standardBorderWidth * 1.1,
+        textColor: Colors.white,
+        fontSize: FontConfig.getCustomFontSize(0.9));
+    var currentExperience = AnimateIncreaseNumberText(
+        startNr: getExperienceForCurrentLevelBeforeLeavingMainScreen(),
+        endNr: getExperienceForCurrentLevel(),
+        toAnimateText: MyText(
+          fontConfig: fontConfig,
+          text: getExperienceForCurrentLevel().toString(),
+        ));
+    var allExperience = MyText(
+      fontConfig: fontConfig,
+      text: " / " +
+          widget._campaignLevelExperienceMap
+              .getExperienceNeededForNextLevelToDisplay()
+              .toString(),
+    );
+    widget._geoQuizLocalStorage.setExperienceBeforeLeavingMainScreen(
+        widget._geoQuizLocalStorage.getExperience());
+    return Row(
+      children: [currentExperience, allExperience],
+    );
   }
 
   Container _createLevelBtnColumn() {
@@ -191,9 +239,16 @@ class GeoQuizMainMenuScreenState extends State<GeoQuizMainMenuScreen>
   }
 
   Widget _createLevelBtn(CampaignLevel campaignLevel, int index) {
+    var levelBtnDisabled =
+        widget._mostRecentUnlockedCampaignLevel.key.difficulty.index <
+            campaignLevel.difficulty.index;
     return Padding(
         padding: EdgeInsets.all(screenDimensions.w(2)),
         child: MyButton(
+          disabled: levelBtnDisabled,
+          contentLocked: campaignLevel.difficulty ==
+                  widget._geoQuizGameQuestionConfig.diff3 &&
+              !levelBtnDisabled,
           onClick: () {
             var geoQuizLocalStorage = widget._geoQuizLocalStorage;
             geoQuizLocalStorage.setExperienceBeforeLeavingMainScreen(

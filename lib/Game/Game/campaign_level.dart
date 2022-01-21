@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
 
@@ -19,7 +20,7 @@ class CampaignLevel {
       identical(this, other) ||
       other is CampaignLevel &&
           difficulty == other.difficulty &&
-          category == other.category;
+          listEquals(category, other.category);
 
   @override
   int get hashCode => difficulty.hashCode ^ category.hashCode;

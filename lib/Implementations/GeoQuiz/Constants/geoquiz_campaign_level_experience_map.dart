@@ -14,11 +14,16 @@ class GeoQuizCampaignLevelExperienceMap {
 
   GeoQuizCampaignLevelExperienceMap() {
     _campaignLevelExperienceMap = {
-      _geoQuizCampaignLevelService.level_0: ExperienceLevel(3000, 10),
-      _geoQuizCampaignLevelService.level_1: ExperienceLevel(13000, 20),
-      _geoQuizCampaignLevelService.level_2: ExperienceLevel(53000, 30),
-      _geoQuizCampaignLevelService.level_3: ExperienceLevel(153000, 100),
+      _geoQuizCampaignLevelService.level_0: ExperienceLevel(6000, 10),
+      _geoQuizCampaignLevelService.level_1: ExperienceLevel(31000, 30),
+      _geoQuizCampaignLevelService.level_2: ExperienceLevel(91000, 100),
+      _geoQuizCampaignLevelService.level_3: ExperienceLevel(291000, 200),
     };
+  }
+
+  ExperienceLevel getExperienceLevel(CampaignLevel campaignLevel) {
+    return _campaignLevelExperienceMap
+        .get<CampaignLevel, ExperienceLevel>(campaignLevel)!;
   }
 
   int getExperienceNeededForNextLevel() {
@@ -28,17 +33,30 @@ class GeoQuizCampaignLevelExperienceMap {
   }
 
   int getExperienceNeededForNextLevelToDisplay() {
-    int expToSubtract = 0;
+    MapEntry<CampaignLevel, ExperienceLevel> mostRecentUnlockedCampaignLevel =
+        getMostRecentUnlockedCampaignLevel();
+    MapEntry<CampaignLevel, ExperienceLevel>? previousUnlockedCampaignLevel =
+        getPreviousUnlockedCampaignLevel();
+    if (previousUnlockedCampaignLevel != null) {
+      return mostRecentUnlockedCampaignLevel
+              .value.experienceNeededForNextLevel -
+          previousUnlockedCampaignLevel.value.experienceNeededForNextLevel;
+    } else {
+      return mostRecentUnlockedCampaignLevel.value.experienceNeededForNextLevel;
+    }
+  }
+
+  MapEntry<CampaignLevel, ExperienceLevel>? getPreviousUnlockedCampaignLevel() {
     var mostRecentUnlockedCampaignLevel = getMostRecentUnlockedCampaignLevel();
+    MapEntry<CampaignLevel, ExperienceLevel>? previousUnlockedCampaignLevel;
     for (MapEntry<CampaignLevel, ExperienceLevel> e
         in _campaignLevelExperienceMap.entries) {
       if (e.key == mostRecentUnlockedCampaignLevel.key) {
-        return e.value.experienceNeededForNextLevel - expToSubtract;
-      } else {
-        expToSubtract = e.value.experienceNeededForNextLevel;
+        break;
       }
+      previousUnlockedCampaignLevel = e;
     }
-    return mostRecentUnlockedCampaignLevel.value.experienceNeededForNextLevel;
+    return previousUnlockedCampaignLevel;
   }
 
   MapEntry<CampaignLevel, ExperienceLevel>

@@ -93,9 +93,9 @@ class GeoQuizGameLevelHeader extends StatelessWidget {
           height: headerHeight / 1.5,
           fillBarColor: Colors.purpleAccent.shade100.withOpacity(0.4),
           animateStepIncrease: animateStepIncrease,
-          currentStep: nrOfCorrectAnsweredQuestions,
-          widthPerStep: progressBarWidth /
-              GeoQuizGameContextService.numberOfQuestionsPerGame,
+          totalNr: GeoQuizGameContextService.numberOfQuestionsPerGame,
+          startNr: nrOfCorrectAnsweredQuestions - 1,
+          endNr: nrOfCorrectAnsweredQuestions,
         ),
         headerButtonsContainer,
         scoreContainer
@@ -106,8 +106,11 @@ class GeoQuizGameLevelHeader extends StatelessWidget {
   }
 
   Widget createScoreContainer() {
+    var gameFinishedScore = score * consecutiveCorrectAnswers;
     var scoreText = MyText(
-      text: (score > 0 ? "" : "") + score.toString(),
+      text: allQuestionsAnswered
+          ? gameFinishedScore.toString()
+          : score.toString(),
       fontConfig: FontConfig(
           textColor: Colors.yellow,
           borderColor: Colors.black,
@@ -115,9 +118,7 @@ class GeoQuizGameLevelHeader extends StatelessWidget {
     );
     return allQuestionsAnswered
         ? AnimateIncreaseNumberText(
-            startNr: score,
-            endNr: score * (consecutiveCorrectAnswers),
-            toAnimateText: scoreText)
+            startNr: score, endNr: gameFinishedScore, toAnimateText: scoreText)
         : scoreText;
   }
 

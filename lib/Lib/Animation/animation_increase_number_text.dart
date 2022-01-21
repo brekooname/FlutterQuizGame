@@ -60,6 +60,9 @@ class MyAnimatedWidgetState extends State<AnimateIncreaseNumberText>
 
   @override
   Widget build(BuildContext context) {
+    if (widget.startNr == widget.endNr) {
+      return widget.toAnimateText;
+    }
     startAnimation();
     return InternalAnimatedWidget(
       toAnimateText: widget.toAnimateText,

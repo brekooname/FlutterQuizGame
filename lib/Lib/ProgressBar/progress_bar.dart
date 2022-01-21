@@ -6,8 +6,9 @@ import 'package:flutter_app_quiz_game/Lib/Color/color_util.dart';
 import 'package:flutter_app_quiz_game/Lib/Font/font_config.dart';
 
 class ProgressBar extends StatefulWidget {
-  int currentStep;
-  double widthPerStep;
+  int startNr;
+  int endNr;
+  int totalNr;
   double height;
   double width;
   bool animateStepIncrease;
@@ -15,11 +16,12 @@ class ProgressBar extends StatefulWidget {
 
   ProgressBar(
       {Key? key,
-      required this.widthPerStep,
-      required this.currentStep,
+      required this.startNr,
+      required this.endNr,
+      required this.totalNr,
       required this.width,
       required this.height,
-      this.animateStepIncrease = false,
+      this.animateStepIncrease = true,
       this.fillBarColor = Colors.lightGreenAccent})
       : super(key: key);
 
@@ -34,7 +36,7 @@ class ProgressBarState extends State<ProgressBar>
 
   void startAnimation() {
     controller = AnimationController(
-        duration: const Duration(milliseconds: 800), vsync: this);
+        duration: const Duration(milliseconds: 1500), vsync: this);
     animation = CurvedAnimation(parent: controller, curve: Curves.ease);
     controller.forward();
   }
@@ -43,8 +45,9 @@ class ProgressBarState extends State<ProgressBar>
   Widget build(BuildContext context) {
     startAnimation();
     return InternalAnimatedWidget(
-      widthPerStep: widget.widthPerStep,
-      currentStep: widget.currentStep,
+      startNr: widget.startNr,
+      endNr: widget.endNr,
+      totalNr: widget.totalNr,
       height: widget.height,
       width: widget.width,
       fillBarColor: widget.fillBarColor,
@@ -61,8 +64,9 @@ class ProgressBarState extends State<ProgressBar>
 }
 
 class InternalAnimatedWidget extends AnimatedWidget {
-  int currentStep;
-  double widthPerStep;
+  int startNr;
+  int endNr;
+  int totalNr;
   double height;
   double width;
   bool animateStepIncrease;
@@ -70,8 +74,9 @@ class InternalAnimatedWidget extends AnimatedWidget {
 
   InternalAnimatedWidget(
       {Key? key,
-      required this.widthPerStep,
-      required this.currentStep,
+      required this.startNr,
+      required this.endNr,
+      required this.totalNr,
       required this.width,
       required this.height,
       required this.animateStepIncrease,
@@ -82,10 +87,10 @@ class InternalAnimatedWidget extends AnimatedWidget {
   @override
   Widget build(BuildContext context) {
     final animation = listenable as Animation<double>;
-    double widthPerStep = this.widthPerStep;
-    double endWidth = currentStep * widthPerStep;
-    double startWidth = max(endWidth - widthPerStep, 0);
-
+    double percentStart = startNr / totalNr;
+    double percentEnd = endNr / totalNr;
+    var startWidth = min(percentStart * width, width);
+    var endWidth = min(percentEnd * width, width);
     var filledBar = Container(
       width: animateStepIncrease
           ? Tween<double>(begin: startWidth, end: endWidth).evaluate(animation)
