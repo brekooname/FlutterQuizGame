@@ -35,8 +35,6 @@ class MyAnimatedWidgetState extends State<AnimateIncreaseNumberText>
   late AnimationController controller;
 
   void startAnimation() {
-    controller = AnimationController(
-        duration: const Duration(milliseconds: 20), vsync: this);
     animation = CurvedAnimation(parent: controller, curve: Curves.ease);
     animation.addStatusListener((status) {
       if (status == AnimationStatus.completed &&
@@ -60,6 +58,8 @@ class MyAnimatedWidgetState extends State<AnimateIncreaseNumberText>
 
   @override
   Widget build(BuildContext context) {
+    controller = AnimationController(
+        duration: const Duration(milliseconds: 20), vsync: this);
     if (widget.startNr == widget.endNr) {
       return widget.toAnimateText;
     }

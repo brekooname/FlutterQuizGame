@@ -44,35 +44,35 @@ void main() {
 
 void testQuestionsWithCountryIndexes() {
   testCapitals("United States", "Washington", questionConfig.diff0);
-  testCapitals("Sweden", "Stockholm", questionConfig.diff1);
-  testCapitals("Somalia", "Mogadishu", questionConfig.diff2);
-  testCapitals("Laos", "Vientiane", questionConfig.diff3);
+  testCapitals("Belgium", "Brussels", questionConfig.diff1);
+  testCapitals("Finland", "Helsinki", questionConfig.diff2);
+  testCapitals("Uruguay", "Montevideo", questionConfig.diff3);
   verifyQuestion(
-    "Which country has this flag?",
+    "Flags",
     "",
     ["United States"],
     ["United States", "", "", ""],
     getQuestion(questionConfig.cat7, questionConfig.diff0),
   );
   verifyQuestion(
-    "Which country has this flag?",
+    "Flags",
     "",
-    ["Azerbaijan"],
-    ["Azerbaijan", "", "", ""],
+    ["Ireland"],
+    ["Ireland", "", "", ""],
     getQuestion(questionConfig.cat7, questionConfig.diff2),
   );
   verifyQuestion(
-    "Which country is shown on the map?",
+    "Find on map",
     "",
     ["United States"],
     ["United States", "", "", ""],
     getQuestion(questionConfig.cat9, questionConfig.diff0),
   );
   verifyQuestion(
-    "Which country is shown on the map?",
+    "Find on map",
     "",
-    ["Niger"],
-    ["Niger", "", "", ""],
+    ["Ecuador"],
+    ["Ecuador", "", "", ""],
     getQuestion(questionConfig.cat9, questionConfig.diff3),
   );
 }
@@ -80,7 +80,7 @@ void testQuestionsWithCountryIndexes() {
 void testCapitals(
     String country, String capital, QuestionDifficulty difficulty) {
   verifyQuestion(
-    "Which country has this capital?",
+    "Capital city",
     capital,
     [country],
     [country, "", "", ""],
@@ -93,18 +93,18 @@ void testGeographicalRegionAndEmpireCategory() {
     questionConfig.diff2,
   ]) {
     verifyQuestion(
-      "Which countries are located in this geographical region?",
-      "Baltic states",
+      "Which countries are located here?",
+      "Baltic states region",
       ["Estonia", "Lithuania", "Latvia"],
       ["Estonia", "", "", "", "", ""],
       getQuestion(questionConfig.cat3, diff),
     );
   }
   verifyQuestion(
-    "Which geographical region do these countries belong to?",
+    "Where are these countries located?",
     "Lithuania, Estonia, Latvia",
-    ["Baltic states"],
-    ["Baltic states", "", "", ""],
+    ["Baltic states region"],
+    ["Baltic states region", "", "", ""],
     getQuestion(questionConfig.cat3, questionConfig.diff1),
   );
   for (QuestionDifficulty diff in [
@@ -230,13 +230,13 @@ void testStatisticsCategories() {
   expect(questionService.isGameFinishedSuccessful(question, ["wrong"]), false);
   expect(questionService.isGameFinishedFailed(question, ["wrong"]), true);
   verifyQuestion(
-      "Which country is among the top 10 most populous countries in the world?",
+      "Which country is more populous?",
       "",
       expectedCorrectOptions,
       ["United States", "", "", ""],
       question);
   verifyQuestion(
-      "Which country is among the top 10 largest countries in the world by land area?",
+      "Which country is larger in size?",
       "",
       ["China"],
       ["China", "", "", ""],

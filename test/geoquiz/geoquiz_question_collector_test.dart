@@ -69,42 +69,42 @@ Map<CategoryDifficulty, ExpectedRankedCountries>
   return {
     CategoryDifficulty(questionConfig.cat6, questionConfig.diff0):
         ExpectedRankedCountries(
-            30, 35, "Germany", "Romania", "Honduras", "Andorra"),
+            15, 20, "Germany", "Romania", "Malaysia", "Andorra"),
     CategoryDifficulty(questionConfig.cat6, questionConfig.diff1):
         ExpectedRankedCountries(
-            30, 35, "Germany", "Romania", "Honduras", "Andorra"),
+            20, 25, "Germany", "Romania", "Malaysia", "Andorra"),
     CategoryDifficulty(questionConfig.cat6, questionConfig.diff2):
         ExpectedRankedCountries(
-            45, 50, "Germany", "Romania", "Honduras", "Andorra"),
+            40, 45, "Germany", "Romania", "Malaysia", "Andorra"),
     CategoryDifficulty(questionConfig.cat6, questionConfig.diff3):
         ExpectedRankedCountries(
-            45, 50, "Germany", "Romania", "Honduras", "Andorra"),
+            80, 85, "Germany", "Romania", "Malaysia", "Andorra"),
     //////////////////////////////////////////////////////////////
     CategoryDifficulty(questionConfig.cat7, questionConfig.diff0):
         ExpectedRankedCountries(
-            30, 35, "Germany", "Romania", "Honduras", "Andorra"),
+            15, 20, "Germany", "Romania", "Malaysia", "Andorra"),
     CategoryDifficulty(questionConfig.cat7, questionConfig.diff1):
         ExpectedRankedCountries(
-            30, 35, "Germany", "Romania", "Honduras", "Andorra"),
+            20, 25, "Germany", "Romania", "Malaysia", "Andorra"),
     CategoryDifficulty(questionConfig.cat7, questionConfig.diff2):
         ExpectedRankedCountries(
-            50, 55, "Germany", "Romania", "Honduras", "Andorra"),
+            40, 45, "Germany", "Romania", "Malaysia", "Andorra"),
     CategoryDifficulty(questionConfig.cat7, questionConfig.diff3):
         ExpectedRankedCountries(
-            50, 55, "Germany", "Romania", "Honduras", "Andorra"),
+            80, 85, "Germany", "Romania", "Malaysia", "Andorra"),
     //////////////////////////////////////////////////////////////
     CategoryDifficulty(questionConfig.cat9, questionConfig.diff0):
         ExpectedRankedCountries(
-            20, 25, "Germany", "Romania", "Uzbekistan", "Honduras"),
+            10, 15, "Germany", "Italy", "Croatia", "Nepal"),
     CategoryDifficulty(questionConfig.cat9, questionConfig.diff1):
         ExpectedRankedCountries(
-            20, 25, "Germany", "Romania", "Uzbekistan", "Honduras"),
+            15, 20, "Germany", "Italy", "Croatia", "Nepal"),
     CategoryDifficulty(questionConfig.cat9, questionConfig.diff2):
         ExpectedRankedCountries(
-            30, 35, "Germany", "Romania", "Uzbekistan", "Honduras"),
+            25, 30, "Germany", "Italy", "Croatia", "Nepal"),
     CategoryDifficulty(questionConfig.cat9, questionConfig.diff3):
         ExpectedRankedCountries(
-            30, 35, "Germany", "Romania", "Uzbekistan", "Honduras"),
+            55, 60, "Germany", "Italy", "Croatia", "Nepal"),
   };
 }
 
@@ -173,16 +173,16 @@ void testNeighboursDiff(QuestionDifficulty difficulty) {
       CategoryDifficulty(questionConfig.cat2, questionConfig.diff0), qStrings, {
     CategoryDifficulty(questionConfig.cat2, questionConfig.diff0):
         ExpectedRankedCountries(
-            30, 45, "Germany", "Romania", "Honduras", "Andorra"),
+            10, 10, "Germany", "Romania", "Honduras", "Andorra"),
     CategoryDifficulty(questionConfig.cat2, questionConfig.diff1):
         ExpectedRankedCountries(
-            30, 45, "Germany", "Romania", "Honduras", "Andorra"),
+            10, 10, "Germany", "Romania", "Honduras", "Andorra"),
     CategoryDifficulty(questionConfig.cat2, questionConfig.diff2):
         ExpectedRankedCountries(
-            45, 50, "Germany", "Romania", "Honduras", "Andorra"),
+            10, 10, "Germany", "Romania", "Honduras", "Andorra"),
     CategoryDifficulty(questionConfig.cat2, questionConfig.diff3):
         ExpectedRankedCountries(
-            45, 50, "Germany", "Romania", "Honduras", "Andorra"),
+            10, 10, "Germany", "Romania", "Honduras", "Andorra"),
   });
 }
 
@@ -198,26 +198,27 @@ void testCountryRanking(
       resultLength >= expectedRes.expectedMinRes &&
           resultLength <= expectedRes.expectedMaxRes,
       true);
+  var r = "cat " + categoryDifficulty.category.name;
   if (categoryDifficulty.difficulty == questionConfig.diff0) {
-    expect(countryNames.contains(expectedRes.exDiff0Country), true);
-    expect(countryNames.contains(expectedRes.exDiff1Country), false);
-    expect(countryNames.contains(expectedRes.exDiff2Country), false);
-    expect(countryNames.contains(expectedRes.exDiff3Country), false);
+    expect(countryNames.contains(expectedRes.exDiff0Country), true, reason: r);
+    expect(countryNames.contains(expectedRes.exDiff1Country), false, reason: r);
+    expect(countryNames.contains(expectedRes.exDiff2Country), false, reason: r);
+    expect(countryNames.contains(expectedRes.exDiff3Country), false, reason: r);
   } else if (categoryDifficulty.difficulty == questionConfig.diff1) {
-    expect(countryNames.contains(expectedRes.exDiff0Country), false);
-    expect(countryNames.contains(expectedRes.exDiff1Country), true);
-    expect(countryNames.contains(expectedRes.exDiff2Country), false);
-    expect(countryNames.contains(expectedRes.exDiff3Country), false);
+    expect(countryNames.contains(expectedRes.exDiff0Country), false, reason: r);
+    expect(countryNames.contains(expectedRes.exDiff1Country), true, reason: r);
+    expect(countryNames.contains(expectedRes.exDiff2Country), false, reason: r);
+    expect(countryNames.contains(expectedRes.exDiff3Country), false, reason: r);
   } else if (categoryDifficulty.difficulty == questionConfig.diff2) {
-    expect(countryNames.contains(expectedRes.exDiff0Country), false);
-    expect(countryNames.contains(expectedRes.exDiff1Country), false);
-    expect(countryNames.contains(expectedRes.exDiff2Country), true);
-    expect(countryNames.contains(expectedRes.exDiff3Country), false);
+    expect(countryNames.contains(expectedRes.exDiff0Country), false, reason: r);
+    expect(countryNames.contains(expectedRes.exDiff1Country), false, reason: r);
+    expect(countryNames.contains(expectedRes.exDiff2Country), true, reason: r);
+    expect(countryNames.contains(expectedRes.exDiff3Country), false, reason: r);
   } else if (categoryDifficulty.difficulty == questionConfig.diff3) {
-    expect(countryNames.contains(expectedRes.exDiff0Country), false);
-    expect(countryNames.contains(expectedRes.exDiff1Country), false);
-    expect(countryNames.contains(expectedRes.exDiff2Country), false);
-    expect(countryNames.contains(expectedRes.exDiff3Country), true);
+    expect(countryNames.contains(expectedRes.exDiff0Country), false, reason: r);
+    expect(countryNames.contains(expectedRes.exDiff1Country), false, reason: r);
+    expect(countryNames.contains(expectedRes.exDiff2Country), false, reason: r);
+    expect(countryNames.contains(expectedRes.exDiff3Country), true, reason: r);
   }
 }
 

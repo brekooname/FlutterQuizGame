@@ -51,20 +51,24 @@ Future<void> testAllCampaignLevels(
     await TestUtil.pumpWidget(tester, MyApp.gameScreenManager);
 
     for (QuestionCategory category in campaignLevel.category) {
-      MyApp.gameScreenManager.currentScreen!.gameScreenManagerState
-          .showGameScreenWithConfig(
-              campaignLevel.difficulty,
-              category,
-              (MyApp.gameScreenManager.currentScreen! as GameScreen)
-                  .gameContext);
-      await TestUtil.pumpWidget(tester, MyApp.gameScreenManager);
+      var gameContext =
+          (MyApp.gameScreenManager.currentScreen! as GameScreen).gameContext;
+      if (gameContext.gameUser
+          .getOpenQuestions()
+          .where((element) => element.question.category == category)
+          .isNotEmpty) {
+        MyApp.gameScreenManager.currentScreen!.gameScreenManagerState
+            .showGameScreenWithConfig(
+                campaignLevel.difficulty, category, gameContext);
+        await TestUtil.pumpWidget(tester, MyApp.gameScreenManager);
 
-      debugPrint("-----" +
-          (MyApp.gameScreenManager.currentScreen! as GameScreen)
-              .listOfCurrentQuestionInfo
-              .first
-              .question
-              .rawString);
+        debugPrint("-----" +
+            (MyApp.gameScreenManager.currentScreen! as GameScreen)
+                .listOfCurrentQuestionInfo
+                .first
+                .question
+                .rawString);
+      }
     }
   }
   // MyApp.gameScreenManager.currentScreen!.gameScreenManagerState
