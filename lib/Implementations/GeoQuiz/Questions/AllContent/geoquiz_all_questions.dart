@@ -658,19 +658,19 @@ class GeoQuizAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat8, //
         questionConfig.diff1, //
-        [":Salto Ángel, Venezuela:10,9,18:", ":Kilimandžáro, Tanzanie::", ":Dunajská delta, Rumunsko::", ":Viktoriiny vodopády, Zimbabwe a Zambie:21,18,11:", ":Oko Sahary, Mauritánie::", ":Mrtvé moře, Izrael::", ":Útesy Moher, Irsko::", ":Bahenní sopky, Ázerbájdžán::", ":Jezero Moraine, Kanada::", ":Ďábelské kuličky, Austrálie::"]);
+        [":Salto Ángel, Venezuela:1,2,4:", ":Kilimandžáro, Tanzanie::", ":Dunajská delta, Rumunsko::", ":Viktoriiny vodopády, Zimbabwe a Zambie:5,6,9:", ":Oko Sahary, Mauritánie::", ":Mrtvé moře, Izrael::", ":Útesy Moher, Irsko::", ":Bahenní sopky, Ázerbájdžán::", ":Jezero Moraine, Kanada::", ":Ďábelské kuličky, Austrálie::"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat8, //
         questionConfig.diff2, //
-        [":Pamukkale, Turecko::", ":Řeka pěti barev, Columbia::", ":Sopka Paricutín, Mexiko::", ":Moeraki balvany, Nový Zéland::", ":Modrá jeskyně, Itálie:28,31,29:", ":Mramorové jeskyně, Chile:19,25,20:", ":Jeskyně Krystal, Bermudy:25,30,35:"]);
+        [":Pamukkale, Turecko::", ":Řeka pěti barev, Columbia::", ":Sopka Paricutín, Mexiko::", ":Moeraki balvany, Nový Zéland::", ":Modrá jeskyně, Itálie:0,1,2:", ":Mramorové jeskyně, Chile:3,0,2:", ":Jeskyně Krystal, Bermudy:0,1,2:"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat8, //
         questionConfig.diff3, //
-        [":Ostrov Jeju, Jižní Korea:31,25,27:", ":Vodopády Iguaçu, Argentina a Brazílie::", ":Matterhorn, Švýcarsko::", ":Stolová hora, Jižní Afrika:26,24,30:", ":Bu Tinah, Spojené arabské emiráty:31,29,26:", ":Sundarbans, Bangladéš::", ":Grand canyon du Verdon, Francie::"]);
+        [":Ostrov Jeju, Jižní Korea:1,2,5:", ":Vodopády Iguaçu, Argentina a Brazílie::", ":Matterhorn, Švýcarsko::", ":Stolová hora, Jižní Afrika:1,6,5:", ":Bu Tinah, Spojené arabské emiráty:1,6,5:", ":Sundarbans, Bangladéš::", ":Grand canyon du Verdon, Francie::"]);
   }
 
   void addDA(Map<Language, Map<CategoryDifficulty, List<Question>>> result,
@@ -723,19 +723,19 @@ class GeoQuizAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat8, //
         questionConfig.diff1, //
-        [":Salto del Angel, Venezuela:10,9,18:", ":Kilimanjaro, Tanzania::", ":Donau-deltaet, Rumænien::", ":Victoria-vandfaldene, Zimbabwe og Zambia:21,18,11:", ":Sahara-øen, Mauretanien::", ":Det Døde Hav, Israel::", ":Klipper af Moher, Irland::", ":Mud vulkaner, Aserbajdsjan::", ":Moraine Sø, Canada::", ":Djævelens marmor, Australien::"]);
+        [":Salto del Angel, Venezuela:1,2,4:", ":Kilimanjaro, Tanzania::", ":Donau-deltaet, Rumænien::", ":Victoria-vandfaldene, Zimbabwe og Zambia:5,6,9:", ":Sahara-øen, Mauretanien::", ":Det Døde Hav, Israel::", ":Klipper af Moher, Irland::", ":Mud vulkaner, Aserbajdsjan::", ":Moraine Sø, Canada::", ":Djævelens marmor, Australien::"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat8, //
         questionConfig.diff2, //
-        [":Pamukkale, Tyrkiet::", ":Floden af fem farver, Colombia::", ":Paricutín vulkan, Mexico::", ":Moeraki stenblokke, New Zealand::", ":Den blå grotte, Italien:28,31,29:", ":Marmorhule, Chile:19,25,20:", ":Krystal Hule, Bermuda:25,30,35:"]);
+        [":Pamukkale, Tyrkiet::", ":Floden af fem farver, Colombia::", ":Paricutín vulkan, Mexico::", ":Moeraki stenblokke, New Zealand::", ":Den blå grotte, Italien:0,1,2:", ":Marmorhule, Chile:3,0,2:", ":Krystal Hule, Bermuda:0,1,2:"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat8, //
         questionConfig.diff3, //
-        [":Jeju Ø, Sydkorea:31,25,27:", ":Iguazú-vandfaldene, Argentina og Brasilien::", ":Matterhorn, Schweiz::", ":Bord bjerg, Sydafrika:26,24,30:", ":Bu Tinah, De Forenede Arabiske Emirater:31,29,26:", ":Sundarbans, Bangladesh::", ":Verdon kløft, Frankrig::"]);
+        [":Jeju Ø, Sydkorea:1,2,5:", ":Iguazú-vandfaldene, Argentina og Brasilien::", ":Matterhorn, Schweiz::", ":Bord bjerg, Sydafrika:1,6,5:", ":Bu Tinah, De Forenede Arabiske Emirater:1,6,5:", ":Sundarbans, Bangladesh::", ":Verdon kløft, Frankrig::"]);
   }
 
   void addDE(Map<Language, Map<CategoryDifficulty, List<Question>>> result,
@@ -788,19 +788,19 @@ class GeoQuizAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat8, //
         questionConfig.diff1, //
-        [":Angel Fälle, Venezuela:10,9,18:", ":Kilimanjaro, Tansania::", ":Donaudelta, Rumänien::", ":Viktoriafälle, Simbabwe und Sambia:21,18,11:", ":Auge der Sahara, Mauretanien::", ":Das Tote Meer, Israel::", ":Cliffs of Moher, Irland::", ":Schlammvulkane, Aserbaidschan::", ":Moraine Lake, Kanada::", ":Teufelsmurmeln, Australien::"]);
+        [":Angel Fälle, Venezuela:1,2,4:", ":Kilimanjaro, Tansania::", ":Donaudelta, Rumänien::", ":Viktoriafälle, Simbabwe und Sambia:5,6,9:", ":Auge der Sahara, Mauretanien::", ":Das Tote Meer, Israel::", ":Cliffs of Moher, Irland::", ":Schlammvulkane, Aserbaidschan::", ":Moraine Lake, Kanada::", ":Teufelsmurmeln, Australien::"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat8, //
         questionConfig.diff2, //
-        [":Pamukkale, Türkei::", ":Der Fluss der fünf Farben, Kolumbien::", ":Vulkan Paricutín, Mexiko::", ":Moeraki Boulders, Neuseeland::", ":Die Blaue Grotte, Italien:28,31,29:", ":Marmorhöhlen, Chile:19,25,20:", ":Kristallhöhle, Bermuda:25,30,35:"]);
+        [":Pamukkale, Türkei::", ":Der Fluss der fünf Farben, Kolumbien::", ":Vulkan Paricutín, Mexiko::", ":Moeraki Boulders, Neuseeland::", ":Die Blaue Grotte, Italien:0,1,2:", ":Marmorhöhlen, Chile:3,0,2:", ":Kristallhöhle, Bermuda:0,1,2:"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat8, //
         questionConfig.diff3, //
-        [":Jejudo, Südkorea:31,25,27:", ":Iguazu Wasserfälle, Argentinien und Brasilien::", ":Matterhorn, Schweiz::", ":Tafelberg, Südafrika:26,24,30:", ":Bu Tinah, Vereinigte Arabische Emirate:31,29,26:", ":Sundarbans, Bangladesch::", ":Verdon Schlucht, Frankreich::"]);
+        [":Jejudo, Südkorea:1,2,5:", ":Iguazu Wasserfälle, Argentinien und Brasilien::", ":Matterhorn, Schweiz::", ":Tafelberg, Südafrika:1,6,5:", ":Bu Tinah, Vereinigte Arabische Emirate:1,6,5:", ":Sundarbans, Bangladesch::", ":Verdon Schlucht, Frankreich::"]);
   }
 
   void addEL(Map<Language, Map<CategoryDifficulty, List<Question>>> result,
@@ -853,19 +853,19 @@ class GeoQuizAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat8, //
         questionConfig.diff1, //
-        [":καταρράκτες Έιντζελ, Βενεζουέλα:10,9,18:", ":Όρος Κιλιμάντζαρο, Τανζανία::", ":Δέλτα του Δούναβη, Ρουμανία::", ":Βικτώριας, Ζιμπάμπουε και Ζάμπια:21,18,11:", ":Μάτι της Σαχάρας, Μαυριτανία::", ":Η Νεκρά Θάλασσα, Ισραήλ::", ":Βράχοι του Μοχέρ, Ιρλανδία::", ":Ηφαιστειακά λάσπη, Αζερμπαϊτζάν::", ":Η λίμνη Moraine, Καναδάς::", ":Μάρμαρα του διαβόλου, Αυστραλία::"]);
+        [":καταρράκτες Έιντζελ, Βενεζουέλα:1,2,4:", ":Όρος Κιλιμάντζαρο, Τανζανία::", ":Δέλτα του Δούναβη, Ρουμανία::", ":Βικτώριας, Ζιμπάμπουε και Ζάμπια:5,6,9:", ":Μάτι της Σαχάρας, Μαυριτανία::", ":Η Νεκρά Θάλασσα, Ισραήλ::", ":Βράχοι του Μοχέρ, Ιρλανδία::", ":Ηφαιστειακά λάσπη, Αζερμπαϊτζάν::", ":Η λίμνη Moraine, Καναδάς::", ":Μάρμαρα του διαβόλου, Αυστραλία::"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat8, //
         questionConfig.diff2, //
-        [":Παμούκκαλε, Τουρκία::", ":Ο ποταμός πέντε χρωμάτων, Κολούμπια::", ":Ηφαίστειο Paricutín, Μεξικό::", ":Μολάκη Μολδάκι, Νέα Ζηλανδία::", ":Η Γαλάζια Σπηλιά, Ιταλία:28,31,29:", ":Μάρμαρα Σπήλαια, Χιλή:19,25,20:", ":Κρυσταλλική Σπηλιά, Βερμούδες:25,30,35:"]);
+        [":Παμούκκαλε, Τουρκία::", ":Ο ποταμός πέντε χρωμάτων, Κολούμπια::", ":Ηφαίστειο Paricutín, Μεξικό::", ":Μολάκη Μολδάκι, Νέα Ζηλανδία::", ":Η Γαλάζια Σπηλιά, Ιταλία:0,1,2:", ":Μάρμαρα Σπήλαια, Χιλή:3,0,2:", ":Κρυσταλλική Σπηλιά, Βερμούδες:0,1,2:"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat8, //
         questionConfig.diff3, //
-        [":Νήσος Jeju, Νότια Κορέα:31,25,27:", ":Καταρράκτες Iguazu, Αργεντινή και Βραζιλία::", ":Μάττερχορν, Ελβετία::", ":Τραπέζι Βουνό, Νότια Αφρική:26,24,30:", ":Bu Tinah, Ηνωμένα Αραβικά Εμιράτα:31,29,26:", ":Σούντορμπον, Μπανγκλαντές::", ":Φαράγγι του Verdon, Γαλλία::"]);
+        [":Νήσος Jeju, Νότια Κορέα:1,2,5:", ":Καταρράκτες Iguazu, Αργεντινή και Βραζιλία::", ":Μάττερχορν, Ελβετία::", ":Τραπέζι Βουνό, Νότια Αφρική:1,6,5:", ":Bu Tinah, Ηνωμένα Αραβικά Εμιράτα:1,6,5:", ":Σούντορμπον, Μπανγκλαντές::", ":Φαράγγι του Verdon, Γαλλία::"]);
   }
 
   void addEN(Map<Language, Map<CategoryDifficulty, List<Question>>> result,
@@ -1001,19 +1001,19 @@ class GeoQuizAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat8, //
         questionConfig.diff1, //
-        [":Salto Ángel, Venezuela:10,9,18:", ":Monte Kilimanjaro, Tanzania::", ":Delta del Danubio, Rumania::", ":Cataratas Victoria, Zimbabwe y Zambia:21,18,11:", ":Ojo del Sahara, Mauritania::", ":El Mar Muerto, Israel::", ":Acantilados de Moher, Irlanda::", ":Volcanes de barro, Azerbaiyán::", ":Lago Moraine, Canadá::", ":Canicas del diablo, Australia::"]);
+        [":Salto Ángel, Venezuela:1,2,4:", ":Monte Kilimanjaro, Tanzania::", ":Delta del Danubio, Rumania::", ":Cataratas Victoria, Zimbabwe y Zambia:5,6,9:", ":Ojo del Sahara, Mauritania::", ":El Mar Muerto, Israel::", ":Acantilados de Moher, Irlanda::", ":Volcanes de barro, Azerbaiyán::", ":Lago Moraine, Canadá::", ":Canicas del diablo, Australia::"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat8, //
         questionConfig.diff2, //
-        [":Pamukkale, Turquía::", ":El río de los cinco colores, Colombia::", ":Volcán Paricutín, México::", ":Cantos rodados de Moeraki, Nueva Zelanda::", ":La gruta azul, Italia:28,31,29:", ":Cuevas de Mármol, Chile:19,25,20:", ":Cueva de cristal, Bermudas:25,30,35:"]);
+        [":Pamukkale, Turquía::", ":El río de los cinco colores, Colombia::", ":Volcán Paricutín, México::", ":Cantos rodados de Moeraki, Nueva Zelanda::", ":La gruta azul, Italia:0,1,2:", ":Cuevas de Mármol, Chile:3,0,2:", ":Cueva de cristal, Bermudas:0,1,2:"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat8, //
         questionConfig.diff3, //
-        [":Isla de Jeju, Corea del Sur:31,25,27:", ":Cataratas del Iguazú, Argentina y Brasil::", ":Matterhorn, Suiza::", ":Montaña de la Mesa, Sudáfrica:26,24,30:", ":Bu Tinah, Emiratos Árabes Unidos:31,29,26:", ":Sundarbans, Bangladesh::", ":Gargantas del Verdon, Francia::"]);
+        [":Isla de Jeju, Corea del Sur:1,2,5:", ":Cataratas del Iguazú, Argentina y Brasil::", ":Matterhorn, Suiza::", ":Montaña de la Mesa, Sudáfrica:1,6,5:", ":Bu Tinah, Emiratos Árabes Unidos:1,6,5:", ":Sundarbans, Bangladesh::", ":Gargantas del Verdon, Francia::"]);
   }
 
   void addFI(Map<Language, Map<CategoryDifficulty, List<Question>>> result,
@@ -1066,19 +1066,19 @@ class GeoQuizAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat8, //
         questionConfig.diff1, //
-        [":Angelin putoukset, Venezuela:10,9,18:", ":Kilimanjaro, Tansania::", ":Tonava Delta, Romania::", ":Victorian putoukset, Zimbabwe ja Sambia:21,18,11:", ":Saharan silmä, Mauritania::", ":Kuollut meri, Israel::", ":Moherin kallio, Irlanti::", ":Muta tulivuoria, Azerbaijan::", ":Moreenijärvi, Kanada::", ":Paholaisen marmorit, Australia::"]);
+        [":Angelin putoukset, Venezuela:1,2,4:", ":Kilimanjaro, Tansania::", ":Tonava Delta, Romania::", ":Victorian putoukset, Zimbabwe ja Sambia:5,6,9:", ":Saharan silmä, Mauritania::", ":Kuollut meri, Israel::", ":Moherin kallio, Irlanti::", ":Muta tulivuoria, Azerbaijan::", ":Moreenijärvi, Kanada::", ":Paholaisen marmorit, Australia::"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat8, //
         questionConfig.diff2, //
-        [":Pamukkale, Turkki::", ":Viiden värin joki, Columbia::", ":Paricutín-tulivuori, Meksiko::", ":Moeraki Lohkareita, Uusi-Seelanti::", ":Sininen luola, Italia:28,31,29:", ":Marmori luolat, Chile:19,25,20:", ":Kristalli luola, Bermuda:25,30,35:"]);
+        [":Pamukkale, Turkki::", ":Viiden värin joki, Columbia::", ":Paricutín-tulivuori, Meksiko::", ":Moeraki Lohkareita, Uusi-Seelanti::", ":Sininen luola, Italia:0,1,2:", ":Marmori luolat, Chile:3,0,2:", ":Kristalli luola, Bermuda:0,1,2:"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat8, //
         questionConfig.diff3, //
-        [":Jeju Saari, Etelä-Korea:31,25,27:", ":Iguazun putoukset, Argentiina ja Brasilia::", ":Matterhorn, Sveitsi::", ":Pöytävuori, Etelä-Afrikka:26,24,30:", ":Bu Tinah, Arabiemiirikunnat:31,29,26:", ":Sundarbans, Bangladesh::", ":Verdon rotko, Ranska::"]);
+        [":Jeju Saari, Etelä-Korea:1,2,5:", ":Iguazun putoukset, Argentiina ja Brasilia::", ":Matterhorn, Sveitsi::", ":Pöytävuori, Etelä-Afrikka:1,6,5:", ":Bu Tinah, Arabiemiirikunnat:1,6,5:", ":Sundarbans, Bangladesh::", ":Verdon rotko, Ranska::"]);
   }
 
   void addFR(Map<Language, Map<CategoryDifficulty, List<Question>>> result,
@@ -1131,19 +1131,19 @@ class GeoQuizAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat8, //
         questionConfig.diff1, //
-        [":Salto Ángel, Venezuela:10,9,18:", ":Mont Kilimandjaro, Tanzanie::", ":Delta du Danube, Roumanie::", ":Chutes Victoria, Zimbabwe et Zambie:21,18,11:", ":Œil du Sahara, Mauritanie::", ":La mer Morte, Israël::", ":Falaises de Moher, Irlande::", ":Volcans de boue, Azerbaïdjan::", ":Lac Moraine, Canada::", ":Marbres du diable, Australie::"]);
+        [":Salto Ángel, Venezuela:1,2,4:", ":Mont Kilimandjaro, Tanzanie::", ":Delta du Danube, Roumanie::", ":Chutes Victoria, Zimbabwe et Zambie:5,6,9:", ":Œil du Sahara, Mauritanie::", ":La mer Morte, Israël::", ":Falaises de Moher, Irlande::", ":Volcans de boue, Azerbaïdjan::", ":Lac Moraine, Canada::", ":Marbres du diable, Australie::"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat8, //
         questionConfig.diff2, //
-        [":Pamukkale, Turquie::", ":La rivière des cinq couleurs, Colombie::", ":Volcan Paricutín, Mexique::", ":Moeraki rochers, Nouvelle-Zélande::", ":La Grotte Bleue, Italie:28,31,29:", ":Grottes de marbre, Chili:19,25,20:", ":Grotte de cristal, Bermuda:25,30,35:"]);
+        [":Pamukkale, Turquie::", ":La rivière des cinq couleurs, Colombie::", ":Volcan Paricutín, Mexique::", ":Moeraki rochers, Nouvelle-Zélande::", ":La Grotte Bleue, Italie:0,1,2:", ":Grottes de marbre, Chili:3,0,2:", ":Grotte de cristal, Bermuda:0,1,2:"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat8, //
         questionConfig.diff3, //
-        [":Île de Jeju, Corée du Sud:31,25,27:", ":Chutes d'Iguazu, Argentine et Brésil::", ":Cervin, Suisse::", ":Montagne de la Table, Afrique du Sud:26,24,30:", ":Bu Tinah, Émirats arabes unis:31,29,26:", ":Sundarbans, Bangladesh::", ":Gorges du Verdon, France::"]);
+        [":Île de Jeju, Corée du Sud:1,2,5:", ":Chutes d'Iguazu, Argentine et Brésil::", ":Cervin, Suisse::", ":Montagne de la Table, Afrique du Sud:1,6,5:", ":Bu Tinah, Émirats arabes unis:1,6,5:", ":Sundarbans, Bangladesh::", ":Gorges du Verdon, France::"]);
   }
 
   void addHE(Map<Language, Map<CategoryDifficulty, List<Question>>> result,
@@ -1261,19 +1261,19 @@ class GeoQuizAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat8, //
         questionConfig.diff1, //
-        [":एंजल फॉल्स, वेनेजुएला:10,9,18:", ":माउंट किलिमंजारो, तंजानिया::", ":डेन्यूब डेल्टा, रोमानिया::", ":विक्टोरिया फॉल्स, जिम्बाब्वे और ज़ाम्बिया:21,18,11:", ":सहारा की आंख, मॉरिटानिया::", ":मृत सागर, इज़राइल::", ":मोहेर, आयरलैंड की चट्टानें::", ":मिट्टी के ज्वालामुखी, अज़रबैजान::", ":मोराइन झील, कनाडा::", ":डेविल्स मार्बल्स, ऑस्ट्रेलिया::"]);
+        [":एंजल फॉल्स, वेनेजुएला:1,2,4:", ":माउंट किलिमंजारो, तंजानिया::", ":डेन्यूब डेल्टा, रोमानिया::", ":विक्टोरिया फॉल्स, जिम्बाब्वे और ज़ाम्बिया:5,6,9:", ":सहारा की आंख, मॉरिटानिया::", ":मृत सागर, इज़राइल::", ":मोहेर, आयरलैंड की चट्टानें::", ":मिट्टी के ज्वालामुखी, अज़रबैजान::", ":मोराइन झील, कनाडा::", ":डेविल्स मार्बल्स, ऑस्ट्रेलिया::"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat8, //
         questionConfig.diff2, //
-        [":पामुकेल, तुर्की::", ":द रिवर ऑफ फाइव कलर्स, कोलंबिया::", ":परिकतीन ज्वालामुखी, मैक्सिको::", ":मूरकी बोल्डर, न्यूजीलैंड::", ":द ब्लू ग्रोटो, इटली:28,31,29:", ":संगमरमर की गुफाएँ, चिली:19,25,20:", ":क्रिस्टल गुफा, बरमूडा:25,30,35:"]);
+        [":पामुकेल, तुर्की::", ":द रिवर ऑफ फाइव कलर्स, कोलंबिया::", ":परिकतीन ज्वालामुखी, मैक्सिको::", ":मूरकी बोल्डर, न्यूजीलैंड::", ":द ब्लू ग्रोटो, इटली:0,1,2:", ":संगमरमर की गुफाएँ, चिली:3,0,2:", ":क्रिस्टल गुफा, बरमूडा:0,1,2:"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat8, //
         questionConfig.diff3, //
-        [":जाजू द्वीप, दक्षिण कोरिया:31,25,27:", ":इगाज़ु फॉल्स, अर्जेंटीना और ब्राजील::", ":मैटरहॉर्न, स्विट्जरलैंड::", ":टेबल माउंटेन, दक्षिण अफ्रीका:26,24,30:", ":बू टीना, संयुक्त अरब अमीरात:31,29,26:", ":सुंदरवन, बांग्लादेश::", ":वर्डन गॉर्ज, फ्रांस::"]);
+        [":जाजू द्वीप, दक्षिण कोरिया:1,2,5:", ":इगाज़ु फॉल्स, अर्जेंटीना और ब्राजील::", ":मैटरहॉर्न, स्विट्जरलैंड::", ":टेबल माउंटेन, दक्षिण अफ्रीका:1,6,5:", ":बू टीना, संयुक्त अरब अमीरात:1,6,5:", ":सुंदरवन, बांग्लादेश::", ":वर्डन गॉर्ज, फ्रांस::"]);
   }
 
   void addHR(Map<Language, Map<CategoryDifficulty, List<Question>>> result,
@@ -1326,19 +1326,19 @@ class GeoQuizAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat8, //
         questionConfig.diff1, //
-        [":Angelovi slapovi, Venezuela:10,9,18:", ":Kilimandžaro, Tanzanija::", ":Delta Dunava, Rumunjska::", ":Viktorijini slapovi, Zimbabwe i Zambija:21,18,11:", ":Sahara, Mauritanija::", ":Mrtvo more, Izrael::", ":Moherske litice, Irska::", ":Vulkani blata, Azerbajdžan::", ":Morsko jezero, Kanada::", ":Vražji mramori, Australija::"]);
+        [":Angelovi slapovi, Venezuela:1,2,4:", ":Kilimandžaro, Tanzanija::", ":Delta Dunava, Rumunjska::", ":Viktorijini slapovi, Zimbabwe i Zambija:5,6,9:", ":Sahara, Mauritanija::", ":Mrtvo more, Izrael::", ":Moherske litice, Irska::", ":Vulkani blata, Azerbajdžan::", ":Morsko jezero, Kanada::", ":Vražji mramori, Australija::"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat8, //
         questionConfig.diff2, //
-        [":Pamukkale, Turska::", ":Rijeka pet boja, Kolumbija::", ":Vulkan Paricutín, Meksiko::", ":Moeraki balvani, Novi Zeland::", ":Plava špilja, Italija:28,31,29:", ":Mramorne špilje, Čile:19,25,20:", ":Kristalna pećina, Bermuda:25,30,35:"]);
+        [":Pamukkale, Turska::", ":Rijeka pet boja, Kolumbija::", ":Vulkan Paricutín, Meksiko::", ":Moeraki balvani, Novi Zeland::", ":Plava špilja, Italija:0,1,2:", ":Mramorne špilje, Čile:3,0,2:", ":Kristalna pećina, Bermuda:0,1,2:"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat8, //
         questionConfig.diff3, //
-        [":Otok Jeju, Južna Koreja:31,25,27:", ":Slapovi Iguazu, Argentina i Brazil::", ":Matterhorn, Švicarska::", ":Stolna planina, Južna Afrika:26,24,30:", ":Bu Tinah, Ujedinjeni Arapski Emirati:31,29,26:", ":Sundarbans, Bangladeš::", ":Ždrijelo Verdon, Francuska::"]);
+        [":Otok Jeju, Južna Koreja:1,2,5:", ":Slapovi Iguazu, Argentina i Brazil::", ":Matterhorn, Švicarska::", ":Stolna planina, Južna Afrika:1,6,5:", ":Bu Tinah, Ujedinjeni Arapski Emirati:1,6,5:", ":Sundarbans, Bangladeš::", ":Ždrijelo Verdon, Francuska::"]);
   }
 
   void addHU(Map<Language, Map<CategoryDifficulty, List<Question>>> result,
@@ -1391,19 +1391,19 @@ class GeoQuizAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat8, //
         questionConfig.diff1, //
-        [":Angel-vízesés, Venezuela:10,9,18:", ":Kilimandzsáró-hegy, Tanzánia::", ":Duna-delta, Románia::", ":Victoria-vízesés, Zimbabwe és Zambia:21,18,11:", ":A Szahara szeme, Mauritánia::", ":A Holt-tenger, Izrael::", ":Moher-sziklák, Írország::", ":Sár vulkánok, Azerbajdzsán::", ":Moraine tó, Kanada::", ":Ördög marmorai, Ausztrália::"]);
+        [":Angel-vízesés, Venezuela:1,2,4:", ":Kilimandzsáró-hegy, Tanzánia::", ":Duna-delta, Románia::", ":Victoria-vízesés, Zimbabwe és Zambia:5,6,9:", ":A Szahara szeme, Mauritánia::", ":A Holt-tenger, Izrael::", ":Moher-sziklák, Írország::", ":Sár vulkánok, Azerbajdzsán::", ":Moraine tó, Kanada::", ":Ördög marmorai, Ausztrália::"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat8, //
         questionConfig.diff2, //
-        [":Pamukkale, Törökország::", ":Az öt színes folyó, Kolumbia::", ":Paricutín vulkán, Mexikó::", ":Moeraki sziklák, Új-Zéland::", ":A kék barlang, Olaszország:28,31,29:", ":Márványbarlangok, Chile:19,25,20:", ":Kristálybarlang, Bermuda:25,30,35:"]);
+        [":Pamukkale, Törökország::", ":Az öt színes folyó, Kolumbia::", ":Paricutín vulkán, Mexikó::", ":Moeraki sziklák, Új-Zéland::", ":A kék barlang, Olaszország:0,1,2:", ":Márványbarlangok, Chile:3,0,2:", ":Kristálybarlang, Bermuda:0,1,2:"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat8, //
         questionConfig.diff3, //
-        [":Jeju-sziget, Dél-Korea:31,25,27:", ":Iguazu-vízesés, Argentína és Brazília::", ":Matterhorn, Svájc::", ":Asztali hegy, Dél-Afrika:26,24,30:", ":Bu Tinah, Egyesült Arab Emirátusok:31,29,26:", ":Szundarbansz, Banglades::", ":Verdon-kanyon, Franciaország::"]);
+        [":Jeju-sziget, Dél-Korea:1,2,5:", ":Iguazu-vízesés, Argentína és Brazília::", ":Matterhorn, Svájc::", ":Asztali hegy, Dél-Afrika:1,6,5:", ":Bu Tinah, Egyesült Arab Emirátusok:1,6,5:", ":Szundarbansz, Banglades::", ":Verdon-kanyon, Franciaország::"]);
   }
 
   void addID(Map<Language, Map<CategoryDifficulty, List<Question>>> result,
@@ -1456,19 +1456,19 @@ class GeoQuizAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat8, //
         questionConfig.diff1, //
-        [":Air terjun Angel, Venezuela:10,9,18:", ":Kilimanjaro, Tanzania::", ":Delta Donau, Romania::", ":Air Terjun Victoria, Zimbabwe dan Zambia:21,18,11:", ":Struktur Richat, Mauritania::", ":Laut Mati, Israel::", ":Tebing Moher, Irlandia::", ":Gunung berapi lumpur, Azerbaijan::", ":Danau Moraine, Kanada::", ":Iblis kelereng, Australia::"]);
+        [":Air terjun Angel, Venezuela:1,2,4:", ":Kilimanjaro, Tanzania::", ":Delta Donau, Romania::", ":Air Terjun Victoria, Zimbabwe dan Zambia:5,6,9:", ":Struktur Richat, Mauritania::", ":Laut Mati, Israel::", ":Tebing Moher, Irlandia::", ":Gunung berapi lumpur, Azerbaijan::", ":Danau Moraine, Kanada::", ":Iblis kelereng, Australia::"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat8, //
         questionConfig.diff2, //
-        [":Pamukkale, Turki::", ":Sungai Lima Warna, Kolumbia::", ":Gunung berapi Paricutín, Meksiko::", ":Bongkahan batu Moeraki, Selandia Baru::", ":Gua Biru, Italia:28,31,29:", ":Gua Marmer, Chili:19,25,20:", ":Gua kristal, Bermuda:25,30,35:"]);
+        [":Pamukkale, Turki::", ":Sungai Lima Warna, Kolumbia::", ":Gunung berapi Paricutín, Meksiko::", ":Bongkahan batu Moeraki, Selandia Baru::", ":Gua Biru, Italia:0,1,2:", ":Gua Marmer, Chili:3,0,2:", ":Gua kristal, Bermuda:0,1,2:"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat8, //
         questionConfig.diff3, //
-        [":Pulau Jeju, Korea Selatan:31,25,27:", ":Air terjun Iguazu, Argentina dan Brasil::", ":Matterhorn, Swiss::", ":Gunung Meja, Afrika Selatan:26,24,30:", ":Bu Tinah, Uni Emirat Arab:31,29,26:", ":Sundarban, Bangladesh::", ":Verdon Jurang, Prancis::"]);
+        [":Pulau Jeju, Korea Selatan:1,2,5:", ":Air terjun Iguazu, Argentina dan Brasil::", ":Matterhorn, Swiss::", ":Gunung Meja, Afrika Selatan:1,6,5:", ":Bu Tinah, Uni Emirat Arab:1,6,5:", ":Sundarban, Bangladesh::", ":Verdon Jurang, Prancis::"]);
   }
 
   void addIT(Map<Language, Map<CategoryDifficulty, List<Question>>> result,
@@ -1521,19 +1521,19 @@ class GeoQuizAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat8, //
         questionConfig.diff1, //
-        [":Salto Angel, Venezuela:10,9,18:", ":Kilimangiaro, Tanzania::", ":Delta del Danubio, Romania::", ":Cascate Vittoria, Zimbabwe e Zambia:21,18,11:", ":Occhio del Sahara, Mauritania::", ":Il Mar Morto, Israele::", ":Scogliere di Moher, Irlanda::", ":Vulcani di fango, Azerbaijan::", ":Lago Moraine, Canada::", ":Marmi del diavolo, Australia::"]);
+        [":Salto Angel, Venezuela:1,2,4:", ":Kilimangiaro, Tanzania::", ":Delta del Danubio, Romania::", ":Cascate Vittoria, Zimbabwe e Zambia:5,6,9:", ":Occhio del Sahara, Mauritania::", ":Il Mar Morto, Israele::", ":Scogliere di Moher, Irlanda::", ":Vulcani di fango, Azerbaijan::", ":Lago Moraine, Canada::", ":Marmi del diavolo, Australia::"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat8, //
         questionConfig.diff2, //
-        [":Pamukkale, Turchia::", ":Il fiume dei cinque colori, Colombia::", ":Vulcano Paricutín, Messico::", ":Massi di Moeraki, Nuova Zelanda::", ":Grotta Azzurra, Italia:28,31,29:", ":Marmeren grotten, Cile:19,25,20:", ":Cave di cristallo, Bermuda:25,30,35:"]);
+        [":Pamukkale, Turchia::", ":Il fiume dei cinque colori, Colombia::", ":Vulcano Paricutín, Messico::", ":Massi di Moeraki, Nuova Zelanda::", ":Grotta Azzurra, Italia:0,1,2:", ":Marmeren grotten, Cile:3,0,2:", ":Cave di cristallo, Bermuda:0,1,2:"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat8, //
         questionConfig.diff3, //
-        [":Isola di Jeju, Corea del Sud:31,25,27:", ":Cascate dell'Iguazú, Argentina e Brasile::", ":Cervino, Svizzera::", ":Montagna della Tavola, Sudafrica:26,24,30:", ":Bu Tinah, Emirati Arabi Uniti:31,29,26:", ":Sundarbans, Bangladesh::", ":Gola del Verdon, Francia::"]);
+        [":Isola di Jeju, Corea del Sud:1,2,5:", ":Cascate dell'Iguazú, Argentina e Brasile::", ":Cervino, Svizzera::", ":Montagna della Tavola, Sudafrica:1,6,5:", ":Bu Tinah, Emirati Arabi Uniti:1,6,5:", ":Sundarbans, Bangladesh::", ":Gola del Verdon, Francia::"]);
   }
 
   void addJA(Map<Language, Map<CategoryDifficulty, List<Question>>> result,
@@ -1586,19 +1586,19 @@ class GeoQuizAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat8, //
         questionConfig.diff1, //
-        [":エンジェルフォールズ,ベネズエラ:10,9,18:", ":キリマンジャロ山,タンザニア::", ":ドナウデルタ,ルーマニア::", ":ビクトリア滝,ジンバブエとザンビア:21,18,11:", ":サハラ砂漠の眼,モーリタニア::", ":イスラエルの死海::", ":アイルランドのモハーの断崖::", ":泥火山,アゼルバイジャン::", ":モレーン湖,カナダ::", ":デビルズマーブルズ,オーストラリア::"]);
+        [":エンジェルフォールズ,ベネズエラ:1,2,4:", ":キリマンジャロ山,タンザニア::", ":ドナウデルタ,ルーマニア::", ":ビクトリア滝,ジンバブエとザンビア:5,6,9:", ":サハラ砂漠の眼,モーリタニア::", ":イスラエルの死海::", ":アイルランドのモハーの断崖::", ":泥火山,アゼルバイジャン::", ":モレーン湖,カナダ::", ":デビルズマーブルズ,オーストラリア::"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat8, //
         questionConfig.diff2, //
-        [":トルコ,パムッカレ::", ":5色の川,コロンビア::", ":パリクティン火山,メキシコ::", ":モエラキ・ボールダーズ,ニュージーランド::", ":ブルー・グロット,イタリア:28,31,29:", ":大理石の洞窟,チリ:19,25,20:", ":クリスタルケーブ,バミューダ:25,30,35:"]);
+        [":トルコ,パムッカレ::", ":5色の川,コロンビア::", ":パリクティン火山,メキシコ::", ":モエラキ・ボールダーズ,ニュージーランド::", ":ブルー・グロット,イタリア:0,1,2:", ":大理石の洞窟,チリ:3,0,2:", ":クリスタルケーブ,バミューダ:0,1,2:"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat8, //
         questionConfig.diff3, //
-        [":済州島,韓国:31,25,27:", ":イグアスの滝,アルゼンチン,ブラジル::", ":スイス,マッターホルン::", ":テーブルマウンテン,南アフリカ:26,24,30:", ":Bu Tinah,アラブ首長国連邦:31,29,26:", ":スンダルバンス,バングラデシュ::", ":ヴェルドン渓谷,フランス::"]);
+        [":済州島,韓国:1,2,5:", ":イグアスの滝,アルゼンチン,ブラジル::", ":スイス,マッターホルン::", ":テーブルマウンテン,南アフリカ:1,6,5:", ":Bu Tinah,アラブ首長国連邦:1,6,5:", ":スンダルバンス,バングラデシュ::", ":ヴェルドン渓谷,フランス::"]);
   }
 
   void addKO(Map<Language, Map<CategoryDifficulty, List<Question>>> result,
@@ -1651,19 +1651,19 @@ class GeoQuizAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat8, //
         questionConfig.diff1, //
-        [":엔젤 폴스, 베네수엘라:10,9,18:", ":킬리만자로 산, 탄자니아::", ":다뉴브 델타, 루마니아::", ":빅토리아 폭포, 짐바브웨 및 잠비아:21,18,11:", ":모리 타니의 사하라 사막의 눈::", ":이스라엘의 사해::", ":Moher의 절벽, 아일랜드::", ":진흙 화산, 아제르바이잔::", ":Moraine 호수, 캐나다::", ":악마의 대리석, 호주::"]);
+        [":엔젤 폴스, 베네수엘라:1,2,4:", ":킬리만자로 산, 탄자니아::", ":다뉴브 델타, 루마니아::", ":빅토리아 폭포, 짐바브웨 및 잠비아:5,6,9:", ":모리 타니의 사하라 사막의 눈::", ":이스라엘의 사해::", ":Moher의 절벽, 아일랜드::", ":진흙 화산, 아제르바이잔::", ":Moraine 호수, 캐나다::", ":악마의 대리석, 호주::"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat8, //
         questionConfig.diff2, //
-        [":파묵칼레, 터키::", ":컬럼의 강, 콜롬비아::", ":파리 쿠틴 화산, 멕시코::", ":모에 라키 바위, 뉴질랜드::", ":푸른 동굴, 이탈리아:28,31,29:", ":마블 동굴, 칠레:19,25,20:", ":크리스탈 동굴, 버뮤다:25,30,35:"]);
+        [":파묵칼레, 터키::", ":컬럼의 강, 콜롬비아::", ":파리 쿠틴 화산, 멕시코::", ":모에 라키 바위, 뉴질랜드::", ":푸른 동굴, 이탈리아:0,1,2:", ":마블 동굴, 칠레:3,0,2:", ":크리스탈 동굴, 버뮤다:0,1,2:"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat8, //
         questionConfig.diff3, //
-        [":제주도, 한국:31,25,27:", ":아르헨티나, 브라질 이과수 폭포::", ":마터호른, 스위스::", ":테이블 마운틴, 남아프리카:26,24,30:", ":Bu Tinah, 아랍 에미리트 연합:31,29,26:", ":순데 반스, 방글라데시::", ":베르 동 협곡, 프랑스::"]);
+        [":제주도, 한국:1,2,5:", ":아르헨티나, 브라질 이과수 폭포::", ":마터호른, 스위스::", ":테이블 마운틴, 남아프리카:1,6,5:", ":Bu Tinah, 아랍 에미리트 연합:1,6,5:", ":순데 반스, 방글라데시::", ":베르 동 협곡, 프랑스::"]);
   }
 
   void addMS(Map<Language, Map<CategoryDifficulty, List<Question>>> result,
@@ -1716,19 +1716,19 @@ class GeoQuizAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat8, //
         questionConfig.diff1, //
-        [":Air Terjun Angel, Venezuela:10,9,18:", ":Gunung Kilimanjaro, Tanzania::", ":Delta Danube, Romania::", ":Air Terjun Victoria, Zimbabwe dan Zambia:21,18,11:", ":Mata Sahara, Mauritania::", ":Laut Mati, Israel::", ":Cliffs of Moher, Ireland::", ":Gunung berapi Lumpur, Azerbaijan::", ":Tasik Moraine, Kanada::", ":Marbles Devil, Australia::"]);
+        [":Air Terjun Angel, Venezuela:1,2,4:", ":Gunung Kilimanjaro, Tanzania::", ":Delta Danube, Romania::", ":Air Terjun Victoria, Zimbabwe dan Zambia:5,6,9:", ":Mata Sahara, Mauritania::", ":Laut Mati, Israel::", ":Cliffs of Moher, Ireland::", ":Gunung berapi Lumpur, Azerbaijan::", ":Tasik Moraine, Kanada::", ":Marbles Devil, Australia::"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat8, //
         questionConfig.diff2, //
-        [":Pamukkale, Turki::", ":Sungai Lima Warna, Columbia::", ":Gunung berapi Paricutín, Mexico::", ":Batu Moeraki sepotong, New Zealand::", ":Grotto Biru, Itali:28,31,29:", ":Gua Marble, Chile:19,25,20:", ":Gua kristal, Bermuda:25,30,35:"]);
+        [":Pamukkale, Turki::", ":Sungai Lima Warna, Columbia::", ":Gunung berapi Paricutín, Mexico::", ":Batu Moeraki sepotong, New Zealand::", ":Grotto Biru, Itali:0,1,2:", ":Gua Marble, Chile:3,0,2:", ":Gua kristal, Bermuda:0,1,2:"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat8, //
         questionConfig.diff3, //
-        [":Pulau Jeju, Korea Selatan:31,25,27:", ":Air Terjun Iguazu, Argentina dan Brazil::", ":Matterhorn, Switzerland::", ":Jadual Gunung, Afrika Selatan:26,24,30:", ":Bu Tinah, Emiriah Arab Bersatu:31,29,26:", ":Sundarban, Bangladesh::", ":Jurang Verdon, Perancis::"]);
+        [":Pulau Jeju, Korea Selatan:1,2,5:", ":Air Terjun Iguazu, Argentina dan Brazil::", ":Matterhorn, Switzerland::", ":Jadual Gunung, Afrika Selatan:1,6,5:", ":Bu Tinah, Emiriah Arab Bersatu:1,6,5:", ":Sundarban, Bangladesh::", ":Jurang Verdon, Perancis::"]);
   }
 
   void addNL(Map<Language, Map<CategoryDifficulty, List<Question>>> result,
@@ -1781,19 +1781,19 @@ class GeoQuizAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat8, //
         questionConfig.diff1, //
-        [":Ángelwaterval, Venezuela:10,9,18:", ":Kilimanjaro, Tanzania::", ":Donau Delta, Roemenië::", ":Victoriawatervallen, Zimbabwe en Zambia:21,18,11:", ":Oog van de Sahara, Mauritanië::", ":Dode Zee, Israel::", ":Kliffen van Moher, Ierland::", ":Moddervulkanen, Azerbeidzjan::", ":Moraine Lake, Canada::", ":Devil's Marbles, Australië::"]);
+        [":Ángelwaterval, Venezuela:1,2,4:", ":Kilimanjaro, Tanzania::", ":Donau Delta, Roemenië::", ":Victoriawatervallen, Zimbabwe en Zambia:5,6,9:", ":Oog van de Sahara, Mauritanië::", ":Dode Zee, Israel::", ":Kliffen van Moher, Ierland::", ":Moddervulkanen, Azerbeidzjan::", ":Moraine Lake, Canada::", ":Devil's Marbles, Australië::"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat8, //
         questionConfig.diff2, //
-        [":Pamukkale, Turkije::", ":Caño Cristales, Colombia::", ":Paricutín-vulkaan, Mexico::", ":Moeraki Boulders, Nieuw-Zeeland::", ":Blauwe Grot, Italië:28,31,29:", ":Marmeren grotten, Chile:19,25,20:", ":Kristallen grot, Bermuda:25,30,35:"]);
+        [":Pamukkale, Turkije::", ":Caño Cristales, Colombia::", ":Paricutín-vulkaan, Mexico::", ":Moeraki Boulders, Nieuw-Zeeland::", ":Blauwe Grot, Italië:0,1,2:", ":Marmeren grotten, Chile:3,0,2:", ":Kristallen grot, Bermuda:0,1,2:"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat8, //
         questionConfig.diff3, //
-        [":Jeju-eiland, Zuid-Korea:31,25,27:", ":Iguazu-watervallen, Argentinië en Brazilië::", ":Matterhorn, Zwitserland::", ":Tafelberg, Zuid-Afrika:26,24,30:", ":Bu Tinah, Verenigde Arabische Emiraten:31,29,26:", ":Sundarbans, Bangladesh::", ":Gorges du Verdon, Frankrijk::"]);
+        [":Jeju-eiland, Zuid-Korea:1,2,5:", ":Iguazu-watervallen, Argentinië en Brazilië::", ":Matterhorn, Zwitserland::", ":Tafelberg, Zuid-Afrika:1,6,5:", ":Bu Tinah, Verenigde Arabische Emiraten:1,6,5:", ":Sundarbans, Bangladesh::", ":Gorges du Verdon, Frankrijk::"]);
   }
 
   void addNB(Map<Language, Map<CategoryDifficulty, List<Question>>> result,
@@ -1846,19 +1846,19 @@ class GeoQuizAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat8, //
         questionConfig.diff1, //
-        [":Angelfossen, Venezuela:10,9,18:", ":Kilimanjaro-fjellet, Tanzania::", ":Donaudeltaet, Romania::", ":Victoriafallene, Zimbabwe og Zambia:21,18,11:", ":Sahara-øye, Mauritania::", ":Dødehavet, Israel::", ":Cliffs of Moher, Irland::", ":Mud-vulkaner, Aserbajdsjan::", ":Moraine Lake, Canada::", ":Djevelens klinkekuler, Australia::"]);
+        [":Angelfossen, Venezuela:1,2,4:", ":Kilimanjaro-fjellet, Tanzania::", ":Donaudeltaet, Romania::", ":Victoriafallene, Zimbabwe og Zambia:5,6,9:", ":Sahara-øye, Mauritania::", ":Dødehavet, Israel::", ":Cliffs of Moher, Irland::", ":Mud-vulkaner, Aserbajdsjan::", ":Moraine Lake, Canada::", ":Djevelens klinkekuler, Australia::"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat8, //
         questionConfig.diff2, //
-        [":Pamukkale, Tyrkia::", ":Caño Cristales, Columbia::", ":Paricutín vulkan, Mexico::", ":Moeraki Boulders, New Zealand::", ":Den blå grotten, Italia:28,31,29:", ":Marmorhuler, Chile:19,25,20:", ":Krystallgrotte, Bermuda:25,30,35:"]);
+        [":Pamukkale, Tyrkia::", ":Caño Cristales, Columbia::", ":Paricutín vulkan, Mexico::", ":Moeraki Boulders, New Zealand::", ":Den blå grotten, Italia:0,1,2:", ":Marmorhuler, Chile:3,0,2:", ":Krystallgrotte, Bermuda:0,1,2:"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat8, //
         questionConfig.diff3, //
-        [":Jeju-øya, Sør-Korea:31,25,27:", ":Iguazúfallene, Argentina og Brasil::", ":Matterhorn, Sveits::", ":Taffelberg, Sør-Afrika:26,24,30:", ":Bu Tinah, De forente arabiske emirater:31,29,26:", ":Sundarbans, Bangladesh::", ":Verdon Kløft, Frankrike::"]);
+        [":Jeju-øya, Sør-Korea:1,2,5:", ":Iguazúfallene, Argentina og Brasil::", ":Matterhorn, Sveits::", ":Taffelberg, Sør-Afrika:1,6,5:", ":Bu Tinah, De forente arabiske emirater:1,6,5:", ":Sundarbans, Bangladesh::", ":Verdon Kløft, Frankrike::"]);
   }
 
   void addPL(Map<Language, Map<CategoryDifficulty, List<Question>>> result,
@@ -1911,19 +1911,19 @@ class GeoQuizAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat8, //
         questionConfig.diff1, //
-        [":Salto Angel, Wenezuela:10,9,18:", ":Kilimandżaro, Tanzania::", ":Delta Dunaju, Rumunia::", ":Wodospady Wiktorii, Zimbabwe i Zambia:21,18,11:", ":Kalb ar-Riszat, Mauretania::", ":Morze Martwe, Izrael::", ":Klify Moheru, Ireland::", ":Wulkany błotne, Azerbejdżan::", ":Moraine, Kanada::", ":Karlu Karlu, Australia::"]);
+        [":Salto Angel, Wenezuela:1,2,4:", ":Kilimandżaro, Tanzania::", ":Delta Dunaju, Rumunia::", ":Wodospady Wiktorii, Zimbabwe i Zambia:5,6,9:", ":Kalb ar-Riszat, Mauretania::", ":Morze Martwe, Izrael::", ":Klify Moheru, Ireland::", ":Wulkany błotne, Azerbejdżan::", ":Moraine, Kanada::", ":Karlu Karlu, Australia::"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat8, //
         questionConfig.diff2, //
-        [":Pamukkale, Turcja::", ":Rzeka pięciu kolorów, Kolumbia::", ":Wulkan Paricutín, Meksyk::", ":Głazy Moeraki, Nowa Zelandia::", ":Lazurowa Grota, Włochy:28,31,29:", ":Marmurowe jaskinie, Chile:19,25,20:", ":Jaskinia Kryształowa, Bermudy:25,30,35:"]);
+        [":Pamukkale, Turcja::", ":Rzeka pięciu kolorów, Kolumbia::", ":Wulkan Paricutín, Meksyk::", ":Głazy Moeraki, Nowa Zelandia::", ":Lazurowa Grota, Włochy:0,1,2:", ":Marmurowe jaskinie, Chile:3,0,2:", ":Jaskinia Kryształowa, Bermudy:0,1,2:"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat8, //
         questionConfig.diff3, //
-        [":Wyspa Jeju, Korea Południowa:31,25,27:", ":Wodospady Iguazu, Argentyna i Brazylia::", ":Matterhorn, Szwajcaria::", ":Góra Stołowa, Republika Południowej Afryki:26,24,30:", ":Bu Tinah, Zjednoczone Emiraty Arabskie:31,26,26:", ":Sundarbany, Bangladesz::", ":Przełom Verdon, Francja::"]);
+        [":Wyspa Jeju, Korea Południowa:1,2,5:", ":Wodospady Iguazu, Argentyna i Brazylia::", ":Matterhorn, Szwajcaria::", ":Góra Stołowa, Republika Południowej Afryki:1,6,5:", ":Bu Tinah, Zjednoczone Emiraty Arabskie:31,26,26:", ":Sundarbany, Bangladesz::", ":Przełom Verdon, Francja::"]);
   }
 
   void addPT(Map<Language, Map<CategoryDifficulty, List<Question>>> result,
@@ -1976,19 +1976,19 @@ class GeoQuizAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat8, //
         questionConfig.diff1, //
-        [":Salto Ángel, Venezuela:10,9,18:", ":Monte Kilimanjaro, Tanzânia::", ":Delta do Danúbio, Romênia::", ":Cataratas Vitória, Zimbábue e Zâmbia:21,18,11:", ":Olho do Saara, Mauritânia::", ":O Mar Morto, Israel::", ":Falésias de Moher, Irlanda::", ":Vulcões de lama, Azerbaijão::", ":Lago Moraine, Canadá::", ":Mármores do Diabo, Austrália::"]);
+        [":Salto Ángel, Venezuela:1,2,4:", ":Monte Kilimanjaro, Tanzânia::", ":Delta do Danúbio, Romênia::", ":Cataratas Vitória, Zimbábue e Zâmbia:5,6,9:", ":Olho do Saara, Mauritânia::", ":O Mar Morto, Israel::", ":Falésias de Moher, Irlanda::", ":Vulcões de lama, Azerbaijão::", ":Lago Moraine, Canadá::", ":Mármores do Diabo, Austrália::"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat8, //
         questionConfig.diff2, //
-        [":Pamukkale, Turquia::", ":O Rio das Cinco Cores, Colômbia::", ":Vulcão Paricutín, México::", ":Seixos gigantes de Moerek, Nova Zelândia::", ":Gruta Azul, Itália:28,31,29:", ":Grutas de Mármore, Chile:19,25,20:", ":Gruta de Cristal, Bermuda:25,30,35:"]);
+        [":Pamukkale, Turquia::", ":O Rio das Cinco Cores, Colômbia::", ":Vulcão Paricutín, México::", ":Seixos gigantes de Moerek, Nova Zelândia::", ":Gruta Azul, Itália:0,1,2:", ":Grutas de Mármore, Chile:3,0,2:", ":Gruta de Cristal, Bermuda:0,1,2:"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat8, //
         questionConfig.diff3, //
-        [":Ilha de Jeju, Coreia do Sul:31,25,27:", ":Cataratas do Iguaçu, Argentina e Brasil::", ":Matterhorn, Suíça::", ":Montanha da Mesa, África do Sul:26,24,30:", ":Bu Tinah, Emirados Árabes Unidos:31,29,26:", ":Sundarbans, Bangladesh::", ":Garganta de Verdon, França::"]);
+        [":Ilha de Jeju, Coreia do Sul:1,2,5:", ":Cataratas do Iguaçu, Argentina e Brasil::", ":Matterhorn, Suíça::", ":Montanha da Mesa, África do Sul:1,6,5:", ":Bu Tinah, Emirados Árabes Unidos:1,6,5:", ":Sundarbans, Bangladesh::", ":Garganta de Verdon, França::"]);
   }
 
   void addRO(Map<Language, Map<CategoryDifficulty, List<Question>>> result,
@@ -2041,19 +2041,19 @@ class GeoQuizAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat8, //
         questionConfig.diff1, //
-        [":Cascada Angel, Venezuela:10,9,18:", ":Muntele Kilimanjaro, Tanzania::", ":Delta Dunării, România::", ":Cascadele din Victoria, Zimbabwe şi Zambia:21,18,11:", ":Ochiul Saharei, Mauritania::", ":Marea Moartă, Israel::", ":Stâncile din Moher, Irlanda::", ":Vulcanii noroi, Azerbaijan::", ":Lacul Moraine, Canada::", ":Pietrele Diavolului, Australia::"]);
+        [":Cascada Angel, Venezuela:1,2,4:", ":Muntele Kilimanjaro, Tanzania::", ":Delta Dunării, România::", ":Cascadele din Victoria, Zimbabwe şi Zambia:5,6,9:", ":Ochiul Saharei, Mauritania::", ":Marea Moartă, Israel::", ":Stâncile din Moher, Irlanda::", ":Vulcanii noroioși, Azerbaijan::", ":Lacul Moraine, Canada::", ":Pietrele Diavolului, Australia::"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat8, //
         questionConfig.diff2, //
-        [":Pamukkale, Turcia::", ":Râul cu Cinci Culori, Columbia::", ":Vulcan Paricutín, Mexic::", ":Bolovanii Moeraki, Noua Zeelandă::", ":Grota Albastră, Italia:28,31,29:", ":Peştera de marmură, Chile:19,25,20:", ":Peştera de cristal, Bermuda:25,30,35:"]);
+        [":Pamukkale, Turcia::", ":Râul cu Cinci Culori, Columbia::", ":Vulcan Paricutín, Mexic::", ":Bolovanii Moeraki, Noua Zeelandă::", ":Grota Albastră, Italia:0,1,2:", ":Peştera de marmură, Chile:3,0,2:", ":Peştera de cristal, Bermuda:0,1,2:"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat8, //
         questionConfig.diff3, //
-        [":Insula Jeju, Coreea de Sud:31,25,27:", ":Cascadele de pe Iguazú, Argentina şi Brazilia::", ":Matterhorn, Elveţia::", ":Muntele Masa, Africa de Sud:26,24,30:", ":Bu Tinah, Emiratele Arabe Unite:31,29,26:", ":Sundarbans, Bangladesh::", ":Cheile Verdon, Franţa::"]);
+        [":Insula Jeju, Coreea de Sud:1,2,5:", ":Cascadele de pe Iguazú, Argentina şi Brazilia::", ":Matterhorn, Elveţia::", ":Muntele Masa, Africa de Sud:1,6,5:", ":Bu Tinah, Emiratele Arabe Unite:1,6,5:", ":Sundarbans, Bangladesh::", ":Cheile Verdon, Franţa::"]);
   }
 
   void addRU(Map<Language, Map<CategoryDifficulty, List<Question>>> result,
@@ -2106,19 +2106,19 @@ class GeoQuizAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat8, //
         questionConfig.diff1, //
-        [":Водопад Анхель, Венесуэла:10,9,18:", ":Гора Килиманджаро, Танзания::", ":Дельта Дуная, Румыния::", ":Водопад Виктория, Зимбабве и Замбия:21,18,11:", ":Глаз Сахары, Мавритания::", ":Мертвое море, Израиль::", ":Скалы Мохер, Ирландия::", ":Грязевые вулканы, Азербайджан::", ":Озеро Морейн, Канада::", ":Шары дьявола, Австралия::"]);
+        [":Водопад Анхель, Венесуэла:1,2,4:", ":Гора Килиманджаро, Танзания::", ":Дельта Дуная, Румыния::", ":Водопад Виктория, Зимбабве и Замбия:5,6,9:", ":Глаз Сахары, Мавритания::", ":Мертвое море, Израиль::", ":Скалы Мохер, Ирландия::", ":Грязевые вулканы, Азербайджан::", ":Озеро Морейн, Канада::", ":Шары дьявола, Австралия::"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat8, //
         questionConfig.diff2, //
-        [":Памуккале, Турция::", ":Река пяти цветов, Колумбия::", ":Вулкан Парикутин, Мексика::", ":Валуны Моераки, Новая Зеландия::", ":Голубой грот, Италия:28,31,29:", ":Мраморные пещеры, Чили:19,25,20:", ":Хрустальная пещера, Бермудские острова:25,30,35:"]);
+        [":Памуккале, Турция::", ":Река пяти цветов, Колумбия::", ":Вулкан Парикутин, Мексика::", ":Валуны Моераки, Новая Зеландия::", ":Голубой грот, Италия:0,1,2:", ":Мраморные пещеры, Чили:3,0,2:", ":Хрустальная пещера, Бермудские острова:0,1,2:"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat8, //
         questionConfig.diff3, //
-        [":Остров Чеджу, Южная Корея:31,25,27:", ":Водопады Игуасу, Аргентина и Бразилия::", ":Маттерхорн, Швейцария::", ":Столовая гора, ЮАР:26,24,30:", ":Бу Тина, Объединенные Арабские Эмираты:31,29,26:", ":Сундарбанс, Бангладеш::", ":Ущелье Вердон, Франция::"]);
+        [":Остров Чеджу, Южная Корея:1,2,5:", ":Водопады Игуасу, Аргентина и Бразилия::", ":Маттерхорн, Швейцария::", ":Столовая гора, ЮАР:1,6,5:", ":Бу Тина, Объединенные Арабские Эмираты:1,6,5:", ":Сундарбанс, Бангладеш::", ":Ущелье Вердон, Франция::"]);
   }
 
   void addSK(Map<Language, Map<CategoryDifficulty, List<Question>>> result,
@@ -2171,19 +2171,19 @@ class GeoQuizAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat8, //
         questionConfig.diff1, //
-        [":Angelov vodopád, Venezuela:10,9,18:", ":Kilimandžáro, Tanzánia::", ":Delta Dunaja, Rumunsko::", ":Viktóriine vodopády, Zimbabwe a Zambia:21,18,11:", ":Eye of Sahara, Mauritania::", ":Mŕtve more, Izrael::", ":Moherské útesy, Írsko::", ":Bahenné sopky, Azerbajdžan::", ":Moraine jazero, Kanada::", ":Diablove guličky, Austrália::"]);
+        [":Angelov vodopád, Venezuela:1,2,4:", ":Kilimandžáro, Tanzánia::", ":Delta Dunaja, Rumunsko::", ":Viktóriine vodopády, Zimbabwe a Zambia:5,6,9:", ":Eye of Sahara, Mauritania::", ":Mŕtve more, Izrael::", ":Moherské útesy, Írsko::", ":Bahenné sopky, Azerbajdžan::", ":Moraine jazero, Kanada::", ":Diablove guličky, Austrália::"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat8, //
         questionConfig.diff2, //
-        [":Pamukkale, Turecko::", ":Rieka piatich farieb, Kolumbia::", ":Sopka Paricutín, Mexiko::", ":Kamenná časť Moeraki, Nový Zéland::", ":Modré jaskyne, Taliansko:28,31,29:", ":Mramorové jaskyne, Čile:19,25,20:", ":Kristallgrotta, Bermuda:25,30,35:"]);
+        [":Pamukkale, Turecko::", ":Rieka piatich farieb, Kolumbia::", ":Sopka Paricutín, Mexiko::", ":Kamenná časť Moeraki, Nový Zéland::", ":Modré jaskyne, Taliansko:0,1,2:", ":Mramorové jaskyne, Čile:3,0,2:", ":Kristallgrotta, Bermuda:0,1,2:"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat8, //
         questionConfig.diff3, //
-        [":Ostrov Jeju, Južná Kórea:31,25,27:", ":Vodopády Iguazu, Argentína a Brazília::", ":Matterhorn, Švajčiarsko::", ":Stolová hora, Južná Afrika:26,24,30:", ":Bu Tinah, Spojené arabské emiráty:31,29,26:", ":Sundarban, Bangladéš::", ":Grand canyon du Verdon, Francúzsko::"]);
+        [":Ostrov Jeju, Južná Kórea:1,2,5:", ":Vodopády Iguazu, Argentína a Brazília::", ":Matterhorn, Švajčiarsko::", ":Stolová hora, Južná Afrika:1,6,5:", ":Bu Tinah, Spojené arabské emiráty:1,6,5:", ":Sundarban, Bangladéš::", ":Grand canyon du Verdon, Francúzsko::"]);
   }
 
   void addSL(Map<Language, Map<CategoryDifficulty, List<Question>>> result,
@@ -2366,19 +2366,19 @@ class GeoQuizAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat8, //
         questionConfig.diff1, //
-        [":Angelfallen, Venezuela:10,9,18:", ":Kilimanjaro-berget, Tanzania::", ":Donau Delta, Rumänien::", ":Victoriafallen, Zimbabwe och Zambia:21,18,11:", ":Richatformationen, Mauretanien::", ":Döda havet, Israel::", ":Cliffs of Moher, Irland::", ":Mud vulkaner, Azerbajdzjan::", ":Moraine Lake, Kanada::", ":Devil's Marbles, Australien::"]);
+        [":Angelfallen, Venezuela:1,2,4:", ":Kilimanjaro-berget, Tanzania::", ":Donau Delta, Rumänien::", ":Victoriafallen, Zimbabwe och Zambia:5,6,9:", ":Richatformationen, Mauretanien::", ":Döda havet, Israel::", ":Cliffs of Moher, Irland::", ":Mud vulkaner, Azerbajdzjan::", ":Moraine Lake, Kanada::", ":Devil's Marbles, Australien::"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat8, //
         questionConfig.diff2, //
-        [":Pamukkale, Turkiet::", ":Caño Cristales, Columbia::", ":Paricutín vulkan, Mexiko::", ":Moeraki Boulders, Nya Zeeland::", ":Den blå grotten, Italien:28,31,29:", ":Marmorgrottor, Chile:19,25,20:", ":Kristallgrotta, Bermuda:25,30,35:"]);
+        [":Pamukkale, Turkiet::", ":Caño Cristales, Columbia::", ":Paricutín vulkan, Mexiko::", ":Moeraki Boulders, Nya Zeeland::", ":Den blå grotten, Italien:0,1,2:", ":Marmorgrottor, Chile:3,0,2:", ":Kristallgrotta, Bermuda:0,1,2:"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat8, //
         questionConfig.diff3, //
-        [":Cheju-do, Sydkorea:31,25,27:", ":Iguazúfallen, Argentina och Brasilien::", ":Matterhorn, Schweiz::", ":Taffelberget, Sydafrika:26,24,30:", ":Bu Tinah, Förenade Arabemiraten:31,29,26:", ":Sundarban, Bangladesh::", ":Verdon Klyfta, Frankrike::"]);
+        [":Cheju-do, Sydkorea:1,2,5:", ":Iguazúfallen, Argentina och Brasilien::", ":Matterhorn, Schweiz::", ":Taffelberget, Sydafrika:1,6,5:", ":Bu Tinah, Förenade Arabemiraten:1,6,5:", ":Sundarban, Bangladesh::", ":Verdon Klyfta, Frankrike::"]);
   }
 
   void addTH(Map<Language, Map<CategoryDifficulty, List<Question>>> result,
@@ -2431,19 +2431,19 @@ class GeoQuizAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat8, //
         questionConfig.diff1, //
-        [":น้ำตกเอนเจล, เวเนซุเอลา:10,9,18:", ":ยอดเขาคิลิมันจาโร, แทนซาเนีย::", ":สามเหลี่ยมปากแม่น้ำดานูบโรมาเนีย::", ":น้ำตกวิกตอเรียซิมบับเวและแซมเบีย:21,18,11:", ":นัยน์ตาของซาฮาร่า, มอริเตเนีย::", ":ทะเลเดดซี, อิสราเอล::", ":หน้าผาแห่งโมเฮอร์, ไอร์แลนด์::", ":โคลนภูเขาไฟ, อาเซอร์ไบจาน::", ":ทะเลสาบจาร, แคนาดา::", ":หินอ่อนปีศาจ, ออสเตรเลีย::"]);
+        [":น้ำตกเอนเจล, เวเนซุเอลา:1,2,4:", ":ยอดเขาคิลิมันจาโร, แทนซาเนีย::", ":สามเหลี่ยมปากแม่น้ำดานูบโรมาเนีย::", ":น้ำตกวิกตอเรียซิมบับเวและแซมเบีย:5,6,9:", ":นัยน์ตาของซาฮาร่า, มอริเตเนีย::", ":ทะเลเดดซี, อิสราเอล::", ":หน้าผาแห่งโมเฮอร์, ไอร์แลนด์::", ":โคลนภูเขาไฟ, อาเซอร์ไบจาน::", ":ทะเลสาบจาร, แคนาดา::", ":หินอ่อนปีศาจ, ออสเตรเลีย::"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat8, //
         questionConfig.diff2, //
-        [":ปามุกกาเล, ตุรกี::", ":แม่น้ำหลากสีโคลัมเบีย::", ":ภูเขาไฟคอนติเนน, เม็กซิโก::", ":ก้อนหินโมเอรากิ, นิวซีแลนด์::", ":ถ้ำสีฟ้า, อิตาลี:28,31,29:", ":ถ้ำหินอ่อน, ชิลี:19,25,20:", ":ถ้ำคริสตัลเบอร์มิวดา:25,30,35:"]);
+        [":ปามุกกาเล, ตุรกี::", ":แม่น้ำหลากสีโคลัมเบีย::", ":ภูเขาไฟคอนติเนน, เม็กซิโก::", ":ก้อนหินโมเอรากิ, นิวซีแลนด์::", ":ถ้ำสีฟ้า, อิตาลี:0,1,2:", ":ถ้ำหินอ่อน, ชิลี:3,0,2:", ":ถ้ำคริสตัลเบอร์มิวดา:0,1,2:"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat8, //
         questionConfig.diff3, //
-        [":เกาะเชจู, เกาหลีใต้:31,25,27:", ":น้ำตกอีกวาซู, อาร์เจนตินาและบราซิล::", ":มัทเทอร์ฮอร์น, สวิตเซอร์แลนด์::", ":ภูเขาโต๊ะ, แอฟริกาใต้:26,24,30:", ":Bu Tinah, สหรัฐอาหรับเอมิเรตส์:31,29,26:", ":สุนทรพน, บังคลาเทศ::", ":Verdon หุบ, ฝรั่งเศส::"]);
+        [":เกาะเชจู, เกาหลีใต้:1,2,5:", ":น้ำตกอีกวาซู, อาร์เจนตินาและบราซิล::", ":มัทเทอร์ฮอร์น, สวิตเซอร์แลนด์::", ":ภูเขาโต๊ะ, แอฟริกาใต้:1,6,5:", ":Bu Tinah, สหรัฐอาหรับเอมิเรตส์:1,6,5:", ":สุนทรพน, บังคลาเทศ::", ":Verdon หุบ, ฝรั่งเศส::"]);
   }
 
   void addTR(Map<Language, Map<CategoryDifficulty, List<Question>>> result,
@@ -2496,19 +2496,19 @@ class GeoQuizAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat8, //
         questionConfig.diff1, //
-        [":Angel Şelaleleri, Venezuela:10,9,18:", ":Kilimanjaro Dağı, Tanzanya::", ":Tuna Deltası, Romanya::", ":Victoria Şelalesi, Zimbabve ve Zambiya:21,18,11:", ":Sahra'nın Gözü, Moritanya::", ":Ölü Deniz, İsrail::", ":Moher Kayalıkları, İrlanda::", ":Çamur volkanları, Azerbaycan::", ":Moraine Gölü, Kanada::", ":Şeytanın Mermerleri, Avustralya::"]);
+        [":Angel Şelaleleri, Venezuela:1,2,4:", ":Kilimanjaro Dağı, Tanzanya::", ":Tuna Deltası, Romanya::", ":Victoria Şelalesi, Zimbabve ve Zambiya:5,6,9:", ":Sahra'nın Gözü, Moritanya::", ":Ölü Deniz, İsrail::", ":Moher Kayalıkları, İrlanda::", ":Çamur volkanları, Azerbaycan::", ":Moraine Gölü, Kanada::", ":Şeytanın Mermerleri, Avustralya::"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat8, //
         questionConfig.diff2, //
-        [":Pamukkale, Türkiye::", ":Beş Renkli Nehir, Kolombiya::", ":Paricutín Volkanı, Meksika::", ":Głazy Moeraki, Yeni Zelanda::", ":Mavi Grotto, İtalya:28,31,29:", ":Mermer Mağaralar, Şili:19,25,20:", ":Kristal Mağarası, Bermuda:25,30,35:"]);
+        [":Pamukkale, Türkiye::", ":Beş Renkli Nehir, Kolombiya::", ":Paricutín Volkanı, Meksika::", ":Głazy Moeraki, Yeni Zelanda::", ":Mavi Grotto, İtalya:0,1,2:", ":Mermer Mağaralar, Şili:3,0,2:", ":Kristal Mağarası, Bermuda:0,1,2:"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat8, //
         questionConfig.diff3, //
-        [":Jeju Adası, Güney Kore:31,25,27:", ":Iguazu Şelalesi, Arjantin ve Brezilya::", ":Matterhorn, İsviçre::", ":Masa Dağı, Güney Afrika:26,24,30:", ":Bu Tinah, Birleşik Arap Emirlikleri:31,29,26:", ":Sundarbans, Bangladeş::", ":Verdon vadi, Fransa::"]);
+        [":Jeju Adası, Güney Kore:1,2,5:", ":Iguazu Şelalesi, Arjantin ve Brezilya::", ":Matterhorn, İsviçre::", ":Masa Dağı, Güney Afrika:1,6,5:", ":Bu Tinah, Birleşik Arap Emirlikleri:1,6,5:", ":Sundarbans, Bangladeş::", ":Verdon vadi, Fransa::"]);
   }
 
   void addUK(Map<Language, Map<CategoryDifficulty, List<Question>>> result,
@@ -2561,19 +2561,19 @@ class GeoQuizAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat8, //
         questionConfig.diff1, //
-        [":Ангел-Фоллз, Венесуела:10,9,18:", ":гора Кіліманджаро, Танзанія::", ":Дельта Дунаю, Румунія::", ":Водоспад Вікторія, Зімбабве та Замбія:21,18,11:", ":Око Сахари, Мавританія::", ":Мертве море, Ізраїль::", ":Скелі Мохер, Ірландія::", ":Грязьові вулкани, Азербайджан::", ":Моренне озеро, Канада::", ":Чортовий мармур, Австралія::"]);
+        [":Ангел-Фоллз, Венесуела:1,2,4:", ":гора Кіліманджаро, Танзанія::", ":Дельта Дунаю, Румунія::", ":Водоспад Вікторія, Зімбабве та Замбія:5,6,9:", ":Око Сахари, Мавританія::", ":Мертве море, Ізраїль::", ":Скелі Мохер, Ірландія::", ":Грязьові вулкани, Азербайджан::", ":Моренне озеро, Канада::", ":Чортовий мармур, Австралія::"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat8, //
         questionConfig.diff2, //
-        [":Памуккале, Туреччина::", ":Річка п'яти кольорів, Колумбія::", ":Вулкан Парикутін, Мексика::", ":Валуни Моеракі, Нова Зеландія::", ":Синій грот, Італія:28,31,29:", ":Мармурові печери, Чилі:19,25,20:", ":Кришталева печера, Бермуди:25,30,35:"]);
+        [":Памуккале, Туреччина::", ":Річка п'яти кольорів, Колумбія::", ":Вулкан Парикутін, Мексика::", ":Валуни Моеракі, Нова Зеландія::", ":Синій грот, Італія:0,1,2:", ":Мармурові печери, Чилі:3,0,2:", ":Кришталева печера, Бермуди:0,1,2:"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat8, //
         questionConfig.diff3, //
-        [":Острів Чеджу, Південна Корея:31,25,27:", ":Водоспад Ігуасу, Аргентина та Бразилія::", ":Маттерхорн, Швейцарія::", ":Столова гора, Південна Африка:26,24,30:", ":Бу-Тіна, Об’єднані Арабські Емірати:31,29,26:", ":Сундарбани, Бангладеш::", ":Вердонська ущелина, Франція::"]);
+        [":Острів Чеджу, Південна Корея:1,2,5:", ":Водоспад Ігуасу, Аргентина та Бразилія::", ":Маттерхорн, Швейцарія::", ":Столова гора, Південна Африка:1,6,5:", ":Бу-Тіна, Об’єднані Арабські Емірати:1,6,5:", ":Сундарбани, Бангладеш::", ":Вердонська ущелина, Франція::"]);
   }
 
   void addVI(Map<Language, Map<CategoryDifficulty, List<Question>>> result,
@@ -2626,19 +2626,19 @@ class GeoQuizAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat8, //
         questionConfig.diff1, //
-        [":Thác Angel, Venezuela:10,9,18:", ":Núi Kilimanjaro, Tanzania::", ":Đồng bằng sông Danube, Rumani::", ":Thác Victoria, Zimbabwe và Zambia:21,18,11:", ":Mắt Sahara, Mauritania::", ":Biển Chết, Israel::", ":Vách đá Moher, Ireland::", ":Núi lửa bùn, Azerbaijan::", ":Hồ Moraine, Canada::", ":Viên bi của quỷ, Úc::"]);
+        [":Thác Angel, Venezuela:1,2,4:", ":Núi Kilimanjaro, Tanzania::", ":Đồng bằng sông Danube, Rumani::", ":Thác Victoria, Zimbabwe và Zambia:5,6,9:", ":Mắt Sahara, Mauritania::", ":Biển Chết, Israel::", ":Vách đá Moher, Ireland::", ":Núi lửa bùn, Azerbaijan::", ":Hồ Moraine, Canada::", ":Viên bi của quỷ, Úc::"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat8, //
         questionConfig.diff2, //
-        [":Pamukkale, Thổ Nhĩ Kỳ::", ":Dòng sông năm màu, Columbia::", ":Núi lửa Paricutín, Mexico::", ":Những tảng đá Moeraki, New Zealand::", ":Hang xanh, Ý:28,31,29:", ":Hang đá cẩm thạch, Chile:19,25,20:", ":Hang động pha lê, Bermuda:25,30,35:"]);
+        [":Pamukkale, Thổ Nhĩ Kỳ::", ":Dòng sông năm màu, Columbia::", ":Núi lửa Paricutín, Mexico::", ":Những tảng đá Moeraki, New Zealand::", ":Hang xanh, Ý:0,1,2:", ":Hang đá cẩm thạch, Chile:3,0,2:", ":Hang động pha lê, Bermuda:0,1,2:"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat8, //
         questionConfig.diff3, //
-        [":Đảo Jeju, Hàn Quốc:31,25,27:", ":Thác Iguazu, Argentina và Brazil::", ":Matterhorn, Thụy Sĩ::", ":Núi Bàn, Nam Phi:26,24,30:", ":Bu Tinah, Các tiểu vương quốc Ả Rập thống nhất:31,29,26:", ":Sundarban, Bangladesh::", ":Verdon Gorge, Pháp::"]);
+        [":Đảo Jeju, Hàn Quốc:1,2,5:", ":Thác Iguazu, Argentina và Brazil::", ":Matterhorn, Thụy Sĩ::", ":Núi Bàn, Nam Phi:1,6,5:", ":Bu Tinah, Các tiểu vương quốc Ả Rập thống nhất:1,6,5:", ":Sundarban, Bangladesh::", ":Verdon Gorge, Pháp::"]);
   }
 
   void addZH(Map<Language, Map<CategoryDifficulty, List<Question>>> result,
@@ -2691,20 +2691,22 @@ class GeoQuizAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat8, //
         questionConfig.diff1, //
-        [":委内瑞拉安赫尔瀑布:10,9,18:", ":坦桑尼亚乞力马扎罗山::", ":罗马尼亚多瑙河三角洲::", ":维多利亚瀑布，津巴布韦和赞比亚:21,18,11:", ":毛里塔尼亚撒哈拉之眼::", ":死海，以色列::", ":爱尔兰莫赫悬崖::", ":泥火山，阿塞拜疆::", ":加拿大梦莲湖::", ":魔鬼大理石，澳大利亚::"]);
+        [":委内瑞拉安赫尔瀑布:1,2,4:", ":坦桑尼亚乞力马扎罗山::", ":罗马尼亚多瑙河三角洲::", ":维多利亚瀑布，津巴布韦和赞比亚:5,6,9:", ":毛里塔尼亚撒哈拉之眼::", ":死海，以色列::", ":爱尔兰莫赫悬崖::", ":泥火山，阿塞拜疆::", ":加拿大梦莲湖::", ":魔鬼大理石，澳大利亚::"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat8, //
         questionConfig.diff2, //
-        [":土耳其棉花堡::", ":五色河，哥伦比亚::", ":墨西哥Paricutín火山::", ":摩拉基巨石，新西兰::", ":意大利蓝洞:28,31,29:", ":智利大理石洞穴:19,25,20:", ":百慕大水晶洞:25,30,35:"]);
+        [":土耳其棉花堡::", ":五色河，哥伦比亚::", ":墨西哥Paricutín火山::", ":摩拉基巨石，新西兰::", ":意大利蓝洞:0,1,2:", ":智利大理石洞穴:3,0,2:", ":百慕大水晶洞:0,1,2:"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat8, //
         questionConfig.diff3, //
-        [":韩国济州岛:31,25,27:", ":伊瓜苏瀑布，阿根廷和巴西::", ":瑞士马特宏峰::", ":南非桌山:26,24,30:", ":Bu Tinah，阿拉伯联合酋长国:31,29,26:", ":孟加拉国孙德尔本斯::", ":维登峡谷，France::"]);
+        [":韩国济州岛:1,2,5:", ":伊瓜苏瀑布，阿根廷和巴西::", ":瑞士马特宏峰::", ":南非桌山:1,6,5:", ":Bu Tinah，阿拉伯联合酋长国:1,6,5:", ":孟加拉国孙德尔本斯::", ":维登峡谷，France::"]);
   }
+
+
 
 }
 

@@ -169,7 +169,7 @@ mixin QuizOptionsGameScreen<TGameContext extends GameContext> {
             buttonSkinConfig: _buttonSkinConfig ?? _defaultButtonSkinConfig(),
             customContent: MyText(
               text: answerBtnText,
-              maxLines: _getValueBasedOnNrOfPossibleAnswers(4, 3, 2, 1, true),
+              maxLines: _getValueBasedOnNrOfPossibleAnswers(3, 3, 2, 1, true),
               width: btnSize.width / 1.1,
             )));
   }
