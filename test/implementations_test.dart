@@ -13,8 +13,9 @@ import 'util/test_util.dart';
 
 List<TestAppConfig> getAppsToTest() {
   return [
+    //[Language.he]
     // TestAppConfig("history", Language.values, HistoryCampaignLevelService()),
-    TestAppConfig("geoquiz", [Language.en], GeoQuizCampaignLevelService()),
+    TestAppConfig("geoquiz", Language.values, GeoQuizCampaignLevelService()),
   ];
 }
 
@@ -33,18 +34,18 @@ void main() {
 
 Future<void> testApp(WidgetTester tester, String appKey, Language lang,
     CampaignLevelService campaignLevelService) async {
-  for (int i = 0; i < 55; i++) {
+  for (int i = 0; i < 30; i++) {
     await TestUtil.initApp(lang, appKey, tester);
     debugPrint("testing =======> " +
         appKey +
         " lang: " +
         MyApp.appLocalizations.localeName);
-    await testAllCampaignLevels(tester, campaignLevelService);
+    await testAllCampaignLevels(tester, appKey, campaignLevelService);
   }
 }
 
-Future<void> testAllCampaignLevels(
-    WidgetTester tester, CampaignLevelService campaignLevelService) async {
+Future<void> testAllCampaignLevels(WidgetTester tester, String appKey,
+    CampaignLevelService campaignLevelService) async {
   for (CampaignLevel campaignLevel in campaignLevelService.allLevels) {
     MyApp.gameScreenManager.currentScreen!.gameScreenManagerState
         .showNewGameScreen(campaignLevel);
@@ -54,21 +55,23 @@ Future<void> testAllCampaignLevels(
       var gameContext =
           (MyApp.gameScreenManager.currentScreen! as GameScreen).gameContext;
       if (gameContext.gameUser
-          .getOpenQuestions()
-          .where((element) => element.question.category == category)
-          .isNotEmpty) {
-        MyApp.gameScreenManager.currentScreen!.gameScreenManagerState
-            .showGameScreenWithConfig(
-                campaignLevel.difficulty, category, gameContext);
-        await TestUtil.pumpWidget(tester, MyApp.gameScreenManager);
-
-        debugPrint("-----" +
-            (MyApp.gameScreenManager.currentScreen! as GameScreen)
-                .listOfCurrentQuestionInfo
-                .first
-                .question
-                .rawString);
+              .getOpenQuestions()
+              .where((element) => element.question.category == category)
+              .isEmpty &&
+          appKey == "geoquiz") {
+        continue;
       }
+      MyApp.gameScreenManager.currentScreen!.gameScreenManagerState
+          .showGameScreenWithConfig(
+              campaignLevel.difficulty, category, gameContext);
+      await TestUtil.pumpWidget(tester, MyApp.gameScreenManager);
+
+      debugPrint("-----" +
+          (MyApp.gameScreenManager.currentScreen! as GameScreen)
+              .listOfCurrentQuestionInfo
+              .first
+              .question
+              .rawString);
     }
   }
   // MyApp.gameScreenManager.currentScreen!.gameScreenManagerState

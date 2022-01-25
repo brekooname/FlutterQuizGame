@@ -1,4 +1,3 @@
-import 'dart:collection';
 import 'dart:core';
 
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
@@ -10,17 +9,12 @@ import 'AllContent/geoquiz_all_questions.dart';
 class GeoQuizCountryUtils {
   final GeoQuizGameQuestionConfig _questionConfig = GeoQuizGameQuestionConfig();
   late GeoQuizAllQuestions _geoQuizAllQuestions;
-  late Map<int, List<String>> allSynonyms = HashMap();
 
   static final GeoQuizCountryUtils singleton = GeoQuizCountryUtils.internal();
 
   factory GeoQuizCountryUtils() {
     GeoQuizAllQuestions geoQuizAllQuestions = GeoQuizAllQuestions();
     singleton._geoQuizAllQuestions = geoQuizAllQuestions;
-    for (var val in geoQuizAllQuestions.allSynonyms) {
-      var split = val.split(":");
-      singleton.allSynonyms.putIfAbsent(split[0].parseToInt, () => [split[1]]);
-    }
     return singleton;
   }
 

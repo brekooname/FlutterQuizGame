@@ -5,6 +5,7 @@ import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.da
 import 'package:flutter_app_quiz_game/Game/Question/question_collector_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Constants/geoquiz_game_question_config.dart';
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Questions/geoquiz_country_utils.dart';
+import 'package:flutter_app_quiz_game/Lib/Constants/language.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/map_extension.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/string_extension.dart';
 
@@ -55,9 +56,7 @@ class GeoQuizQuestionCollectorService
     //------------- CAT 2 ------------- NEIGHBOURS ===> sorted by rank
     if (category == _gameQuestionConfig.cat2) {
       var sortedAfterRank = sortQuestionListAfterRankedCountries(
-          allQuestions.get<CategoryDifficulty, List<Question>>(
-              CategoryDifficulty(category, _gameQuestionConfig.diff0))!,
-          0);
+          getEnglishLangQuestions(category), 0);
       //because we have multiple playing types depending on the difficulty level
       //here we show only easy countries diff0
       result = sortedAfterRank.sublist(0, 10);
@@ -138,8 +137,14 @@ class GeoQuizQuestionCollectorService
     if (!_geoQuizCountryUtils.isStatsCategory(category)) {
       return [];
     }
-    return allQuestions.get<CategoryDifficulty, List<Question>>(
-        CategoryDifficulty(category, _gameQuestionConfig.diff0))!;
+    return getEnglishLangQuestions(category);
+  }
+
+  List<Question> getEnglishLangQuestions(QuestionCategory category) {
+    return allQuestionsService
+        .getAllQuestionsWithLanguages()
+        .get<Language, Map<CategoryDifficulty, List<Question>>>(Language.en)!
+        .get(CategoryDifficulty(category, _gameQuestionConfig.diff0))!;
   }
 
   @override

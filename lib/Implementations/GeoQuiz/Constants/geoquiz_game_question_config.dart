@@ -122,14 +122,14 @@ class GeoQuizGameQuestionConfig extends GameQuestionConfig {
         () => label.l_which_country_is_more_populous);
     res.putIfAbsent(
       QuestionCategoryWithPrefixCode(category: cat1, prefixCode: 0),
-      () => label.l_which_country_is_larger_in_size,
+      () => label.l_which_country_is_larger_in_area_size,
     );
     res.putIfAbsent(
         QuestionCategoryWithPrefixCode(category: cat2, prefixCode: 0),
         () => label.l_find_a_neighbour_of_this_country);
     res.putIfAbsent(
         QuestionCategoryWithPrefixCode(category: cat2, prefixCode: 1),
-        () => label.l_find_all_the_neighbours_of_this_country);
+        () => label.l_find_the_neighbours_of_this_country);
     res.putIfAbsent(
         QuestionCategoryWithPrefixCode(category: cat2, prefixCode: 2),
         () => label.l_which_country_has_these_neighbours);

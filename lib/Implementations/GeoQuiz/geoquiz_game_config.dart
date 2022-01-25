@@ -50,6 +50,10 @@ class GeoQuizGameConfig extends GameConfig {
   @override
   String getTitle(Language language) {
     switch (language) {
+      case Language.ar:
+        return "جغرافيا العالم";
+      case Language.bg:
+        return "Световна география";
       case Language.cs:
         return "Světová geografie";
       case Language.da:
@@ -66,6 +70,8 @@ class GeoQuizGameConfig extends GameConfig {
         return "Maailman maantiede";
       case Language.fr:
         return "Géographie du monde";
+      case Language.he:
+        return "גאוגרפית העולם";
       case Language.hi:
         return "विश्व का भूगोल";
       case Language.hr:
@@ -96,6 +102,10 @@ class GeoQuizGameConfig extends GameConfig {
         return "Мировая география";
       case Language.sk:
         return "Svetová geografia";
+      case Language.sl:
+        return "Svetovna geografija";
+      case Language.sr:
+        return "Светска географија";
       case Language.sv:
         return "Världsgeografi";
       case Language.th:

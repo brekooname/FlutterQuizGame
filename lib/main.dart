@@ -44,7 +44,7 @@ class MyApp extends StatefulWidget {
   static CampaignLevel campaignLevel = GeoQuizCampaignLevelService().level_1;
   // static String webAppKey = "history";
   static String webAppKey = "geoquiz";
-  static Language webLanguage = Language.en;
+  static Language webLanguage = Language.de;
 
   ////////////
   //////

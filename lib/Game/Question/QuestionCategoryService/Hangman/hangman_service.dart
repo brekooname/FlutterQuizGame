@@ -24,6 +24,7 @@ class HangmanService {
 
     return [
       Language.ar,
+      Language.he,
       Language.hi,
       Language.ja,
       Language.ko,

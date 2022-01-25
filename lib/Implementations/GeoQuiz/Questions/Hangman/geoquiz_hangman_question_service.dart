@@ -91,7 +91,7 @@ class GeoQuizHangmanQuestionService extends QuestionService {
       List<String> result = [];
       result.addAll(allFoundCountries);
       for (String country in allFoundCountries) {
-        result.addAll(_getCountrySynonyms(country));
+        // result.addAll(_getCountrySynonyms(country));
       }
       return result;
     } else {
@@ -103,22 +103,22 @@ class GeoQuizHangmanQuestionService extends QuestionService {
       String pressedAnswer, List<String> availableCountries, bool exactMatch) {
     return availableCountries
         .where((country) =>
-            _isSynonymPressed(pressedAnswer, country, exactMatch) ||
+            // _isSynonymPressed(pressedAnswer, country, exactMatch) ||
             _isCountryMatch(pressedAnswer, country, exactMatch))
         .toSet();
   }
 
-  List<String> _getCountrySynonyms(String country) {
-    int countryIndex = _geoQuizCountryUtils.getCountryIndexForName(country);
-    return _geoQuizCountryUtils.allSynonyms
-        .getOrDefault<int, List<String>>(countryIndex, []);
-  }
-
-  bool _isSynonymPressed(
-      String pressedAnswer, String countryToCheck, bool exactMatch) {
-    return _getCountrySynonyms(countryToCheck)
-        .any((synonym) => _isCountryMatch(pressedAnswer, synonym, exactMatch));
-  }
+  // List<String> _getCountrySynonyms(String country) {
+  //   int countryIndex = _geoQuizCountryUtils.getCountryIndexForName(country);
+  //   return _geoQuizCountryUtils.allSynonyms
+  //       .getOrDefault<int, List<String>>(countryIndex, []);
+  // }
+  //
+  // bool _isSynonymPressed(
+  //     String pressedAnswer, String countryToCheck, bool exactMatch) {
+  //   return _getCountrySynonyms(countryToCheck)
+  //       .any((synonym) => _isCountryMatch(pressedAnswer, synonym, exactMatch));
+  // }
 
   bool _isCountryMatch(String pressedAnswer, String val, bool exactMatch) {
     var processedString = _hangmanService
