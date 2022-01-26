@@ -8,7 +8,7 @@ import 'package:flutter_app_quiz_game/Lib/Storage/quiz_game_local_storage.dart';
 import '../../../main.dart';
 
 class GeoQuizGameContextService {
-  static const int numberOfQuestionsPerGame = 10;
+  static const int numberOfQuestionsPerGame = 4;
   final GeoQuizLocalStorage _geoQuizLocalStorage = GeoQuizLocalStorage();
 
   static final GeoQuizGameContextService singleton =
@@ -30,8 +30,10 @@ class GeoQuizGameContextService {
     questions.shuffle();
     questions = questions.sublist(0, numberOfQuestionsPerGame);
 
+    var amountAvailableHints = MyApp.isExtraContentLocked ? 3 : 6;
     var gameContext = GameContextService()
-        .createGameContextWithHintsAndQuestions(3, questions);
+        .createGameContextWithHintsAndQuestions(
+            amountAvailableHints, questions);
 
     return GeoQuizGameContext(gameContext);
   }

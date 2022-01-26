@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Lib/Audio/my_audio_player.dart';
 import 'package:flutter_app_quiz_game/Lib/Font/font_config.dart';
@@ -9,21 +8,17 @@ import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 class AnimateIncreaseNumberText extends StatefulWidget {
   final MyAudioPlayer _myAudioPlayer = MyAudioPlayer();
   static const double defaultZoomAmount = 1.1;
-  bool finishedPlayingSound = true;
   MyText toAnimateText;
   int startNr;
   int endNr;
+  bool _increaseSoundStartedPlaying = false;
 
   AnimateIncreaseNumberText(
       {Key? key,
       required this.startNr,
       required this.endNr,
       required this.toAnimateText})
-      : super(key: key) {
-    _myAudioPlayer.audioPlayer.onPlayerCompletion.listen((event) {
-      finishedPlayingSound = true;
-    });
-  }
+      : super(key: key);
 
   @override
   MyAnimatedWidgetState createState() => MyAnimatedWidgetState();
@@ -40,9 +35,9 @@ class MyAnimatedWidgetState extends State<AnimateIncreaseNumberText>
       if (status == AnimationStatus.completed &&
           widget.startNr < widget.endNr) {
         setState(() {
-          if (widget.finishedPlayingSound || kIsWeb) {
-            widget.finishedPlayingSound = false;
-            widget._myAudioPlayer.playSuccess();
+          if (!widget._increaseSoundStartedPlaying) {
+            widget._increaseSoundStartedPlaying = true;
+            widget._myAudioPlayer.playSuccess(loop: true, playSpeed: 2);
           }
           widget.startNr =
               min(widget.startNr + _getIncrementAmount(), widget.endNr);
@@ -60,7 +55,8 @@ class MyAnimatedWidgetState extends State<AnimateIncreaseNumberText>
   Widget build(BuildContext context) {
     controller = AnimationController(
         duration: const Duration(milliseconds: 20), vsync: this);
-    if (widget.startNr == widget.endNr) {
+    if (widget.startNr >= widget.endNr) {
+      widget._myAudioPlayer.stop();
       return widget.toAnimateText;
     }
     startAnimation();
@@ -73,8 +69,9 @@ class MyAnimatedWidgetState extends State<AnimateIncreaseNumberText>
 
   @override
   void dispose() {
-    controller.dispose();
     super.dispose();
+    widget._myAudioPlayer.stop();
+    controller.dispose();
   }
 }
 

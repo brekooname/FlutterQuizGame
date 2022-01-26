@@ -44,7 +44,7 @@ class MyApp extends StatefulWidget {
   static CampaignLevel campaignLevel = GeoQuizCampaignLevelService().level_1;
   // static String webAppKey = "history";
   static String webAppKey = "geoquiz";
-  static Language webLanguage = Language.zh;
+  static Language webLanguage = Language.en;
 
   ////////////
   //////
@@ -191,7 +191,7 @@ class MyAppState extends State<MyApp> {
       ////
       //
       ////
-      GeoQuizLocalStorage().setExperience(14000);
+      // GeoQuizLocalStorage().setExperience(14000);
       widgetToShow = createScreen(MyApp.gameScreenManager, widget.bannerAd);
       // Future.delayed(const Duration(milliseconds: 100), () {
       //   MyApp.gameScreenManager.currentScreen!.gameScreenManagerState

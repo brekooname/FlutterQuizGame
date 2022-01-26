@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">World Geography Pro</string>
+    <string name="app_name">World Geography</string>
     <string name="language">en</string>
-    <string name="game_id">quizgame</string>
+    <string name="game_id">geoquiz</string>
 
     <string name="admob_banner_id">xxx</string>
     <string name="admob_inter_id">xxx</string>
     <string name="admob_video_id">xxx</string>
     <string name="admob_app_id">xxx</string>
 
-    <bool name="google_facebook_login_enabled">false</bool>
-    <bool name="isPro">true</bool>
+    <bool name="is_pro">true</bool>
 </resources>
