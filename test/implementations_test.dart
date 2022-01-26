@@ -5,6 +5,7 @@ import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Constants/geoquiz_campaign_level_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Constants/history_campaign_level_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Constants/language.dart';
+import 'package:flutter_app_quiz_game/Lib/Screen/Game/Options/quiz_options_game_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen.dart';
 import 'package:flutter_app_quiz_game/main.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -66,12 +67,14 @@ Future<void> testAllCampaignLevels(WidgetTester tester, String appKey,
               campaignLevel.difficulty, category, gameContext);
       await TestUtil.pumpWidget(tester, MyApp.gameScreenManager);
 
+      var gameScreen = MyApp.gameScreenManager.currentScreen! as GameScreen;
+      var quizOptionsGameScreen =
+          MyApp.gameScreenManager.currentScreen! as QuizOptionsGameScreen;
       debugPrint("-----" +
-          (MyApp.gameScreenManager.currentScreen! as GameScreen)
-              .listOfCurrentQuestionInfo
-              .first
-              .question
-              .rawString);
+          gameScreen.listOfCurrentQuestionInfo.first.question.rawString);
+
+      expect(gameScreen.listOfCurrentQuestionInfo.isNotEmpty, true);
+      expect(quizOptionsGameScreen.possibleAnswers.length >= 4, true);
     }
   }
   // MyApp.gameScreenManager.currentScreen!.gameScreenManagerState

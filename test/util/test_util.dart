@@ -10,7 +10,7 @@ class TestUtil {
       Language lang, String appKey, WidgetTester tester) async {
     SharedPreferences.setMockInitialValues({});
     FontConfig.fontScale = 30;
-    MyApp.kIsTest = true;
+    MyApp.kIsAutomatedTest = true;
     MyApp.webLanguage = lang;
     MyApp.webAppKey = appKey;
     await MyAppState.initAppConfig(MyAppState.createWebAppConfig());

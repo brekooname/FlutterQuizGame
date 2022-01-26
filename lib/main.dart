@@ -38,13 +38,13 @@ class MyApp extends StatefulWidget {
   //
   //////
   ////////////
-  static bool kIsTest = false;
+  static bool kIsAutomatedTest = false;
 
   ////////////
   static CampaignLevel campaignLevel = GeoQuizCampaignLevelService().level_1;
   // static String webAppKey = "history";
   static String webAppKey = "geoquiz";
-  static Language webLanguage = Language.ro;
+  static Language webLanguage = Language.zh;
 
   ////////////
   //////
@@ -76,7 +76,7 @@ class MyApp extends StatefulWidget {
     context.findAncestorStateOfType<MyAppState>()!.extraContentBought();
   }
 
-  static bool get kIsMobile => !kIsWeb && !MyApp.kIsTest;
+  static bool get kIsMobile => !kIsWeb && !MyApp.kIsAutomatedTest;
 
   @override
   State<MyApp> createState() => MyAppState();
@@ -138,8 +138,14 @@ class MyAppState extends State<MyApp> {
       adBannerId: "",
       adInterstitialId: "",
       adRewardedId: "",
+      //
+      //////
+      ////////////
       // isPro: false,
       isPro: true,
+      ////////////
+      //////
+      //
     );
   }
 
@@ -185,7 +191,7 @@ class MyAppState extends State<MyApp> {
       ////
       //
       ////
-      // GeoQuizLocalStorage().setExperience(152000);
+      GeoQuizLocalStorage().setExperience(14000);
       widgetToShow = createScreen(MyApp.gameScreenManager, widget.bannerAd);
       // Future.delayed(const Duration(milliseconds: 100), () {
       //   MyApp.gameScreenManager.currentScreen!.gameScreenManagerState

@@ -10,7 +10,10 @@ import 'package:flutter_app_quiz_game/Lib/Animation/animation_increase_number_te
 import 'package:flutter_app_quiz_game/Lib/Button/floating_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Color/color_util.dart';
+import 'package:flutter_app_quiz_game/Lib/Constants/language.dart';
+import 'package:flutter_app_quiz_game/Lib/Extensions/enum_extension.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/map_extension.dart';
+import 'package:flutter_app_quiz_game/Lib/Extensions/string_extension.dart';
 import 'package:flutter_app_quiz_game/Lib/Popup/settings_popup.dart';
 import 'package:flutter_app_quiz_game/Lib/ProgressBar/progress_bar.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen_manager_state.dart';
@@ -77,7 +80,8 @@ class GeoQuizMainMenuScreenState extends State<GeoQuizMainMenuScreen>
           borderWidth: FontConfig.standardBorderWidth * 3,
           textColor: Colors.lightGreenAccent,
           fontWeight: FontWeight.normal,
-          fontSize: FontConfig.getCustomFontSize(2),
+          fontSize: FontConfig.getCustomFontSize(
+              [Language.nl.name].contains(MyApp.languageCode) ? 1.5 : 2),
           borderColor: Colors.green.shade900),
       backgroundImagePath: assetsService.getSpecificAssetPath(
           assetExtension: "png", assetName: "title_backgr"),
@@ -97,6 +101,7 @@ class GeoQuizMainMenuScreenState extends State<GeoQuizMainMenuScreen>
 
     var bottomMargin = screenDimensions.h(3);
     Container mainContent = Container(
+      alignment: Alignment.center,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -242,13 +247,16 @@ class GeoQuizMainMenuScreenState extends State<GeoQuizMainMenuScreen>
     var levelBtnDisabled =
         widget._mostRecentUnlockedCampaignLevel.key.difficulty.index <
             campaignLevel.difficulty.index;
+    levelBtnDisabled = false;
+    var contentLocked =
+        campaignLevel.difficulty == widget._geoQuizGameQuestionConfig.diff3 &&
+            !levelBtnDisabled &&
+            MyApp.isExtraContentLocked;
     return Padding(
         padding: EdgeInsets.all(screenDimensions.w(2)),
         child: MyButton(
           disabled: levelBtnDisabled,
-          contentLocked: campaignLevel.difficulty ==
-                  widget._geoQuizGameQuestionConfig.diff3 &&
-              !levelBtnDisabled,
+          contentLocked: contentLocked,
           onClick: () {
             var geoQuizLocalStorage = widget._geoQuizLocalStorage;
             geoQuizLocalStorage.setExperienceBeforeLeavingMainScreen(
@@ -263,7 +271,7 @@ class GeoQuizMainMenuScreenState extends State<GeoQuizMainMenuScreen>
               textColor: Colors.white,
               fontSize: FontConfig.getCustomFontSize(1.3)),
           size: Size(screenDimensions.w(60), screenDimensions.h(10)),
-          text: formatTextWithOneParam(label.l_level_param0, index),
+          text: formatTextWithOneParam(label.l_level_param0.capitalized, index),
         ));
   }
 }

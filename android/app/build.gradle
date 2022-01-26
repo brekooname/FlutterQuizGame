@@ -70,6 +70,22 @@ android {
     flavorDimensions "game"
     productFlavors {
 /////////////////////////////////////////////////////////////////////////////
+        geoquiz {
+            applicationIdSuffix ".geoquiz"
+            versionCode 5
+            versionName "1.3"
+            dimension "game"
+            manifestPlaceholders = [appIcon: "@drawable/geoquiz_icon"]
+        }
+/////////////////////////////////////////////////////////////////////////////
+        geoquizPro {
+            applicationIdSuffix ".geoquizpro"
+            versionCode 2
+            versionName "1.1"
+            dimension "game"
+            manifestPlaceholders = [appIcon: "@drawable/geoquizpro_icon"]
+        }
+/////////////////////////////////////////////////////////////////////////////
         history {
             applicationIdSuffix ".history"
             versionCode 11

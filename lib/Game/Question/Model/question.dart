@@ -1,6 +1,7 @@
 import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/Base/question_service.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
+import 'package:flutter_app_quiz_game/Lib/Extensions/string_extension.dart';
 
 class Question {
   final int _index;
@@ -22,12 +23,12 @@ class Question {
       _category.getQuestionCategoryService(_difficulty).getQuestionService();
 
   String get questionToBeDisplayed =>
-      questionService.getQuestionToBeDisplayed(this);
+      questionService.getQuestionToBeDisplayed(this).capitalized;
 
   List<String> get correctAnswers => questionService.getCorrectAnswers(this);
 
   String get questionPrefixToBeDisplayed =>
-      questionService.getPrefixToBeDisplayedForQuestion(this);
+      questionService.getPrefixToBeDisplayedForQuestion(this).capitalized;
 
   @override
   bool operator ==(Object other) =>

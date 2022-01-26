@@ -9,6 +9,7 @@ import 'package:flutter_app_quiz_game/Lib/Audio/my_audio_player.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/button_skin_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/list_extension.dart';
+import 'package:flutter_app_quiz_game/Lib/Extensions/string_extension.dart';
 import 'package:flutter_app_quiz_game/Lib/Font/font_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Image/image_service.dart';
 import 'package:flutter_app_quiz_game/Lib/ScreenDimensions/screen_dimensions_service.dart';
@@ -22,7 +23,7 @@ mixin QuizOptionsGameScreen<TGameContext extends GameContext> {
   final Set<String> _wrongPressedAnswer = HashSet();
   late QuizGameLocalStorage quizGameLocalStorage;
   late TGameContext _gameContext;
-  late Set<String> _possibleAnswers;
+  late Set<String> possibleAnswers;
   late QuestionInfo _currentQuestionInfo;
   Image? _questionImage;
   bool? _zoomableImage;
@@ -47,13 +48,18 @@ mixin QuizOptionsGameScreen<TGameContext extends GameContext> {
 
     var question = currentQuestionInfo.question;
     var questionService = question.questionService;
-    correctAnswersForQuestion = questionService.getCorrectAnswers(question);
+    correctAnswersForQuestion = questionService
+        .getCorrectAnswers(question)
+        .map((e) => e.capitalized)
+        .toList();
     _buttonSkinConfig = correctAnswersForQuestion.length == 1
         ? buttonSkinConfig
         : multipleCorrectAnswersButtonSkinConfig ?? buttonSkinConfig;
 
-    _possibleAnswers =
-        HashSet.of(_getPossibleAnswerOption(isOneCorrectAnswerEnoughToWin));
+    possibleAnswers = HashSet.of(
+        _getPossibleAnswerOption(isOneCorrectAnswerEnoughToWin)
+            .map((e) => e.capitalized)
+            .toList());
   }
 
   Widget createOptionRows(
@@ -61,7 +67,7 @@ mixin QuizOptionsGameScreen<TGameContext extends GameContext> {
     List<Row> answerRows = [];
     int answersOnRow = 2;
     List<Widget> answerBtns = [];
-    for (String possibleAnswer in _possibleAnswers) {
+    for (String possibleAnswer in possibleAnswers) {
       answerBtns.add(_createPossibleAnswerButton(
           refreshSetState, goToNextScreenAfterPress, possibleAnswer));
       if (answerBtns.length == answersOnRow) {
@@ -79,7 +85,7 @@ mixin QuizOptionsGameScreen<TGameContext extends GameContext> {
     var btnSize = _getAnswerBtnSize();
     Widget btnContainer = Container(
         height: (btnSize.height + getAnswerButtonPaddingBetween() * 2) *
-            (_possibleAnswers.length / 2).ceil(),
+            (possibleAnswers.length / 2).ceil(),
         child: ListView(
           children: answerRows,
         ));
@@ -262,7 +268,7 @@ mixin QuizOptionsGameScreen<TGameContext extends GameContext> {
         _currentQuestionInfo.question.difficulty,
         _gameContext.amountAvailableHints);
 
-    var optionsToDisable = List.of(_possibleAnswers);
+    var optionsToDisable = List.of(possibleAnswers);
     optionsToDisable.shuffle();
     optionsToDisable.removeAll(correctAnswersForQuestion);
 
@@ -289,7 +295,7 @@ mixin QuizOptionsGameScreen<TGameContext extends GameContext> {
             ? 2
             : 1
         : 1;
-    var nrOfPossibleAnswers = _possibleAnswers.length;
+    var nrOfPossibleAnswers = possibleAnswers.length;
     int val = nrOfPossibleAnswers <= 4
         ? v4
         : nrOfPossibleAnswers <= 6

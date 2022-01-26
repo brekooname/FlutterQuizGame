@@ -37,7 +37,7 @@ class GameTitle extends StatelessWidget {
           )),
       MyText(
         text: text,
-        width: backgroundImageWidth / 1.4,
+        width: backgroundImageWidth / 1.2,
         maxLines: text.contains(" ") ? 2 : 1,
         fontConfig: fontConfig,
       ),
