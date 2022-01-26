@@ -82,6 +82,13 @@ class GeoQuizQuestionScreen extends GameScreen<GeoQuizGameContext>
   }
 
   @override
+  void playSuccessAudio() {
+    if (!allQuestionsAnswered) {
+      super.playSuccessAudio();
+    }
+  }
+
+  @override
   void executeOnPressedWrongAnswer(String answerBtnText) {
     super.executeOnPressedWrongAnswer(answerBtnText);
     if (isGameFinishedFailed() && gameContext.consecutiveCorrectAnswers > 0) {

@@ -194,8 +194,10 @@ mixin QuizOptionsGameScreen<TGameContext extends GameContext> {
   }
 
   void executeOnPressedCorrectAnswer() {
-    _audioPlayer.playSuccess();
+    playSuccessAudio();
   }
+
+  void playSuccessAudio() => _audioPlayer.playSuccess();
 
   void executeOnPressedWrongAnswer(String answerBtnText) {
     _audioPlayer.playFail();
