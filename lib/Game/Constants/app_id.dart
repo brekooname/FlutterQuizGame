@@ -1,6 +1,7 @@
 import 'package:flutter_app_quiz_game/Game/GameType/game_config.dart';
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/geoquiz_game_config.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/history_game_config.dart';
+import 'package:flutter_app_quiz_game/Implementations/PersTest/perstest_game_config.dart';
 
 class AppIds {
   static final AppIds singleton = AppIds.internal();
@@ -20,6 +21,8 @@ class AppIds {
       return HistoryGameConfig();
     } else if (appKey == "geoquiz") {
       return GeoQuizGameConfig();
+    } else if (appKey == "perstest") {
+      return PersTestGameConfig();
     }
     throw UnsupportedError("Unsupported app key ======> " + appKey);
   }

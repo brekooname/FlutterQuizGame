@@ -106,6 +106,10 @@ flutter:
     - assets/main/popup/
     - assets/main/audio/
     ########################
+    ###### PERSTEST #########
+    ########################
+    - assets/implementations/perstest/
+    ########################
     ###### GEOQUIZ #########
     ########################
     - assets/implementations/geoquiz/
