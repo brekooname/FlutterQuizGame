@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
@@ -82,19 +84,13 @@ class GeoQuizQuestionScreen extends GameScreen<GeoQuizGameContext>
   }
 
   @override
-  void playSuccessAudio() {
-    if (!allQuestionsAnswered) {
-      super.playSuccessAudio();
-    }
-  }
-
-  @override
   void executeOnPressedWrongAnswer(String answerBtnText) {
     super.executeOnPressedWrongAnswer(answerBtnText);
     if (isGameFinishedFailed() && gameContext.consecutiveCorrectAnswers > 0) {
       animateWrongAnswer = true;
     }
-    gameContext.consecutiveCorrectAnswers = 0;
+    gameContext.consecutiveCorrectAnswers =
+        max(gameContext.consecutiveCorrectAnswers - 1, 0);
   }
 
   @override

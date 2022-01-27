@@ -107,14 +107,14 @@ class MyButtonState extends State<MyButton> {
           padding: EdgeInsets.all(widget.allPadding),
           child: GestureDetector(
               onTapCancel: () {
-                if (!widget.disabled) {
+                if (isTouchEnabled()) {
                   setState(() {
                     widget.pressed = false;
                   });
                 }
               },
               onTapUp: (TapUpDetails details) {
-                if (!widget.disabled) {
+                if (isTouchEnabled()) {
                   setState(() {
                     widget.onClick.call();
                     widget.pressed = false;
@@ -122,7 +122,7 @@ class MyButtonState extends State<MyButton> {
                 }
               },
               onTapDown: (TapDownDetails details) {
-                if (!widget.disabled) {
+                if (isTouchEnabled()) {
                   setState(() {
                     widget.pressed = true;
                   });
@@ -140,6 +140,8 @@ class MyButtonState extends State<MyButton> {
                   )))),
     );
   }
+
+  bool isTouchEnabled() => !widget.disabled || widget.contentLocked;
 
   Widget buildContentLocked(Widget buttonContent) {
     var decoration = BoxDecoration(

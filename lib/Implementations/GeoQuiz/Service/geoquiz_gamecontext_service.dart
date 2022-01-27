@@ -8,7 +8,7 @@ import 'package:flutter_app_quiz_game/Lib/Storage/quiz_game_local_storage.dart';
 import '../../../main.dart';
 
 class GeoQuizGameContextService {
-  static const int numberOfQuestionsPerGame = 4;
+  static const int numberOfQuestionsPerGame = 10;
   final GeoQuizLocalStorage _geoQuizLocalStorage = GeoQuizLocalStorage();
 
   static final GeoQuizGameContextService singleton =

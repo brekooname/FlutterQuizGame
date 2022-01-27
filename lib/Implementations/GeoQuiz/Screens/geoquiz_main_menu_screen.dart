@@ -204,6 +204,7 @@ class GeoQuizMainMenuScreenState extends State<GeoQuizMainMenuScreen>
         textColor: Colors.white,
         fontSize: FontConfig.getCustomFontSize(0.9));
     var currentExperience = AnimateIncreaseNumberText(
+        audioPlayerId: "ExperienceContainerAudioId",
         startNr: getExperienceForCurrentLevelBeforeLeavingMainScreen(),
         endNr: getExperienceForCurrentLevel(),
         toAnimateText: MyText(
@@ -247,10 +248,8 @@ class GeoQuizMainMenuScreenState extends State<GeoQuizMainMenuScreen>
     var levelBtnDisabled =
         widget._mostRecentUnlockedCampaignLevel.key.difficulty.index <
             campaignLevel.difficulty.index;
-    levelBtnDisabled = false;
     var contentLocked =
         campaignLevel.difficulty == widget._geoQuizGameQuestionConfig.diff3 &&
-            !levelBtnDisabled &&
             MyApp.isExtraContentLocked;
     return Padding(
         padding: EdgeInsets.all(screenDimensions.w(2)),

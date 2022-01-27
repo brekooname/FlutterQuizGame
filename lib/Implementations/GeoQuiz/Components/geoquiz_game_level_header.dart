@@ -118,7 +118,10 @@ class GeoQuizGameLevelHeader extends StatelessWidget {
     );
     return allQuestionsAnswered
         ? AnimateIncreaseNumberText(
-            startNr: score, endNr: gameFinishedScore, toAnimateText: scoreText)
+            audioPlayerId: "ScoreContainerAudioId",
+            startNr: score,
+            endNr: gameFinishedScore,
+            toAnimateText: scoreText)
         : scoreText;
   }
 

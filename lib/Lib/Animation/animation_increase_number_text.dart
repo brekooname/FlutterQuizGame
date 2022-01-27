@@ -11,12 +11,13 @@ class AnimateIncreaseNumberText extends StatefulWidget {
   MyText toAnimateText;
   int startNr;
   int endNr;
-  bool _increaseSoundStartedPlaying = false;
+  String audioPlayerId;
 
   AnimateIncreaseNumberText(
       {Key? key,
       required this.startNr,
       required this.endNr,
+      required this.audioPlayerId,
       required this.toAnimateText})
       : super(key: key);
 
@@ -29,16 +30,21 @@ class MyAnimatedWidgetState extends State<AnimateIncreaseNumberText>
   late Animation<double> animation;
   late AnimationController controller;
 
+  @override
+  void initState() {
+    super.initState();
+    if (widget.startNr < widget.endNr) {
+      widget._myAudioPlayer.playSuccess(
+          audioPlayerId: widget.audioPlayerId, loop: true, playSpeed: 2);
+    }
+  }
+
   void startAnimation() {
     animation = CurvedAnimation(parent: controller, curve: Curves.ease);
     animation.addStatusListener((status) {
       if (status == AnimationStatus.completed &&
           widget.startNr < widget.endNr) {
         setState(() {
-          if (!widget._increaseSoundStartedPlaying) {
-            widget._increaseSoundStartedPlaying = true;
-            widget._myAudioPlayer.playSuccess(loop: true, playSpeed: 2);
-          }
           widget.startNr =
               min(widget.startNr + _getIncrementAmount(), widget.endNr);
         });
@@ -56,7 +62,7 @@ class MyAnimatedWidgetState extends State<AnimateIncreaseNumberText>
     controller = AnimationController(
         duration: const Duration(milliseconds: 20), vsync: this);
     if (widget.startNr >= widget.endNr) {
-      widget._myAudioPlayer.stop();
+      widget._myAudioPlayer.stop(audioPlayerId: widget.audioPlayerId);
       return widget.toAnimateText;
     }
     startAnimation();
@@ -70,7 +76,7 @@ class MyAnimatedWidgetState extends State<AnimateIncreaseNumberText>
   @override
   void dispose() {
     super.dispose();
-    widget._myAudioPlayer.stop();
+    widget._myAudioPlayer.stop(audioPlayerId: widget.audioPlayerId);
     controller.dispose();
   }
 }

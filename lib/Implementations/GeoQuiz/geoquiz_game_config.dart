@@ -39,6 +39,7 @@ class GeoQuizGameConfig extends GameConfig {
   @override
   Color get screenBackgroundColor => const Color.fromRGBO(198, 236, 255, 1);
 
+  //TODO Check extra content "iOS" and "Android" may be different
   //iOS
   // @override
   // String get extraContentProductId => "extraContent";

@@ -1,9 +1,2 @@
-CFBundleDisplayName="History Game";
-language="en";
-appKey="history";
-isPro="true";
-appRatingPackage="1534612693";
-GADApplicationIdentifier="ca-app-pub-9432399956064043~9559920970";
-admobBannerId="ca-app-pub-9432399956064043/8246839301";
-admobInterId="ca-app-pub-9432399956064043/9781420436";
-admobVideoId="ca-app-pub-9432399956064043/7971329527";
+"CFBundleDisplayName"="World Geography Game";
+"language"="en";

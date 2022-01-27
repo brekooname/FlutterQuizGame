@@ -11,7 +11,7 @@ class AdService {
   //////
   ////////////
   //TODO ---VALUE CHANGED--- should be false
-  static const bool isTest = true;
+  static const bool isTest = false;
 
   ////////////
   //////

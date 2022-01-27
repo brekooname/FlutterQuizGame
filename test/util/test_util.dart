@@ -11,6 +11,7 @@ class TestUtil {
     SharedPreferences.setMockInitialValues({});
     FontConfig.fontScale = 30;
     MyApp.kIsAutomatedTest = true;
+    MyApp.webIsPro = true;
     MyApp.webLanguage = lang;
     MyApp.webAppKey = appKey;
     await MyAppState.initAppConfig(MyAppState.createWebAppConfig());

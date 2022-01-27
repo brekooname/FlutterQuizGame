@@ -42,9 +42,11 @@ class MyApp extends StatefulWidget {
 
   ////////////
   static CampaignLevel campaignLevel = GeoQuizCampaignLevelService().level_1;
+
   // static String webAppKey = "history";
   static String webAppKey = "geoquiz";
   static Language webLanguage = Language.en;
+  static bool webIsPro = false;
 
   ////////////
   //////
@@ -138,14 +140,7 @@ class MyAppState extends State<MyApp> {
       adBannerId: "",
       adInterstitialId: "",
       adRewardedId: "",
-      //
-      //////
-      ////////////
-      // isPro: false,
-      isPro: true,
-      ////////////
-      //////
-      //
+      isPro: MyApp.webIsPro,
     );
   }
 
