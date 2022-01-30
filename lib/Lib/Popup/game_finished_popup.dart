@@ -36,7 +36,7 @@ class GameFinishedPopup extends StatelessWidget with MyPopup {
               width: width / 1.2,
             ),
             highScore == null ? Container() : buildHighScoreText(),
-            rowVerticalMargin,
+            margin,
             MyButton(
                 text: label.l_play_again,
                 backgroundColor: Colors.lightGreenAccent,

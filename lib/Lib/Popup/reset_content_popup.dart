@@ -29,9 +29,9 @@ class ResetContentPopupState extends State<ResetContentPopup> with MyPopup {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            rowVerticalMargin,
+            margin,
             MyText(text: label.l_delete_all_progress),
-            rowVerticalMargin,
+            margin,
             MyButton(
               text: label.l_yes,
               backgroundColor: Colors.redAccent.shade200,
@@ -42,7 +42,7 @@ class ResetContentPopupState extends State<ResetContentPopup> with MyPopup {
                 closePopup(context);
               },
             ),
-            rowVerticalMargin,
+            margin,
             MyButton(
               text: label.l_no,
               backgroundColor: Colors.blue.shade300,

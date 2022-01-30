@@ -89,12 +89,10 @@ class _InAppPurchaseState extends State<InAppPurchasePopup> with MyPopup {
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> stack = [];
-    var popupHeight = screenDimensions.dimen(80);
+    List<Widget> stackWidgets = [];
     if (_queryProductError == null && _products.isNotEmpty) {
-      stack.add(
+      stackWidgets.add(
         SizedBox(
-            height: popupHeight,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -104,21 +102,19 @@ class _InAppPurchaseState extends State<InAppPurchasePopup> with MyPopup {
             )),
       );
     } else if (_queryProductError != null) {
-      stack.add(Center(
+      stackWidgets.add(Center(
         child: Text(_queryProductError!),
       ));
     }
 
     if (_purchasePending || _products.isEmpty) {
-      stack.add(
+      stackWidgets.add(
         SizedBox(
-          height: popupHeight,
           child: Stack(
             children: const [
               Opacity(
                 opacity: 0.3,
-                child:
-                    ModalBarrier(dismissible: false, color: Colors.grey),
+                child: ModalBarrier(dismissible: false, color: Colors.grey),
               ),
               Center(
                 child: CircularProgressIndicator(),
@@ -130,10 +126,9 @@ class _InAppPurchaseState extends State<InAppPurchasePopup> with MyPopup {
     }
 
     return createDialog(
-      Container(
-          child: Stack(
-        children: stack,
-      )),
+      Stack(
+        children: stackWidgets,
+      ),
       context: context,
     );
   }
@@ -218,48 +213,52 @@ class _InAppPurchaseState extends State<InAppPurchasePopup> with MyPopup {
             fontSize: FontConfig.bigFontSize,
             text: label.l_extra_content_ad_free,
           ),
-          rowVerticalMargin,
-          MyButton(
-            backgroundColor: Colors.greenAccent,
-            width: btnWidth,
-            customContent: Row(children: [
-              SizedBox(width: paddingBetween),
-              imageService.getMainImage(
-                imageName: "btn_in_app_purchases_background",
-                imageExtension: "png",
-                module: "buttons",
-                maxWidth: iconWidth,
-              ),
-              SizedBox(width: paddingBetween),
-              MyText(
-                text: label.l_buy,
-                fontSize: FontConfig.getCustomFontSize(1.1),
-                width: btnWidth - iconWidth - paddingBetween * 5,
-                alignmentInsideContainer: Alignment.center,
-              ),
-            ]),
-            onClick: () {
-              if (kIsWeb) {
-                widget._inAppPurchaseLocalStorage
-                    .savePurchase(productDetails.id);
-                MyApp.extraContentBought(context);
-                showSnackBar(label.l_purchased);
-                return;
-              }
-
-              if (productDetails.id == InAppPurchasePopup._kNonConsumableId) {
-                widget._inAppPurchase.buyNonConsumable(
-                    purchaseParam: getPurchaseParam(productDetails));
-              }
-            },
-          ),
-          SizedBox(height: screenDimensions.dimen(10)),
+          margin,
+          _buildBuyButton(btnWidth, paddingBetween, iconWidth, productDetails),
+          margin,
           _buildRestoreButton(btnWidth, iconWidth, paddingBetween),
         ]);
       },
     ));
 
     return Container(child: Column(children: productList));
+  }
+
+  MyButton _buildBuyButton(double btnWidth, double paddingBetween,
+      double iconWidth, ProductDetails productDetails) {
+    return MyButton(
+      backgroundColor: Colors.greenAccent,
+      width: btnWidth,
+      customContent: Row(children: [
+        SizedBox(width: paddingBetween),
+        imageService.getMainImage(
+          imageName: "btn_in_app_purchases_background",
+          imageExtension: "png",
+          module: "buttons",
+          maxWidth: iconWidth,
+        ),
+        SizedBox(width: paddingBetween),
+        MyText(
+          text: label.l_buy,
+          fontSize: FontConfig.getCustomFontSize(1.1),
+          width: btnWidth - iconWidth - paddingBetween * 5,
+          alignmentInsideContainer: Alignment.center,
+        ),
+      ]),
+      onClick: () {
+        if (kIsWeb) {
+          widget._inAppPurchaseLocalStorage.savePurchase(productDetails.id);
+          MyApp.extraContentBought(context);
+          showSnackBar(label.l_purchased);
+          return;
+        }
+
+        if (productDetails.id == InAppPurchasePopup._kNonConsumableId) {
+          widget._inAppPurchase.buyNonConsumable(
+              purchaseParam: getPurchaseParam(productDetails));
+        }
+      },
+    );
   }
 
   Widget _buildRestoreButton(

@@ -15,8 +15,9 @@ import '../../main.dart';
 
 mixin MyPopup {
   late double width;
-  late SizedBox rowVerticalMargin;
+  late SizedBox margin;
   late NavigatorService _navigatorService;
+  late double marginDoubleVal;
   SnackBarService snackBarService = SnackBarService();
   LocalizationService localizationService = LocalizationService();
   ImageService imageService = ImageService();
@@ -34,15 +35,18 @@ mixin MyPopup {
     }
     _navigatorService = NavigatorService();
     width = screenDimensions.dimen(100);
-    rowVerticalMargin = SizedBox(height: screenDimensions.dimen(6));
+    marginDoubleVal = screenDimensions.dimen(6);
+    var marginDimen = marginDoubleVal;
+    margin = SizedBox(
+      height: marginDimen,
+      width: marginDimen,
+    );
   }
 
   double get defaultBackgroundImageWidth => width / 3.4;
 
   AlertDialog createDialog(Widget mainContent,
       {required BuildContext context, VoidCallback? onCloseBtnClick}) {
-    double margin = screenDimensions.dimen(10);
-
     DecorationImage? decorationImage;
     if (backgroundImage != null) {
       decorationImage = DecorationImage(
@@ -72,8 +76,8 @@ mixin MyPopup {
                 ),
                 width: width,
                 child: Padding(
-                  padding:
-                      EdgeInsets.fromLTRB(margin, margin, margin, margin * 2),
+                  padding: EdgeInsets.fromLTRB(marginDoubleVal, marginDoubleVal,
+                      marginDoubleVal, marginDoubleVal * 2),
                   child: Column(children: [
                     Container(
                         alignment: Alignment.topRight,

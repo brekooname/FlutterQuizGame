@@ -57,7 +57,7 @@ class WatchRewardedAdPopupState extends State<WatchRewardedAdPopup>
   @override
   void initState() {
     super.initState();
-    initPopup();
+    initPopup(backgroundImageName: "popup_extra_hint_background");
     refreshTimer();
   }
 
@@ -67,19 +67,13 @@ class WatchRewardedAdPopupState extends State<WatchRewardedAdPopup>
       Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
-          imageService.getMainImage(
-              imageName: getImageName(),
-              imageExtension: "png",
-              module: "popup",
-              maxWidth: defaultBackgroundImageWidth),
-          SizedBox(height: screenDimensions.dimen(9)),
           MyText(
             text: getText(),
             maxLines: 3,
             width: width / 1.2,
             fontSize: FontConfig.getCustomFontSize(1.2),
           ),
-          rowVerticalMargin,
+          margin,
           Row(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -99,7 +93,7 @@ class WatchRewardedAdPopupState extends State<WatchRewardedAdPopup>
                     ? Container()
                     : const CircularProgressIndicator()
               ]),
-          rowVerticalMargin,
+          margin,
           MyButton(
             text: label.l_no,
             backgroundColor: Colors.grey.shade300,
@@ -151,9 +145,5 @@ class WatchRewardedAdPopupState extends State<WatchRewardedAdPopup>
 
   String getText() {
     return label.l_watch_an_ad_for_a_free_hint;
-  }
-
-  String getImageName() {
-    return "popup_extra_hint_background";
   }
 }

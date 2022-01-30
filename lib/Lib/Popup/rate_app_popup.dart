@@ -26,7 +26,7 @@ class RatePopupService {
   RatePopupService.internal();
 
   void showRateAppPopup() {
-    // return;
+    return;
     if (rateAppLocalStorage.isAlreadyRated()) {
       //TODO ---VALUE CHANGED--- should be return
       return;
@@ -52,20 +52,15 @@ class RateAppPopup extends StatelessWidget with MyPopup {
 
   @override
   AlertDialog build(BuildContext context) {
-    initPopup();
+    initPopup(backgroundImageName: "popup_rate_app_stars_background");
 
     return createDialog(
       Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
-          imageService.getMainImage(
-              imageName: "popup_rate_app_stars_background",
-              imageExtension: "png",
-              module: "popup",
-              maxWidth: defaultBackgroundImageWidth),
-          rowVerticalMargin,
+          margin,
           MyText(text: label.l_thanks_for_your_support),
-          rowVerticalMargin,
+          margin,
           MyButton(
             text: label.l_rate_now_the_app,
             backgroundColor: Colors.lightGreenAccent,
@@ -75,7 +70,7 @@ class RateAppPopup extends StatelessWidget with MyPopup {
               internetService.openAppUrl(MyApp.appRatingPackage, true, context);
             },
           ),
-          rowVerticalMargin,
+          margin,
           MyButton(
             text: label.l_rate_later,
             backgroundColor: Colors.grey.shade300,

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Popup/reset_content_popup.dart';
+import 'package:flutter_app_quiz_game/Lib/ScreenDimensions/screen_dimensions_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Storage/settings_local_storage.dart';
 
 import '../../main.dart';
@@ -28,6 +29,9 @@ class SettingsPopupState extends State<SettingsPopup> with MyPopup {
   @override
   void initState() {
     initPopup();
+    width = ScreenDimensionsService.isPortrait()
+        ? screenDimensions.dimen(100)
+        : screenDimensions.w(70);
     var sideDimen = screenDimensions.dimen(20);
     soundOn = imageService.getMainImage(
         imageName: "btn_sound_on",
@@ -56,25 +60,41 @@ class SettingsPopupState extends State<SettingsPopup> with MyPopup {
     List<Widget> settingsChildren = [];
     settingsChildren.addAll([
       soundOnOffButton(context),
-      rowVerticalMargin,
+      margin,
       Divider(
         height: screenDimensions.dimen(0.5),
         thickness: screenDimensions.dimen(0.5),
         color: Colors.grey,
       )
     ]);
+    List<Widget> settingsButtons = [];
     if (MyApp.isExtraContentLocked) {
-      settingsChildren.addAll([
-        rowVerticalMargin,
+      settingsButtons.addAll([
         removeAdsButton(context),
+        margin,
       ]);
     }
-    settingsChildren.addAll([
-      rowVerticalMargin,
+    settingsButtons.addAll([
       deleteProgressButton(context),
+    ]);
+    settingsChildren.addAll([
+      margin,
+      ScreenDimensionsService.isPortrait()
+          ? Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: settingsButtons,
+            )
+          : Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: settingsButtons,
+            )
     ]);
     return createDialog(
       Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: settingsChildren,
       ),
       context: context,

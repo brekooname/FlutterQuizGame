@@ -224,10 +224,11 @@ class MyAppState extends State<MyApp> {
   static Builder builder(Widget widgetToShow, bool initAsyncCompleted) {
     return Builder(builder: (BuildContext context) {
       if (initAsyncCompleted) {
-        MyApp.screenWidth =
-            ScreenDimensionsService.calculateScreenWidth(context);
-        MyApp.screenHeight =
-            ScreenDimensionsService.calculateScreenHeight(context);
+        var mediaQueryData = MediaQuery.of(context);
+        var screenDimensions =
+            ScreenDimensionsService.calculateScreenDimensions(mediaQueryData);
+        MyApp.screenWidth = screenDimensions.key;
+        MyApp.screenHeight = screenDimensions.value;
         MyApp.appLocalizations = AppLocalizations.of(context)!;
       }
       return widgetToShow;
@@ -262,9 +263,8 @@ class MyAppState extends State<MyApp> {
             )),
             alignment: Alignment.center,
             child: AspectRatio(
-              aspectRatio: ScreenDimensionsService.isPortrait()
-                  ? 9 / 16
-                  : 16 / 9,
+              aspectRatio:
+                  ScreenDimensionsService.isPortrait() ? 9 / 16 : 16 / 9,
               child: Container(
                 // color: Colors.blue,
                 alignment: Alignment.center,

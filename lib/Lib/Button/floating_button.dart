@@ -26,26 +26,25 @@ class FloatingButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var margin = _screenDimensions.dimen(1);
-    var btn = SizedBox(
-        height: _buttonSize.height,
-        width: _buttonSize.width,
-        child: FittedBox(
-            child: FloatingActionButton(
-                elevation: 0,
-                hoverElevation: 0,
-                disabledElevation: 0,
-                focusElevation: 0,
-                highlightElevation: 0,
-                foregroundColor: Colors.transparent,
-                focusColor: Colors.transparent,
-                hoverColor: Colors.transparent,
-                backgroundColor: Colors.transparent,
-                splashColor: Colors.transparent,
-                onPressed: () {},
-                child: Padding(
-                    padding:
-                        EdgeInsets.fromLTRB(margin, margin, margin, margin),
+    var margin = _screenDimensions.dimen(3);
+    var btn = Padding(
+        padding: EdgeInsets.all(margin),
+        child: SizedBox(
+            height: _buttonSize.height,
+            width: _buttonSize.width,
+            child: FittedBox(
+                child: FloatingActionButton(
+                    elevation: 0,
+                    hoverElevation: 0,
+                    disabledElevation: 0,
+                    focusElevation: 0,
+                    highlightElevation: 0,
+                    foregroundColor: Colors.transparent,
+                    focusColor: Colors.transparent,
+                    hoverColor: Colors.transparent,
+                    backgroundColor: Colors.transparent,
+                    splashColor: Colors.transparent,
+                    onPressed: () {},
                     child: MyButton(
                         onClick: () {
                           Future.delayed(
