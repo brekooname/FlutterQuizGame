@@ -105,15 +105,15 @@ mixin QuizOptionsGameScreen<TGameContext extends GameContext> {
       return Container();
     }
     return SizedBox(
-        width: _screenDimensions.w(98),
-        height: _screenDimensions.h(40),
+        width: _screenDimensions.dimen(98),
+        height: _screenDimensions.dimen(70),
         child: _zoomableImage ?? false
             ? createZoomableContainer()
             : _questionImage!);
   }
 
   Widget createZoomableContainer() {
-    var pinchIconSideDimen = _screenDimensions.w(10);
+    var pinchIconSideDimen = _screenDimensions.dimen(10);
     Stack stack = Stack(
       alignment: Alignment.center,
       children: [
@@ -123,7 +123,7 @@ mixin QuizOptionsGameScreen<TGameContext extends GameContext> {
           child: _questionImage!,
         ),
         Padding(
-            padding: EdgeInsets.all(_screenDimensions.w(5)),
+            padding: EdgeInsets.all(_screenDimensions.dimen(5)),
             child: Container(
                 alignment: Alignment.bottomRight,
                 child: _imageService.getMainImage(
@@ -137,7 +137,7 @@ mixin QuizOptionsGameScreen<TGameContext extends GameContext> {
         decoration: BoxDecoration(
             color: Colors.grey.shade200,
             border: Border.all(
-                color: Colors.blue.shade700, width: _screenDimensions.w(0.3)),
+                color: Colors.blue.shade700, width: _screenDimensions.dimen(0.3)),
             borderRadius:
                 BorderRadius.circular(FontConfig.standardBorderRadius * 0.1)),
         child: stack);
@@ -282,13 +282,13 @@ mixin QuizOptionsGameScreen<TGameContext extends GameContext> {
 
   Size _getAnswerBtnSize() {
     return Size(
-        _screenDimensions.w(45),
-        _screenDimensions.h(
-            _getValueBasedOnNrOfPossibleAnswers(15, 12, 8, 5, true)
+        _screenDimensions.dimen(45),
+        _screenDimensions.dimen(
+            _getValueBasedOnNrOfPossibleAnswers(26, 23, 19, 16, true)
                 .toDouble()));
   }
 
-  double getAnswerButtonPaddingBetween() => _screenDimensions.w(1);
+  double getAnswerButtonPaddingBetween() => _screenDimensions.dimen(1);
 
   int _getValueBasedOnNrOfPossibleAnswers(
       int v4, int v6, int v8, int max, bool isSizeValue) {

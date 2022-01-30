@@ -41,12 +41,12 @@ class GeoQuizGameConfig extends GameConfig {
 
   //TODO Check extra content "iOS" and "Android" may be different
   //iOS
-  // @override
-  // String get extraContentProductId => "extraContent";
+  @override
+  String get extraContentProductId => "extraContent";
 
   //Android
-  @override
-  String get extraContentProductId => "extracontent.geoquiz";
+  // @override
+  // String get extraContentProductId => "extracontent.geoquiz";
 
   @override
   String getTitle(Language language) {

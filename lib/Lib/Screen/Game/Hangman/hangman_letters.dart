@@ -57,13 +57,13 @@ mixin HangmanLetters {
     VoidCallback refreshSetState,
     VoidCallback goToNextScreenAfterPress,
   ) {
-    var btnSide = screenDimensions.w(12);
+    var btnSide = screenDimensions.dimen(12);
     return MyButton(
       onClick: () {
         clickAnswerBtn(btnLetter, goToNextScreenAfterPress, refreshSetState);
       },
       disabled: alreadyPressedLetters.contains(btnLetter),
-      allPadding: screenDimensions.w(2),
+      allPadding: screenDimensions.dimen(2),
       text: btnLetter,
       size: Size(btnSide, btnSide),
     );

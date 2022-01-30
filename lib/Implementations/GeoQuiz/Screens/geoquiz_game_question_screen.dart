@@ -150,7 +150,7 @@ class GeoQuizQuestionScreenState extends State<GeoQuizQuestionScreen>
                   Colors.blue.shade100,
                 ]),
             border: Border.all(
-                color: Colors.blue.shade700, width: screenDimensions.w(0.3)),
+                color: Colors.blue.shade700, width: screenDimensions.dimen(0.3)),
             borderRadius:
                 BorderRadius.circular(FontConfig.standardBorderRadius * 0.2)));
     Widget optionsRows = widget.createOptionRows(

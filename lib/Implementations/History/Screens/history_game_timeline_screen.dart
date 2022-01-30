@@ -135,7 +135,7 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
     timelineArrow = imageService.getSpecificImage(
         imageName: FontConfig.isRtlLanguage ? "arrow_left" : "arrow_right",
         imageExtension: "png",
-        maxWidth: screenDimensions.w(10));
+        maxWidth: screenDimensions.dimen(10));
   }
 
   @override
@@ -203,7 +203,7 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
             : widget.currentQuestionInfo.question,
         widget.category == HistoryGameQuestionConfig().cat0 ? 1 : 2,
         widget.category == HistoryGameQuestionConfig().cat3 ? 4 : 2,
-        questionContainerHeight: screenDimensions.h(18));
+        questionContainerHeight: screenDimensions.dimen(25));
 
     ScrollablePositionedList listView =
         createListView(answerBtnSize, zoomInZoomOutAnswerDuration);
@@ -361,9 +361,9 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
 
   double getImageWidth() {
     if (widget.category == HistoryGameQuestionConfig().cat0) {
-      return screenDimensions.w(30);
+      return screenDimensions.dimen(30);
     } else {
-      return screenDimensions.w(20);
+      return screenDimensions.dimen(20);
     }
   }
 
@@ -384,20 +384,20 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
       var v2 = split[1];
       double textWidthPercent = 15;
       return Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-        MyText(text: v1, width: screenDimensions.w(textWidthPercent)),
+        MyText(text: v1, width: screenDimensions.dimen(textWidthPercent)),
         Padding(
-            padding: EdgeInsets.all(screenDimensions.w(1)),
+            padding: EdgeInsets.all(screenDimensions.dimen(1)),
             child: timelineArrow),
-        MyText(text: v2, width: screenDimensions.w(textWidthPercent))
+        MyText(text: v2, width: screenDimensions.dimen(textWidthPercent))
       ]);
     }
   }
 
   Size getButtonSizeForCat() {
     if (widget.category == HistoryGameQuestionConfig().cat0) {
-      return Size(screenDimensions.w(30), screenDimensions.h(9));
+      return Size(screenDimensions.dimen(30), screenDimensions.dimen(16));
     } else {
-      return Size(screenDimensions.w(60), screenDimensions.h(10));
+      return Size(screenDimensions.dimen(60), screenDimensions.dimen(17));
     }
   }
 
@@ -428,7 +428,7 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
     Widget answerPart = createBtnAnswerWithAnimation(mostRecentAnswered,
         questionIndex, millisForZoomInZoomOut, answerBtnSize, answerBtn);
 
-    var margin = screenDimensions.w(3);
+    var margin = screenDimensions.dimen(3);
     var item = Row(children: <Widget>[
       const Spacer(),
       Padding(
@@ -461,10 +461,10 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
       return Container(
           child: Row(children: <Widget>[
         SizedBox(
-          width: screenDimensions.w(2),
+          width: screenDimensions.dimen(2),
         ),
         Container(
-            width: screenDimensions.w(2),
+            width: screenDimensions.dimen(2),
             height: answerBtnSize.height * 1.6,
             color: correctAnswer == null
                 ? Colors.blueGrey
@@ -472,7 +472,7 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
                     ? Colors.green
                     : Colors.red),
         SizedBox(
-          width: screenDimensions.w(2),
+          width: screenDimensions.dimen(2),
         ),
       ]));
     } else {
@@ -502,7 +502,7 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
     var item = Row(children: <Widget>[
       const Spacer(),
       Padding(
-          padding: EdgeInsets.all(screenDimensions.w(3)), child: answerPart),
+          padding: EdgeInsets.all(screenDimensions.dimen(3)), child: answerPart),
       getQuestionSeparator(answerBtnSize, correctAnswer),
       questionImg,
       const Spacer()

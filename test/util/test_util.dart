@@ -22,7 +22,7 @@ class TestUtil {
   static Future<void> pumpWidget(WidgetTester tester, Widget widget) async {
     await tester.pumpWidget(Builder(
       builder: (BuildContext context) {
-        return MyAppState.buildMaterialApp(context, widget);
+        return MyAppState.buildMaterialApp(context, widget, true);
       },
     ));
   }

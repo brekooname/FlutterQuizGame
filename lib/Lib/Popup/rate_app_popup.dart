@@ -63,9 +63,9 @@ class RateAppPopup extends StatelessWidget with MyPopup {
               imageExtension: "png",
               module: "popup",
               maxWidth: defaultBackgroundImageWidth),
-          SizedBox(height: screenDimensions.h(5)),
+          rowVerticalMargin,
           MyText(text: label.l_thanks_for_your_support),
-          SizedBox(height: screenDimensions.h(5)),
+          rowVerticalMargin,
           MyButton(
             text: label.l_rate_now_the_app,
             backgroundColor: Colors.lightGreenAccent,
@@ -75,7 +75,7 @@ class RateAppPopup extends StatelessWidget with MyPopup {
               internetService.openAppUrl(MyApp.appRatingPackage, true, context);
             },
           ),
-          SizedBox(height: screenDimensions.h(5)),
+          rowVerticalMargin,
           MyButton(
             text: label.l_rate_later,
             backgroundColor: Colors.grey.shade300,

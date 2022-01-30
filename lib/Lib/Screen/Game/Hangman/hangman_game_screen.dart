@@ -46,10 +46,10 @@ mixin HangmanGameScreen<TGameContext extends GameContext> {
 
   Widget getHangmanWordContainer() {
     return SizedBox(
-      height: _screenDimensions.h(15),
+      height: _screenDimensions.dimen(22),
       child: MyText(
         maxLines: 1,
-        width: _screenDimensions.w(98),
+        width: _screenDimensions.dimen(98),
         fontSize: FontConfig.bigFontSize,
         text: _hangmanService.getCurrentWordState(
             _currentQuestionInfo.question.questionToBeDisplayed,

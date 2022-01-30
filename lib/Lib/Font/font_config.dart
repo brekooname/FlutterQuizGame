@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Lib/Constants/language.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/enum_extension.dart';
+import 'package:flutter_app_quiz_game/Lib/ScreenDimensions/screen_dimensions_service.dart';
 
 import '../../main.dart';
 import 'font_util.dart';
@@ -64,7 +65,10 @@ class FontConfig {
 
   static double get smallFontSize => normalFontSize / 2;
 
-  static double get displayDimensionScale => MyApp.screenWidth;
+  static double get displayDimensionScale =>
+      ScreenDimensionsService.isPortrait()
+          ? MyApp.screenWidth
+          : MyApp.screenHeight;
 
   static bool get isRtlLanguage =>
       [Language.ar.name, Language.he.name].contains(MyApp.languageCode);

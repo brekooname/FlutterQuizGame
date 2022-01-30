@@ -75,7 +75,7 @@ class GeoQuizMainMenuScreenState extends State<GeoQuizMainMenuScreen>
     var gameTitle = GameTitle(
       backgroundImageOpacity: gameTitleOpacity,
       text: MyApp.appTitle,
-      backgroundImageWidth: screenDimensions.w(70),
+      backgroundImageWidth: screenDimensions.dimen(70),
       fontConfig: FontConfig(
           borderWidth: FontConfig.standardBorderWidth * 3,
           textColor: Colors.lightGreenAccent,
@@ -99,14 +99,14 @@ class GeoQuizMainMenuScreenState extends State<GeoQuizMainMenuScreen>
         ),
         child: gameTitle);
 
-    var bottomMargin = screenDimensions.h(3);
+    var bottomMargin = screenDimensions.dimen(10);
     Container mainContent = Container(
       alignment: Alignment.center,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(height: screenDimensions.h(10)),
+          SizedBox(height: screenDimensions.dimen(17)),
           gameTitleContainer,
           SizedBox(height: bottomMargin),
           _createPlayerInfo(),
@@ -136,12 +136,12 @@ class GeoQuizMainMenuScreenState extends State<GeoQuizMainMenuScreen>
   }
 
   Widget _createPlayerInfo() {
-    var xpWidth = screenDimensions.w(10);
-    var progressBarWidth = screenDimensions.w(90);
+    var xpWidth = screenDimensions.dimen(10);
+    var progressBarWidth = screenDimensions.dimen(90);
     Widget info = Stack(alignment: Alignment.center, children: [
       ProgressBar(
         width: progressBarWidth,
-        height: screenDimensions.h(5),
+        height: screenDimensions.dimen(10),
         totalNr: widget._campaignLevelExperienceMap
             .getExperienceNeededForNextLevelToDisplay(),
         startNr: getExperienceForCurrentLevelBeforeLeavingMainScreen(),
@@ -252,7 +252,7 @@ class GeoQuizMainMenuScreenState extends State<GeoQuizMainMenuScreen>
         campaignLevel.difficulty == widget._geoQuizGameQuestionConfig.diff3 &&
             MyApp.isExtraContentLocked;
     return Padding(
-        padding: EdgeInsets.all(screenDimensions.w(2)),
+        padding: EdgeInsets.all(screenDimensions.dimen(2)),
         child: MyButton(
           disabled: levelBtnDisabled,
           contentLocked: contentLocked,
@@ -269,7 +269,7 @@ class GeoQuizMainMenuScreenState extends State<GeoQuizMainMenuScreen>
               borderColor: Colors.black,
               textColor: Colors.white,
               fontSize: FontConfig.getCustomFontSize(1.3)),
-          size: Size(screenDimensions.w(60), screenDimensions.h(10)),
+          size: Size(screenDimensions.dimen(60), screenDimensions.dimen(17)),
           text: formatTextWithOneParam(label.l_level_param0.capitalized, index),
         ));
   }

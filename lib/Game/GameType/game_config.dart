@@ -5,6 +5,7 @@ import 'package:flutter_app_quiz_game/Game/Question/all_questions_service.dart';
 import 'package:flutter_app_quiz_game/Game/Question/question_collector_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Constants/contrast.dart';
 import 'package:flutter_app_quiz_game/Lib/Constants/language.dart';
+import 'package:flutter_app_quiz_game/Lib/Constants/screen_orientation.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen_manager.dart';
 
 import 'game_question_config.dart';
@@ -19,6 +20,8 @@ abstract class GameConfig {
   String getTitle(Language language);
 
   Contrast get screenContrast => Contrast.light;
+
+  ScreenOrientation get screenOrientation => ScreenOrientation.portrait;
 
   String get extraContentProductId;
 

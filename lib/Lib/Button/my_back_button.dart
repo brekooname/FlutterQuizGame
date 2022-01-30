@@ -15,7 +15,7 @@ class MyBackButton extends StatelessWidget {
   late Size _buttonSize;
 
   MyBackButton({Key? key}) : super(key: key) {
-    var side = _screenDimensions.w(12);
+    var side = _screenDimensions.dimen(12);
     _buttonSize = Size(side, side);
   }
 

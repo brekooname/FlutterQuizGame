@@ -72,14 +72,14 @@ class WatchRewardedAdPopupState extends State<WatchRewardedAdPopup>
               imageExtension: "png",
               module: "popup",
               maxWidth: defaultBackgroundImageWidth),
-          SizedBox(height: screenDimensions.h(2)),
+          SizedBox(height: screenDimensions.dimen(9)),
           MyText(
             text: getText(),
             maxLines: 3,
             width: width / 1.2,
             fontSize: FontConfig.getCustomFontSize(1.2),
           ),
-          SizedBox(height: screenDimensions.h(5)),
+          rowVerticalMargin,
           Row(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -94,12 +94,12 @@ class WatchRewardedAdPopupState extends State<WatchRewardedAdPopup>
                         widget.onUserEarnedReward.call();
                       });
                     }),
-                SizedBox(width: screenDimensions.w(1)),
+                SizedBox(width: screenDimensions.dimen(1)),
                 widget.isRewardedAdLoaded
                     ? Container()
                     : const CircularProgressIndicator()
               ]),
-          SizedBox(height: screenDimensions.h(5)),
+          rowVerticalMargin,
           MyButton(
             text: label.l_no,
             backgroundColor: Colors.grey.shade300,

@@ -109,8 +109,8 @@ class GeoQuizHangmanScreenState extends State<GeoQuizHangmanScreen>
   }
 
   Widget createWordContainer() {
-    var wordBoxHeight = screenDimensions.h(15);
-    var wordBoxWidth = screenDimensions.w(100);
+    var wordBoxHeight = screenDimensions.dimen(15);
+    var wordBoxWidth = screenDimensions.dimen(100);
     var clearBtnHeight = wordBoxHeight / 2;
     var wordBox = SizedBox(
       height: wordBoxHeight,

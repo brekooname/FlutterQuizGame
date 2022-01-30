@@ -4,6 +4,7 @@ import 'package:flutter_app_quiz_game/Game/GameType/game_question_config.dart';
 import 'package:flutter_app_quiz_game/Game/Question/all_questions_service.dart';
 import 'package:flutter_app_quiz_game/Game/Question/question_collector_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Constants/language.dart';
+import 'package:flutter_app_quiz_game/Lib/Constants/screen_orientation.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen_manager.dart';
 
 import 'Constants/perstest_game_question_config.dart';
@@ -38,14 +39,11 @@ class PersTestGameConfig extends GameConfig {
   ImageRepeat get backgroundTextureRepeat => ImageRepeat.noRepeat;
 
   @override
+  ScreenOrientation get screenOrientation => ScreenOrientation.landscape;
+
+  @override
   Color get screenBackgroundColor => const Color.fromRGBO(198, 236, 255, 1);
 
-  //TODO Check extra content "iOS" and "Android" may be different
-  //iOS
-  // @override
-  // String get extraContentProductId => "extraContent";
-
-  //Android
   @override
   String get extraContentProductId => "extracontent.perstest";
 

@@ -55,7 +55,7 @@ class HistoryMainMenuScreenState extends State<HistoryMainMenuScreen>
     debugPrint("build main menu");
     var gameTitle = GameTitle(
       text: MyApp.appTitle,
-      backgroundImageWidth: screenDimensions.w(70),
+      backgroundImageWidth: screenDimensions.dimen(70),
       fontConfig: FontConfig(
           textColor: Colors.lightGreenAccent,
           fontWeight: FontWeight.normal,
@@ -76,16 +76,16 @@ class HistoryMainMenuScreenState extends State<HistoryMainMenuScreen>
     var level3 = createLevelButton(context, historyCampaignLevel.level_3,
         Colors.yellow.shade300, label.l_prehistory, MyApp.isExtraContentLocked);
 
-    var btnMargin = screenDimensions.h(3);
+    var btnMargin = screenDimensions.dimen(10);
     var mainColumn = Container(
         alignment: Alignment.center,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            SizedBox(height: screenDimensions.h(4)),
+            SizedBox(height: screenDimensions.dimen(11)),
             gameTitle,
-            SizedBox(height: screenDimensions.h(7)),
+            SizedBox(height: screenDimensions.dimen(14)),
             level0,
             SizedBox(height: btnMargin),
             level1,
@@ -114,9 +114,9 @@ class HistoryMainMenuScreenState extends State<HistoryMainMenuScreen>
 
   Widget createLevelButton(BuildContext context, CampaignLevel campaignLevel,
       Color btnColor, String labelText, bool contentLocked) {
-    var btnSize = Size(screenDimensions.w(84), screenDimensions.h(12));
+    var btnSize = Size(screenDimensions.dimen(84), screenDimensions.dimen(20));
     var paddingBetween = btnSize.width / 20;
-    var iconWidth = screenDimensions.w(14);
+    var iconWidth = screenDimensions.dimen(14);
 
     int totalQuestionsForCampaignLevel = widget
             .totalNrOfQuestionsForCampaignLevel

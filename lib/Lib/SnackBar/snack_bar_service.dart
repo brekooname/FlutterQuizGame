@@ -9,11 +9,11 @@ class SnackBarService {
   void showSnackBar(String message, BuildContext context) {
     var snackBar = SnackBar(
       content: SizedBox(
-        height: screenDimensions.h(5),
+        height: screenDimensions.dimen(12),
         child: Center(
             child: MyText(
               text: message,
-              width: screenDimensions.w(99),
+              width: screenDimensions.dimen(99),
               maxLines: 1,
             )),
       ),

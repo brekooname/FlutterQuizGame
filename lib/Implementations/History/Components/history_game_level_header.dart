@@ -38,7 +38,7 @@ class HistoryGameLevelHeader extends StatelessWidget {
         watchRewardedAdForHint: MyApp.isExtraContentLocked,
         showAvailableHintsText: true);
 
-    var scoreTextWidth = screenDimensions.w(60);
+    var scoreTextWidth = screenDimensions.dimen(60);
     var scoreText = MyText(
       maxLines: 1,
       width: scoreTextWidth,
@@ -50,16 +50,16 @@ class HistoryGameLevelHeader extends StatelessWidget {
     );
 
     return Container(
-        height: screenDimensions.h(9),
+        height: screenDimensions.dimen(16),
         decoration: BoxDecoration(
           color: Colors.lightBlueAccent.withOpacity(0.3),
         ),
         child: Padding(
-            padding: EdgeInsets.all(screenDimensions.w(1)),
+            padding: EdgeInsets.all(screenDimensions.dimen(1)),
             child: Row(
               children: <Widget>[
                 MyBackButton(),
-                SizedBox(width: screenDimensions.w(2)),
+                SizedBox(width: screenDimensions.dimen(2)),
                 SizedBox(
                     width: scoreTextWidth,
                     child: animateScore

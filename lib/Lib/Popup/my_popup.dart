@@ -15,6 +15,7 @@ import '../../main.dart';
 
 mixin MyPopup {
   late double width;
+  late SizedBox rowVerticalMargin;
   late NavigatorService _navigatorService;
   SnackBarService snackBarService = SnackBarService();
   LocalizationService localizationService = LocalizationService();
@@ -32,14 +33,15 @@ mixin MyPopup {
       );
     }
     _navigatorService = NavigatorService();
-    width = screenDimensions.w(100);
+    width = screenDimensions.dimen(100);
+    rowVerticalMargin = SizedBox(height: screenDimensions.dimen(6));
   }
 
   double get defaultBackgroundImageWidth => width / 3.4;
 
   AlertDialog createDialog(Widget mainContent,
       {required BuildContext context, VoidCallback? onCloseBtnClick}) {
-    double margin = screenDimensions.h(3);
+    double margin = screenDimensions.dimen(10);
 
     DecorationImage? decorationImage;
     if (backgroundImage != null) {
@@ -89,7 +91,7 @@ mixin MyPopup {
 
   MyButton createClosePopupBtn(
       BuildContext context, VoidCallback? onCloseBtnClick) {
-    var closeBtnWidth = screenDimensions.w(9);
+    var closeBtnWidth = screenDimensions.dimen(9);
     return MyButton(
         size: Size(closeBtnWidth, closeBtnWidth),
         onClick: () {

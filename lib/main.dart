@@ -44,10 +44,10 @@ class MyApp extends StatefulWidget {
   static CampaignLevel campaignLevel = GeoQuizCampaignLevelService().level_1;
 
   // static String webAppKey = "history";
-  // static String webAppKey = "geoquiz";
-  static String webAppKey = "perstest";
+  static String webAppKey = "geoquiz";
+  // static String webAppKey = "perstest";
   static Language webLanguage = Language.en;
-  static bool webIsPro = true;
+  static bool webIsPro = false;
 
   ////////////
   //////
@@ -173,7 +173,8 @@ class MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     Widget widgetToShow = _getWidgetToShow();
-    var materialApp = buildMaterialApp(context, widgetToShow);
+    var materialApp =
+        buildMaterialApp(context, widgetToShow, widget.initAsyncCompleted);
 
     return materialApp;
   }
@@ -206,7 +207,7 @@ class MyAppState extends State<MyApp> {
   }
 
   static MaterialApp buildMaterialApp(
-      BuildContext context, Widget widgetToShow) {
+      BuildContext context, Widget widgetToShow, bool initAsyncCompleted) {
     return MaterialApp(
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: _getSupportedLocales(),
@@ -217,16 +218,18 @@ class MyAppState extends State<MyApp> {
           ),
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        home: builder(widgetToShow));
+        home: builder(widgetToShow, initAsyncCompleted));
   }
 
-  static Builder builder(Widget widgetToShow) {
+  static Builder builder(Widget widgetToShow, bool initAsyncCompleted) {
     return Builder(builder: (BuildContext context) {
-      MyApp.screenWidth =
-          ScreenDimensionsService.calculateScreenWidth(context, true);
-      MyApp.screenHeight =
-          ScreenDimensionsService.calculateScreenHeight(context, true);
-      MyApp.appLocalizations = AppLocalizations.of(context)!;
+      if (initAsyncCompleted) {
+        MyApp.screenWidth =
+            ScreenDimensionsService.calculateScreenWidth(context);
+        MyApp.screenHeight =
+            ScreenDimensionsService.calculateScreenHeight(context);
+        MyApp.appLocalizations = AppLocalizations.of(context)!;
+      }
       return widgetToShow;
     });
   }
@@ -259,8 +262,11 @@ class MyAppState extends State<MyApp> {
             )),
             alignment: Alignment.center,
             child: AspectRatio(
-              aspectRatio: 9 / 16,
+              aspectRatio: ScreenDimensionsService.isPortrait()
+                  ? 9 / 16
+                  : 16 / 9,
               child: Container(
+                // color: Colors.blue,
                 alignment: Alignment.center,
                 child: Column(
                   children: <Widget>[

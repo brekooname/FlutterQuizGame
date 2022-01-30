@@ -55,28 +55,28 @@ class GeoQuizGameLevelHeader extends StatelessWidget {
         watchRewardedAdForHint: MyApp.isExtraContentLocked,
         showAvailableHintsText: true);
 
-    var headerHeight = screenDimensions.h(9);
+    var headerHeight = screenDimensions.dimen(16);
     var headerButtonsContainer = SizedBox(
         height: headerHeight,
         child: Padding(
-            padding: EdgeInsets.all(screenDimensions.w(1)),
+            padding: EdgeInsets.all(screenDimensions.dimen(1)),
             child: Row(
               children: <Widget>[
                 MyBackButton(),
-                SizedBox(width: screenDimensions.w(2)),
+                SizedBox(width: screenDimensions.dimen(2)),
                 const Spacer(),
                 hintBtn,
               ],
             )));
 
-    var progressBarWidth = screenDimensions.w(65);
+    var progressBarWidth = screenDimensions.dimen(65);
     Widget scoreContainer = SizedBox(
       width: progressBarWidth,
       child: Row(
         children: [
           const Spacer(),
           SizedBox(
-            width: screenDimensions.w(20),
+            width: screenDimensions.dimen(20),
           ),
           createScoreContainer(),
           createMultiplierContainer(),
@@ -127,7 +127,7 @@ class GeoQuizGameLevelHeader extends StatelessWidget {
 
   Widget createMultiplierContainer() {
     var multiplier = MyText(
-      width: screenDimensions.w(20),
+      width: screenDimensions.dimen(20),
       text: consecutiveCorrectAnswers == 0 && !animateWrongAnswer
           ? ""
           : (consecutiveCorrectAnswers).toString() + "X",

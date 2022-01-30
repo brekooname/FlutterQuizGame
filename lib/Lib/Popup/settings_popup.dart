@@ -28,17 +28,19 @@ class SettingsPopupState extends State<SettingsPopup> with MyPopup {
   @override
   void initState() {
     initPopup();
-    var sideDimen = screenDimensions.w(20);
+    var sideDimen = screenDimensions.dimen(20);
     soundOn = imageService.getMainImage(
         imageName: "btn_sound_on",
         imageExtension: "png",
         module: "buttons",
-        maxWidth: sideDimen);
+        maxWidth: sideDimen,
+        maxHeight: sideDimen);
     soundOff = imageService.getMainImage(
         imageName: "btn_sound_off",
         imageExtension: "png",
         module: "buttons",
-        maxWidth: sideDimen);
+        maxWidth: sideDimen,
+        maxHeight: sideDimen);
     super.initState();
   }
 
@@ -51,25 +53,24 @@ class SettingsPopupState extends State<SettingsPopup> with MyPopup {
 
   @override
   AlertDialog build(BuildContext context) {
-    var vertMargin = screenDimensions.h(2);
     List<Widget> settingsChildren = [];
     settingsChildren.addAll([
       soundOnOffButton(context),
-      SizedBox(height: vertMargin * 2),
+      rowVerticalMargin,
       Divider(
-        height: screenDimensions.h(0.2),
-        thickness: screenDimensions.h(0.2),
+        height: screenDimensions.dimen(0.5),
+        thickness: screenDimensions.dimen(0.5),
         color: Colors.grey,
       )
     ]);
     if (MyApp.isExtraContentLocked) {
       settingsChildren.addAll([
-        SizedBox(height: vertMargin * 2),
+        rowVerticalMargin,
         removeAdsButton(context),
       ]);
     }
     settingsChildren.addAll([
-      SizedBox(height: vertMargin * 2),
+      rowVerticalMargin,
       deleteProgressButton(context),
     ]);
     return createDialog(
@@ -81,21 +82,33 @@ class SettingsPopupState extends State<SettingsPopup> with MyPopup {
   }
 
   Row soundOnOffButton(BuildContext context) {
+    var switchDimen = screenDimensions.dimen(17);
+    var soundImgDimen = screenDimensions.dimen(15);
     return Row(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          widget._settingsLocalStorage.isSoundOn() ? soundOn : soundOff,
-          CupertinoSwitch(
-            value: widget._settingsLocalStorage.isSoundOn(),
-            onChanged: (value) {
-              setState(() {
-                widget._settingsLocalStorage.toggleSound();
-                Future.delayed(const Duration(milliseconds: 300),
-                    () => closePopup(context));
-              });
-            },
-          ),
+          SizedBox(
+              height: soundImgDimen,
+              width: soundImgDimen,
+              child: FittedBox(
+                  child: widget._settingsLocalStorage.isSoundOn()
+                      ? soundOn
+                      : soundOff)),
+          SizedBox(
+              height: switchDimen,
+              width: switchDimen,
+              child: FittedBox(
+                  child: CupertinoSwitch(
+                value: widget._settingsLocalStorage.isSoundOn(),
+                onChanged: (value) {
+                  setState(() {
+                    widget._settingsLocalStorage.toggleSound();
+                    Future.delayed(const Duration(milliseconds: 300),
+                        () => closePopup(context));
+                  });
+                },
+              ))),
         ]);
   }
 

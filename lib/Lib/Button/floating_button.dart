@@ -15,49 +15,57 @@ class FloatingButton extends StatelessWidget {
   late Size _buttonSize;
 
   FloatingButton(
-      {Key? key, required BuildContext context,
+      {Key? key,
+      required BuildContext context,
       required this.myPopupToDisplay,
-      required this.iconName}) : super(key: key) {
-    var side = _screenDimensions.w(12);
+      required this.iconName})
+      : super(key: key) {
+    var side = _screenDimensions.dimen(14);
     _buttonSize = Size(side, side);
   }
 
   @override
   Widget build(BuildContext context) {
-    var margin = _screenDimensions.w(1);
-    var btn = FloatingActionButton(
-        elevation: 0,
-        hoverElevation: 0,
-        disabledElevation: 0,
-        focusElevation: 0,
-        highlightElevation: 0,
-        foregroundColor: Colors.transparent,
-        focusColor: Colors.transparent,
-        hoverColor: Colors.transparent,
-        backgroundColor: Colors.transparent,
-        splashColor: Colors.transparent,
-        onPressed: () {},
-        child: Padding(
-            padding: EdgeInsets.fromLTRB(margin, margin, margin, margin),
-            child: MyButton(
-                onClick: () {
-                  Future.delayed(
-                      Duration.zero,
-                      () => showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return myPopupToDisplay;
-                          }));
-                },
-                size: _buttonSize,
-                buttonSkinConfig: ButtonSkinConfig(
-                  image: (_imageService.getMainImage(
-                      imageName: iconName,
-                      imageExtension: "png",
-                      module: "buttons",
-                      maxWidth: _buttonSize.width)),
-                ),
-                fontConfig: FontConfig())));
+    var margin = _screenDimensions.dimen(1);
+    var btn = SizedBox(
+        height: _buttonSize.height,
+        width: _buttonSize.width,
+        child: FittedBox(
+            child: FloatingActionButton(
+                elevation: 0,
+                hoverElevation: 0,
+                disabledElevation: 0,
+                focusElevation: 0,
+                highlightElevation: 0,
+                foregroundColor: Colors.transparent,
+                focusColor: Colors.transparent,
+                hoverColor: Colors.transparent,
+                backgroundColor: Colors.transparent,
+                splashColor: Colors.transparent,
+                onPressed: () {},
+                child: Padding(
+                    padding:
+                        EdgeInsets.fromLTRB(margin, margin, margin, margin),
+                    child: MyButton(
+                        onClick: () {
+                          Future.delayed(
+                              Duration.zero,
+                              () => showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return myPopupToDisplay;
+                                  }));
+                        },
+                        size: _buttonSize,
+                        buttonSkinConfig: ButtonSkinConfig(
+                          image: (_imageService.getMainImage(
+                            imageName: iconName,
+                            imageExtension: "png",
+                            module: "buttons",
+                            maxWidth: _buttonSize.width,
+                          )),
+                        ),
+                        fontConfig: FontConfig())))));
 
     return btn;
   }

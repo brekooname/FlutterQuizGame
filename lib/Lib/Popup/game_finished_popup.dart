@@ -29,14 +29,14 @@ class GameFinishedPopup extends StatelessWidget with MyPopup {
                 module: "popup",
                 imageExtension: "png",
                 maxWidth: defaultBackgroundImageWidth),
-            SizedBox(height: screenDimensions.h(2)),
+            SizedBox(height: screenDimensions.dimen(9)),
             MyText(
               text: getGameFinishedText(),
               maxLines: 3,
               width: width / 1.2,
             ),
             highScore == null ? Container() : buildHighScoreText(),
-            SizedBox(height: screenDimensions.h(5)),
+            rowVerticalMargin,
             MyButton(
                 text: label.l_play_again,
                 backgroundColor: Colors.lightGreenAccent,
@@ -44,13 +44,13 @@ class GameFinishedPopup extends StatelessWidget with MyPopup {
                   onClickGoBack(context);
                   playAgainClick.call();
                 }),
-            SizedBox(height: screenDimensions.h(4)),
+            SizedBox(height: screenDimensions.dimen(11)),
             MyButton(
               text: label.l_go_back,
               backgroundColor: Colors.grey.shade300,
               onClick: () => onClickGoBack(context),
             ),
-            SizedBox(height: screenDimensions.h(2)),
+            SizedBox(height: screenDimensions.dimen(9)),
           ],
         ),
         context: context,

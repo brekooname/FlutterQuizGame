@@ -20,7 +20,7 @@ class GameTitle extends StatelessWidget {
     double? backgroundImageWidth,
   }) : super(key: key) {
     this.backgroundImageWidth =
-        backgroundImageWidth ?? ScreenDimensionsService().w(85);
+        backgroundImageWidth ?? ScreenDimensionsService().dimen(85);
   }
 
   @override

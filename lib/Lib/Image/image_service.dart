@@ -58,6 +58,7 @@ class ImageService {
     return Image.asset(
       imagePath,
       alignment: Alignment.center,
+      fit: maxWidth != null && maxWidth == maxHeight ? BoxFit.fitWidth : null,
       height: maxHeight,
       width: maxWidth,
     );

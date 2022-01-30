@@ -6,5 +6,6 @@ class ButtonSize {
 
   ButtonSize();
 
-  Size get normalSize => Size(_screenDimensions.w(45), _screenDimensions.h(9));
+  Size get normalSize =>
+      Size(_screenDimensions.dimen(45), _screenDimensions.dimen(17));
 }

@@ -90,7 +90,7 @@ class _InAppPurchaseState extends State<InAppPurchasePopup> with MyPopup {
   @override
   Widget build(BuildContext context) {
     List<Widget> stack = [];
-    var popupHeight = screenDimensions.h(45);
+    var popupHeight = screenDimensions.dimen(80);
     if (_queryProductError == null && _products.isNotEmpty) {
       stack.add(
         SizedBox(
@@ -206,9 +206,9 @@ class _InAppPurchaseState extends State<InAppPurchasePopup> with MyPopup {
   }
 
   Container _buildProductList() {
-    var btnWidth = screenDimensions.w(65);
-    var paddingBetween = screenDimensions.w(1);
-    var iconWidth = screenDimensions.w(8);
+    var btnWidth = screenDimensions.dimen(65);
+    var paddingBetween = screenDimensions.dimen(1);
+    var iconWidth = screenDimensions.dimen(8);
 
     List<Column> productList = <Column>[];
     productList.addAll(_products.map(
@@ -218,7 +218,7 @@ class _InAppPurchaseState extends State<InAppPurchasePopup> with MyPopup {
             fontSize: FontConfig.bigFontSize,
             text: label.l_extra_content_ad_free,
           ),
-          SizedBox(height: screenDimensions.h(5)),
+          rowVerticalMargin,
           MyButton(
             backgroundColor: Colors.greenAccent,
             width: btnWidth,
@@ -253,7 +253,7 @@ class _InAppPurchaseState extends State<InAppPurchasePopup> with MyPopup {
               }
             },
           ),
-          SizedBox(height: screenDimensions.h(3)),
+          SizedBox(height: screenDimensions.dimen(10)),
           _buildRestoreButton(btnWidth, iconWidth, paddingBetween),
         ]);
       },

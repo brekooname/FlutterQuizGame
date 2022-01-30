@@ -31,7 +31,7 @@ class PersTestMainMenuScreenState extends State<PersTestMainMenuScreen>
     debugPrint("build main menu");
     var gameTitle = GameTitle(
       text: MyApp.appTitle,
-      backgroundImageWidth: screenDimensions.w(70),
+      backgroundImageWidth: screenDimensions.dimen(70),
       fontConfig: FontConfig(
           textColor: Colors.lightGreenAccent,
           fontWeight: FontWeight.normal,
@@ -47,9 +47,9 @@ class PersTestMainMenuScreenState extends State<PersTestMainMenuScreen>
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            SizedBox(height: screenDimensions.h(4)),
+            SizedBox(height: screenDimensions.dimen(11)),
             gameTitle,
-            SizedBox(height: screenDimensions.h(7)),
+            SizedBox(height: screenDimensions.dimen(14)),
           ],
         ));
     return Scaffold(

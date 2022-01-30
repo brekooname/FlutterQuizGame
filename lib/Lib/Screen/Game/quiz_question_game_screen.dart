@@ -12,8 +12,8 @@ mixin QuizQuestionContainer {
       Question? question, int questionPrefixMaxLines, int questionTextMaxLines,
       {double? questionContainerHeight,
       BoxDecoration? questionContainerDecoration}) {
-    var vertMargin = _screenDimensions.h(1);
-    var horizMargin = _screenDimensions.w(1);
+    var vertMargin = _screenDimensions.dimen(1);
+    var horizMargin = _screenDimensions.dimen(1);
     var questionPrefixToBeDisplayed = question?.questionPrefixToBeDisplayed;
     var questionToBeDisplayed = question?.questionToBeDisplayed;
     Widget questionPrefix;
@@ -29,7 +29,7 @@ mixin QuizQuestionContainer {
             textColor: questionToBeDisplayedIsEmpty
                 ? questionColor
                 : Colors.grey.shade700,
-            width: _screenDimensions.w(95),
+            width: _screenDimensions.dimen(95),
             maxLines: questionPrefixMaxLines,
             text: questionPrefixToBeDisplayed ?? "",
             fontSize: FontConfig.getCustomFontSize(1),
@@ -41,7 +41,7 @@ mixin QuizQuestionContainer {
     } else {
       var text = MyText(
         textColor: questionColor,
-        width: _screenDimensions.w(95),
+        width: _screenDimensions.dimen(95),
         maxLines: questionTextMaxLines,
         text: questionToBeDisplayed ?? "",
         fontSize: FontConfig.getCustomFontSize(1.1),
@@ -61,8 +61,10 @@ mixin QuizQuestionContainer {
       ],
     );
 
+    var bottomTopQuestionContainerMargin =
+        SizedBox(height: _screenDimensions.dimen(3));
     return Column(children: [
-      SizedBox(height: _screenDimensions.h(1)),
+      bottomTopQuestionContainerMargin,
       Column(mainAxisSize: MainAxisSize.min, children: [
         Container(
           height: questionContainerHeight,
@@ -71,12 +73,12 @@ mixin QuizQuestionContainer {
                   color: Colors.green.shade100.withAlpha(150),
                   border: Border.all(
                       color: Colors.green.shade200,
-                      width: _screenDimensions.w(1)),
+                      width: _screenDimensions.dimen(1)),
                   borderRadius:
                       BorderRadius.circular(FontConfig.standardBorderRadius)),
           child: questionColumn,
         ),
-        SizedBox(height: _screenDimensions.h(1)),
+        bottomTopQuestionContainerMargin,
       ])
     ]);
   }

@@ -26,7 +26,7 @@ class HintButton extends StatefulWidget {
       this.disabled = false,
       this.watchRewardedAdForHint = false,
       this.showAvailableHintsText = false}) : super(key: key) {
-    var side = screenDimensions.w(14);
+    var side = screenDimensions.dimen(14);
     this.buttonSize = buttonSize ?? Size(side, side);
     assert(!watchRewardedAdForHint ||
         watchRewardedAdForHint && _adService.watchRewardedAdPopup != null);
