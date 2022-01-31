@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_app_quiz_game/Game/Game/campaign_level.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
-import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Screens/geoquiz_main_menu_screen.dart';
 import 'package:flutter_app_quiz_game/Implementations/PersTest/Questions/perstest_game_context.dart';
+import 'package:flutter_app_quiz_game/Implementations/PersTest/Screens/perstest_game_over_screen.dart';
 import 'package:flutter_app_quiz_game/Implementations/PersTest/Screens/perstest_game_question_screen.dart';
 import 'package:flutter_app_quiz_game/Implementations/PersTest/Screens/perstest_main_menu_screen.dart';
 import 'package:flutter_app_quiz_game/Implementations/PersTest/Service/perstest_gamecontext_service.dart';
@@ -18,10 +18,10 @@ class PersTestGameScreenManager extends GameScreenManager {
 
   @override
   State<PersTestGameScreenManager> createState() =>
-      GeoQuizGameScreenManagerState();
+      PersTestGameScreenManagerState();
 }
 
-class GeoQuizGameScreenManagerState extends State<PersTestGameScreenManager>
+class PersTestGameScreenManagerState extends State<PersTestGameScreenManager>
     with GameScreenManagerState<PersTestGameContext> {
   @override
   void initState() {
@@ -39,7 +39,7 @@ class GeoQuizGameScreenManagerState extends State<PersTestGameScreenManager>
 
   @override
   bool goBack(StandardScreen standardScreen) {
-    if (standardScreen.runtimeType == GeoQuizMainMenuScreen) {
+    if (standardScreen.runtimeType == PersTestMainMenuScreen) {
       return true;
     } else {
       showMainScreen();
@@ -53,6 +53,12 @@ class GeoQuizGameScreenManagerState extends State<PersTestGameScreenManager>
       this,
       key: UniqueKey(),
     );
+  }
+
+  void showGameOverScreen(PersTestGameContext gameContext,
+      QuestionDifficulty difficulty, QuestionCategory category) {
+    setCurrentScreenState(PersTestGameOverScreen(this,
+        difficulty: difficulty, category: category, gameContext: gameContext));
   }
 
   @override

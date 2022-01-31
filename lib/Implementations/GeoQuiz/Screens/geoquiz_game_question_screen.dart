@@ -11,6 +11,7 @@ import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Constants/geoquiz_
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Questions/AnswerOptions/geoquiz_options_question_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Questions/geoquiz_country_utils.dart';
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Questions/geoquiz_game_context.dart';
+import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Service/geoquiz_game_screen_manager.dart';
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Service/geoquiz_gamecontext_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Service/geoquiz_local_storage.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/button_skin_config.dart';
@@ -18,13 +19,13 @@ import 'package:flutter_app_quiz_game/Lib/Color/color_util.dart';
 import 'package:flutter_app_quiz_game/Lib/Font/font_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/Options/quiz_options_game_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen.dart';
-import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen_manager_state.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/quiz_question_game_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
 
 import 'geoquiz_game_hangman_screen.dart';
 
-class GeoQuizQuestionScreen extends GameScreen<GeoQuizGameContext>
+class GeoQuizQuestionScreen
+    extends GameScreen<GeoQuizGameContext, GeoQuizGameScreenManagerState>
     with QuizOptionsGameScreen<GeoQuizGameContext> {
   final GeoQuizCountryUtils _geoQuizCountryUtils = GeoQuizCountryUtils();
   final _geoQuizLocalStorage = GeoQuizLocalStorage();
@@ -33,7 +34,7 @@ class GeoQuizQuestionScreen extends GameScreen<GeoQuizGameContext>
   bool animateWrongAnswer = false;
 
   GeoQuizQuestionScreen(
-    GameScreenManagerState gameScreenManagerState, {
+    GeoQuizGameScreenManagerState gameScreenManagerState, {
     Key? key,
     required QuestionDifficulty difficulty,
     required QuestionCategory category,
@@ -150,7 +151,8 @@ class GeoQuizQuestionScreenState extends State<GeoQuizQuestionScreen>
                   Colors.blue.shade100,
                 ]),
             border: Border.all(
-                color: Colors.blue.shade700, width: screenDimensions.dimen(0.3)),
+                color: Colors.blue.shade700,
+                width: screenDimensions.dimen(0.3)),
             borderRadius:
                 BorderRadius.circular(FontConfig.standardBorderRadius * 0.2)));
     Widget optionsRows = widget.createOptionRows(

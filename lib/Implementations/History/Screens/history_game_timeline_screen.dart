@@ -11,6 +11,7 @@ import 'package:flutter_app_quiz_game/Implementations/History/Constants/history_
 import 'package:flutter_app_quiz_game/Implementations/History/Constants/history_game_question_config.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Questions/history_game_context.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Service/history_game_local_storage.dart';
+import 'package:flutter_app_quiz_game/Implementations/History/Service/history_game_screen_manager.dart';
 import 'package:flutter_app_quiz_game/Lib/Animation/animation_zoom_in_zoom_out.dart';
 import 'package:flutter_app_quiz_game/Lib/Audio/my_audio_player.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
@@ -18,7 +19,6 @@ import 'package:flutter_app_quiz_game/Lib/Extensions/int_extension.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/map_extension.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/string_extension.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen.dart';
-import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen_manager_state.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/quiz_question_game_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
@@ -27,7 +27,8 @@ import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import '../../../Lib/Button/button_skin_config.dart';
 import '../../../Lib/Font/font_config.dart';
 
-class HistoryGameTimelineScreen extends GameScreen<HistoryGameContext>
+class HistoryGameTimelineScreen
+    extends GameScreen<HistoryGameContext, HistoryGameScreenManagerState>
     with QuizQuestionContainer {
   static const int scrollToItemDurationMillis = 600;
   static const int showInterstitialAdEveryNQuestions = 8;
@@ -47,7 +48,7 @@ class HistoryGameTimelineScreen extends GameScreen<HistoryGameContext>
   Set<QuestionInfo> randomQuestionsToDisplay = HashSet();
 
   HistoryGameTimelineScreen(
-    GameScreenManagerState gameScreenManagerState, {
+    HistoryGameScreenManagerState gameScreenManagerState, {
     Key? key,
     required QuestionDifficulty difficulty,
     required QuestionCategory category,
@@ -502,7 +503,8 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
     var item = Row(children: <Widget>[
       const Spacer(),
       Padding(
-          padding: EdgeInsets.all(screenDimensions.dimen(3)), child: answerPart),
+          padding: EdgeInsets.all(screenDimensions.dimen(3)),
+          child: answerPart),
       getQuestionSeparator(answerBtnSize, correctAnswer),
       questionImg,
       const Spacer()

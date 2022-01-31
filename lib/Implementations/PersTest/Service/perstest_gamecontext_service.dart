@@ -3,6 +3,8 @@ import 'package:flutter_app_quiz_game/Game/Game/game_context_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Service/history_game_local_storage.dart';
 import 'package:flutter_app_quiz_game/Implementations/PersTest/Questions/perstest_game_context.dart';
 
+import '../../../main.dart';
+
 class PersTestGameContextService {
   HistoryLocalStorage historyLocalStorage = HistoryLocalStorage();
 
@@ -16,9 +18,13 @@ class PersTestGameContextService {
   PersTestGameContextService.internal();
 
   PersTestGameContext createGameContext(CampaignLevel campaignLevel) {
-    var gameContext =
-        GameContextService().createGameContextWithHintsAndQuestions(1, []);
-    var persTestGameContext = PersTestGameContext(gameContext);
+    var gameContext = GameContextService()
+        .createGameContextWithHintsAndQuestions(
+            0,
+            MyApp.appId.gameConfig.questionCollectorService
+                .getAllQuestionsForCategory(campaignLevel.category.first));
+    var persTestGameContext = PersTestGameContext(
+        gameContext.gameUser.getOpenQuestions().first, gameContext);
     return persTestGameContext;
   }
 }

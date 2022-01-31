@@ -48,75 +48,75 @@ class SkelGameConfig extends GameConfig {
   String getTitle(Language language) {
     switch (language) {
       case Language.ar:
-        return "جغرافيا العالم";
+        return "xxxxxxxxxxxxxxxxxxxx";
       case Language.bg:
-        return "Световна география";
+        return "xxxxxxxxxxxxxxxxxxxx";
       case Language.cs:
-        return "Světová geografie";
+        return "xxxxxxxxxxxxxxxxxxxx";
       case Language.da:
-        return "Verdensgeografi";
+        return "xxxxxxxxxxxxxxxxxxxx";
       case Language.de:
-        return "Weltgeografie";
+        return "xxxxxxxxxxxxxxxxxxxx";
       case Language.el:
-        return "Παγκόσμια γεωγραφία";
+        return "xxxxxxxxxxxxxxxxxxxx";
       case Language.en:
-        return "World Geography";
+        return "xxxxxxxxxxxxxxxxxxxx";
       case Language.es:
-        return "Geografia mundial";
+        return "xxxxxxxxxxxxxxxxxxxx";
       case Language.fi:
-        return "Maailman maantiede";
+        return "xxxxxxxxxxxxxxxxxxxx";
       case Language.fr:
-        return "Géographie du monde";
+        return "xxxxxxxxxxxxxxxxxxxx";
       case Language.he:
-        return "גאוגרפית העולם";
+        return "xxxxxxxxxxxxxxxxxxxx";
       case Language.hi:
-        return "विश्व का भूगोल";
+        return "xxxxxxxxxxxxxxxxxxxx";
       case Language.hr:
-        return "Svjetska geografija";
+        return "xxxxxxxxxxxxxxxxxxxx";
       case Language.hu:
-        return "Világföldrajz";
+        return "xxxxxxxxxxxxxxxxxxxx";
       case Language.id:
-        return "Geografi dunia";
+        return "xxxxxxxxxxxxxxxxxxxx";
       case Language.it:
-        return "Geografia mondiale";
+        return "xxxxxxxxxxxxxxxxxxxx";
       case Language.ja:
-        return "世界の地理";
+        return "xxxxxxxxxxxxxxxxxxxx";
       case Language.ko:
-        return "세계 지리";
+        return "xxxxxxxxxxxxxxxxxxxx";
       case Language.ms:
-        return "Geografi Dunia";
+        return "xxxxxxxxxxxxxxxxxxxx";
       case Language.nl:
-        return "Wereld Aardrijkskunde";
+        return "xxxxxxxxxxxxxxxxxxxx";
       case Language.nb:
-        return "Verdensgeografi";
+        return "xxxxxxxxxxxxxxxxxxxx";
       case Language.pl:
-        return "Geografia świata";
+        return "xxxxxxxxxxxxxxxxxxxx";
       case Language.pt:
-        return "Geografia mundial";
+        return "xxxxxxxxxxxxxxxxxxxx";
       case Language.ro:
-        return "Geografia lumii";
+        return "xxxxxxxxxxxxxxxxxxxx";
       case Language.ru:
-        return "Мировая география";
+        return "xxxxxxxxxxxxxxxxxxxx";
       case Language.sk:
-        return "Svetová geografia";
+        return "xxxxxxxxxxxxxxxxxxxx";
       case Language.sl:
-        return "Svetovna geografija";
+        return "xxxxxxxxxxxxxxxxxxxx";
       case Language.sr:
-        return "Светска географија";
+        return "xxxxxxxxxxxxxxxxxxxx";
       case Language.sv:
-        return "Världsgeografi";
+        return "xxxxxxxxxxxxxxxxxxxx";
       case Language.th:
-        return "ภูมิศาสตร์โลก";
+        return "xxxxxxxxxxxxxxxxxxxx";
       case Language.tr:
-        return "Dünya coğrafyası";
+        return "xxxxxxxxxxxxxxxxxxxx";
       case Language.uk:
-        return "Світова географія";
+        return "xxxxxxxxxxxxxxxxxxxx";
       case Language.vi:
-        return "Địa lý thế giới";
+        return "xxxxxxxxxxxxxxxxxxxx";
       case Language.zh:
-        return "世界地理";
+        return "xxxxxxxxxxxxxxxxxxxx";
       default:
-        return "World Geography";
+        return "xxxxxxxxxxxxxxxxxxxx";
     }
   }
 }

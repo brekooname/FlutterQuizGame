@@ -8,6 +8,7 @@ import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Questions/Hangman/
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Questions/Hangman/geoquiz_hangman_question_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Questions/geoquiz_country_utils.dart';
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Questions/geoquiz_game_context.dart';
+import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Service/geoquiz_game_screen_manager.dart';
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Service/geoquiz_local_storage.dart';
 import 'package:flutter_app_quiz_game/Lib/Audio/my_audio_player.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/button_skin_config.dart';
@@ -15,11 +16,11 @@ import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Font/font_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/Hangman/hangman_letters.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen.dart';
-import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen_manager_state.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
-class GeoQuizHangmanScreen extends GameScreen<GeoQuizGameContext> {
+class GeoQuizHangmanScreen
+    extends GameScreen<GeoQuizGameContext, GeoQuizGameScreenManagerState> {
   static const int showInterstitialAdEveryNQuestions = 8;
   final GeoQuizLocalStorage _geoQuizLocalStorage = GeoQuizLocalStorage();
   final MyAudioPlayer _audioPlayer = MyAudioPlayer();
@@ -31,7 +32,7 @@ class GeoQuizHangmanScreen extends GameScreen<GeoQuizGameContext> {
   bool answerFound = false;
 
   GeoQuizHangmanScreen(
-    GameScreenManagerState gameScreenManagerState, {
+    GeoQuizGameScreenManagerState gameScreenManagerState, {
     Key? key,
     required QuestionDifficulty difficulty,
     required QuestionCategory category,

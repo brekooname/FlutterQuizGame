@@ -3,10 +3,11 @@ import 'package:flutter_app_quiz_game/Lib/Color/color_util.dart';
 import 'package:flutter_app_quiz_game/Lib/Font/font_config.dart';
 
 class ButtonSkinConfig {
+  late double borderRadius;
+  late Color borderColor;
   Gradient? backgroundGradient;
   Image? _image;
   Icon? _icon;
-  Color? borderColor;
   bool withBorder;
 
   late double borderWidth;
@@ -17,6 +18,7 @@ class ButtonSkinConfig {
       Image? image,
       Icon? icon,
       Color? borderColor,
+      double? borderRadius,
       double borderWidth = 0,
       this.withBorder = true}) {
     if (backgroundGradient != null) {
@@ -37,6 +39,7 @@ class ButtonSkinConfig {
         : Colors.transparent;
     this.borderWidth =
         borderColor == Colors.transparent ? 0 : FontConfig.standardBorderWidth;
+    this.borderRadius = borderRadius ?? FontConfig.standardBorderRadius;
   }
 
   Widget? get image {

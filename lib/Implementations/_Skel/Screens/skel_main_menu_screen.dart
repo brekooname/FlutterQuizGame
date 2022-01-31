@@ -61,7 +61,7 @@ class SkelMainMenuScreenState extends State<SkelMainMenuScreen>
             iconName: "btn_settings",
             myPopupToDisplay: SettingsPopup(
               resetContent: () {
-               // widget.historyLocalStorage.clearAll();
+               // widget.skelLocalStorage.clearAll();
               },
             ),
           ),

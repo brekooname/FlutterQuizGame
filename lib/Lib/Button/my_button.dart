@@ -145,7 +145,7 @@ class MyButtonState extends State<MyButton> {
 
   Widget buildContentLocked(Widget buttonContent) {
     var decoration = BoxDecoration(
-      borderRadius: BorderRadius.circular(FontConfig.standardBorderRadius),
+      borderRadius: BorderRadius.circular(widget.buttonSkinConfig.borderRadius),
       color: Colors.grey.shade400.withOpacity(0.5),
     );
 
@@ -180,7 +180,8 @@ class MyButtonState extends State<MyButton> {
   BoxDecoration? createImageButtonDecoration() {
     return BoxDecoration(
         boxShadow: [createImageButtonShadow()],
-        borderRadius: BorderRadius.circular(FontConfig.standardBorderRadius));
+        borderRadius:
+            BorderRadius.circular(widget.buttonSkinConfig.borderRadius));
   }
 
   BoxDecoration? createGradientButtonDecoration() {
@@ -192,13 +193,13 @@ class MyButtonState extends State<MyButton> {
     }
 
     Color borderColor = widget.pressed
-        ? ColorUtil.colorDarken(
-            buttonSkinConfig.borderColor ?? Colors.transparent)
-        : buttonSkinConfig.borderColor ?? Colors.transparent;
+        ? ColorUtil.colorDarken(buttonSkinConfig.borderColor)
+        : buttonSkinConfig.borderColor;
 
     return BoxDecoration(
         boxShadow: [createButtonShadow()],
-        borderRadius: BorderRadius.circular(FontConfig.standardBorderRadius),
+        borderRadius:
+            BorderRadius.circular(widget.buttonSkinConfig.borderRadius),
         gradient: widget.pressed
             ? buttonSkinConfig.backgroundGradient == null
                 ? null

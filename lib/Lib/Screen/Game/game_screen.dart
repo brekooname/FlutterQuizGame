@@ -12,8 +12,9 @@ import 'package:flutter_app_quiz_game/Lib/Storage/game_local_storage.dart';
 
 import 'game_screen_manager_state.dart';
 
-abstract class GameScreen<TGameContext extends GameContext>
-    extends StandardScreen {
+abstract class GameScreen<TGameContext extends GameContext,
+        TGameScreenManagerState extends GameScreenManagerState>
+    extends StandardScreen<TGameScreenManagerState> {
   GameLocalStorage gameLocalStorage = GameLocalStorage();
   AdService adService = AdService();
   ImageService imageService = ImageService();
@@ -24,7 +25,7 @@ abstract class GameScreen<TGameContext extends GameContext>
   final List<QuestionInfo> _currentQuestionInfos;
 
   GameScreen(
-      GameScreenManagerState gameScreenManagerState,
+      TGameScreenManagerState gameScreenManagerState,
       CampaignLevelService campaignLevelService,
       this.gameContext,
       this.difficulty,

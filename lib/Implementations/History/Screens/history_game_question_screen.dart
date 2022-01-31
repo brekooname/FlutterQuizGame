@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
-import 'package:flutter_app_quiz_game/Game/Question/Model/question_info.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Components/history_game_level_header.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Constants/history_campaign_level_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Constants/history_game_question_config.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Questions/history_game_context.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Service/history_game_local_storage.dart';
+import 'package:flutter_app_quiz_game/Implementations/History/Service/history_game_screen_manager.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/Options/quiz_options_game_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen.dart';
-import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen_manager_state.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/quiz_question_game_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
 
 import 'history_game_timeline_screen.dart';
 
-class HistoryGameQuestionScreen extends GameScreen<HistoryGameContext>
+class HistoryGameQuestionScreen
+    extends GameScreen<HistoryGameContext, HistoryGameScreenManagerState>
     with QuizOptionsGameScreen<HistoryGameContext> {
   HistoryGameQuestionScreen(
-    GameScreenManagerState gameScreenManagerState, {
+    HistoryGameScreenManagerState gameScreenManagerState, {
     Key? key,
     required QuestionDifficulty difficulty,
     required QuestionCategory category,

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app_quiz_game/Game/Game/campaign_level.dart';
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Service/geoquiz_gamecontext_service.dart';
-import 'package:flutter_app_quiz_game/Lib/Animation/animation_color_in_color_out_text.dart';
 import 'package:flutter_app_quiz_game/Lib/Animation/animation_increase_number_text.dart';
 import 'package:flutter_app_quiz_game/Lib/Animation/animation_zoom_in_zoom_out_text.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/hint_button.dart';

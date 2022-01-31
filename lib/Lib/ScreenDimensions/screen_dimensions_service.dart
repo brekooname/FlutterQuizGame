@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_app_quiz_game/Lib/Constants/screen_orientation.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -42,54 +40,22 @@ class ScreenDimensionsService {
 
   static MapEntry<double, double> calculateScreenDimensions(
       MediaQueryData mediaQueryData) {
-    var width = _calculateScreenWidth(mediaQueryData);
-    var height = _calculateScreenHeight(mediaQueryData);
-    if (width > height) {
+    var width = _getExternalDeviceWidth(mediaQueryData);
+    var height = _getExternalDeviceHeight(mediaQueryData);
+    if (isPortrait()) {
+      if (height / width > _standardScreenRatio) {
+        height = width * _standardScreenRatio;
+      } else {
+        width = height / _standardScreenRatio;
+      }
+    } else {
       if (width / height > _standardScreenRatio) {
         width = height * _standardScreenRatio;
+      } else {
+        height = width / _standardScreenRatio;
       }
     }
     return MapEntry(width, height);
-  }
-
-  static double _calculateScreenWidth(MediaQueryData mediaQueryData) {
-    var externalDeviceWidth = _getExternalDeviceWidth(mediaQueryData);
-    var width = externalDeviceWidth;
-    //if FALSE, width is larger, so width must be adjusted
-    if (!_isExternalGraphicsRatioGreaterThanStandard(mediaQueryData)) {
-      var externalDeviceHeight = _getExternalDeviceHeight(mediaQueryData);
-      width = isPortrait()
-          ? externalDeviceHeight / _standardScreenRatio
-          : externalDeviceHeight * _standardScreenRatio;
-    }
-    return min(externalDeviceWidth, width);
-  }
-
-  static double _calculateScreenHeight(MediaQueryData mediaQueryData) {
-    var externalDeviceHeight = _getExternalDeviceHeight(mediaQueryData);
-    var height = externalDeviceHeight;
-    //if TRUE, width is smaller, so height must be adjusted
-    if (_isExternalGraphicsRatioGreaterThanStandard(mediaQueryData)) {
-      var externalDeviceWidth = _getExternalDeviceWidth(mediaQueryData);
-      height = isPortrait()
-          ? externalDeviceWidth * _standardScreenRatio
-          : externalDeviceWidth / _standardScreenRatio;
-    }
-    return min(externalDeviceHeight, height);
-  }
-
-  //If return TRUE, means that the WIDTH is lower than the standard
-  static bool _isExternalGraphicsRatioGreaterThanStandard(
-      MediaQueryData mediaQueryData) {
-    return _getExternalScreenRatio(mediaQueryData) > _standardScreenRatio;
-  }
-
-  static double _getExternalScreenRatio(MediaQueryData mediaQueryData) {
-    return isPortrait()
-        ? _getExternalDeviceHeight(mediaQueryData) /
-            _getExternalDeviceWidth(mediaQueryData)
-        : _getExternalDeviceWidth(mediaQueryData) /
-            _getExternalDeviceHeight(mediaQueryData);
   }
 
   static double _getExternalDeviceHeight(MediaQueryData mediaQueryData) {
