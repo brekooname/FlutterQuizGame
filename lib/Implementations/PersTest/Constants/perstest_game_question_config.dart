@@ -7,32 +7,35 @@ import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/Depe
 
 class PersTestGameQuestionConfig extends GameQuestionConfig {
   late QuestionCategory cat0;
+  late QuestionCategory cat1;
+  late QuestionCategory cat2;
 
-  QuestionDifficulty diff0 = QuestionDifficulty(index: 0);
+  late QuestionDifficulty diff0;
 
   static final PersTestGameQuestionConfig singleton =
       PersTestGameQuestionConfig.internal();
 
   factory PersTestGameQuestionConfig() {
+    singleton.categories = [
+      singleton.cat0 = QuestionCategory(
+          index: 0,
+          questionCategoryService: DependentAnswersCategoryQuestionService()),
+      singleton.cat1 = QuestionCategory(
+          index: 1,
+          questionCategoryService: DependentAnswersCategoryQuestionService()),
+      singleton.cat2 = QuestionCategory(
+          index: 2,
+          questionCategoryService: DependentAnswersCategoryQuestionService())
+    ];
     //
-    //CATEGORIES
-    singleton.cat0 = QuestionCategory(
-        index: 0,
-        questionCategoryService: DependentAnswersCategoryQuestionService());
+    //
+    singleton.difficulties = [
+      singleton.diff0 = QuestionDifficulty(index: 0),
+    ];
     return singleton;
   }
 
   PersTestGameQuestionConfig.internal();
-
-  @override
-  List<QuestionDifficulty> get difficulties => [
-        diff0,
-      ];
-
-  @override
-  List<QuestionCategory> get categories => [
-        cat0,
-      ];
 
   @override
   Map<QuestionCategoryWithPrefixCode, String> get prefixLabelForCode {

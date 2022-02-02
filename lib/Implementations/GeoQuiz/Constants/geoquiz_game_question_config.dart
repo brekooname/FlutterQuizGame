@@ -7,7 +7,6 @@ import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/Depe
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Questions/AnswerOptions/geoquiz_options_question_category_service.dart';
 
 class GeoQuizGameQuestionConfig extends GameQuestionConfig {
-
   //POPULATION ===> top 10
   //diff0
   late QuestionCategory cat0;
@@ -50,69 +49,70 @@ class GeoQuizGameQuestionConfig extends GameQuestionConfig {
   //MAPS
   late QuestionCategory cat9;
 
-  QuestionDifficulty diff0 = QuestionDifficulty(index: 0);
-  QuestionDifficulty diff1 = QuestionDifficulty(index: 1);
-  QuestionDifficulty diff2 = QuestionDifficulty(index: 2);
-  QuestionDifficulty diff3 = QuestionDifficulty(index: 3);
+  late QuestionDifficulty diff0;
+  late QuestionDifficulty diff1;
+  late QuestionDifficulty diff2;
+  late QuestionDifficulty diff3;
 
   static final GeoQuizGameQuestionConfig singleton =
       GeoQuizGameQuestionConfig.internal();
 
   factory GeoQuizGameQuestionConfig() {
+    singleton.categories = [
+      singleton.cat0 = QuestionCategory(
+          index: 0,
+          categoryLabel: "POPULATION",
+          questionCategoryService: GeoQuizOptionsCategoryQuestionService()),
+      singleton.cat1 = QuestionCategory(
+          index: 1,
+          categoryLabel: "AREA",
+          questionCategoryService: GeoQuizOptionsCategoryQuestionService()),
+      singleton.cat2 = QuestionCategory(
+          index: 2,
+          categoryLabel: "NEIGHBOURS",
+          questionCategoryService: GeoQuizOptionsCategoryQuestionService()),
+      singleton.cat3 = QuestionCategory(
+          index: 3,
+          categoryLabel: "GEOGRAPHICAL REGION",
+          questionCategoryService: GeoQuizOptionsCategoryQuestionService()),
+      singleton.cat4 = QuestionCategory(
+          index: 4,
+          categoryLabel: "EMPIRE",
+          questionCategoryService: GeoQuizOptionsCategoryQuestionService()),
+      singleton.cat5 = QuestionCategory(
+          index: 5,
+          categoryLabel: "LANDMARKS",
+          questionCategoryService: DependentAnswersCategoryQuestionService()),
+      singleton.cat6 = QuestionCategory(
+          index: 6,
+          categoryLabel: "CAPITALS",
+          questionCategoryService: GeoQuizOptionsCategoryQuestionService()),
+      singleton.cat7 = QuestionCategory(
+          index: 7,
+          categoryLabel: "FLAGS",
+          questionCategoryService: GeoQuizOptionsCategoryQuestionService()),
+      singleton.cat8 = QuestionCategory(
+          index: 8,
+          categoryLabel: "NATURAL WONDERS",
+          questionCategoryService: DependentAnswersCategoryQuestionService()),
+      singleton.cat9 = QuestionCategory(
+          index: 9,
+          categoryLabel: "MAPS",
+          questionCategoryService: GeoQuizOptionsCategoryQuestionService())
+    ];
     //
-    //CATEGORIES
-    singleton.cat0 = QuestionCategory(
-        index: 0,
-        categoryLabel: "POPULATION",
-        questionCategoryService: GeoQuizOptionsCategoryQuestionService());
-    singleton.cat1 = QuestionCategory(
-        index: 1,
-        categoryLabel: "AREA",
-        questionCategoryService: GeoQuizOptionsCategoryQuestionService());
-    singleton.cat2 = QuestionCategory(
-        index: 2,
-        categoryLabel: "NEIGHBOURS",
-        questionCategoryService: GeoQuizOptionsCategoryQuestionService());
-    singleton.cat3 = QuestionCategory(
-        index: 3,
-        categoryLabel: "GEOGRAPHICAL REGION",
-        questionCategoryService: GeoQuizOptionsCategoryQuestionService());
-    singleton.cat4 = QuestionCategory(
-        index: 4,
-        categoryLabel: "EMPIRE",
-        questionCategoryService: GeoQuizOptionsCategoryQuestionService());
-    singleton.cat5 = QuestionCategory(
-        index: 5,
-        categoryLabel: "LANDMARKS",
-        questionCategoryService: DependentAnswersCategoryQuestionService());
-    singleton.cat6 = QuestionCategory(
-        index: 6,
-        categoryLabel: "CAPITALS",
-        questionCategoryService: GeoQuizOptionsCategoryQuestionService());
-    singleton.cat7 = QuestionCategory(
-        index: 7,
-        categoryLabel: "FLAGS",
-        questionCategoryService: GeoQuizOptionsCategoryQuestionService());
-    singleton.cat8 = QuestionCategory(
-        index: 8,
-        categoryLabel: "NATURAL WONDERS",
-        questionCategoryService: DependentAnswersCategoryQuestionService());
-    singleton.cat9 = QuestionCategory(
-        index: 9,
-        categoryLabel: "MAPS",
-        questionCategoryService: GeoQuizOptionsCategoryQuestionService());
+    //
+    singleton.difficulties = [
+      singleton.diff0 = QuestionDifficulty(index: 0),
+      singleton.diff1 = QuestionDifficulty(index: 1),
+      singleton.diff2 = QuestionDifficulty(index: 2),
+      singleton.diff3 = QuestionDifficulty(index: 3),
+    ];
 
     return singleton;
   }
 
   GeoQuizGameQuestionConfig.internal();
-
-  @override
-  List<QuestionDifficulty> get difficulties => [diff0, diff1, diff2, diff3];
-
-  @override
-  List<QuestionCategory> get categories =>
-      [cat0, cat1, cat2, cat3, cat4, cat5, cat6, cat7, cat8, cat9];
 
   @override
   Map<QuestionCategoryWithPrefixCode, String> get prefixLabelForCode {

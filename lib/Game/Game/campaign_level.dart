@@ -4,15 +4,15 @@ import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.da
 
 class CampaignLevel {
   QuestionDifficulty difficulty;
-  List<QuestionCategory> category;
+  List<QuestionCategory> categories;
 
   CampaignLevel({
     required this.difficulty,
-    required this.category,
+    required this.categories,
   });
 
   String get name {
-    return difficulty.name + category.map((e) => e.name).toList().toString();
+    return difficulty.name + categories.map((e) => e.name).toList().toString();
   }
 
   @override
@@ -20,8 +20,8 @@ class CampaignLevel {
       identical(this, other) ||
       other is CampaignLevel &&
           difficulty == other.difficulty &&
-          listEquals(category, other.category);
+          listEquals(categories, other.categories);
 
   @override
-  int get hashCode => difficulty.hashCode ^ category.hashCode;
+  int get hashCode => difficulty.hashCode ^ categories.hashCode;
 }

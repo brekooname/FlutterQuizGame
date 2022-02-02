@@ -43,9 +43,9 @@ class GeoQuizGameContextService {
         _geoQuizLocalStorage.getWonQuestionsForDiff(campaignLevel.difficulty);
 
     return MyApp.appId.gameConfig.questionCollectorService
-        .getAllQuestionsForCategoriesAndDifficulties(
-          [campaignLevel.difficulty],
-          campaignLevel.category,
+        .getAllQuestions(
+          difficulties: [campaignLevel.difficulty],
+          categories: campaignLevel.categories,
         )
         .where((q) => !wonQuestions
             .contains(QuestionKey(q.category, q.difficulty, q.index)))

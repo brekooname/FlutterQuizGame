@@ -79,7 +79,7 @@ class GeoQuizHangmanQuestionService extends QuestionService {
     var wonQ = _geoQuizLocalStorage.getWonQuestionsForDiffAndCat(diff, cat);
 
     var questions = MyApp.appId.gameConfig.questionCollectorService
-        .getAllQuestionsForCategoriesAndDifficulties([diff], [cat]);
+        .getAllQuestions(difficulties: [diff], categories: [cat]);
 
     var allFoundCountries = wonQ.map((q) {
       return _geoQuizCountryUtils.getCountryName(questions
@@ -101,11 +101,9 @@ class GeoQuizHangmanQuestionService extends QuestionService {
 
   Set<String> getCorrectPressedCountries(
       String pressedAnswer, List<String> availableCountries, bool exactMatch) {
-    return availableCountries
-        .where((country) =>
-            // _isSynonymPressed(pressedAnswer, country, exactMatch) ||
-            _isCountryMatch(pressedAnswer, country, exactMatch))
-        .toSet();
+    return availableCountries.where((country) =>
+        // _isSynonymPressed(pressedAnswer, country, exactMatch) ||
+        _isCountryMatch(pressedAnswer, country, exactMatch)).toSet();
   }
 
   // List<String> _getCountrySynonyms(String country) {

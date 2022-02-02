@@ -21,10 +21,10 @@ class HistoryGameContextService {
   HistoryGameContext createGameContext(CampaignLevel campaignLevel) {
     List<QuestionKey> wonQuestions =
         historyLocalStorage.getWonQuestionsForDiff(campaignLevel.difficulty);
-    var questions = MyApp.appId.gameConfig.questionCollectorService
-        .getAllQuestionsForCategoriesAndDifficulties(
-      [campaignLevel.difficulty],
-      campaignLevel.category,
+    var questions =
+        MyApp.appId.gameConfig.questionCollectorService.getAllQuestions(
+      difficulties: [campaignLevel.difficulty],
+      categories: campaignLevel.categories,
     ).where((q) {
       var questionKey = QuestionKey(q.category, q.difficulty, q.index);
       return !wonQuestions.contains(questionKey);

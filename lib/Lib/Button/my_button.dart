@@ -25,14 +25,16 @@ class MyButton extends StatefulWidget {
   bool visible;
   bool contentLocked;
 
-  double allPadding;
+  double buttonAllPadding;
 
   String? text;
+  int textMaxLines;
 
   MyButton({
     Key? key,
     this.text,
-    this.allPadding = 0,
+    this.textMaxLines = 2,
+    this.buttonAllPadding = 0,
     this.disabled = false,
     this.visible = true,
     this.contentLocked = false,
@@ -64,8 +66,8 @@ class MyButton extends StatefulWidget {
       customContent = MyText(
         text: text!,
         fontConfig: this.fontConfig,
-        maxLines: 2,
-        width: this.size.width / 1.1,
+        maxLines: textMaxLines,
+        width: this.size.width / 1.7,
       );
     } else {
       if (this.buttonSkinConfig.image != null) {
@@ -104,7 +106,7 @@ class MyButtonState extends State<MyButton> {
     return Visibility(
       visible: widget.visible,
       child: Padding(
-          padding: EdgeInsets.all(widget.allPadding),
+          padding: EdgeInsets.all(widget.buttonAllPadding),
           child: GestureDetector(
               onTapCancel: () {
                 if (isTouchEnabled()) {

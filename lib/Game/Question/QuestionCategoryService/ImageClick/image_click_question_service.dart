@@ -8,7 +8,6 @@ import '../../../../main.dart';
 import '../../Model/question.dart';
 import '../../Model/question_category.dart';
 import '../../Model/question_difficulty.dart';
-import '../../question_collector_service.dart';
 
 class ImageClickQuestionService extends QuestionService {
   late QuestionParser questionParser;
@@ -34,7 +33,7 @@ class ImageClickQuestionService extends QuestionService {
       QuestionCategory questionCategory) {
     List<Question> allQuestions = MyApp
         .appId.gameConfig.questionCollectorService
-        .getAllQuestionsForCategory(questionCategory);
+        .getAllQuestions(categories: [questionCategory]);
     Map<MyButton, ImageClickInfo> buttonWithCoordinates =
         HashMap<MyButton, ImageClickInfo>();
     for (Question question in allQuestions) {

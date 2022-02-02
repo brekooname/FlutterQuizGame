@@ -156,7 +156,7 @@ void testNeighboursCategory() {
     questionConfig.diff3
   ]) {
     verifyQuestion(
-        "Find all the neighbours of this country",
+        "Find the neighbours of this country",
         "Germany",
         [
           "Austria",
@@ -229,14 +229,10 @@ void testStatisticsCategories() {
       true);
   expect(questionService.isGameFinishedSuccessful(question, ["wrong"]), false);
   expect(questionService.isGameFinishedFailed(question, ["wrong"]), true);
+  verifyQuestion("Which country is more populous?", "", expectedCorrectOptions,
+      ["United States", "", "", ""], question);
   verifyQuestion(
-      "Which country is more populous?",
-      "",
-      expectedCorrectOptions,
-      ["United States", "", "", ""],
-      question);
-  verifyQuestion(
-      "Which country is larger in size?",
+      "Which country is larger in area size?",
       "",
       ["China"],
       ["China", "", "", ""],
@@ -324,7 +320,7 @@ void verifyListOfCountries(List<String> expectedListOfCountries,
 Question getQuestion(QuestionCategory category, QuestionDifficulty difficulty,
     {int? questionAt}) {
   List<Question> questions = questionCollectorService
-      .getAllQuestionsForCategoriesAndDifficulties([difficulty], [category]);
+      .getAllQuestions(difficulties: [difficulty], categories: [category]);
   expect(questions.length >= 4, true);
   return questions.elementAt(questionAt ?? 2);
 }

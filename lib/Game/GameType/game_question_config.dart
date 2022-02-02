@@ -6,9 +6,9 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../main.dart';
 
 abstract class GameQuestionConfig {
-  List<QuestionCategory> get categories;
+  late List<QuestionCategory> categories;
 
-  List<QuestionDifficulty> get difficulties;
+  late List<QuestionDifficulty> difficulties;
 
   Map<QuestionCategoryWithPrefixCode, String> get prefixLabelForCode;
 

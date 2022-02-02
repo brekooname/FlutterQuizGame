@@ -63,7 +63,7 @@ mixin HangmanLetters {
         clickAnswerBtn(btnLetter, goToNextScreenAfterPress, refreshSetState);
       },
       disabled: alreadyPressedLetters.contains(btnLetter),
-      allPadding: screenDimensions.dimen(2),
+      buttonAllPadding: screenDimensions.dimen(2),
       text: btnLetter,
       size: Size(btnSide, btnSide),
     );

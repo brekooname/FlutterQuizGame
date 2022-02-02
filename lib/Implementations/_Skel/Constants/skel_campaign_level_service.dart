@@ -10,17 +10,16 @@ class SkelCampaignLevelService extends CampaignLevelService {
 
   factory SkelCampaignLevelService() {
     var questionConfig = SkelGameQuestionConfig();
-    singleton.level_0 = CampaignLevel(
-      difficulty: questionConfig.diff0,
-      category: [
-        questionConfig.cat0,
-      ],
-    );
+    singleton.allLevels = [
+      singleton.level_0 = CampaignLevel(
+        difficulty: questionConfig.diff0,
+        categories: [
+          questionConfig.cat0,
+        ],
+      )
+    ];
     return singleton;
   }
 
   SkelCampaignLevelService.internal();
-
-  @override
-  List<CampaignLevel> get allLevels => [level_0];
 }

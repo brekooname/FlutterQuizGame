@@ -45,7 +45,7 @@ class MyApp extends StatefulWidget {
   static bool kIsAutomatedTest = false;
 
   ////////////
-  static CampaignLevel campaignLevel = PersTestCampaignLevelService().level_0;
+  static CampaignLevel campaignLevel = PersTestCampaignLevelService().level_1;
 
   // static String webAppKey = "history";
   // static String webAppKey = "geoquiz";

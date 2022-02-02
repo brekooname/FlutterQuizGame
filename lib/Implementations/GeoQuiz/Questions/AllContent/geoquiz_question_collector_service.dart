@@ -11,13 +11,11 @@ import 'package:flutter_app_quiz_game/Lib/Extensions/string_extension.dart';
 
 import 'geoquiz_all_questions.dart';
 
-class GeoQuizQuestionCollectorService
-    extends QuestionCollectorService<GeoQuizAllQuestions> {
+class GeoQuizQuestionCollectorService extends QuestionCollectorService<
+    GeoQuizAllQuestions, GeoQuizGameQuestionConfig> {
   static const int numberOfQuestionsForStatisticsCategory = 10;
   final Map<QuestionDifficulty, PercentRangeForList>
       _percentOfListForDifficulty = {};
-  final GeoQuizGameQuestionConfig _gameQuestionConfig =
-      GeoQuizGameQuestionConfig();
   final GeoQuizCountryUtils _geoQuizCountryUtils = GeoQuizCountryUtils();
 
   static final GeoQuizQuestionCollectorService singleton =
@@ -25,14 +23,13 @@ class GeoQuizQuestionCollectorService
 
   factory GeoQuizQuestionCollectorService() {
     singleton._percentOfListForDifficulty.putIfAbsent(
-        singleton._gameQuestionConfig.diff0, () => PercentRangeForList(0, 10));
+        singleton.gameQuestionConfig.diff0, () => PercentRangeForList(0, 10));
     singleton._percentOfListForDifficulty.putIfAbsent(
-        singleton._gameQuestionConfig.diff1, () => PercentRangeForList(10, 25));
+        singleton.gameQuestionConfig.diff1, () => PercentRangeForList(10, 25));
     singleton._percentOfListForDifficulty.putIfAbsent(
-        singleton._gameQuestionConfig.diff2, () => PercentRangeForList(25, 50));
+        singleton.gameQuestionConfig.diff2, () => PercentRangeForList(25, 50));
     singleton._percentOfListForDifficulty.putIfAbsent(
-        singleton._gameQuestionConfig.diff3,
-        () => PercentRangeForList(50, 100));
+        singleton.gameQuestionConfig.diff3, () => PercentRangeForList(50, 100));
     return singleton;
   }
 
@@ -42,19 +39,19 @@ class GeoQuizQuestionCollectorService
       QuestionCategory category, QuestionDifficulty difficulty) {
     List<Question> result = [];
     //------------- CAT 0 ------------- POPULATION ===> top 10
-    if (category == _gameQuestionConfig.cat0 &&
-        difficulty == _gameQuestionConfig.diff0) {
+    if (category == gameQuestionConfig.cat0 &&
+        difficulty == gameQuestionConfig.diff0) {
       result = getStatsQuestions(category)
           .sublist(0, numberOfQuestionsForStatisticsCategory);
     } else
     //------------- CAT 1 ------------- AREA ===> top 10
-    if (category == _gameQuestionConfig.cat1 &&
-        difficulty == _gameQuestionConfig.diff1) {
+    if (category == gameQuestionConfig.cat1 &&
+        difficulty == gameQuestionConfig.diff1) {
       result = getStatsQuestions(category)
           .sublist(0, numberOfQuestionsForStatisticsCategory);
     } else
     //------------- CAT 2 ------------- NEIGHBOURS ===> sorted by rank
-    if (category == _gameQuestionConfig.cat2) {
+    if (category == gameQuestionConfig.cat2) {
       var sortedAfterRank = sortQuestionListAfterRankedCountries(
           getEnglishLangQuestions(category), 0);
       //because we have multiple playing types depending on the difficulty level
@@ -62,32 +59,32 @@ class GeoQuizQuestionCollectorService
       result = sortedAfterRank.sublist(0, 10);
     } else
     //------------- CAT 3 ------------- GEOGRAPHICAL REGION
-    if (category == _gameQuestionConfig.cat3 &&
-            (difficulty == _gameQuestionConfig.diff0 ||
-                difficulty == _gameQuestionConfig.diff1 ||
-                difficulty == _gameQuestionConfig.diff2)
+    if (category == gameQuestionConfig.cat3 &&
+            (difficulty == gameQuestionConfig.diff0 ||
+                difficulty == gameQuestionConfig.diff1 ||
+                difficulty == gameQuestionConfig.diff2)
         //
         ||
         //------------- CAT 4 ------------- EMPIRE
-        category == _gameQuestionConfig.cat4 &&
-            (difficulty == _gameQuestionConfig.diff1 ||
-                difficulty == _gameQuestionConfig.diff2 ||
-                difficulty == _gameQuestionConfig.diff3)) {
+        category == gameQuestionConfig.cat4 &&
+            (difficulty == gameQuestionConfig.diff1 ||
+                difficulty == gameQuestionConfig.diff2 ||
+                difficulty == gameQuestionConfig.diff3)) {
       result = allQuestions.get<CategoryDifficulty, List<Question>>(
-          CategoryDifficulty(category, _gameQuestionConfig.diff0))!;
+          CategoryDifficulty(category, gameQuestionConfig.diff0))!;
     } else
     //------------- CAT 5 ------------- LANDMARKS
-    if (category == _gameQuestionConfig.cat5
+    if (category == gameQuestionConfig.cat5
         //
         ||
         //------------- CAT 8------------- NATURAL WONDERS
-        category == _gameQuestionConfig.cat8) {
+        category == gameQuestionConfig.cat8) {
       result = allQuestions.get<CategoryDifficulty, List<Question>>(
           CategoryDifficulty(category, difficulty))!;
     }
-    var capitalsCategory = _gameQuestionConfig.cat6;
-    var flagsCategory = _gameQuestionConfig.cat7;
-    var mapsCategory = _gameQuestionConfig.cat9;
+    var capitalsCategory = gameQuestionConfig.cat6;
+    var flagsCategory = gameQuestionConfig.cat7;
+    var mapsCategory = gameQuestionConfig.cat9;
     //------------- CAT 6 ------------- CAPITALS
     if (category == capitalsCategory
         //
@@ -144,23 +141,19 @@ class GeoQuizQuestionCollectorService
     return allQuestionsService
         .getAllQuestionsWithLanguages()
         .get<Language, Map<CategoryDifficulty, List<Question>>>(Language.en)!
-        .get(CategoryDifficulty(category, _gameQuestionConfig.diff0))!;
+        .get(CategoryDifficulty(category, gameQuestionConfig.diff0))!;
   }
 
   @override
-  List<Question> getAllQuestionsForCategory(QuestionCategory questionCategory) {
-    return getAllQuestionsForCategoriesAndDifficulties(
-        _gameQuestionConfig.difficulties, [questionCategory]);
-  }
-
-  @override
-  List<Question> getAllQuestionsForCategoriesAndDifficulties(
-    List<QuestionDifficulty> difficultyLevels,
-    List<QuestionCategory> categories,
-  ) {
+  List<Question> getAllQuestions({
+    List<QuestionDifficulty>? difficulties,
+    List<QuestionCategory>? categories,
+  }) {
     List<Question> result = [];
-    for (QuestionDifficulty diff in difficultyLevels) {
-      for (QuestionCategory questionCategory in categories) {
+    for (QuestionDifficulty diff
+        in difficulties ?? gameQuestionConfig.difficulties) {
+      for (QuestionCategory questionCategory
+          in categories ?? gameQuestionConfig.categories) {
         result.addAll(
             getAllQuestionsForCategoryAndDifficulty(questionCategory, diff));
       }

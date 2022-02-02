@@ -8,31 +8,26 @@ import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/Depe
 class SkelGameQuestionConfig extends GameQuestionConfig {
   late QuestionCategory cat0;
 
-  QuestionDifficulty diff0 = QuestionDifficulty(index: 0);
+  late QuestionDifficulty diff0;
 
   static final SkelGameQuestionConfig singleton =
       SkelGameQuestionConfig.internal();
 
   factory SkelGameQuestionConfig() {
+    singleton.categories = [
+      singleton.cat0 = QuestionCategory(
+          index: 0,
+          questionCategoryService: DependentAnswersCategoryQuestionService())
+    ];
     //
-    //CATEGORIES
-    singleton.cat0 = QuestionCategory(
-        index: 0,
-        questionCategoryService: DependentAnswersCategoryQuestionService());
+    //
+    singleton.difficulties = [
+      singleton.diff0 = QuestionDifficulty(index: 0),
+    ];
     return singleton;
   }
 
   SkelGameQuestionConfig.internal();
-
-  @override
-  List<QuestionDifficulty> get difficulties => [
-        diff0,
-      ];
-
-  @override
-  List<QuestionCategory> get categories => [
-        cat0,
-      ];
 
   @override
   Map<QuestionCategoryWithPrefixCode, String> get prefixLabelForCode {

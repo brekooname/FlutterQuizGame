@@ -71,9 +71,11 @@ class DependentAnswersQuestionParser extends QuestionParser {
   List<Question> getQuestionsToChooseAsPossibleAnswers(
       bool includeAllDifficulties, Question question) {
     return includeAllDifficulties
-        ? questionCollectorService.getAllQuestionsForCategory(question.category)
-        : questionCollectorService.getAllQuestionsForCategoriesAndDifficulties(
-            [question.difficulty], [question.category]);
+        ? questionCollectorService
+            .getAllQuestions(categories: [question.category])
+        : questionCollectorService.getAllQuestions(
+            difficulties: [question.difficulty],
+            categories: [question.category]);
   }
 
   Set<String> getPossibleAnswersForSpecifiedReferences(

@@ -146,8 +146,8 @@ class GeoQuizOptionsQuestionParser
 
   Set<String> getDependentAnswerOptionsForQuestion(Question question,
       String correctAnswerForCurrentQuestion, int nrOfPossibleAnswers) {
-    List<Question> allQuestionsForCategory =
-        questionCollectorService.getAllQuestionsForCategory(question.category);
+    List<Question> allQuestionsForCategory = questionCollectorService
+        .getAllQuestions(categories: [question.category]);
 
     Set<String> possibleAnswersResult = {};
     possibleAnswersResult.add(correctAnswerForCurrentQuestion);

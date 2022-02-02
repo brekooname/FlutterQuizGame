@@ -22,7 +22,7 @@ class PersTestGameContextService {
         .createGameContextWithHintsAndQuestions(
             0,
             MyApp.appId.gameConfig.questionCollectorService
-                .getAllQuestionsForCategory(campaignLevel.category.first));
+                .getAllQuestions(categories: [campaignLevel.categories.first]));
     var persTestGameContext = PersTestGameContext(
         gameContext.gameUser.getOpenQuestions().first, gameContext);
     return persTestGameContext;

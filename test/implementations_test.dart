@@ -52,7 +52,7 @@ Future<void> testAllCampaignLevels(WidgetTester tester, String appKey,
         .showNewGameScreen(campaignLevel);
     await TestUtil.pumpWidget(tester, MyApp.gameScreenManager);
 
-    for (QuestionCategory category in campaignLevel.category) {
+    for (QuestionCategory category in campaignLevel.categories) {
       var gameContext =
           (MyApp.gameScreenManager.currentScreen! as GameScreen).gameContext;
       if (gameContext.gameUser
@@ -77,8 +77,6 @@ Future<void> testAllCampaignLevels(WidgetTester tester, String appKey,
       expect(quizOptionsGameScreen.possibleAnswers.length >= 4, true);
     }
   }
-  // MyApp.gameScreenManager.currentScreen!.gameScreenManagerState
-  //     .showMainScreen();
 }
 
 void _startApp() {
