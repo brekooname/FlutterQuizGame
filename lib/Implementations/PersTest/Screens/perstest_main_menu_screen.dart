@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app_quiz_game/Game/Game/campaign_level.dart';
+import 'package:flutter_app_quiz_game/Implementations/PersTest/Components/perstest_report_not_available_popup.dart';
+import 'package:flutter_app_quiz_game/Implementations/PersTest/Constants/perstest_campaign_level_service.dart';
+import 'package:flutter_app_quiz_game/Implementations/PersTest/Service/perstest_game_local_storage.dart';
+import 'package:flutter_app_quiz_game/Implementations/PersTest/Service/perstest_game_screen_manager.dart';
+import 'package:flutter_app_quiz_game/Lib/Button/button_skin_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/floating_button.dart';
+import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Popup/settings_popup.dart';
-import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen_manager_state.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/standard_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/game_title.dart';
@@ -9,8 +15,11 @@ import 'package:flutter_app_quiz_game/Lib/Text/game_title.dart';
 import '../../../Lib/Font/font_config.dart';
 import '../../../main.dart';
 
-class PersTestMainMenuScreen extends StandardScreen {
-  PersTestMainMenuScreen(GameScreenManagerState gameScreenManagerState,
+class PersTestMainMenuScreen
+    extends StandardScreen<PersTestGameScreenManagerState> {
+  final PersTestLocalStorage _persTestLocalStorage = PersTestLocalStorage();
+
+  PersTestMainMenuScreen(PersTestGameScreenManagerState gameScreenManagerState,
       {Key? key})
       : super(gameScreenManagerState, key: key);
 
@@ -31,14 +40,11 @@ class PersTestMainMenuScreenState extends State<PersTestMainMenuScreen>
     debugPrint("build main menu");
     var gameTitle = GameTitle(
       text: MyApp.appTitle,
-      backgroundImageWidth: screenDimensions.dimen(70),
       fontConfig: FontConfig(
           textColor: Colors.lightGreenAccent,
           fontWeight: FontWeight.normal,
           fontSize: FontConfig.bigFontSize,
           borderColor: Colors.green),
-      backgroundImagePath: assetsService.getSpecificAssetPath(
-          assetExtension: "png", assetName: "title_clouds_background"),
     );
 
     var mainColumn = Container(
@@ -50,6 +56,7 @@ class PersTestMainMenuScreenState extends State<PersTestMainMenuScreen>
             SizedBox(height: screenDimensions.dimen(11)),
             gameTitle,
             SizedBox(height: screenDimensions.dimen(14)),
+            createLevelBtnsContainer()
           ],
         ));
     return Scaffold(
@@ -61,11 +68,71 @@ class PersTestMainMenuScreenState extends State<PersTestMainMenuScreen>
             iconName: "btn_settings",
             myPopupToDisplay: SettingsPopup(
               resetContent: () {
-               // widget.historyLocalStorage.clearAll();
+                widget._persTestLocalStorage.clearAll();
               },
             ),
           ),
         ]),
         floatingActionButtonLocation: FloatingActionButtonLocation.startTop);
+  }
+
+  Widget createLevelBtnsContainer() {
+    var campLevelService = PersTestCampaignLevelService();
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        createLevelBtn(campLevelService.level_0),
+        createLevelBtn(campLevelService.level_1),
+        createLevelBtn(campLevelService.level_2),
+      ],
+    );
+  }
+
+  Widget createLevelBtn(CampaignLevel campaignLevel) {
+    var reportBtnDimen = screenDimensions.dimen(15);
+    return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          MyButton(
+            buttonAllPadding: screenDimensions.dimen(2),
+            text: campaignLevel.name,
+            onClick: () {
+              widget.gameScreenManagerState.showNewGameScreen(campaignLevel);
+            },
+          ),
+          MyButton(
+            size: Size(reportBtnDimen, reportBtnDimen),
+            buttonAllPadding: screenDimensions.dimen(2),
+            buttonSkinConfig: ButtonSkinConfig(
+                image: imageService.getMainImage(
+                    maxWidth: reportBtnDimen,
+                    imageName: "pie_chart",
+                    imageExtension: "png",
+                    module: "general")),
+            onClick: () {
+              var difficulty = campaignLevel.difficulty;
+              var category = campaignLevel.categories.first;
+              if (widget._persTestLocalStorage
+                  .getGameTypeResults(difficulty, category)
+                  .isEmpty) {
+                Future.delayed(
+                    Duration.zero,
+                    () => showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return PersTestReportNotAvailablePopup(() {
+                            widget.gameScreenManagerState
+                                .showNewGameScreen(campaignLevel);
+                          });
+                        }));
+              } else {
+                widget.gameScreenManagerState
+                    .showGameOverScreen(difficulty, category);
+              }
+            },
+          )
+        ]);
   }
 }

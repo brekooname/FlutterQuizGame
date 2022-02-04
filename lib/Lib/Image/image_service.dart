@@ -27,7 +27,7 @@ class ImageService {
   Image getMainImage(
       {required String imageName,
       required String imageExtension,
-      String? module,
+      required String module,
       double? maxWidth,
       double? maxHeight}) {
     return getByImagePath(

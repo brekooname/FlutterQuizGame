@@ -51,75 +51,76 @@ class PersTestGameConfig extends GameConfig {
   String getTitle(Language language) {
     switch (language) {
       case Language.ar:
-        return "xxxxxxxxxxxxxxxxxxxx";
+        return "اختبار الشخصية";
       case Language.bg:
-        return "xxxxxxxxxxxxxxxxxxxx";
+        return "Личностен тест";
       case Language.cs:
-        return "xxxxxxxxxxxxxxxxxxxx";
+        return "Osobnostní test";
       case Language.da:
-        return "xxxxxxxxxxxxxxxxxxxx";
+        return "Personlighedstest";
       case Language.de:
-        return "xxxxxxxxxxxxxxxxxxxx";
+        return "Persönlichkeitstest";
       case Language.el:
-        return "xxxxxxxxxxxxxxxxxxxx";
+        return "Τεστ προσωπικότητας";
       case Language.en:
-        return "xxxxxxxxxxxxxxxxxxxx";
+        return "The Big Five Personality Test";
+        // return "The Personality Test";
       case Language.es:
-        return "xxxxxxxxxxxxxxxxxxxx";
+        return "La prueba de personalidad";
       case Language.fi:
-        return "xxxxxxxxxxxxxxxxxxxx";
+        return "Persoonallisuustesti";
       case Language.fr:
-        return "xxxxxxxxxxxxxxxxxxxx";
+        return "Test de personnalité";
       case Language.he:
-        return "xxxxxxxxxxxxxxxxxxxx";
+        return "מבחן אישיות";
       case Language.hi:
-        return "xxxxxxxxxxxxxxxxxxxx";
+        return "व्यक्तित्व परीक्षण";
       case Language.hr:
-        return "xxxxxxxxxxxxxxxxxxxx";
+        return "Test osobnosti";
       case Language.hu:
-        return "xxxxxxxxxxxxxxxxxxxx";
+        return "Személyiségteszt";
       case Language.id:
-        return "xxxxxxxxxxxxxxxxxxxx";
+        return "Tes Kepribadian";
       case Language.it:
-        return "xxxxxxxxxxxxxxxxxxxx";
+        return "Il test della personalità";
       case Language.ja:
-        return "xxxxxxxxxxxxxxxxxxxx";
+        return "性格検査";
       case Language.ko:
-        return "xxxxxxxxxxxxxxxxxxxx";
+        return "성격 검사";
       case Language.ms:
-        return "xxxxxxxxxxxxxxxxxxxx";
+        return "Ujian Keperibadian";
       case Language.nl:
-        return "xxxxxxxxxxxxxxxxxxxx";
+        return "Persoonlijkheidstest";
       case Language.nb:
-        return "xxxxxxxxxxxxxxxxxxxx";
+        return "Personlighetstest";
       case Language.pl:
-        return "xxxxxxxxxxxxxxxxxxxx";
+        return "Kwestionariusz osobowości";
       case Language.pt:
-        return "xxxxxxxxxxxxxxxxxxxx";
+        return "O teste de personalidade";
       case Language.ro:
-        return "xxxxxxxxxxxxxxxxxxxx";
+        return "Test de personalitate";
       case Language.ru:
-        return "xxxxxxxxxxxxxxxxxxxx";
+        return "Личностный тест";
       case Language.sk:
-        return "xxxxxxxxxxxxxxxxxxxx";
+        return "Test osobnosti";
       case Language.sl:
-        return "xxxxxxxxxxxxxxxxxxxx";
+        return "Test osebnosti";
       case Language.sr:
-        return "xxxxxxxxxxxxxxxxxxxx";
+        return "Тест личности";
       case Language.sv:
-        return "xxxxxxxxxxxxxxxxxxxx";
+        return "Personlighetstest";
       case Language.th:
-        return "xxxxxxxxxxxxxxxxxxxx";
+        return "แบบทดสอบบุคลิกภาพ";
       case Language.tr:
-        return "xxxxxxxxxxxxxxxxxxxx";
+        return "Kişilik testi";
       case Language.uk:
-        return "xxxxxxxxxxxxxxxxxxxx";
+        return "Тест особистості";
       case Language.vi:
-        return "xxxxxxxxxxxxxxxxxxxx";
+        return "Trắc nghiệm tính cách";
       case Language.zh:
-        return "xxxxxxxxxxxxxxxxxxxx";
+        return "性格测试";
       default:
-        return "xxxxxxxxxxxxxxxxxxxx";
+        return "The Personality Test";
     }
   }
 }

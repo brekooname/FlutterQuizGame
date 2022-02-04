@@ -1,4 +1,3 @@
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -9,7 +8,8 @@ import 'package:flutter_app_quiz_game/Game/Question/Model/question_info_status.d
 import 'package:flutter_app_quiz_game/Implementations/PersTest/Components/perstest_attr_description_popup.dart';
 import 'package:flutter_app_quiz_game/Implementations/PersTest/Components/perstest_level_header.dart';
 import 'package:flutter_app_quiz_game/Implementations/PersTest/Questions/perstest_game_context.dart';
-import 'package:flutter_app_quiz_game/Implementations/PersTest/Screens/GameType/perstest_game_type.dart';
+import 'package:flutter_app_quiz_game/Implementations/PersTest/Screens/GameType/perstest_game_type_play.dart';
+import 'package:flutter_app_quiz_game/Implementations/PersTest/Service/perstest_game_local_storage.dart';
 import 'package:flutter_app_quiz_game/Implementations/PersTest/Service/perstest_game_screen_manager.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/button_skin_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_back_button.dart';
@@ -20,19 +20,19 @@ import 'package:flutter_app_quiz_game/Lib/Font/font_config.dart';
 import 'package:flutter_app_quiz_game/Lib/ProgressBar/progress_bar.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
-class PersTestGameTypeBigFive extends PersTestGameType {
+class PersTestGameTypeBigFivePlay extends PersTestGameTypePlay {
   final int _gameOverMaxScoreVal = 40;
+  final PersTestLocalStorage _persTestLocalStorage = PersTestLocalStorage();
 
-  PersTestGameTypeBigFive(
-      CampaignLevel campaignLevel,
-      QuestionInfo currentQuestionInfo,
-      PersTestGameContext gameContext,
-      PersTestGameScreenManagerState gameScreenManagerState)
-      : super(campaignLevel, currentQuestionInfo, gameContext,
-            gameScreenManagerState);
+  PersTestGameTypeBigFivePlay(CampaignLevel campaignLevel)
+      : super(campaignLevel);
 
   @override
-  Widget createGamePlayContent(BuildContext context) {
+  Widget createGamePlayContent(
+      BuildContext context,
+      QuestionInfo currentQuestionInfo,
+      PersTestGameContext gameContext,
+      PersTestGameScreenManagerState gameScreenManagerState) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -42,18 +42,24 @@ class PersTestGameTypeBigFive extends PersTestGameType {
                 "/" +
                 gameContext.gameUser.countAllQuestions([]).toString()),
         const Spacer(),
-        createQuestionContainer(),
+        _createQuestionContainer(
+            currentQuestionInfo, gameContext, gameScreenManagerState),
         SizedBox(height: screenDimensions.dimen(10)),
-        createResponseLabels(),
-        createResponseButtons(),
+        _createResponseLabels(),
+        _createResponseButtons(
+            currentQuestionInfo, gameContext, gameScreenManagerState),
         const Spacer(),
       ],
     );
   }
 
-  Widget createQuestionContainer() {
+  Widget _createQuestionContainer(
+      QuestionInfo currentQuestionInfo,
+      PersTestGameContext gameContext,
+      PersTestGameScreenManagerState gameScreenManagerState) {
     List<Widget> children = [];
-    children.add(createPreviousNextButton(true));
+    children.add(_createPreviousNextButton(
+        true, currentQuestionInfo, gameContext, gameScreenManagerState));
     children.add(SizedBox(
         child: MyText(
       width: screenDimensions.w(75),
@@ -61,7 +67,8 @@ class PersTestGameTypeBigFive extends PersTestGameType {
       fontSize: FontConfig.bigFontSize,
       text: currentQuestionInfo.question.rawString,
     )));
-    children.add(createPreviousNextButton(false));
+    children.add(_createPreviousNextButton(
+        false, currentQuestionInfo, gameContext, gameScreenManagerState));
     return SizedBox(
         height: screenDimensions.dimen(30),
         child: Row(
@@ -70,7 +77,11 @@ class PersTestGameTypeBigFive extends PersTestGameType {
             children: children));
   }
 
-  Widget createPreviousNextButton(bool goPreviousQuestion) {
+  Widget _createPreviousNextButton(
+      bool goPreviousQuestion,
+      QuestionInfo currentQuestionInfo,
+      PersTestGameContext gameContext,
+      PersTestGameScreenManagerState gameScreenManagerState) {
     var btnSideDimen = screenDimensions.dimen(12);
     var currentQIndex = currentQuestionInfo.question.index;
     return SizedBox(
@@ -90,7 +101,8 @@ class PersTestGameTypeBigFive extends PersTestGameType {
                         ? currentQIndex - 1
                         : currentQIndex + 1))
                 .first;
-            goToQuestionInfo(goToQuestion);
+            _goToQuestionInfo(
+                goToQuestion, gameContext, gameScreenManagerState);
           },
           size: Size(btnSideDimen, btnSideDimen),
           buttonSkinConfig: ButtonSkinConfig(
@@ -101,7 +113,7 @@ class PersTestGameTypeBigFive extends PersTestGameType {
         ));
   }
 
-  Widget createResponseLabels() {
+  Widget _createResponseLabels() {
     List<Widget> labels = [];
     var labelWidth = screenDimensions.dimen(55);
     for (String l in ["Disagree", "Neutral", "Agree"]) {
@@ -119,7 +131,10 @@ class PersTestGameTypeBigFive extends PersTestGameType {
     );
   }
 
-  Widget createResponseButtons() {
+  Widget _createResponseButtons(
+      QuestionInfo currentQuestionInfo,
+      PersTestGameContext gameContext,
+      PersTestGameScreenManagerState gameScreenManagerState) {
     var responseBtns = [
       ResponseButton(Colors.red, 0),
       ResponseButton(Colors.orange, 1),
@@ -137,9 +152,12 @@ class PersTestGameTypeBigFive extends PersTestGameType {
           currentQuestionInfo.clearPressedAnswers();
           currentQuestionInfo.addPressedAnswer(r.value.toString());
           gameContext.gameUser.setWonQuestion(currentQuestionInfo);
-          goToQuestionInfo(gameContext.gameUser.getOpenQuestions().isEmpty
-              ? null
-              : gameContext.gameUser.getOpenQuestions().first);
+          _goToQuestionInfo(
+              gameContext.gameUser.getOpenQuestions().isEmpty
+                  ? null
+                  : gameContext.gameUser.getOpenQuestions().first,
+              gameContext,
+              gameScreenManagerState);
         },
         size: Size(btnSideDimen, btnSideDimen),
         buttonSkinConfig: ButtonSkinConfig(
@@ -172,10 +190,13 @@ class PersTestGameTypeBigFive extends PersTestGameType {
     );
   }
 
-  void goToQuestionInfo(QuestionInfo? questionInfo) {
+  void _goToQuestionInfo(
+      QuestionInfo? questionInfo,
+      PersTestGameContext gameContext,
+      PersTestGameScreenManagerState gameScreenManagerState) {
     if (questionInfo == null) {
-      gameScreenManagerState.showGameOverScreen(
-          gameContext, campaignLevel.difficulty, campaignLevel.categories.first);
+      storeResultsToStorage(gameContext);
+      gameScreenManagerState.showGameOverScreen(difficulty, category);
     } else {
       gameContext.currentQuestionInfo = questionInfo;
       gameScreenManagerState.showNextGameScreen(campaignLevel, gameContext);
@@ -183,14 +204,14 @@ class PersTestGameTypeBigFive extends PersTestGameType {
   }
 
   @override
-  Widget createGameOverContent(BuildContext context) {
+  Widget createResultsReportContent(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Row(children: [MyBackButton(), const Spacer()]),
         const Spacer(),
-        createAttributes(context),
+        _createAttributes(context),
         SizedBox(
           height: screenDimensions.dimen(1),
         ),
@@ -215,31 +236,38 @@ class PersTestGameTypeBigFive extends PersTestGameType {
     );
   }
 
-  int r(int qNr) {
-    return Random().nextInt(5) + 1;
-    return gameContext.gameUser
-            .getAllQuestions([])
-            .where((element) => element.question.index == qNr)
-            .first
-            .pressedAnswers
-            .first
-            .parseToInt +
-        1;
+  @override
+  void storeResultsToStorage(PersTestGameContext gameContext) {
+    _persTestLocalStorage.storeGameTypeResults(difficulty, category, [
+      PersTestGameTypeAttrStorage("e", calculateE(gameContext).toString()),
+      PersTestGameTypeAttrStorage("a", calculateA(gameContext).toString()),
+      PersTestGameTypeAttrStorage("c", calculateC(gameContext).toString()),
+      PersTestGameTypeAttrStorage("n", calculateN(gameContext).toString()),
+      PersTestGameTypeAttrStorage("o", calculateO(gameContext).toString()),
+    ]);
   }
 
-  Widget createAttributes(BuildContext context) {
-    var persAttrList = [
-      PersAttribute(Colors.lightGreenAccent, "Extroversion", calculateE()),
-      PersAttribute(Colors.red, "Emotional stabielt", calculateA()),
-      PersAttribute(Colors.tealAccent, "Agreeablesnn", calculateC()),
-      PersAttribute(Colors.purpleAccent, "Consitoniouss", calculateN()),
-      PersAttribute(Colors.blue, "Intellect/Imagination", calculateO()),
+  Widget _createAttributes(BuildContext context) {
+    List<PersTestGameTypeAttrStorage> storageAttrs =
+        _persTestLocalStorage.getGameTypeResults(difficulty, category);
+    List<PersAttribute> attrVals = [
+      PersAttribute(Colors.lightGreenAccent, "Extroversion",
+          getAttrIntValue("e", storageAttrs)),
+      PersAttribute(
+          Colors.red, "Emotional stabielt", getAttrIntValue("a", storageAttrs)),
+      PersAttribute(Colors.tealAccent, "Agreeablesnn",
+          getAttrIntValue("c", storageAttrs)),
+      PersAttribute(Colors.purpleAccent, "Consitoniouss",
+          getAttrIntValue("n", storageAttrs)),
+      PersAttribute(Colors.blue, "Intellect/Imagination",
+          getAttrIntValue("o", storageAttrs)),
     ];
+
     List<Widget> attrs = [];
     var attrBarWidth = screenDimensions.dimen(90);
     var btnSize = Size(screenDimensions.dimen(90), screenDimensions.dimen(13));
     var padding = screenDimensions.dimen(0.8);
-    for (PersAttribute r in persAttrList) {
+    for (PersAttribute r in attrVals) {
       double percent = r.val / _gameOverMaxScoreVal * 100;
       attrs.add(Padding(
         padding: EdgeInsets.all(padding),
@@ -292,74 +320,95 @@ class PersTestGameTypeBigFive extends PersTestGameType {
     );
   }
 
-  int calculateE() {
+  int getAttrIntValue(
+      String key, List<PersTestGameTypeAttrStorage> storageAttrs) {
+    return storageAttrs
+        .where((e) => e.attrKey == key)
+        .first
+        .attrValue
+        .parseToInt;
+  }
+
+  int r(PersTestGameContext gameContext, int qNr) {
+    // return Random().nextInt(5) + 1;
+    return gameContext.gameUser
+            .getAllQuestions([])
+            .where((element) => element.question.index == qNr)
+            .first
+            .pressedAnswers
+            .first
+            .parseToInt +
+        1;
+  }
+
+  int calculateE(PersTestGameContext gameContext) {
     return 20 +
-        r(0) -
-        r(5) +
-        r(10) -
-        r(15) +
-        r(20) -
-        r(25) +
-        r(30) -
-        r(35) +
-        r(40) -
-        r(45);
+        r(gameContext, 0) -
+        r(gameContext, 5) +
+        r(gameContext, 10) -
+        r(gameContext, 15) +
+        r(gameContext, 20) -
+        r(gameContext, 25) +
+        r(gameContext, 30) -
+        r(gameContext, 35) +
+        r(gameContext, 40) -
+        r(gameContext, 45);
   }
 
-  int calculateA() {
+  int calculateA(PersTestGameContext gameContext) {
     return 14 -
-        r(1) +
-        r(6) -
-        r(11) +
-        r(16) -
-        r(21) +
-        r(26) -
-        r(31) +
-        r(36) +
-        r(41) +
-        r(46);
+        r(gameContext, 1) +
+        r(gameContext, 6) -
+        r(gameContext, 11) +
+        r(gameContext, 16) -
+        r(gameContext, 21) +
+        r(gameContext, 26) -
+        r(gameContext, 31) +
+        r(gameContext, 36) +
+        r(gameContext, 41) +
+        r(gameContext, 46);
   }
 
-  int calculateC() {
+  int calculateC(PersTestGameContext gameContext) {
     return 14 +
-        r(2) -
-        r(7) +
-        r(12) -
-        r(17) +
-        r(22) -
-        r(27) +
-        r(32) -
-        r(37) +
-        r(42) +
-        r(47);
+        r(gameContext, 2) -
+        r(gameContext, 7) +
+        r(gameContext, 12) -
+        r(gameContext, 17) +
+        r(gameContext, 22) -
+        r(gameContext, 27) +
+        r(gameContext, 32) -
+        r(gameContext, 37) +
+        r(gameContext, 42) +
+        r(gameContext, 47);
   }
 
-  int calculateN() {
+  int calculateN(PersTestGameContext gameContext) {
     return 38 -
-        r(3) +
-        r(8) -
-        r(13) +
-        r(18) -
-        r(23) -
-        r(28) -
-        r(33) -
-        r(38) -
-        r(43) -
-        r(48);
+        r(gameContext, 3) +
+        r(gameContext, 8) -
+        r(gameContext, 13) +
+        r(gameContext, 18) -
+        r(gameContext, 23) -
+        r(gameContext, 28) -
+        r(gameContext, 33) -
+        r(gameContext, 38) -
+        r(gameContext, 43) -
+        r(gameContext, 48);
   }
 
-  int calculateO() {
+  int calculateO(PersTestGameContext gameContext) {
     return 8 +
-        r(4) -
-        r(9) +
-        r(14) -
-        r(19) +
-        r(24) -
-        r(29) +
-        r(34) +
-        r(39) +
-        r(44) +
-        r(49);
+        r(gameContext, 4) -
+        r(gameContext, 9) +
+        r(gameContext, 14) -
+        r(gameContext, 19) +
+        r(gameContext, 24) -
+        r(gameContext, 29) +
+        r(gameContext, 34) +
+        r(gameContext, 39) +
+        r(gameContext, 44) +
+        r(gameContext, 49);
   }
 }
 

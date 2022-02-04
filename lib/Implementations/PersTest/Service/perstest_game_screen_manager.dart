@@ -55,10 +55,10 @@ class PersTestGameScreenManagerState extends State<PersTestGameScreenManager>
     );
   }
 
-  void showGameOverScreen(PersTestGameContext gameContext,
+  void showGameOverScreen(
       QuestionDifficulty difficulty, QuestionCategory category) {
     setCurrentScreenState(PersTestGameOverScreen(this,
-        difficulty: difficulty, category: category, gameContext: gameContext));
+        difficulty: difficulty, category: category));
   }
 
   @override

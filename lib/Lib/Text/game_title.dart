@@ -8,33 +8,35 @@ class GameTitle extends StatelessWidget {
   late double backgroundImageWidth;
   FontConfig fontConfig;
   String text;
-  String backgroundImagePath;
+  String? backgroundImagePath;
   double? backgroundImageOpacity;
 
   GameTitle({
     Key? key,
     required this.fontConfig,
     required this.text,
-    required this.backgroundImagePath,
+    this.backgroundImagePath,
     this.backgroundImageOpacity,
     double? backgroundImageWidth,
   }) : super(key: key) {
     this.backgroundImageWidth =
-        backgroundImageWidth ?? ScreenDimensionsService().dimen(85);
+        backgroundImageWidth ?? ScreenDimensionsService().w(95);
   }
 
   @override
   Widget build(BuildContext context) {
     var imageWithText =
         Stack(alignment: AlignmentDirectional.center, children: <Widget>[
-      Opacity(
-          opacity: backgroundImageOpacity ?? 1,
-          child: Image.asset(
-            backgroundImagePath,
-            fit: BoxFit.fitWidth,
-            alignment: Alignment.center,
-            width: backgroundImageWidth,
-          )),
+      backgroundImagePath != null
+          ? Opacity(
+              opacity: backgroundImageOpacity ?? 1,
+              child: Image.asset(
+                backgroundImagePath!,
+                fit: BoxFit.fitWidth,
+                alignment: Alignment.center,
+                width: backgroundImageWidth,
+              ))
+          : const SizedBox(),
       MyText(
         text: text,
         width: backgroundImageWidth / 1.2,
