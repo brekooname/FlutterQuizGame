@@ -1,12 +1,22 @@
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:charts_flutter/flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Lib/Font/font_config.dart';
 import 'package:flutter_app_quiz_game/Lib/ScreenDimensions/screen_dimensions_service.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import '../../../main.dart';
 
 class PersTestSelfEsteemBarChart extends StatelessWidget {
   final ScreenDimensionsService _screenDimensionsService =
       ScreenDimensionsService();
   static final fontSize = FontConfig.getCustomFontSize(0.7).toInt();
+  int selfEsteem;
+  int? age;
+
+  PersTestSelfEsteemBarChart(this.selfEsteem, this.age);
+
+  AppLocalizations get label => MyApp.appLocalizations;
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +38,13 @@ class PersTestSelfEsteemBarChart extends StatelessWidget {
       LinearSales(90, 50, 0.0),
       LinearSales(100, 30, 0.0),
     ];
+    ChartBehavior<num>? seriesLegend = charts.SeriesLegend(
+      position: charts.BehaviorPosition.top,
+      entryTextStyle: charts.TextStyleSpec(
+          color: charts.MaterialPalette.red.shadeDefault.darker,
+          fontSize: fontSize),
+    );
+    List<Widget> stackChildren = [];
     var lineChart = charts.LineChart(
       _createSampleData(
           selfEsteemData, true, _screenDimensionsService.dimen(1)),
@@ -35,25 +52,26 @@ class PersTestSelfEsteemBarChart extends StatelessWidget {
       primaryMeasureAxis: yAxisStyle,
       domainAxis: xAxisStyle,
       behaviors: [
-        charts.PanAndZoomBehavior(),
-        charts.LinePointHighlighter(
-            showHorizontalFollowLine:
-                charts.LinePointHighlighterFollowLineType.none,
-            showVerticalFollowLine:
-                charts.LinePointHighlighterFollowLineType.nearest),
-        charts.SelectNearest(eventTrigger: charts.SelectionTrigger.tapAndDrag)
+        seriesLegend,
       ],
     );
-    List<LinearSales> dataWithPlot = selfEsteemData.toList();
-    dataWithPlot.add(LinearSales(34, 15, _screenDimensionsService.dimen(1)));
-    var scatterPlotChart = charts.ScatterPlotChart(
-        _createSampleData(
-            dataWithPlot, false, _screenDimensionsService.dimen(1)),
-        primaryMeasureAxis: yAxisStyle,
-        domainAxis: xAxisStyle,
-        animate: true);
+    stackChildren.add(lineChart);
+    var ageSubmitted = age != null && age != -1;
+    if (ageSubmitted) {
+      List<LinearSales> dataWithPlot = selfEsteemData.toList();
+      dataWithPlot.add(
+          LinearSales(age!, selfEsteem, _screenDimensionsService.dimen(1)));
+      var scatterPlotChart = charts.ScatterPlotChart(
+          _createSampleData(
+              dataWithPlot, false, _screenDimensionsService.dimen(1)),
+          primaryMeasureAxis: yAxisStyle,
+          domainAxis: xAxisStyle,
+          behaviors: [seriesLegend],
+          animate: true);
+      stackChildren.add(scatterPlotChart);
+    }
     return Stack(
-      children: [lineChart, scatterPlotChart],
+      children: stackChildren,
     );
   }
 
@@ -67,16 +85,16 @@ class PersTestSelfEsteemBarChart extends StatelessWidget {
                 color: charts.MaterialPalette.gray.shade400)));
   }
 
-  static List<charts.Series<LinearSales, int>> _createSampleData(
+  List<charts.Series<LinearSales, int>> _createSampleData(
       List<LinearSales> data, bool blueColor, double strokeWidth) {
     return [
       charts.Series<LinearSales, int>(
-        id: 'se',
+        id: label.l_your_self_esteem,
         colorFn: (LinearSales sales, _) => blueColor
             ? charts.MaterialPalette.blue.shadeDefault
             : charts.MaterialPalette.red.shadeDefault,
-        domainFn: (LinearSales sales, _) => sales.year,
-        measureFn: (LinearSales sales, _) => sales.sales,
+        domainFn: (LinearSales sales, _) => sales.age,
+        measureFn: (LinearSales sales, _) => sales.selfEsteem,
         radiusPxFn: (LinearSales sales, _) => sales.radius,
         strokeWidthPxFn: (LinearSales sales, _) => strokeWidth,
         data: data,
@@ -85,11 +103,10 @@ class PersTestSelfEsteemBarChart extends StatelessWidget {
   }
 }
 
-/// Sample linear data type.
 class LinearSales {
-  final int year;
-  final int sales;
+  final int age;
+  final int selfEsteem;
   final double radius;
 
-  LinearSales(this.year, this.sales, this.radius);
+  LinearSales(this.age, this.selfEsteem, this.radius);
 }

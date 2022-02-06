@@ -3,21 +3,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Lib/Popup/my_popup.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
-class PersTestAttrDescriptionPopup extends StatefulWidget with MyPopup {
+class PersTestDescriptionPopup extends StatefulWidget with MyPopup {
+  String description;
 
-  PersTestAttrDescriptionPopup({Key? key}) : super(key: key);
+  PersTestDescriptionPopup(this.description, {Key? key}) : super(key: key);
 
   @override
-  State<PersTestAttrDescriptionPopup> createState() =>
-      PersTestAttrDescriptionPopupState();
+  State<PersTestDescriptionPopup> createState() =>
+      PersTestDescriptionPopupState();
 }
 
-class PersTestAttrDescriptionPopupState
-    extends State<PersTestAttrDescriptionPopup> with MyPopup {
+class PersTestDescriptionPopupState extends State<PersTestDescriptionPopup>
+    with MyPopup {
   @override
   void initState() {
     initPopup();
-    width=screenDimensions.w(90);
+    width = screenDimensions.w(90);
     super.initState();
   }
 
@@ -30,8 +31,8 @@ class PersTestAttrDescriptionPopupState
           children: [
             margin,
             MyText(
-                text:
-                    "Emotional Stability is often referred to by other names, such as Neruoticism or Negative Emotionality (in these two cases interpretations are inverted, as Neruoticism and Negative Emotionality can be though of as the opposite of Emotional Stability)."),
+              text: widget.description,
+            ),
             margin,
           ]),
       context: context,

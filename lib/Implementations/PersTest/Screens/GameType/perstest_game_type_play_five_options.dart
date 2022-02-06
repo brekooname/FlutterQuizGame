@@ -4,7 +4,9 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_app_quiz_game/Game/Game/campaign_level.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_info.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_info_status.dart';
+import 'package:flutter_app_quiz_game/Implementations/PersTest/Components/perstest_age_popup.dart';
 import 'package:flutter_app_quiz_game/Implementations/PersTest/Components/perstest_level_header.dart';
+import 'package:flutter_app_quiz_game/Implementations/PersTest/Constants/perstest_game_question_config.dart';
 import 'package:flutter_app_quiz_game/Implementations/PersTest/Questions/perstest_game_context.dart';
 import 'package:flutter_app_quiz_game/Implementations/PersTest/Screens/GameType/perstest_game_type_play.dart';
 import 'package:flutter_app_quiz_game/Implementations/PersTest/Screens/GameType/perstest_game_type_report.dart';
@@ -36,23 +38,24 @@ class PersTestGameTypePlayFiveOptions extends PersTestGameTypePlay {
                 gameContext.gameUser.countAllQuestions([]).toString()),
         const Spacer(),
         _createQuestionContainer(
-            currentQuestionInfo, gameContext, gameScreenManagerState),
+            context, currentQuestionInfo, gameContext, gameScreenManagerState),
         SizedBox(height: screenDimensions.dimen(10)),
         _createResponseLabels(),
         _createResponseButtons(
-            currentQuestionInfo, gameContext, gameScreenManagerState),
+            context, currentQuestionInfo, gameContext, gameScreenManagerState),
         const Spacer(),
       ],
     );
   }
 
   Widget _createQuestionContainer(
+      BuildContext context,
       QuestionInfo currentQuestionInfo,
       PersTestGameContext gameContext,
       PersTestGameScreenManagerState gameScreenManagerState) {
     List<Widget> children = [];
-    children.add(_createPreviousNextButton(
-        true, currentQuestionInfo, gameContext, gameScreenManagerState));
+    children.add(_createPreviousNextButton(context, true, currentQuestionInfo,
+        gameContext, gameScreenManagerState));
     children.add(SizedBox(
         child: MyText(
       width: screenDimensions.w(75),
@@ -60,8 +63,8 @@ class PersTestGameTypePlayFiveOptions extends PersTestGameTypePlay {
       fontSize: FontConfig.bigFontSize,
       text: currentQuestionInfo.question.rawString,
     )));
-    children.add(_createPreviousNextButton(
-        false, currentQuestionInfo, gameContext, gameScreenManagerState));
+    children.add(_createPreviousNextButton(context, false, currentQuestionInfo,
+        gameContext, gameScreenManagerState));
     return SizedBox(
         height: screenDimensions.dimen(30),
         child: Row(
@@ -71,6 +74,7 @@ class PersTestGameTypePlayFiveOptions extends PersTestGameTypePlay {
   }
 
   Widget _createPreviousNextButton(
+      BuildContext context,
       bool goPreviousQuestion,
       QuestionInfo currentQuestionInfo,
       PersTestGameContext gameContext,
@@ -95,7 +99,7 @@ class PersTestGameTypePlayFiveOptions extends PersTestGameTypePlay {
                         : currentQIndex + 1))
                 .first;
             _goToQuestionInfo(
-                goToQuestion, gameContext, gameScreenManagerState);
+                context, goToQuestion, gameContext, gameScreenManagerState);
           },
           size: Size(btnSideDimen, btnSideDimen),
           buttonSkinConfig: ButtonSkinConfig(
@@ -109,7 +113,7 @@ class PersTestGameTypePlayFiveOptions extends PersTestGameTypePlay {
   Widget _createResponseLabels() {
     List<Widget> labels = [];
     var labelWidth = screenDimensions.dimen(55);
-    for (String l in ["Disagree", "Neutral", "Agree"]) {
+    for (String l in [label.l_disagree, label.l_neutral, label.l_agree]) {
       labels.add(SizedBox(
           width: labelWidth,
           child: MyText(
@@ -125,6 +129,7 @@ class PersTestGameTypePlayFiveOptions extends PersTestGameTypePlay {
   }
 
   Widget _createResponseButtons(
+      BuildContext context,
       QuestionInfo currentQuestionInfo,
       PersTestGameContext gameContext,
       PersTestGameScreenManagerState gameScreenManagerState) {
@@ -149,6 +154,7 @@ class PersTestGameTypePlayFiveOptions extends PersTestGameTypePlay {
 
           gameContext.gameUser.setWonQuestion(currentQuestionInfo);
           _goToQuestionInfo(
+              context,
               gameContext.gameUser.getOpenQuestions().isEmpty
                   ? null
                   : gameContext.gameUser.getOpenQuestions().first,
@@ -187,16 +193,35 @@ class PersTestGameTypePlayFiveOptions extends PersTestGameTypePlay {
   }
 
   void _goToQuestionInfo(
+      BuildContext context,
       QuestionInfo? questionInfo,
       PersTestGameContext gameContext,
       PersTestGameScreenManagerState gameScreenManagerState) {
     if (questionInfo == null) {
       gameTypeReport.storeResultsToStorage(gameContext);
-      gameScreenManagerState.showGameOverScreen(difficulty, category);
+      if (category == PersTestGameQuestionConfig().cat1) {
+        Future.delayed(
+            Duration.zero,
+            () => showDialog(
+                barrierDismissible: false,
+                context: context,
+                builder: (BuildContext context) {
+                  return PersTestAgePopup(() {
+                    showGameOverScreen(gameScreenManagerState);
+                  });
+                }));
+      } else {
+        showGameOverScreen(gameScreenManagerState);
+      }
     } else {
       gameContext.currentQuestionInfo = questionInfo;
       gameScreenManagerState.showNextGameScreen(campaignLevel, gameContext);
     }
+  }
+
+  void showGameOverScreen(
+      PersTestGameScreenManagerState gameScreenManagerState) {
+    gameScreenManagerState.showGameOverScreen(difficulty, category);
   }
 }
 

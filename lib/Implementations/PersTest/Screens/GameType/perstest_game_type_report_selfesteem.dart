@@ -19,7 +19,6 @@ class PersTestGameTypeReportSelfEsteem extends PersTestGameTypeReport {
   void storeResultsToStorage(PersTestGameContext gameContext) {
     var esteem =
         (calculateEsteem(gameContext) + _gameOverMaxScoreVal).toString();
-    print(esteem);
     persTestLocalStorage.storeGameTypeResults(difficulty, category, [
       PersTestGameTypeAttrStorage("e", esteem),
     ]);
@@ -29,61 +28,71 @@ class PersTestGameTypeReportSelfEsteem extends PersTestGameTypeReport {
   List<PersAttribute> getPersAttributes() {
     List<PersTestGameTypeAttrStorage> storageAttrs =
         persTestLocalStorage.getGameTypeResults(difficulty, category);
+    var persAttribute = PersAttribute(Colors.lightGreenAccent,
+        label.l_self_esteem, "", getAttrIntValue("e", storageAttrs));
+    persAttribute.isButton = false;
     return [
-      PersAttribute(Colors.lightGreenAccent, "Self Esteem",
-          getAttrIntValue("e", storageAttrs)),
+      persAttribute,
     ];
   }
 
   @override
   Widget? createExtraReportContent() {
-    var graphHeight = screenDimensions.dimen(40);
+    var graphHeight = screenDimensions.dimen(50);
+    var graphWidth = screenDimensions.w(70);
     var labelWidth = screenDimensions.w(25);
     var fontSize = PersTestSelfEsteemBarChart.fontSize;
-    return Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          SizedBox(
-              height: graphHeight,
-              width: labelWidth,
-              child: Column(
+    return Material(
+        color: Colors.white.withOpacity(0.6),
+        textStyle: const TextStyle(decoration: TextDecoration.none),
+        child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(
+                  height: graphHeight,
+                  width: labelWidth,
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                          child: MyText(
+                              alignmentInsideContainer: Alignment.centerRight,
+                              width: labelWidth,
+                              text: label.l_average_self_esteem_for_general,
+                              fontConfig: FontConfig(
+                                  fontSize: fontSize.toDouble(),
+                                  fontColor: Colors.blue.shade700)),
+                        )
+                      ])),
+              Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Padding(
-                      padding: EdgeInsets.fromLTRB(
-                          0, 0, 0, screenDimensions.dimen(1)),
-                      child: MyText(
-                          alignmentInsideContainer: Alignment.centerRight,
-                          width: labelWidth,
-                          text: "Average self esteem for general population",
-                          fontConfig: FontConfig(
-                              fontSize: fontSize.toDouble(),
-                              fontColor: Colors.blue.shade700)),
-                    )
-                  ])),
-          SizedBox(
-              width: screenDimensions.w(50),
-              height: graphHeight,
-              child: PersTestSelfEsteemBarChart()),
-          SizedBox(
-              height: graphHeight * 1.02,
-              width: labelWidth,
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Spacer(),
-                    MyText(
-                        alignmentInsideContainer: Alignment.bottomLeft,
-                        width: labelWidth,
-                        text: "Age",
-                        fontConfig: FontConfig(
-                            fontSize: fontSize.toDouble(),
-                            fontColor: Colors.green.shade700)),
-                  ]))
-        ]);
+                    SizedBox(
+                        width: graphWidth,
+                        height: graphHeight,
+                        child: PersTestSelfEsteemBarChart(
+                            getAttrPercentValue(getPersAttributes().first)
+                                .toInt(),
+                            persTestLocalStorage.getUserAge())),
+                    SizedBox(
+                        width: graphWidth,
+                        child: Padding(
+                          padding: EdgeInsets.fromLTRB(
+                              0, screenDimensions.dimen(1), 0, 0),
+                          child: MyText(
+                              alignmentInsideContainer: Alignment.center,
+                              width: labelWidth,
+                              text: label.l_age,
+                              fontConfig: FontConfig(
+                                  fontSize: fontSize.toDouble(),
+                                  fontColor: Colors.green.shade700)),
+                        ))
+                  ])
+            ]));
     // return null;
   }
 
@@ -99,7 +108,7 @@ class PersTestGameTypeReportSelfEsteem extends PersTestGameTypeReport {
 
   @override
   String getInfoText() {
-    return "A score below 50% indicate low self esteem";
+    return label.l_a_score_below_50;
   }
 
   int calculateEsteem(PersTestGameContext gameContext) {

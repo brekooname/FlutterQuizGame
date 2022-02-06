@@ -9,6 +9,9 @@ import 'package:flutter_app_quiz_game/Implementations/PersTest/Screens/GameType/
 import 'package:flutter_app_quiz_game/Implementations/PersTest/Service/perstest_game_screen_manager.dart';
 import 'package:flutter_app_quiz_game/Lib/Image/image_service.dart';
 import 'package:flutter_app_quiz_game/Lib/ScreenDimensions/screen_dimensions_service.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import '../../../../main.dart';
 
 abstract class PersTestGameTypePlay {
   ImageService imageService = ImageService();
@@ -23,6 +26,8 @@ abstract class PersTestGameTypePlay {
     category = campaignLevel.categories.first;
     gameTypeReport = PersTestGameTypeReport.createGameTypeReport(campaignLevel);
   }
+
+  AppLocalizations get label => MyApp.appLocalizations;
 
   Widget createGamePlayContent(
       BuildContext context,

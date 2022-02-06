@@ -20,6 +20,9 @@ import 'package:flutter_app_quiz_game/Lib/Image/image_service.dart';
 import 'package:flutter_app_quiz_game/Lib/ProgressBar/progress_bar.dart';
 import 'package:flutter_app_quiz_game/Lib/ScreenDimensions/screen_dimensions_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import '../../../../main.dart';
 
 abstract class PersTestGameTypeReport {
   ImageService imageService = ImageService();
@@ -33,6 +36,8 @@ abstract class PersTestGameTypeReport {
     difficulty = campaignLevel.difficulty;
     category = campaignLevel.categories.first;
   }
+
+  AppLocalizations get label => MyApp.appLocalizations;
 
   int getMaxGraphValue();
 
@@ -54,6 +59,8 @@ abstract class PersTestGameTypeReport {
       children: [
         Row(children: [MyBackButton(), const Spacer()]),
         const Spacer(),
+        extraReportContent ?? emptyContainer,
+        extraReportContent == null ? emptyContainer : margin,
         createAttributesGraph(context),
         margin,
         Row(
@@ -72,8 +79,6 @@ abstract class PersTestGameTypeReport {
                 text: getInfoText(),
               )
             ]),
-        extraReportContent == null ? emptyContainer : margin,
-        extraReportContent ?? emptyContainer,
         const Spacer(),
       ],
     );
@@ -124,36 +129,18 @@ abstract class PersTestGameTypeReport {
     var attrBarWidth = screenDimensions.dimen(90);
     var btnSize = Size(screenDimensions.dimen(90), screenDimensions.dimen(13));
     var padding = screenDimensions.dimen(0.8);
-    for (PersAttribute r in attrVals) {
-      double percent = r.val / getMaxGraphValue() * 100;
+    for (PersAttribute attr in attrVals) {
+      double percent = getAttrPercentValue(attr);
       attrs.add(Padding(
         padding: EdgeInsets.all(padding),
         child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              MyButton(
-                onClick: () {
-                  Future.delayed(
-                      Duration.zero,
-                      () => showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return PersTestAttrDescriptionPopup();
-                          }));
-                },
-                textMaxLines: 1,
-                text: r.label,
-                size: btnSize,
-                fontConfig:
-                    FontConfig(fontSize: FontConfig.getCustomFontSize(0.9)),
-                buttonSkinConfig: ButtonSkinConfig(
-                    backgroundColor: Colors.lightBlueAccent.shade200,
-                    borderRadius: FontConfig.standardBorderRadius / 2),
-              ),
+              createAttrLabel(context, attr, btnSize),
               Stack(alignment: Alignment.center, children: [
                 ProgressBar(
-                    fillBarColor: r.color,
+                    fillBarColor: attr.color,
                     startNr: 0,
                     endNr: percent.toInt(),
                     totalNr: 100,
@@ -177,6 +164,39 @@ abstract class PersTestGameTypeReport {
     );
   }
 
+  Widget createAttrLabel(
+      BuildContext context, PersAttribute attr, Size btnSize) {
+    var fontConfig = FontConfig(fontSize: FontConfig.getCustomFontSize(0.9));
+    return attr.isButton
+        ? MyButton(
+            onClick: () {
+              Future.delayed(
+                  Duration.zero,
+                  () => showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return PersTestDescriptionPopup(attr.description);
+                      }));
+            },
+            textMaxLines: 1,
+            text: attr.label,
+            size: btnSize,
+            fontConfig: fontConfig,
+            buttonSkinConfig: ButtonSkinConfig(
+                backgroundColor: Colors.lightBlueAccent.shade200,
+                borderRadius: FontConfig.standardBorderRadius / 2),
+          )
+        : Padding(
+            padding: EdgeInsets.all(screenDimensions.dimen(2)),
+            child: MyText(
+              text: attr.label,
+              fontConfig: fontConfig,
+            ));
+  }
+
+  double getAttrPercentValue(PersAttribute r) =>
+      r.val / getMaxGraphValue() * 100;
+
   int getAttrIntValue(
       String key, List<PersTestGameTypeAttrStorage> storageAttrs) {
     return storageAttrs
@@ -190,7 +210,9 @@ abstract class PersTestGameTypeReport {
 class PersAttribute {
   Color color;
   String label;
+  String description;
+  bool isButton = true;
   int val;
 
-  PersAttribute(this.color, this.label, this.val);
+  PersAttribute(this.color, this.label, this.description, this.val);
 }

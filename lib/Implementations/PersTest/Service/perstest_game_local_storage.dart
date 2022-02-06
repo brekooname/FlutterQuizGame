@@ -13,12 +13,23 @@ class PersTestLocalStorage extends QuizGameLocalStorage {
 
   PersTestLocalStorage.internal();
 
-  List<PersTestGameTypeAttrStorage> getGameTypeResults(
-      QuestionDifficulty diff, QuestionCategory cat) {
-    return PersTestGameTypeStorage.decode(localStorage
-                    .getString(_getPersTestGameTypeFieldName(diff, cat)) ??
-                "")
-            ?.attrs ??
+  int getUserAge() {
+    return localStorage.getInt(_getPersTestUserAgeFieldName()) ?? -1;
+  }
+
+  void setUserAge(int age) {
+    if (age > 0 && age <= 100) {
+      localStorage.setInt(_getPersTestUserAgeFieldName(), age);
+    }
+  }
+
+  List<PersTestGameTypeAttrStorage> getGameTypeResults(QuestionDifficulty diff,
+      QuestionCategory cat) {
+    return PersTestGameTypeStorage
+        .decode(localStorage
+        .getString(_getPersTestGameTypeFieldName(diff, cat)) ??
+        "")
+        ?.attrs ??
         [];
   }
 
@@ -28,14 +39,23 @@ class PersTestLocalStorage extends QuizGameLocalStorage {
         PersTestGameTypeStorage(cat, diff, attrs).encode());
   }
 
-  String _getPersTestGameTypeFieldName(
-      QuestionDifficulty diff, QuestionCategory cat) {
+  String _getPersTestGameTypeFieldName(QuestionDifficulty diff,
+      QuestionCategory cat) {
     return localStorageName + "_PersTestGameType_" + cat.name + "_" + diff.name;
+  }
+
+  String _getPersTestUserAgeFieldName() {
+    return localStorageName + "__getPersTestUserAgeFieldName";
+  }
+
+  void clearAge() {
+    localStorage.setInt(_getPersTestUserAgeFieldName(), -1);
   }
 
   @override
   void clearAll() {
     super.clearAll();
+    clearAge();
     var gameConfig = MyApp.appId.gameConfig;
     for (var diff in gameConfig.questionDifficulties) {
       for (var cat in gameConfig.questionCategories) {
@@ -59,9 +79,9 @@ class PersTestGameTypeStorage {
     var split = encoded.split("_");
     var gameConfig = MyApp.appId.gameConfig;
     QuestionCategory cat =
-        gameConfig.questionCategories.firstWhere((e) => e.name == split[0]);
+    gameConfig.questionCategories.firstWhere((e) => e.name == split[0]);
     QuestionDifficulty diff =
-        gameConfig.questionDifficulties.firstWhere((e) => e.name == split[1]);
+    gameConfig.questionDifficulties.firstWhere((e) => e.name == split[1]);
     List<PersTestGameTypeAttrStorage> attrs = split[2].split(";").map((e) {
       var eSplit = e.split(":");
       return PersTestGameTypeAttrStorage(eSplit[0], eSplit[1]);

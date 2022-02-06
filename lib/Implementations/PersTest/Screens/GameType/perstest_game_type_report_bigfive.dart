@@ -28,7 +28,7 @@ class PersTestGameTypeReportBigFive extends PersTestGameTypeReport {
 
   @override
   String getInfoText() {
-    return "Click on any of the traits to see it's description";
+    return label.l_click_on_any_of_the_traits;
   }
 
   @override
@@ -41,15 +41,31 @@ class PersTestGameTypeReportBigFive extends PersTestGameTypeReport {
     List<PersTestGameTypeAttrStorage> storageAttrs =
         persTestLocalStorage.getGameTypeResults(difficulty, category);
     return [
-      PersAttribute(Colors.lightGreenAccent, "Extroversion",
+      PersAttribute(
+          Colors.lightGreenAccent,
+          label.l_extroversion,
+          label.l_extroversion_is_sometimes_given,
           getAttrIntValue("e", storageAttrs)),
       PersAttribute(
-          Colors.red, "Emotional stabielt", getAttrIntValue("a", storageAttrs)),
-      PersAttribute(Colors.tealAccent, "Agreeablesnn",
+          Colors.red,
+          label.l_emotional_stability,
+          label.l_emotional_stability_is_often_referred_to_by_other_names,
+          getAttrIntValue("a", storageAttrs)),
+      PersAttribute(
+          Colors.tealAccent,
+          label.l_agreeableness,
+          label.l_a_person_high_in_agreeableness_is,
           getAttrIntValue("c", storageAttrs)),
-      PersAttribute(Colors.purpleAccent, "Consitoniouss",
+      PersAttribute(
+          Colors.purpleAccent,
+          label.l_consitoniouss,
+          label
+              .l_individuals_who_score_high_on_this_factor_are_careful_and_diligent,
           getAttrIntValue("n", storageAttrs)),
-      PersAttribute(Colors.blue, "Intellect/Imagination",
+      PersAttribute(
+          Colors.blue,
+          label.l_intellectimagination,
+          label.l_this_factor_is_also_often_called_openness_to_experience,
           getAttrIntValue("o", storageAttrs)),
     ];
   }

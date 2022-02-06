@@ -4,7 +4,6 @@ import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Popup/my_popup.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
-
 class PersTestReportNotAvailablePopup extends StatefulWidget with MyPopup {
   VoidCallback startTestCallback;
 
@@ -32,12 +31,10 @@ class PersTestReportNotAvailablePopupState
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             margin,
-            MyText(
-                text:
-                    "Report not available.\nComplete the personality test first."),
+            MyText(text: label.l_report_not_av),
             margin,
             MyButton(
-              text: "Start test",
+              text: label.l_start_test,
               backgroundColor: Colors.green.shade200,
               onClick: () {
                 widget.startTestCallback.call();

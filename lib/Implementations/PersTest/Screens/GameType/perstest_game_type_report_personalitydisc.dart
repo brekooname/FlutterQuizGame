@@ -27,6 +27,7 @@ class PersTestGameTypeReportPersonalityDisc extends PersTestGameTypeReport {
     ]);
   }
 
+  https://situational.com/blog/what-are-the-four-disc-personality-types/
   @override
   List<PersAttribute> getPersAttributes() {
     List<PersTestGameTypeAttrStorage> storageAttrs =
@@ -54,7 +55,7 @@ class PersTestGameTypeReportPersonalityDisc extends PersTestGameTypeReport {
 
   @override
   String getInfoText() {
-    return "Click on any of the personalities to see their description";
+    return label.l_click_on_any_of_the_traits;
   }
 
   int calculateVal(PersTestGameContext gameContext, int min, int max) {
