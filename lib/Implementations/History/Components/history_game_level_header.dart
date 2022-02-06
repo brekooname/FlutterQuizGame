@@ -44,7 +44,7 @@ class HistoryGameLevelHeader extends StatelessWidget {
       width: scoreTextWidth,
       text: score.toString(),
       fontConfig: FontConfig(
-          textColor: Colors.yellow,
+          fontColor: Colors.yellow,
           borderColor: Colors.black,
           fontSize: FontConfig.bigFontSize),
     );

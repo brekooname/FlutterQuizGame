@@ -110,7 +110,7 @@ class GeoQuizGameLevelHeader extends StatelessWidget {
           ? gameFinishedScore.toString()
           : score.toString(),
       fontConfig: FontConfig(
-          textColor: Colors.yellow,
+          fontColor: Colors.yellow,
           borderColor: Colors.black,
           fontSize: FontConfig.bigFontSize),
     );
@@ -132,7 +132,7 @@ class GeoQuizGameLevelHeader extends StatelessWidget {
       fontConfig: FontConfig(
           borderWidth: FontConfig.standardBorderWidth,
           borderColor: Colors.green.shade900,
-          textColor: consecutiveCorrectAnswers == 0
+          fontColor: consecutiveCorrectAnswers == 0
               ? Colors.white
               : Colors.lightGreenAccent.shade200,
           fontSize: FontConfig.getCustomFontSize(1.1)),

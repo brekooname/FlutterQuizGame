@@ -26,7 +26,7 @@ class MyText extends StatelessWidget {
       this.maxLines = 2})
       : super(key: key) {
     this.fontConfig =
-        fontConfig ?? FontConfig(fontSize: fontSize, textColor: textColor);
+        fontConfig ?? FontConfig(fontSize: fontSize, fontColor: textColor);
   }
 
   @override

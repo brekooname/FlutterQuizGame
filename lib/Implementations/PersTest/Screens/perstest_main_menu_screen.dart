@@ -41,7 +41,7 @@ class PersTestMainMenuScreenState extends State<PersTestMainMenuScreen>
     var gameTitle = GameTitle(
       text: MyApp.appTitle,
       fontConfig: FontConfig(
-          textColor: Colors.lightGreenAccent,
+          fontColor: Colors.lightGreenAccent,
           fontWeight: FontWeight.normal,
           fontSize: FontConfig.bigFontSize,
           borderColor: Colors.green),

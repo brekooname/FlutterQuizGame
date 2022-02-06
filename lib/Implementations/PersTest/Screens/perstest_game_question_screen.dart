@@ -27,7 +27,7 @@ class PersTestQuestionScreen
             category,
             [gameContext.currentQuestionInfo],
             key: key) {
-    persTestGameType = PersTestGameTypePlay.createGameType(campaignLevel);
+    persTestGameType = PersTestGameTypePlay.createGameTypePlay(campaignLevel);
   }
 
   @override

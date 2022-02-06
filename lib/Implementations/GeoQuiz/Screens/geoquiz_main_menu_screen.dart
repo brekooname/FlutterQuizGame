@@ -78,7 +78,7 @@ class GeoQuizMainMenuScreenState extends State<GeoQuizMainMenuScreen>
       backgroundImageWidth: screenDimensions.dimen(70),
       fontConfig: FontConfig(
           borderWidth: FontConfig.standardBorderWidth * 3,
-          textColor: Colors.lightGreenAccent,
+          fontColor: Colors.lightGreenAccent,
           fontWeight: FontWeight.normal,
           fontSize: FontConfig.getCustomFontSize(
               [Language.nl.name].contains(MyApp.languageCode) ? 1.5 : 2),
@@ -160,7 +160,7 @@ class GeoQuizMainMenuScreenState extends State<GeoQuizMainMenuScreen>
             fontConfig: FontConfig(
                 borderColor: Colors.black,
                 borderWidth: FontConfig.standardBorderWidth * 1.1,
-                textColor: Colors.lightGreenAccent,
+                fontColor: Colors.lightGreenAccent,
                 fontSize: FontConfig.getCustomFontSize(1)),
             text: "XP",
           ),
@@ -201,7 +201,7 @@ class GeoQuizMainMenuScreenState extends State<GeoQuizMainMenuScreen>
     var fontConfig = FontConfig(
         borderColor: Colors.black,
         borderWidth: FontConfig.standardBorderWidth * 1.1,
-        textColor: Colors.white,
+        fontColor: Colors.white,
         fontSize: FontConfig.getCustomFontSize(0.9));
     var currentExperience = AnimateIncreaseNumberText(
         audioPlayerId: "ExperienceContainerAudioId",
@@ -267,7 +267,7 @@ class GeoQuizMainMenuScreenState extends State<GeoQuizMainMenuScreen>
               .key,
           fontConfig: FontConfig(
               borderColor: Colors.black,
-              textColor: Colors.white,
+              fontColor: Colors.white,
               fontSize: FontConfig.getCustomFontSize(1.3)),
           size: Size(screenDimensions.dimen(60), screenDimensions.dimen(17)),
           text: formatTextWithOneParam(label.l_level_param0.capitalized, index),

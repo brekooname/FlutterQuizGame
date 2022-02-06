@@ -1,0 +1,196 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_app_quiz_game/Game/Game/campaign_level.dart';
+import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
+import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
+import 'package:flutter_app_quiz_game/Implementations/PersTest/Components/perstest_attr_description_popup.dart';
+import 'package:flutter_app_quiz_game/Implementations/PersTest/Constants/perstest_game_question_config.dart';
+import 'package:flutter_app_quiz_game/Implementations/PersTest/Questions/perstest_game_context.dart';
+import 'package:flutter_app_quiz_game/Implementations/PersTest/Screens/GameType/perstest_game_type_report_bigfive.dart';
+import 'package:flutter_app_quiz_game/Implementations/PersTest/Screens/GameType/perstest_game_type_report_personalitydisc.dart';
+import 'package:flutter_app_quiz_game/Implementations/PersTest/Screens/GameType/perstest_game_type_report_selfesteem.dart';
+import 'package:flutter_app_quiz_game/Implementations/PersTest/Service/perstest_game_local_storage.dart';
+import 'package:flutter_app_quiz_game/Lib/Button/button_skin_config.dart';
+import 'package:flutter_app_quiz_game/Lib/Button/my_back_button.dart';
+import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
+import 'package:flutter_app_quiz_game/Lib/Extensions/string_extension.dart';
+import 'package:flutter_app_quiz_game/Lib/Font/font_config.dart';
+import 'package:flutter_app_quiz_game/Lib/Image/image_service.dart';
+import 'package:flutter_app_quiz_game/Lib/ProgressBar/progress_bar.dart';
+import 'package:flutter_app_quiz_game/Lib/ScreenDimensions/screen_dimensions_service.dart';
+import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
+
+abstract class PersTestGameTypeReport {
+  ImageService imageService = ImageService();
+  ScreenDimensionsService screenDimensions = ScreenDimensionsService();
+  PersTestLocalStorage persTestLocalStorage = PersTestLocalStorage();
+  CampaignLevel campaignLevel;
+  late QuestionCategory category;
+  late QuestionDifficulty difficulty;
+
+  PersTestGameTypeReport(this.campaignLevel) {
+    difficulty = campaignLevel.difficulty;
+    category = campaignLevel.categories.first;
+  }
+
+  int getMaxGraphValue();
+
+  List<PersAttribute> getPersAttributes();
+
+  void storeResultsToStorage(PersTestGameContext gameContext);
+
+  bool isPositiveResponseValue();
+
+  String getInfoText();
+
+  Widget createResultsReportContent(BuildContext context) {
+    var margin = SizedBox(height: screenDimensions.dimen(1));
+    Widget? extraReportContent = createExtraReportContent();
+    var emptyContainer = Container();
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Row(children: [MyBackButton(), const Spacer()]),
+        const Spacer(),
+        createAttributesGraph(context),
+        margin,
+        Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              imageService.getMainImage(
+                  maxWidth: screenDimensions.dimen(8),
+                  imageName: "info",
+                  module: "general",
+                  imageExtension: "png"),
+              SizedBox(
+                width: screenDimensions.dimen(1),
+              ),
+              MyText(
+                text: getInfoText(),
+              )
+            ]),
+        extraReportContent == null ? emptyContainer : margin,
+        extraReportContent ?? emptyContainer,
+        const Spacer(),
+      ],
+    );
+  }
+
+  Widget? createExtraReportContent() {
+    return null;
+  }
+
+  static PersTestGameTypeReport createGameTypeReport(
+      CampaignLevel campaignLevel) {
+    var questionConfig = PersTestGameQuestionConfig();
+    var category = campaignLevel.categories.first;
+    if (category == questionConfig.cat0) {
+      return PersTestGameTypeReportBigFive(campaignLevel);
+    } else if (category == questionConfig.cat1) {
+      return PersTestGameTypeReportSelfEsteem(campaignLevel);
+    } else if (category == questionConfig.cat2) {
+      return PersTestGameTypeReportPersonalityDisc(campaignLevel);
+    }
+    throw UnimplementedError("no report configured for category");
+  }
+
+  int r(PersTestGameContext gameContext, int qNr) {
+    var q = gameContext.gameUser.getAllQuestions([]).firstWhere(
+        (element) => element.question.index == qNr);
+    if (q.pressedAnswers.isNotEmpty) {
+      var val = q.pressedAnswers.first.parseToInt;
+      if (isPositiveResponseValue()) {
+        return val + 1;
+      } else {
+        if (val == 0) {
+          return 0;
+        } else if (val > 1) {
+          return val + 1;
+        } else {
+          return val - 1;
+        }
+      }
+    } else {
+      return 0;
+    }
+  }
+
+  Widget createAttributesGraph(BuildContext context) {
+    List<PersAttribute> attrVals = getPersAttributes();
+    List<Widget> attrs = [];
+    var attrBarWidth = screenDimensions.dimen(90);
+    var btnSize = Size(screenDimensions.dimen(90), screenDimensions.dimen(13));
+    var padding = screenDimensions.dimen(0.8);
+    for (PersAttribute r in attrVals) {
+      double percent = r.val / getMaxGraphValue() * 100;
+      attrs.add(Padding(
+        padding: EdgeInsets.all(padding),
+        child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              MyButton(
+                onClick: () {
+                  Future.delayed(
+                      Duration.zero,
+                      () => showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return PersTestAttrDescriptionPopup();
+                          }));
+                },
+                textMaxLines: 1,
+                text: r.label,
+                size: btnSize,
+                fontConfig:
+                    FontConfig(fontSize: FontConfig.getCustomFontSize(0.9)),
+                buttonSkinConfig: ButtonSkinConfig(
+                    backgroundColor: Colors.lightBlueAccent.shade200,
+                    borderRadius: FontConfig.standardBorderRadius / 2),
+              ),
+              Stack(alignment: Alignment.center, children: [
+                ProgressBar(
+                    fillBarColor: r.color,
+                    startNr: 0,
+                    endNr: percent.toInt(),
+                    totalNr: 100,
+                    width: attrBarWidth,
+                    height: btnSize.height),
+                MyText(
+                  text: percent.toInt().toString() + "%",
+                  fontConfig: FontConfig(
+                    fontColor: Colors.white,
+                    borderColor: Colors.black,
+                  ),
+                ),
+              ])
+            ]),
+      ));
+    }
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: attrs,
+    );
+  }
+
+  int getAttrIntValue(
+      String key, List<PersTestGameTypeAttrStorage> storageAttrs) {
+    return storageAttrs
+        .where((e) => e.attrKey == key)
+        .first
+        .attrValue
+        .parseToInt;
+  }
+}
+
+class PersAttribute {
+  Color color;
+  String label;
+  int val;
+
+  PersAttribute(this.color, this.label, this.val);
+}

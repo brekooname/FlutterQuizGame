@@ -95,7 +95,7 @@ class HintButtonState extends State<HintButton> {
           text: widget.availableHints.toString(),
           fontConfig: FontConfig(
               fontSize: FontConfig.normalFontSize,
-              textColor: Colors.lightGreenAccent,
+              fontColor: Colors.lightGreenAccent,
               borderWidth: FontConfig.standardBorderWidth * 1.2,
               borderColor: Colors.black),
         ));

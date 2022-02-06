@@ -33,7 +33,7 @@ class SkelMainMenuScreenState extends State<SkelMainMenuScreen>
       text: MyApp.appTitle,
       backgroundImageWidth: screenDimensions.dimen(70),
       fontConfig: FontConfig(
-          textColor: Colors.lightGreenAccent,
+          fontColor: Colors.lightGreenAccent,
           fontWeight: FontWeight.normal,
           fontSize: FontConfig.bigFontSize,
           borderColor: Colors.green),

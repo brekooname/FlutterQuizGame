@@ -68,7 +68,7 @@ class GameFinishedPopup extends StatelessWidget with MyPopup {
           label.l_high_score_param0, highScore.toString()),
       maxLines: 3,
       fontConfig: FontConfig(
-          textColor: Colors.lightGreenAccent,
+          fontColor: Colors.lightGreenAccent,
           fontWeight: FontWeight.normal,
           borderWidth: FontConfig.standardBorderWidth * 1.2,
           fontSize: FontConfig.normalFontSize,
