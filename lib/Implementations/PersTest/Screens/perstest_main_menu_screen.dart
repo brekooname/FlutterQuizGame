@@ -19,6 +19,7 @@ import '../../../main.dart';
 class PersTestMainMenuScreen
     extends StandardScreen<PersTestGameScreenManagerState> {
   final PersTestLocalStorage _persTestLocalStorage = PersTestLocalStorage();
+  late Image backgroundImage;
 
   PersTestMainMenuScreen(PersTestGameScreenManagerState gameScreenManagerState,
       {Key? key})
@@ -33,6 +34,8 @@ class PersTestMainMenuScreenState extends State<PersTestMainMenuScreen>
   @override
   void initState() {
     super.initState();
+    widget.backgroundImage = imageService.getSpecificImage(
+        imageName: "background_texture2", imageExtension: "png");
     initScreenState();
   }
 
@@ -41,14 +44,26 @@ class PersTestMainMenuScreenState extends State<PersTestMainMenuScreen>
     debugPrint("build main menu");
     var gameTitle = GameTitle(
       text: MyApp.appTitle,
+      textShadow: Shadow(
+        offset: Offset(
+            FontConfig.standardShadowOffset, FontConfig.standardShadowOffset),
+        blurRadius: FontConfig.standardShadowRadius * 2,
+        color: Colors.black.withOpacity(0.2),
+      ),
       fontConfig: FontConfig(
-          fontColor: Colors.lightGreenAccent,
-          fontWeight: FontWeight.normal,
-          fontSize: FontConfig.bigFontSize,
-          borderColor: Colors.green),
+        borderColor: Colors.grey.shade200,
+        borderWidth: screenDimensions.dimen(0.4),
+        fontColor: Colors.black,
+        fontSize: FontConfig.getCustomFontSize(1.8),
+      ),
     );
 
     var mainColumn = Container(
+        decoration: BoxDecoration(
+            image: DecorationImage(
+          repeat: ImageRepeat.noRepeat,
+          image: widget.backgroundImage.image,
+        )),
         alignment: Alignment.center,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -83,11 +98,23 @@ class PersTestMainMenuScreenState extends State<PersTestMainMenuScreen>
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        createLevelBtn(campLevelService.level_0,
-            "The Big Five Personality Test", Colors.green.shade400),
-        createLevelBtn(campLevelService.level_1, "Rosenberg self-esteem scale",
+        createLevelBtn(
+            campLevelService.level_0,
+            label.l_big_five_personality_traits,
+            label
+                .l_the_test_consists_of_50_self_assessment_questions_this_questionnaire_has_the_highest_acceptance_ra,
+            Colors.green.shade400),
+        createLevelBtn(
+            campLevelService.level_1,
+            label.l_rosenberg_self_esteem_scale,
+            label
+                .l_the_test_consists_of_10_self_assessment_questions_developed_by_the_sociologist_morris_rosenberg_is,
             Colors.red.shade300),
-        createLevelBtn(campLevelService.level_2, "DISC personality test",
+        createLevelBtn(
+            campLevelService.level_2,
+            label.l_disc_personality_test,
+            label
+                .l_the_test_consists_of_16_self_assessment_questions_disc_assessments_are_behavior_self_assessment_to,
             Colors.yellow.shade400),
       ],
     );
@@ -105,6 +132,9 @@ class PersTestMainMenuScreenState extends State<PersTestMainMenuScreen>
             backgroundColor: color,
             size: Size(screenDimensions.w(32), screenDimensions.dimen(20)),
             buttonAllPadding: screenDimensions.dimen(0.5),
+            fontConfig: FontConfig(
+              fontWeight: FontWeight.w500,
+            ),
             textMaxLines: 2,
             text: levelText,
             onClick: () {

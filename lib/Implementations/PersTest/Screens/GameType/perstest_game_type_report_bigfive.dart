@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_app_quiz_game/Game/Game/campaign_level.dart';
 import 'package:flutter_app_quiz_game/Implementations/PersTest/Questions/perstest_game_context.dart';
 import 'package:flutter_app_quiz_game/Implementations/PersTest/Screens/GameType/perstest_game_type_report.dart';
 import 'package:flutter_app_quiz_game/Implementations/PersTest/Service/perstest_game_local_storage.dart';
-import 'package:flutter_app_quiz_game/Lib/Button/my_back_button.dart';
-import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
 class PersTestGameTypeReportBigFive extends PersTestGameTypeReport {
   final int _gameOverMaxScoreVal = 40;
@@ -28,7 +24,7 @@ class PersTestGameTypeReportBigFive extends PersTestGameTypeReport {
 
   @override
   String getInfoText() {
-    return label.l_click_on_any_of_the_traits;
+    return label.l_click_on_any_of_the_traits_to_see_their_description;
   }
 
   @override
@@ -43,29 +39,33 @@ class PersTestGameTypeReportBigFive extends PersTestGameTypeReport {
     return [
       PersAttribute(
           Colors.lightGreenAccent,
-          label.l_extroversion,
-          label.l_extroversion_is_sometimes_given,
+          label.l_extraversion,
+          label
+              .l_extraversion_is_sometimes_given_other_names_such_as_positive_emotionality_individuals_who_score_hi,
           getAttrIntValue("e", storageAttrs)),
-      PersAttribute(
-          Colors.red,
-          label.l_emotional_stability,
-          label.l_emotional_stability_is_often_referred_to_by_other_names,
-          getAttrIntValue("a", storageAttrs)),
       PersAttribute(
           Colors.tealAccent,
           label.l_agreeableness,
-          label.l_a_person_high_in_agreeableness_is,
-          getAttrIntValue("c", storageAttrs)),
+          label
+              .l_agreeableness_is_a_personality_trait_that_can_be_described_as_cooperative_polite_and_friendly_peop,
+          getAttrIntValue("a", storageAttrs)),
       PersAttribute(
           Colors.purpleAccent,
-          label.l_consitoniouss,
+          label.l_conscientiousness,
           label
-              .l_individuals_who_score_high_on_this_factor_are_careful_and_diligent,
+              .l_conscientiousness_is_a_fundamental_personality_trait_that_reflects_the_tendency_to_be_responsible_,
+          getAttrIntValue("c", storageAttrs)),
+      PersAttribute(
+          Colors.red,
+          label.l_emotional_stability,
+          label
+              .l_emotional_stability_refers_to_a_persons_ability_to_remain_stable_and_balanced_at_the_other_end_of_,
           getAttrIntValue("n", storageAttrs)),
       PersAttribute(
           Colors.blue,
-          label.l_intellectimagination,
-          label.l_this_factor_is_also_often_called_openness_to_experience,
+          label.l_openness_to_experience,
+          label
+              .l_openness_to_new_experiences_indicates_appreciation_for_art_emotion_adventure_unusual_ideas_imagina,
           getAttrIntValue("o", storageAttrs)),
     ];
   }

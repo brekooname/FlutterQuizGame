@@ -45,7 +45,7 @@ class PersTestLocalStorage extends QuizGameLocalStorage {
   }
 
   String _getPersTestUserAgeFieldName() {
-    return localStorageName + "__getPersTestUserAgeFieldName";
+    return localStorageName + "_getPersTestUserAgeFieldName";
   }
 
   void clearAge() {

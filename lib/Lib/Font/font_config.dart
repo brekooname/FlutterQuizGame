@@ -31,7 +31,7 @@ class FontConfig {
       this.borderColor = Colors.transparent,
       double? fontSize,
       double? borderWidth,
-      this.fontWeight = FontWeight.bold}) {
+      this.fontWeight = FontWeight.w500}) {
     this.fontSize = fontSize ?? normalFontSize;
     this.textColor = fontColor ?? FontUtil.getFontDefaultColor();
     this.borderWidth = borderColor == Colors.transparent

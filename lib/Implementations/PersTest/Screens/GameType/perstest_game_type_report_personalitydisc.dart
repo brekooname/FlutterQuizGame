@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_app_quiz_game/Game/Game/campaign_level.dart';
 import 'package:flutter_app_quiz_game/Implementations/PersTest/Questions/perstest_game_context.dart';
 import 'package:flutter_app_quiz_game/Implementations/PersTest/Screens/GameType/perstest_game_type_report.dart';
 import 'package:flutter_app_quiz_game/Implementations/PersTest/Service/perstest_game_local_storage.dart';
-import 'package:flutter_app_quiz_game/Lib/Button/my_back_button.dart';
 
 class PersTestGameTypeReportPersonalityDisc extends PersTestGameTypeReport {
   final int _gameOverMaxScoreVal = 20;
@@ -27,19 +24,35 @@ class PersTestGameTypeReportPersonalityDisc extends PersTestGameTypeReport {
     ]);
   }
 
-  https://situational.com/blog/what-are-the-four-disc-personality-types/
   @override
   List<PersAttribute> getPersAttributes() {
     List<PersTestGameTypeAttrStorage> storageAttrs =
         persTestLocalStorage.getGameTypeResults(difficulty, category);
     return [
-      PersAttribute(Colors.lightGreenAccent, "Type D",
+      PersAttribute(
+          Colors.lightGreenAccent,
+          label.l_dominance,
+          label
+              .l_someone_with_a_high_score_is_likely_to_be_direct_assertive_independent_and_decisive_they_are_compe,
           getAttrIntValue("d", storageAttrs)),
       PersAttribute(
-          Colors.tealAccent, "Type I", getAttrIntValue("i", storageAttrs)),
+          Colors.tealAccent,
+          label.l_influence,
+          label
+              .l_someone_with_a_high_score_is_likely_to_be_informal_and_fun_they_tend_to_be_confident_engaging_and_,
+          getAttrIntValue("i", storageAttrs)),
       PersAttribute(
-          Colors.purpleAccent, "Type S", getAttrIntValue("s", storageAttrs)),
-      PersAttribute(Colors.blue, "Type C", getAttrIntValue("c", storageAttrs)),
+          Colors.purpleAccent,
+          label.l_steadiness,
+          label
+              .l_someone_with_a_high_score_is_likely_to_be_reserved_and_is_looking_for_like_minded_and_loyal_indivi,
+          getAttrIntValue("s", storageAttrs)),
+      PersAttribute(
+          Colors.blue,
+          label.l_conscientiousness,
+          label
+              .l_conscientiousness_is_a_fundamental_personality_trait_that_reflects_the_tendency_to_be_responsible_,
+          getAttrIntValue("c", storageAttrs)),
     ];
   }
 
@@ -55,7 +68,7 @@ class PersTestGameTypeReportPersonalityDisc extends PersTestGameTypeReport {
 
   @override
   String getInfoText() {
-    return label.l_click_on_any_of_the_traits;
+    return label.l_click_on_any_of_the_traits_to_see_their_description;
   }
 
   int calculateVal(PersTestGameContext gameContext, int min, int max) {

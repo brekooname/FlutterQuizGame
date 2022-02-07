@@ -61,7 +61,8 @@ class PersTestGameTypeReportSelfEsteem extends PersTestGameTypeReport {
                           child: MyText(
                               alignmentInsideContainer: Alignment.centerRight,
                               width: labelWidth,
-                              text: label.l_average_self_esteem_for_general,
+                              text: label
+                                  .l_average_self_esteem_for_the_general_population_,
                               fontConfig: FontConfig(
                                   fontSize: fontSize.toDouble(),
                                   fontColor: Colors.blue.shade700)),
@@ -108,7 +109,7 @@ class PersTestGameTypeReportSelfEsteem extends PersTestGameTypeReport {
 
   @override
   String getInfoText() {
-    return label.l_a_score_below_50;
+    return label.l_a_score_below_50_indicates_a_low_self_esteem;
   }
 
   int calculateEsteem(PersTestGameContext gameContext) {

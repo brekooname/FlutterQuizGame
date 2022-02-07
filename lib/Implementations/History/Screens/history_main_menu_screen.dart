@@ -147,7 +147,7 @@ class HistoryMainMenuScreenState extends State<HistoryMainMenuScreen>
               child: Column(children: [
                 MyText(
                   text: labelText,
-                  textColor: Colors.grey.shade800,
+                  fontColor: Colors.grey.shade800,
                 ),
                 MyText(
                   text: contentLocked

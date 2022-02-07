@@ -112,15 +112,37 @@ class PersTestGameTypePlayFiveOptions extends PersTestGameTypePlay {
 
   Widget _createResponseLabels() {
     List<Widget> labels = [];
-    var labelWidth = screenDimensions.dimen(55);
-    for (String l in [label.l_disagree, label.l_neutral, label.l_agree]) {
+    var labelWidth = screenDimensions.w(25);
+    int i = 0;
+    Color labelColor;
+    for (String l in [
+      label.l_disagree,
+      label.l_neither_agree_nor_disagree,
+      label.l_agree
+    ]) {
+      if (i == 0) {
+        labelColor = Colors.red.shade200;
+        labels.add(const Spacer());
+      } else if (i == 1) {
+        labelColor = Colors.yellow;
+        labels.add(const Spacer());
+      } else {
+        labelColor = Colors.green.shade200;
+        labels.add(const Spacer());
+      }
       labels.add(SizedBox(
           width: labelWidth,
           child: MyText(
-            textColor: Colors.grey.shade600,
+            fontConfig: FontConfig(
+                fontColor: labelColor,
+                fontSize: FontConfig.getCustomFontSize(0.85),
+                borderWidth: screenDimensions.dimen(0.5),
+                borderColor: Colors.black),
             text: l,
           )));
+      i++;
     }
+    labels.add(const Spacer());
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,

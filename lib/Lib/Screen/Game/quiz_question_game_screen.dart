@@ -26,7 +26,7 @@ mixin QuizQuestionContainer {
           padding: EdgeInsets.fromLTRB(horizMargin, 0, horizMargin,
               questionToBeDisplayedIsEmpty ? 0 : vertMargin),
           child: MyText(
-            textColor: questionToBeDisplayedIsEmpty
+            fontColor: questionToBeDisplayedIsEmpty
                 ? questionColor
                 : Colors.grey.shade700,
             width: _screenDimensions.dimen(95),
@@ -40,7 +40,7 @@ mixin QuizQuestionContainer {
       questionText = Container();
     } else {
       var text = MyText(
-        textColor: questionColor,
+        fontColor: questionColor,
         width: _screenDimensions.dimen(95),
         maxLines: questionTextMaxLines,
         text: questionToBeDisplayed ?? "",

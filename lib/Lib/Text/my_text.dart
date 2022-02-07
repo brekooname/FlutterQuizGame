@@ -6,33 +6,31 @@ class MyText extends StatelessWidget {
   final MyTextCreatorService _myTextCreatorService = MyTextCreatorService();
 
   late FontConfig fontConfig;
-
   late int maxLines;
-
   double? width;
-
+  Shadow? textShadow;
   Alignment alignmentInsideContainer;
-
   String text;
 
   MyText(
       {Key? key,
       FontConfig? fontConfig,
       double? fontSize,
-      Color? textColor,
+      Color? fontColor,
       required this.text,
       this.alignmentInsideContainer = Alignment.center,
       this.width,
+      this.textShadow,
       this.maxLines = 2})
       : super(key: key) {
     this.fontConfig =
-        fontConfig ?? FontConfig(fontSize: fontSize, fontColor: textColor);
+        fontConfig ?? FontConfig(fontSize: fontSize, fontColor: fontColor);
   }
 
   @override
   Widget build(BuildContext context) {
-    var defaultText = _myTextCreatorService.createText(
-        text, getTextStyle(), TextAlign.center);
+    var defaultText = _myTextCreatorService._createText(
+        text, _getTextStyle(), TextAlign.center);
 
     Widget result;
     if (fontConfig.borderColor == Colors.transparent) {
@@ -50,14 +48,19 @@ class MyText extends StatelessWidget {
         width: width, alignment: alignmentInsideContainer, child: result);
   }
 
-  TextStyle getTextStyle() {
+  TextStyle _getTextStyle() {
+    List<Shadow> shadows = [];
+    if (textShadow != null) {
+      shadows.add(textShadow!);
+    }
     var textStyle = TextStyle(
         decoration: TextDecoration.none,
         fontWeight: fontConfig.fontWeight,
         color: fontConfig.textColor,
-        fontSize: fontConfig.fontSize);
+        fontSize: fontConfig.fontSize,
+        shadows: shadows);
 
-    while (hasTextOverflow(text, textStyle,
+    while (_hasTextOverflow(text, textStyle,
         maxWidth: width ?? double.infinity, maxLines: maxLines)) {
       fontConfig.fontSize = fontConfig.fontSize / 1.1;
       textStyle = TextStyle(
@@ -69,7 +72,7 @@ class MyText extends StatelessWidget {
     return textStyle;
   }
 
-  bool hasTextOverflow(String text, TextStyle style,
+  bool _hasTextOverflow(String text, TextStyle style,
       {double minWidth = 0,
       double maxWidth = double.infinity,
       int maxLines = 2}) {
@@ -106,7 +109,7 @@ class OutlinedText extends StatelessWidget {
     for (var i = 0; i < list.length; i++) {
       widthSum += list[i].width ?? 0;
 
-      var textControl = _myTextCreatorService.createText(
+      var textControl = _myTextCreatorService._createText(
           text?.data ?? '',
           (text?.style ?? const TextStyle()).copyWith(
               foreground: Paint()
@@ -133,7 +136,7 @@ class MyTextCreatorService {
 
   MyTextCreatorService.internal();
 
-  Text createText(String text, TextStyle textStyle, TextAlign? textAlign) {
+  Text _createText(String text, TextStyle textStyle, TextAlign? textAlign) {
     return Text(
       text,
       textScaleFactor: 1,

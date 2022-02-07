@@ -89,7 +89,7 @@ class PersTestSelfEsteemBarChart extends StatelessWidget {
       List<LinearSales> data, bool blueColor, double strokeWidth) {
     return [
       charts.Series<LinearSales, int>(
-        id: label.l_your_self_esteem,
+        id: label.l_self_esteem,
         colorFn: (LinearSales sales, _) => blueColor
             ? charts.MaterialPalette.blue.shadeDefault
             : charts.MaterialPalette.red.shadeDefault,

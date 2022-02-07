@@ -10,11 +10,13 @@ class GameTitle extends StatelessWidget {
   String text;
   String? backgroundImagePath;
   double? backgroundImageOpacity;
+  Shadow? textShadow;
 
   GameTitle({
     Key? key,
     required this.fontConfig,
     required this.text,
+    this.textShadow,
     this.backgroundImagePath,
     this.backgroundImageOpacity,
     double? backgroundImageWidth,
@@ -39,6 +41,7 @@ class GameTitle extends StatelessWidget {
           : const SizedBox(),
       MyText(
         text: text,
+        textShadow: textShadow,
         width: backgroundImageWidth / 1.2,
         maxLines: text.contains(" ") ? 2 : 1,
         fontConfig: fontConfig,

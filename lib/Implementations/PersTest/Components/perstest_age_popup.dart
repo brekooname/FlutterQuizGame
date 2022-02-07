@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_app_quiz_game/Implementations/PersTest/Service/perstest_game_local_storage.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/string_extension.dart';
+import 'package:flutter_app_quiz_game/Lib/Number/number_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Popup/my_popup.dart';
 
 class PersTestAgePopup extends StatefulWidget with MyPopup {
@@ -46,8 +47,12 @@ class PersTestAgePopupState extends State<PersTestAgePopup> with MyPopup {
                 text: "OK",
                 backgroundColor: Colors.green.shade200,
                 onClick: () {
-                  widget.persTestLocalStorage
-                      .setUserAge(widget.ageController.text.parseToInt);
+                  var text = widget.ageController.text;
+                  if (NumberService.isNumeric(text)) {
+                    widget.persTestLocalStorage.setUserAge(text.parseToInt);
+                  } else {
+                    widget.persTestLocalStorage.clearAge();
+                  }
                   widget.goToGameOverScreenCallback.call();
                   closePopup(context);
                 },
