@@ -34,7 +34,9 @@ mixin MyPopup {
       );
     }
     _navigatorService = NavigatorService();
-    width = screenDimensions.dimen(100);
+    width = ScreenDimensionsService.isPortrait()
+        ? screenDimensions.dimen(100)
+        : screenDimensions.w(70);
     marginDoubleVal = screenDimensions.dimen(6);
     var marginDimen = marginDoubleVal;
     margin = SizedBox(

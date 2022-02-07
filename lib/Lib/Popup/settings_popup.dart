@@ -29,9 +29,6 @@ class SettingsPopupState extends State<SettingsPopup> with MyPopup {
   @override
   void initState() {
     initPopup();
-    width = ScreenDimensionsService.isPortrait()
-        ? screenDimensions.dimen(100)
-        : screenDimensions.w(70);
     var sideDimen = screenDimensions.dimen(20);
     soundOn = imageService.getMainImage(
         imageName: "btn_sound_on",

@@ -18,12 +18,12 @@ class MyButton extends StatefulWidget {
   late ButtonSkinConfig buttonSkinConfig;
   late VoidCallback onClick;
   late Size size;
+  late ContentLockedConfig contentLockedConfig;
   Widget? customContent;
 
   bool pressed = false;
   bool disabled;
   bool visible;
-  bool contentLocked;
 
   double buttonAllPadding;
 
@@ -37,7 +37,6 @@ class MyButton extends StatefulWidget {
     this.buttonAllPadding = 0,
     this.disabled = false,
     this.visible = true,
-    this.contentLocked = false,
     Color? disabledBackgroundColor,
     VoidCallback? onClick,
     Size? size,
@@ -45,6 +44,7 @@ class MyButton extends StatefulWidget {
     FontConfig? fontConfig,
     Color? backgroundColor,
     ButtonSkinConfig? buttonSkinConfig,
+    ContentLockedConfig? contentLockedConfig,
     this.customContent,
   }) : super(key: key) {
     this.size = size == null
@@ -54,6 +54,8 @@ class MyButton extends StatefulWidget {
         : size;
     this.fontConfig = fontConfig ?? FontConfig();
     this.onClick = onClick ?? () {};
+    this.contentLockedConfig =
+        contentLockedConfig ?? ContentLockedConfig(isContentLocked: false);
     this.buttonSkinConfig = buttonSkinConfig ??
         ButtonSkinConfig(
             backgroundColor:
@@ -96,8 +98,11 @@ class MyButtonState extends State<MyButton> {
       buttonContent = widget.customContent ?? Container();
     }
 
-    if (widget.contentLocked) {
-      buttonContent = buildContentLocked(buttonContent);
+    if (widget.contentLockedConfig.isContentLocked) {
+      if (widget.contentLockedConfig.contentLockedMode ==
+          ContentLockedMode.contentLockedButtonLock) {
+        buttonContent = buildContentLocked(buttonContent);
+      }
       widget.onClick = () {
         InAppPurchasesPopupService(buildContext: context).showPopup();
       };
@@ -143,7 +148,8 @@ class MyButtonState extends State<MyButton> {
     );
   }
 
-  bool isTouchEnabled() => !widget.disabled || widget.contentLocked;
+  bool isTouchEnabled() =>
+      !widget.disabled || widget.contentLockedConfig.isContentLocked;
 
   Widget buildContentLocked(Widget buttonContent) {
     var decoration = BoxDecoration(
@@ -258,4 +264,25 @@ class MyButtonState extends State<MyButton> {
         borderColor: borderColor,
         borderWidth: widget.buttonSkinConfig.borderWidth);
   }
+}
+
+class ContentLockedConfig {
+  bool isContentLocked;
+  late ContentLockedMode contentLockedMode;
+
+  ContentLockedConfig(
+      {required this.isContentLocked, ContentLockedMode? contentLockedMode}) {
+    if (isContentLocked) {
+      this.contentLockedMode =
+          contentLockedMode ?? ContentLockedMode.contentLockedButtonLock;
+    } else {
+      this.contentLockedMode = ContentLockedMode.contentUnlocked;
+    }
+  }
+}
+
+enum ContentLockedMode {
+  contentLockedButtonLock,
+  contentLockedButtonNormal,
+  contentUnlocked
 }

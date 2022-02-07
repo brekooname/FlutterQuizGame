@@ -178,6 +178,9 @@ abstract class PersTestGameTypeReport {
                         return PersTestDescriptionPopup(attr.description);
                       }));
             },
+            contentLockedConfig: ContentLockedConfig(
+                isContentLocked: MyApp.isExtraContentLocked,
+                contentLockedMode: ContentLockedMode.contentLockedButtonNormal),
             textMaxLines: 1,
             text: attr.label,
             size: btnSize,

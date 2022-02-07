@@ -125,14 +125,16 @@ class HistoryMainMenuScreenState extends State<HistoryMainMenuScreen>
     var totalWonQuestions = widget.historyLocalStorage
         .getTotalWonQuestions(campaignLevel.difficulty);
     var myButton = MyButton(
-        contentLocked: contentLocked,
+        contentLockedConfig:
+            ContentLockedConfig(isContentLocked: contentLocked),
         size: btnSize,
         onClick: () {
           if (widget.historyLocalStorage
                   .getWonQuestionsForDiff(campaignLevel.difficulty)
                   .length ==
               totalQuestionsForCampaignLevel) {
-            widget.historyLocalStorage.resetLevelQuestionsAndHints(campaignLevel.difficulty);
+            widget.historyLocalStorage
+                .resetLevelQuestionsAndHints(campaignLevel.difficulty);
           }
           widget.gameScreenManagerState.showNewGameScreen(campaignLevel);
         },

@@ -255,7 +255,8 @@ class GeoQuizMainMenuScreenState extends State<GeoQuizMainMenuScreen>
         padding: EdgeInsets.all(screenDimensions.dimen(2)),
         child: MyButton(
           disabled: levelBtnDisabled,
-          contentLocked: contentLocked,
+          contentLockedConfig:
+              ContentLockedConfig(isContentLocked: contentLocked),
           onClick: () {
             var geoQuizLocalStorage = widget._geoQuizLocalStorage;
             geoQuizLocalStorage.setExperienceBeforeLeavingMainScreen(
