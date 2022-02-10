@@ -24,7 +24,7 @@ class PersTestGameTypeReportBigFive extends PersTestGameTypeReport {
 
   @override
   String getInfoText() {
-    return label.l_click_on_any_of_the_traits_to_see_their_description;
+    return label.l_press_on_any_of_the_traits_to_see_their_description;
   }
 
   @override

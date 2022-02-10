@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app_quiz_game/Lib/Extensions/string_extension.dart';
 import 'package:flutter_app_quiz_game/Lib/Font/font_config.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -23,6 +24,7 @@ class MyText extends StatelessWidget {
       this.textShadow,
       this.maxLines = 2})
       : super(key: key) {
+    text = text.capitalized.trim();
     this.fontConfig =
         fontConfig ?? FontConfig(fontSize: fontSize, fontColor: fontColor);
   }

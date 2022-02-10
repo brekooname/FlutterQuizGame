@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_app_quiz_game/Implementations/PersTest/Service/perstest_game_local_storage.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/string_extension.dart';
+import 'package:flutter_app_quiz_game/Lib/Font/font_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Number/number_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Popup/my_popup.dart';
 
@@ -35,6 +36,10 @@ class PersTestAgePopupState extends State<PersTestAgePopup> with MyPopup {
             children: [
               margin,
               TextField(
+                autofocus: true,
+                style: TextStyle(
+                    fontSize: FontConfig.normalFontSize,
+                    color: Colors.black),
                 controller: widget.ageController,
                 decoration: InputDecoration(labelText: label.l_your_age),
                 keyboardType: TextInputType.number,

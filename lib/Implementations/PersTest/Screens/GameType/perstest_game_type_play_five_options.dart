@@ -15,6 +15,7 @@ import 'package:flutter_app_quiz_game/Implementations/PersTest/Service/perstest_
 import 'package:flutter_app_quiz_game/Lib/Button/button_skin_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Color/color_util.dart';
+import 'package:flutter_app_quiz_game/Lib/Extensions/string_extension.dart';
 import 'package:flutter_app_quiz_game/Lib/Font/font_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
@@ -61,7 +62,7 @@ class PersTestGameTypePlayFiveOptions extends PersTestGameTypePlay {
       width: screenDimensions.w(75),
       maxLines: 4,
       fontSize: FontConfig.bigFontSize,
-      text: currentQuestionInfo.question.rawString,
+      text: currentQuestionInfo.question.rawString.capitalized,
     )));
     children.add(_createPreviousNextButton(context, false, currentQuestionInfo,
         gameContext, gameScreenManagerState));
@@ -112,7 +113,7 @@ class PersTestGameTypePlayFiveOptions extends PersTestGameTypePlay {
 
   Widget _createResponseLabels() {
     List<Widget> labels = [];
-    var labelWidth = screenDimensions.w(25);
+    var labelWidth = screenDimensions.w(28);
     int i = 0;
     Color labelColor;
     for (String l in [
@@ -133,12 +134,13 @@ class PersTestGameTypePlayFiveOptions extends PersTestGameTypePlay {
       labels.add(SizedBox(
           width: labelWidth,
           child: MyText(
+            maxLines: 2,
             fontConfig: FontConfig(
                 fontColor: labelColor,
-                fontSize: FontConfig.getCustomFontSize(0.85),
+                fontSize: FontConfig.getCustomFontSize(0.80),
                 borderWidth: screenDimensions.dimen(0.5),
                 borderColor: Colors.black),
-            text: l,
+            text: l.capitalized,
           )));
       i++;
     }

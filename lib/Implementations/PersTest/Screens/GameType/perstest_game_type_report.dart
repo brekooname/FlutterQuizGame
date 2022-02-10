@@ -126,8 +126,8 @@ abstract class PersTestGameTypeReport {
   Widget createAttributesGraph(BuildContext context) {
     List<PersAttribute> attrVals = getPersAttributes();
     List<Widget> attrs = [];
-    var attrBarWidth = screenDimensions.dimen(90);
-    var btnSize = Size(screenDimensions.dimen(90), screenDimensions.dimen(13));
+    var attrBarWidth = screenDimensions.w(47);
+    var btnSize = Size(screenDimensions.w(47), screenDimensions.dimen(13));
     var padding = screenDimensions.dimen(0.8);
     for (PersAttribute attr in attrVals) {
       double percent = getAttrPercentValue(attr);

@@ -50,8 +50,9 @@ class MyApp extends StatefulWidget {
   // static String webAppKey = "history";
   // static String webAppKey = "geoquiz";
   static String webAppKey = "perstest";
-  static Language webLanguage = Language.en;
+  static Language webLanguage = Language.ro;
   static bool webIsPro = false;
+  // static bool webIsPro = true;
 
   ////////////
   //////
