@@ -40,6 +40,7 @@ class MyButton extends StatefulWidget {
     Color? disabledBackgroundColor,
     VoidCallback? onClick,
     Size? size,
+    double? fontSize,
     double? width,
     FontConfig? fontConfig,
     Color? backgroundColor,
@@ -52,7 +53,7 @@ class MyButton extends StatefulWidget {
             ? _buttonSize.normalSize
             : Size(width, _buttonSize.normalSize.height)
         : size;
-    this.fontConfig = fontConfig ?? FontConfig();
+    this.fontConfig = fontConfig ?? FontConfig(fontSize: fontSize);
     this.onClick = onClick ?? () {};
     this.contentLockedConfig =
         contentLockedConfig ?? ContentLockedConfig(isContentLocked: false);
@@ -69,7 +70,7 @@ class MyButton extends StatefulWidget {
         text: text!,
         fontConfig: this.fontConfig,
         maxLines: textMaxLines,
-        width: this.size.width / 1.2,
+        width: this.size.width / 1.1,
       );
     } else {
       if (this.buttonSkinConfig.image != null) {

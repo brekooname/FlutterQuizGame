@@ -8,10 +8,11 @@ import 'font_util.dart';
 
 class FontConfig {
   static var fontScale = [
+    Language.he.name,
+    Language.hi.name,
     Language.ja.name,
     Language.ko.name,
     Language.th.name,
-    Language.he.name
   ].contains(MyApp.languageCode)
       ? 19
       : 18;

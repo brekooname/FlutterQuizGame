@@ -8,6 +8,8 @@ import 'package:flutter_app_quiz_game/Implementations/PersTest/Service/perstest_
 import 'package:flutter_app_quiz_game/Lib/Button/button_skin_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/floating_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
+import 'package:flutter_app_quiz_game/Lib/Constants/language.dart';
+import 'package:flutter_app_quiz_game/Lib/Extensions/enum_extension.dart';
 import 'package:flutter_app_quiz_game/Lib/Popup/settings_popup.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/standard_screen.dart';
@@ -130,12 +132,12 @@ class PersTestMainMenuScreenState extends State<PersTestMainMenuScreen>
         children: [
           MyButton(
             backgroundColor: color,
+            fontSize: [Language.sl.name].contains(MyApp.languageCode)
+                ? FontConfig.normalFontSize / 1.1
+                : FontConfig.normalFontSize,
             size: Size(screenDimensions.w(32), screenDimensions.dimen(20)),
             buttonAllPadding: screenDimensions.dimen(0.5),
-            fontConfig: FontConfig(
-              fontWeight: FontWeight.w500,
-            ),
-            textMaxLines: 2,
+            textMaxLines: levelText.contains(" ") ? 2 : 1,
             text: levelText,
             onClick: () {
               widget.gameScreenManagerState.showNewGameScreen(campaignLevel);

@@ -76,6 +76,8 @@ abstract class PersTestGameTypeReport {
                 width: screenDimensions.dimen(1),
               ),
               MyText(
+                width: screenDimensions.w(90),
+                maxLines: 1,
                 text: getInfoText(),
               )
             ]),
