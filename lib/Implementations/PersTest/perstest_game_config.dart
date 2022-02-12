@@ -63,8 +63,8 @@ class PersTestGameConfig extends GameConfig {
       case Language.el:
         return "Τεστ προσωπικότητας";
       case Language.en:
-        return "The Big Five Personality Test";
-        // return "The Personality Test";
+        // return "The Big Five Personality Test";
+        return "The Personality Test";
       case Language.es:
         return "La prueba de personalidad";
       case Language.fi:
