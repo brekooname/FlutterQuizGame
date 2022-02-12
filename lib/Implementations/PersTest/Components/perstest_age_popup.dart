@@ -36,6 +36,9 @@ class PersTestAgePopupState extends State<PersTestAgePopup> with MyPopup {
             children: [
               margin,
               TextField(
+                onSubmitted: (value) {
+                  ageSubmitted();
+                },
                 autofocus: true,
                 style: TextStyle(
                     fontSize: FontConfig.normalFontSize,
@@ -52,14 +55,7 @@ class PersTestAgePopupState extends State<PersTestAgePopup> with MyPopup {
                 text: "OK",
                 backgroundColor: Colors.green.shade200,
                 onClick: () {
-                  var text = widget.ageController.text;
-                  if (NumberService.isNumeric(text)) {
-                    widget.persTestLocalStorage.setUserAge(text.parseToInt);
-                  } else {
-                    widget.persTestLocalStorage.clearAge();
-                  }
-                  widget.goToGameOverScreenCallback.call();
-                  closePopup(context);
+                  ageSubmitted();
                 },
               ),
             ]),
@@ -68,5 +64,16 @@ class PersTestAgePopupState extends State<PersTestAgePopup> with MyPopup {
       widget.goToGameOverScreenCallback.call();
       closePopup(context);
     });
+  }
+
+  void ageSubmitted(){
+    var text = widget.ageController.text;
+    if (NumberService.isNumeric(text)) {
+      widget.persTestLocalStorage.setUserAge(text.parseToInt);
+    } else {
+      widget.persTestLocalStorage.clearAge();
+    }
+    widget.goToGameOverScreenCallback.call();
+    closePopup(context);
   }
 }

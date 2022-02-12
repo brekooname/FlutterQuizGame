@@ -27,7 +27,15 @@ class PersTestQuestionScreen
             category,
             [gameContext.currentQuestionInfo],
             key: key) {
-    persTestGameType = PersTestGameTypePlay.createGameTypePlay(campaignLevel);
+    persTestGameType =
+        PersTestGameTypePlay.createGameTypePlay(this, campaignLevel);
+  }
+
+  @override
+  void incrementTotalPlayedQuestions() {
+    if (currentQuestionInfo.isQuestionOpen()) {
+      super.incrementTotalPlayedQuestions();
+    }
   }
 
   @override
@@ -35,7 +43,7 @@ class PersTestQuestionScreen
 
   @override
   int nrOfQuestionsToShowInterstitialAd() {
-    return 8;
+    return 15;
   }
 }
 

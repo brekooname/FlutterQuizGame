@@ -68,6 +68,7 @@ class _InAppPurchaseState extends State<InAppPurchasePopup> with MyPopup {
   void initState() {
     initPopup(backgroundImageName: "popup_in_app_purchases_background");
 
+    debugPrint("open in app purchases");
     if (!kIsWeb) {
       final Stream<List<PurchaseDetails>> purchaseUpdated =
           widget._inAppPurchase.purchaseStream;
@@ -90,6 +91,7 @@ class _InAppPurchaseState extends State<InAppPurchasePopup> with MyPopup {
   @override
   Widget build(BuildContext context) {
     List<Widget> stackWidgets = [];
+    debugPrint("create in app purchases popup");
     if (_queryProductError == null && _products.isNotEmpty) {
       stackWidgets.add(
         SizedBox(
@@ -109,18 +111,10 @@ class _InAppPurchaseState extends State<InAppPurchasePopup> with MyPopup {
 
     if (_purchasePending || _products.isEmpty) {
       stackWidgets.add(
-        SizedBox(
-          child: Stack(
-            children: const [
-              Opacity(
-                opacity: 0.3,
-                child: ModalBarrier(dismissible: false, color: Colors.grey),
-              ),
-              Center(
-                child: CircularProgressIndicator(),
-              ),
-            ],
-          ),
+        const SizedBox(
+          child: Center(
+            child: CircularProgressIndicator(),
+          )
         ),
       );
     }

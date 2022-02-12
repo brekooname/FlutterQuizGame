@@ -7,7 +7,9 @@ import 'package:flutter_app_quiz_game/Implementations/PersTest/Questions/perstes
 import 'package:flutter_app_quiz_game/Implementations/PersTest/Screens/GameType/perstest_game_type_play_five_options.dart';
 import 'package:flutter_app_quiz_game/Implementations/PersTest/Screens/GameType/perstest_game_type_report.dart';
 import 'package:flutter_app_quiz_game/Implementations/PersTest/Service/perstest_game_screen_manager.dart';
+import 'package:flutter_app_quiz_game/Lib/Audio/my_audio_player.dart';
 import 'package:flutter_app_quiz_game/Lib/Image/image_service.dart';
+import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/ScreenDimensions/screen_dimensions_service.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -15,13 +17,15 @@ import '../../../../main.dart';
 
 abstract class PersTestGameTypePlay {
   ImageService imageService = ImageService();
+  MyAudioPlayer audioPlayer = MyAudioPlayer();
   ScreenDimensionsService screenDimensions = ScreenDimensionsService();
   CampaignLevel campaignLevel;
+  late GameScreen gameScreen;
   late PersTestGameTypeReport gameTypeReport;
   late QuestionCategory category;
   late QuestionDifficulty difficulty;
 
-  PersTestGameTypePlay(this.campaignLevel) {
+  PersTestGameTypePlay(this.gameScreen, this.campaignLevel) {
     difficulty = campaignLevel.difficulty;
     category = campaignLevel.categories.first;
     gameTypeReport = PersTestGameTypeReport.createGameTypeReport(campaignLevel);
@@ -35,7 +39,8 @@ abstract class PersTestGameTypePlay {
       PersTestGameContext gameContext,
       PersTestGameScreenManagerState gameScreenManagerState);
 
-  static PersTestGameTypePlay createGameTypePlay(CampaignLevel campaignLevel) {
-    return PersTestGameTypePlayFiveOptions(campaignLevel);
+  static PersTestGameTypePlay createGameTypePlay(
+      GameScreen gameScreen, CampaignLevel campaignLevel) {
+    return PersTestGameTypePlayFiveOptions(gameScreen, campaignLevel);
   }
 }

@@ -1,6 +1,5 @@
 package app.flutter_app_quiz_game
 
-import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.Window

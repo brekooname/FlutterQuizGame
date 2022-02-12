@@ -34,6 +34,10 @@ abstract class GameScreen<TGameContext extends GameContext,
       {Key? key})
       : super(gameScreenManagerState, key: key) {
     campaignLevel = campaignLevelService.campaignLevel(difficulty, category);
+    incrementTotalPlayedQuestions();
+  }
+
+  void incrementTotalPlayedQuestions() {
     gameLocalStorage.incrementTotalPlayedQuestions();
   }
 

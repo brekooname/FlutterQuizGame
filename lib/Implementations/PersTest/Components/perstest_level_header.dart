@@ -11,12 +11,12 @@ class PersTestLevelHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var headerHeight = _screenDimensions.dimen(16);
+    var headerHeight = _screenDimensions.dimen(13);
 
     return SizedBox(
         height: headerHeight,
         child: Padding(
-            padding: EdgeInsets.all(_screenDimensions.dimen(1)),
+            padding: EdgeInsets.all(_screenDimensions.dimen(0)),
             child: Row(
               children: <Widget>[
                 MyBackButton(),

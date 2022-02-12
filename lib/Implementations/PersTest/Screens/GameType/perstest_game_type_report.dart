@@ -62,7 +62,7 @@ abstract class PersTestGameTypeReport {
         extraReportContent ?? emptyContainer,
         extraReportContent == null ? emptyContainer : margin,
         createAttributesGraph(context),
-        margin,
+        const Spacer(),
         Row(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -129,8 +129,8 @@ abstract class PersTestGameTypeReport {
     List<PersAttribute> attrVals = getPersAttributes();
     List<Widget> attrs = [];
     var attrBarWidth = screenDimensions.w(47);
-    var btnSize = Size(screenDimensions.w(47), screenDimensions.dimen(13));
-    var padding = screenDimensions.dimen(0.8);
+    var btnSize = Size(screenDimensions.w(47), screenDimensions.dimen(10));
+    var padding = screenDimensions.dimen(0.5);
     for (PersAttribute attr in attrVals) {
       double percent = getAttrPercentValue(attr);
       attrs.add(Padding(

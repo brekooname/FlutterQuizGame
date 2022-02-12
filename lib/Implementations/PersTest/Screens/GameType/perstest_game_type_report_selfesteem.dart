@@ -38,7 +38,7 @@ class PersTestGameTypeReportSelfEsteem extends PersTestGameTypeReport {
 
   @override
   Widget? createExtraReportContent() {
-    var graphHeight = screenDimensions.dimen(50);
+    var graphHeight = screenDimensions.dimen(40);
     var graphWidth = screenDimensions.w(70);
     var labelWidth = screenDimensions.w(25);
     var fontSize = PersTestSelfEsteemBarChart.fontSize;

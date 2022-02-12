@@ -107,26 +107,26 @@ flutter:
     - assets/main/popup/
     - assets/main/audio/
     ########################
-    ###### PERSTEST #########
+    ###### PERSTEST ################################################################################
     ########################
     - assets/implementations/perstest/
     - assets/implementations/perstest/buttons/
     ########################
-    ###### GEOQUIZ #########
+    ###### GEOQUIZ #################################################################################
     ########################
-    - assets/implementations/geoquiz/
-    - assets/implementations/geoquiz/questions/images/cat7/
-    - assets/implementations/geoquiz/questions/images/cat9/
-    - assets/implementations/geoquiz/questions/images/diff0/cat5/
-    - assets/implementations/geoquiz/questions/images/diff0/cat8/
-    - assets/implementations/geoquiz/questions/images/diff1/cat5/
-    - assets/implementations/geoquiz/questions/images/diff1/cat8/
-    - assets/implementations/geoquiz/questions/images/diff2/cat5/
-    - assets/implementations/geoquiz/questions/images/diff2/cat8/
-    - assets/implementations/geoquiz/questions/images/diff3/cat5/
-    - assets/implementations/geoquiz/questions/images/diff3/cat8/
+    #- assets/implementations/geoquiz/
+    #- assets/implementations/geoquiz/questions/images/cat7/
+    #- assets/implementations/geoquiz/questions/images/cat9/
+    #- assets/implementations/geoquiz/questions/images/diff0/cat5/
+    #- assets/implementations/geoquiz/questions/images/diff0/cat8/
+    #- assets/implementations/geoquiz/questions/images/diff1/cat5/
+    #- assets/implementations/geoquiz/questions/images/diff1/cat8/
+    #- assets/implementations/geoquiz/questions/images/diff2/cat5/
+    #- assets/implementations/geoquiz/questions/images/diff2/cat8/
+    #- assets/implementations/geoquiz/questions/images/diff3/cat5/
+    #- assets/implementations/geoquiz/questions/images/diff3/cat8/
     ########################
-    ###### HISTORY #########
+    ###### HISTORY #################################################################################
     ########################
     #- assets/implementations/history/
     #- assets/implementations/history/buttons/

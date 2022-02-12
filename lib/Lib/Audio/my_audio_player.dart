@@ -29,6 +29,10 @@ class MyAudioPlayer {
     await _playSound(assetName: "level_fail");
   }
 
+  Future<void> playClick() async {
+    await _playSound(assetName: "click");
+  }
+
   Future<void> stop({String? audioPlayerId}) async {
     var assetsAudioPlayer = _getAssetsAudioPlayer(audioPlayerId);
     if (assetsAudioPlayer.isPlaying.value) {

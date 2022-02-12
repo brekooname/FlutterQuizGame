@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">The Personality Test</string>
+    <string name="language">en</string>
+    <string name="game_id">perstest</string>
+
+    <string name="admob_banner_id">ca-app-pub-9432399956064043/2539999940</string>
+    <string name="admob_inter_id">ca-app-pub-9432399956064043/8913836607</string>
+    <string name="admob_video_id">ca-app-pub-9432399956064043/2348428252</string>
+    <string name="admob_app_id">ca-app-pub-9432399956064043~7792326625</string>
+
+    <bool name="is_pro">false</bool>
+</resources>

@@ -17,11 +17,13 @@ import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Color/color_util.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/string_extension.dart';
 import 'package:flutter_app_quiz_game/Lib/Font/font_config.dart';
+import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
 class PersTestGameTypePlayFiveOptions extends PersTestGameTypePlay {
-  PersTestGameTypePlayFiveOptions(CampaignLevel campaignLevel)
-      : super(campaignLevel);
+  PersTestGameTypePlayFiveOptions(
+      GameScreen gameScreen, CampaignLevel campaignLevel)
+      : super(gameScreen, campaignLevel);
 
   @override
   Widget createGamePlayContent(
@@ -40,7 +42,7 @@ class PersTestGameTypePlayFiveOptions extends PersTestGameTypePlay {
         const Spacer(),
         _createQuestionContainer(
             context, currentQuestionInfo, gameContext, gameScreenManagerState),
-        SizedBox(height: screenDimensions.dimen(10)),
+        SizedBox(height: screenDimensions.dimen(5)),
         _createResponseLabels(),
         _createResponseButtons(
             context, currentQuestionInfo, gameContext, gameScreenManagerState),
@@ -166,16 +168,19 @@ class PersTestGameTypePlayFiveOptions extends PersTestGameTypePlay {
           positiveResponseValue ? 3 : 1),
       ResponseButton(Colors.green, positiveResponseValue ? 4 : 2)
     ];
-    var btnSideDimen = screenDimensions.dimen(20);
+    var btnSideDimen = screenDimensions.dimen(18);
     List<Widget> btns = [];
-    var pad = screenDimensions.dimen(4);
+    var vertPadding = screenDimensions.dimen(2);
+    var horizPadding = screenDimensions.dimen(6);
     for (ResponseButton r in responseBtns) {
       List<Widget> stackBtn = [];
       stackBtn.add(MyButton(
         onClick: () {
+
           currentQuestionInfo.clearPressedAnswers();
           currentQuestionInfo.addPressedAnswer(r.value.toString());
 
+          audioPlayer.playClick();
           gameContext.gameUser.setWonQuestion(currentQuestionInfo);
           _goToQuestionInfo(
               context,
@@ -203,7 +208,8 @@ class PersTestGameTypePlayFiveOptions extends PersTestGameTypePlay {
         );
       }
       btns.add(Padding(
-          padding: EdgeInsets.all(pad),
+          padding: EdgeInsets.fromLTRB(
+              horizPadding, vertPadding, horizPadding, vertPadding),
           child: Stack(
             alignment: Alignment.center,
             children: stackBtn,
@@ -239,7 +245,7 @@ class PersTestGameTypePlayFiveOptions extends PersTestGameTypePlay {
       }
     } else {
       gameContext.currentQuestionInfo = questionInfo;
-      gameScreenManagerState.showNextGameScreen(campaignLevel, gameContext);
+      gameScreen.goToNextGameScreen(context);
     }
   }
 
