@@ -8,7 +8,7 @@ class DopeWarsLocation {
   static late DopeWarsLocation location4;
   static late DopeWarsLocation location5;
 
-  List<DopeWarsLocation> locations = [
+  static List<DopeWarsLocation> locations = [
     location0 = DopeWarsLocation(
         0,
         "New York",
@@ -101,4 +101,12 @@ class DopeWarsLocation {
       this.expensiveResources,
       this.unlockPricePercent,
       this.travelPricePercent);
+
+  bool isResourceCheapInThisLocation(DopeWarsResourceType resourceType) {
+    return cheapResources.contains(resourceType);
+  }
+
+  bool isResourceExpensiveInThisLocation(DopeWarsResourceType resourceType) {
+    return expensiveResources.contains(resourceType);
+  }
 }

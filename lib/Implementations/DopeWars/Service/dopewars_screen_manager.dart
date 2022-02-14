@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_app_quiz_game/Game/Game/campaign_level.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
-import 'package:flutter_app_quiz_game/Implementations/DopeWars/Questions/dopewars_context.dart';
+import 'package:flutter_app_quiz_game/Implementations/DopeWars/Questions/dopewars_game_context.dart';
 import 'package:flutter_app_quiz_game/Implementations/DopeWars/Screens/dopewars_main_menu_screen.dart';
 import 'package:flutter_app_quiz_game/Implementations/DopeWars/Screens/dopewars_question_screen.dart';
 import 'package:flutter_app_quiz_game/Implementations/DopeWars/Service/dopewars_gamecontext_service.dart';
@@ -20,7 +20,7 @@ class DopeWarsScreenManager extends GameScreenManager {
 }
 
 class DopeWarsScreenManagerState extends State<DopeWarsScreenManager>
-    with GameScreenManagerState<DopeWarsContext> {
+    with GameScreenManagerState<DopeWarsGameContext> {
   @override
   void initState() {
     super.initState();
@@ -63,7 +63,7 @@ class DopeWarsScreenManagerState extends State<DopeWarsScreenManager>
   @override
   @protected
   GameScreen getScreenForConfig(
-    DopeWarsContext gameContext,
+    DopeWarsGameContext gameContext,
     QuestionDifficulty difficulty,
     QuestionCategory category,
   ) {
@@ -76,7 +76,7 @@ class DopeWarsScreenManagerState extends State<DopeWarsScreenManager>
 
   @override
   @protected
-  DopeWarsContext createGameContext(CampaignLevel campaignLevel) {
+  DopeWarsGameContext createGameContext(CampaignLevel campaignLevel) {
     return DopeWarsContextService().createGameContext(campaignLevel);
   }
 }

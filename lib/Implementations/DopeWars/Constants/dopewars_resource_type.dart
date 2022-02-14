@@ -1,3 +1,5 @@
+import 'package:flutter_app_quiz_game/Implementations/DopeWars/Service/dopewars_price_service.dart';
+
 class DopeWarsResourceType {
   static late DopeWarsResourceType res0;
   static late DopeWarsResourceType res1;
@@ -12,7 +14,7 @@ class DopeWarsResourceType {
   static late DopeWarsResourceType res10;
   static late DopeWarsResourceType res11;
 
-  List<DopeWarsResourceType> resources = [
+  static List<DopeWarsResourceType> resources = [
     res0 = DopeWarsResourceType(0, "Gems", 600),
     res1 = DopeWarsResourceType(1, "Cars", 240),
     res2 = DopeWarsResourceType(2, "Electronics", 100),
@@ -29,8 +31,12 @@ class DopeWarsResourceType {
 
   int index;
   String resourceLabel;
-  int standardPricePercent;
+  final int _standardPricePercent;
 
   DopeWarsResourceType(
-      this.index, this.resourceLabel, this.standardPricePercent);
+      this.index, this.resourceLabel, this._standardPricePercent);
+
+  int get standardPrice =>
+      DopeWarsPriceService.getPriceBasedOnStartingBudgetWithPercent(
+          _standardPricePercent);
 }
