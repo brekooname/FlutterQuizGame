@@ -3,13 +3,13 @@ import 'package:flutter_app_quiz_game/Game/GameType/game_config.dart';
 import 'package:flutter_app_quiz_game/Game/GameType/game_question_config.dart';
 import 'package:flutter_app_quiz_game/Game/Question/all_questions_service.dart';
 import 'package:flutter_app_quiz_game/Game/Question/question_collector_service.dart';
+import 'package:flutter_app_quiz_game/Implementations/_Skel/Service/skel_screen_manager.dart';
 import 'package:flutter_app_quiz_game/Lib/Constants/language.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen_manager.dart';
 
 import 'Constants/skel_game_question_config.dart';
 import 'Questions/AllContent/skel_all_questions.dart';
 import 'Questions/AllContent/skel_question_collector_service.dart';
-import 'Service/skel_game_screen_manager.dart';
 
 class SkelGameConfig extends GameConfig {
   static final SkelGameConfig singleton = SkelGameConfig.internal();
@@ -32,7 +32,7 @@ class SkelGameConfig extends GameConfig {
 
   @override
   GameScreenManager get gameScreenManager =>
-      SkelGameScreenManager(key: UniqueKey());
+      SkelScreenManager(key: UniqueKey());
 
   @override
   ImageRepeat get backgroundTextureRepeat => ImageRepeat.noRepeat;
