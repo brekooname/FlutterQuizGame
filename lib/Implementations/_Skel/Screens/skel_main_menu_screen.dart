@@ -37,8 +37,6 @@ class SkelMainMenuScreenState extends State<SkelMainMenuScreen>
           fontWeight: FontWeight.normal,
           fontSize: FontConfig.bigFontSize,
           borderColor: Colors.green),
-      backgroundImagePath: assetsService.getSpecificAssetPath(
-          assetExtension: "png", assetName: "title_clouds_background"),
     );
 
     var mainColumn = Container(

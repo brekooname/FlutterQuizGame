@@ -12,16 +12,6 @@ class InAppPurchaseLocalStorage extends MyLocalStorage {
 
   InAppPurchaseLocalStorage.internal();
 
-  InAppPurchasesPreferencesService() {
-    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    //!!!!!!!!!!!!! //TODO should be disabled !!!!!!!!!!!!
-    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    // localStorage.setBool(_getProductIdKey(""), false);
-    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  }
-
   bool isPurchased(String productId) {
     return localStorage.getBool(_getProductIdKey(productId)) ?? false;
   }

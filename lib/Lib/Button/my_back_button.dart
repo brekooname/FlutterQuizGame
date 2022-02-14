@@ -12,17 +12,17 @@ import 'my_button.dart';
 class MyBackButton extends StatelessWidget {
   final ImageService _imageService = ImageService();
   final ScreenDimensionsService _screenDimensions = ScreenDimensionsService();
-  late Size _buttonSize;
+  late Size buttonSize;
 
   MyBackButton({Key? key}) : super(key: key) {
     var side = _screenDimensions.dimen(12);
-    _buttonSize = Size(side, side);
+    buttonSize = Size(side, side);
   }
 
   @override
   Widget build(BuildContext context) {
     Widget btn = MyButton(
-        size: _buttonSize,
+        size: buttonSize,
         onClick: () {
           var currentScreen = MyApp.gameScreenManager.currentScreen;
           currentScreen!.gameScreenManagerState.goBack(currentScreen);
@@ -34,7 +34,7 @@ class MyBackButton extends StatelessWidget {
                   : "btn_back_up_white",
               imageExtension: "png",
               module: "buttons",
-              maxWidth: _buttonSize.width)),
+              maxWidth: buttonSize.width)),
         ),
         fontConfig: FontConfig());
 

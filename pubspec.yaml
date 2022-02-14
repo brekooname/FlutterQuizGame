@@ -107,6 +107,11 @@ flutter:
     - assets/main/popup/
     - assets/main/audio/
     ########################
+    ###### DOPEWARS ################################################################################
+    ########################
+    - assets/implementations/dopewars/
+    - assets/implementations/dopewars/buttons/
+    ########################
     ###### PERSTEST ################################################################################
     ########################
     - assets/implementations/perstest/

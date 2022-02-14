@@ -44,8 +44,13 @@ class PersTestGameConfig extends GameConfig {
   @override
   Color get screenBackgroundColor => const Color.fromRGBO(198, 236, 255, 1);
 
+  //iOS
   @override
-  String get extraContentProductId => "extracontent.perstest";
+  String get extraContentProductId => "extracontent.persontest";
+
+  // //Android
+  // @override
+  // String get extraContentProductId => "extracontent.perstest";
 
   @override
   String getTitle(Language language) {

@@ -8,7 +8,6 @@ import '../../main.dart';
 import 'my_popup.dart';
 
 class RatePopupService {
-  //TODO ---VALUE CHANGED--- should be 2
   final int launchesUntilPrompt = 2;
 
   late RateAppLocalStorage rateAppLocalStorage;
@@ -26,13 +25,12 @@ class RatePopupService {
   RatePopupService.internal();
 
   void showRateAppPopup() {
-    return;
-    if (rateAppLocalStorage.isAlreadyRated()) {
-      //TODO ---VALUE CHANGED--- should be return
+    if (MyApp.kIsManualTest) {
       return;
-    }
-
-    if (rateAppLocalStorage.appLaunchedCount() % launchesUntilPrompt == 0) {
+    } else if (rateAppLocalStorage.isAlreadyRated()) {
+      return;
+    } else if (rateAppLocalStorage.appLaunchedCount() % launchesUntilPrompt ==
+        0) {
       Future.delayed(
           Duration.zero,
           () => showDialog(

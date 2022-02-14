@@ -31,34 +31,42 @@ class PersTestAgePopupState extends State<PersTestAgePopup> with MyPopup {
   AlertDialog build(BuildContext context) {
     return createDialog(
         Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              margin,
-              TextField(
-                onSubmitted: (value) {
-                  ageSubmitted();
-                },
-                autofocus: true,
-                style: TextStyle(
-                    fontSize: FontConfig.normalFontSize,
-                    color: Colors.black),
-                controller: widget.ageController,
-                decoration: InputDecoration(labelText: label.l_your_age),
-                keyboardType: TextInputType.number,
-                inputFormatters: <TextInputFormatter>[
-                  FilteringTextInputFormatter.digitsOnly
-                ],
-              ),
-              margin,
-              MyButton(
-                text: "OK",
-                backgroundColor: Colors.green.shade200,
-                onClick: () {
-                  ageSubmitted();
-                },
-              ),
-            ]),
+          children: [
+            margin,
+            Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(
+                      width: width / 3,
+                      child: TextField(
+                        onSubmitted: (value) {
+                          ageSubmitted();
+                        },
+                        autofocus: true,
+                        style: TextStyle(
+                            fontSize: FontConfig.normalFontSize,
+                            color: Colors.black),
+                        controller: widget.ageController,
+                        decoration:
+                            InputDecoration(labelText: label.l_your_age),
+                        keyboardType: TextInputType.number,
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
+                      )),
+                  margin,
+                  MyButton(
+                    text: "OK",
+                    backgroundColor: Colors.green.shade200,
+                    onClick: () {
+                      ageSubmitted();
+                    },
+                  ),
+                ]),
+            margin
+          ],
+        ),
         context: context, onCloseBtnClick: () {
       widget.persTestLocalStorage.clearAge();
       widget.goToGameOverScreenCallback.call();
@@ -66,7 +74,7 @@ class PersTestAgePopupState extends State<PersTestAgePopup> with MyPopup {
     });
   }
 
-  void ageSubmitted(){
+  void ageSubmitted() {
     var text = widget.ageController.text;
     if (NumberService.isNumeric(text)) {
       widget.persTestLocalStorage.setUserAge(text.parseToInt);

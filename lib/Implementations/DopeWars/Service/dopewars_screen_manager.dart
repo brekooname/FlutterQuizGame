@@ -2,25 +2,25 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_app_quiz_game/Game/Game/campaign_level.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
-import 'package:flutter_app_quiz_game/Implementations/_Skel/Questions/skel_game_context.dart';
-import 'package:flutter_app_quiz_game/Implementations/_Skel/Screens/skel_game_question_screen.dart';
-import 'package:flutter_app_quiz_game/Implementations/_Skel/Screens/skel_main_menu_screen.dart';
-import 'package:flutter_app_quiz_game/Implementations/_Skel/Service/skel_gamecontext_service.dart';
+import 'package:flutter_app_quiz_game/Implementations/DopeWars/Questions/dopewars_context.dart';
+import 'package:flutter_app_quiz_game/Implementations/DopeWars/Screens/dopewars_main_menu_screen.dart';
+import 'package:flutter_app_quiz_game/Implementations/DopeWars/Screens/dopewars_question_screen.dart';
+import 'package:flutter_app_quiz_game/Implementations/DopeWars/Service/dopewars_gamecontext_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Popup/rate_app_popup.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen_manager.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen_manager_state.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/standard_screen.dart';
 
-class SkelGameScreenManager extends GameScreenManager {
-  SkelGameScreenManager({Key? key}) : super(key: key);
+class DopeWarsScreenManager extends GameScreenManager {
+  DopeWarsScreenManager({Key? key}) : super(key: key);
 
   @override
-  State<SkelGameScreenManager> createState() => SkelGameScreenManagerState();
+  State<DopeWarsScreenManager> createState() => DopeWarsScreenManagerState();
 }
 
-class SkelGameScreenManagerState extends State<SkelGameScreenManager>
-    with GameScreenManagerState<SkelGameContext> {
+class DopeWarsScreenManagerState extends State<DopeWarsScreenManager>
+    with GameScreenManagerState<DopeWarsContext> {
   @override
   void initState() {
     super.initState();
@@ -37,7 +37,7 @@ class SkelGameScreenManagerState extends State<SkelGameScreenManager>
 
   @override
   bool goBack(StandardScreen standardScreen) {
-    if (standardScreen.runtimeType == SkelMainMenuScreen) {
+    if (standardScreen.runtimeType == DopeWarsMainMenuScreen) {
       return true;
     } else {
       showMainScreen();
@@ -47,7 +47,7 @@ class SkelGameScreenManagerState extends State<SkelGameScreenManager>
 
   @override
   StandardScreen createMainScreen() {
-    return SkelMainMenuScreen(
+    return DopeWarsMainMenuScreen(
       this,
       key: UniqueKey(),
     );
@@ -63,11 +63,11 @@ class SkelGameScreenManagerState extends State<SkelGameScreenManager>
   @override
   @protected
   GameScreen getScreenForConfig(
-    SkelGameContext gameContext,
+    DopeWarsContext gameContext,
     QuestionDifficulty difficulty,
     QuestionCategory category,
   ) {
-    return SkelQuestionScreen(this,
+    return DopeWarsQuestionScreen(this,
         key: UniqueKey(),
         gameContext: gameContext,
         category: category,
@@ -76,7 +76,7 @@ class SkelGameScreenManagerState extends State<SkelGameScreenManager>
 
   @override
   @protected
-  SkelGameContext createGameContext(CampaignLevel campaignLevel) {
-    return SkelGameContextService().createGameContext(campaignLevel);
+  DopeWarsContext createGameContext(CampaignLevel campaignLevel) {
+    return DopeWarsContextService().createGameContext(campaignLevel);
   }
 }

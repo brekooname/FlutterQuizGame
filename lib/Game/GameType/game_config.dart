@@ -23,6 +23,7 @@ abstract class GameConfig {
 
   ScreenOrientation get screenOrientation => ScreenOrientation.portrait;
 
+  //TODO Check extra content "iOS" and "Android" may be different
   String get extraContentProductId;
 
   Color get screenBackgroundColor;
