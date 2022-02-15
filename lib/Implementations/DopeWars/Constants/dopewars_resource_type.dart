@@ -39,4 +39,15 @@ class DopeWarsResourceType {
   int get standardPrice =>
       DopeWarsPriceService.getPriceBasedOnStartingBudgetWithPercent(
           _standardPricePercent);
+
+  DopeWarsResourceType.fromJson(Map<String, dynamic> json)
+      : index = json['index'],
+        resourceLabel = json['resourceLabel'],
+        _standardPricePercent = json['_standardPricePercent'];
+
+  Map<String, dynamic> toJson() => {
+        'index': index,
+        'resourceLabel': resourceLabel,
+        '_standardPricePercent': _standardPricePercent,
+      };
 }

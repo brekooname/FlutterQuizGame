@@ -77,6 +77,6 @@ class DopeWarsScreenManagerState extends State<DopeWarsScreenManager>
   @override
   @protected
   DopeWarsGameContext createGameContext(CampaignLevel campaignLevel) {
-    return DopeWarsContextService().createGameContext(campaignLevel);
+    return DopeWarsContextService().createGameContext();
   }
 }

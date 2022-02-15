@@ -1,4 +1,5 @@
 import 'package:flutter_app_quiz_game/Implementations/DopeWars/Constants/dopewars_resource_type.dart';
+import 'package:flutter_app_quiz_game/Implementations/DopeWars/Service/dopewars_price_service.dart';
 
 class DopeWarsLocation {
   static late DopeWarsLocation location0;
@@ -19,7 +20,7 @@ class DopeWarsLocation {
         [
           DopeWarsResourceType.res0,
         ],
-        null,
+        0,
         3),
     location1 = DopeWarsLocation(
         1,
@@ -91,16 +92,16 @@ class DopeWarsLocation {
   String locationLabel;
   List<DopeWarsResourceType> cheapResources;
   List<DopeWarsResourceType> expensiveResources;
-  int? unlockPricePercent;
-  int travelPricePercent;
+  final int _unlockPricePercent;
+  final int _travelPricePercent;
 
   DopeWarsLocation(
       this.index,
       this.locationLabel,
       this.cheapResources,
       this.expensiveResources,
-      this.unlockPricePercent,
-      this.travelPricePercent);
+      this._unlockPricePercent,
+      this._travelPricePercent);
 
   bool isResourceCheapInThisLocation(DopeWarsResourceType resourceType) {
     return cheapResources.contains(resourceType);
@@ -109,4 +110,12 @@ class DopeWarsLocation {
   bool isResourceExpensiveInThisLocation(DopeWarsResourceType resourceType) {
     return expensiveResources.contains(resourceType);
   }
+
+  int get unlockPrice =>
+      DopeWarsPriceService.getPriceBasedOnStartingBudgetWithPercent(
+          _unlockPricePercent);
+
+  int getTravelPrice(int daysPassed) => DopeWarsPriceService
+      .getPriceBasedOnStartingBudgetWithPercentAndDaysPassed(
+          _travelPricePercent, daysPassed);
 }

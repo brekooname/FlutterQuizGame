@@ -14,21 +14,23 @@ class ColorUtil {
   static Widget imageDarken(Widget image, [double amount = -0.001]) {
     return ColorFiltered(
       colorFilter: ColorFilter.matrix(
-          ColorFilterGenerator.brightnessAdjustMatrix(value: -0.001)),
+          ColorFilterGenerator.brightnessAdjustMatrix(value: amount)),
       child: Container(
         child: image,
       ),
     );
   }
 
-  static Widget imageToGreyScale(Widget image) {
-    return ColorFiltered(
-      colorFilter: ColorFilter.matrix(
-          ColorFilterGenerator.saturationAdjustMatrix(value: -1)),
-      child: Container(
-        child: image,
-      ),
-    );
+  static Widget imageToGreyScale(Widget image, [double amount = 0.002]) {
+    return imageDarken(
+        ColorFiltered(
+          colorFilter: ColorFilter.matrix(
+              ColorFilterGenerator.saturationAdjustMatrix(value: -1)),
+          child: Container(
+            child: image,
+          ),
+        ),
+        amount);
   }
 }
 

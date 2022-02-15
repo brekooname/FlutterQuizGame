@@ -5,4 +5,13 @@ abstract class DopeWarsResource {
   int price;
 
   DopeWarsResource(this.resourceType, this.price);
+
+  DopeWarsResource.fromJson(Map<String, dynamic> json)
+      : resourceType = DopeWarsResourceType.fromJson(json['resourceType']),
+        price = json['price'];
+
+  Map<String, dynamic> toJson() => {
+        'resourceType': resourceType.toJson(),
+        'price': price,
+      };
 }

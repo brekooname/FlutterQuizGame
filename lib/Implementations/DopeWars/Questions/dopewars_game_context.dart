@@ -22,10 +22,27 @@ class DopeWarsGameContext extends GameContext {
 
   int get reputation => _reputation;
 
-  set reputation(int reputation) {
+  setReputation(int reputation) {
     if (reputation > 100) {
       reputation = 100;
     }
     _reputation = reputation;
+  }
+
+  DopeWarsGameContext.fromJson(
+      GameContext gameContext, Map<String, dynamic> json)
+      : _reputation = json['_reputation'],
+        daysPassed = json['daysPassed'],
+        inventory = DopeWarsUserInventory.fromJson(json['inventory']),
+        super(gameContext.gameUser, gameContext.questionConfig) {
+    market = DopeWarsUserMarket(inventory.availableResourcesByType);
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      '_reputation': _reputation,
+      'daysPassed': daysPassed,
+      'inventory': inventory.toJson(),
+    };
   }
 }

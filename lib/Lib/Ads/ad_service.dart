@@ -8,7 +8,6 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import '../../main.dart';
 
 class AdService {
-
   bool isInterstitialAdLoaded = false;
   InterstitialAd? interstitialAd;
   WatchRewardedAdPopup? watchRewardedAdPopup;
@@ -61,7 +60,7 @@ class AdService {
   }
 
   void showInterstitialAd(BuildContext buildContext, bool showInterstitialAd,
-      VoidCallback executeAfterClose) {
+      {required VoidCallback executeAfterClose}) {
     if (MyApp.isExtraContentLocked &&
         isInterstitialAdLoaded &&
         showInterstitialAd) {

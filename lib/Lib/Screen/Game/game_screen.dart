@@ -56,8 +56,9 @@ abstract class GameScreen<TGameContext extends GameContext,
   void goToNextGameScreen(BuildContext context) {
     var playedQ = gameLocalStorage.getTotalPlayedQuestions();
     var showOnNrOfQ = nrOfQuestionsToShowInterstitialAd();
-    adService.showInterstitialAd(
-        context, playedQ > 0 && playedQ % showOnNrOfQ == 0, () {
+    adService
+        .showInterstitialAd(context, playedQ > 0 && playedQ % showOnNrOfQ == 0,
+            executeAfterClose: () {
       gameScreenManagerState.showNextGameScreen(campaignLevel, gameContext);
     });
   }

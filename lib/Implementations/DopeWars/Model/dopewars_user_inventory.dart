@@ -2,7 +2,7 @@ import 'package:flutter_app_quiz_game/Implementations/DopeWars/Constants/dopewar
 import 'package:flutter_app_quiz_game/Implementations/DopeWars/Model/dopewars_resource_inventory.dart';
 
 class DopeWarsUserInventory {
-  final int startingMaxContainer = 99;
+  static const int startingMaxContainer = 99;
   static const int maxItemsInInventory = 6;
   List<DopeWarsResourceInventory> availableResources = [];
   int budget;
@@ -23,5 +23,15 @@ class DopeWarsUserInventory {
 
   int get containerSpaceLeft {
     return startingMaxContainer - totalAmountOfResources;
+  }
+
+  DopeWarsUserInventory.fromJson(Map<String, dynamic> json)
+      : budget = json['budget'],
+        availableResources = List<DopeWarsResourceInventory>.from(
+            json['availableResources']
+                .map((model) => DopeWarsResourceInventory.fromJson(model)));
+
+  Map<String, dynamic> toJson() {
+    return {'budget': budget, 'availableResources': availableResources};
   }
 }
