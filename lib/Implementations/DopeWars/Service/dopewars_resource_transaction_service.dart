@@ -2,6 +2,7 @@ import 'package:flutter_app_quiz_game/Implementations/DopeWars/Model/dopewars_re
 import 'package:flutter_app_quiz_game/Implementations/DopeWars/Model/dopewars_resource_inventory.dart';
 import 'package:flutter_app_quiz_game/Implementations/DopeWars/Model/dopewars_user_inventory.dart';
 import 'package:flutter_app_quiz_game/Implementations/DopeWars/Questions/dopewars_game_context.dart';
+import 'package:flutter_app_quiz_game/Lib/Extensions/int_extension.dart';
 
 import 'dopewars_location_move_service.dart';
 
@@ -90,6 +91,10 @@ class DopeWarsResourceTransactionService {
 
   static int getResourceAmountYouAfford(int resourcePrice, int budget) {
     return (budget / resourcePrice).floor();
+  }
+
+  static String formatCurrency(int? val) {
+    return val?.formatIntEveryChars(3, "\$") ?? "";
   }
 
   void calculateReputation() {

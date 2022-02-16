@@ -1,7 +1,7 @@
 import 'package:flutter_app_quiz_game/Lib/Extensions/string_extension.dart';
 
 extension IntExtension on int {
-  String formatIntEveryChars(int everyChars) {
+  String formatIntEveryChars(int everyChars, [suffix = ""]) {
     String stringVal = toString();
     String result = toString();
     int j = 0;
@@ -25,6 +25,6 @@ extension IntExtension on int {
     if (result[0] == '-' && result[1] == '.') {
       result = "-" + result.substring(2);
     }
-    return result;
+    return result + suffix;
   }
 }
