@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
 import 'package:flutter_app_quiz_game/Implementations/DopeWars/Components/dopewars_level_header.dart';
+import 'package:flutter_app_quiz_game/Implementations/DopeWars/Components/dopewars_location_move_popup.dart';
 import 'package:flutter_app_quiz_game/Implementations/DopeWars/Constants/dopewars_campaign_level_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/DopeWars/Model/dopewars_resource.dart';
 import 'package:flutter_app_quiz_game/Implementations/DopeWars/Model/dopewars_resource_inventory.dart';
@@ -56,11 +57,15 @@ class DopeWarsQuestionScreenState extends State<DopeWarsQuestionScreen>
     with ScreenState, QuizQuestionContainer {
   @override
   Widget build(BuildContext context) {
+    var margin = SizedBox(
+      height: screenDimensions.dimen(5),
+    );
     return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           DopeWarsLevelHeader(widget.gameContext),
+          margin,
           Row(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -69,6 +74,8 @@ class DopeWarsQuestionScreenState extends State<DopeWarsQuestionScreen>
                 createCenterControls(),
                 createMarket()
               ]),
+          margin,
+          createBottomRowButtons(),
           const Spacer()
         ]);
   }
@@ -162,7 +169,7 @@ class DopeWarsQuestionScreenState extends State<DopeWarsQuestionScreen>
   FontConfig invMarketLabelFontConfig() {
     return FontConfig(
         fontSize: FontConfig.getCustomFontSize(0.9),
-        fontColor: Colors.black);
+        fontColor: Colors.grey.shade600);
   }
 
   Widget createInventory() {
@@ -171,9 +178,10 @@ class DopeWarsQuestionScreenState extends State<DopeWarsQuestionScreen>
         widget.gameContext.inventory.availableResources.toList();
     availableRes.sort((a, b) => a.price.compareTo(b.price));
     List<Widget> items = [];
-    items.add(
-        MyText(maxLines: 1,
-            fontConfig: invMarketLabelFontConfig(), text: "Inventory"));
+    items.add(MyText(
+        maxLines: 1,
+        fontConfig: invMarketLabelFontConfig(),
+        text: "Inventory"));
     for (DopeWarsResourceInventory res in availableRes) {
       items.add(createInventoryItem(res));
       remainingSlotsToAdd--;
@@ -218,7 +226,64 @@ class DopeWarsQuestionScreenState extends State<DopeWarsQuestionScreen>
   }
 
   Size getSizeForResBtn() {
-    return Size(screenDimensions.dimen(40), screenDimensions.dimen(18));
+    return Size(screenDimensions.dimen(40), screenDimensions.dimen(17));
+  }
+
+  Widget createBottomRowButtons() {
+    var btnSize = Size(screenDimensions.w(32), screenDimensions.dimen(14));
+    var btnSkin = ButtonSkinConfig(
+        borderColor: Colors.green.shade800,
+        borderWidth: FontConfig.standardBorderWidth / 2,
+        backgroundColor: Colors.green.shade50);
+    var travelBtn = MyButton(
+      text: "New York",
+      size: btnSize,
+      buttonSkinConfig: btnSkin,
+      onClick: () {
+        Future.delayed(
+            Duration.zero,
+            () => showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return DopeWarsLocationMovePopup(() {
+                    setState(() {});
+                  });
+                }));
+      },
+    );
+    var shopBtn = MyButton(
+      text: "Shop",
+      size: btnSize,
+      buttonSkinConfig: btnSkin,
+      onClick: () {
+        setState(() {});
+      },
+    );
+    var nextDayBtn = MyButton(
+      text: "Next Day",
+      size: btnSize,
+      buttonSkinConfig: btnSkin,
+      onClick: () {
+        widget.dopeWarsResourceTransactionService.dopeWarsLocationMoveService
+            .increaseDaysPassed(context);
+        widget.gameContext.market.setCurrentLocation(
+            widget.gameContext.market.currentLocation,
+            widget.gameContext.inventory.availableResourcesByType);
+        setState(() {});
+      },
+    );
+    return Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          const Spacer(),
+          travelBtn,
+          const Spacer(),
+          shopBtn,
+          const Spacer(),
+          nextDayBtn,
+          const Spacer()
+        ]);
   }
 
   Widget createInventoryItem(DopeWarsResourceInventory res) {
@@ -346,7 +411,7 @@ class DopeWarsQuestionScreenState extends State<DopeWarsQuestionScreen>
     var margin = FontConfig.standardBorderWidth * 2;
     List<Widget> btnStack = [];
     if (res != null && content != null) {
-      btnStack.add(Container(
+      btnStack.add(SizedBox(
         width: btnSize.width - margin,
         height: btnSize.height - margin,
         child: Opacity(
@@ -482,7 +547,7 @@ class DopeWarsQuestionScreenState extends State<DopeWarsQuestionScreen>
 
   Widget _getArrowForMarketPrice(
       DopeWarsResourceMarket resourceMarket, bool disabled) {
-    double imgDimen = screenDimensions.dimen(10);
+    double imgDimen = screenDimensions.dimen(8);
     Widget? img;
     String? imgName;
     if (resourceMarket.price <
