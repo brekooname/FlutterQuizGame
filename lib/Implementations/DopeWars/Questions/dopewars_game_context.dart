@@ -12,6 +12,8 @@ class DopeWarsGameContext extends GameContext {
   DopeWarsResource? selectedResource;
   int? selectedMoneyChange;
   int selectedAmount = 0;
+  bool? reputationChanged;
+  bool? daysPassedChanged;
 
   late DopeWarsUserInventory inventory;
   late DopeWarsUserMarket market;
@@ -30,7 +32,16 @@ class DopeWarsGameContext extends GameContext {
     if (reputation > 100) {
       reputation = 100;
     }
+    if (_reputation != reputation) {
+      reputationChanged = true;
+    }
     _reputation = reputation;
+  }
+
+  resetSelectedResource() {
+    selectedResource = null;
+    selectedAmount = 0;
+    selectedMoneyChange = null;
   }
 
   DopeWarsGameContext.fromJson(

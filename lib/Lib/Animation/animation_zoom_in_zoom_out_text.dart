@@ -88,7 +88,7 @@ class InternalAnimatedWidget extends AnimatedWidget {
             borderWidth: fontConfig.borderWidth,
             fontSize: Tween<double>(
                     begin: fontConfig.fontSize,
-                    end: fontConfig.fontSize / zoomAmount)
+                    end: fontConfig.fontSize * zoomAmount)
                 .evaluate(animation),
             borderColor: fontConfig.borderColor),
         text: toAnimateText.text,

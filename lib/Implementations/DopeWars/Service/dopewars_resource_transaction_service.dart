@@ -8,8 +8,6 @@ import 'dopewars_location_move_service.dart';
 
 class DopeWarsResourceTransactionService {
   static const int reputationForLocationUnlock = 15;
-  static const int reputationForFinalBudgetReached = 25;
-  static const int finalBudgetToReachToWinGame = 1000000;
   DopeWarsGameContext gameContext;
   late DopeWarsLocationMoveService dopeWarsLocationMoveService;
 
@@ -101,10 +99,6 @@ class DopeWarsResourceTransactionService {
     int nrOfLocationsUnlocked =
         dopeWarsLocationMoveService.nrOfLocationsUnlocked();
     int reputation = (nrOfLocationsUnlocked - 1) * reputationForLocationUnlock;
-    if (dopeWarsLocationMoveService.areAllLocationsUnlocked() &&
-        gameContext.inventory.budget >= finalBudgetToReachToWinGame) {
-      reputation = reputation + reputationForFinalBudgetReached;
-    }
     gameContext.setReputation(reputation);
     dopeWarsLocationMoveService.processGameOver();
   }

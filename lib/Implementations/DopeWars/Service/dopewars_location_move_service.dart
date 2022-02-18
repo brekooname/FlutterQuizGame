@@ -73,6 +73,8 @@ class DopeWarsLocationMoveService {
             gameContext.daysPassed == 40 ||
             gameContext.daysPassed == 58, executeAfterClose: () {
       gameContext.daysPassed = gameContext.daysPassed + 1;
+      gameContext.daysPassedChanged = true;
+      gameContext.resetSelectedResource();
       processGameOver();
     });
   }

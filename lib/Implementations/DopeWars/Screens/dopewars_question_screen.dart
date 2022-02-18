@@ -60,11 +60,14 @@ class DopeWarsQuestionScreenState extends State<DopeWarsQuestionScreen>
     var margin = SizedBox(
       height: screenDimensions.dimen(5),
     );
-    return Column(
+    var content = Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          DopeWarsLevelHeader(widget.gameContext),
+          DopeWarsLevelHeader(
+              widget.gameContext,
+              widget.gameContext.daysPassedChanged,
+              widget.gameContext.reputationChanged),
           margin,
           Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -78,6 +81,9 @@ class DopeWarsQuestionScreenState extends State<DopeWarsQuestionScreen>
           createBottomRowButtons(),
           const Spacer()
         ]);
+    widget.gameContext.reputationChanged = false;
+    widget.gameContext.daysPassedChanged = false;
+    return content;
   }
 
   Widget createCenterControls() {
@@ -148,9 +154,7 @@ class DopeWarsQuestionScreenState extends State<DopeWarsQuestionScreen>
             widget.dopeWarsResourceTransactionService.buyResource(
                 widget.gameContext.selectedResource!, selectedAmount);
           }
-          widget.gameContext.selectedResource = null;
-          widget.gameContext.selectedAmount = 0;
-          widget.gameContext.selectedMoneyChange = null;
+          widget.gameContext.resetSelectedResource();
           setState(() {});
         },
         buttonSkinConfig: ButtonSkinConfig(
@@ -230,13 +234,13 @@ class DopeWarsQuestionScreenState extends State<DopeWarsQuestionScreen>
   }
 
   Widget createBottomRowButtons() {
-    var btnSize = Size(screenDimensions.w(32), screenDimensions.dimen(14));
+    var btnSize = Size(screenDimensions.w(32), screenDimensions.dimen(17));
     var btnSkin = ButtonSkinConfig(
         borderColor: Colors.green.shade800,
         borderWidth: FontConfig.standardBorderWidth / 2,
         backgroundColor: Colors.green.shade50);
     var travelBtn = MyButton(
-      text: "New York",
+      text: widget.gameContext.market.currentLocation.locationLabel,
       size: btnSize,
       buttonSkinConfig: btnSkin,
       onClick: () {
@@ -247,7 +251,7 @@ class DopeWarsQuestionScreenState extends State<DopeWarsQuestionScreen>
                 builder: (BuildContext context) {
                   return DopeWarsLocationMovePopup(() {
                     setState(() {});
-                  });
+                  }, widget.gameContext);
                 }));
       },
     );
@@ -303,8 +307,8 @@ class DopeWarsQuestionScreenState extends State<DopeWarsQuestionScreen>
           MyText(
               maxLines: 1,
               fontConfig: smallPriceFontConfig(),
-              text: DopeWarsResourceTransactionService.formatCurrency(
-                  actualSellPrice))
+              text:
+                  DopeWarsResourceTransactionService.formatCurrency(res.price))
         ]);
     var amountDimen = btnSize.width / 5;
     Row secondRow = Row(
@@ -313,8 +317,8 @@ class DopeWarsQuestionScreenState extends State<DopeWarsQuestionScreen>
         children: [
           MyText(
               fontConfig: bigPriceFontConfig(),
-              text:
-                  DopeWarsResourceTransactionService.formatCurrency(res.price)),
+              text: DopeWarsResourceTransactionService.formatCurrency(
+                  actualSellPrice)),
           SizedBox(
             width: screenDimensions.dimen(1),
           ),
@@ -372,6 +376,7 @@ class DopeWarsQuestionScreenState extends State<DopeWarsQuestionScreen>
               text: DopeWarsResourceTransactionService.formatCurrency(
                   res.resourceType.standardPrice))
         ]);
+    var inventoryIsInMarket = inventoryItemIsInMarket(res);
     Row secondRow = Row(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -380,8 +385,7 @@ class DopeWarsQuestionScreenState extends State<DopeWarsQuestionScreen>
               fontConfig: bigPriceFontConfig(),
               text:
                   DopeWarsResourceTransactionService.formatCurrency(res.price)),
-          _getArrowForMarketPrice(
-              res, !isEnabled && !inventoryItemIsInMarket(res))
+          _getArrowForMarketPrice(res, !isEnabled && !inventoryIsInMarket)
         ]);
     return createResBtn(
         !isEnabled,
@@ -390,7 +394,9 @@ class DopeWarsQuestionScreenState extends State<DopeWarsQuestionScreen>
         Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
-            children: [firstRow, secondRow]));
+            children: [firstRow, secondRow]),
+        btnEnabledDisabledColor:
+            inventoryIsInMarket ? Colors.orange.shade100 : null);
   }
 
   FontConfig smallPriceFontConfig() {
@@ -404,8 +410,9 @@ class DopeWarsQuestionScreenState extends State<DopeWarsQuestionScreen>
         fontColor: Colors.green.shade900);
   }
 
-  MyButton createResBtn(bool isBtnDisabled, DopeWarsResource? res,
-      SelectedResourceInfo expectedSelection, Widget? content) {
+  Widget createResBtn(bool isBtnDisabled, DopeWarsResource? res,
+      SelectedResourceInfo expectedSelection, Widget? content,
+      {Color? btnEnabledDisabledColor}) {
     var btnSize = getSizeForResBtn();
     var borderRadius = FontConfig.standardBorderRadius / 2;
     var margin = FontConfig.standardBorderWidth * 2;
@@ -427,17 +434,19 @@ class DopeWarsQuestionScreenState extends State<DopeWarsQuestionScreen>
     var isBtnSelected = res?.resourceType.index ==
             widget.gameContext.selectedResource?.resourceType.index &&
         expectedSelection == getSelectionInfo();
-    return MyButton(
+    var backgroundColor = isBtnSelected
+        ? Colors.green.shade50
+        : btnEnabledDisabledColor ?? Colors.blue.shade100;
+    var myButton = MyButton(
         size: btnSize,
+        disabledBackgroundColor: btnEnabledDisabledColor,
         buttonAllPadding: getPaddingForResBtn(),
         disabled: isBtnDisabled,
         buttonSkinConfig: ButtonSkinConfig(
-            borderColor:
-                isBtnSelected ? Colors.green.shade800 : Colors.blue.shade300,
+            borderColor: ColorUtil.colorDarken(backgroundColor),
             borderRadius: borderRadius,
             borderWidth: FontConfig.standardBorderWidth / 2,
-            backgroundColor:
-                isBtnSelected ? Colors.green.shade50 : Colors.blue.shade100),
+            backgroundColor: backgroundColor),
         onClick: () {
           widget.gameContext.selectedResource = res;
           setAmount(getMaxAmountForSelection(res));
@@ -446,6 +455,7 @@ class DopeWarsQuestionScreenState extends State<DopeWarsQuestionScreen>
         customContent: Stack(
           children: btnStack,
         ));
+    return isBtnDisabled ? Opacity(opacity: 0.65, child: myButton) : myButton;
   }
 
   int getMaxAmountForSelection(DopeWarsResource? res) {

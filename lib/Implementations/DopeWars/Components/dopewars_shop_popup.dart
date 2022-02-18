@@ -11,24 +11,24 @@ import 'package:flutter_app_quiz_game/Lib/Font/font_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Popup/my_popup.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
-class DopeWarsLocationMovePopup extends StatefulWidget with MyPopup {
+class DopeWarsShopPopup extends StatefulWidget with MyPopup {
   final DopeWarsLocalStorage _dopeWarsLocalStorage = DopeWarsLocalStorage();
   final DopeWarsGameContext _dopeWarsGameContext;
   final VoidCallback _refreshStateCallback;
   late DopeWarsResourceTransactionService _dopeWarsResourceTransactionService;
 
-  DopeWarsLocationMovePopup(
+  DopeWarsShopPopup(
       this._refreshStateCallback, this._dopeWarsGameContext) {
     _dopeWarsResourceTransactionService =
         DopeWarsResourceTransactionService(_dopeWarsGameContext);
   }
 
   @override
-  State<DopeWarsLocationMovePopup> createState() =>
-      DopeWarsLocationMovePopupState();
+  State<DopeWarsShopPopup> createState() =>
+      DopeWarsShopPopupState();
 }
 
-class DopeWarsLocationMovePopupState extends State<DopeWarsLocationMovePopup>
+class DopeWarsShopPopupState extends State<DopeWarsShopPopup>
     with MyPopup {
   @override
   void initState() {
@@ -39,16 +39,16 @@ class DopeWarsLocationMovePopupState extends State<DopeWarsLocationMovePopup>
   @override
   AlertDialog build(BuildContext context) {
     return createDialog(
-      createLocations(),
+      createItems(),
       context: context,
     );
   }
 
-  Widget createLocations() {
+  Widget createItems() {
     List<Widget> items = [];
     var locations = DopeWarsLocation.locations;
     for (DopeWarsLocation l in locations) {
-      items.add(createLocationRow(l));
+      items.add(createItemRow(l));
       if (l.index != locations.last.index) {
         items.add(Padding(
             padding: EdgeInsets.all(screenDimensions.dimen(2.5)),
@@ -65,10 +65,8 @@ class DopeWarsLocationMovePopupState extends State<DopeWarsLocationMovePopup>
         children: items);
   }
 
-  Widget createLocationRow(DopeWarsLocation location) {
-    bool isCurrentLocation = location.index ==
-        widget._dopeWarsGameContext.market.currentLocation.index;
-    bool isDisabled = isCurrentLocation;
+  Widget createItemRow(DopeWarsLocation location) {
+    bool isDisabled;
     String priceInfo = "";
     String reputationInfo = "";
     var btnColor = Colors.green.shade300;
@@ -80,7 +78,7 @@ class DopeWarsLocationMovePopupState extends State<DopeWarsLocationMovePopup>
               location.unlockPrice);
       reputationInfo = "Reputation +" +
           DopeWarsResourceTransactionService.reputationForLocationUnlock
-              .toString() ;
+              .toString();
       isDisabled = location.unlockPrice > budget;
       btnColor = Colors.orange.shade300;
     } else if (!isCurrentLocation) {
@@ -138,45 +136,12 @@ class DopeWarsLocationMovePopupState extends State<DopeWarsLocationMovePopup>
       }
     }
     items.add(Column(children: locBtnItems));
-    items.add(createResColumn(location.cheapResources, "downarrow"));
-    items.add(createResColumn(location.expensiveResources, "uparrow"));
     return Row(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: items);
   }
 
-  Widget createResColumn(List<DopeWarsResourceType> res, String arrowImgName) {
-    List<Widget> items = [];
-    for (DopeWarsResourceType t in res) {
-      items.add(createResRow(t, arrowImgName));
-    }
-    return Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: items);
-  }
 
-  Widget createResRow(DopeWarsResourceType res, String arrowImgName) {
-    List<Widget> items = [];
-    var allContainerWidth = screenDimensions.dimen(27);
-    var imgDimen = screenDimensions.dimen(5);
-    items.add(MyText(
-      width: allContainerWidth - imgDimen * 1.1,
-      text: res.resourceLabel,
-      fontSize: FontConfig.getCustomFontSize(0.8),
-      maxLines: 1,
-    ));
-    items.add(imageService.getSpecificImage(
-        maxWidth: imgDimen,
-        module: "general",
-        imageName: arrowImgName,
-        imageExtension: "png"));
-    return SizedBox(
-        width: allContainerWidth,
-        child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: items));
-  }
+
 }

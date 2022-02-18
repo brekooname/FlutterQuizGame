@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter_app_quiz_game/Implementations/DopeWars/Constants/dopewars_location.dart';
+import 'package:flutter_app_quiz_game/Implementations/DopeWars/Constants/dopewars_shop_item.dart';
 import 'package:flutter_app_quiz_game/Implementations/DopeWars/Questions/dopewars_game_context.dart';
 import 'package:flutter_app_quiz_game/Lib/Storage/my_local_storage.dart';
 
@@ -73,6 +74,11 @@ class DopeWarsLocalStorage extends MyLocalStorage {
   String _unlockLocationFieldName(DopeWarsLocation location) {
     return localStorageName +
         "_unlockLocationFieldName_" +
+        location.index.toString();
+  }
+  String _unlockShopItemFieldName(DopeWarsShopItem item) {
+    return localStorageName +
+        "_item_" +
         location.index.toString();
   }
 

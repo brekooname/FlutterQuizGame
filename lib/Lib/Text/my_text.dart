@@ -12,6 +12,7 @@ class MyText extends StatelessWidget {
   Shadow? textShadow;
   Alignment alignmentInsideContainer;
   String text;
+  double textAllPadding;
 
   MyText(
       {Key? key,
@@ -19,6 +20,7 @@ class MyText extends StatelessWidget {
       double? fontSize,
       Color? fontColor,
       required this.text,
+      this.textAllPadding = 0,
       this.alignmentInsideContainer = Alignment.center,
       this.width,
       this.textShadow,
@@ -46,8 +48,10 @@ class MyText extends StatelessWidget {
         ],
       );
     }
-    return Container(
-        width: width, alignment: alignmentInsideContainer, child: result);
+    return Padding(
+        padding: EdgeInsets.all(textAllPadding),
+        child: Container(
+            width: width, alignment: alignmentInsideContainer, child: result));
   }
 
   TextStyle _getTextStyle() {
@@ -142,7 +146,7 @@ class MyTextCreatorService {
     return Text(
       text,
       textScaleFactor: 1,
-      overflow: TextOverflow.fade,
+      overflow: TextOverflow.visible,
       textAlign: textAlign,
       style: GoogleFonts.roboto(textStyle: textStyle),
     );
