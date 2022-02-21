@@ -31,13 +31,7 @@ class RatePopupService {
       return;
     } else if (rateAppLocalStorage.appLaunchedCount() % launchesUntilPrompt ==
         0) {
-      Future.delayed(
-          Duration.zero,
-          () => showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return RateAppPopup(rateAppLocalStorage);
-              }));
+      MyPopup.showPopup(context, RateAppPopup(rateAppLocalStorage));
     }
   }
 }

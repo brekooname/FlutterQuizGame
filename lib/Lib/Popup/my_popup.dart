@@ -122,4 +122,14 @@ mixin MyPopup {
     return localizationService
         .formatTextWithParams(labelText, [param1, param2]);
   }
+
+  static void showPopup(BuildContext context, Widget popupToShow) {
+    Future.delayed(
+        Duration.zero,
+        () => showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return popupToShow;
+            }));
+  }
 }

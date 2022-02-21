@@ -136,13 +136,7 @@ class SettingsPopupState extends State<SettingsPopup> with MyPopup {
       onClick: () {
         closePopup(context);
         assert(widget.resetContent != null);
-        Future.delayed(
-            Duration.zero,
-            () => showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return ResetContentPopup(widget.resetContent!);
-                }));
+        MyPopup.showPopup(context, ResetContentPopup(widget.resetContent!));
       },
     );
   }

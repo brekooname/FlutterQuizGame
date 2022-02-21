@@ -39,10 +39,6 @@ class DopeWarsLocationMoveService {
         newLocation.getTravelPrice(gameContext.daysPassed);
   }
 
-  bool areAllLocationsUnlocked() {
-    return nrOfLocationsUnlocked() == DopeWarsLocation.locations.length;
-  }
-
   int nrOfLocationsUnlocked() {
     int nrOfLocationsUnlocked = 0;
     for (DopeWarsLocation location in DopeWarsLocation.locations) {
@@ -51,17 +47,6 @@ class DopeWarsLocationMoveService {
       }
     }
     return nrOfLocationsUnlocked;
-  }
-
-  DopeWarsLocation? nextLocationToUnlock() {
-    DopeWarsLocation? locationToUnlock;
-    for (DopeWarsLocation location in DopeWarsLocation.locations) {
-      if (!_dopeWarsLocalStorage.isLocationUnlocked(location)) {
-        locationToUnlock = location;
-        break;
-      }
-    }
-    return locationToUnlock;
   }
 
   void increaseDaysPassed(BuildContext context) {

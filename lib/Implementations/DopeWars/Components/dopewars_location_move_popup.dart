@@ -9,6 +9,7 @@ import 'package:flutter_app_quiz_game/Lib/Button/button_skin_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Font/font_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Popup/my_popup.dart';
+import 'package:flutter_app_quiz_game/Lib/ScreenDimensions/screen_dimensions_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
 class DopeWarsLocationMovePopup extends StatefulWidget with MyPopup {
@@ -26,6 +27,40 @@ class DopeWarsLocationMovePopup extends StatefulWidget with MyPopup {
   @override
   State<DopeWarsLocationMovePopup> createState() =>
       DopeWarsLocationMovePopupState();
+
+  static List<Widget> createPriceAndReputationText(
+      String priceInfo,
+      String reputationInfo,
+      bool isItemDisabled,
+      ScreenDimensionsService screenDimensions) {
+    List<Widget> itemsList = [];
+    if (priceInfo.isNotEmpty || reputationInfo.isNotEmpty) {
+      var infoFontSize = FontConfig.getCustomFontSize(0.8);
+      if (reputationInfo.isNotEmpty) {
+        itemsList.add(MyText(
+          textAllPadding: screenDimensions.dimen(0.2),
+          maxLines: 1,
+          text: reputationInfo,
+          fontConfig: FontConfig(
+              fontSize: infoFontSize,
+              fontColor: Colors.deepOrange,
+              borderColor: Colors.orange.shade100),
+        ));
+      }
+      if (priceInfo.isNotEmpty) {
+        itemsList.add(MyText(
+          textAllPadding: screenDimensions.dimen(0.2),
+          maxLines: 1,
+          fontConfig: FontConfig(
+              fontWeight: isItemDisabled ? FontWeight.w500 : FontWeight.w800,
+              fontSize: infoFontSize,
+              fontColor: isItemDisabled ? Colors.grey : Colors.green.shade900),
+          text: priceInfo,
+        ));
+      }
+    }
+    return itemsList;
+  }
 }
 
 class DopeWarsLocationMovePopupState extends State<DopeWarsLocationMovePopup>
@@ -80,7 +115,7 @@ class DopeWarsLocationMovePopupState extends State<DopeWarsLocationMovePopup>
               location.unlockPrice);
       reputationInfo = "Reputation +" +
           DopeWarsResourceTransactionService.reputationForLocationUnlock
-              .toString() ;
+              .toString();
       isDisabled = location.unlockPrice > budget;
       btnColor = Colors.orange.shade300;
     } else if (!isCurrentLocation) {
@@ -112,31 +147,8 @@ class DopeWarsLocationMovePopupState extends State<DopeWarsLocationMovePopup>
         closePopup(context);
       },
     ));
-    if (priceInfo.isNotEmpty || reputationInfo.isNotEmpty) {
-      var infoFontSize = FontConfig.getCustomFontSize(0.8);
-      if (priceInfo.isNotEmpty) {
-        locBtnItems.add(MyText(
-          textAllPadding: screenDimensions.dimen(0.2),
-          maxLines: 1,
-          fontConfig: FontConfig(
-              fontWeight: isDisabled ? FontWeight.w500 : FontWeight.w800,
-              fontSize: infoFontSize,
-              fontColor: isDisabled ? Colors.grey : Colors.green.shade900),
-          text: priceInfo,
-        ));
-      }
-      if (reputationInfo.isNotEmpty) {
-        locBtnItems.add(MyText(
-          textAllPadding: screenDimensions.dimen(0.2),
-          maxLines: 1,
-          text: reputationInfo,
-          fontConfig: FontConfig(
-              fontSize: infoFontSize,
-              fontColor: Colors.deepOrange,
-              borderColor: Colors.orange.shade100),
-        ));
-      }
-    }
+    locBtnItems.addAll(DopeWarsLocationMovePopup.createPriceAndReputationText(
+        priceInfo, reputationInfo, isDisabled, screenDimensions));
     items.add(Column(children: locBtnItems));
     items.add(createResColumn(location.cheapResources, "downarrow"));
     items.add(createResColumn(location.expensiveResources, "uparrow"));

@@ -1,13 +1,16 @@
+import 'package:flutter_app_quiz_game/Implementations/DopeWars/Constants/dopewars_shop_item.dart';
 import 'package:flutter_app_quiz_game/Implementations/DopeWars/Model/dopewars_resource.dart';
 import 'package:flutter_app_quiz_game/Implementations/DopeWars/Model/dopewars_resource_inventory.dart';
 import 'package:flutter_app_quiz_game/Implementations/DopeWars/Model/dopewars_user_inventory.dart';
 import 'package:flutter_app_quiz_game/Implementations/DopeWars/Questions/dopewars_game_context.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/int_extension.dart';
 
+import 'dopewars_game_local_storage.dart';
 import 'dopewars_location_move_service.dart';
 
 class DopeWarsResourceTransactionService {
-  static const int reputationForLocationUnlock = 15;
+  final DopeWarsLocalStorage _dopeWarsLocalStorage = DopeWarsLocalStorage();
+  static const int reputationForLocationUnlock = 25;
   DopeWarsGameContext gameContext;
   late DopeWarsLocationMoveService dopeWarsLocationMoveService;
 
@@ -23,6 +26,12 @@ class DopeWarsResourceTransactionService {
     DopeWarsResourceInventory currentResource = DopeWarsResourceInventory(
         boughtAmount, resourceToBuy.resourceType, resourceToBuy.price);
     addBoughtResource(currentResource, boughtAmount);
+  }
+
+  void unlockShopItem(DopeWarsShopItem item) {
+    _dopeWarsLocalStorage.unlockShopItem(item);
+    gameContext.inventory.budget = gameContext.inventory.budget - item.price;
+    calculateReputation();
   }
 
   void addBoughtResource(
@@ -99,6 +108,12 @@ class DopeWarsResourceTransactionService {
     int nrOfLocationsUnlocked =
         dopeWarsLocationMoveService.nrOfLocationsUnlocked();
     int reputation = (nrOfLocationsUnlocked - 1) * reputationForLocationUnlock;
+    var shopItems = DopeWarsShopItem.items;
+    for (DopeWarsShopItem i in shopItems) {
+      if (_dopeWarsLocalStorage.isShopItemUnlocked(i)) {
+        reputation = reputation + i.reputation;
+      }
+    }
     gameContext.setReputation(reputation);
     dopeWarsLocationMoveService.processGameOver();
   }

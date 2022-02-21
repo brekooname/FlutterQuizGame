@@ -17,6 +17,7 @@ import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Color/color_util.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/string_extension.dart';
 import 'package:flutter_app_quiz_game/Lib/Font/font_config.dart';
+import 'package:flutter_app_quiz_game/Lib/Popup/my_popup.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
@@ -176,7 +177,6 @@ class PersTestGameTypePlayFiveOptions extends PersTestGameTypePlay {
       List<Widget> stackBtn = [];
       stackBtn.add(MyButton(
         onClick: () {
-
           currentQuestionInfo.clearPressedAnswers();
           currentQuestionInfo.addPressedAnswer(r.value.toString());
 
@@ -230,16 +230,9 @@ class PersTestGameTypePlayFiveOptions extends PersTestGameTypePlay {
     if (questionInfo == null) {
       gameTypeReport.storeResultsToStorage(gameContext);
       if (category == PersTestGameQuestionConfig().cat1) {
-        Future.delayed(
-            Duration.zero,
-            () => showDialog(
-                barrierDismissible: false,
-                context: context,
-                builder: (BuildContext context) {
-                  return PersTestAgePopup(() {
-                    showGameOverScreen(gameScreenManagerState);
-                  });
-                }));
+        MyPopup.showPopup(context, PersTestAgePopup(() {
+          showGameOverScreen(gameScreenManagerState);
+        }));
       } else {
         showGameOverScreen(gameScreenManagerState);
       }

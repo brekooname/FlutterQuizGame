@@ -10,6 +10,7 @@ import 'package:flutter_app_quiz_game/Lib/Button/floating_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Constants/language.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/enum_extension.dart';
+import 'package:flutter_app_quiz_game/Lib/Popup/my_popup.dart';
 import 'package:flutter_app_quiz_game/Lib/Popup/settings_popup.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/standard_screen.dart';
@@ -154,13 +155,8 @@ class PersTestMainMenuScreenState extends State<PersTestMainMenuScreen>
                       imageExtension: "png",
                       module: "general")),
               onClick: () {
-                Future.delayed(
-                    Duration.zero,
-                    () => showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return PersTestDescriptionPopup(levelDescr);
-                        }));
+                MyPopup.showPopup(
+                    context, PersTestDescriptionPopup(levelDescr));
               },
             ),
             MyButton(
@@ -178,16 +174,11 @@ class PersTestMainMenuScreenState extends State<PersTestMainMenuScreen>
                 if (widget._persTestLocalStorage
                     .getGameTypeResults(difficulty, category)
                     .isEmpty) {
-                  Future.delayed(
-                      Duration.zero,
-                      () => showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return PersTestReportNotAvailablePopup(() {
-                              widget.gameScreenManagerState
-                                  .showNewGameScreen(campaignLevel);
-                            });
-                          }));
+                  MyPopup.showPopup(context,
+                      PersTestReportNotAvailablePopup(() {
+                    widget.gameScreenManagerState
+                        .showNewGameScreen(campaignLevel);
+                  }));
                 } else {
                   widget.gameScreenManagerState
                       .showGameOverScreen(difficulty, category);

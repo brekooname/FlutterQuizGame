@@ -4,6 +4,7 @@ import 'package:flutter_app_quiz_game/Implementations/DopeWars/Questions/dopewar
 import 'package:flutter_app_quiz_game/Implementations/DopeWars/Service/dopewars_location_move_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/DopeWars/Service/dopewars_price_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/DopeWars/Service/dopewars_resource_transaction_service.dart';
+import 'package:flutter_app_quiz_game/Lib/Animation/animation_increase_number_text.dart';
 import 'package:flutter_app_quiz_game/Lib/Animation/animation_zoom_in_zoom_out_text.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_back_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Font/font_config.dart';
@@ -17,10 +18,10 @@ class DopeWarsLevelHeader extends StatelessWidget {
 
   DopeWarsGameContext gameContext;
   bool? daysPassedChanged;
-  bool? reputationChanged;
+  int? reputationChange;
 
   DopeWarsLevelHeader(
-      this.gameContext, this.daysPassedChanged, this.reputationChanged);
+      this.gameContext, this.daysPassedChanged, this.reputationChange);
 
   @override
   Widget build(BuildContext context) {
@@ -73,10 +74,14 @@ class DopeWarsLevelHeader extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         const Spacer(),
-        createLabelValueRow("Reputation",
-            gameContext.reputation.toString(), Colors.deepOrange,
+        createLabelValueRow(
+            "Reputation", gameContext.reputation.toString(), Colors.deepOrange,
             borderColor: Colors.orange.shade100,
-            animateValue: reputationChanged),
+            animateIncreaseText: reputationChange != null,
+            audioPlayerId: "ReputationAudioId",
+            animationStartNr:
+                gameContext.reputation - (reputationChange?.toInt() ?? 0),
+            animationEndNr: gameContext.reputation),
         _imageService.getSpecificImage(
             maxWidth: rowHeight,
             module: "general",
@@ -140,7 +145,12 @@ class DopeWarsLevelHeader extends StatelessWidget {
 
   Widget createLabelValueRow(
       String labelText, String valueText, Color valueTextColor,
-      {Color? borderColor, bool? animateValue}) {
+      {Color? borderColor,
+      bool? animateValue,
+      bool? animateIncreaseText,
+      String? audioPlayerId,
+      int? animationStartNr,
+      int? animationEndNr}) {
     var valueMyText = MyText(
         text: valueText,
         fontConfig: FontConfig(
@@ -167,7 +177,13 @@ class DopeWarsLevelHeader extends StatelessWidget {
                   zoomAmount: 1.4,
                   executeAnimationOnlyOnce: true,
                   toAnimateText: valueMyText)
-              : valueMyText,
+              : animateIncreaseText ?? false
+                  ? AnimateIncreaseNumberText(
+                      audioPlayerId: audioPlayerId!,
+                      startNr: animationStartNr!,
+                      endNr: animationEndNr!,
+                      toAnimateText: valueMyText)
+                  : valueMyText,
         ]);
   }
 }

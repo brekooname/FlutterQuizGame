@@ -17,13 +17,6 @@ class DopeWarsLocalStorage extends MyLocalStorage {
 
   DopeWarsLocalStorage.internal();
 
-  bool isLocationUnlocked(DopeWarsLocation location) {
-    if (location.index == DopeWarsLocation.location0.index) {
-      return true;
-    }
-    return localStorage.getBool(_unlockLocationFieldName(location)) ?? false;
-  }
-
   void saveGame(DopeWarsGameContext gameContext) {
     String json = jsonEncode(gameContext.toJson());
     localStorage.setString(_saveGameFieldName(), json);
@@ -38,8 +31,23 @@ class DopeWarsLocalStorage extends MyLocalStorage {
         DopeWarsContextService().createGameContext(), jsonDecode(json));
   }
 
+  bool isLocationUnlocked(DopeWarsLocation location) {
+    if (location.index == DopeWarsLocation.location0.index) {
+      return true;
+    }
+    return localStorage.getBool(_unlockLocationFieldName(location)) ?? false;
+  }
+
   void unlockLocation(DopeWarsLocation location) {
     localStorage.setBool(_unlockLocationFieldName(location), true);
+  }
+
+  bool isShopItemUnlocked(DopeWarsShopItem item) {
+    return localStorage.getBool(_unlockShopItemFieldName(item)) ?? false;
+  }
+
+  void unlockShopItem(DopeWarsShopItem item) {
+    localStorage.setBool(_unlockShopItemFieldName(item), true);
   }
 
   int getMaxDays() {
@@ -78,8 +86,8 @@ class DopeWarsLocalStorage extends MyLocalStorage {
   }
   String _unlockShopItemFieldName(DopeWarsShopItem item) {
     return localStorageName +
-        "_item_" +
-        location.index.toString();
+        "_unlockShopItemFieldName_" +
+        item.index.toString();
   }
 
   String _saveGameFieldName() {

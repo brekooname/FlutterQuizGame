@@ -3,6 +3,7 @@ import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
 import 'package:flutter_app_quiz_game/Implementations/DopeWars/Components/dopewars_level_header.dart';
 import 'package:flutter_app_quiz_game/Implementations/DopeWars/Components/dopewars_location_move_popup.dart';
+import 'package:flutter_app_quiz_game/Implementations/DopeWars/Components/dopewars_shop_popup.dart';
 import 'package:flutter_app_quiz_game/Implementations/DopeWars/Constants/dopewars_campaign_level_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/DopeWars/Model/dopewars_resource.dart';
 import 'package:flutter_app_quiz_game/Implementations/DopeWars/Model/dopewars_resource_inventory.dart';
@@ -16,6 +17,7 @@ import 'package:flutter_app_quiz_game/Lib/Button/button_skin_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Color/color_util.dart';
 import 'package:flutter_app_quiz_game/Lib/Font/font_config.dart';
+import 'package:flutter_app_quiz_game/Lib/Popup/my_popup.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/quiz_question_game_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
@@ -67,7 +69,7 @@ class DopeWarsQuestionScreenState extends State<DopeWarsQuestionScreen>
           DopeWarsLevelHeader(
               widget.gameContext,
               widget.gameContext.daysPassedChanged,
-              widget.gameContext.reputationChanged),
+              widget.gameContext.reputationChange),
           margin,
           Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -81,7 +83,7 @@ class DopeWarsQuestionScreenState extends State<DopeWarsQuestionScreen>
           createBottomRowButtons(),
           const Spacer()
         ]);
-    widget.gameContext.reputationChanged = false;
+    widget.gameContext.reputationChange = null;
     widget.gameContext.daysPassedChanged = false;
     return content;
   }
@@ -244,15 +246,11 @@ class DopeWarsQuestionScreenState extends State<DopeWarsQuestionScreen>
       size: btnSize,
       buttonSkinConfig: btnSkin,
       onClick: () {
-        Future.delayed(
-            Duration.zero,
-            () => showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return DopeWarsLocationMovePopup(() {
-                    setState(() {});
-                  }, widget.gameContext);
-                }));
+        MyPopup.showPopup(
+            context,
+            DopeWarsLocationMovePopup(() {
+              setState(() {});
+            }, widget.gameContext));
       },
     );
     var shopBtn = MyButton(
@@ -260,7 +258,11 @@ class DopeWarsQuestionScreenState extends State<DopeWarsQuestionScreen>
       size: btnSize,
       buttonSkinConfig: btnSkin,
       onClick: () {
-        setState(() {});
+        MyPopup.showPopup(
+            context,
+            DopeWarsShopPopup(() {
+              setState(() {});
+            }, widget.gameContext));
       },
     );
     var nextDayBtn = MyButton(
@@ -452,9 +454,11 @@ class DopeWarsQuestionScreenState extends State<DopeWarsQuestionScreen>
           setAmount(getMaxAmountForSelection(res));
           setState(() {});
         },
-        customContent: Stack(
-          children: btnStack,
-        ));
+        customContent: btnStack.isNotEmpty
+            ? Stack(
+                children: btnStack,
+              )
+            : Container());
     return isBtnDisabled ? Opacity(opacity: 0.65, child: myButton) : myButton;
   }
 

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Implementations/DopeWars/Constants/dopewars_location.dart';
 import 'package:flutter_app_quiz_game/Implementations/DopeWars/Constants/dopewars_resource_type.dart';
+import 'package:flutter_app_quiz_game/Implementations/DopeWars/Constants/dopewars_shop_item.dart';
 import 'package:flutter_app_quiz_game/Implementations/DopeWars/Questions/dopewars_game_context.dart';
 import 'package:flutter_app_quiz_game/Implementations/DopeWars/Service/dopewars_game_local_storage.dart';
 import 'package:flutter_app_quiz_game/Implementations/DopeWars/Service/dopewars_resource_transaction_service.dart';
@@ -11,25 +12,24 @@ import 'package:flutter_app_quiz_game/Lib/Font/font_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Popup/my_popup.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
+import 'dopewars_location_move_popup.dart';
+
 class DopeWarsShopPopup extends StatefulWidget with MyPopup {
   final DopeWarsLocalStorage _dopeWarsLocalStorage = DopeWarsLocalStorage();
   final DopeWarsGameContext _dopeWarsGameContext;
   final VoidCallback _refreshStateCallback;
   late DopeWarsResourceTransactionService _dopeWarsResourceTransactionService;
 
-  DopeWarsShopPopup(
-      this._refreshStateCallback, this._dopeWarsGameContext) {
+  DopeWarsShopPopup(this._refreshStateCallback, this._dopeWarsGameContext) {
     _dopeWarsResourceTransactionService =
         DopeWarsResourceTransactionService(_dopeWarsGameContext);
   }
 
   @override
-  State<DopeWarsShopPopup> createState() =>
-      DopeWarsShopPopupState();
+  State<DopeWarsShopPopup> createState() => DopeWarsShopPopupState();
 }
 
-class DopeWarsShopPopupState extends State<DopeWarsShopPopup>
-    with MyPopup {
+class DopeWarsShopPopupState extends State<DopeWarsShopPopup> with MyPopup {
   @override
   void initState() {
     super.initState();
@@ -45,12 +45,12 @@ class DopeWarsShopPopupState extends State<DopeWarsShopPopup>
   }
 
   Widget createItems() {
-    List<Widget> items = [];
-    var locations = DopeWarsLocation.locations;
-    for (DopeWarsLocation l in locations) {
-      items.add(createItemRow(l));
-      if (l.index != locations.last.index) {
-        items.add(Padding(
+    List<Widget> allItems = [];
+    var shopItems = DopeWarsShopItem.items;
+    for (DopeWarsShopItem i in shopItems) {
+      allItems.add(createItemRow(i));
+      if (i.index != shopItems.last.index) {
+        allItems.add(Padding(
             padding: EdgeInsets.all(screenDimensions.dimen(2.5)),
             child: Divider(
               height: screenDimensions.dimen(0.1),
@@ -62,86 +62,62 @@ class DopeWarsShopPopupState extends State<DopeWarsShopPopup>
     return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
-        children: items);
+        children: allItems);
   }
 
-  Widget createItemRow(DopeWarsLocation location) {
-    bool isDisabled;
+  Widget createItemRow(DopeWarsShopItem item) {
+    bool shopItemUnlocked =
+        widget._dopeWarsLocalStorage.isShopItemUnlocked(item);
+    bool isDisabled = shopItemUnlocked;
     String priceInfo = "";
     String reputationInfo = "";
     var btnColor = Colors.green.shade300;
     Color? disabledColor;
     var budget = widget._dopeWarsGameContext.inventory.budget;
-    if (!widget._dopeWarsLocalStorage.isLocationUnlocked(location)) {
+    if (!shopItemUnlocked) {
       priceInfo = "Unlock " +
-          DopeWarsResourceTransactionService.formatCurrency(
-              location.unlockPrice);
-      reputationInfo = "Reputation +" +
-          DopeWarsResourceTransactionService.reputationForLocationUnlock
-              .toString();
-      isDisabled = location.unlockPrice > budget;
+          DopeWarsResourceTransactionService.formatCurrency(item.price);
+      reputationInfo = "Reputation +" + item.reputation.toString();
+      isDisabled = item.price > budget;
       btnColor = Colors.orange.shade300;
-    } else if (!isCurrentLocation) {
-      var travelPrice =
-          location.getTravelPrice(widget._dopeWarsGameContext.daysPassed);
-      priceInfo = "Travel " +
-          DopeWarsResourceTransactionService.formatCurrency(travelPrice);
-      isDisabled = travelPrice > budget;
-      btnColor = Colors.lightGreen.shade300;
-    } else if (isCurrentLocation) {
-      disabledColor = Colors.white;
+    }else{
+      disabledColor = Colors.green.shade300;
     }
     var btnSize = Size(screenDimensions.w(33), screenDimensions.dimen(14));
-    List<Widget> items = [];
-    List<Widget> locBtnItems = [];
-    locBtnItems.add(MyButton(
+    var itemBtn = MyButton(
       disabled: isDisabled,
       disabledBackgroundColor: disabledColor,
-      text: location.locationLabel,
+      text: item.itemLabel,
       fontSize: FontConfig.getCustomFontSize(0.9),
       size: btnSize,
       buttonSkinConfig: ButtonSkinConfig(
           borderWidth: FontConfig.standardBorderWidth / 2,
           backgroundColor: btnColor),
       onClick: () {
-        widget._dopeWarsResourceTransactionService.dopeWarsLocationMoveService
-            .passDayAndMoveLocation(context, location);
+        widget._dopeWarsResourceTransactionService.unlockShopItem(item);
         widget._refreshStateCallback.call();
         closePopup(context);
       },
-    ));
-    if (priceInfo.isNotEmpty || reputationInfo.isNotEmpty) {
-      var infoFontSize = FontConfig.getCustomFontSize(0.8);
-      if (priceInfo.isNotEmpty) {
-        locBtnItems.add(MyText(
-          textAllPadding: screenDimensions.dimen(0.2),
-          maxLines: 1,
-          fontConfig: FontConfig(
-              fontWeight: isDisabled ? FontWeight.w500 : FontWeight.w800,
-              fontSize: infoFontSize,
-              fontColor: isDisabled ? Colors.grey : Colors.green.shade900),
-          text: priceInfo,
-        ));
-      }
-      if (reputationInfo.isNotEmpty) {
-        locBtnItems.add(MyText(
-          textAllPadding: screenDimensions.dimen(0.2),
-          maxLines: 1,
-          text: reputationInfo,
-          fontConfig: FontConfig(
-              fontSize: infoFontSize,
-              fontColor: Colors.deepOrange,
-              borderColor: Colors.orange.shade100),
-        ));
-      }
-    }
-    items.add(Column(children: locBtnItems));
+    );
+    List<Widget> priceInfoList =
+        DopeWarsLocationMovePopup.createPriceAndReputationText(
+            priceInfo, reputationInfo, isDisabled, screenDimensions);
+    const spacer = Spacer();
     return Row(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
-        children: items);
+        children: [
+          spacer,
+          imageService.getSpecificImage(
+              imageName: item.itemImgName,
+              imageExtension: "png",
+              maxWidth: btnSize.height / 1.2,
+              module: "resource_background"),
+          spacer,
+          itemBtn,
+          spacer,
+          Column(children: priceInfoList),
+          spacer,
+        ]);
   }
-
-
-
 }

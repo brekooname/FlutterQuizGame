@@ -17,6 +17,7 @@ import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/string_extension.dart';
 import 'package:flutter_app_quiz_game/Lib/Font/font_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Image/image_service.dart';
+import 'package:flutter_app_quiz_game/Lib/Popup/my_popup.dart';
 import 'package:flutter_app_quiz_game/Lib/ProgressBar/progress_bar.dart';
 import 'package:flutter_app_quiz_game/Lib/ScreenDimensions/screen_dimensions_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
@@ -172,13 +173,8 @@ abstract class PersTestGameTypeReport {
     return attr.isButton
         ? MyButton(
             onClick: () {
-              Future.delayed(
-                  Duration.zero,
-                  () => showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return PersTestDescriptionPopup(attr.description);
-                      }));
+              MyPopup.showPopup(
+                  context, PersTestDescriptionPopup(attr.description));
             },
             contentLockedConfig: ContentLockedConfig(
                 isContentLocked: MyApp.isExtraContentLocked,

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Lib/Image/image_service.dart';
+import 'package:flutter_app_quiz_game/Lib/Popup/my_popup.dart';
 import 'package:flutter_app_quiz_game/Lib/ScreenDimensions/screen_dimensions_service.dart';
 
 import '../../Lib/Button/button_skin_config.dart';
@@ -47,13 +48,7 @@ class FloatingButton extends StatelessWidget {
                     onPressed: () {},
                     child: MyButton(
                         onClick: () {
-                          Future.delayed(
-                              Duration.zero,
-                              () => showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return myPopupToDisplay;
-                                  }));
+                          MyPopup.showPopup(context, myPopupToDisplay);
                         },
                         size: _buttonSize,
                         buttonSkinConfig: ButtonSkinConfig(

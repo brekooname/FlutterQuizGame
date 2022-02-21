@@ -10,21 +10,22 @@ class DopeWarsShopItem {
   static late DopeWarsShopItem item5;
 
   static List<DopeWarsShopItem> items = [
-    item0 = DopeWarsShopItem(0, "Sun Glasses", 15, 10),
-    item1 = DopeWarsShopItem(1, "Mobile Phone", 75, 20),
-    item2 = DopeWarsShopItem(2, "Gold Watch", 150, 50),
-    item3 = DopeWarsShopItem(3, "Limousine", 250, 200),
-    item4 = DopeWarsShopItem(4, "Mansion", 350, 1000),
-    item5 = DopeWarsShopItem(5, "Private Jet", 800, 5000),
+    item0 = DopeWarsShopItem(0, "sunglasses", "Sun Glasses", 5, 10),
+    item1 = DopeWarsShopItem(1, "smartphone", "Smartphone", 10, 20),
+    item2 = DopeWarsShopItem(2, "gold_watch", "Gold Watch", 25, 50),
+    item3 = DopeWarsShopItem(3, "limousine", "Limousine", 100, 200),
+    item4 = DopeWarsShopItem(4, "mansion", "Mansion", 500, 1000),
+    item5 = DopeWarsShopItem(5, "yacht", "Yacht", 2500, 5000),
   ];
 
   int index;
+  String itemImgName;
   String itemLabel;
   int reputation;
   final int _pricePercent;
 
-  DopeWarsShopItem(
-      this.index, this.itemLabel, this.reputation, this._pricePercent);
+  DopeWarsShopItem(this.index, this.itemImgName, this.itemLabel,
+      this.reputation, this._pricePercent);
 
   int get price =>
       DopeWarsPriceService.getPriceBasedOnStartingBudgetWithPercent(

@@ -29,13 +29,7 @@ class InAppPurchasesPopupService {
   InAppPurchasesPopupService.internal();
 
   void showPopup({String? inAppPurchaseDescription}) {
-    Future.delayed(
-        Duration.zero,
-        () => showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return InAppPurchasePopup();
-            }));
+    MyPopup.showPopup(context, InAppPurchasePopup());
   }
 }
 
@@ -96,12 +90,12 @@ class _InAppPurchaseState extends State<InAppPurchasePopup> with MyPopup {
       stackWidgets.add(
         SizedBox(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                _buildProductList(),
-              ],
-            )),
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            _buildProductList(),
+          ],
+        )),
       );
     } else if (_queryProductError != null) {
       stackWidgets.add(Center(
@@ -112,10 +106,9 @@ class _InAppPurchaseState extends State<InAppPurchasePopup> with MyPopup {
     if (_purchasePending || _products.isEmpty) {
       stackWidgets.add(
         const SizedBox(
-          child: Center(
-            child: CircularProgressIndicator(),
-          )
-        ),
+            child: Center(
+          child: CircularProgressIndicator(),
+        )),
       );
     }
 

@@ -12,7 +12,7 @@ class DopeWarsGameContext extends GameContext {
   DopeWarsResource? selectedResource;
   int? selectedMoneyChange;
   int selectedAmount = 0;
-  bool? reputationChanged;
+  int? reputationChange;
   bool? daysPassedChanged;
 
   late DopeWarsUserInventory inventory;
@@ -32,8 +32,8 @@ class DopeWarsGameContext extends GameContext {
     if (reputation > 100) {
       reputation = 100;
     }
-    if (_reputation != reputation) {
-      reputationChanged = true;
+    if (_reputation < reputation) {
+      reputationChange = reputation - _reputation;
     }
     _reputation = reputation;
   }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Lib/Ads/ad_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Animation/animation_zoom_in_zoom_out.dart';
 import 'package:flutter_app_quiz_game/Lib/Image/image_service.dart';
+import 'package:flutter_app_quiz_game/Lib/Popup/my_popup.dart';
 import 'package:flutter_app_quiz_game/Lib/ScreenDimensions/screen_dimensions_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
@@ -20,12 +21,14 @@ class HintButton extends StatefulWidget {
   int availableHints;
 
   HintButton(
-      {Key? key, Size? buttonSize,
+      {Key? key,
+      Size? buttonSize,
       this.availableHints = 1,
       required this.onClick,
       this.disabled = false,
       this.watchRewardedAdForHint = false,
-      this.showAvailableHintsText = false}) : super(key: key) {
+      this.showAvailableHintsText = false})
+      : super(key: key) {
     var side = screenDimensions.dimen(14);
     this.buttonSize = buttonSize ?? Size(side, side);
     assert(!watchRewardedAdForHint ||
@@ -56,14 +59,8 @@ class HintButtonState extends State<HintButton> {
         disabled: widget.disabled,
         onClick: shouldShowRewardedAd
             ? () {
-                Future.delayed(
-                    Duration.zero,
-                    () => showDialog(
-                        barrierDismissible: false,
-                        context: context,
-                        builder: (BuildContext context) {
-                          return widget._adService.watchRewardedAdPopup!;
-                        }));
+                MyPopup.showPopup(
+                    context, widget._adService.watchRewardedAdPopup!);
               }
             : widget.onClick,
         buttonSkinConfig: ButtonSkinConfig(image: icon),
