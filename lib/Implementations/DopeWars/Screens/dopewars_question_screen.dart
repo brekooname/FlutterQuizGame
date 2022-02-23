@@ -95,7 +95,7 @@ class DopeWarsQuestionScreenState extends State<DopeWarsQuestionScreen>
     var isInventoryResSelected =
         getSelectionInfo() == SelectedResourceInfo.inventorySelection;
     items.add(MyText(
-        fontColor: isInventoryResSelected ? Colors.blue : Colors.red,
+        fontColor: isInventoryResSelected ? Colors.blue.shade900 : Colors.red,
         maxLines: 1,
         text: (isMarketResSelected
                 ? "-"
@@ -116,12 +116,18 @@ class DopeWarsQuestionScreenState extends State<DopeWarsQuestionScreen>
         decoration: BoxDecoration(
             borderRadius:
                 BorderRadius.circular(FontConfig.standardBorderRadius * 5),
-            color: Colors.redAccent.withOpacity(0.1)),
+            color: Colors.green.shade50),
         child: NumberPicker(
+            textStyle: TextStyle(
+              decoration: TextDecoration.none,
+              fontSize: FontConfig.normalFontSize,
+              fontWeight: FontWeight.w400,
+              color: Colors.black,
+            ),
             decoration: BoxDecoration(
                 border: Border.all(
                     color: Colors.blue.shade700,
-                    width: screenDimensions.dimen(0.3)),
+                    width: screenDimensions.dimen(1)),
                 borderRadius:
                     BorderRadius.circular(FontConfig.standardBorderRadius * 5),
                 color: Colors.white.withOpacity(0.1)),
@@ -246,6 +252,7 @@ class DopeWarsQuestionScreenState extends State<DopeWarsQuestionScreen>
       size: btnSize,
       buttonSkinConfig: btnSkin,
       onClick: () {
+        widget.gameContext.resetSelectedResource();
         MyPopup.showPopup(
             context,
             DopeWarsLocationMovePopup(() {
@@ -258,6 +265,7 @@ class DopeWarsQuestionScreenState extends State<DopeWarsQuestionScreen>
       size: btnSize,
       buttonSkinConfig: btnSkin,
       onClick: () {
+        widget.gameContext.resetSelectedResource();
         MyPopup.showPopup(
             context,
             DopeWarsShopPopup(() {

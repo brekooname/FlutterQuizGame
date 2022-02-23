@@ -50,16 +50,6 @@ class DopeWarsLocalStorage extends MyLocalStorage {
     localStorage.setBool(_unlockShopItemFieldName(item), true);
   }
 
-  int getMaxDays() {
-    return localStorage.getInt(_maxDaysFieldName()) ?? defaultMaxDays;
-  }
-
-  void setMaxDays(int days) {
-    if (days < getMaxDays()) {
-      localStorage.setInt(_maxDaysFieldName(), days);
-    }
-  }
-
   int getMaxReputation() {
     return localStorage.getInt(_maxRepFieldName()) ?? 0;
   }
@@ -72,10 +62,12 @@ class DopeWarsLocalStorage extends MyLocalStorage {
 
   void clearAll() {
     localStorage.setInt(_maxRepFieldName(), 0);
-    localStorage.setInt(_maxDaysFieldName(), defaultMaxDays);
     localStorage.setString(_saveGameFieldName(), "");
     for (DopeWarsLocation l in DopeWarsLocation.locations) {
       localStorage.setBool(_unlockLocationFieldName(l), false);
+    }
+    for (DopeWarsShopItem i in DopeWarsShopItem.items) {
+      localStorage.setBool(_unlockShopItemFieldName(i), false);
     }
   }
 
@@ -92,10 +84,6 @@ class DopeWarsLocalStorage extends MyLocalStorage {
 
   String _saveGameFieldName() {
     return localStorageName + "_saveGameFieldName";
-  }
-
-  String _maxDaysFieldName() {
-    return localStorageName + "_maxDaysFieldName";
   }
 
   String _maxRepFieldName() {

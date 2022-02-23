@@ -69,11 +69,8 @@ class DopeWarsLocationMoveService {
     int currentDaysPassed = gameContext.daysPassed;
     if (currentDaysPassed > totalDays || currentRep >= 100) {
       var maxReputation = _dopeWarsLocalStorage.getMaxReputation();
-      if (currentRep > maxReputation ||
-          (currentRep == maxReputation &&
-              currentDaysPassed < _dopeWarsLocalStorage.getMaxDays())) {
+      if (currentRep > maxReputation) {
         _dopeWarsLocalStorage.clearAll();
-        _dopeWarsLocalStorage.setMaxDays(currentDaysPassed);
         _dopeWarsLocalStorage.setMaxReputation(currentRep);
       }
     }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app_quiz_game/Implementations/DopeWars/Service/dopewars_game_local_storage.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/floating_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Popup/settings_popup.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen_manager_state.dart';
@@ -10,6 +11,7 @@ import '../../../Lib/Font/font_config.dart';
 import '../../../main.dart';
 
 class DopeWarsMainMenuScreen extends StandardScreen {
+  final DopeWarsLocalStorage _dopeWarsLocalStorage = DopeWarsLocalStorage();
   DopeWarsMainMenuScreen(GameScreenManagerState gameScreenManagerState,
       {Key? key})
       : super(gameScreenManagerState, key: key);
@@ -59,7 +61,7 @@ class DopeWarsMainMenuScreenState extends State<DopeWarsMainMenuScreen>
             iconName: "btn_settings",
             myPopupToDisplay: SettingsPopup(
               resetContent: () {
-               // widget.skelLocalStorage.clearAll();
+               widget._dopeWarsLocalStorage.clearAll();
               },
             ),
           ),

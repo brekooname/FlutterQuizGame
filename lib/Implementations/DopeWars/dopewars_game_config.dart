@@ -35,10 +35,10 @@ class DopeWarsGameConfig extends GameConfig {
       DopeWarsScreenManager(key: UniqueKey());
 
   @override
-  ImageRepeat get backgroundTextureRepeat => ImageRepeat.noRepeat;
+  ImageRepeat get backgroundTextureRepeat => ImageRepeat.repeat;
 
   @override
-  Color get screenBackgroundColor => const Color.fromRGBO(198, 236, 255, 1);
+  Color get screenBackgroundColor => const Color.fromRGBO(142, 220, 176, 1);
 
   //Android
   @override
@@ -48,75 +48,76 @@ class DopeWarsGameConfig extends GameConfig {
   String getTitle(Language language) {
     switch (language) {
       case Language.ar:
-        return "xxxxxxxxxxxxxxxxxxxx";
+        return "لعبة الأعمال";
       case Language.bg:
-        return "xxxxxxxxxxxxxxxxxxxx";
+        return "Бизнес игра";
       case Language.cs:
-        return "xxxxxxxxxxxxxxxxxxxx";
+        return "Obchodní Hra";
       case Language.da:
-        return "xxxxxxxxxxxxxxxxxxxx";
+        return "Forretningsspil";
       case Language.de:
-        return "xxxxxxxxxxxxxxxxxxxx";
+        return "Geschäftsspiel";
       case Language.el:
-        return "xxxxxxxxxxxxxxxxxxxx";
+        return "Επιχειρηματικό παιχνίδι";
       case Language.en:
-        return "xxxxxxxxxxxxxxxxxxxx";
+        return "Business Game";
+        return "Dope Wars";
       case Language.es:
-        return "xxxxxxxxxxxxxxxxxxxx";
+        return "Juego de Negocios";
       case Language.fi:
-        return "xxxxxxxxxxxxxxxxxxxx";
+        return "Liiketoimintapeli";
       case Language.fr:
-        return "xxxxxxxxxxxxxxxxxxxx";
+        return "Jeu d'affaires";
       case Language.he:
-        return "xxxxxxxxxxxxxxxxxxxx";
+        return "משחק עסקי";
       case Language.hi:
-        return "xxxxxxxxxxxxxxxxxxxx";
+        return "बिजनेस गेम";
       case Language.hr:
-        return "xxxxxxxxxxxxxxxxxxxx";
+        return "Poslovna Igra";
       case Language.hu:
-        return "xxxxxxxxxxxxxxxxxxxx";
+        return "Üzleti Játék";
       case Language.id:
-        return "xxxxxxxxxxxxxxxxxxxx";
+        return "Game Bisnis";
       case Language.it:
-        return "xxxxxxxxxxxxxxxxxxxx";
+        return "Gioco Aziendale";
       case Language.ja:
-        return "xxxxxxxxxxxxxxxxxxxx";
+        return "ビジネスゲーム";
       case Language.ko:
-        return "xxxxxxxxxxxxxxxxxxxx";
+        return "비즈니스 게임";
       case Language.ms:
-        return "xxxxxxxxxxxxxxxxxxxx";
+        return "Permainan Perniagaan";
       case Language.nl:
-        return "xxxxxxxxxxxxxxxxxxxx";
+        return "Zakelijk Spel";
       case Language.nb:
-        return "xxxxxxxxxxxxxxxxxxxx";
+        return "Forretningsspill";
       case Language.pl:
-        return "xxxxxxxxxxxxxxxxxxxx";
+        return "Gra Biznesowa";
       case Language.pt:
-        return "xxxxxxxxxxxxxxxxxxxx";
+        return "Jogo de Negócios";
       case Language.ro:
-        return "xxxxxxxxxxxxxxxxxxxx";
+        return "Joc de Afaceri";
       case Language.ru:
-        return "xxxxxxxxxxxxxxxxxxxx";
+        return "Деловая игра";
       case Language.sk:
-        return "xxxxxxxxxxxxxxxxxxxx";
+        return "Obchodná Hra";
       case Language.sl:
-        return "xxxxxxxxxxxxxxxxxxxx";
+        return "Poslovna Igra";
       case Language.sr:
-        return "xxxxxxxxxxxxxxxxxxxx";
+        return "Пословна игра";
       case Language.sv:
-        return "xxxxxxxxxxxxxxxxxxxx";
+        return "Affärsspel";
       case Language.th:
-        return "xxxxxxxxxxxxxxxxxxxx";
+        return "เกมธุรกิจ";
       case Language.tr:
-        return "xxxxxxxxxxxxxxxxxxxx";
+        return "İş Oyunu";
       case Language.uk:
-        return "xxxxxxxxxxxxxxxxxxxx";
+        return "Ділова гра";
       case Language.vi:
-        return "xxxxxxxxxxxxxxxxxxxx";
+        return "Trò chơi kinh doanh";
       case Language.zh:
-        return "xxxxxxxxxxxxxxxxxxxx";
+        return "商业游戏";
       default:
-        return "xxxxxxxxxxxxxxxxxxxx";
+        return "Business Game";
     }
   }
 }
