@@ -5,9 +5,11 @@ import 'package:flutter_app_quiz_game/Implementations/DopeWars/Service/dopewars_
 import 'package:flutter_app_quiz_game/Lib/Ads/ad_service.dart';
 
 import 'dopewars_game_local_storage.dart';
+import 'dopewars_total_days_service.dart';
 
 class DopeWarsLocationMoveService {
-  static const int totalDays = 60;
+  final DopeWarsTotalDaysService _dopeWarsTotalDaysService =
+      DopeWarsTotalDaysService();
   final DopeWarsLocalStorage _dopeWarsLocalStorage = DopeWarsLocalStorage();
   AdService adService = AdService();
 
@@ -23,9 +25,9 @@ class DopeWarsLocationMoveService {
       unlockLocation(newLocation);
     }
     DopeWarsResourceTransactionService(gameContext).calculateReputation();
-    increaseDaysPassed(context);
     gameContext.market.setCurrentLocation(
         newLocation, gameContext.inventory.availableResourcesByType);
+    increaseDaysPassed(context);
   }
 
   void unlockLocation(DopeWarsLocation location) {
@@ -50,29 +52,15 @@ class DopeWarsLocationMoveService {
   }
 
   void increaseDaysPassed(BuildContext context) {
-    _dopeWarsLocalStorage.saveGame(gameContext);
     adService.showInterstitialAd(
         context,
         gameContext.daysPassed == 10 ||
             gameContext.daysPassed == 25 ||
             gameContext.daysPassed == 40 ||
             gameContext.daysPassed == 58, executeAfterClose: () {
-      gameContext.daysPassed = gameContext.daysPassed + 1;
-      gameContext.daysPassedChanged = true;
+      _dopeWarsTotalDaysService.increaseDays(gameContext);
       gameContext.resetSelectedResource();
-      processGameOver();
+      _dopeWarsTotalDaysService.processGameOver(gameContext);
     });
-  }
-
-  void processGameOver() {
-    int currentRep = gameContext.reputation;
-    int currentDaysPassed = gameContext.daysPassed;
-    if (currentDaysPassed > totalDays || currentRep >= 100) {
-      var maxReputation = _dopeWarsLocalStorage.getMaxReputation();
-      if (currentRep > maxReputation) {
-        _dopeWarsLocalStorage.clearAll();
-        _dopeWarsLocalStorage.setMaxReputation(currentRep);
-      }
-    }
   }
 }

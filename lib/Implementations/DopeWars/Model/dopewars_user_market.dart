@@ -149,4 +149,17 @@ class DopeWarsUserMarket {
       return 4;
     }
   }
+
+  DopeWarsUserMarket.fromJson(Map<String, dynamic> json)
+      : currentLocation = DopeWarsLocation.fromJson(json['currentLocation']),
+        availableResources = List<DopeWarsResourceMarket>.from(
+            json['availableResources']
+                .map((model) => DopeWarsResourceMarket.fromJson(model)));
+
+  Map<String, dynamic> toJson() {
+    return {
+      'availableResources': availableResources,
+      'currentLocation': currentLocation
+    };
+  }
 }

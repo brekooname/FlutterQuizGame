@@ -38,7 +38,7 @@ class DopeWarsGameConfig extends GameConfig {
   ImageRepeat get backgroundTextureRepeat => ImageRepeat.repeat;
 
   @override
-  Color get screenBackgroundColor => const Color.fromRGBO(142, 220, 176, 1);
+  Color get screenBackgroundColor => const Color.fromRGBO(198, 236, 198, 1);
 
   //Android
   @override

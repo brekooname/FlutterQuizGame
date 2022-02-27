@@ -115,6 +115,14 @@ class DopeWarsResourceTransactionService {
       }
     }
     gameContext.setReputation(reputation);
-    dopeWarsLocationMoveService.processGameOver();
+    updateMaxReputation();
+  }
+
+  void updateMaxReputation() {
+    var maxReputation = _dopeWarsLocalStorage.getMaxReputation();
+    int currentRep = gameContext.reputation;
+    if (currentRep > maxReputation) {
+      _dopeWarsLocalStorage.setMaxReputation(currentRep);
+    }
   }
 }

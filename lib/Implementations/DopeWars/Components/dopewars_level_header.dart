@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Implementations/DopeWars/Model/dopewars_user_inventory.dart';
 import 'package:flutter_app_quiz_game/Implementations/DopeWars/Questions/dopewars_game_context.dart';
-import 'package:flutter_app_quiz_game/Implementations/DopeWars/Service/dopewars_location_move_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/DopeWars/Service/dopewars_price_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/DopeWars/Service/dopewars_resource_transaction_service.dart';
+import 'package:flutter_app_quiz_game/Implementations/DopeWars/Service/dopewars_total_days_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Animation/animation_increase_number_text.dart';
 import 'package:flutter_app_quiz_game/Lib/Animation/animation_zoom_in_zoom_out_text.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_back_button.dart';
@@ -14,6 +14,8 @@ import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
 class DopeWarsLevelHeader extends StatelessWidget {
   final ScreenDimensionsService _screenDimensions = ScreenDimensionsService();
+  final DopeWarsTotalDaysService _dopeWarsTotalDaysService =
+      DopeWarsTotalDaysService();
   final ImageService _imageService = ImageService();
 
   DopeWarsGameContext gameContext;
@@ -132,9 +134,8 @@ class DopeWarsLevelHeader extends StatelessWidget {
       children: <Widget>[
         const Spacer(),
         createLabelValueRow(
-            "Remaining Days",
-            (DopeWarsLocationMoveService.totalDays - gameContext.daysPassed)
-                .toString(),
+            _dopeWarsTotalDaysService.getTotalDaysLabelText(),
+            _dopeWarsTotalDaysService.getTotalDaysValueText(gameContext),
             Colors.white,
             borderColor: Colors.black,
             animateValue: daysPassedChanged),
@@ -180,6 +181,7 @@ class DopeWarsLevelHeader extends StatelessWidget {
               : animateIncreaseText ?? false
                   ? AnimateIncreaseNumberText(
                       audioPlayerId: audioPlayerId!,
+                      audioPlayLoop: false,
                       startNr: animationStartNr!,
                       endNr: animationEndNr!,
                       toAnimateText: valueMyText)

@@ -12,13 +12,15 @@ class AnimateIncreaseNumberText extends StatefulWidget {
   int startNr;
   int endNr;
   String audioPlayerId;
+  bool? audioPlayLoop;
 
   AnimateIncreaseNumberText(
       {Key? key,
       required this.startNr,
       required this.endNr,
       required this.audioPlayerId,
-      required this.toAnimateText})
+      required this.toAnimateText,
+      this.audioPlayLoop})
       : super(key: key);
 
   @override
@@ -35,7 +37,9 @@ class MyAnimatedWidgetState extends State<AnimateIncreaseNumberText>
     super.initState();
     if (widget.startNr < widget.endNr) {
       widget._myAudioPlayer.playSuccess(
-          audioPlayerId: widget.audioPlayerId, loop: true, playSpeed: 2);
+          audioPlayerId: widget.audioPlayerId,
+          loop: widget.audioPlayLoop ?? true,
+          playSpeed: 2);
     }
   }
 

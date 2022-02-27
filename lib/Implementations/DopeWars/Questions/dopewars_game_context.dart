@@ -1,12 +1,12 @@
 import 'package:flutter_app_quiz_game/Game/Game/game_context.dart';
-import 'package:flutter_app_quiz_game/Implementations/DopeWars/Constants/dopewars_location.dart';
-import 'package:flutter_app_quiz_game/Implementations/DopeWars/Constants/dopewars_resource_type.dart';
 import 'package:flutter_app_quiz_game/Implementations/DopeWars/Model/dopewars_resource.dart';
 import 'package:flutter_app_quiz_game/Implementations/DopeWars/Model/dopewars_user_inventory.dart';
 import 'package:flutter_app_quiz_game/Implementations/DopeWars/Model/dopewars_user_market.dart';
+import 'package:flutter_app_quiz_game/Implementations/DopeWars/Service/dopewars_game_local_storage.dart';
 import 'package:flutter_app_quiz_game/Implementations/DopeWars/Service/dopewars_price_service.dart';
 
 class DopeWarsGameContext extends GameContext {
+  final DopeWarsLocalStorage _dopeWarsLocalStorage = DopeWarsLocalStorage();
   int _reputation = 0;
   int daysPassed = 0;
   DopeWarsResource? selectedResource;
@@ -20,8 +20,6 @@ class DopeWarsGameContext extends GameContext {
 
   DopeWarsGameContext(GameContext gameContext)
       : super(gameContext.gameUser, gameContext.questionConfig) {
-    DopeWarsResourceType.resources;
-    DopeWarsLocation.locations;
     inventory = DopeWarsUserInventory(DopeWarsPriceService.startingBudget);
     market = DopeWarsUserMarket(inventory.availableResourcesByType);
   }
@@ -34,6 +32,7 @@ class DopeWarsGameContext extends GameContext {
     }
     if (_reputation < reputation) {
       reputationChange = reputation - _reputation;
+      _dopeWarsLocalStorage.saveGame(this);
     }
     _reputation = reputation;
   }
@@ -49,15 +48,15 @@ class DopeWarsGameContext extends GameContext {
       : _reputation = json['_reputation'],
         daysPassed = json['daysPassed'],
         inventory = DopeWarsUserInventory.fromJson(json['inventory']),
-        super(gameContext.gameUser, gameContext.questionConfig) {
-    market = DopeWarsUserMarket(inventory.availableResourcesByType);
-  }
+        market = DopeWarsUserMarket.fromJson(json['market']),
+        super(gameContext.gameUser, gameContext.questionConfig);
 
   Map<String, dynamic> toJson() {
     return {
       '_reputation': _reputation,
       'daysPassed': daysPassed,
       'inventory': inventory.toJson(),
+      'market': market.toJson(),
     };
   }
 }

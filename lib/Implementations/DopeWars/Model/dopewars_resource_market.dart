@@ -4,4 +4,7 @@ import 'package:flutter_app_quiz_game/Implementations/DopeWars/Model/dopewars_re
 class DopeWarsResourceMarket extends DopeWarsResource {
   DopeWarsResourceMarket(DopeWarsResourceType resourceType, int price)
       : super(resourceType, price);
+
+  DopeWarsResourceMarket.fromJson(Map<String, dynamic> json)
+      : super.fromJson(json);
 }

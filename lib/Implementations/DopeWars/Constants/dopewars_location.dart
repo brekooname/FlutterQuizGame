@@ -88,12 +88,12 @@ class DopeWarsLocation {
         3),
   ];
 
-  int index;
-  String locationLabel;
-  List<DopeWarsResourceType> cheapResources;
-  List<DopeWarsResourceType> expensiveResources;
-  final int _unlockPricePercent;
-  final int _travelPricePercent;
+  late int index;
+  late String locationLabel;
+  late List<DopeWarsResourceType> cheapResources;
+  late List<DopeWarsResourceType> expensiveResources;
+  late int _unlockPricePercent;
+  late int _travelPricePercent;
 
   DopeWarsLocation(
       this.index,
@@ -102,6 +102,20 @@ class DopeWarsLocation {
       this.expensiveResources,
       this._unlockPricePercent,
       this._travelPricePercent);
+
+  DopeWarsLocation.fromJson(Map<String, dynamic> json) {
+    index = json['index'];
+    var loc = locations.firstWhere((element) => element.index == index);
+    locationLabel = loc.locationLabel;
+    cheapResources = loc.cheapResources;
+    expensiveResources = loc.expensiveResources;
+    _unlockPricePercent = loc._unlockPricePercent;
+    _travelPricePercent = loc._travelPricePercent;
+  }
+
+  Map<String, dynamic> toJson() => {
+        'index': index,
+      };
 
   bool isResourceCheapInThisLocation(DopeWarsResourceType resourceType) {
     return cheapResources.contains(resourceType);

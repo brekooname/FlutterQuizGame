@@ -6,6 +6,7 @@ import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_info.dart';
 import 'package:flutter_app_quiz_game/Lib/Ads/ad_service.dart';
+import 'package:flutter_app_quiz_game/Lib/Audio/my_audio_player.dart';
 import 'package:flutter_app_quiz_game/Lib/Image/image_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/standard_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Storage/game_local_storage.dart';
@@ -17,6 +18,7 @@ abstract class GameScreen<TGameContext extends GameContext,
     extends StandardScreen<TGameScreenManagerState> {
   GameLocalStorage gameLocalStorage = GameLocalStorage();
   AdService adService = AdService();
+  MyAudioPlayer audioPlayer = MyAudioPlayer();
   ImageService imageService = ImageService();
   late CampaignLevel campaignLevel;
   TGameContext gameContext;

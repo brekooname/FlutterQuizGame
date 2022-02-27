@@ -11,6 +11,7 @@ class GameTitle extends StatelessWidget {
   String? backgroundImagePath;
   double? backgroundImageOpacity;
   Shadow? textShadow;
+  double? textWidth;
 
   GameTitle({
     Key? key,
@@ -20,9 +21,11 @@ class GameTitle extends StatelessWidget {
     this.backgroundImagePath,
     this.backgroundImageOpacity,
     double? backgroundImageWidth,
+    double? textWidth,
   }) : super(key: key) {
     this.backgroundImageWidth =
         backgroundImageWidth ?? ScreenDimensionsService().w(95);
+    this.textWidth = textWidth ?? (this.backgroundImageWidth / 1.2);
   }
 
   @override
@@ -42,7 +45,7 @@ class GameTitle extends StatelessWidget {
       MyText(
         text: text,
         textShadow: textShadow,
-        width: backgroundImageWidth / 1.2,
+        width: textWidth,
         maxLines: text.contains(" ") ? 2 : 1,
         fontConfig: fontConfig,
       ),

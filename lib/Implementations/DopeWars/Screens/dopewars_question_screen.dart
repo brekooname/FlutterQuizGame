@@ -44,6 +44,8 @@ class DopeWarsQuestionScreen
             key: key) {
     dopeWarsResourceTransactionService =
         DopeWarsResourceTransactionService(gameContext);
+    dopeWarsResourceTransactionService.calculateReputation();
+    gameContext.reputationChange = null;
   }
 
   @override
@@ -278,11 +280,12 @@ class DopeWarsQuestionScreenState extends State<DopeWarsQuestionScreen>
       size: btnSize,
       buttonSkinConfig: btnSkin,
       onClick: () {
-        widget.dopeWarsResourceTransactionService.dopeWarsLocationMoveService
-            .increaseDaysPassed(context);
+        widget.audioPlayer.playClick();
         widget.gameContext.market.setCurrentLocation(
             widget.gameContext.market.currentLocation,
             widget.gameContext.inventory.availableResourcesByType);
+        widget.dopeWarsResourceTransactionService.dopeWarsLocationMoveService
+            .increaseDaysPassed(context);
         setState(() {});
       },
     );

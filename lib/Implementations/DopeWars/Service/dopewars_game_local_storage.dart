@@ -54,21 +54,45 @@ class DopeWarsLocalStorage extends MyLocalStorage {
     return localStorage.getInt(_maxRepFieldName()) ?? 0;
   }
 
+  bool isUnlimitedMode() {
+    return localStorage.getBool(_unlimitedModeFieldName()) ?? false;
+  }
+
+  void toggleUnlimitedMode() {
+    localStorage.setBool(_unlimitedModeFieldName(), !isUnlimitedMode());
+  }
+
   void setMaxReputation(int rep) {
     if (rep > getMaxReputation()) {
       localStorage.setInt(_maxRepFieldName(), rep);
+      setNewMaxReputation(true);
+    }
+  }
+
+  void setNewMaxReputation(bool val) {
+    localStorage.setBool(_newMaxRepFieldName(), val);
+  }
+
+  bool isNewMaxReputation() {
+    return localStorage.getBool(_newMaxRepFieldName()) ?? false;
+  }
+
+  void startNewGame() {
+    localStorage.setBool(_newMaxRepFieldName(), false);
+    localStorage.setString(_saveGameFieldName(), "");
+    var locations = DopeWarsLocation.locations;
+    for (DopeWarsLocation l in locations) {
+      localStorage.setBool(_unlockLocationFieldName(l), false);
+    }
+    var items = DopeWarsShopItem.items;
+    for (DopeWarsShopItem i in items) {
+      localStorage.setBool(_unlockShopItemFieldName(i), false);
     }
   }
 
   void clearAll() {
     localStorage.setInt(_maxRepFieldName(), 0);
-    localStorage.setString(_saveGameFieldName(), "");
-    for (DopeWarsLocation l in DopeWarsLocation.locations) {
-      localStorage.setBool(_unlockLocationFieldName(l), false);
-    }
-    for (DopeWarsShopItem i in DopeWarsShopItem.items) {
-      localStorage.setBool(_unlockShopItemFieldName(i), false);
-    }
+    startNewGame();
   }
 
   String _unlockLocationFieldName(DopeWarsLocation location) {
@@ -76,6 +100,7 @@ class DopeWarsLocalStorage extends MyLocalStorage {
         "_unlockLocationFieldName_" +
         location.index.toString();
   }
+
   String _unlockShopItemFieldName(DopeWarsShopItem item) {
     return localStorageName +
         "_unlockShopItemFieldName_" +
@@ -88,5 +113,13 @@ class DopeWarsLocalStorage extends MyLocalStorage {
 
   String _maxRepFieldName() {
     return localStorageName + "_maxRepFieldName";
+  }
+
+  String _newMaxRepFieldName() {
+    return localStorageName + "_newMaxRepFieldName";
+  }
+
+  String _unlimitedModeFieldName() {
+    return localStorageName + "_unlimitedModeFieldName";
   }
 }
