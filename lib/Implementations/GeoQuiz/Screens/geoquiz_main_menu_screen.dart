@@ -14,6 +14,7 @@ import 'package:flutter_app_quiz_game/Lib/Constants/language.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/enum_extension.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/map_extension.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/string_extension.dart';
+import 'package:flutter_app_quiz_game/Lib/Localization/label_mixin.dart';
 import 'package:flutter_app_quiz_game/Lib/Popup/settings_popup.dart';
 import 'package:flutter_app_quiz_game/Lib/ProgressBar/progress_bar.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen_manager_state.dart';
@@ -62,7 +63,7 @@ class GeoQuizMainMenuScreen extends StandardScreen {
 }
 
 class GeoQuizMainMenuScreenState extends State<GeoQuizMainMenuScreen>
-    with ScreenState {
+    with ScreenState, LabelMixin {
   @override
   void initState() {
     super.initState();

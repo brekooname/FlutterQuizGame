@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
+import 'package:flutter_app_quiz_game/Lib/Localization/label_mixin.dart';
 import 'package:flutter_app_quiz_game/Lib/Popup/reset_content_popup.dart';
 import 'package:flutter_app_quiz_game/Lib/ScreenDimensions/screen_dimensions_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Storage/settings_local_storage.dart';
@@ -9,7 +10,7 @@ import '../../main.dart';
 import 'in_app_purchase_popup.dart';
 import 'my_popup.dart';
 
-class SettingsPopup extends StatefulWidget with MyPopup {
+class SettingsPopup extends StatefulWidget {
   late SettingsLocalStorage _settingsLocalStorage;
   VoidCallback? resetContent;
 
@@ -22,7 +23,7 @@ class SettingsPopup extends StatefulWidget with MyPopup {
   State<SettingsPopup> createState() => SettingsPopupState();
 }
 
-class SettingsPopupState extends State<SettingsPopup> with MyPopup {
+class SettingsPopupState extends State<SettingsPopup> with MyPopup, LabelMixin {
   late Image soundOn;
   late Image soundOff;
 

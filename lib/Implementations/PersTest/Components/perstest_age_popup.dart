@@ -5,10 +5,11 @@ import 'package:flutter_app_quiz_game/Implementations/PersTest/Service/perstest_
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/string_extension.dart';
 import 'package:flutter_app_quiz_game/Lib/Font/font_config.dart';
+import 'package:flutter_app_quiz_game/Lib/Localization/label_mixin.dart';
 import 'package:flutter_app_quiz_game/Lib/Number/number_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Popup/my_popup.dart';
 
-class PersTestAgePopup extends StatefulWidget with MyPopup {
+class PersTestAgePopup extends StatefulWidget {
   VoidCallback goToGameOverScreenCallback;
   PersTestLocalStorage persTestLocalStorage = PersTestLocalStorage();
   TextEditingController ageController = TextEditingController();
@@ -20,7 +21,8 @@ class PersTestAgePopup extends StatefulWidget with MyPopup {
   State<PersTestAgePopup> createState() => PersTestAgePopupState();
 }
 
-class PersTestAgePopupState extends State<PersTestAgePopup> with MyPopup {
+class PersTestAgePopupState extends State<PersTestAgePopup>
+    with MyPopup, LabelMixin {
   @override
   void initState() {
     initPopup();

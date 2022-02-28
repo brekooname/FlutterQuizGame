@@ -5,13 +5,9 @@ import 'package:flutter_app_quiz_game/Lib/Button/button_skin_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Font/font_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Image/image_service.dart';
-import 'package:flutter_app_quiz_game/Lib/Localization/localization_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Navigation/navigator_service.dart';
 import 'package:flutter_app_quiz_game/Lib/ScreenDimensions/screen_dimensions_service.dart';
 import 'package:flutter_app_quiz_game/Lib/SnackBar/snack_bar_service.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
-import '../../main.dart';
 
 mixin MyPopup {
   late double width;
@@ -19,7 +15,6 @@ mixin MyPopup {
   late NavigatorService _navigatorService;
   late double marginDoubleVal;
   SnackBarService snackBarService = SnackBarService();
-  LocalizationService localizationService = LocalizationService();
   ImageService imageService = ImageService();
   ButtonSize buttonSize = ButtonSize();
   ScreenDimensionsService screenDimensions = ScreenDimensionsService();
@@ -109,18 +104,6 @@ mixin MyPopup {
         },
         buttonSkinConfig: ButtonSkinConfig(
             icon: Icon(Icons.clear, color: Colors.red, size: closeBtnWidth)));
-  }
-
-  AppLocalizations get label => MyApp.appLocalizations;
-
-  String formatTextWithOneParam(String labelText, String param) {
-    return localizationService.formatTextWithParams(labelText, [param]);
-  }
-
-  String formatTextWithTwoParams(
-      String labelText, String param1, String param2) {
-    return localizationService
-        .formatTextWithParams(labelText, [param1, param2]);
   }
 
   static void showPopup(BuildContext context, Widget popupToShow) {

@@ -1,9 +1,6 @@
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/map_extension.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
-import '../../main.dart';
 
 abstract class GameQuestionConfig {
   late List<QuestionCategory> categories;
@@ -11,8 +8,6 @@ abstract class GameQuestionConfig {
   late List<QuestionDifficulty> difficulties;
 
   Map<QuestionCategoryWithPrefixCode, String> get prefixLabelForCode;
-
-  AppLocalizations get label => MyApp.appLocalizations;
 
   String getPrefixToBeDisplayedForQuestion(
       QuestionCategory category, int prefixCode) {

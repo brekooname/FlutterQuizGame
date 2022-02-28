@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Font/font_config.dart';
+import 'package:flutter_app_quiz_game/Lib/Localization/label_mixin.dart';
 import 'package:flutter_app_quiz_game/Lib/Storage/in_app_purchases_local_storage.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 import 'package:flutter_app_quiz_game/main.dart';
@@ -52,7 +53,8 @@ class InAppPurchasePopup extends StatefulWidget {
   _InAppPurchaseState createState() => _InAppPurchaseState();
 }
 
-class _InAppPurchaseState extends State<InAppPurchasePopup> with MyPopup {
+class _InAppPurchaseState extends State<InAppPurchasePopup>
+    with MyPopup, LabelMixin {
   late StreamSubscription<List<PurchaseDetails>> _subscription;
   List<ProductDetails> _products = [];
   bool _purchasePending = false;

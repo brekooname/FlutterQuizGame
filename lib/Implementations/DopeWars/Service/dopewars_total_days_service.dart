@@ -1,9 +1,10 @@
 import 'package:flutter_app_quiz_game/Implementations/DopeWars/Questions/dopewars_game_context.dart';
+import 'package:flutter_app_quiz_game/Lib/Localization/label_mixin.dart';
 
 import '../../../main.dart';
 import 'dopewars_game_local_storage.dart';
 
-class DopeWarsTotalDaysService {
+class DopeWarsTotalDaysService with LabelMixin {
   static const int _totalDays = 60;
   final DopeWarsLocalStorage _dopeWarsLocalStorage = DopeWarsLocalStorage();
 
@@ -18,7 +19,7 @@ class DopeWarsTotalDaysService {
 
   String getTotalDaysLabelText() {
     var unlimitedMode = _dopeWarsLocalStorage.isUnlimitedMode();
-    return unlimitedMode ? "Unlimited Mode" : "Days/Total Days";
+    return unlimitedMode ? label.l_unlimited_mode : label.l_days_total_days;
   }
 
   String getTotalDaysValueText(DopeWarsGameContext gameContext) {

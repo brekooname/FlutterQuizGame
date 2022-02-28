@@ -1,7 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app_quiz_game/Implementations/DopeWars/Constants/dopewars_location.dart';
-import 'package:flutter_app_quiz_game/Implementations/DopeWars/Constants/dopewars_resource_type.dart';
 import 'package:flutter_app_quiz_game/Implementations/DopeWars/Constants/dopewars_shop_item.dart';
 import 'package:flutter_app_quiz_game/Implementations/DopeWars/Questions/dopewars_game_context.dart';
 import 'package:flutter_app_quiz_game/Implementations/DopeWars/Service/dopewars_game_local_storage.dart';
@@ -9,8 +7,8 @@ import 'package:flutter_app_quiz_game/Implementations/DopeWars/Service/dopewars_
 import 'package:flutter_app_quiz_game/Lib/Button/button_skin_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Font/font_config.dart';
+import 'package:flutter_app_quiz_game/Lib/Localization/label_mixin.dart';
 import 'package:flutter_app_quiz_game/Lib/Popup/my_popup.dart';
-import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
 import 'dopewars_location_move_popup.dart';
 
@@ -29,7 +27,8 @@ class DopeWarsShopPopup extends StatefulWidget with MyPopup {
   State<DopeWarsShopPopup> createState() => DopeWarsShopPopupState();
 }
 
-class DopeWarsShopPopupState extends State<DopeWarsShopPopup> with MyPopup {
+class DopeWarsShopPopupState extends State<DopeWarsShopPopup>
+    with MyPopup, LabelMixin {
   @override
   void initState() {
     super.initState();
@@ -75,12 +74,12 @@ class DopeWarsShopPopupState extends State<DopeWarsShopPopup> with MyPopup {
     Color? disabledColor;
     var budget = widget._dopeWarsGameContext.inventory.budget;
     if (!shopItemUnlocked) {
-      priceInfo = "Unlock " +
-          DopeWarsResourceTransactionService.formatCurrency(item.price);
-      reputationInfo = "Reputation +" + item.reputation.toString();
+      priceInfo = formatTextWithOneParam(label.l_unlock_param0,
+          DopeWarsResourceTransactionService.formatCurrency(item.price));
+      reputationInfo = label.l_reputation + " +" + item.reputation.toString();
       isDisabled = item.price > budget;
       btnColor = Colors.orange.shade300;
-    }else{
+    } else {
       disabledColor = Colors.green.shade300;
     }
     var btnSize = Size(screenDimensions.w(33), screenDimensions.dimen(14));

@@ -5,8 +5,9 @@ import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
 import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/DependentAnswers/dependent_answers_question_category_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Questions/AnswerOptions/geoquiz_options_question_category_service.dart';
+import 'package:flutter_app_quiz_game/Lib/Localization/label_mixin.dart';
 
-class GeoQuizGameQuestionConfig extends GameQuestionConfig {
+class GeoQuizGameQuestionConfig extends GameQuestionConfig with LabelMixin {
   //POPULATION ===> top 10
   //diff0
   late QuestionCategory cat0;

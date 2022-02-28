@@ -7,6 +7,7 @@ import 'package:flutter_app_quiz_game/Implementations/History/Constants/history_
 import 'package:flutter_app_quiz_game/Implementations/History/Questions/history_game_context.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Service/history_game_local_storage.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Service/history_game_screen_manager.dart';
+import 'package:flutter_app_quiz_game/Lib/Localization/label_mixin.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/Options/quiz_options_game_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/quiz_question_game_screen.dart';
@@ -50,7 +51,7 @@ class HistoryGameQuestionScreen
 }
 
 class HistoryGameQuestionScreenState extends State<HistoryGameQuestionScreen>
-    with ScreenState, QuizQuestionContainer {
+    with ScreenState, QuizQuestionContainer, LabelMixin {
   @override
   void initState() {
     super.initState();

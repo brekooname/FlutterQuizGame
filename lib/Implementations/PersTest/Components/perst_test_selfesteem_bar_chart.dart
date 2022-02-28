@@ -2,12 +2,10 @@ import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:charts_flutter/flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Lib/Font/font_config.dart';
+import 'package:flutter_app_quiz_game/Lib/Localization/label_mixin.dart';
 import 'package:flutter_app_quiz_game/Lib/ScreenDimensions/screen_dimensions_service.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import '../../../main.dart';
-
-class PersTestSelfEsteemBarChart extends StatelessWidget {
+class PersTestSelfEsteemBarChart extends StatelessWidget with LabelMixin {
   final ScreenDimensionsService _screenDimensionsService =
       ScreenDimensionsService();
   static final fontSize = FontConfig.getCustomFontSize(0.7).toInt();
@@ -15,8 +13,6 @@ class PersTestSelfEsteemBarChart extends StatelessWidget {
   int? age;
 
   PersTestSelfEsteemBarChart(this.selfEsteem, this.age);
-
-  AppLocalizations get label => MyApp.appLocalizations;
 
   @override
   Widget build(BuildContext context) {

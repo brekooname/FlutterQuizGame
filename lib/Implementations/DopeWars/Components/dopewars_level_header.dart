@@ -9,10 +9,11 @@ import 'package:flutter_app_quiz_game/Lib/Animation/animation_zoom_in_zoom_out_t
 import 'package:flutter_app_quiz_game/Lib/Button/my_back_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Font/font_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Image/image_service.dart';
+import 'package:flutter_app_quiz_game/Lib/Localization/label_mixin.dart';
 import 'package:flutter_app_quiz_game/Lib/ScreenDimensions/screen_dimensions_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
-class DopeWarsLevelHeader extends StatelessWidget {
+class DopeWarsLevelHeader extends StatelessWidget with LabelMixin {
   final ScreenDimensionsService _screenDimensions = ScreenDimensionsService();
   final DopeWarsTotalDaysService _dopeWarsTotalDaysService =
       DopeWarsTotalDaysService();
@@ -76,8 +77,8 @@ class DopeWarsLevelHeader extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         const Spacer(),
-        createLabelValueRow(
-            "Reputation", gameContext.reputation.toString(), Colors.deepOrange,
+        createLabelValueRow(label.l_reputation,
+            gameContext.reputation.toString(), Colors.deepOrange,
             borderColor: Colors.orange.shade100,
             animateIncreaseText: reputationChange != null,
             audioPlayerId: "ReputationAudioId",
@@ -101,7 +102,7 @@ class DopeWarsLevelHeader extends StatelessWidget {
       children: <Widget>[
         const Spacer(),
         createLabelValueRow(
-            "Budget",
+            label.l_budget,
             DopeWarsResourceTransactionService.formatCurrency(
                 gameContext.inventory.budget),
             gameContext.inventory.budget <
@@ -113,7 +114,7 @@ class DopeWarsLevelHeader extends StatelessWidget {
                     : Colors.green.shade800),
         const Spacer(),
         createLabelValueRow(
-            "Inventory",
+            label.l_inventory,
             (DopeWarsUserInventory.startingMaxContainer -
                         gameContext.inventory.containerSpaceLeft)
                     .toString() +

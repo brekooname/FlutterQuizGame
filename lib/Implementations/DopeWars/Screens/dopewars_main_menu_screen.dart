@@ -11,6 +11,8 @@ import 'package:flutter_app_quiz_game/Lib/Button/button_skin_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/floating_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Color/color_util.dart';
+import 'package:flutter_app_quiz_game/Lib/Localization/label_mixin.dart';
+import 'package:flutter_app_quiz_game/Lib/Popup/in_app_purchase_popup.dart';
 import 'package:flutter_app_quiz_game/Lib/Popup/settings_popup.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen_manager_state.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
@@ -33,7 +35,7 @@ class DopeWarsMainMenuScreen extends StandardScreen {
 }
 
 class DopeWarsMainMenuScreenState extends State<DopeWarsMainMenuScreen>
-    with ScreenState {
+    with ScreenState, LabelMixin {
   @override
   void initState() {
     DopeWarsResourceType.resources;
@@ -68,7 +70,7 @@ class DopeWarsMainMenuScreenState extends State<DopeWarsMainMenuScreen>
       fontColor: titleColor,
     );
     var newGameBtn = MyButton(
-      text: "New Game!",
+      text: label.l_new_game,
       width: btnW,
       fontConfig: fontConfig,
       buttonSkinConfig: buttonSkinConfig,
@@ -85,7 +87,7 @@ class DopeWarsMainMenuScreenState extends State<DopeWarsMainMenuScreen>
       fontConfig: fontConfig,
       visible: savedGame != null,
       buttonSkinConfig: buttonSkinConfig,
-      text: "Continue",
+      text: label.l_continue,
       onClick: () {
         if (savedGame != null) {
           widget.gameScreenManagerState.showNextGameScreen(
@@ -93,20 +95,29 @@ class DopeWarsMainMenuScreenState extends State<DopeWarsMainMenuScreen>
         }
       },
     );
+    var switchDimen = screenDimensions.dimen(17);
     var unlimitedSwitch = Row(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          MyText(text: "Unlimited Mode"),
-          FittedBox(
-              child: CupertinoSwitch(
-            value: widget._dopeWarsLocalStorage.isUnlimitedMode(),
-            onChanged: (value) {
-              setState(() {
-                widget._dopeWarsLocalStorage.toggleUnlimitedMode();
-              });
-            },
-          ))
+          MyText(text: label.l_unlimited_mode),
+          SizedBox(
+              height: switchDimen,
+              width: switchDimen,
+              child: FittedBox(
+                  child: CupertinoSwitch(
+                value: widget._dopeWarsLocalStorage.isUnlimitedMode(),
+                onChanged: (value) {
+                  setState(() {
+                    if (MyApp.isExtraContentLocked) {
+                      InAppPurchasesPopupService(buildContext: context)
+                          .showPopup();
+                    } else {
+                      widget._dopeWarsLocalStorage.toggleUnlimitedMode();
+                    }
+                  });
+                },
+              )))
         ]);
 
     var vertMaring = screenDimensions.dimen(4.0);
@@ -128,7 +139,6 @@ class DopeWarsMainMenuScreenState extends State<DopeWarsMainMenuScreen>
             marginBox,
             unlimitedSwitch,
             const Spacer(),
-            const Spacer(),
           ],
         ));
     return Scaffold(
@@ -147,8 +157,8 @@ class DopeWarsMainMenuScreenState extends State<DopeWarsMainMenuScreen>
           FloatingButton(
             context: context,
             iconName: "btn_help",
-            myPopupToDisplay:
-                DopeWarsHelpPopup("testsagfsdf asdfa sd fasf asdfasdf sd"),
+            myPopupToDisplay: DopeWarsHelpPopup(label
+                .l_buy_cheap_products_from_the_market_and_sell_them_more_expensive_wait_until_the_next_day_or_travel_),
           ),
         ]),
         floatingActionButtonLocation: FloatingActionButtonLocation.startTop);
@@ -166,7 +176,8 @@ class DopeWarsMainMenuScreenState extends State<DopeWarsMainMenuScreen>
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         MyText(
-            fontSize: FontConfig.getCustomFontSize(1.3), text: "High Score:"),
+            fontSize: FontConfig.getCustomFontSize(1.3),
+            text: label.l_high_score),
         SizedBox(
           width: screenDimensions.dimen(2),
         ),

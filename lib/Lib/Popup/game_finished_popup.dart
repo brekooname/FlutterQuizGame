@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Font/font_config.dart';
+import 'package:flutter_app_quiz_game/Lib/Localization/label_mixin.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
 import 'my_popup.dart';
 
-class GameFinishedPopup extends StatelessWidget with MyPopup {
+class GameFinishedPopup extends StatelessWidget with MyPopup, LabelMixin {
   int? highScore;
   bool isGameFinishedSuccess;
   VoidCallback playAgainClick;

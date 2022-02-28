@@ -1,5 +1,6 @@
 import 'package:flutter_app_quiz_game/Implementations/DopeWars/Constants/dopewars_resource_type.dart';
 import 'package:flutter_app_quiz_game/Implementations/DopeWars/Service/dopewars_price_service.dart';
+import 'package:flutter_app_quiz_game/Lib/Localization/label_mixin.dart';
 
 class DopeWarsLocation {
   static late DopeWarsLocation location0;
@@ -12,7 +13,7 @@ class DopeWarsLocation {
   static List<DopeWarsLocation> locations = [
     location0 = DopeWarsLocation(
         0,
-        "New York",
+        LabelMixin.staticLabel.l_new_york,
         [
           DopeWarsResourceType.res4,
           DopeWarsResourceType.res5,
@@ -24,7 +25,7 @@ class DopeWarsLocation {
         3),
     location1 = DopeWarsLocation(
         1,
-        "Rio de Janeiro",
+        LabelMixin.staticLabel.l_rio_de_janeiro,
         [
           DopeWarsResourceType.res11,
           DopeWarsResourceType.res9,
@@ -38,7 +39,7 @@ class DopeWarsLocation {
         3),
     location2 = DopeWarsLocation(
         2,
-        "Beijing",
+        LabelMixin.staticLabel.l_beijing,
         [
           DopeWarsResourceType.res8,
         ],
@@ -50,7 +51,7 @@ class DopeWarsLocation {
         3),
     location3 = DopeWarsLocation(
         3,
-        "Sydney",
+        LabelMixin.staticLabel.l_sydney,
         [
           DopeWarsResourceType.res8,
           DopeWarsResourceType.res9,
@@ -62,7 +63,7 @@ class DopeWarsLocation {
         3),
     location4 = DopeWarsLocation(
         4,
-        "Berlin",
+        LabelMixin.staticLabel.l_berlin,
         [
           DopeWarsResourceType.res1,
           DopeWarsResourceType.res10,
@@ -75,7 +76,7 @@ class DopeWarsLocation {
         3),
     location5 = DopeWarsLocation(
         5,
-        "Cape Town",
+        LabelMixin.staticLabel.l_cape_town,
         [
           DopeWarsResourceType.res0,
           DopeWarsResourceType.res4,

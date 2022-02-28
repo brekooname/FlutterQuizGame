@@ -14,13 +14,15 @@ import 'package:flutter_app_quiz_game/Lib/Audio/my_audio_player.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/button_skin_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Font/font_config.dart';
+import 'package:flutter_app_quiz_game/Lib/Localization/label_mixin.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/Hangman/hangman_letters.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
 class GeoQuizHangmanScreen
-    extends GameScreen<GeoQuizGameContext, GeoQuizGameScreenManagerState> {
+    extends GameScreen<GeoQuizGameContext, GeoQuizGameScreenManagerState>
+    with LabelMixin {
   static const int showInterstitialAdEveryNQuestions = 8;
   final GeoQuizLocalStorage _geoQuizLocalStorage = GeoQuizLocalStorage();
   final MyAudioPlayer _audioPlayer = MyAudioPlayer();
@@ -80,7 +82,7 @@ class GeoQuizHangmanScreen
 }
 
 class GeoQuizHangmanScreenState extends State<GeoQuizHangmanScreen>
-    with ScreenState, HangmanLetters {
+    with ScreenState, HangmanLetters, LabelMixin {
   @override
   void initState() {
     super.initState();
@@ -93,8 +95,10 @@ class GeoQuizHangmanScreenState extends State<GeoQuizHangmanScreen>
   Widget build(BuildContext context) {
     Widget foundCountriesContainer = createFoundCountriesContainer();
     Widget wordContainer = createWordContainer();
-    Widget letters = createLettersRows(
-        {}, setStateCallback, widget.goToNextGameScreenCallBack(context));
+    Widget letters = createLettersRows({},
+        setStateCallback,
+        widget.goToNextGameScreenCallBack(context),
+        label.l_a_b_c_d_e_f_g_h_i_j_k_l_m_n_o_p_q_r_s_t_u_v_w_x_y_z);
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,

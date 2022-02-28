@@ -8,6 +8,7 @@ import 'package:flutter_app_quiz_game/Implementations/DopeWars/Service/dopewars_
 import 'package:flutter_app_quiz_game/Lib/Button/button_skin_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Font/font_config.dart';
+import 'package:flutter_app_quiz_game/Lib/Localization/label_mixin.dart';
 import 'package:flutter_app_quiz_game/Lib/Popup/my_popup.dart';
 import 'package:flutter_app_quiz_game/Lib/ScreenDimensions/screen_dimensions_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
@@ -35,7 +36,7 @@ class DopeWarsLocationMovePopup extends StatefulWidget with MyPopup {
       ScreenDimensionsService screenDimensions) {
     List<Widget> itemsList = [];
     if (priceInfo.isNotEmpty || reputationInfo.isNotEmpty) {
-      var infoFontSize = FontConfig.getCustomFontSize(0.8);
+      var infoFontSize = FontConfig.getCustomFontSize(0.7);
       if (reputationInfo.isNotEmpty) {
         itemsList.add(MyText(
           textAllPadding: screenDimensions.dimen(0.2),
@@ -64,7 +65,7 @@ class DopeWarsLocationMovePopup extends StatefulWidget with MyPopup {
 }
 
 class DopeWarsLocationMovePopupState extends State<DopeWarsLocationMovePopup>
-    with MyPopup {
+    with MyPopup, LabelMixin {
   @override
   void initState() {
     super.initState();
@@ -110,32 +111,35 @@ class DopeWarsLocationMovePopupState extends State<DopeWarsLocationMovePopup>
     Color? disabledColor;
     var budget = widget._dopeWarsGameContext.inventory.budget;
     if (!widget._dopeWarsLocalStorage.isLocationUnlocked(location)) {
-      priceInfo = "Unlock " +
+      priceInfo = formatTextWithOneParam(
+          label.l_unlock_param0,
           DopeWarsResourceTransactionService.formatCurrency(
-              location.unlockPrice);
-      reputationInfo = "Reputation +" +
+              location.unlockPrice));
+      reputationInfo = label.l_reputation +
+          " +" +
           DopeWarsResourceTransactionService.reputationForLocationUnlock
               .toString();
+
       isDisabled = location.unlockPrice > budget;
       btnColor = Colors.orange.shade300;
     } else if (!isCurrentLocation) {
       var travelPrice =
           location.getTravelPrice(widget._dopeWarsGameContext.daysPassed);
-      priceInfo = "Travel " +
-          DopeWarsResourceTransactionService.formatCurrency(travelPrice);
+      priceInfo = formatTextWithOneParam(label.l_travel_param0,
+          DopeWarsResourceTransactionService.formatCurrency(travelPrice));
       isDisabled = travelPrice > budget;
       btnColor = Colors.lightGreen.shade300;
     } else if (isCurrentLocation) {
       disabledColor = Colors.white;
     }
-    var btnSize = Size(screenDimensions.w(33), screenDimensions.dimen(14));
+    var btnSize = Size(screenDimensions.w(33), screenDimensions.dimen(12));
     List<Widget> items = [];
     List<Widget> locBtnItems = [];
     locBtnItems.add(MyButton(
       disabled: isDisabled,
       disabledBackgroundColor: disabledColor,
       text: location.locationLabel,
-      fontSize: FontConfig.getCustomFontSize(0.9),
+      fontSize: FontConfig.getCustomFontSize(0.8),
       size: btnSize,
       buttonSkinConfig: ButtonSkinConfig(
           borderWidth: FontConfig.standardBorderWidth / 2,

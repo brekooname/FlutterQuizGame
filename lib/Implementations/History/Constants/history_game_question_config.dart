@@ -6,8 +6,9 @@ import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.da
 import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/DependentAnswers/dependent_answers_question_category_service.dart';
 import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/UniqueAnswers/unqiue_answers_question_category_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Questions/history_question_category_service.dart';
+import 'package:flutter_app_quiz_game/Lib/Localization/label_mixin.dart';
 
-class HistoryGameQuestionConfig extends GameQuestionConfig {
+class HistoryGameQuestionConfig extends GameQuestionConfig with LabelMixin {
   late QuestionCategory cat0;
   late QuestionCategory cat1;
   late QuestionCategory cat2;

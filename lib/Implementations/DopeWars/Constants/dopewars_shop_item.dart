@@ -1,5 +1,5 @@
-import 'package:flutter_app_quiz_game/Implementations/DopeWars/Constants/dopewars_resource_type.dart';
 import 'package:flutter_app_quiz_game/Implementations/DopeWars/Service/dopewars_price_service.dart';
+import 'package:flutter_app_quiz_game/Lib/Localization/label_mixin.dart';
 
 class DopeWarsShopItem {
   static late DopeWarsShopItem item0;
@@ -10,12 +10,18 @@ class DopeWarsShopItem {
   static late DopeWarsShopItem item5;
 
   static List<DopeWarsShopItem> items = [
-    item0 = DopeWarsShopItem(0, "sunglasses", "Sun Glasses", 5, 10),
-    item1 = DopeWarsShopItem(1, "smartphone", "Smartphone", 10, 20),
-    item2 = DopeWarsShopItem(2, "gold_watch", "Gold Watch", 25, 50),
-    item3 = DopeWarsShopItem(3, "limousine", "Limousine", 100, 200),
-    item4 = DopeWarsShopItem(4, "mansion", "Mansion", 500, 1000),
-    item5 = DopeWarsShopItem(5, "yacht", "Yacht", 2500, 5000),
+    item0 = DopeWarsShopItem(
+        0, "sunglasses", LabelMixin.staticLabel.l_sun_glasses, 5, 10),
+    item1 = DopeWarsShopItem(
+        1, "smartphone", LabelMixin.staticLabel.l_smartphone, 10, 20),
+    item2 = DopeWarsShopItem(
+        2, "gold_watch", LabelMixin.staticLabel.l_gold_watch, 25, 50),
+    item3 = DopeWarsShopItem(
+        3, "limousine", LabelMixin.staticLabel.l_limousine, 100, 200),
+    item4 = DopeWarsShopItem(
+        4, "mansion", LabelMixin.staticLabel.l_mansion, 500, 1000),
+    item5 = DopeWarsShopItem(
+        5, "yacht", LabelMixin.staticLabel.l_yacht, 2500, 5000),
   ];
 
   int index;

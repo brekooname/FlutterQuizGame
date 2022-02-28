@@ -17,6 +17,7 @@ import 'package:flutter_app_quiz_game/Lib/Button/button_skin_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Color/color_util.dart';
 import 'package:flutter_app_quiz_game/Lib/Font/font_config.dart';
+import 'package:flutter_app_quiz_game/Lib/Localization/label_mixin.dart';
 import 'package:flutter_app_quiz_game/Lib/Popup/my_popup.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/quiz_question_game_screen.dart';
@@ -58,7 +59,7 @@ class DopeWarsQuestionScreen
 }
 
 class DopeWarsQuestionScreenState extends State<DopeWarsQuestionScreen>
-    with ScreenState, QuizQuestionContainer {
+    with ScreenState, QuizQuestionContainer, LabelMixin {
   @override
   Widget build(BuildContext context) {
     var margin = SizedBox(
@@ -96,13 +97,16 @@ class DopeWarsQuestionScreenState extends State<DopeWarsQuestionScreen>
         getSelectionInfo() == SelectedResourceInfo.marketSelection;
     var isInventoryResSelected =
         getSelectionInfo() == SelectedResourceInfo.inventorySelection;
+    var widthForCenterColumn = getWidthForCenterColumnButtons();
     items.add(MyText(
+        fontSize: FontConfig.normalFontSize,
+        width: widthForCenterColumn,
         fontColor: isInventoryResSelected ? Colors.blue.shade900 : Colors.red,
         maxLines: 1,
         text: (isMarketResSelected
-                ? "-"
+                ? ""
                 : isInventoryResSelected
-                    ? "+"
+                    ? ""
                     : "") +
             DopeWarsResourceTransactionService.formatCurrency(
                 widget.gameContext.selectedMoneyChange)));
@@ -114,7 +118,7 @@ class DopeWarsQuestionScreenState extends State<DopeWarsQuestionScreen>
         getMaxAmountForSelection(widget.gameContext.selectedResource);
     if (maxAmountForSelection > 0) {
       items.add(Container(
-        width: screenDimensions.dimen(15),
+        width: widthForCenterColumn,
         decoration: BoxDecoration(
             borderRadius:
                 BorderRadius.circular(FontConfig.standardBorderRadius * 5),
@@ -125,6 +129,13 @@ class DopeWarsQuestionScreenState extends State<DopeWarsQuestionScreen>
               fontSize: FontConfig.normalFontSize,
               fontWeight: FontWeight.w400,
               color: Colors.black,
+            ),
+            itemHeight: screenDimensions.h(10),
+            selectedTextStyle: TextStyle(
+              decoration: TextDecoration.none,
+              fontSize: FontConfig.normalFontSize * 1.25,
+              fontWeight: FontWeight.w600,
+              color: Colors.blue,
             ),
             decoration: BoxDecoration(
                 border: Border.all(
@@ -140,7 +151,7 @@ class DopeWarsQuestionScreenState extends State<DopeWarsQuestionScreen>
       ));
     }
     return SizedBox(
-        width: screenDimensions.dimen(25),
+        width: screenDimensions.w(20),
         child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -148,7 +159,7 @@ class DopeWarsQuestionScreenState extends State<DopeWarsQuestionScreen>
   }
 
   MyButton createBuySellBtn() {
-    double buySellBtnSideDimen = screenDimensions.dimen(15);
+    double buySellBtnSideDimen = getWidthForCenterColumnButtons();
     var selectedAmount = widget.gameContext.selectedAmount;
     bool noSelection = getSelectionInfo() == SelectedResourceInfo.noSelection;
     bool inventorySelection =
@@ -169,6 +180,8 @@ class DopeWarsQuestionScreenState extends State<DopeWarsQuestionScreen>
         },
         buttonSkinConfig: ButtonSkinConfig(
           image: imageService.getSpecificImage(
+              maxWidth: buySellBtnSideDimen,
+              maxHeight: buySellBtnSideDimen,
               imageName: noSelection
                   ? "coin"
                   : inventorySelection
@@ -195,7 +208,7 @@ class DopeWarsQuestionScreenState extends State<DopeWarsQuestionScreen>
     items.add(MyText(
         maxLines: 1,
         fontConfig: invMarketLabelFontConfig(),
-        text: "Inventory"));
+        text: label.l_inventory));
     for (DopeWarsResourceInventory res in availableRes) {
       items.add(createInventoryItem(res));
       remainingSlotsToAdd--;
@@ -215,7 +228,7 @@ class DopeWarsQuestionScreenState extends State<DopeWarsQuestionScreen>
     items.add(MyText(
       maxLines: 1,
       fontConfig: invMarketLabelFontConfig(),
-      text: "Market",
+      text: label.l_market,
     ));
     for (DopeWarsResourceMarket res
         in widget.gameContext.market.availableResources) {
@@ -240,7 +253,11 @@ class DopeWarsQuestionScreenState extends State<DopeWarsQuestionScreen>
   }
 
   Size getSizeForResBtn() {
-    return Size(screenDimensions.dimen(40), screenDimensions.dimen(17));
+    return Size(screenDimensions.dimen(36), screenDimensions.dimen(17));
+  }
+
+  double getWidthForCenterColumnButtons() {
+    return screenDimensions.dimen(15);
   }
 
   Widget createBottomRowButtons() {
@@ -263,7 +280,7 @@ class DopeWarsQuestionScreenState extends State<DopeWarsQuestionScreen>
       },
     );
     var shopBtn = MyButton(
-      text: "Shop",
+      text: label.l_shop,
       size: btnSize,
       buttonSkinConfig: btnSkin,
       onClick: () {
@@ -276,7 +293,7 @@ class DopeWarsQuestionScreenState extends State<DopeWarsQuestionScreen>
       },
     );
     var nextDayBtn = MyButton(
-      text: "Next Day",
+      text: label.l_next_day,
       size: btnSize,
       buttonSkinConfig: btnSkin,
       onClick: () {
@@ -414,7 +431,7 @@ class DopeWarsQuestionScreenState extends State<DopeWarsQuestionScreen>
 
   FontConfig smallPriceFontConfig() {
     return FontConfig(
-        fontSize: FontConfig.getCustomFontSize(0.7), fontColor: Colors.black);
+        fontSize: FontConfig.getCustomFontSize(0.65), fontColor: Colors.black);
   }
 
   FontConfig bigPriceFontConfig() {

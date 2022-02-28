@@ -11,6 +11,7 @@ import 'package:flutter_app_quiz_game/Lib/Button/floating_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Color/color_util.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/map_extension.dart';
+import 'package:flutter_app_quiz_game/Lib/Localization/label_mixin.dart';
 import 'package:flutter_app_quiz_game/Lib/Popup/settings_popup.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen_manager_state.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
@@ -43,7 +44,7 @@ class HistoryMainMenuScreen extends StandardScreen {
 }
 
 class HistoryMainMenuScreenState extends State<HistoryMainMenuScreen>
-    with ScreenState {
+    with ScreenState, LabelMixin {
   @override
   void initState() {
     super.initState();

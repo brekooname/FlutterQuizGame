@@ -17,15 +17,15 @@ import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/string_extension.dart';
 import 'package:flutter_app_quiz_game/Lib/Font/font_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Image/image_service.dart';
+import 'package:flutter_app_quiz_game/Lib/Localization/label_mixin.dart';
 import 'package:flutter_app_quiz_game/Lib/Popup/my_popup.dart';
 import 'package:flutter_app_quiz_game/Lib/ProgressBar/progress_bar.dart';
 import 'package:flutter_app_quiz_game/Lib/ScreenDimensions/screen_dimensions_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../../../main.dart';
 
-abstract class PersTestGameTypeReport {
+abstract class PersTestGameTypeReport with LabelMixin {
   ImageService imageService = ImageService();
   ScreenDimensionsService screenDimensions = ScreenDimensionsService();
   PersTestLocalStorage persTestLocalStorage = PersTestLocalStorage();
@@ -37,8 +37,6 @@ abstract class PersTestGameTypeReport {
     difficulty = campaignLevel.difficulty;
     category = campaignLevel.categories.first;
   }
-
-  AppLocalizations get label => MyApp.appLocalizations;
 
   int getMaxGraphValue();
 

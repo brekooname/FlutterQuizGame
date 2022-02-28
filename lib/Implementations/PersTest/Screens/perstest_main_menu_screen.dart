@@ -10,6 +10,7 @@ import 'package:flutter_app_quiz_game/Lib/Button/floating_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Constants/language.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/enum_extension.dart';
+import 'package:flutter_app_quiz_game/Lib/Localization/label_mixin.dart';
 import 'package:flutter_app_quiz_game/Lib/Popup/my_popup.dart';
 import 'package:flutter_app_quiz_game/Lib/Popup/settings_popup.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
@@ -33,7 +34,7 @@ class PersTestMainMenuScreen
 }
 
 class PersTestMainMenuScreenState extends State<PersTestMainMenuScreen>
-    with ScreenState {
+    with ScreenState, LabelMixin {
   @override
   void initState() {
     super.initState();

@@ -1,12 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
+import 'package:flutter_app_quiz_game/Lib/Localization/label_mixin.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
 import '../../main.dart';
 import 'my_popup.dart';
 
-class ResetContentPopup extends StatefulWidget with MyPopup {
+class ResetContentPopup extends StatefulWidget {
   VoidCallback resetContent;
 
   ResetContentPopup(this.resetContent, {Key? key}) : super(key: key);
@@ -15,7 +16,8 @@ class ResetContentPopup extends StatefulWidget with MyPopup {
   State<ResetContentPopup> createState() => ResetContentPopupState();
 }
 
-class ResetContentPopupState extends State<ResetContentPopup> with MyPopup {
+class ResetContentPopupState extends State<ResetContentPopup>
+    with MyPopup, LabelMixin {
   @override
   void initState() {
     initPopup();

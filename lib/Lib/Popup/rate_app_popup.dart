@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Internet/internet_service.dart';
+import 'package:flutter_app_quiz_game/Lib/Localization/label_mixin.dart';
 import 'package:flutter_app_quiz_game/Lib/Storage/rate_app_local_storage.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
@@ -36,7 +37,7 @@ class RatePopupService {
   }
 }
 
-class RateAppPopup extends StatelessWidget with MyPopup {
+class RateAppPopup extends StatelessWidget with MyPopup, LabelMixin {
   RateAppLocalStorage rateAppLocalStorage;
   InternetService internetService = InternetService();
 

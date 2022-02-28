@@ -10,18 +10,13 @@ import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/Hang
 import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/Hangman/hangman_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Audio/my_audio_player.dart';
 import 'package:flutter_app_quiz_game/Lib/Font/font_config.dart';
-import 'package:flutter_app_quiz_game/Lib/Image/image_service.dart';
 import 'package:flutter_app_quiz_game/Lib/ScreenDimensions/screen_dimensions_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Storage/quiz_game_local_storage.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
-import '../../../../main.dart';
 
 mixin HangmanGameScreen<TGameContext extends GameContext> {
   final ScreenDimensionsService _screenDimensions = ScreenDimensionsService();
   final MyAudioPlayer _audioPlayer = MyAudioPlayer();
-  final ImageService _imageService = ImageService();
   final HangmanCategoryQuestionService _hangmanCategoryQuestionService =
       HangmanCategoryQuestionService();
   final HangmanService _hangmanService = HangmanService();
@@ -41,8 +36,6 @@ mixin HangmanGameScreen<TGameContext extends GameContext> {
     _currentQuestionInfo =
         gameContext.gameUser.getRandomQuestion(difficulty, category);
   }
-
-  AppLocalizations get label => MyApp.appLocalizations;
 
   Widget getHangmanWordContainer() {
     return SizedBox(

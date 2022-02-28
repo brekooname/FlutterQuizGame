@@ -1,12 +1,13 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Lib/Ads/ad_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Font/font_config.dart';
+import 'package:flutter_app_quiz_game/Lib/Localization/label_mixin.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
 
 import '../../main.dart';
 import 'my_popup.dart';
@@ -53,7 +54,7 @@ class WatchRewardedAdPopup extends StatefulWidget {
 }
 
 class WatchRewardedAdPopupState extends State<WatchRewardedAdPopup>
-    with MyPopup {
+    with MyPopup, LabelMixin {
   @override
   void initState() {
     super.initState();
