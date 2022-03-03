@@ -37,8 +37,10 @@ class DopeWarsLocationMovePopup extends StatefulWidget with MyPopup {
     List<Widget> itemsList = [];
     if (priceInfo.isNotEmpty || reputationInfo.isNotEmpty) {
       var infoFontSize = FontConfig.getCustomFontSize(0.7);
+      var labelWidth = screenDimensions.dimen(33);
       if (reputationInfo.isNotEmpty) {
         itemsList.add(MyText(
+          width: labelWidth,
           textAllPadding: screenDimensions.dimen(0.2),
           maxLines: 1,
           text: reputationInfo,
@@ -50,6 +52,7 @@ class DopeWarsLocationMovePopup extends StatefulWidget with MyPopup {
       }
       if (priceInfo.isNotEmpty) {
         itemsList.add(MyText(
+          width: labelWidth,
           textAllPadding: screenDimensions.dimen(0.2),
           maxLines: 1,
           fontConfig: FontConfig(

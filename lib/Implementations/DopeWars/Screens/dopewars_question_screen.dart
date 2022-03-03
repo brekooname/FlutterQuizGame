@@ -24,6 +24,7 @@ import 'package:flutter_app_quiz_game/Lib/Screen/Game/quiz_question_game_screen.
 import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 import 'package:numberpicker/numberpicker.dart';
+import 'dart:math' as math;
 
 class DopeWarsQuestionScreen
     extends GameScreen<DopeWarsGameContext, DopeWarsScreenManagerState> {
@@ -47,6 +48,7 @@ class DopeWarsQuestionScreen
         DopeWarsResourceTransactionService(gameContext);
     dopeWarsResourceTransactionService.calculateReputation();
     gameContext.reputationChange = null;
+    gameContext.inventory.budget=30000;
   }
 
   @override
@@ -110,10 +112,26 @@ class DopeWarsQuestionScreenState extends State<DopeWarsQuestionScreen>
                     : "") +
             DopeWarsResourceTransactionService.formatCurrency(
                 widget.gameContext.selectedMoneyChange)));
-    items.add(createBuySellBtn());
-    items.add(SizedBox(
+
+    double buySellBtnSideDimen = getWidthForCenterColumnButtons();
+    var selectedAmount = widget.gameContext.selectedAmount;
+    bool noSelection = getSelectionInfo() == SelectedResourceInfo.noSelection;
+    bool inventorySelection =
+        getSelectionInfo() == SelectedResourceInfo.inventorySelection;
+    var isBtnDisabled = noSelection || selectedAmount < 1;
+    Widget buySellBtn = createBuySellBtn(buySellBtnSideDimen, inventorySelection,
+        isBtnDisabled, selectedAmount, noSelection);
+    if (FontConfig.isRtlLanguage) {
+      buySellBtn = Transform.rotate(
+        angle: -math.pi,
+        child: buySellBtn,
+      );
+    }
+    items.add(buySellBtn);
+    var bottomMargin = SizedBox(
       height: screenDimensions.dimen(3),
-    ));
+    );
+    items.add(bottomMargin);
     var maxAmountForSelection =
         getMaxAmountForSelection(widget.gameContext.selectedResource);
     if (maxAmountForSelection > 0) {
@@ -150,6 +168,8 @@ class DopeWarsQuestionScreenState extends State<DopeWarsQuestionScreen>
             onChanged: (value) => setState(() => setAmount(value))),
       ));
     }
+    items.add(bottomMargin);
+    items.add(createGoToOneBtn(buySellBtnSideDimen, isBtnDisabled));
     return SizedBox(
         width: screenDimensions.w(20),
         child: Column(
@@ -158,14 +178,30 @@ class DopeWarsQuestionScreenState extends State<DopeWarsQuestionScreen>
             children: items));
   }
 
-  MyButton createBuySellBtn() {
-    double buySellBtnSideDimen = getWidthForCenterColumnButtons();
-    var selectedAmount = widget.gameContext.selectedAmount;
-    bool noSelection = getSelectionInfo() == SelectedResourceInfo.noSelection;
-    bool inventorySelection =
-        getSelectionInfo() == SelectedResourceInfo.inventorySelection;
+  MyButton createGoToOneBtn(double buySellBtnSideDimen, bool isBtnDisabled) {
     return MyButton(
-        disabled: noSelection || selectedAmount < 1,
+        disabled: isBtnDisabled,
+        size: Size(buySellBtnSideDimen, buySellBtnSideDimen),
+        buttonSkinConfig: ButtonSkinConfig(
+          image: imageService.getSpecificImage(
+              maxWidth: buySellBtnSideDimen,
+              maxHeight: buySellBtnSideDimen,
+              imageName: "up_up_arrow",
+              imageExtension: "png",
+              module: "buttons"),
+          borderRadius: FontConfig.standardBorderRadius * 4,
+        ),
+        onClick: () {
+          setState(() {
+            widget.gameContext.selectedAmount = 1;
+          });
+        });
+  }
+
+  MyButton createBuySellBtn(double buySellBtnSideDimen, bool inventorySelection,
+      bool isBtnDisabled, int selectedAmount, bool noSelection) {
+    return MyButton(
+        disabled: isBtnDisabled,
         size: Size(buySellBtnSideDimen, buySellBtnSideDimen),
         onClick: () {
           if (inventorySelection) {
@@ -272,6 +308,8 @@ class DopeWarsQuestionScreenState extends State<DopeWarsQuestionScreen>
       buttonSkinConfig: btnSkin,
       onClick: () {
         widget.gameContext.resetSelectedResource();
+        setState(() {
+        });
         MyPopup.showPopup(
             context,
             DopeWarsLocationMovePopup(() {
@@ -285,6 +323,8 @@ class DopeWarsQuestionScreenState extends State<DopeWarsQuestionScreen>
       buttonSkinConfig: btnSkin,
       onClick: () {
         widget.gameContext.resetSelectedResource();
+        setState(() {
+        });
         MyPopup.showPopup(
             context,
             DopeWarsShopPopup(() {
@@ -326,21 +366,26 @@ class DopeWarsQuestionScreenState extends State<DopeWarsQuestionScreen>
     int? actualSellPrice = getActualSellPrice(res, widget.gameContext.market);
 
     var btnSize = getSizeForResBtn();
-    Row firstRow = Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          MyText(
-              text: res.resourceType.resourceLabel,
-              width: resLabelWidth(),
-              maxLines: 1),
-          MyText(
-              maxLines: 1,
-              fontConfig: smallPriceFontConfig(),
-              text:
-                  DopeWarsResourceTransactionService.formatCurrency(res.price))
-        ]);
-    var amountDimen = btnSize.width / 5;
+    var boughtPrice = MyText(
+        maxLines: 1,
+        fontConfig: smallPriceFontConfig(),
+        text: DopeWarsResourceTransactionService.formatCurrency(res.price));
+    Widget firstRow = Stack(children: [
+      Opacity(
+          opacity: resLabelOpacity(),
+          child: Container(
+            height: btnSize.height / 3.5,
+            decoration: const BoxDecoration(color: Colors.white),
+          )),
+      MyText(
+          text: res.resourceType.resourceLabel,
+          fontConfig: FontConfig(
+              fontSize: FontConfig.getCustomFontSize(0.8),
+              fontWeight: FontWeight.w700),
+          width: resLabelWidth(),
+          maxLines: 1),
+    ]);
+    var amountDimen = btnSize.width / 6;
     Row secondRow = Row(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -359,17 +404,20 @@ class DopeWarsQuestionScreenState extends State<DopeWarsQuestionScreen>
                   borderRadius: BorderRadius.circular(
                       FontConfig.standardBorderRadius * 5),
                   color: Colors.green.shade300),
-              child: MyText(text: res.amount.toString())),
+              child: MyText(
+                text: res.amount.toString(),
+                fontSize: FontConfig.getCustomFontSize(0.8),
+              )),
         ]);
     content = Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
-        children: [firstRow, secondRow]);
+        children: [boughtPrice, firstRow, secondRow]);
     return createResBtn(
         !isEnabled, res, SelectedResourceInfo.inventorySelection, content);
   }
 
-  double resLabelWidth() => getSizeForResBtn().width / 1.7;
+  double resLabelWidth() => getSizeForResBtn().width / 1.1;
 
   bool isInventoryItemEnabled(DopeWarsResourceInventory resourceInventory) {
     int? actualSellPrice =
@@ -390,22 +438,29 @@ class DopeWarsQuestionScreenState extends State<DopeWarsQuestionScreen>
   }
 
   Widget createMarketItem(DopeWarsResourceMarket res) {
+    var btnSize = getSizeForResBtn();
     bool isEnabled = isMarketItemEnabled(res);
-    Row firstRow = Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          MyText(
-            text: res.resourceType.resourceLabel,
-            width: resLabelWidth(),
-            maxLines: 1,
-          ),
-          MyText(
-              maxLines: 1,
-              fontConfig: smallPriceFontConfig(),
-              text: DopeWarsResourceTransactionService.formatCurrency(
-                  res.resourceType.standardPrice))
-        ]);
+    var standardPrice = MyText(
+        maxLines: 1,
+        fontConfig: smallPriceFontConfig(),
+        text: DopeWarsResourceTransactionService.formatCurrency(
+            res.resourceType.standardPrice));
+    Widget firstRow = Stack(children: [
+      Opacity(
+          opacity: resLabelOpacity(),
+          child: Container(
+            height: btnSize.height / 3.5,
+            decoration: BoxDecoration(color: Colors.white),
+          )),
+      MyText(
+        text: res.resourceType.resourceLabel,
+        width: resLabelWidth(),
+        fontConfig: FontConfig(
+            fontSize: FontConfig.getCustomFontSize(0.8),
+            fontWeight: FontWeight.w700),
+        maxLines: 1,
+      )
+    ]);
     var inventoryIsInMarket = inventoryItemIsInMarket(res);
     Row secondRow = Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -424,19 +479,23 @@ class DopeWarsQuestionScreenState extends State<DopeWarsQuestionScreen>
         Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
-            children: [firstRow, secondRow]),
+            children: [standardPrice, firstRow, secondRow]),
         btnEnabledDisabledColor:
             inventoryIsInMarket ? Colors.orange.shade100 : null);
   }
 
+  double resLabelOpacity() => 0.25;
+
   FontConfig smallPriceFontConfig() {
     return FontConfig(
-        fontSize: FontConfig.getCustomFontSize(0.65), fontColor: Colors.black);
+        fontSize: FontConfig.getCustomFontSize(0.65),
+        fontColor: Colors.grey.shade600);
   }
 
   FontConfig bigPriceFontConfig() {
     return FontConfig(
-        fontSize: FontConfig.getCustomFontSize(1.1),
+        fontWeight: FontWeight.w800,
+        fontSize: FontConfig.getCustomFontSize(0.8),
         fontColor: Colors.green.shade900);
   }
 
@@ -589,7 +648,7 @@ class DopeWarsQuestionScreenState extends State<DopeWarsQuestionScreen>
 
   Widget _getArrowForMarketPrice(
       DopeWarsResourceMarket resourceMarket, bool disabled) {
-    double imgDimen = screenDimensions.dimen(8);
+    double imgDimen = screenDimensions.dimen(6);
     Widget? img;
     String? imgName;
     if (resourceMarket.price <

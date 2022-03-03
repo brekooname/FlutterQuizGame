@@ -27,9 +27,6 @@ class DopeWarsGameContext extends GameContext {
   int get reputation => _reputation;
 
   setReputation(int reputation) {
-    if (reputation > 100) {
-      reputation = 100;
-    }
     if (_reputation < reputation) {
       reputationChange = reputation - _reputation;
       _dopeWarsLocalStorage.saveGame(this);

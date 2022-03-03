@@ -49,7 +49,7 @@ class MyApp extends StatefulWidget {
   static CampaignLevel campaignLevel = DopeWarsCampaignLevelService().level_0;
 
   //
-  static Language webLanguage = Language.en;
+  static Language webLanguage = Language.el;
   static bool webIsPro = true;
 
   // static bool webIsPro = true;
@@ -270,7 +270,17 @@ class MyAppState extends State<MyApp> {
               aspectRatio:
                   ScreenDimensionsService.isPortrait() ? 9 / 16 : 16 / 9,
               child: Container(
+                ////
+                //
+                ////
+                //
+                ////
                 // color: Colors.blue,
+                ////
+                //
+                ////
+                //
+                ////
                 alignment: Alignment.center,
                 child: Column(
                   children: <Widget>[

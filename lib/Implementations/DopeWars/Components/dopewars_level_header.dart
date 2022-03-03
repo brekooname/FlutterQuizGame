@@ -77,14 +77,17 @@ class DopeWarsLevelHeader extends StatelessWidget with LabelMixin {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         const Spacer(),
-        createLabelValueRow(label.l_reputation,
-            gameContext.reputation.toString(), Colors.deepOrange,
-            borderColor: Colors.orange.shade100,
-            animateIncreaseText: reputationChange != null,
-            audioPlayerId: "ReputationAudioId",
-            animationStartNr:
-                gameContext.reputation - (reputationChange?.toInt() ?? 0),
-            animationEndNr: gameContext.reputation),
+        createLabelValueRow(
+          label.l_reputation,
+          gameContext.reputation.toString(),
+          Colors.deepOrange,
+          borderColor: Colors.orange.shade100,
+          animateIncreaseText: reputationChange != null,
+          audioPlayerId: "ReputationAudioId",
+          animationStartNr:
+              gameContext.reputation - (reputationChange?.toInt() ?? 0),
+          animationEndNr: gameContext.reputation,
+        ),
         _imageService.getSpecificImage(
             maxWidth: rowHeight,
             module: "general",
@@ -102,27 +105,30 @@ class DopeWarsLevelHeader extends StatelessWidget with LabelMixin {
       children: <Widget>[
         const Spacer(),
         createLabelValueRow(
-            label.l_budget,
-            DopeWarsResourceTransactionService.formatCurrency(
-                gameContext.inventory.budget),
-            gameContext.inventory.budget <
-                    DopeWarsPriceService.startingBudget / 6
-                ? Colors.red
-                : gameContext.inventory.budget <
-                        DopeWarsPriceService.startingBudget / 3
-                    ? Colors.orange
-                    : Colors.green.shade800),
+          null,
+          DopeWarsResourceTransactionService.formatCurrency(
+              gameContext.inventory.budget),
+          gameContext.inventory.budget < DopeWarsPriceService.startingBudget / 6
+              ? Colors.red
+              : gameContext.inventory.budget <
+                      DopeWarsPriceService.startingBudget / 3
+                  ? Colors.orange
+                  : Colors.green.shade800,
+          imageName: "money_bag",
+        ),
         const Spacer(),
         createLabelValueRow(
-            label.l_inventory,
-            (DopeWarsUserInventory.startingMaxContainer -
-                        gameContext.inventory.containerSpaceLeft)
-                    .toString() +
-                "/" +
-                DopeWarsUserInventory.startingMaxContainer.toString(),
-            gameContext.inventory.containerSpaceLeft == 0
-                ? Colors.red
-                : Colors.blue),
+          null,
+          (DopeWarsUserInventory.startingMaxContainer -
+                      gameContext.inventory.containerSpaceLeft)
+                  .toString() +
+              "/" +
+              DopeWarsUserInventory.startingMaxContainer.toString(),
+          gameContext.inventory.containerSpaceLeft == 0
+              ? Colors.red
+              : Colors.blue,
+          imageName: "inventory",
+        ),
         const Spacer(),
       ],
     );
@@ -135,24 +141,28 @@ class DopeWarsLevelHeader extends StatelessWidget with LabelMixin {
       children: <Widget>[
         const Spacer(),
         createLabelValueRow(
-            _dopeWarsTotalDaysService.getTotalDaysLabelText(),
-            _dopeWarsTotalDaysService.getTotalDaysValueText(gameContext),
-            Colors.white,
-            borderColor: Colors.black,
-            animateValue: daysPassedChanged),
+          _dopeWarsTotalDaysService.getTotalDaysLabelText(),
+          _dopeWarsTotalDaysService.getTotalDaysValueText(gameContext),
+          Colors.white,
+          borderColor: Colors.black,
+          animateValue: daysPassedChanged,
+        ),
         const Spacer(),
       ],
     );
   }
 
   Widget createLabelValueRow(
-      String labelText, String valueText, Color valueTextColor,
+      String? labelText, String valueText, Color valueTextColor,
       {Color? borderColor,
       bool? animateValue,
       bool? animateIncreaseText,
       String? audioPlayerId,
       int? animationStartNr,
-      int? animationEndNr}) {
+      int? animationEndNr,
+      String? imageName,
+      double? labelTextWidth,
+      int maxLines = 1}) {
     var valueMyText = MyText(
         text: valueText,
         fontConfig: FontConfig(
@@ -161,16 +171,30 @@ class DopeWarsLevelHeader extends StatelessWidget with LabelMixin {
             borderWidth: FontConfig.standardBorderWidth * 1.5,
             fontSize: FontConfig.getCustomFontSize(1.2),
             fontWeight: FontWeight.w800));
+    double imgDimen = _screenDimensions.dimen(8);
+    Widget image = imageName != null
+        ? _imageService.getSpecificImage(
+            maxWidth: imgDimen,
+            maxHeight: imgDimen,
+            imageName: imageName,
+            imageExtension: "png",
+            module: "general")
+        : Container();
     return Row(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           MyText(
+            maxLines: maxLines,
+            width: labelTextWidth == null
+                ? null
+                : _screenDimensions.dimen(labelTextWidth),
             fontConfig: FontConfig(
                 fontSize: FontConfig.getCustomFontSize(1.0),
                 fontColor: Colors.black),
-            text: labelText,
+            text: labelText ?? "",
           ),
+          image,
           SizedBox(
             width: _screenDimensions.dimen(2),
           ),

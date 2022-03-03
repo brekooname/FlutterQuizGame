@@ -8,6 +8,7 @@ import 'font_util.dart';
 
 class FontConfig {
   static var fontScale = [
+    Language.ar.name,
     Language.he.name,
     Language.hi.name,
     Language.ja.name,

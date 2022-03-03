@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_app_quiz_game/Implementations/DopeWars/Constants/dopewars_shop_item.dart';
 import 'package:flutter_app_quiz_game/Implementations/DopeWars/Model/dopewars_resource.dart';
 import 'package:flutter_app_quiz_game/Implementations/DopeWars/Model/dopewars_resource_inventory.dart';
@@ -59,7 +60,7 @@ class DopeWarsResourceTransactionService {
     if (resource != null) {
       for (DopeWarsResource marketResource
           in gameContext.market.availableResources) {
-        if (marketResource.resourceType == resource.resourceType) {
+        if (marketResource.resourceType.index == resource.resourceType.index) {
           marketPrice = marketResource.price;
         }
       }
@@ -68,14 +69,13 @@ class DopeWarsResourceTransactionService {
   }
 
   void sellResource(DopeWarsResource resourceToSell, int soldAmount) {
-    int moneyWonOnSellingThisResource = getAmountToModifyBudget(
-        soldAmount, getMarketPriceForResource(resourceToSell));
+    var marketPriceForResource = getMarketPriceForResource(resourceToSell);
+    int moneyWonOnSellingThisResource =
+        getAmountToModifyBudget(soldAmount, marketPriceForResource);
     gameContext.inventory.budget =
         gameContext.inventory.budget + moneyWonOnSellingThisResource;
     DopeWarsResourceInventory currentResource = DopeWarsResourceInventory(
-        soldAmount,
-        resourceToSell.resourceType,
-        getMarketPriceForResource(resourceToSell));
+        soldAmount, resourceToSell.resourceType, marketPriceForResource);
     removeSoldResource(gameContext.inventory, currentResource, soldAmount);
 
     calculateReputation();

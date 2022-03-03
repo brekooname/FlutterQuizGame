@@ -4,6 +4,7 @@ import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.da
 import 'package:flutter_app_quiz_game/Implementations/_Skel/Constants/skel_campaign_level_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/_Skel/Questions/skel_game_context.dart';
 import 'package:flutter_app_quiz_game/Implementations/_Skel/Service/skel_screen_manager.dart';
+import 'package:flutter_app_quiz_game/Lib/Localization/label_mixin.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/quiz_question_game_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
@@ -35,7 +36,7 @@ class SkelQuestionScreen
 }
 
 class SkelQuestionScreenState extends State<SkelQuestionScreen>
-    with ScreenState, QuizQuestionContainer {
+    with ScreenState, QuizQuestionContainer, LabelMixin {
   @override
   Widget build(BuildContext context) {
     return Container();

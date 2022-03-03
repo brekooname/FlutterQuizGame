@@ -11,17 +11,17 @@ class DopeWarsShopItem {
 
   static List<DopeWarsShopItem> items = [
     item0 = DopeWarsShopItem(
-        0, "sunglasses", LabelMixin.staticLabel.l_sun_glasses, 5, 10),
+        0, "sunglasses", LabelMixin.staticLabel.l_sun_glasses, 5, 100),
     item1 = DopeWarsShopItem(
-        1, "smartphone", LabelMixin.staticLabel.l_smartphone, 10, 20),
+        1, "smartphone", LabelMixin.staticLabel.l_smartphone, 10, 200),
     item2 = DopeWarsShopItem(
-        2, "gold_watch", LabelMixin.staticLabel.l_gold_watch, 25, 50),
+        2, "gold_watch", LabelMixin.staticLabel.l_gold_watch, 25, 1500),
     item3 = DopeWarsShopItem(
-        3, "limousine", LabelMixin.staticLabel.l_limousine, 100, 200),
+        3, "limousine", LabelMixin.staticLabel.l_limousine, 100, 8000),
     item4 = DopeWarsShopItem(
-        4, "mansion", LabelMixin.staticLabel.l_mansion, 500, 1000),
+        4, "mansion", LabelMixin.staticLabel.l_mansion, 500, 50000),
     item5 = DopeWarsShopItem(
-        5, "yacht", LabelMixin.staticLabel.l_yacht, 2500, 5000),
+        5, "yacht", LabelMixin.staticLabel.l_yacht, 2500, 500000),
   ];
 
   int index;
