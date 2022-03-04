@@ -34,7 +34,7 @@ class MyText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var defaultText = _myTextCreatorService._createText(
-        text, _getTextStyle(), TextAlign.center);
+        text, _getTextStyle(), TextAlign.center, maxLines);
 
     Widget result;
     if (fontConfig.borderColor == Colors.transparent) {
@@ -46,6 +46,7 @@ class MyText extends StatelessWidget {
           OutlinedTextStroke(
               color: fontConfig.borderColor, width: fontConfig.borderWidth),
         ],
+        maxLines: maxLines,
       );
     }
     return Padding(
@@ -83,10 +84,15 @@ class MyText extends StatelessWidget {
       double maxWidth = double.infinity,
       int maxLines = 2}) {
     final TextPainter textPainter = TextPainter(
+      textScaleFactor: 1,
       text: TextSpan(text: text, style: style),
       maxLines: maxLines,
       textDirection: TextDirection.ltr,
-    )..layout(minWidth: minWidth, maxWidth: maxWidth);
+    )..layout(
+        minWidth: minWidth,
+        maxWidth: maxWidth -
+            (fontConfig.borderWidth * text.length) -
+            textAllPadding * 2);
     return textPainter.didExceedMaxLines;
   }
 }
@@ -102,10 +108,12 @@ class OutlinedTextStroke {
 class OutlinedText extends StatelessWidget {
   final MyTextCreatorService _myTextCreatorService = MyTextCreatorService();
   final Text? text;
+  final int maxLines;
 
   final List<OutlinedTextStroke>? strokes;
 
-  OutlinedText({Key? key, this.text, this.strokes}) : super(key: key);
+  OutlinedText({Key? key, this.text, this.strokes, required this.maxLines})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -122,7 +130,8 @@ class OutlinedText extends StatelessWidget {
                 ..style = PaintingStyle.stroke
                 ..strokeWidth = widthSum
                 ..color = list[i].color ?? Colors.transparent),
-          text?.textAlign);
+          text?.textAlign,
+          maxLines);
 
       children.add(textControl);
     }
@@ -142,9 +151,11 @@ class MyTextCreatorService {
 
   MyTextCreatorService.internal();
 
-  Text _createText(String text, TextStyle textStyle, TextAlign? textAlign) {
+  Text _createText(
+      String text, TextStyle textStyle, TextAlign? textAlign, int maxLines) {
     return Text(
       text,
+      softWrap: maxLines != 1,
       textScaleFactor: 1,
       overflow: TextOverflow.visible,
       textAlign: textAlign,

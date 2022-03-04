@@ -49,7 +49,7 @@ class MyApp extends StatefulWidget {
   static CampaignLevel campaignLevel = DopeWarsCampaignLevelService().level_0;
 
   //
-  static Language webLanguage = Language.el;
+  static Language webLanguage = Language.zh;
   static bool webIsPro = true;
 
   // static bool webIsPro = true;

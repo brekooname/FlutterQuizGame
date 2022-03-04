@@ -11,6 +11,8 @@ import 'package:flutter_app_quiz_game/Lib/Button/button_skin_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/floating_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Color/color_util.dart';
+import 'package:flutter_app_quiz_game/Lib/Constants/language.dart';
+import 'package:flutter_app_quiz_game/Lib/Extensions/enum_extension.dart';
 import 'package:flutter_app_quiz_game/Lib/Localization/label_mixin.dart';
 import 'package:flutter_app_quiz_game/Lib/Popup/in_app_purchase_popup.dart';
 import 'package:flutter_app_quiz_game/Lib/Popup/settings_popup.dart';
@@ -57,7 +59,14 @@ class DopeWarsMainMenuScreenState extends State<DopeWarsMainMenuScreen>
       fontConfig: FontConfig(
         fontColor: titleColor,
         fontWeight: FontWeight.w700,
-        fontSize: FontConfig.getCustomFontSize(1.7),
+        fontSize: FontConfig.getCustomFontSize([
+          Language.ja.name,
+          Language.ms.name,
+          Language.pl.name,
+          Language.vi.name,
+        ].contains(MyApp.languageCode)
+            ? 1.3
+            : 1.7),
       ),
     );
 

@@ -1,22 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Lib/Constants/language.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/enum_extension.dart';
+import 'package:flutter_app_quiz_game/Lib/Extensions/map_extension.dart';
 import 'package:flutter_app_quiz_game/Lib/ScreenDimensions/screen_dimensions_service.dart';
 
 import '../../main.dart';
 import 'font_util.dart';
 
 class FontConfig {
-  static var fontScale = [
-    Language.ar.name,
-    Language.he.name,
-    Language.hi.name,
-    Language.ja.name,
-    Language.ko.name,
-    Language.th.name,
-  ].contains(MyApp.languageCode)
-      ? 19
-      : 18;
+  static var fontScale = _initFontScale();
 
   late Color textColor;
 
@@ -74,4 +66,25 @@ class FontConfig {
 
   static bool get isRtlLanguage =>
       [Language.ar.name, Language.he.name].contains(MyApp.languageCode);
+
+  //The larger the value the smaller the fontSize
+  static double _initFontScale() {
+    String appLang = MyApp.languageCode;
+    Map<String, double> fontScaleConfig = {};
+
+    //
+    fontScaleConfig.putIfAbsent(Language.ja.name, () => 22);
+    fontScaleConfig.putIfAbsent(Language.ko.name, () => 22);
+    //
+    fontScaleConfig.putIfAbsent(Language.zh.name, () => 21);
+    //
+    fontScaleConfig.putIfAbsent(Language.el.name, () => 20);
+    fontScaleConfig.putIfAbsent(Language.he.name, () => 20);
+    fontScaleConfig.putIfAbsent(Language.hi.name, () => 20);
+    fontScaleConfig.putIfAbsent(Language.ar.name, () => 20);
+    fontScaleConfig.putIfAbsent(Language.th.name, () => 20);
+    //
+    //
+    return fontScaleConfig.getOrDefault(appLang, 18);
+  }
 }
