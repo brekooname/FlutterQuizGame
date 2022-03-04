@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Dope Wars</string>
+    <string name="language">en</string>
+    <string name="game_id">dopewars</string>
+
+    <string name="admob_banner_id">ca-app-pub-9432399956064043/1660649309</string>
+    <string name="admob_inter_id">ca-app-pub-9432399956064043/8921806623</string>
+    <string name="admob_video_id">ca-app-pub-9432399956064043/6721404296</string>
+    <string name="admob_app_id">ca-app-pub-9432399956064043~3165302661</string>
+
+    <bool name="is_pro">false</bool>
+</resources>

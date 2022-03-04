@@ -59,6 +59,12 @@ android {
         perstestPro {
             assets.srcDirs = ['assets/implementations/perstest', 'assets/main']
         }
+        dopewars {
+            assets.srcDirs = ['assets/implementations/dopewars', 'assets/main']
+        }
+        dopewarsPro {
+            assets.srcDirs = ['assets/implementations/dopewars', 'assets/main']
+        }
     }
 
     defaultConfig {
@@ -81,6 +87,22 @@ android {
 
     flavorDimensions "game"
     productFlavors {
+/////////////////////////////////////////////////////////////////////////////
+        perstest {
+            applicationIdSuffix ".dopewars"
+            versionCode 2
+            versionName "1.1"
+            dimension "game"
+            manifestPlaceholders = [appIcon: "@drawable/dopewars_icon"]
+        }
+/////////////////////////////////////////////////////////////////////////////
+        perstestPro {
+            applicationIdSuffix ".dopewarsPro"
+            versionCode 2
+            versionName "1.1"
+            dimension "game"
+            manifestPlaceholders = [appIcon: "@drawable/dopewarspro_icon"]
+        }
 /////////////////////////////////////////////////////////////////////////////
         perstest {
             applicationIdSuffix ".perstest"

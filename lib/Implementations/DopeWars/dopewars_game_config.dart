@@ -61,7 +61,7 @@ class DopeWarsGameConfig extends GameConfig {
         return "Επιχειρηματικό παιχνίδι";
       case Language.en:
         return "Business Game";
-        return "Dope Wars";
+        // return "Dope Wars";
       case Language.es:
         return "Juego de Negocios";
       case Language.fi:
