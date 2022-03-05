@@ -40,9 +40,8 @@ class DopeWarsGameConfig extends GameConfig {
   @override
   Color get screenBackgroundColor => const Color.fromRGBO(198, 236, 198, 1);
 
-  //Android
   @override
-  String get extraContentProductId => "extracontent.skel";
+  String get extraContentProductId => "extracontent.resourcewars";
 
   @override
   String getTitle(Language language) {

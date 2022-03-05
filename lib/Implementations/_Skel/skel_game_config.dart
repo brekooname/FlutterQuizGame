@@ -40,7 +40,6 @@ class SkelGameConfig extends GameConfig {
   @override
   Color get screenBackgroundColor => const Color.fromRGBO(198, 236, 255, 1);
 
-  //Android
   @override
   String get extraContentProductId => "extracontent.skel";
 

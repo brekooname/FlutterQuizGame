@@ -117,8 +117,8 @@ flutter:
     ########################
     ###### PERSTEST ################################################################################
     ########################
-    - assets/implementations/perstest/
-    - assets/implementations/perstest/buttons/
+    #- assets/implementations/perstest/
+    #- assets/implementations/perstest/buttons/
     ########################
     ###### GEOQUIZ #################################################################################
     ########################

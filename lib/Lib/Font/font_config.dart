@@ -77,12 +77,11 @@ class FontConfig {
     fontScaleConfig.putIfAbsent(Language.ko.name, () => 22);
     //
     fontScaleConfig.putIfAbsent(Language.zh.name, () => 21);
-    //
-    fontScaleConfig.putIfAbsent(Language.el.name, () => 20);
-    fontScaleConfig.putIfAbsent(Language.he.name, () => 20);
-    fontScaleConfig.putIfAbsent(Language.hi.name, () => 20);
-    fontScaleConfig.putIfAbsent(Language.ar.name, () => 20);
-    fontScaleConfig.putIfAbsent(Language.th.name, () => 20);
+    fontScaleConfig.putIfAbsent(Language.th.name, () => 21);
+    fontScaleConfig.putIfAbsent(Language.el.name, () => 21);
+    fontScaleConfig.putIfAbsent(Language.he.name, () => 21);
+    fontScaleConfig.putIfAbsent(Language.hi.name, () => 21);
+    fontScaleConfig.putIfAbsent(Language.ar.name, () => 21);
     //
     //
     return fontScaleConfig.getOrDefault(appLang, 18);

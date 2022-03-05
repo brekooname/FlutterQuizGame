@@ -65,8 +65,8 @@ class DopeWarsQuestionScreenState extends State<DopeWarsQuestionScreen>
   @override
   Widget build(BuildContext context) {
     var margin = SizedBox(
-      height: screenDimensions.dimen(5),
-    );
+            height: screenDimensions.dimen(2.5),
+          );
     var content = Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -289,7 +289,7 @@ class DopeWarsQuestionScreenState extends State<DopeWarsQuestionScreen>
   }
 
   Size getSizeForResBtn() {
-    return Size(screenDimensions.dimen(36), screenDimensions.dimen(17));
+    return Size(screenDimensions.dimen(36), screenDimensions.dimen(16.75));
   }
 
   double getWidthForCenterColumnButtons() {
@@ -297,7 +297,7 @@ class DopeWarsQuestionScreenState extends State<DopeWarsQuestionScreen>
   }
 
   Widget createBottomRowButtons() {
-    var btnSize = Size(screenDimensions.w(32), screenDimensions.dimen(17));
+    var btnSize = Size(screenDimensions.w(32), screenDimensions.dimen(16.5));
     var btnSkin = ButtonSkinConfig(
         borderColor: Colors.green.shade800,
         borderWidth: FontConfig.standardBorderWidth / 2,
@@ -305,6 +305,7 @@ class DopeWarsQuestionScreenState extends State<DopeWarsQuestionScreen>
     var travelBtn = MyButton(
       text: widget.gameContext.market.currentLocation.locationLabel,
       size: btnSize,
+      fontSize: getBottomRowBtnFontSize(),
       buttonSkinConfig: btnSkin,
       onClick: () {
         widget.gameContext.resetSelectedResource();
@@ -320,6 +321,7 @@ class DopeWarsQuestionScreenState extends State<DopeWarsQuestionScreen>
     var shopBtn = MyButton(
       text: label.l_shop,
       size: btnSize,
+      fontSize: getBottomRowBtnFontSize(),
       buttonSkinConfig: btnSkin,
       onClick: () {
         widget.gameContext.resetSelectedResource();
@@ -335,6 +337,7 @@ class DopeWarsQuestionScreenState extends State<DopeWarsQuestionScreen>
     var nextDayBtn = MyButton(
       text: label.l_next_day,
       size: btnSize,
+      fontSize: getBottomRowBtnFontSize(),
       buttonSkinConfig: btnSkin,
       onClick: () {
         widget.audioPlayer.playClick();
@@ -380,7 +383,7 @@ class DopeWarsQuestionScreenState extends State<DopeWarsQuestionScreen>
       MyText(
           text: res.resourceType.resourceLabel,
           fontConfig: FontConfig(
-              fontSize: FontConfig.getCustomFontSize(0.8),
+              fontSize: getResLabelFontSize(),
               fontWeight: FontWeight.w700),
           width: resLabelWidth(),
           maxLines: 1),
@@ -416,6 +419,10 @@ class DopeWarsQuestionScreenState extends State<DopeWarsQuestionScreen>
     return createResBtn(
         !isEnabled, res, SelectedResourceInfo.inventorySelection, content);
   }
+
+  double getResLabelFontSize() => FontConfig.getCustomFontSize(0.75);
+
+  double getBottomRowBtnFontSize() => FontConfig.getCustomFontSize(0.9);
 
   double resLabelWidth() => getSizeForResBtn().width / 1.1;
 
@@ -456,7 +463,7 @@ class DopeWarsQuestionScreenState extends State<DopeWarsQuestionScreen>
         text: res.resourceType.resourceLabel,
         width: resLabelWidth(),
         fontConfig: FontConfig(
-            fontSize: FontConfig.getCustomFontSize(0.8),
+            fontSize: getResLabelFontSize(),
             fontWeight: FontWeight.w700),
         maxLines: 1,
       )
@@ -495,7 +502,7 @@ class DopeWarsQuestionScreenState extends State<DopeWarsQuestionScreen>
   FontConfig bigPriceFontConfig() {
     return FontConfig(
         fontWeight: FontWeight.w800,
-        fontSize: FontConfig.getCustomFontSize(0.8),
+        fontSize: getResLabelFontSize(),
         fontColor: Colors.green.shade900);
   }
 

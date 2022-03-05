@@ -88,7 +88,7 @@ android {
     flavorDimensions "game"
     productFlavors {
 /////////////////////////////////////////////////////////////////////////////
-        perstest {
+        dopewars {
             applicationIdSuffix ".dopewars"
             versionCode 2
             versionName "1.1"
@@ -96,7 +96,7 @@ android {
             manifestPlaceholders = [appIcon: "@drawable/dopewars_icon"]
         }
 /////////////////////////////////////////////////////////////////////////////
-        perstestPro {
+        dopewarsPro {
             applicationIdSuffix ".dopewarsPro"
             versionCode 2
             versionName "1.1"

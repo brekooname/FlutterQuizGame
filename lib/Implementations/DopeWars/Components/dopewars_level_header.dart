@@ -31,7 +31,7 @@ class DopeWarsLevelHeader extends StatelessWidget with LabelMixin {
     var margin = SizedBox(
       height: _screenDimensions.dimen(0.5),
     );
-    var rowHeight = _screenDimensions.dimen(8);
+    var rowHeight = _screenDimensions.dimen(7);
     return Container(
         decoration: BoxDecoration(
             boxShadow: [
@@ -169,7 +169,7 @@ class DopeWarsLevelHeader extends StatelessWidget with LabelMixin {
             fontColor: valueTextColor,
             borderColor: borderColor ?? Colors.transparent,
             borderWidth: FontConfig.standardBorderWidth * 1.5,
-            fontSize: FontConfig.getCustomFontSize(1.2),
+            fontSize: FontConfig.getCustomFontSize(1.0),
             fontWeight: FontWeight.w800));
     double imgDimen = _screenDimensions.dimen(8);
     Widget image = imageName != null
