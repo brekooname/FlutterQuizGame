@@ -48,7 +48,6 @@ class DopeWarsQuestionScreen
         DopeWarsResourceTransactionService(gameContext);
     dopeWarsResourceTransactionService.calculateReputation();
     gameContext.reputationChange = null;
-    gameContext.inventory.budget=30000;
   }
 
   @override
@@ -65,8 +64,8 @@ class DopeWarsQuestionScreenState extends State<DopeWarsQuestionScreen>
   @override
   Widget build(BuildContext context) {
     var margin = SizedBox(
-            height: screenDimensions.dimen(2.5),
-          );
+      height: screenDimensions.dimen(2.5),
+    );
     var content = Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -119,8 +118,8 @@ class DopeWarsQuestionScreenState extends State<DopeWarsQuestionScreen>
     bool inventorySelection =
         getSelectionInfo() == SelectedResourceInfo.inventorySelection;
     var isBtnDisabled = noSelection || selectedAmount < 1;
-    Widget buySellBtn = createBuySellBtn(buySellBtnSideDimen, inventorySelection,
-        isBtnDisabled, selectedAmount, noSelection);
+    Widget buySellBtn = createBuySellBtn(buySellBtnSideDimen,
+        inventorySelection, isBtnDisabled, selectedAmount, noSelection);
     if (FontConfig.isRtlLanguage) {
       buySellBtn = Transform.rotate(
         angle: -math.pi,
@@ -309,8 +308,7 @@ class DopeWarsQuestionScreenState extends State<DopeWarsQuestionScreen>
       buttonSkinConfig: btnSkin,
       onClick: () {
         widget.gameContext.resetSelectedResource();
-        setState(() {
-        });
+        setState(() {});
         MyPopup.showPopup(
             context,
             DopeWarsLocationMovePopup(() {
@@ -325,8 +323,7 @@ class DopeWarsQuestionScreenState extends State<DopeWarsQuestionScreen>
       buttonSkinConfig: btnSkin,
       onClick: () {
         widget.gameContext.resetSelectedResource();
-        setState(() {
-        });
+        setState(() {});
         MyPopup.showPopup(
             context,
             DopeWarsShopPopup(() {
@@ -383,8 +380,7 @@ class DopeWarsQuestionScreenState extends State<DopeWarsQuestionScreen>
       MyText(
           text: res.resourceType.resourceLabel,
           fontConfig: FontConfig(
-              fontSize: getResLabelFontSize(),
-              fontWeight: FontWeight.w700),
+              fontSize: getResLabelFontSize(), fontWeight: FontWeight.w700),
           width: resLabelWidth(),
           maxLines: 1),
     ]);
@@ -463,8 +459,7 @@ class DopeWarsQuestionScreenState extends State<DopeWarsQuestionScreen>
         text: res.resourceType.resourceLabel,
         width: resLabelWidth(),
         fontConfig: FontConfig(
-            fontSize: getResLabelFontSize(),
-            fontWeight: FontWeight.w700),
+            fontSize: getResLabelFontSize(), fontWeight: FontWeight.w700),
         maxLines: 1,
       )
     ]);

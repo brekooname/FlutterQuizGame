@@ -89,7 +89,7 @@ android {
     productFlavors {
 /////////////////////////////////////////////////////////////////////////////
         dopewars {
-            applicationIdSuffix ".dopewars"
+            applicationIdSuffix ".resourcewars"
             versionCode 2
             versionName "1.1"
             dimension "game"
@@ -97,7 +97,7 @@ android {
         }
 /////////////////////////////////////////////////////////////////////////////
         dopewarsPro {
-            applicationIdSuffix ".dopewarsPro"
+            applicationIdSuffix ".resourcewarspro"
             versionCode 2
             versionName "1.1"
             dimension "game"

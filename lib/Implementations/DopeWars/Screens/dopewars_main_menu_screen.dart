@@ -139,7 +139,6 @@ class DopeWarsMainMenuScreenState extends State<DopeWarsMainMenuScreen>
           children: <Widget>[
             const Spacer(),
             gameTitle,
-            SizedBox(height: screenDimensions.dimen(2.0)),
             buildHighScore(),
             marginBox,
             newGameBtn,
@@ -204,6 +203,6 @@ class DopeWarsMainMenuScreenState extends State<DopeWarsMainMenuScreen>
       ],
     );
     widget._dopeWarsLocalStorage.setNewMaxReputation(false);
-    return SizedBox(height: screenDimensions.dimen(15), child: highScore);
+    return SizedBox(height: screenDimensions.dimen(12), child: highScore);
   }
 }

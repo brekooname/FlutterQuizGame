@@ -40,7 +40,7 @@ class MyApp extends StatefulWidget {
   static bool kIsAutomatedTest = false;
 
   //TODO ---VALUE CHANGED--- should be false
-  static bool kIsManualTest = true;
+  static bool kIsManualTest = false;
 
   // static String webAppKey = "history";
   // static String webAppKey = "geoquiz";
@@ -49,7 +49,7 @@ class MyApp extends StatefulWidget {
   static CampaignLevel campaignLevel = DopeWarsCampaignLevelService().level_0;
 
   //
-  static Language webLanguage = Language.ja;
+  static Language webLanguage = Language.en;
   static bool webIsPro = false;
 
   // static bool webIsPro = true;
