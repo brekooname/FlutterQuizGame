@@ -108,6 +108,13 @@ flutter:
     - assets/main/popup/
     - assets/main/audio/
     ########################
+    ###### ANATOMY #################################################################################
+    ########################
+    - assets/implementations/anatomy/
+    - assets/implementations/anatomy/buttons/
+    - assets/implementations/anatomy/general/
+    - assets/implementations/anatomy/categories/
+    ########################
     ###### DOPEWARS ################################################################################
     ########################
     - assets/implementations/dopewars/

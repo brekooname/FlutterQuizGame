@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_app_quiz_game/Implementations/Anatomy/Constants/anatomy_campaign_level_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/enum_extension.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -12,7 +13,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'Game/Constants/app_id.dart';
 import 'Game/Game/campaign_level.dart';
-import 'Implementations/DopeWars/Constants/dopewars_campaign_level_service.dart';
 import 'Lib/Ads/ad_service.dart';
 import 'Lib/Constants/language.dart';
 import 'Lib/Image/image_service.dart';
@@ -40,17 +40,18 @@ class MyApp extends StatefulWidget {
   static bool kIsAutomatedTest = false;
 
   //TODO ---VALUE CHANGED--- should be false
-  static bool kIsManualTest = false;
+  static bool kIsManualTest = true;
 
   // static String webAppKey = "history";
   // static String webAppKey = "geoquiz";
   // static String webAppKey = "perstest";
-  static String webAppKey = "dopewars";
-  static CampaignLevel campaignLevel = DopeWarsCampaignLevelService().level_0;
+  // static String webAppKey = "dopewars";
+  static String webAppKey = "anatomy";
+  static CampaignLevel campaignLevel = AnatomyCampaignLevelService().level_0;
 
   //
   static Language webLanguage = Language.en;
-  static bool webIsPro = false;
+  static bool webIsPro = true;
 
   // static bool webIsPro = true;
 
