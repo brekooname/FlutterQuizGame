@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
+import 'package:flutter_app_quiz_game/Implementations/Anatomy/Constants/anatomy_game_question_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/floating_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Localization/label_mixin.dart';
@@ -8,6 +9,7 @@ import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen_manager_state.
 import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/standard_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/game_title.dart';
+import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 import '../../../Lib/Font/font_config.dart';
 import '../../../main.dart';
@@ -23,6 +25,8 @@ class AnatomyMainMenuScreen extends StandardScreen {
 
 class AnatomyMainMenuScreenState extends State<AnatomyMainMenuScreen>
     with ScreenState, LabelMixin {
+  ItemScrollController itemScrollController = ItemScrollController();
+
   @override
   void initState() {
     super.initState();
@@ -42,7 +46,25 @@ class AnatomyMainMenuScreenState extends State<AnatomyMainMenuScreen>
           borderColor: Colors.green),
     );
 
-    var
+    var categories = AnatomyGameQuestionConfig().categories;
+
+    ScrollablePositionedList listView = ScrollablePositionedList.builder(
+      physics: const ClampingScrollPhysics(),
+      itemCount: categories.length,
+      itemScrollController: itemScrollController,
+      itemBuilder: (BuildContext context, int index) {
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            _createCategoryItem(categories.elementAt(index)),
+            SizedBox(
+              height: screenDimensions.dimen(4),
+            )
+          ],
+        );
+      },
+    );
 
     var mainColumn = Container(
         alignment: Alignment.center,
@@ -50,9 +72,10 @@ class AnatomyMainMenuScreenState extends State<AnatomyMainMenuScreen>
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            SizedBox(height: screenDimensions.dimen(11)),
+            SizedBox(height: screenDimensions.dimen(5)),
             gameTitle,
-            SizedBox(height: screenDimensions.dimen(14)),
+            SizedBox(height: screenDimensions.dimen(5)),
+            Expanded(child: listView)
           ],
         ));
     return Scaffold(
@@ -76,12 +99,14 @@ class AnatomyMainMenuScreenState extends State<AnatomyMainMenuScreen>
     Size btnSize = Size(screenDimensions.dimen(40), screenDimensions.dimen(60));
 
     Image catImg = imageService.getSpecificImage(
-        imageName: cat.index.toString(),
+        imageName: cat.index.toString() + "s",
         imageExtension: "png",
         module: "categories",
-        maxHeight: btnSize.height);
+        maxHeight: btnSize.height,
+        maxWidth: screenDimensions.dimen(55));
 
     MyButton lvlBtn = MyButton(
+      textMaxLines: 4,
       text: cat.categoryLabel,
       size: btnSize,
     );
