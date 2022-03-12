@@ -14,15 +14,15 @@ class SkelGameQuestionConfig extends GameQuestionConfig {
       SkelGameQuestionConfig.internal();
 
   factory SkelGameQuestionConfig() {
+    singleton.difficulties = [
+      singleton.diff0 = QuestionDifficulty(index: 0),
+    ];
+    //
+    //
     singleton.categories = [
       singleton.cat0 = QuestionCategory(
           index: 0,
           questionCategoryService: DependentAnswersCategoryQuestionService())
-    ];
-    //
-    //
-    singleton.difficulties = [
-      singleton.diff0 = QuestionDifficulty(index: 0),
     ];
     return singleton;
   }

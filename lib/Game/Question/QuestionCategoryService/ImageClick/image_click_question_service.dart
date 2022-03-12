@@ -74,7 +74,7 @@ class ImageClickQuestionService extends QuestionService {
 
   @override
   Set<String> getQuizAnswerOptions(Question question) {
-    return questionParser.getAnswerOptions(question.rawString);
+    return questionParser.getAnswerOptions(question.rawString, 1);
   }
 
   @override

@@ -41,7 +41,7 @@ class AnatomyQuestionCollectorService extends QuestionCollectorService<
   String _processRawStringForDependentQuestion(String qString) {
     return qString.split(":")[0] +
         ":" +
-        qString.split(":")[1].split(",")[0] +
+TODO should form the raw string for dependent ..................      qString.split(":")[1].split(",")[0] +
         ":" +
         qString.split(":")[1] +
         ":";
