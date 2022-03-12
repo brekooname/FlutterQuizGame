@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_app_quiz_game/Game/Game/campaign_level.dart';
 import 'package:flutter_app_quiz_game/Game/Game/campaign_level_service.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
+import 'package:flutter_app_quiz_game/Implementations/Anatomy/Constants/anatomy_campaign_level_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Constants/geoquiz_campaign_level_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Constants/history_campaign_level_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/PersTest/Constants/perstest_campaign_level_service.dart';
@@ -18,8 +19,9 @@ List<TestAppConfig> getAppsToTest() {
     //[Language.he]
     // TestAppConfig("history", Language.values, HistoryCampaignLevelService(), true),
     // TestAppConfig("geoquiz", Language.values, GeoQuizCampaignLevelService(), true),
-    TestAppConfig(
-        "perstest", Language.values, PersTestCampaignLevelService(), false),
+    // TestAppConfig(
+    //     "perstest", Language.values, PersTestCampaignLevelService(), false),
+    TestAppConfig("anatomy", Language.values, AnatomyCampaignLevelService(), true),
   ];
 }
 

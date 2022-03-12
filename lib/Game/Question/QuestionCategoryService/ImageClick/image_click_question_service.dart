@@ -1,7 +1,7 @@
 import 'dart:collection';
 
-import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/Base/question_parser.dart';
 import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/Base/question_service.dart';
+import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/ImageClick/image_click_question_parser.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
 
 import '../../../../main.dart';
@@ -10,12 +10,13 @@ import '../../Model/question_category.dart';
 import '../../Model/question_difficulty.dart';
 
 class ImageClickQuestionService extends QuestionService {
-  late QuestionParser questionParser;
+  late ImageClickQuestionParser questionParser;
 
   static final ImageClickQuestionService singleton =
       ImageClickQuestionService.internal();
 
-  factory ImageClickQuestionService({required QuestionParser questionParser}) {
+  factory ImageClickQuestionService(
+      {required ImageClickQuestionParser questionParser}) {
     singleton.questionParser = questionParser;
     return singleton;
   }
@@ -73,7 +74,7 @@ class ImageClickQuestionService extends QuestionService {
 
   @override
   Set<String> getQuizAnswerOptions(Question question) {
-    return {};
+    return questionParser.getAnswerOptions(question.rawString);
   }
 
   @override
@@ -103,7 +104,7 @@ class ImageClickQuestionService extends QuestionService {
 
   @override
   List<String> getCorrectAnswers(Question question) {
-    throw UnimplementedError();
+    return questionParser.getCorrectAnswersFromRawString(question);
   }
 }
 

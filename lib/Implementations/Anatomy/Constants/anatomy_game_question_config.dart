@@ -4,6 +4,7 @@ import 'package:flutter_app_quiz_game/Game/GameType/game_question_config.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
 import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/DependentAnswers/dependent_answers_question_category_service.dart';
+import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/ImageClick/image_click_question_category_service.dart';
 
 class AnatomyGameQuestionConfig extends GameQuestionConfig {
   late QuestionCategory cat0;
@@ -26,54 +27,58 @@ class AnatomyGameQuestionConfig extends GameQuestionConfig {
       AnatomyGameQuestionConfig.internal();
 
   factory AnatomyGameQuestionConfig() {
+    var questionCategoryServiceMap = {
+      singleton.diff0: ImageClickCategoryQuestionService(),
+      singleton.diff1: DependentAnswersCategoryQuestionService(),
+    };
     singleton.categories = [
       singleton.cat0 = QuestionCategory(
           index: 0,
-          questionCategoryService: DependentAnswersCategoryQuestionService(),
+          questionCategoryServiceMap: questionCategoryServiceMap,
           categoryLabel: "Organs"),
       singleton.cat1 = QuestionCategory(
           index: 1,
-          questionCategoryService: DependentAnswersCategoryQuestionService(),
+          questionCategoryServiceMap: questionCategoryServiceMap,
           categoryLabel: "Bones"),
       singleton.cat2 = QuestionCategory(
           index: 2,
-          questionCategoryService: DependentAnswersCategoryQuestionService(),
+          questionCategoryServiceMap: questionCategoryServiceMap,
           categoryLabel: "Muscles"),
       singleton.cat3 = QuestionCategory(
           index: 3,
-          questionCategoryService: DependentAnswersCategoryQuestionService(),
+          questionCategoryServiceMap: questionCategoryServiceMap,
           categoryLabel: "Circulatory system"),
       singleton.cat4 = QuestionCategory(
           index: 4,
-          questionCategoryService: DependentAnswersCategoryQuestionService(),
+          questionCategoryServiceMap: questionCategoryServiceMap,
           categoryLabel: "Nervous system"),
       singleton.cat5 = QuestionCategory(
           index: 5,
-          questionCategoryService: DependentAnswersCategoryQuestionService(),
+          questionCategoryServiceMap: questionCategoryServiceMap,
           categoryLabel: "Mouth"),
       singleton.cat6 = QuestionCategory(
           index: 6,
-          questionCategoryService: DependentAnswersCategoryQuestionService(),
+          questionCategoryServiceMap: questionCategoryServiceMap,
           categoryLabel: "Brain"),
       singleton.cat7 = QuestionCategory(
           index: 7,
-          questionCategoryService: DependentAnswersCategoryQuestionService(),
+          questionCategoryServiceMap: questionCategoryServiceMap,
           categoryLabel: "Ear"),
       singleton.cat8 = QuestionCategory(
           index: 8,
-          questionCategoryService: DependentAnswersCategoryQuestionService(),
+          questionCategoryServiceMap: questionCategoryServiceMap,
           categoryLabel: "Heart"),
       singleton.cat9 = QuestionCategory(
           index: 9,
-          questionCategoryService: DependentAnswersCategoryQuestionService(),
+          questionCategoryServiceMap: questionCategoryServiceMap,
           categoryLabel: "Eye"),
       singleton.cat10 = QuestionCategory(
           index: 10,
-          questionCategoryService: DependentAnswersCategoryQuestionService(),
+          questionCategoryServiceMap: questionCategoryServiceMap,
           categoryLabel: "Cell"),
       singleton.cat11 = QuestionCategory(
           index: 11,
-          questionCategoryService: DependentAnswersCategoryQuestionService(),
+          questionCategoryServiceMap: questionCategoryServiceMap,
           categoryLabel: "Chemical elements of the human body"),
     ];
     //

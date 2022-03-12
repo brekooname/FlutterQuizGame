@@ -16,21 +16,16 @@ class DependentAnswersQuestionParser extends QuestionParser {
 
   DependentAnswersQuestionParser.internal();
 
-  //We return a list in case of multiple correct answers
-  // but for this case there is only one correct answer
-  @override
-  List<String> getCorrectAnswersFromRawString(Question question) {
-    return [question.rawString.split(":")[1].trim()];
-  }
-
   @override
   String getQuestionToBeDisplayed(Question question) {
     return question.rawString.split(":")[0].trim();
   }
 
-  int getPrefixCodeForQuestion(String questionRawString) {
-    var val = questionRawString.split(":")[3].trim();
-    return val.isEmpty ? 0 : val.parseToInt;
+  //We return a list in case of multiple correct answers
+  // but for this case there is only one correct answer
+  @override
+  List<String> getCorrectAnswersFromRawString(Question question) {
+    return [question.rawString.split(":")[1].trim()];
   }
 
   List<int> getAnswerReferences(String questionRawString) {
@@ -40,6 +35,11 @@ class DependentAnswersQuestionParser extends QuestionParser {
         .where((element) => element.trim().isNotEmpty)
         .toList();
     return answers.isEmpty ? [] : answers.map((e) => e.parseToInt).toList();
+  }
+
+  int getPrefixCodeForQuestion(String questionRawString) {
+    var val = questionRawString.split(":")[3].trim();
+    return val.isEmpty ? 0 : val.parseToInt;
   }
 
   Set<String> getAllPossibleAnswersForQuestion(
