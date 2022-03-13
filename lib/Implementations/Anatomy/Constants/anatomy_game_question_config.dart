@@ -5,7 +5,6 @@ import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
 import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/DependentAnswers/dependent_answers_question_category_service.dart';
 import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/ImageClick/image_click_question_category_service.dart';
-import 'package:flutter_app_quiz_game/Implementations/Anatomy/Questions/anatomy_question_category_service.dart';
 
 class AnatomyGameQuestionConfig extends GameQuestionConfig {
   late QuestionCategory cat0;
@@ -36,7 +35,7 @@ class AnatomyGameQuestionConfig extends GameQuestionConfig {
     //
     var questionCategoryServiceMap = {
       singleton.diff0: ImageClickCategoryQuestionService(),
-      singleton.diff1: AnatomyCategoryQuestionService(),
+      singleton.diff1: DependentAnswersCategoryQuestionService(),
     };
     singleton.categories = [
       singleton.cat0 = QuestionCategory(

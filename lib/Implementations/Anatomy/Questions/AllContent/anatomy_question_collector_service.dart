@@ -1,3 +1,4 @@
+import 'package:collection/src/iterable_extensions.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/category_difficulty.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
@@ -30,7 +31,7 @@ class AnatomyQuestionCollectorService extends QuestionCollectorService<
           CategoryDifficulty(category, gameQuestionConfig.diff1))!;
       result = list
           .map((e) => Question(e.index, e.difficulty, e.category,
-              _processRawStringForDependentQuestion(e.rawString)))
+              _processRawStringForDependentQuestion(e)))
           .toList();
     }
     return result
@@ -38,12 +39,22 @@ class AnatomyQuestionCollectorService extends QuestionCollectorService<
         .toList();
   }
 
-  String _processRawStringForDependentQuestion(String qString) {
-    return qString.split(":")[0] +
+  String _processRawStringForDependentQuestion(Question question) {
+    Question? questionOpt = getAllQuestions(
+            difficulties: [gameQuestionConfig.diff0],
+            categories: [question.category])
+        .firstWhereOrNull((element) => element.index == question.index);
+    if (questionOpt == null) {
+      throw AssertionError(
+          ["No diff 0 question found for cat " + question.category.name]);
+    }
+
+    var optString = question.rawString.split(":")[1];
+    return question.rawString.split(":")[0] +
         ":" +
-TODO should form the raw string for dependent ..................      qString.split(":")[1].split(",")[0] +
+        questionOpt.rawString.split(":")[0] +
         ":" +
-        qString.split(":")[1] +
+        optString.substring(optString.indexOf(",") + 1) +
         ":";
   }
 
