@@ -1,4 +1,5 @@
 import 'dart:collection';
+import 'dart:ui';
 
 import 'package:flutter_app_quiz_game/Game/GameType/game_question_config.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
@@ -22,6 +23,8 @@ class AnatomyGameQuestionConfig extends GameQuestionConfig {
 
   late QuestionDifficulty diff0;
   late QuestionDifficulty diff1;
+
+  late Map<QuestionCategory, Size> categoryImgDimen;
 
   static final AnatomyGameQuestionConfig singleton =
       AnatomyGameQuestionConfig.internal();
@@ -87,6 +90,20 @@ class AnatomyGameQuestionConfig extends GameQuestionConfig {
           questionCategoryServiceMap: questionCategoryServiceMap,
           categoryLabel: "Chemical elements of the human body"),
     ];
+    singleton.categoryImgDimen = {
+      singleton.cat0: const Size(252, 580),
+      singleton.cat1: const Size(252, 580),
+      singleton.cat2: const Size(252, 580),
+      singleton.cat3: const Size(253, 580),
+      singleton.cat4: const Size(252, 580),
+      singleton.cat5: const Size(320, 580),
+      singleton.cat6: const Size(341, 341),
+      singleton.cat7: const Size(396, 396),
+      singleton.cat8: const Size(400, 400),
+      singleton.cat9: const Size(316, 316),
+      singleton.cat10: const Size(400, 383),
+      singleton.cat11: const Size(300, 628),
+    };
     return singleton;
   }
 

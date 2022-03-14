@@ -1,13 +1,7 @@
-import 'dart:collection';
-
 import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/Base/question_service.dart';
 import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/ImageClick/image_click_question_parser.dart';
-import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
 
-import '../../../../main.dart';
 import '../../Model/question.dart';
-import '../../Model/question_category.dart';
-import '../../Model/question_difficulty.dart';
 
 class ImageClickQuestionService extends QuestionService {
   late ImageClickQuestionParser questionParser;
@@ -28,53 +22,20 @@ class ImageClickQuestionService extends QuestionService {
     return question.rawString.split(":")[0];
   }
 
-  Map<MyButton, ImageClickInfo> getAnswerOptionsCoordinates(
-      List<MyButton> allAnswerOptionsButtons,
-      QuestionDifficulty questionDifficultyLevel,
-      QuestionCategory questionCategory) {
-    List<Question> allQuestions = MyApp
-        .appId.gameConfig.questionCollectorService
-        .getAllQuestions(categories: [questionCategory]);
-    Map<MyButton, ImageClickInfo> buttonWithCoordinates =
-        HashMap<MyButton, ImageClickInfo>();
-    for (Question question in allQuestions) {
-      for (MyButton button in allAnswerOptionsButtons) {
-        if (button.text != null &&
-            (button.text ?? "").toLowerCase() ==
-                questionParser
-                    .getCorrectAnswersFromRawString(question)
-                    .first
-                    .toLowerCase()) {
-          buttonWithCoordinates[button] =
-              getAnswerOptionCoordinates(question.rawString);
-          break;
-        }
-      }
-    }
-    return buttonWithCoordinates;
-  }
-
-  ImageClickInfo getAnswerOptionCoordinates(String questionString) {
-    List<String> s = questionString
-        .split(":")[4]
-        .split(",")
-        .where((element) => element.trim().isNotEmpty)
-        .toList();
-    ImageClickInfo imageClickInfo =
-        ImageClickInfo(x: double.parse(s[0]), y: double.parse(s[1]));
-    if (s.length == 3) {
-      imageClickInfo.arrowWidth = double.parse(s[2]);
-    }
-    return imageClickInfo;
-  }
-
   List<String> getAnswers(Question question) {
     return questionParser.getCorrectAnswersFromRawString(question);
   }
 
+  List<ImageClickInfo> getQuizAnswerOptionsCoordinates(Question question) {
+    return questionParser
+        .getAnswerOptionQuestions(question)
+        .map((e) => questionParser.getAnswerOptionCoordinates(e.rawString))
+        .toList();
+  }
+
   @override
   Set<String> getQuizAnswerOptions(Question question) {
-    return questionParser.getAnswerOptions(question.rawString, 1);
+    return questionParser.getAnswerOptions(question);
   }
 
   @override
@@ -106,13 +67,4 @@ class ImageClickQuestionService extends QuestionService {
   List<String> getCorrectAnswers(Question question) {
     return questionParser.getCorrectAnswersFromRawString(question);
   }
-}
-
-class ImageClickInfo {
-  double x;
-  double y;
-
-  double? arrowWidth;
-
-  ImageClickInfo({required this.x, required this.y, this.arrowWidth});
 }

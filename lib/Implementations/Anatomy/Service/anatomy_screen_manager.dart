@@ -2,7 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_app_quiz_game/Game/Game/campaign_level.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
+import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/ImageClick/image_click_question_category_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/Anatomy/Questions/anatomy_game_context.dart';
+import 'package:flutter_app_quiz_game/Implementations/Anatomy/Screens/anatomy_image_click_screen.dart';
 import 'package:flutter_app_quiz_game/Implementations/Anatomy/Screens/anatomy_main_menu_screen.dart';
 import 'package:flutter_app_quiz_game/Implementations/Anatomy/Screens/anatomy_question_screen.dart';
 import 'package:flutter_app_quiz_game/Implementations/Anatomy/Service/anatomy_gamecontext_service.dart';
@@ -67,11 +69,20 @@ class AnatomyScreenManagerState extends State<AnatomyScreenManager>
     QuestionDifficulty difficulty,
     QuestionCategory category,
   ) {
-    return AnatomyQuestionScreen(this,
-        key: UniqueKey(),
-        gameContext: gameContext,
-        category: category,
-        difficulty: difficulty);
+    if (category.getQuestionCategoryService(difficulty)
+        is ImageClickCategoryQuestionService) {
+      return AnatomyImageClickScreen(this,
+          key: UniqueKey(),
+          gameContext: gameContext,
+          category: category,
+          difficulty: difficulty);
+    } else {
+      return AnatomyQuestionScreen(this,
+          key: UniqueKey(),
+          gameContext: gameContext,
+          category: category,
+          difficulty: difficulty);
+    }
   }
 
   @override

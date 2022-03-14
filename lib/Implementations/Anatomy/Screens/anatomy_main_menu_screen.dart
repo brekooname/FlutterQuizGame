@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app_quiz_game/Game/Game/campaign_level.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
+import 'package:flutter_app_quiz_game/Implementations/Anatomy/Constants/anatomy_campaign_level_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/Anatomy/Constants/anatomy_game_question_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/floating_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
@@ -46,18 +48,18 @@ class AnatomyMainMenuScreenState extends State<AnatomyMainMenuScreen>
           borderColor: Colors.green),
     );
 
-    var categories = AnatomyGameQuestionConfig().categories;
+    var campaignLevels = AnatomyCampaignLevelService().allLevels;
 
     ScrollablePositionedList listView = ScrollablePositionedList.builder(
       physics: const ClampingScrollPhysics(),
-      itemCount: categories.length,
+      itemCount: campaignLevels.length ~/ 2,
       itemScrollController: itemScrollController,
       itemBuilder: (BuildContext context, int index) {
         return Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            _createCategoryItem(categories.elementAt(index)),
+            _createCategoryItem(campaignLevels.elementAt(index)),
             SizedBox(
               height: screenDimensions.dimen(4),
             )
@@ -95,9 +97,10 @@ class AnatomyMainMenuScreenState extends State<AnatomyMainMenuScreen>
         floatingActionButtonLocation: FloatingActionButtonLocation.startTop);
   }
 
-  Widget _createCategoryItem(QuestionCategory cat) {
+  Widget _createCategoryItem(CampaignLevel campaignLevel) {
     Size btnSize = Size(screenDimensions.dimen(40), screenDimensions.dimen(60));
 
+    var cat = campaignLevel.categories[0];
     Image catImg = imageService.getSpecificImage(
         imageName: cat.index.toString() + "s",
         imageExtension: "png",
@@ -109,6 +112,9 @@ class AnatomyMainMenuScreenState extends State<AnatomyMainMenuScreen>
       textMaxLines: 4,
       text: cat.categoryLabel,
       size: btnSize,
+      onClick: () {
+        widget.gameScreenManagerState.showNewGameScreen(campaignLevel);
+      },
     );
 
     return Row(

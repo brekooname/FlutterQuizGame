@@ -47,7 +47,8 @@ class MyApp extends StatefulWidget {
   // static String webAppKey = "perstest";
   // static String webAppKey = "dopewars";
   static String webAppKey = "anatomy";
-  static CampaignLevel campaignLevel = AnatomyCampaignLevelService().level_0;
+  static CampaignLevel campaignLevel =
+      AnatomyCampaignLevelService().allLevels[0];
 
   //
   static Language webLanguage = Language.en;
@@ -196,10 +197,10 @@ class MyAppState extends State<MyApp> {
       ////
       // GeoQuizLocalStorage().setExperience(14000);
       widgetToShow = createScreen(MyApp.gameScreenManager, widget.bannerAd);
-      // Future.delayed(const Duration(milliseconds: 100), () {
-      //   MyApp.gameScreenManager.currentScreen!.gameScreenManagerState
-      //       .showNewGameScreen(MyApp.campaignLevel);
-      // });
+      Future.delayed(const Duration(milliseconds: 100), () {
+        MyApp.gameScreenManager.currentScreen!.gameScreenManagerState
+            .showNewGameScreen(MyApp.campaignLevel);
+      });
       ////
       //
       ////

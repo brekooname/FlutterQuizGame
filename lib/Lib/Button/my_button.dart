@@ -168,7 +168,6 @@ class MyButtonState extends State<MyButton> {
         decoration: decoration,
       ),
       AnimateZoomInZoomOut(
-          toAnimateWidgetSize: Size(lockedImageSide, lockedImageSide),
           toAnimateWidget: widget._imageService.getMainImage(
               imageName: "btn_locked",
               module: "buttons",

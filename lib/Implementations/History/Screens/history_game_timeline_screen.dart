@@ -530,7 +530,6 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
         ? AnimateZoomInZoomOut(
             zoomInZoomOutOnce: true,
             duration: Duration(milliseconds: millisForZoomInZoomOut),
-            toAnimateWidgetSize: answerBtnSize,
             toAnimateWidget: answerBtn,
           )
         : answerBtn;

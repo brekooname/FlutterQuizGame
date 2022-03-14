@@ -18,31 +18,4 @@ abstract class QuestionParser<
   List<String> getCorrectAnswersFromRawString(Question question);
 
   String getQuestionToBeDisplayed(Question question);
-
-  Set<String> getAnswerOptions(
-      String questionRawString, int optionsRawStringPosition) {
-    List<String> answers = questionRawString
-        .split(":")[optionsRawStringPosition]
-        .split(",")
-        .where((element) => element.trim().isNotEmpty)
-        .toList();
-    Set<String> possibleAnswersResult = {};
-    var answerIntList =
-        answers.isEmpty ? [] : answers.map((e) => e.parseToInt).toList();
-    for (int index in answerIntList) {
-      Question? questionForRef = getQuestionForRef(index);
-      if (questionForRef == null) {
-        continue;
-      }
-      possibleAnswersResult
-          .addAll(getCorrectAnswersFromRawString(questionForRef));
-    }
-    return possibleAnswersResult;
-  }
-
-  Question? getQuestionForRef(int index) {
-    return questionCollectorService
-        .getAllQuestions()
-        .firstWhereOrNull((element) => element.index == index);
-  }
 }
