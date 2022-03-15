@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
 
 class AnimateZoomInZoomOut extends StatefulWidget {
-  static const double defaultZoomAmount = 0.05;
+  static const double defaultZoomAmount = 5;
   Widget toAnimateWidget;
+  Size toAnimateWidgetSize;
   double zoomAmount;
   bool zoomInZoomOutOnce;
   Duration duration;
 
   AnimateZoomInZoomOut(
       {Key? key,
-      this.zoomAmount = defaultZoomAmount,
-      this.zoomInZoomOutOnce = false,
-      this.duration = const Duration(seconds: 1),
-      required this.toAnimateWidget})
+        this.zoomAmount = defaultZoomAmount,
+        this.zoomInZoomOutOnce = false,
+        this.duration = const Duration(seconds: 1),
+        required this.toAnimateWidgetSize,
+        required this.toAnimateWidget})
       : super(key: key);
 
   @override
@@ -44,7 +46,7 @@ class MyAnimatedWidgetState extends State<AnimateZoomInZoomOut>
   Widget build(BuildContext context) => InternalAnimatedWidget(
       zoomAmount: widget.zoomAmount,
       toAnimateWidget: widget.toAnimateWidget,
-      duration: widget.duration,
+      toAnimateWidgetSize: widget.toAnimateWidgetSize,
       animation: animation);
 
   @override
@@ -56,24 +58,34 @@ class MyAnimatedWidgetState extends State<AnimateZoomInZoomOut>
 
 class InternalAnimatedWidget extends AnimatedWidget {
   Widget toAnimateWidget;
+  Size toAnimateWidgetSize;
   double zoomAmount;
-  Duration duration;
 
   InternalAnimatedWidget(
       {Key? key,
-      required this.zoomAmount,
-      required this.duration,
-      required this.toAnimateWidget,
-      required Animation<double> animation})
+        required this.zoomAmount,
+        required this.toAnimateWidgetSize,
+        required this.toAnimateWidget,
+        required Animation<double> animation})
       : super(key: key, listenable: animation);
 
   @override
   Widget build(BuildContext context) {
     final animation = listenable as Animation<double>;
-    return AnimatedScale(
-      scale: Tween<double>(begin: 1 - zoomAmount, end: 1).evaluate(animation),
-      duration: duration,
-      child: toAnimateWidget,
+    return Center(
+      child: SizedBox(
+        height: Tween<double>(
+            begin: toAnimateWidgetSize.height,
+            end: toAnimateWidgetSize.height -
+                (toAnimateWidgetSize.height / zoomAmount))
+            .evaluate(animation),
+        width: Tween<double>(
+            begin: toAnimateWidgetSize.width,
+            end: toAnimateWidgetSize.width -
+                (toAnimateWidgetSize.width / zoomAmount))
+            .evaluate(animation),
+        child: toAnimateWidget,
+      ),
     );
   }
 }

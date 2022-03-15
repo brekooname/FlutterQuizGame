@@ -528,6 +528,7 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
                 HistoryGameTimelineScreen
                     .defaultQuestionsToPlayUntilNextCategory)
         ? AnimateZoomInZoomOut(
+            toAnimateWidgetSize: answerBtnSize,
             zoomInZoomOutOnce: true,
             duration: Duration(milliseconds: millisForZoomInZoomOut),
             toAnimateWidget: answerBtn,

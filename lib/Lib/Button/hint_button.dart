@@ -72,6 +72,7 @@ class HintButtonState extends State<HintButton> {
         child: widget.disabled
             ? btn
             : AnimateZoomInZoomOut(
+                toAnimateWidgetSize: widget.buttonSize,
                 toAnimateWidget: btn,
               ));
 

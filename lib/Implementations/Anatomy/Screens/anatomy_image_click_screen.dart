@@ -93,65 +93,85 @@ class AnatomyImageClickScreenState extends State<AnatomyImageClickScreen>
         ? screenDimensions.getNewWidthForNewHeight(
             maxImgHeight, imgDimen.width, imgDimen.height)
         : maxImgWidth;
-    var imageContainer = Container(
-        height: imgHeight,
-        width: imgWidth,
-        child: categoryImage);
+    var imageContainer =
+        Container(height: imgHeight, width: imgWidth, child: categoryImage);
 
     stackChildren.add(imageContainer);
     var question = widget.currentQuestionInfo.question;
     var quizAnswerOptionsCoordinates =
         (question.questionService as ImageClickQuestionService)
             .getQuizAnswerOptionsCoordinates(question);
-    var pointerDimen = screenDimensions.dimen(3);
-    stackChildren.addAll(quizAnswerOptionsCoordinates
+
+    List<Widget> answerPointerStackChildren = [];
+    var allWidth = screenDimensions.w(100);
+    var imageContainerHeight = screenDimensions.h(85);
+    answerPointerStackChildren.addAll(quizAnswerOptionsCoordinates
         .map((e) => SizedBox(
-            width: imgWidth,
-            height: imgHeight,
-            child: AnimateZoomInZoomOut(
-                key: UniqueKey(),
-                zoomAmount: AnimateZoomInZoomOut.defaultZoomAmount / 2,
-                toAnimateWidget:
-                    createAnswerPointer(imgHeight, imgWidth, e, pointerDimen))))
+            width: allWidth,
+            height: imageContainerHeight,
+            child: createAnswerPointer(
+                imgHeight, imgWidth, allWidth, imageContainerHeight, e)))
         .toList());
-    return Stack(
-      clipBehavior: Clip.none,
+    stackChildren.add(Container(
+        width: allWidth,
+        height: imageContainerHeight,
+        alignment: Alignment.center,
+        child: Stack(
+          children: answerPointerStackChildren,
+        )));
+    return Expanded(
+        child: Stack(
       alignment: Alignment.center,
       children: stackChildren,
-    );
+    ));
   }
 
-  Widget createAnswerPointer(double imgHeight, double imgWidth,
-      ImageClickInfo imageClickInfo, double pointerDimen) {
+  Widget createAnswerPointer(double imgHeight, double imgWidth, double allWidth,
+      double imageContainerHeight, ImageClickInfo imageClickInfo) {
+    var pointerDimen = screenDimensions.dimen(5);
     var btnSide = screenDimensions.dimen(15);
     var arrowLineWidth = screenDimensions.w(20);
-    return Stack(alignment: Alignment.center, clipBehavior: Clip.none,children: [
+    return Stack(alignment: Alignment.center, children: [
       Positioned(
-        top: imgHeight - ((imageClickInfo.y * 1.08) / 100 * imgHeight),
-        left: imageClickInfo.x / 100 * imgWidth,
+        top: ((imageContainerHeight - imgHeight) / 2) +
+            imgHeight -
+            ((imageClickInfo.y * 1.08) / 100 * imgHeight),
+        left: ((allWidth - imgWidth) / 2) + imageClickInfo.x / 100 * imgWidth,
         child: Row(children: [
-          Container(
-            width: pointerDimen,
-            height: pointerDimen,
-            decoration: BoxDecoration(
-                color: Colors.lightGreenAccent,
-                borderRadius:
-                    BorderRadius.circular(FontConfig.standardBorderRadius * 4),
-                border: Border.all(
-                    color: Colors.red, width: FontConfig.standardBorderWidth)),
-          ),
-          Opacity(
-              opacity: 1,
-              child: Container(
-                  width: arrowLineWidth,
-                  height: screenDimensions.h(1),
-                  decoration: BoxDecoration(
-                      color: Colors.lightGreenAccent,
-                      borderRadius: BorderRadius.circular(
-                          FontConfig.standardBorderRadius),
-                      border: Border.all(
-                          color: Colors.red,
-                          width: FontConfig.standardBorderWidth)))),
+          Stack(alignment: Alignment.centerLeft, children: [
+            Padding(
+                padding: EdgeInsets.only(left: screenDimensions.w(1)),
+                child: Opacity(
+                    opacity: 1,
+                    child: Container(
+                        width: arrowLineWidth,
+                        height: screenDimensions.h(1),
+                        decoration: BoxDecoration(
+                            color: Colors.lightGreenAccent,
+                            borderRadius: BorderRadius.circular(
+                                FontConfig.standardBorderRadius),
+                            border: Border.all(
+                                color: Colors.red,
+                                width: FontConfig.standardBorderWidth))))),
+            SizedBox(
+                width: pointerDimen,
+                height: pointerDimen,
+                child: AnimateZoomInZoomOut(
+                    key: UniqueKey(),
+                    toAnimateWidgetSize: Size(pointerDimen, pointerDimen),
+                    zoomAmount: AnimateZoomInZoomOut.defaultZoomAmount * 1.5,
+                    toAnimateWidget: Container(
+                      width: pointerDimen,
+                      height: pointerDimen,
+                      decoration: BoxDecoration(
+                          color: Colors.lightGreenAccent,
+                          borderRadius: BorderRadius.circular(
+                              FontConfig.standardBorderRadius * 4),
+                          border: Border.all(
+                              color: Colors.red,
+                              width: FontConfig.standardBorderWidth)),
+                    ))),
+          ]),
           MyButton(
               text: "?",
               size: Size(btnSide, btnSide),
