@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
@@ -17,6 +19,7 @@ import 'package:flutter_app_quiz_game/Lib/Localization/label_mixin.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/quiz_question_game_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
+import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
 class AnatomyImageClickScreen
     extends GameScreen<AnatomyGameContext, AnatomyScreenManagerState> {
@@ -69,10 +72,11 @@ class AnatomyImageClickScreenState extends State<AnatomyImageClickScreen>
   }
 
   Widget _getQuestionImage() {
-    var maxImgHeight = screenDimensions.h(80);
-    var maxImgWidth = screenDimensions.w(80);
     var imgDimen = widget.gameQuestionConfig.categoryImgDimen
         .get<QuestionCategory, Size>(widget.category)!;
+    var maxImgHeight =
+        screenDimensions.h((imgDimen.height / imgDimen.width < 2) ? 65 : 80);
+    var maxImgWidth = screenDimensions.w(80);
 
     var heightGreaterThanWidth = imgDimen.width <= imgDimen.height;
     Image categoryImage = imageService.getSpecificImage(
@@ -93,93 +97,175 @@ class AnatomyImageClickScreenState extends State<AnatomyImageClickScreen>
         ? screenDimensions.getNewWidthForNewHeight(
             maxImgHeight, imgDimen.width, imgDimen.height)
         : maxImgWidth;
-    var imageContainer =
-        Container(height: imgHeight, width: imgWidth, child: categoryImage);
+    Container imageContainer = Container(
+        // color: Colors.red,
+        height: imgHeight,
+        width: imgWidth,
+        child: GestureDetector(
+            onTapCancel: () {},
+            onTapUp: (TapUpDetails details) {},
+            onTapDown: (TapDownDetails details) {
+              debugPrint("x " +
+                  (details.localPosition.dx / imgWidth * 100).toString() +
+                  " y " +
+                  (100 - details.localPosition.dy / imgHeight * 100)
+                      .toString());
+            },
+            child: categoryImage));
 
     stackChildren.add(imageContainer);
     var question = widget.currentQuestionInfo.question;
     var quizAnswerOptionsCoordinates =
         (question.questionService as ImageClickQuestionService)
             .getQuizAnswerOptionsCoordinates(question);
+    quizAnswerOptionsCoordinates.sort((a, b) => a.y.compareTo(b.y));
+    quizAnswerOptionsCoordinates =
+        quizAnswerOptionsCoordinates.reversed.toList();
+    var allWidth = screenDimensions.dimen(100);
+    double btnSidePercent = 15;
+    var btnSide = screenDimensions.dimen(btnSidePercent);
+    //we update the arrow with if two buttons are overlapping
+    for (ImageClickInfo info1 in quizAnswerOptionsCoordinates) {
+      for (ImageClickInfo info2 in quizAnswerOptionsCoordinates) {
+        if (info1.y != info2.y &&
+            info1.x != info2.x &&
+            (info1.y - info2.y).abs() < (btnSidePercent + 1) &&
+            (info1.x - info2.x).abs() < (btnSidePercent + 1) &&
+            (info1.arrowWidth - info2.arrowWidth) == 0) {
+          info1.arrowWidth = screenDimensions.dimen(Random().nextInt(20) + 5);
+        }
+      }
+    }
 
     List<Widget> answerPointerStackChildren = [];
-    var allWidth = screenDimensions.w(100);
     var imageContainerHeight = screenDimensions.h(85);
     answerPointerStackChildren.addAll(quizAnswerOptionsCoordinates
         .map((e) => SizedBox(
             width: allWidth,
             height: imageContainerHeight,
-            child: createAnswerPointer(
-                imgHeight, imgWidth, allWidth, imageContainerHeight, e)))
+            child: createAnswerPointer(imgHeight, imgWidth, allWidth,
+                imageContainerHeight, btnSide, e)))
         .toList());
     stackChildren.add(Container(
         width: allWidth,
         height: imageContainerHeight,
-        alignment: Alignment.center,
+        alignment: Alignment.centerLeft,
         child: Stack(
           children: answerPointerStackChildren,
         )));
     return Expanded(
         child: Stack(
-      alignment: Alignment.center,
+      alignment: Alignment.centerLeft,
       children: stackChildren,
     ));
   }
 
-  Widget createAnswerPointer(double imgHeight, double imgWidth, double allWidth,
-      double imageContainerHeight, ImageClickInfo imageClickInfo) {
-    var pointerDimen = screenDimensions.dimen(5);
-    var btnSide = screenDimensions.dimen(15);
-    var arrowLineWidth = screenDimensions.w(20);
-    return Stack(alignment: Alignment.center, children: [
-      Positioned(
-        top: ((imageContainerHeight - imgHeight) / 2) +
-            imgHeight -
-            ((imageClickInfo.y * 1.08) / 100 * imgHeight),
-        left: ((allWidth - imgWidth) / 2) + imageClickInfo.x / 100 * imgWidth,
-        child: Row(children: [
-          Stack(alignment: Alignment.centerLeft, children: [
-            Padding(
-                padding: EdgeInsets.only(left: screenDimensions.w(1)),
-                child: Opacity(
-                    opacity: 1,
-                    child: Container(
-                        width: arrowLineWidth,
-                        height: screenDimensions.h(1),
-                        decoration: BoxDecoration(
-                            color: Colors.lightGreenAccent,
-                            borderRadius: BorderRadius.circular(
-                                FontConfig.standardBorderRadius),
-                            border: Border.all(
-                                color: Colors.red,
-                                width: FontConfig.standardBorderWidth))))),
-            SizedBox(
+  Widget createAnswerPointer(
+      double imgHeight,
+      double imgWidth,
+      double allWidth,
+      double imageContainerHeight,
+      double btnSide,
+      ImageClickInfo imageClickInfo) {
+    var borderRadius = FontConfig.standardBorderRadius * 4;
+    var pointerDimen = screenDimensions.dimen(2.5);
+    var originY = -pointerDimen / 2 +
+        ((imageContainerHeight - imgHeight) / 2) -
+        (btnSide - borderRadius / 2);
+    var answerLabelWidth = imageClickInfo.arrowWidth + btnSide;
+    // var originX = -pointerDimen / 2 + ((allWidth - imgWidth) / 2);
+    var originX = -pointerDimen / 2;
+    var leftPad = screenDimensions.w(1);
+    bool rectangularImage = imgHeight / imgWidth < 1.2;
+    var answerBtn = SizedBox(
+        width: btnSide,
+        child: Stack(alignment: Alignment.bottomCenter, children: [
+          Opacity(
+              opacity: 0.75,
+              child: SizedBox(
+                  height: btnSide,
+                  width: btnSide,
+                  child: AnimateZoomInZoomOut(
+                      toAnimateWidgetSize: Size(btnSide, btnSide),
+                      zoomAmount: AnimateZoomInZoomOut.defaultZoomAmount * 5,
+                      toAnimateWidget: MyButton(
+                          text: "?",
+                          fontConfig: FontConfig(
+                              fontColor: Colors.white,
+                              fontWeight: FontWeight.w800,
+                              borderColor: Colors.black),
+                          size: Size(btnSide, btnSide),
+                          buttonSkinConfig: ButtonSkinConfig(
+                              borderRadius: borderRadius,
+                              borderColor: Colors.red,
+                              backgroundColor: Colors.lightGreenAccent))))),
+        ]));
+    var answerLabel = Visibility(
+        visible: false,
+        child: Container(
+            clipBehavior: Clip.none,
+            width: answerLabelWidth,
+            decoration: BoxDecoration(
+              color: Colors.white.withOpacity(0.9),
+              borderRadius: BorderRadius.circular(borderRadius),
+            ),
+            child: MyText(
+              maxLines: 1,
+              width: answerLabelWidth,
+              text: imageClickInfo.answerLabel,
+            )));
+    var answerPointer = rectangularImage
+        ? Container()
+        : Opacity(
+            opacity: 1.0,
+            child: SizedBox(
                 width: pointerDimen,
                 height: pointerDimen,
                 child: AnimateZoomInZoomOut(
-                    key: UniqueKey(),
                     toAnimateWidgetSize: Size(pointerDimen, pointerDimen),
-                    zoomAmount: AnimateZoomInZoomOut.defaultZoomAmount * 1.5,
+                    zoomAmount: AnimateZoomInZoomOut.defaultZoomAmount / 1.5,
                     toAnimateWidget: Container(
                       width: pointerDimen,
                       height: pointerDimen,
                       decoration: BoxDecoration(
                           color: Colors.lightGreenAccent,
-                          borderRadius: BorderRadius.circular(
-                              FontConfig.standardBorderRadius * 4),
+                          borderRadius: BorderRadius.circular(borderRadius),
                           border: Border.all(
                               color: Colors.red,
                               width: FontConfig.standardBorderWidth)),
-                    ))),
-          ]),
-          MyButton(
-              text: "?",
-              size: Size(btnSide, btnSide),
-              buttonSkinConfig: ButtonSkinConfig(
-                  borderRadius: FontConfig.standardBorderRadius * 4,
-                  backgroundColor: Colors.lightGreenAccent)),
-        ]),
-      )
+                    ))));
+    var answerLine = rectangularImage
+        ? Container()
+        : Padding(
+            padding: EdgeInsets.only(left: leftPad),
+            child: Opacity(
+                opacity: 0.7,
+                child: Container(
+                    width: imageClickInfo.arrowWidth,
+                    height: screenDimensions.h(1),
+                    decoration: BoxDecoration(
+                        color: Colors.lightGreenAccent,
+                        borderRadius: BorderRadius.circular(
+                            FontConfig.standardBorderRadius),
+                        border: Border.all(
+                            color: Colors.red,
+                            width: FontConfig.standardBorderWidth)))));
+    return Stack(alignment: Alignment.centerLeft, children: [
+      Positioned(
+          top: originY + (100 - imageClickInfo.y) / 100 * imgHeight,
+          left: originX + imageClickInfo.x / 100 * imgWidth,
+          // top: originY + imgHeight,
+          // left: originX + imgWidth,
+          child: Stack(alignment: Alignment.center, children: [
+            Row(children: [
+              Stack(alignment: Alignment.centerLeft, children: [
+                answerLine,
+                answerPointer,
+              ]),
+              answerBtn,
+            ]),
+            answerLabel
+          ]))
     ]);
   }
 }

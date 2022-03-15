@@ -29,7 +29,7 @@ class ImageClickQuestionService extends QuestionService {
   List<ImageClickInfo> getQuizAnswerOptionsCoordinates(Question question) {
     return questionParser
         .getAnswerOptionQuestions(question)
-        .map((e) => questionParser.getAnswerOptionCoordinates(e.rawString))
+        .map((e) => questionParser.getAnswerOptionCoordinates(e))
         .toList();
   }
 
