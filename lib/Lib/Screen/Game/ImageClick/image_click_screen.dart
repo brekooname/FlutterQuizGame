@@ -25,121 +25,177 @@ mixin ImageClickScreen<TQuizControlsService extends QuizControlsService> {
   }
 
   Widget createImageClickContainer(
-    Size imageSize,
+    Size rawImageSize,
     VoidCallback refreshSetState,
     VoidCallback goToNextScreenAfterPress,
   ) {
-    var category = _currentQuestionInfo.question.category;
-    var maxImgHeight =
-        _screenDimensions.h((imageSize.height / imageSize.width < 2) ? 65 : 80);
-    var maxImgWidth = _screenDimensions.w(80);
-
-    var heightGreaterThanWidth = imageSize.width < imageSize.height;
-    bool rectangularImage = imageSize.height / imageSize.width < 1.2;
-    Image categoryImage = _imageService.getSpecificImage(
-      imageName: category.index.toString(),
-      imageExtension: "png",
-      module: "categories",
-      maxWidth: heightGreaterThanWidth ? null : maxImgWidth,
-      maxHeight: heightGreaterThanWidth ? maxImgHeight : null,
-    );
+    Image categoryImage = _getImageToClick(rawImageSize);
+    Size imageToClickSize = _getImageToClickAdjustedForScreenSize(rawImageSize);
+    var imageAlignment = _isImageToClickRectangular(rawImageSize)
+        ? Alignment.center
+        : Alignment.centerLeft;
 
     List<Widget> stackChildren = [];
 
-    double imgHeight = heightGreaterThanWidth
-        ? maxImgHeight
-        : _screenDimensions.getNewHeightForNewWidth(
-            maxImgWidth, imageSize.width, imageSize.height);
-    double imgWidth = heightGreaterThanWidth
-        ? _screenDimensions.getNewWidthForNewHeight(
-            maxImgHeight, imageSize.width, imageSize.height)
-        : maxImgWidth;
-    Container imageContainer = Container(
-        // color: Colors.red,
-        height: imgHeight,
-        width: imgWidth,
-        child: GestureDetector(
-            onTapCancel: () {},
-            onTapUp: (TapUpDetails details) {},
-            onTapDown: (TapDownDetails details) {
-              debugPrint("x " +
-                  (details.localPosition.dx / imgWidth * 100).toString() +
-                  " y " +
-                  (100 - details.localPosition.dy / imgHeight * 100)
-                      .toString());
-            },
-            child: categoryImage));
+    //Add main image
+    stackChildren.add(SizedBox(
+        height: imageToClickSize.height,
+        width: imageToClickSize.width,
+        child: _createImageContainer(imageToClickSize, categoryImage)));
 
-    stackChildren.add(imageContainer);
-    var question = _currentQuestionInfo.question;
-    var quizAnswerOptionsCoordinates =
-        (question.questionService as ImageClickQuestionService)
-            .getQuizAnswerOptionsCoordinates(question);
-    quizAnswerOptionsCoordinates.sort((a, b) => -a.x.compareTo(b.x));
-    quizAnswerOptionsCoordinates
-        .sort((a, b) => pressedAnswerEqualsButton(a) ? 1 : -1);
-    var allWidth = _screenDimensions.dimen(100);
-    double btnSidePercent = 10;
-    var btnSide = _screenDimensions.dimen(btnSidePercent);
-    List<Widget> answerPointerStackChildren = [];
-    var imageContainerHeight = _screenDimensions.h(85);
-    answerPointerStackChildren.addAll(quizAnswerOptionsCoordinates
-        .map((e) => SizedBox(
-            width: allWidth,
-            height: imageContainerHeight,
-            child: createAnswerPointer(
-                imgHeight,
-                imgWidth,
-                allWidth,
-                imageContainerHeight,
-                btnSide,
-                rectangularImage,
-                e,
-                refreshSetState,
-                goToNextScreenAfterPress)))
-        .toList());
+    //Add answer pointers
     stackChildren.add(Container(
-        width: allWidth,
-        height: imageContainerHeight,
-        alignment: rectangularImage ? Alignment.center : Alignment.centerLeft,
+        width: _getImageContainerWidth(),
+        height: _getImageContainerHeight(),
+        alignment: imageAlignment,
         child: Stack(
-          children: answerPointerStackChildren,
+          children: _createAnswerPointers(
+              rawImageSize, refreshSetState, goToNextScreenAfterPress),
         )));
+
     return Expanded(
         child: Stack(
-      alignment: rectangularImage ? Alignment.center : Alignment.centerLeft,
+      alignment: imageAlignment,
       children: stackChildren,
     ));
   }
 
-  Widget createAnswerPointer(
-    double imgHeight,
-    double imgWidth,
-    double allWidth,
-    double imageContainerHeight,
-    double btnSide,
-    bool rectangularImage,
+  List<Widget> _createAnswerPointers(Size rawImageSize,
+      VoidCallback refreshSetState, VoidCallback goToNextScreenAfterPress) {
+    List<Widget> answerPointerStackChildren = [];
+    answerPointerStackChildren.addAll(_getAnswerOptionsCoordinates()
+        .map((imageClickInfo) => SizedBox(
+            width: _getImageContainerWidth(),
+            height: _getImageContainerHeight(),
+            child: _createAnswerPointer(rawImageSize, imageClickInfo,
+                refreshSetState, goToNextScreenAfterPress)))
+        .toList());
+    return answerPointerStackChildren;
+  }
+
+  Widget _createAnswerPointer(
+    Size rawImageSize,
     ImageClickInfo imageClickInfo,
     VoidCallback refreshSetState,
     VoidCallback goToNextScreenAfterPress,
   ) {
-    var pointerDimen = _screenDimensions.dimen(2.5);
-    var borderWidth = FontConfig.standardBorderWidth;
-    var originY = rectangularImage
-        ? (imageContainerHeight - imgHeight) / 2 - btnSide / 2
-        : -pointerDimen / 2 +
-            ((imageContainerHeight - imgHeight) / 2) -
-            (btnSide / 2 - borderWidth * 2);
-    var originX = rectangularImage
-        ? (allWidth - imgWidth) / 2 + btnSide / 2
-        : -pointerDimen / 2 + borderWidth;
-    var answerLabelWidth = imageClickInfo.arrowWidth + btnSide;
-    var leftPad = _screenDimensions.w(1);
-    var borderRadius = FontConfig.standardBorderRadius * 4;
-    var pressedAnswerEqualsButtonVal =
-        pressedAnswerEqualsButton(imageClickInfo);
+    return Stack(alignment: Alignment.centerLeft, children: [
+      Positioned(
+          top: _calculateY(rawImageSize, imageClickInfo),
+          left: _calculateX(rawImageSize, imageClickInfo),
+          child: Stack(alignment: Alignment.center, children: [
+            Row(children: [
+              Stack(alignment: Alignment.centerLeft, children: [
+                _createAnswerPointerLine(rawImageSize, imageClickInfo),
+                _createAnswerPointerPoint(rawImageSize),
+              ]),
+              _createAnswerButton(
+                  imageClickInfo, refreshSetState, goToNextScreenAfterPress),
+            ]),
+            _createAnswerLabel(imageClickInfo)
+          ]))
+    ]);
+  }
+
+  double _calculateY(Size rawImageSize, ImageClickInfo imageClickInfo) {
+    Size adjustedImageSize =
+        _getImageToClickAdjustedForScreenSize(rawImageSize);
+    return _calculateOriginY(rawImageSize) +
+        (100 - imageClickInfo.y) / 100 * adjustedImageSize.height;
+  }
+
+  double _calculateX(Size rawImageSize, ImageClickInfo imageClickInfo) {
+    Size adjustedImageSize =
+        _getImageToClickAdjustedForScreenSize(rawImageSize);
+    bool isPressedAnswerEqualsButton =
+        _pressedAnswerEqualsButton(imageClickInfo);
+    var showAnswerLabelOnLeftSide = isPressedAnswerEqualsButton &&
+            imageClickInfo.x > 50 &&
+            _isImageToClickRectangular(rawImageSize)
+        ? _getAnswerLabelWidth(imageClickInfo) / 1.5
+        : 0;
+    return _calculateOriginX(rawImageSize) +
+        imageClickInfo.x / 100 * adjustedImageSize.width -
+        showAnswerLabelOnLeftSide;
+  }
+
+  double _calculateOriginX(Size rawImageSize) {
+    return _isImageToClickRectangular(rawImageSize)
+        ? _getAnswerBtnSideDimen() / 2 + _getAnswerBtnBorderWidth()
+        : -_getPointerDimen() / 2 + _getAnswerBtnBorderWidth();
+  }
+
+  double _calculateOriginY(Size rawImageSize) {
+    Size adjustedImageSize =
+        _getImageToClickAdjustedForScreenSize(rawImageSize);
+    return _isImageToClickRectangular(rawImageSize)
+        ? (_getImageContainerHeight() - adjustedImageSize.height) / 2 -
+            _getAnswerBtnSideDimen() / 2
+        : -_getPointerDimen() / 2 +
+            ((_getImageContainerHeight() - adjustedImageSize.height) / 2) -
+            (_getAnswerBtnSideDimen() / 2 - _getAnswerBtnBorderWidth() * 2);
+  }
+
+  bool _pressedAnswerEqualsButton(ImageClickInfo imageClickInfo) {
+    return _currentQuestionInfo.pressedAnswers.isNotEmpty &&
+        _currentQuestionInfo.pressedAnswers.first == imageClickInfo.answerLabel;
+  }
+
+  double _getAnswerBtnBorderWidth() => FontConfig.standardBorderWidth;
+
+  double _getPointerDimen() => _screenDimensions.dimen(2.5);
+
+  double _getAnswerBtnSideDimen() => _screenDimensions.dimen(10);
+
+  Widget _createAnswerPointerPoint(Size rawImageSize) {
+    var pointerDimen = _getPointerDimen();
+    var answerPointer = _isImageToClickRectangular(rawImageSize)
+        ? Container()
+        : SizedBox(
+            width: pointerDimen,
+            height: pointerDimen,
+            child: AnimateZoomInZoomOut(
+                toAnimateWidgetSize: Size(pointerDimen, pointerDimen),
+                zoomAmount: AnimateZoomInZoomOut.defaultZoomAmount / 1.5,
+                toAnimateWidget: Container(
+                  width: pointerDimen,
+                  height: pointerDimen,
+                  decoration: BoxDecoration(
+                      color: Colors.lightGreenAccent,
+                      borderRadius: BorderRadius.circular(
+                          FontConfig.standardBorderRadius * 4),
+                      border: Border.all(
+                          color: Colors.red,
+                          width: _getAnswerBtnBorderWidth())),
+                )));
+    return answerPointer;
+  }
+
+  Widget _createAnswerPointerLine(
+      Size rawImageSize, ImageClickInfo imageClickInfo) {
+    return _isImageToClickRectangular(rawImageSize)
+        ? Container()
+        : Padding(
+            padding: EdgeInsets.only(left: _screenDimensions.w(1)),
+            child: Opacity(
+                opacity: 0.7,
+                child: Container(
+                    width: imageClickInfo.arrowWidth,
+                    height: _screenDimensions.h(1),
+                    decoration: BoxDecoration(
+                        color: Colors.lightGreenAccent,
+                        borderRadius: BorderRadius.circular(
+                            FontConfig.standardBorderRadius),
+                        border: Border.all(
+                            color: Colors.red,
+                            width: _getAnswerBtnBorderWidth())))));
+  }
+
+  Visibility _createAnswerButton(ImageClickInfo imageClickInfo,
+      VoidCallback refreshSetState, VoidCallback goToNextScreenAfterPress) {
+    var btnSide = _getAnswerBtnSideDimen();
     var answerBtn = Visibility(
-        visible: !pressedAnswerEqualsButtonVal,
+        visible: !_pressedAnswerEqualsButton(imageClickInfo),
         child: SizedBox(
             width: btnSide,
             child: Stack(alignment: Alignment.bottomCenter, children: [
@@ -170,12 +226,18 @@ mixin ImageClickScreen<TQuizControlsService extends QuizControlsService> {
                                   borderColor: Colors.black),
                               size: Size(btnSide, btnSide),
                               buttonSkinConfig: ButtonSkinConfig(
-                                  borderRadius: borderRadius,
+                                  borderRadius:
+                                      FontConfig.standardBorderRadius * 4,
                                   borderColor: Colors.red,
                                   backgroundColor: Colors.lightGreenAccent))))),
             ])));
+    return answerBtn;
+  }
+
+  Visibility _createAnswerLabel(ImageClickInfo imageClickInfo) {
+    var answerLabelWidth = _getAnswerLabelWidth(imageClickInfo);
     var answerLabel = Visibility(
-        visible: pressedAnswerEqualsButtonVal,
+        visible: _pressedAnswerEqualsButton(imageClickInfo),
         child: Container(
             clipBehavior: Clip.none,
             width: answerLabelWidth,
@@ -196,59 +258,81 @@ mixin ImageClickScreen<TQuizControlsService extends QuizControlsService> {
               width: answerLabelWidth,
               text: imageClickInfo.answerLabel,
             )));
-    var answerPointer = rectangularImage
-        ? Container()
-        : Opacity(
-            opacity: 1.0,
-            child: SizedBox(
-                width: pointerDimen,
-                height: pointerDimen,
-                child: AnimateZoomInZoomOut(
-                    toAnimateWidgetSize: Size(pointerDimen, pointerDimen),
-                    zoomAmount: AnimateZoomInZoomOut.defaultZoomAmount / 1.5,
-                    toAnimateWidget: Container(
-                      width: pointerDimen,
-                      height: pointerDimen,
-                      decoration: BoxDecoration(
-                          color: Colors.lightGreenAccent,
-                          borderRadius: BorderRadius.circular(borderRadius),
-                          border: Border.all(
-                              color: Colors.red, width: borderWidth)),
-                    ))));
-    var answerLine = rectangularImage
-        ? Container()
-        : Padding(
-            padding: EdgeInsets.only(left: leftPad),
-            child: Opacity(
-                opacity: 0.7,
-                child: Container(
-                    width: imageClickInfo.arrowWidth,
-                    height: _screenDimensions.h(1),
-                    decoration: BoxDecoration(
-                        color: Colors.lightGreenAccent,
-                        borderRadius: BorderRadius.circular(
-                            FontConfig.standardBorderRadius),
-                        border: Border.all(
-                            color: Colors.red, width: borderWidth)))));
-    return Stack(alignment: Alignment.centerLeft, children: [
-      Positioned(
-          top: originY + (100 - imageClickInfo.y) / 100 * imgHeight,
-          left: originX + imageClickInfo.x / 100 * imgWidth,
-          child: Stack(alignment: Alignment.center, children: [
-            Row(children: [
-              Stack(alignment: Alignment.centerLeft, children: [
-                answerLine,
-                answerPointer,
-              ]),
-              answerBtn,
-            ]),
-            answerLabel
-          ]))
-    ]);
+    return answerLabel;
   }
 
-  bool pressedAnswerEqualsButton(ImageClickInfo imageClickInfo) {
-    return _currentQuestionInfo.pressedAnswers.isNotEmpty &&
-        _currentQuestionInfo.pressedAnswers.first == imageClickInfo.answerLabel;
+  Size _getImageToClickAdjustedForScreenSize(Size rawImageSize) {
+    var heightGreaterThanWidth = _isImageHeightGreaterThanWidth(rawImageSize);
+    var maxImgHeight = _getMaxImgHeight(rawImageSize);
+    var maxImgWidth = _getMaxImgWidth();
+    double imgHeight = heightGreaterThanWidth
+        ? maxImgHeight
+        : _screenDimensions.getNewHeightForNewWidth(
+            maxImgWidth, rawImageSize.width, rawImageSize.height);
+    double imgWidth = heightGreaterThanWidth
+        ? _screenDimensions.getNewWidthForNewHeight(
+            maxImgHeight, rawImageSize.width, rawImageSize.height)
+        : maxImgWidth;
+
+    return Size(imgWidth, imgHeight);
   }
+
+  bool _isImageToClickRectangular(Size rawImageSize) =>
+      rawImageSize.height / rawImageSize.width < 1.2;
+
+  double _getImageContainerHeight() => _screenDimensions.h(85);
+
+  double _getImageContainerWidth() => _screenDimensions.dimen(100);
+
+  List<ImageClickInfo> _getAnswerOptionsCoordinates() {
+    var question = _currentQuestionInfo.question;
+    var quizAnswerOptionsCoordinates =
+        (question.questionService as ImageClickQuestionService)
+            .getQuizAnswerOptionsCoordinates(question);
+    //Most left pointer should be placed on top
+    quizAnswerOptionsCoordinates.sort((a, b) => -a.x.compareTo(b.x));
+    //Answered pointer should be placed on top
+    quizAnswerOptionsCoordinates
+        .sort((a, b) => _pressedAnswerEqualsButton(a) ? 1 : -1);
+    return quizAnswerOptionsCoordinates;
+  }
+
+  GestureDetector _createImageContainer(
+      Size imageToClickSize, Image categoryImage) {
+    return GestureDetector(
+        onTapCancel: () {},
+        onTapUp: (TapUpDetails details) {},
+        onTapDown: (TapDownDetails details) {
+          debugPrint("x " +
+              (details.localPosition.dx / imageToClickSize.width * 100)
+                  .toString() +
+              " y " +
+              (100 - details.localPosition.dy / imageToClickSize.height * 100)
+                  .toString());
+        },
+        child: categoryImage);
+  }
+
+  Image _getImageToClick(Size rawImageSize) {
+    var heightGreaterThanWidth = _isImageHeightGreaterThanWidth(rawImageSize);
+    Image categoryImage = _imageService.getSpecificImage(
+      imageName: _currentQuestionInfo.question.category.index.toString(),
+      imageExtension: "png",
+      module: "categories",
+      maxWidth: heightGreaterThanWidth ? null : _getMaxImgWidth(),
+      maxHeight: heightGreaterThanWidth ? _getMaxImgHeight(rawImageSize) : null,
+    );
+    return categoryImage;
+  }
+
+  bool _isImageHeightGreaterThanWidth(Size rawImageSize) =>
+      rawImageSize.width < rawImageSize.height;
+
+  double _getMaxImgWidth() => _screenDimensions.w(80);
+
+  double _getMaxImgHeight(Size rawImageSize) => _screenDimensions
+      .h((rawImageSize.height / rawImageSize.width < 2) ? 65 : 80);
+
+  double _getAnswerLabelWidth(ImageClickInfo imageClickInfo) =>
+      imageClickInfo.arrowWidth + _getAnswerBtnSideDimen();
 }
