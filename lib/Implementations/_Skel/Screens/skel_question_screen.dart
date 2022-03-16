@@ -6,7 +6,7 @@ import 'package:flutter_app_quiz_game/Implementations/_Skel/Questions/skel_game_
 import 'package:flutter_app_quiz_game/Implementations/_Skel/Service/skel_screen_manager.dart';
 import 'package:flutter_app_quiz_game/Lib/Localization/label_mixin.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen.dart';
-import 'package:flutter_app_quiz_game/Lib/Screen/Game/quiz_question_game_screen.dart';
+import 'package:flutter_app_quiz_game/Lib/Screen/Game/quiz_question_container.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
 
 class SkelQuestionScreen

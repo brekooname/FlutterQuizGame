@@ -1,65 +1,41 @@
-import 'dart:collection';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_app_quiz_game/Game/Game/game_context.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_info.dart';
-import 'package:flutter_app_quiz_game/Lib/Audio/my_audio_player.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/button_skin_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
-import 'package:flutter_app_quiz_game/Lib/Extensions/list_extension.dart';
-import 'package:flutter_app_quiz_game/Lib/Extensions/string_extension.dart';
 import 'package:flutter_app_quiz_game/Lib/Font/font_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Image/image_service.dart';
 import 'package:flutter_app_quiz_game/Lib/ScreenDimensions/screen_dimensions_service.dart';
-import 'package:flutter_app_quiz_game/Lib/Storage/quiz_game_local_storage.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
-mixin QuizOptionsGameScreen<TGameContext extends GameContext> {
+import '../quiz_controls_service.dart';
+
+mixin QuizOptionsGameScreen<TQuizControlsService extends QuizControlsService> {
+  late TQuizControlsService quizControlsService;
   final ScreenDimensionsService _screenDimensions = ScreenDimensionsService();
   final ImageService _imageService = ImageService();
-  final MyAudioPlayer _audioPlayer = MyAudioPlayer();
-  final Set<String> _wrongPressedAnswer = HashSet();
-  late QuizGameLocalStorage quizGameLocalStorage;
-  late TGameContext _gameContext;
-  late Set<String> possibleAnswers;
   late QuestionInfo _currentQuestionInfo;
+
   Image? _questionImage;
   bool? _zoomableImage;
   ButtonSkinConfig? _buttonSkinConfig;
-  late List<String> correctAnswersForQuestion;
-  Set<String> hintDisabledPossibleAnswers = HashSet();
 
   void initQuizOptionsScreen(
-      TGameContext gameContext,
-      QuizGameLocalStorage quizGameLocalStorage,
-      QuestionInfo currentQuestionInfo,
-      {bool isOneCorrectAnswerEnoughToWin = false,
-      ButtonSkinConfig? buttonSkinConfig,
+      TQuizControlsService quizControlsService, QuestionInfo currentQuestionInfo,
+      {ButtonSkinConfig? buttonSkinConfig,
       ButtonSkinConfig? multipleCorrectAnswersButtonSkinConfig,
       Image? questionImage,
       bool? zoomableImage}) {
-    this.quizGameLocalStorage = quizGameLocalStorage;
-    _gameContext = gameContext;
+    this.quizControlsService = quizControlsService;
     _zoomableImage = zoomableImage;
     _questionImage = questionImage;
     _currentQuestionInfo = currentQuestionInfo;
 
-    var question = currentQuestionInfo.question;
-    var questionService = question.questionService;
-    correctAnswersForQuestion = questionService
-        .getCorrectAnswers(question)
-        .map((e) => e.capitalized)
-        .toList();
-    _buttonSkinConfig = correctAnswersForQuestion.length == 1
-        ? buttonSkinConfig
-        : multipleCorrectAnswersButtonSkinConfig ?? buttonSkinConfig;
-
-    possibleAnswers = HashSet.of(
-        _getPossibleAnswerOption(isOneCorrectAnswerEnoughToWin)
-            .map((e) => e.capitalized)
-            .toList());
+    _buttonSkinConfig =
+        this.quizControlsService.correctAnswersForQuestion.length == 1
+            ? buttonSkinConfig
+            : multipleCorrectAnswersButtonSkinConfig ?? buttonSkinConfig;
   }
 
   Widget createOptionRows(
@@ -67,7 +43,7 @@ mixin QuizOptionsGameScreen<TGameContext extends GameContext> {
     List<Row> answerRows = [];
     int answersOnRow = 2;
     List<Widget> answerBtns = [];
-    for (String possibleAnswer in possibleAnswers) {
+    for (String possibleAnswer in quizControlsService.possibleAnswers) {
       answerBtns.add(_createPossibleAnswerButton(
           refreshSetState, goToNextScreenAfterPress, possibleAnswer));
       if (answerBtns.length == answersOnRow) {
@@ -85,7 +61,7 @@ mixin QuizOptionsGameScreen<TGameContext extends GameContext> {
     var btnSize = _getAnswerBtnSize();
     Widget btnContainer = Container(
         height: (btnSize.height + getAnswerButtonPaddingBetween() * 2) *
-            (possibleAnswers.length / 2).ceil(),
+            (quizControlsService.possibleAnswers.length / 2).ceil(),
         child: ListView(
           children: answerRows,
         ));
@@ -137,7 +113,8 @@ mixin QuizOptionsGameScreen<TGameContext extends GameContext> {
         decoration: BoxDecoration(
             color: Colors.grey.shade200,
             border: Border.all(
-                color: Colors.blue.shade700, width: _screenDimensions.dimen(0.3)),
+                color: Colors.blue.shade700,
+                width: _screenDimensions.dimen(0.3)),
             borderRadius:
                 BorderRadius.circular(FontConfig.standardBorderRadius * 0.1)),
         child: stack);
@@ -147,16 +124,18 @@ mixin QuizOptionsGameScreen<TGameContext extends GameContext> {
       VoidCallback goToNextScreenAfterPress, String answerBtnText) {
     var question = _currentQuestionInfo.question;
     var btnSize = _getAnswerBtnSize();
-    var answerBtnDisabled = _wrongPressedAnswer.isNotEmpty ||
-        correctAnswersForQuestion.contains(answerBtnText) &&
+    var answerBtnDisabled = quizControlsService.wrongPressedAnswer.isNotEmpty ||
+        quizControlsService.correctAnswersForQuestion.contains(answerBtnText) &&
             _currentQuestionInfo.pressedAnswers.contains(answerBtnText) ||
-        _isGameFinished() ||
-        hintDisabledPossibleAnswers.contains(answerBtnText.toLowerCase());
+        quizControlsService.isGameFinished() ||
+        quizControlsService.hintDisabledPossibleAnswers
+            .contains(answerBtnText.toLowerCase());
 
     var disabledBackgroundColor = answerBtnDisabled
-        ? _wrongPressedAnswer.contains(answerBtnText)
+        ? quizControlsService.wrongPressedAnswer.contains(answerBtnText)
             ? Colors.red
-            : isAnswerCorrectInOptionsList(question, answerBtnText)
+            : quizControlsService.isAnswerCorrectInOptionsList(
+                    question, answerBtnText)
                 ? Colors.green
                 : null
         : null;
@@ -168,152 +147,30 @@ mixin QuizOptionsGameScreen<TGameContext extends GameContext> {
             disabled: answerBtnDisabled,
             disabledBackgroundColor: disabledBackgroundColor,
             onClick: () {
-              onClickAnswerOptionBtn(question, answerBtnText, refreshSetState,
-                  goToNextScreenAfterPress);
+              quizControlsService.onClickAnswerOptionBtn(question,
+                  answerBtnText, refreshSetState, goToNextScreenAfterPress);
             },
             buttonSkinConfig: _buttonSkinConfig ?? _defaultButtonSkinConfig(),
             customContent: MyText(
               text: answerBtnText,
-              maxLines: _getValueBasedOnNrOfPossibleAnswers(3, 3, 2, 1, true),
+              maxLines: quizControlsService.getValueBasedOnNrOfPossibleAnswers(
+                  3, 3, 2, 1, true, _questionImage == null ? 2 : 1),
               width: btnSize.width / 1.1,
             )));
-  }
-
-  void onClickAnswerOptionBtn(Question question, String answerBtnText,
-      VoidCallback refreshSetState, VoidCallback goToNextScreenAfterPress) {
-    _gameContext.gameUser.addAnswerToQuestionInfo(question, answerBtnText);
-    if (isAnswerCorrectInOptionsList(question, answerBtnText)) {
-      executeOnPressedCorrectAnswer();
-    } else {
-      executeOnPressedWrongAnswer(answerBtnText);
-    }
-    refreshSetState.call();
-    _processGameFinished(question, goToNextScreenAfterPress);
-  }
-
-  bool isAnswerCorrectInOptionsList(Question question, String answerBtnText) {
-    return question.questionService.isAnswerCorrectInOptionsList(
-        correctAnswersForQuestion, answerBtnText);
-  }
-
-  void executeOnPressedCorrectAnswer() {
-    playSuccessAudio();
-  }
-
-  void playSuccessAudio() => _audioPlayer.playSuccess();
-
-  void executeOnPressedWrongAnswer(String answerBtnText) {
-    _audioPlayer.playFail();
-    _wrongPressedAnswer.add(answerBtnText);
   }
 
   ButtonSkinConfig _defaultButtonSkinConfig() {
     return ButtonSkinConfig(backgroundColor: Colors.lightBlueAccent);
   }
 
-  List<String> _getPossibleAnswerOption(bool oneCorrectAnswerEnoughToWin) {
-    List<String> possibleAnswers;
-    var question = _currentQuestionInfo.question;
-    var questionService = question.questionService;
-    if (oneCorrectAnswerEnoughToWin) {
-      correctAnswersForQuestion.shuffle();
-      correctAnswersForQuestion = [correctAnswersForQuestion.first];
-      possibleAnswers = List.of(
-          questionService.getQuizAnswerOptionsWithSingleCorrectAnswer(
-              correctAnswersForQuestion.first, question));
-    } else {
-      possibleAnswers = List.of(questionService.getQuizAnswerOptions(question));
-    }
-    possibleAnswers.shuffle();
-    return possibleAnswers;
-  }
-
-  void _processGameFinished(
-      Question question, VoidCallback goToNextScreenAfterPress) {
-    var questionService = question.questionService;
-    if (_isGameFinished()) {
-      Future.delayed(
-          durationGoToNextScreen, () => goToNextScreenAfterPress.call());
-      if (isGameFinishedSuccessful()) {
-        _gameContext.gameUser.setWonQuestion(_currentQuestionInfo);
-        quizGameLocalStorage.setWonQuestion(question);
-      } else if (questionService.isGameFinishedFailedWithOptionList(
-          correctAnswersForQuestion, _currentQuestionInfo.pressedAnswers)) {
-        _gameContext.gameUser.setLostQuestion(_currentQuestionInfo);
-        quizGameLocalStorage.setLostQuestion(question);
-      }
-    }
-  }
-
-  Duration get durationGoToNextScreen => Duration(
-      milliseconds:
-          _getValueBasedOnNrOfPossibleAnswers(1100, 1600, 1700, 1800, false));
-
-  bool isGameFinishedSuccessful() {
-    return _currentQuestionInfo.question.questionService
-        .isGameFinishedSuccessfulWithOptionList(
-            correctAnswersForQuestion, _currentQuestionInfo.pressedAnswers);
-  }
-
-  bool isGameFinishedFailed() {
-    return _currentQuestionInfo.question.questionService
-        .isGameFinishedFailedWithOptionList(
-            correctAnswersForQuestion, _currentQuestionInfo.pressedAnswers);
-  }
-
-  bool _isGameFinished() {
-    return _currentQuestionInfo.question.questionService
-        .isGameFinishedWithOptionList(
-            correctAnswersForQuestion, _currentQuestionInfo.pressedAnswers);
-  }
-
-  void onHintButtonClick(VoidCallback refreshSetState) {
-    _gameContext.amountAvailableHints--;
-    quizGameLocalStorage.setRemainingHints(
-        _currentQuestionInfo.question.difficulty,
-        _gameContext.amountAvailableHints);
-
-    var optionsToDisable = List.of(possibleAnswers);
-    optionsToDisable.shuffle();
-    optionsToDisable.removeAll(correctAnswersForQuestion);
-
-    hintDisabledPossibleAnswers.add(optionsToDisable.first.toLowerCase());
-    hintDisabledPossibleAnswers.add(optionsToDisable.last.toLowerCase());
-
-    refreshSetState.call();
-  }
-
   Size _getAnswerBtnSize() {
     return Size(
         _screenDimensions.dimen(45),
-        _screenDimensions.dimen(
-            _getValueBasedOnNrOfPossibleAnswers(26, 23, 19, 16, true)
-                .toDouble()));
+        _screenDimensions.dimen(quizControlsService
+            .getValueBasedOnNrOfPossibleAnswers(
+                26, 23, 19, 16, true, _questionImage == null ? 2 : 1)
+            .toDouble()));
   }
 
   double getAnswerButtonPaddingBetween() => _screenDimensions.dimen(1);
-
-  int _getValueBasedOnNrOfPossibleAnswers(
-      int v4, int v6, int v8, int max, bool isSizeValue) {
-    double factor = isSizeValue
-        ? _questionImage == null
-            ? 2
-            : 1
-        : 1;
-    var nrOfPossibleAnswers = possibleAnswers.length;
-    int val = nrOfPossibleAnswers <= 4
-        ? v4
-        : nrOfPossibleAnswers <= 6
-            ? v6
-            : nrOfPossibleAnswers <= 8
-                ? v8
-                : max;
-    val = (val * factor).ceil();
-    val = isSizeValue
-        ? val > v4
-            ? v4
-            : val
-        : val;
-    return val;
-  }
 }

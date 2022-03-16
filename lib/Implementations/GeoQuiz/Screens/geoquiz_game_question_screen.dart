@@ -1,8 +1,10 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_app_quiz_game/Game/Game/campaign_level.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
+import 'package:flutter_app_quiz_game/Game/Question/Model/question_info.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_info_status.dart';
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Components/geoquiz_game_level_header.dart';
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Constants/geoquiz_campaign_level_experience_map.dart';
@@ -19,19 +21,16 @@ import 'package:flutter_app_quiz_game/Lib/Color/color_util.dart';
 import 'package:flutter_app_quiz_game/Lib/Font/font_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/Options/quiz_options_game_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen.dart';
-import 'package:flutter_app_quiz_game/Lib/Screen/Game/quiz_question_game_screen.dart';
+import 'package:flutter_app_quiz_game/Lib/Screen/Game/quiz_controls_service.dart';
+import 'package:flutter_app_quiz_game/Lib/Screen/Game/quiz_question_container.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
 
 import 'geoquiz_game_hangman_screen.dart';
 
 class GeoQuizQuestionScreen
     extends GameScreen<GeoQuizGameContext, GeoQuizGameScreenManagerState>
-    with QuizOptionsGameScreen<GeoQuizGameContext> {
+    with QuizOptionsGameScreen<GeoQuizQuizControlsService> {
   final GeoQuizCountryUtils _geoQuizCountryUtils = GeoQuizCountryUtils();
-  final _geoQuizLocalStorage = GeoQuizLocalStorage();
-  final GeoQuizCampaignLevelExperienceMap _campaignLevelExperienceMap =
-      GeoQuizCampaignLevelExperienceMap();
-  bool animateWrongAnswer = false;
 
   GeoQuizQuestionScreen(
     GeoQuizGameScreenManagerState gameScreenManagerState, {
@@ -54,8 +53,7 @@ class GeoQuizQuestionScreen
           .clearCache();
     }
 
-    initQuizOptionsScreen(
-        gameContext, _geoQuizLocalStorage, currentQuestionInfo,
+    initQuizOptionsScreen(createQuizControlsService(), currentQuestionInfo,
         questionImage: getQuestionImage(category),
         zoomableImage: GeoQuizGameQuestionConfig().cat9 == category,
         buttonSkinConfig: ButtonSkinConfig(
@@ -67,47 +65,15 @@ class GeoQuizQuestionScreen
             ButtonSkinConfig(backgroundColor: Colors.purple.shade100));
   }
 
-  @override
-  void executeOnPressedCorrectAnswer() {
-    super.executeOnPressedCorrectAnswer();
-    if (isGameFinishedSuccessful()) {
-      var amountToIncreaseScore = _campaignLevelExperienceMap
-          .getExperienceLevel(campaignLevel)
-          .increaseExperiencePerCorrectAnswerAmount;
-      gameContext.consecutiveCorrectAnswers =
-          gameContext.consecutiveCorrectAnswers + 1;
-      gameContext.gameScore = gameContext.gameScore + amountToIncreaseScore;
-      if (allQuestionsAnswered) {
-        _geoQuizLocalStorage.incrementExperience(
-            gameContext.gameScore * gameContext.consecutiveCorrectAnswers);
-      }
-    }
+  GeoQuizQuizControlsService createQuizControlsService() {
+    return GeoQuizQuizControlsService(
+        gameContext, currentQuestionInfo, GeoQuizLocalStorage(), campaignLevel);
   }
-
-  @override
-  void executeOnPressedWrongAnswer(String answerBtnText) {
-    super.executeOnPressedWrongAnswer(answerBtnText);
-    if (isGameFinishedFailed() && gameContext.consecutiveCorrectAnswers > 0) {
-      animateWrongAnswer = true;
-    }
-    gameContext.consecutiveCorrectAnswers =
-        max(gameContext.consecutiveCorrectAnswers - 1, 0);
-  }
-
-  @override
-  Duration get durationGoToNextScreen =>
-      allQuestionsAnswered && gameContext.consecutiveCorrectAnswers > 1
-          ? const Duration(milliseconds: 3000)
-          : super.durationGoToNextScreen;
 
   @override
   int nrOfQuestionsToShowInterstitialAd() {
     return GeoQuizHangmanScreen.showInterstitialAdEveryNQuestions;
   }
-
-  bool get allQuestionsAnswered =>
-      GeoQuizGameContextService.numberOfQuestionsPerGame ==
-      gameContext.gameUser.countAllQuestions([QuestionInfoStatus.won]);
 
   @override
   State<GeoQuizQuestionScreen> createState() => GeoQuizQuestionScreenState();
@@ -134,7 +100,7 @@ class GeoQuizQuestionScreenState extends State<GeoQuizQuestionScreen>
   void initState() {
     super.initState();
     initScreenState(onUserEarnedReward: () {
-      widget.onHintButtonClick(setStateCallback);
+      widget.quizControlsService.onHintButtonClick(setStateCallback);
     });
   }
 
@@ -170,27 +136,81 @@ class GeoQuizQuestionScreenState extends State<GeoQuizQuestionScreen>
   }
 
   GeoQuizGameLevelHeader createHeader() {
-    var gameFinishedSuccessful = widget.isGameFinishedSuccessful();
+    var gameFinishedSuccessful =
+        widget.quizControlsService.isGameFinishedSuccessful();
     var header = GeoQuizGameLevelHeader(
       score: widget.gameContext.gameScore,
       nrOfCorrectAnsweredQuestions: widget.gameContext.gameUser
           .countAllQuestions([QuestionInfoStatus.won]),
       consecutiveCorrectAnswers: widget.gameContext.consecutiveCorrectAnswers,
       availableHints: widget.gameContext.amountAvailableHints,
-      allQuestionsAnswered: widget.allQuestionsAnswered,
+      allQuestionsAnswered: widget.quizControlsService.allQuestionsAnswered,
       animateScore: gameFinishedSuccessful,
-      animateWrongAnswer: widget.animateWrongAnswer,
+      animateWrongAnswer: widget.quizControlsService.animateWrongAnswer,
       animateStepIncrease: gameFinishedSuccessful,
-      disableHintBtn: widget.hintDisabledPossibleAnswers.isNotEmpty,
+      disableHintBtn:
+          widget.quizControlsService.hintDisabledPossibleAnswers.isNotEmpty,
       hintButtonOnClick: () {
-        widget.onHintButtonClick(setStateCallback);
+        widget.quizControlsService.onHintButtonClick(setStateCallback);
       },
     );
-    widget.animateWrongAnswer = false;
+    widget.quizControlsService.animateWrongAnswer = false;
     return header;
   }
 
   void setStateCallback() {
     setState(() {});
   }
+}
+
+class GeoQuizQuizControlsService
+    extends QuizControlsService<GeoQuizGameContext, GeoQuizLocalStorage> {
+  final GeoQuizCampaignLevelExperienceMap _campaignLevelExperienceMap =
+      GeoQuizCampaignLevelExperienceMap();
+  bool animateWrongAnswer = false;
+  CampaignLevel campaignLevel;
+
+  GeoQuizQuizControlsService(
+      GeoQuizGameContext gameContext,
+      QuestionInfo currentQuestionInfo,
+      GeoQuizLocalStorage quizGameLocalStorage,
+      this.campaignLevel)
+      : super(gameContext, currentQuestionInfo, quizGameLocalStorage);
+
+  bool get allQuestionsAnswered =>
+      GeoQuizGameContextService.numberOfQuestionsPerGame ==
+      gameContext.gameUser.countAllQuestions([QuestionInfoStatus.won]);
+
+  @override
+  void executeOnPressedCorrectAnswer() {
+    super.executeOnPressedCorrectAnswer();
+    if (isGameFinishedSuccessful()) {
+      var amountToIncreaseScore = _campaignLevelExperienceMap
+          .getExperienceLevel(campaignLevel)
+          .increaseExperiencePerCorrectAnswerAmount;
+      gameContext.consecutiveCorrectAnswers =
+          gameContext.consecutiveCorrectAnswers + 1;
+      gameContext.gameScore = gameContext.gameScore + amountToIncreaseScore;
+      if (allQuestionsAnswered) {
+        quizGameLocalStorage.incrementExperience(
+            gameContext.gameScore * gameContext.consecutiveCorrectAnswers);
+      }
+    }
+  }
+
+  @override
+  void executeOnPressedWrongAnswer(String answerBtnText) {
+    super.executeOnPressedWrongAnswer(answerBtnText);
+    if (isGameFinishedFailed() && gameContext.consecutiveCorrectAnswers > 0) {
+      animateWrongAnswer = true;
+    }
+    gameContext.consecutiveCorrectAnswers =
+        max(gameContext.consecutiveCorrectAnswers - 1, 0);
+  }
+
+  @override
+  Duration get durationGoToNextScreen =>
+      allQuestionsAnswered && gameContext.consecutiveCorrectAnswers > 1
+          ? const Duration(milliseconds: 3000)
+          : super.durationGoToNextScreen;
 }

@@ -1,31 +1,23 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
-import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/ImageClick/image_click_question_parser.dart';
-import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/ImageClick/image_click_question_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/Anatomy/Components/anatomy_level_header.dart';
 import 'package:flutter_app_quiz_game/Implementations/Anatomy/Constants/anatomy_campaign_level_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/Anatomy/Constants/anatomy_game_question_config.dart';
 import 'package:flutter_app_quiz_game/Implementations/Anatomy/Questions/anatomy_game_context.dart';
 import 'package:flutter_app_quiz_game/Implementations/Anatomy/Service/anatomy_local_storage.dart';
 import 'package:flutter_app_quiz_game/Implementations/Anatomy/Service/anatomy_screen_manager.dart';
-import 'package:flutter_app_quiz_game/Lib/Animation/animation_zoom_in_zoom_out.dart';
-import 'package:flutter_app_quiz_game/Lib/Button/button_skin_config.dart';
-import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/map_extension.dart';
-import 'package:flutter_app_quiz_game/Lib/Font/font_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Localization/label_mixin.dart';
-import 'package:flutter_app_quiz_game/Lib/Screen/Game/Options/quiz_options_game_screen.dart';
+import 'package:flutter_app_quiz_game/Lib/Screen/Game/ImageClick/image_click_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen.dart';
-import 'package:flutter_app_quiz_game/Lib/Screen/Game/quiz_question_game_screen.dart';
+import 'package:flutter_app_quiz_game/Lib/Screen/Game/quiz_controls_service.dart';
+import 'package:flutter_app_quiz_game/Lib/Screen/Game/quiz_question_container.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
-import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
 class AnatomyImageClickScreen
     extends GameScreen<AnatomyGameContext, AnatomyScreenManagerState>
-    with QuizOptionsGameScreen<AnatomyGameContext> {
+    with ImageClickScreen<QuizControlsService> {
   AnatomyGameQuestionConfig gameQuestionConfig = AnatomyGameQuestionConfig();
 
   AnatomyImageClickScreen(
@@ -42,8 +34,10 @@ class AnatomyImageClickScreen
             category,
             [gameContext.gameUser.getRandomQuestion(difficulty, category)],
             key: key) {
-    initQuizOptionsScreen(
-        gameContext, AnatomyLocalStorage(), currentQuestionInfo);
+    initImageClickScreen(
+        QuizControlsService<AnatomyGameContext, AnatomyLocalStorage>(
+            gameContext, currentQuestionInfo, AnatomyLocalStorage()),
+        currentQuestionInfo);
   }
 
   @override
@@ -57,236 +51,25 @@ class AnatomyImageClickScreen
 }
 
 class AnatomyImageClickScreenState extends State<AnatomyImageClickScreen>
-    with ScreenState, QuizQuestionContainer, LabelMixin {
+    with ScreenState, LabelMixin {
   @override
   Widget build(BuildContext context) {
-    var mainColumn = Column(
-      children: <Widget>[
-        AnatomyLevelHeader(
-          questionText:
-              widget.currentQuestionInfo.question.questionToBeDisplayed,
-        ),
-        _getQuestionImage()
-      ],
-    );
+    var mainColumn = Column(children: <Widget>[
+      AnatomyLevelHeader(
+        questionText: widget.currentQuestionInfo.question.questionToBeDisplayed,
+      ),
+      widget.createImageClickContainer(
+          widget.gameQuestionConfig.categoryImgDimen
+              .get<QuestionCategory, Size>(
+                  widget.currentQuestionInfo.question.category)!, () {
+        setState(() {});
+      }, widget.goToNextGameScreenCallBack(context))
+    ]);
 
     return mainColumn;
   }
 
   void setStateCallback() {
     setState(() {});
-  }
-
-  Widget _getQuestionImage() {
-    var imgDimen = widget.gameQuestionConfig.categoryImgDimen
-        .get<QuestionCategory, Size>(widget.category)!;
-    var maxImgHeight =
-        screenDimensions.h((imgDimen.height / imgDimen.width < 2) ? 65 : 80);
-    var maxImgWidth = screenDimensions.w(80);
-
-    var heightGreaterThanWidth = imgDimen.width < imgDimen.height;
-    Image categoryImage = imageService.getSpecificImage(
-      imageName: widget.category.index.toString(),
-      imageExtension: "png",
-      module: "categories",
-      maxWidth: heightGreaterThanWidth ? null : maxImgWidth,
-      maxHeight: heightGreaterThanWidth ? maxImgHeight : null,
-    );
-
-    List<Widget> stackChildren = [];
-
-    double imgHeight = heightGreaterThanWidth
-        ? maxImgHeight
-        : screenDimensions.getNewHeightForNewWidth(
-            maxImgWidth, imgDimen.width, imgDimen.height);
-    double imgWidth = heightGreaterThanWidth
-        ? screenDimensions.getNewWidthForNewHeight(
-            maxImgHeight, imgDimen.width, imgDimen.height)
-        : maxImgWidth;
-    Container imageContainer = Container(
-        // color: Colors.red,
-        height: imgHeight,
-        width: imgWidth,
-        child: GestureDetector(
-            onTapCancel: () {},
-            onTapUp: (TapUpDetails details) {},
-            onTapDown: (TapDownDetails details) {
-              debugPrint("x " +
-                  (details.localPosition.dx / imgWidth * 100).toString() +
-                  " y " +
-                  (100 - details.localPosition.dy / imgHeight * 100)
-                      .toString());
-            },
-            child: categoryImage));
-
-    stackChildren.add(imageContainer);
-    var question = widget.currentQuestionInfo.question;
-    var quizAnswerOptionsCoordinates =
-        (question.questionService as ImageClickQuestionService)
-            .getQuizAnswerOptionsCoordinates(question);
-    quizAnswerOptionsCoordinates.sort((a, b) => -a.x.compareTo(b.x));
-    quizAnswerOptionsCoordinates
-        .sort((a, b) => pressedAnswerEqualsButton(a) ? 1 : -1);
-    var allWidth = screenDimensions.dimen(100);
-    double btnSidePercent = 10;
-    var btnSide = screenDimensions.dimen(btnSidePercent);
-    List<Widget> answerPointerStackChildren = [];
-    var imageContainerHeight = screenDimensions.h(85);
-    answerPointerStackChildren.addAll(quizAnswerOptionsCoordinates
-        .map((e) => SizedBox(
-            width: allWidth,
-            height: imageContainerHeight,
-            child: createAnswerPointer(imgHeight, imgWidth, allWidth,
-                imageContainerHeight, btnSide, e)))
-        .toList());
-    stackChildren.add(Container(
-        width: allWidth,
-        height: imageContainerHeight,
-        alignment: Alignment.centerLeft,
-        child: Stack(
-          children: answerPointerStackChildren,
-        )));
-    return Expanded(
-        child: Stack(
-      alignment: Alignment.centerLeft,
-      children: stackChildren,
-    ));
-  }
-
-  Widget createAnswerPointer(
-      double imgHeight,
-      double imgWidth,
-      double allWidth,
-      double imageContainerHeight,
-      double btnSide,
-      ImageClickInfo imageClickInfo) {
-    bool rectangularImage = imgHeight / imgWidth < 1.2;
-    var pointerDimen = screenDimensions.dimen(2.5);
-    var borderWidth = FontConfig.standardBorderWidth;
-    var originY = rectangularImage
-        ? (imageContainerHeight - imgHeight) / 2 - btnSide / 2
-        : -pointerDimen / 2 +
-            ((imageContainerHeight - imgHeight) / 2) -
-            (btnSide / 2 - borderWidth * 2);
-    var originX = rectangularImage
-        ? -(allWidth - imgWidth) / 2 + btnSide / 2
-        : -pointerDimen / 2 + borderWidth;
-    var answerLabelWidth = imageClickInfo.arrowWidth + btnSide;
-    var leftPad = screenDimensions.w(1);
-    var borderRadius = FontConfig.standardBorderRadius * 4;
-    var answerBtn = SizedBox(
-        width: btnSide,
-        child: Stack(alignment: Alignment.bottomCenter, children: [
-          Opacity(
-              opacity: 0.75,
-              child: SizedBox(
-                  height: btnSide,
-                  width: btnSide,
-                  child: AnimateZoomInZoomOut(
-                      toAnimateWidgetSize: Size(btnSide, btnSide),
-                      zoomAmount: AnimateZoomInZoomOut.defaultZoomAmount * 5,
-                      toAnimateWidget: MyButton(
-                          disabled: widget
-                              .currentQuestionInfo.pressedAnswers.isNotEmpty,
-                          onClick: () {
-                            widget.onClickAnswerOptionBtn(
-                              widget.currentQuestionInfo.question,
-                              imageClickInfo.answerLabel,
-                              () {
-                                setState(() {});
-                              },
-                              widget.goToNextGameScreenCallBack(context),
-                            );
-                          },
-                          text: "?",
-                          fontConfig: FontConfig(
-                              fontColor: Colors.white,
-                              fontWeight: FontWeight.w800,
-                              borderColor: Colors.black),
-                          size: Size(btnSide, btnSide),
-                          buttonSkinConfig: ButtonSkinConfig(
-                              borderRadius: borderRadius,
-                              borderColor: Colors.red,
-                              backgroundColor: Colors.lightGreenAccent))))),
-        ]));
-    var answerLabel = Visibility(
-        visible: pressedAnswerEqualsButton(imageClickInfo),
-        child: Container(
-            clipBehavior: Clip.none,
-            width: answerLabelWidth,
-            decoration: BoxDecoration(
-              color: (widget.isAnswerCorrectInOptionsList(
-                          widget.currentQuestionInfo.question,
-                          imageClickInfo.answerLabel)
-                      ? Colors.lightGreenAccent
-                      : Colors.red.shade200)
-                  .withOpacity(0.9),
-            ),
-            child: MyText(
-              fontConfig: FontConfig(
-                  fontColor: Colors.white,
-                  fontWeight: FontWeight.w800,
-                  borderColor: Colors.black),
-              maxLines: 3,
-              width: answerLabelWidth,
-              text: imageClickInfo.answerLabel,
-            )));
-    var answerPointer = rectangularImage
-        ? Container()
-        : Opacity(
-            opacity: 1.0,
-            child: SizedBox(
-                width: pointerDimen,
-                height: pointerDimen,
-                child: AnimateZoomInZoomOut(
-                    toAnimateWidgetSize: Size(pointerDimen, pointerDimen),
-                    zoomAmount: AnimateZoomInZoomOut.defaultZoomAmount / 1.5,
-                    toAnimateWidget: Container(
-                      width: pointerDimen,
-                      height: pointerDimen,
-                      decoration: BoxDecoration(
-                          color: Colors.lightGreenAccent,
-                          borderRadius: BorderRadius.circular(borderRadius),
-                          border: Border.all(
-                              color: Colors.red, width: borderWidth)),
-                    ))));
-    var answerLine = rectangularImage
-        ? Container()
-        : Padding(
-            padding: EdgeInsets.only(left: leftPad),
-            child: Opacity(
-                opacity: 0.7,
-                child: Container(
-                    width: imageClickInfo.arrowWidth,
-                    height: screenDimensions.h(1),
-                    decoration: BoxDecoration(
-                        color: Colors.lightGreenAccent,
-                        borderRadius: BorderRadius.circular(
-                            FontConfig.standardBorderRadius),
-                        border: Border.all(
-                            color: Colors.red, width: borderWidth)))));
-    return Stack(alignment: Alignment.centerLeft, children: [
-      Positioned(
-          top: originY + (100 - imageClickInfo.y) / 100 * imgHeight,
-          left: originX + imageClickInfo.x / 100 * imgWidth,
-          // top: originY + imgHeight,
-          // left: originX + imgWidth,
-          child: Stack(alignment: Alignment.center, children: [
-            Row(children: [
-              Stack(alignment: Alignment.centerLeft, children: [
-                answerLine,
-                answerPointer,
-              ]),
-              answerBtn,
-            ]),
-            answerLabel
-          ]))
-    ]);
-  }
-
-  bool pressedAnswerEqualsButton(ImageClickInfo imageClickInfo) {
-    return widget.currentQuestionInfo.pressedAnswers.isNotEmpty &&
-        widget.currentQuestionInfo.pressedAnswers.first ==
-            imageClickInfo.answerLabel;
   }
 }

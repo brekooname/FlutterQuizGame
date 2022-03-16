@@ -21,7 +21,8 @@ List<TestAppConfig> getAppsToTest() {
     // TestAppConfig("geoquiz", Language.values, GeoQuizCampaignLevelService(), true),
     // TestAppConfig(
     //     "perstest", Language.values, PersTestCampaignLevelService(), false),
-    TestAppConfig("anatomy", Language.values, AnatomyCampaignLevelService(), true),
+    TestAppConfig(
+        "anatomy", Language.values, AnatomyCampaignLevelService(), true),
   ];
 }
 
@@ -79,7 +80,10 @@ Future<void> testAllCampaignLevels(WidgetTester tester, String appKey,
             MyApp.gameScreenManager.currentScreen! as QuizOptionsGameScreen;
         debugPrint("-----" +
             gameScreen.listOfCurrentQuestionInfo.first.question.rawString);
-        expect(quizOptionsGameScreen.possibleAnswers.length >= 4, true);
+        expect(
+            quizOptionsGameScreen.quizControlsService.possibleAnswers.length >=
+                4,
+            true);
       }
       expect(gameScreen.listOfCurrentQuestionInfo.isNotEmpty, true);
     }

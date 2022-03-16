@@ -10,14 +10,15 @@ import 'package:flutter_app_quiz_game/Implementations/History/Service/history_ga
 import 'package:flutter_app_quiz_game/Lib/Localization/label_mixin.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/Options/quiz_options_game_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen.dart';
-import 'package:flutter_app_quiz_game/Lib/Screen/Game/quiz_question_game_screen.dart';
+import 'package:flutter_app_quiz_game/Lib/Screen/Game/quiz_controls_service.dart';
+import 'package:flutter_app_quiz_game/Lib/Screen/Game/quiz_question_container.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
 
 import 'history_game_timeline_screen.dart';
 
 class HistoryGameQuestionScreen
     extends GameScreen<HistoryGameContext, HistoryGameScreenManagerState>
-    with QuizOptionsGameScreen<HistoryGameContext> {
+    with QuizOptionsGameScreen<QuizControlsService> {
   HistoryGameQuestionScreen(
     HistoryGameScreenManagerState gameScreenManagerState, {
     Key? key,
@@ -33,7 +34,9 @@ class HistoryGameQuestionScreen
             [gameContext.gameUser.getRandomQuestion(difficulty, category)],
             key: key) {
     initQuizOptionsScreen(
-        gameContext, HistoryLocalStorage(), currentQuestionInfo,
+        QuizControlsService<HistoryGameContext, HistoryLocalStorage>(
+            gameContext, currentQuestionInfo, HistoryLocalStorage()),
+        currentQuestionInfo,
         questionImage: imageService.getSpecificImage(
             module: "questions/images/" + difficulty.name + "/" + category.name,
             imageExtension: "jpeg",
@@ -56,7 +59,7 @@ class HistoryGameQuestionScreenState extends State<HistoryGameQuestionScreen>
   void initState() {
     super.initState();
     initScreenState(onUserEarnedReward: () {
-      widget.onHintButtonClick(setStateCallback);
+      widget.quizControlsService.onHintButtonClick(setStateCallback);
     });
   }
 
@@ -80,18 +83,19 @@ class HistoryGameQuestionScreenState extends State<HistoryGameQuestionScreen>
   HistoryGameLevelHeader createHeader() {
     var header = HistoryGameLevelHeader(
       availableHints: widget.gameContext.amountAvailableHints,
-      animateScore: widget.isGameFinishedSuccessful(),
-      disableHintBtn: widget.hintDisabledPossibleAnswers.isNotEmpty,
+      animateScore: widget.quizControlsService.isGameFinishedSuccessful(),
+      disableHintBtn:
+          widget.quizControlsService.hintDisabledPossibleAnswers.isNotEmpty,
       score: formatTextWithOneParam(
           label.l_score_param0,
-          widget.quizGameLocalStorage
+          widget.quizControlsService.quizGameLocalStorage
                   .getWonQuestionsForDiff(widget.difficulty)
                   .length
                   .toString() +
               "/" +
               widget.gameContext.totalNrOfQuestionsForCampaignLevel.toString()),
       hintButtonOnClick: () {
-        widget.onHintButtonClick(setStateCallback);
+        widget.quizControlsService.onHintButtonClick(setStateCallback);
       },
     );
     return header;
