@@ -9,6 +9,7 @@ import 'package:flutter_app_quiz_game/Implementations/Anatomy/Components/anatomy
 import 'package:flutter_app_quiz_game/Implementations/Anatomy/Constants/anatomy_campaign_level_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/Anatomy/Constants/anatomy_game_question_config.dart';
 import 'package:flutter_app_quiz_game/Implementations/Anatomy/Questions/anatomy_game_context.dart';
+import 'package:flutter_app_quiz_game/Implementations/Anatomy/Service/anatomy_local_storage.dart';
 import 'package:flutter_app_quiz_game/Implementations/Anatomy/Service/anatomy_screen_manager.dart';
 import 'package:flutter_app_quiz_game/Lib/Animation/animation_zoom_in_zoom_out.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/button_skin_config.dart';
@@ -16,13 +17,15 @@ import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/map_extension.dart';
 import 'package:flutter_app_quiz_game/Lib/Font/font_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Localization/label_mixin.dart';
+import 'package:flutter_app_quiz_game/Lib/Screen/Game/Options/quiz_options_game_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/quiz_question_game_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
 class AnatomyImageClickScreen
-    extends GameScreen<AnatomyGameContext, AnatomyScreenManagerState> {
+    extends GameScreen<AnatomyGameContext, AnatomyScreenManagerState>
+    with QuizOptionsGameScreen<AnatomyGameContext> {
   AnatomyGameQuestionConfig gameQuestionConfig = AnatomyGameQuestionConfig();
 
   AnatomyImageClickScreen(
@@ -38,7 +41,10 @@ class AnatomyImageClickScreen
             difficulty,
             category,
             [gameContext.gameUser.getRandomQuestion(difficulty, category)],
-            key: key);
+            key: key) {
+    initQuizOptionsScreen(
+        gameContext, AnatomyLocalStorage(), currentQuestionInfo);
+  }
 
   @override
   State<AnatomyImageClickScreen> createState() =>
@@ -78,7 +84,7 @@ class AnatomyImageClickScreenState extends State<AnatomyImageClickScreen>
         screenDimensions.h((imgDimen.height / imgDimen.width < 2) ? 65 : 80);
     var maxImgWidth = screenDimensions.w(80);
 
-    var heightGreaterThanWidth = imgDimen.width <= imgDimen.height;
+    var heightGreaterThanWidth = imgDimen.width < imgDimen.height;
     Image categoryImage = imageService.getSpecificImage(
       imageName: widget.category.index.toString(),
       imageExtension: "png",
@@ -118,25 +124,12 @@ class AnatomyImageClickScreenState extends State<AnatomyImageClickScreen>
     var quizAnswerOptionsCoordinates =
         (question.questionService as ImageClickQuestionService)
             .getQuizAnswerOptionsCoordinates(question);
-    quizAnswerOptionsCoordinates.sort((a, b) => a.y.compareTo(b.y));
-    quizAnswerOptionsCoordinates =
-        quizAnswerOptionsCoordinates.reversed.toList();
+    quizAnswerOptionsCoordinates.sort((a, b) => -a.x.compareTo(b.x));
+    quizAnswerOptionsCoordinates
+        .sort((a, b) => pressedAnswerEqualsButton(a) ? 1 : -1);
     var allWidth = screenDimensions.dimen(100);
-    double btnSidePercent = 15;
+    double btnSidePercent = 10;
     var btnSide = screenDimensions.dimen(btnSidePercent);
-    //we update the arrow with if two buttons are overlapping
-    for (ImageClickInfo info1 in quizAnswerOptionsCoordinates) {
-      for (ImageClickInfo info2 in quizAnswerOptionsCoordinates) {
-        if (info1.y != info2.y &&
-            info1.x != info2.x &&
-            (info1.y - info2.y).abs() < (btnSidePercent + 1) &&
-            (info1.x - info2.x).abs() < (btnSidePercent + 1) &&
-            (info1.arrowWidth - info2.arrowWidth) == 0) {
-          info1.arrowWidth = screenDimensions.dimen(Random().nextInt(20) + 5);
-        }
-      }
-    }
-
     List<Widget> answerPointerStackChildren = [];
     var imageContainerHeight = screenDimensions.h(85);
     answerPointerStackChildren.addAll(quizAnswerOptionsCoordinates
@@ -167,16 +160,20 @@ class AnatomyImageClickScreenState extends State<AnatomyImageClickScreen>
       double imageContainerHeight,
       double btnSide,
       ImageClickInfo imageClickInfo) {
-    var borderRadius = FontConfig.standardBorderRadius * 4;
-    var pointerDimen = screenDimensions.dimen(2.5);
-    var originY = -pointerDimen / 2 +
-        ((imageContainerHeight - imgHeight) / 2) -
-        (btnSide - borderRadius / 2);
-    var answerLabelWidth = imageClickInfo.arrowWidth + btnSide;
-    // var originX = -pointerDimen / 2 + ((allWidth - imgWidth) / 2);
-    var originX = -pointerDimen / 2;
-    var leftPad = screenDimensions.w(1);
     bool rectangularImage = imgHeight / imgWidth < 1.2;
+    var pointerDimen = screenDimensions.dimen(2.5);
+    var borderWidth = FontConfig.standardBorderWidth;
+    var originY = rectangularImage
+        ? (imageContainerHeight - imgHeight) / 2 - btnSide / 2
+        : -pointerDimen / 2 +
+            ((imageContainerHeight - imgHeight) / 2) -
+            (btnSide / 2 - borderWidth * 2);
+    var originX = rectangularImage
+        ? -(allWidth - imgWidth) / 2 + btnSide / 2
+        : -pointerDimen / 2 + borderWidth;
+    var answerLabelWidth = imageClickInfo.arrowWidth + btnSide;
+    var leftPad = screenDimensions.w(1);
+    var borderRadius = FontConfig.standardBorderRadius * 4;
     var answerBtn = SizedBox(
         width: btnSide,
         child: Stack(alignment: Alignment.bottomCenter, children: [
@@ -189,6 +186,18 @@ class AnatomyImageClickScreenState extends State<AnatomyImageClickScreen>
                       toAnimateWidgetSize: Size(btnSide, btnSide),
                       zoomAmount: AnimateZoomInZoomOut.defaultZoomAmount * 5,
                       toAnimateWidget: MyButton(
+                          disabled: widget
+                              .currentQuestionInfo.pressedAnswers.isNotEmpty,
+                          onClick: () {
+                            widget.onClickAnswerOptionBtn(
+                              widget.currentQuestionInfo.question,
+                              imageClickInfo.answerLabel,
+                              () {
+                                setState(() {});
+                              },
+                              widget.goToNextGameScreenCallBack(context),
+                            );
+                          },
                           text: "?",
                           fontConfig: FontConfig(
                               fontColor: Colors.white,
@@ -201,16 +210,24 @@ class AnatomyImageClickScreenState extends State<AnatomyImageClickScreen>
                               backgroundColor: Colors.lightGreenAccent))))),
         ]));
     var answerLabel = Visibility(
-        visible: false,
+        visible: pressedAnswerEqualsButton(imageClickInfo),
         child: Container(
             clipBehavior: Clip.none,
             width: answerLabelWidth,
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.9),
-              borderRadius: BorderRadius.circular(borderRadius),
+              color: (widget.isAnswerCorrectInOptionsList(
+                          widget.currentQuestionInfo.question,
+                          imageClickInfo.answerLabel)
+                      ? Colors.lightGreenAccent
+                      : Colors.red.shade200)
+                  .withOpacity(0.9),
             ),
             child: MyText(
-              maxLines: 1,
+              fontConfig: FontConfig(
+                  fontColor: Colors.white,
+                  fontWeight: FontWeight.w800,
+                  borderColor: Colors.black),
+              maxLines: 3,
               width: answerLabelWidth,
               text: imageClickInfo.answerLabel,
             )));
@@ -231,8 +248,7 @@ class AnatomyImageClickScreenState extends State<AnatomyImageClickScreen>
                           color: Colors.lightGreenAccent,
                           borderRadius: BorderRadius.circular(borderRadius),
                           border: Border.all(
-                              color: Colors.red,
-                              width: FontConfig.standardBorderWidth)),
+                              color: Colors.red, width: borderWidth)),
                     ))));
     var answerLine = rectangularImage
         ? Container()
@@ -248,8 +264,7 @@ class AnatomyImageClickScreenState extends State<AnatomyImageClickScreen>
                         borderRadius: BorderRadius.circular(
                             FontConfig.standardBorderRadius),
                         border: Border.all(
-                            color: Colors.red,
-                            width: FontConfig.standardBorderWidth)))));
+                            color: Colors.red, width: borderWidth)))));
     return Stack(alignment: Alignment.centerLeft, children: [
       Positioned(
           top: originY + (100 - imageClickInfo.y) / 100 * imgHeight,
@@ -267,5 +282,11 @@ class AnatomyImageClickScreenState extends State<AnatomyImageClickScreen>
             answerLabel
           ]))
     ]);
+  }
+
+  bool pressedAnswerEqualsButton(ImageClickInfo imageClickInfo) {
+    return widget.currentQuestionInfo.pressedAnswers.isNotEmpty &&
+        widget.currentQuestionInfo.pressedAnswers.first ==
+            imageClickInfo.answerLabel;
   }
 }

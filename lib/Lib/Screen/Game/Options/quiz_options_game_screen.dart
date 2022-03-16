@@ -156,8 +156,7 @@ mixin QuizOptionsGameScreen<TGameContext extends GameContext> {
     var disabledBackgroundColor = answerBtnDisabled
         ? _wrongPressedAnswer.contains(answerBtnText)
             ? Colors.red
-            : question.questionService.isAnswerCorrectInOptionsList(
-                    correctAnswersForQuestion, answerBtnText)
+            : isAnswerCorrectInOptionsList(question, answerBtnText)
                 ? Colors.green
                 : null
         : null;
@@ -169,7 +168,7 @@ mixin QuizOptionsGameScreen<TGameContext extends GameContext> {
             disabled: answerBtnDisabled,
             disabledBackgroundColor: disabledBackgroundColor,
             onClick: () {
-              _onClickAnswerOptionBtn(question, answerBtnText, refreshSetState,
+              onClickAnswerOptionBtn(question, answerBtnText, refreshSetState,
                   goToNextScreenAfterPress);
             },
             buttonSkinConfig: _buttonSkinConfig ?? _defaultButtonSkinConfig(),
@@ -180,17 +179,21 @@ mixin QuizOptionsGameScreen<TGameContext extends GameContext> {
             )));
   }
 
-  void _onClickAnswerOptionBtn(Question question, String answerBtnText,
+  void onClickAnswerOptionBtn(Question question, String answerBtnText,
       VoidCallback refreshSetState, VoidCallback goToNextScreenAfterPress) {
     _gameContext.gameUser.addAnswerToQuestionInfo(question, answerBtnText);
-    if (question.questionService.isAnswerCorrectInOptionsList(
-        correctAnswersForQuestion, answerBtnText)) {
+    if (isAnswerCorrectInOptionsList(question, answerBtnText)) {
       executeOnPressedCorrectAnswer();
     } else {
       executeOnPressedWrongAnswer(answerBtnText);
     }
     refreshSetState.call();
     _processGameFinished(question, goToNextScreenAfterPress);
+  }
+
+  bool isAnswerCorrectInOptionsList(Question question, String answerBtnText) {
+    return question.questionService.isAnswerCorrectInOptionsList(
+        correctAnswersForQuestion, answerBtnText);
   }
 
   void executeOnPressedCorrectAnswer() {
