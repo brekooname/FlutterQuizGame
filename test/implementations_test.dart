@@ -81,7 +81,7 @@ Future<void> testAllCampaignLevels(WidgetTester tester, String appKey,
         debugPrint("-----" +
             gameScreen.listOfCurrentQuestionInfo.first.question.rawString);
         expect(
-            quizOptionsGameScreen.quizControlsService.possibleAnswers.length >=
+            quizOptionsGameScreen.quizQuestionManager.possibleAnswers.length >=
                 4,
             true);
       }

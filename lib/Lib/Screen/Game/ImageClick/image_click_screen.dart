@@ -10,17 +10,18 @@ import 'package:flutter_app_quiz_game/Lib/Image/image_service.dart';
 import 'package:flutter_app_quiz_game/Lib/ScreenDimensions/screen_dimensions_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
-import '../quiz_controls_service.dart';
+import '../quiz_question_manager.dart';
 
-mixin ImageClickScreen<TQuizControlsService extends QuizControlsService> {
+
+mixin ImageClickScreen<TQuizQuestionManager extends QuizQuestionManager> {
   final ScreenDimensionsService _screenDimensions = ScreenDimensionsService();
   final ImageService _imageService = ImageService();
   late QuestionInfo _currentQuestionInfo;
-  late TQuizControlsService quizControlsService;
+  late TQuizQuestionManager quizQuestionManager;
 
-  void initImageClickScreen(TQuizControlsService quizControlsService,
+  void initImageClickScreen(TQuizQuestionManager quizQuestionManager,
       QuestionInfo currentQuestionInfo) {
-    this.quizControlsService = quizControlsService;
+    this.quizQuestionManager = quizQuestionManager;
     _currentQuestionInfo = currentQuestionInfo;
   }
 
@@ -212,7 +213,7 @@ mixin ImageClickScreen<TQuizControlsService extends QuizControlsService> {
                               disabled: _currentQuestionInfo
                                   .pressedAnswers.isNotEmpty,
                               onClick: () {
-                                quizControlsService.onClickAnswerOptionBtn(
+                                quizQuestionManager.onClickAnswerOptionBtn(
                                   _currentQuestionInfo.question,
                                   imageClickInfo.answerLabel,
                                   refreshSetState,
@@ -242,7 +243,7 @@ mixin ImageClickScreen<TQuizControlsService extends QuizControlsService> {
             clipBehavior: Clip.none,
             width: answerLabelWidth,
             decoration: BoxDecoration(
-              color: (quizControlsService.isAnswerCorrectInOptionsList(
+              color: (quizQuestionManager.isAnswerCorrectInOptionsList(
                           _currentQuestionInfo.question,
                           imageClickInfo.answerLabel)
                       ? Colors.lightGreenAccent

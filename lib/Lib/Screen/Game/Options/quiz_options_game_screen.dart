@@ -9,10 +9,11 @@ import 'package:flutter_app_quiz_game/Lib/Image/image_service.dart';
 import 'package:flutter_app_quiz_game/Lib/ScreenDimensions/screen_dimensions_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
-import '../quiz_controls_service.dart';
+import '../quiz_question_manager.dart';
 
-mixin QuizOptionsGameScreen<TQuizControlsService extends QuizControlsService> {
-  late TQuizControlsService quizControlsService;
+
+mixin QuizOptionsGameScreen<TQuizQuestionManager extends QuizQuestionManager> {
+  late TQuizQuestionManager quizQuestionManager;
   final ScreenDimensionsService _screenDimensions = ScreenDimensionsService();
   final ImageService _imageService = ImageService();
   late QuestionInfo _currentQuestionInfo;
@@ -22,18 +23,18 @@ mixin QuizOptionsGameScreen<TQuizControlsService extends QuizControlsService> {
   ButtonSkinConfig? _buttonSkinConfig;
 
   void initQuizOptionsScreen(
-      TQuizControlsService quizControlsService, QuestionInfo currentQuestionInfo,
+      TQuizQuestionManager quizQuestionManager, QuestionInfo currentQuestionInfo,
       {ButtonSkinConfig? buttonSkinConfig,
       ButtonSkinConfig? multipleCorrectAnswersButtonSkinConfig,
       Image? questionImage,
       bool? zoomableImage}) {
-    this.quizControlsService = quizControlsService;
+    this.quizQuestionManager = quizQuestionManager;
     _zoomableImage = zoomableImage;
     _questionImage = questionImage;
     _currentQuestionInfo = currentQuestionInfo;
 
     _buttonSkinConfig =
-        this.quizControlsService.correctAnswersForQuestion.length == 1
+        this.quizQuestionManager.correctAnswersForQuestion.length == 1
             ? buttonSkinConfig
             : multipleCorrectAnswersButtonSkinConfig ?? buttonSkinConfig;
   }
@@ -43,7 +44,7 @@ mixin QuizOptionsGameScreen<TQuizControlsService extends QuizControlsService> {
     List<Row> answerRows = [];
     int answersOnRow = 2;
     List<Widget> answerBtns = [];
-    for (String possibleAnswer in quizControlsService.possibleAnswers) {
+    for (String possibleAnswer in quizQuestionManager.possibleAnswers) {
       answerBtns.add(_createPossibleAnswerButton(
           refreshSetState, goToNextScreenAfterPress, possibleAnswer));
       if (answerBtns.length == answersOnRow) {
@@ -61,7 +62,7 @@ mixin QuizOptionsGameScreen<TQuizControlsService extends QuizControlsService> {
     var btnSize = _getAnswerBtnSize();
     Widget btnContainer = Container(
         height: (btnSize.height + getAnswerButtonPaddingBetween() * 2) *
-            (quizControlsService.possibleAnswers.length / 2).ceil(),
+            (quizQuestionManager.possibleAnswers.length / 2).ceil(),
         child: ListView(
           children: answerRows,
         ));
@@ -124,17 +125,17 @@ mixin QuizOptionsGameScreen<TQuizControlsService extends QuizControlsService> {
       VoidCallback goToNextScreenAfterPress, String answerBtnText) {
     var question = _currentQuestionInfo.question;
     var btnSize = _getAnswerBtnSize();
-    var answerBtnDisabled = quizControlsService.wrongPressedAnswer.isNotEmpty ||
-        quizControlsService.correctAnswersForQuestion.contains(answerBtnText) &&
+    var answerBtnDisabled = quizQuestionManager.wrongPressedAnswer.isNotEmpty ||
+        quizQuestionManager.correctAnswersForQuestion.contains(answerBtnText) &&
             _currentQuestionInfo.pressedAnswers.contains(answerBtnText) ||
-        quizControlsService.isGameFinished() ||
-        quizControlsService.hintDisabledPossibleAnswers
+        quizQuestionManager.isGameFinished() ||
+        quizQuestionManager.hintDisabledPossibleAnswers
             .contains(answerBtnText.toLowerCase());
 
     var disabledBackgroundColor = answerBtnDisabled
-        ? quizControlsService.wrongPressedAnswer.contains(answerBtnText)
+        ? quizQuestionManager.wrongPressedAnswer.contains(answerBtnText)
             ? Colors.red
-            : quizControlsService.isAnswerCorrectInOptionsList(
+            : quizQuestionManager.isAnswerCorrectInOptionsList(
                     question, answerBtnText)
                 ? Colors.green
                 : null
@@ -147,13 +148,13 @@ mixin QuizOptionsGameScreen<TQuizControlsService extends QuizControlsService> {
             disabled: answerBtnDisabled,
             disabledBackgroundColor: disabledBackgroundColor,
             onClick: () {
-              quizControlsService.onClickAnswerOptionBtn(question,
+              quizQuestionManager.onClickAnswerOptionBtn(question,
                   answerBtnText, refreshSetState, goToNextScreenAfterPress);
             },
             buttonSkinConfig: _buttonSkinConfig ?? _defaultButtonSkinConfig(),
             customContent: MyText(
               text: answerBtnText,
-              maxLines: quizControlsService.getValueBasedOnNrOfPossibleAnswers(
+              maxLines: quizQuestionManager.getValueBasedOnNrOfPossibleAnswers(
                   3, 3, 2, 1, true, _questionImage == null ? 2 : 1),
               width: btnSize.width / 1.1,
             )));
@@ -166,7 +167,7 @@ mixin QuizOptionsGameScreen<TQuizControlsService extends QuizControlsService> {
   Size _getAnswerBtnSize() {
     return Size(
         _screenDimensions.dimen(45),
-        _screenDimensions.dimen(quizControlsService
+        _screenDimensions.dimen(quizQuestionManager
             .getValueBasedOnNrOfPossibleAnswers(
                 26, 23, 19, 16, true, _questionImage == null ? 2 : 1)
             .toDouble()));

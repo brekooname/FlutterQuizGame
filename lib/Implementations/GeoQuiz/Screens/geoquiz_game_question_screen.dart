@@ -21,15 +21,15 @@ import 'package:flutter_app_quiz_game/Lib/Color/color_util.dart';
 import 'package:flutter_app_quiz_game/Lib/Font/font_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/Options/quiz_options_game_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen.dart';
-import 'package:flutter_app_quiz_game/Lib/Screen/Game/quiz_controls_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/quiz_question_container.dart';
+import 'package:flutter_app_quiz_game/Lib/Screen/Game/quiz_question_manager.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
 
 import 'geoquiz_game_hangman_screen.dart';
 
 class GeoQuizQuestionScreen
     extends GameScreen<GeoQuizGameContext, GeoQuizGameScreenManagerState>
-    with QuizOptionsGameScreen<GeoQuizQuizControlsService> {
+    with QuizOptionsGameScreen<GeoQuizQuizQuestionManager> {
   final GeoQuizCountryUtils _geoQuizCountryUtils = GeoQuizCountryUtils();
 
   GeoQuizQuestionScreen(
@@ -53,7 +53,7 @@ class GeoQuizQuestionScreen
           .clearCache();
     }
 
-    initQuizOptionsScreen(createQuizControlsService(), currentQuestionInfo,
+    initQuizOptionsScreen(createQuizQuestionManager(), currentQuestionInfo,
         questionImage: getQuestionImage(category),
         zoomableImage: GeoQuizGameQuestionConfig().cat9 == category,
         buttonSkinConfig: ButtonSkinConfig(
@@ -65,8 +65,8 @@ class GeoQuizQuestionScreen
             ButtonSkinConfig(backgroundColor: Colors.purple.shade100));
   }
 
-  GeoQuizQuizControlsService createQuizControlsService() {
-    return GeoQuizQuizControlsService(
+  GeoQuizQuizQuestionManager createQuizQuestionManager() {
+    return GeoQuizQuizQuestionManager(
         gameContext, currentQuestionInfo, GeoQuizLocalStorage(), campaignLevel);
   }
 
@@ -100,7 +100,7 @@ class GeoQuizQuestionScreenState extends State<GeoQuizQuestionScreen>
   void initState() {
     super.initState();
     initScreenState(onUserEarnedReward: () {
-      widget.quizControlsService.onHintButtonClick(setStateCallback);
+      widget.quizQuestionManager.onHintButtonClick(setStateCallback);
     });
   }
 
@@ -137,24 +137,24 @@ class GeoQuizQuestionScreenState extends State<GeoQuizQuestionScreen>
 
   GeoQuizGameLevelHeader createHeader() {
     var gameFinishedSuccessful =
-        widget.quizControlsService.isGameFinishedSuccessful();
+        widget.quizQuestionManager.isGameFinishedSuccessful();
     var header = GeoQuizGameLevelHeader(
       score: widget.gameContext.gameScore,
       nrOfCorrectAnsweredQuestions: widget.gameContext.gameUser
           .countAllQuestions([QuestionInfoStatus.won]),
       consecutiveCorrectAnswers: widget.gameContext.consecutiveCorrectAnswers,
       availableHints: widget.gameContext.amountAvailableHints,
-      allQuestionsAnswered: widget.quizControlsService.allQuestionsAnswered,
+      allQuestionsAnswered: widget.quizQuestionManager.allQuestionsAnswered,
       animateScore: gameFinishedSuccessful,
-      animateWrongAnswer: widget.quizControlsService.animateWrongAnswer,
+      animateWrongAnswer: widget.quizQuestionManager.animateWrongAnswer,
       animateStepIncrease: gameFinishedSuccessful,
       disableHintBtn:
-          widget.quizControlsService.hintDisabledPossibleAnswers.isNotEmpty,
+          widget.quizQuestionManager.hintDisabledPossibleAnswers.isNotEmpty,
       hintButtonOnClick: () {
-        widget.quizControlsService.onHintButtonClick(setStateCallback);
+        widget.quizQuestionManager.onHintButtonClick(setStateCallback);
       },
     );
-    widget.quizControlsService.animateWrongAnswer = false;
+    widget.quizQuestionManager.animateWrongAnswer = false;
     return header;
   }
 
@@ -163,14 +163,14 @@ class GeoQuizQuestionScreenState extends State<GeoQuizQuestionScreen>
   }
 }
 
-class GeoQuizQuizControlsService
-    extends QuizControlsService<GeoQuizGameContext, GeoQuizLocalStorage> {
+class GeoQuizQuizQuestionManager
+    extends QuizQuestionManager<GeoQuizGameContext, GeoQuizLocalStorage> {
   final GeoQuizCampaignLevelExperienceMap _campaignLevelExperienceMap =
       GeoQuizCampaignLevelExperienceMap();
   bool animateWrongAnswer = false;
   CampaignLevel campaignLevel;
 
-  GeoQuizQuizControlsService(
+  GeoQuizQuizQuestionManager(
       GeoQuizGameContext gameContext,
       QuestionInfo currentQuestionInfo,
       GeoQuizLocalStorage quizGameLocalStorage,

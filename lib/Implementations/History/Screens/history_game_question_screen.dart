@@ -10,15 +10,15 @@ import 'package:flutter_app_quiz_game/Implementations/History/Service/history_ga
 import 'package:flutter_app_quiz_game/Lib/Localization/label_mixin.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/Options/quiz_options_game_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen.dart';
-import 'package:flutter_app_quiz_game/Lib/Screen/Game/quiz_controls_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/quiz_question_container.dart';
+import 'package:flutter_app_quiz_game/Lib/Screen/Game/quiz_question_manager.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
 
 import 'history_game_timeline_screen.dart';
 
 class HistoryGameQuestionScreen
     extends GameScreen<HistoryGameContext, HistoryGameScreenManagerState>
-    with QuizOptionsGameScreen<QuizControlsService> {
+    with QuizOptionsGameScreen<QuizQuestionManager> {
   HistoryGameQuestionScreen(
     HistoryGameScreenManagerState gameScreenManagerState, {
     Key? key,
@@ -34,7 +34,7 @@ class HistoryGameQuestionScreen
             [gameContext.gameUser.getRandomQuestion(difficulty, category)],
             key: key) {
     initQuizOptionsScreen(
-        QuizControlsService<HistoryGameContext, HistoryLocalStorage>(
+        QuizQuestionManager<HistoryGameContext, HistoryLocalStorage>(
             gameContext, currentQuestionInfo, HistoryLocalStorage()),
         currentQuestionInfo,
         questionImage: imageService.getSpecificImage(
@@ -59,7 +59,7 @@ class HistoryGameQuestionScreenState extends State<HistoryGameQuestionScreen>
   void initState() {
     super.initState();
     initScreenState(onUserEarnedReward: () {
-      widget.quizControlsService.onHintButtonClick(setStateCallback);
+      widget.quizQuestionManager.onHintButtonClick(setStateCallback);
     });
   }
 
@@ -83,19 +83,19 @@ class HistoryGameQuestionScreenState extends State<HistoryGameQuestionScreen>
   HistoryGameLevelHeader createHeader() {
     var header = HistoryGameLevelHeader(
       availableHints: widget.gameContext.amountAvailableHints,
-      animateScore: widget.quizControlsService.isGameFinishedSuccessful(),
+      animateScore: widget.quizQuestionManager.isGameFinishedSuccessful(),
       disableHintBtn:
-          widget.quizControlsService.hintDisabledPossibleAnswers.isNotEmpty,
+          widget.quizQuestionManager.hintDisabledPossibleAnswers.isNotEmpty,
       score: formatTextWithOneParam(
           label.l_score_param0,
-          widget.quizControlsService.quizGameLocalStorage
+          widget.quizQuestionManager.quizGameLocalStorage
                   .getWonQuestionsForDiff(widget.difficulty)
                   .length
                   .toString() +
               "/" +
               widget.gameContext.totalNrOfQuestionsForCampaignLevel.toString()),
       hintButtonOnClick: () {
-        widget.quizControlsService.onHintButtonClick(setStateCallback);
+        widget.quizQuestionManager.onHintButtonClick(setStateCallback);
       },
     );
     return header;

@@ -9,7 +9,7 @@ import 'package:flutter_app_quiz_game/Lib/Extensions/list_extension.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/string_extension.dart';
 import 'package:flutter_app_quiz_game/Lib/Storage/quiz_game_local_storage.dart';
 
-class QuizControlsService<TGameContext extends GameContext,
+class QuizQuestionManager<TGameContext extends GameContext,
     TQuizGameLocalStorage extends QuizGameLocalStorage> {
   final MyAudioPlayer _audioPlayer = MyAudioPlayer();
   final TGameContext gameContext;
@@ -20,7 +20,7 @@ class QuizControlsService<TGameContext extends GameContext,
   late List<String> correctAnswersForQuestion;
   late Set<String> possibleAnswers;
 
-  QuizControlsService(
+  QuizQuestionManager(
       this.gameContext, this._currentQuestionInfo, this.quizGameLocalStorage) {
     var question = _currentQuestionInfo.question;
     var questionService = question.questionService;

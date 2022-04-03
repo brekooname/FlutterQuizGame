@@ -11,13 +11,12 @@ import 'package:flutter_app_quiz_game/Lib/Extensions/map_extension.dart';
 import 'package:flutter_app_quiz_game/Lib/Localization/label_mixin.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/ImageClick/image_click_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen.dart';
-import 'package:flutter_app_quiz_game/Lib/Screen/Game/quiz_controls_service.dart';
-import 'package:flutter_app_quiz_game/Lib/Screen/Game/quiz_question_container.dart';
+import 'package:flutter_app_quiz_game/Lib/Screen/Game/quiz_question_manager.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
 
 class AnatomyImageClickScreen
     extends GameScreen<AnatomyGameContext, AnatomyScreenManagerState>
-    with ImageClickScreen<QuizControlsService> {
+    with ImageClickScreen<QuizQuestionManager> {
   AnatomyGameQuestionConfig gameQuestionConfig = AnatomyGameQuestionConfig();
 
   AnatomyImageClickScreen(
@@ -35,7 +34,7 @@ class AnatomyImageClickScreen
             [gameContext.gameUser.getRandomQuestion(difficulty, category)],
             key: key) {
     initImageClickScreen(
-        QuizControlsService<AnatomyGameContext, AnatomyLocalStorage>(
+        QuizQuestionManager<AnatomyGameContext, AnatomyLocalStorage>(
             gameContext, currentQuestionInfo, AnatomyLocalStorage()),
         currentQuestionInfo);
   }
