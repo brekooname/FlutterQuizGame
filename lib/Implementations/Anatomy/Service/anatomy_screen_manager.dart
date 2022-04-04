@@ -5,6 +5,7 @@ import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.da
 import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/ImageClick/image_click_question_category_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/Anatomy/Questions/anatomy_game_context.dart';
 import 'package:flutter_app_quiz_game/Implementations/Anatomy/Screens/anatomy_image_click_screen.dart';
+import 'package:flutter_app_quiz_game/Implementations/Anatomy/Screens/anatomy_levels_screen.dart';
 import 'package:flutter_app_quiz_game/Implementations/Anatomy/Screens/anatomy_main_menu_screen.dart';
 import 'package:flutter_app_quiz_game/Implementations/Anatomy/Screens/anatomy_question_screen.dart';
 import 'package:flutter_app_quiz_game/Implementations/Anatomy/Service/anatomy_gamecontext_service.dart';
@@ -35,6 +36,14 @@ class AnatomyScreenManagerState extends State<AnatomyScreenManager>
   @override
   Widget build(BuildContext context) {
     return showScreen(widget.currentScreen);
+  }
+
+  void showLevelsScreen(QuestionCategory category) {
+    setCurrentScreenState(AnatomyLevelsScreen(
+      this,
+      key: UniqueKey(),
+      category: category,
+    ));
   }
 
   @override
