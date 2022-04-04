@@ -116,57 +116,57 @@ class GeoQuizGameQuestionConfig extends GameQuestionConfig with LabelMixin {
   GeoQuizGameQuestionConfig.internal();
 
   @override
-  Map<QuestionCategoryWithPrefixCode, String> get prefixLabelForCode {
-    Map<QuestionCategoryWithPrefixCode, String> res = HashMap();
+  Map<QuestionCategoryDifficultyWithPrefixCode, String> get prefixLabelForCode {
+    Map<QuestionCategoryDifficultyWithPrefixCode, String> res = HashMap();
     res.putIfAbsent(
-        QuestionCategoryWithPrefixCode(category: cat0, prefixCode: 0),
+        QuestionCategoryDifficultyWithPrefixCode(category: cat0, prefixCode: 0),
         () => label.l_which_country_is_more_populous);
     res.putIfAbsent(
-      QuestionCategoryWithPrefixCode(category: cat1, prefixCode: 0),
+      QuestionCategoryDifficultyWithPrefixCode(category: cat1, prefixCode: 0),
       () => label.l_which_country_is_larger_in_area_size,
     );
     res.putIfAbsent(
-        QuestionCategoryWithPrefixCode(category: cat2, prefixCode: 0),
+        QuestionCategoryDifficultyWithPrefixCode(category: cat2, prefixCode: 0),
         () => label.l_find_a_neighbour_of_this_country);
     res.putIfAbsent(
-        QuestionCategoryWithPrefixCode(category: cat2, prefixCode: 1),
+        QuestionCategoryDifficultyWithPrefixCode(category: cat2, prefixCode: 1),
         () => label.l_find_the_neighbours_of_this_country);
     res.putIfAbsent(
-        QuestionCategoryWithPrefixCode(category: cat2, prefixCode: 2),
+        QuestionCategoryDifficultyWithPrefixCode(category: cat2, prefixCode: 2),
         () => label.l_which_country_has_these_neighbours);
     res.putIfAbsent(
-        QuestionCategoryWithPrefixCode(category: cat3, prefixCode: 0),
+        QuestionCategoryDifficultyWithPrefixCode(category: cat3, prefixCode: 0),
         () => label.l_which_country_is_located_here);
     res.putIfAbsent(
-        QuestionCategoryWithPrefixCode(category: cat3, prefixCode: 1),
+        QuestionCategoryDifficultyWithPrefixCode(category: cat3, prefixCode: 1),
         () => label.l_which_countries_are_located_here);
     res.putIfAbsent(
-        QuestionCategoryWithPrefixCode(category: cat3, prefixCode: 2),
+        QuestionCategoryDifficultyWithPrefixCode(category: cat3, prefixCode: 2),
         () => label.l_where_are_these_countries_located);
     res.putIfAbsent(
-        QuestionCategoryWithPrefixCode(category: cat4, prefixCode: 0),
+        QuestionCategoryDifficultyWithPrefixCode(category: cat4, prefixCode: 0),
         () => label.l_which_country_was_partly_or_entirely_part_of_this_empire);
     res.putIfAbsent(
-        QuestionCategoryWithPrefixCode(category: cat4, prefixCode: 1),
+        QuestionCategoryDifficultyWithPrefixCode(category: cat4, prefixCode: 1),
         () => label
             .l_which_countries_were_partly_or_entirely_part_of_this_empire);
     res.putIfAbsent(
-        QuestionCategoryWithPrefixCode(category: cat4, prefixCode: 2),
+        QuestionCategoryDifficultyWithPrefixCode(category: cat4, prefixCode: 2),
         () => label.l_which_empire_included_territories_from_these_countries);
     res.putIfAbsent(
-        QuestionCategoryWithPrefixCode(category: cat5, prefixCode: 0),
+        QuestionCategoryDifficultyWithPrefixCode(category: cat5, prefixCode: 0),
         () => label.l_landmarks);
     res.putIfAbsent(
-        QuestionCategoryWithPrefixCode(category: cat6, prefixCode: 0),
+        QuestionCategoryDifficultyWithPrefixCode(category: cat6, prefixCode: 0),
         () => label.l_capital_city);
     res.putIfAbsent(
-        QuestionCategoryWithPrefixCode(category: cat7, prefixCode: 0),
+        QuestionCategoryDifficultyWithPrefixCode(category: cat7, prefixCode: 0),
         () => label.l_flags);
     res.putIfAbsent(
-        QuestionCategoryWithPrefixCode(category: cat8, prefixCode: 0),
+        QuestionCategoryDifficultyWithPrefixCode(category: cat8, prefixCode: 0),
         () => label.l_natural_wonders);
     res.putIfAbsent(
-        QuestionCategoryWithPrefixCode(category: cat9, prefixCode: 0),
+        QuestionCategoryDifficultyWithPrefixCode(category: cat9, prefixCode: 0),
         () => label.l_find_on_map);
     return res;
   }

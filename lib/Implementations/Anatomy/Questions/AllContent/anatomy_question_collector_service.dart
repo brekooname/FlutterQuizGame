@@ -22,15 +22,43 @@ class AnatomyQuestionCollectorService extends QuestionCollectorService<
   List<Question> getAllQuestionsForCategoryAndDifficulty(
       QuestionCategory category, QuestionDifficulty difficulty) {
     List<Question> result = [];
+    //
+    //Diagram image click
+    //
     if (difficulty == gameQuestionConfig.diff0) {
       var list = allQuestions.get<CategoryDifficulty, List<Question>>(
           CategoryDifficulty(category, gameQuestionConfig.diff0))!;
       result = list;
-    } else if (difficulty == gameQuestionConfig.diff1) {
-      var list = allQuestions.get<CategoryDifficulty, List<Question>>(
-          CategoryDifficulty(category, gameQuestionConfig.diff1))!;
-      result = list
+    }
+    //
+    //Main Trivia
+    //
+    else if (difficulty == gameQuestionConfig.diff1) {
+      result = allQuestions
+          .get<CategoryDifficulty, List<Question>>(
+              CategoryDifficulty(category, gameQuestionConfig.diff1))!
           .map((e) => Question(e.index, e.difficulty, e.category,
+              _processRawStringForDependentQuestion(e)))
+          .toList();
+    }
+    //
+    //Disease Trivia
+    //
+    else if (difficulty == gameQuestionConfig.diff2) {
+    }
+    //
+    //Disease Symptoms
+    //
+    else if (difficulty == gameQuestionConfig.diff3) {
+    }
+    //
+    //Main Image Trivia
+    //
+    else if (difficulty == gameQuestionConfig.diff4) {
+      result = allQuestions
+          .get<CategoryDifficulty, List<Question>>(
+              CategoryDifficulty(category, gameQuestionConfig.diff0))!
+          .map((e) => Question(e.index, gameQuestionConfig.diff4, e.category,
               _processRawStringForDependentQuestion(e)))
           .toList();
     }

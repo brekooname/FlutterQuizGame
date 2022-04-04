@@ -30,8 +30,8 @@ class SkelGameQuestionConfig extends GameQuestionConfig {
   SkelGameQuestionConfig.internal();
 
   @override
-  Map<QuestionCategoryWithPrefixCode, String> get prefixLabelForCode {
-    Map<QuestionCategoryWithPrefixCode, String> res = HashMap();
+  Map<QuestionCategoryDifficultyWithPrefixCode, String> get prefixLabelForCode {
+    Map<QuestionCategoryDifficultyWithPrefixCode, String> res = HashMap();
     return res;
   }
 }

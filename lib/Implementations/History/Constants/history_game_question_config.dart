@@ -53,22 +53,22 @@ class HistoryGameQuestionConfig extends GameQuestionConfig with LabelMixin {
   HistoryGameQuestionConfig.internal();
 
   @override
-  Map<QuestionCategoryWithPrefixCode, String> get prefixLabelForCode {
-    Map<QuestionCategoryWithPrefixCode, String> res = HashMap();
+  Map<QuestionCategoryDifficultyWithPrefixCode, String> get prefixLabelForCode {
+    Map<QuestionCategoryDifficultyWithPrefixCode, String> res = HashMap();
     res.putIfAbsent(
-        QuestionCategoryWithPrefixCode(category: cat0, prefixCode: 0),
+        QuestionCategoryDifficultyWithPrefixCode(category: cat0, prefixCode: 0),
         () => label.l_when_did_this_event_occur);
     res.putIfAbsent(
-        QuestionCategoryWithPrefixCode(category: cat1, prefixCode: 0),
+        QuestionCategoryDifficultyWithPrefixCode(category: cat1, prefixCode: 0),
         () => label.l_between_what_years_did_this_empire_exist);
     res.putIfAbsent(
-        QuestionCategoryWithPrefixCode(category: cat2, prefixCode: 0),
+        QuestionCategoryDifficultyWithPrefixCode(category: cat2, prefixCode: 0),
         () => label.l_in_which_modern_country_did_this_event_occur);
     res.putIfAbsent(
-        QuestionCategoryWithPrefixCode(category: cat2, prefixCode: 1),
+        QuestionCategoryDifficultyWithPrefixCode(category: cat2, prefixCode: 1),
         () => label.l_in_which_modern_country_is_this_location);
     res.putIfAbsent(
-        QuestionCategoryWithPrefixCode(category: cat4, prefixCode: 0),
+        QuestionCategoryDifficultyWithPrefixCode(category: cat4, prefixCode: 0),
         () => label.l_identify_the_historical_figure);
     return res;
   }

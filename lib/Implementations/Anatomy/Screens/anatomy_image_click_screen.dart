@@ -58,7 +58,7 @@ class AnatomyImageClickScreenState extends State<AnatomyImageClickScreen>
         questionText: widget.currentQuestionInfo.question.questionToBeDisplayed,
       ),
       widget.createImageClickContainer(
-          widget.gameQuestionConfig.categoryImgDimen
+          widget.gameQuestionConfig.categoryDiagramImgDimen
               .get<QuestionCategory, Size>(
                   widget.currentQuestionInfo.question.category)!, () {
         setState(() {});

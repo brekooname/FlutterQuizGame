@@ -31,8 +31,8 @@ abstract class QuestionService {
 
   String getPrefixToBeDisplayedForQuestion(Question question) {
     return MyApp.appId.gameConfig.gameQuestionConfig
-        .getPrefixToBeDisplayedForQuestion(
-            question.category, getPrefixCodeForQuestion(question));
+        .getPrefixToBeDisplayedForQuestion(question.category,
+            question.difficulty, getPrefixCodeForQuestion(question));
   }
 
   bool addAnswerToGameInfo(

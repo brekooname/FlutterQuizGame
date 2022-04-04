@@ -7,33 +7,44 @@ abstract class GameQuestionConfig {
 
   late List<QuestionDifficulty> difficulties;
 
-  Map<QuestionCategoryWithPrefixCode, String> get prefixLabelForCode;
+  Map<QuestionCategoryDifficultyWithPrefixCode, String> get prefixLabelForCode;
 
-  String getPrefixToBeDisplayedForQuestion(
-      QuestionCategory category, int prefixCode) {
+  String getPrefixToBeDisplayedForQuestion(QuestionCategory category,
+      QuestionDifficulty difficulty, int prefixCode) {
     return prefixLabelForCode
-        .getOrDefault<QuestionCategoryWithPrefixCode, String>(
-            QuestionCategoryWithPrefixCode(
-                category: category, prefixCode: prefixCode),
-            "");
+        .getOrDefault<QuestionCategoryDifficultyWithPrefixCode, String>(
+            QuestionCategoryDifficultyWithPrefixCode(
+                category: category,
+                difficulty: difficulty,
+                prefixCode: prefixCode),
+            prefixLabelForCode
+                .getOrDefault<QuestionCategoryDifficultyWithPrefixCode, String>(
+                    QuestionCategoryDifficultyWithPrefixCode(
+                        category: category,
+                        difficulty: null,
+                        prefixCode: prefixCode),
+                    ""));
   }
 }
 
-class QuestionCategoryWithPrefixCode {
+class QuestionCategoryDifficultyWithPrefixCode {
   QuestionCategory category;
+  QuestionDifficulty? difficulty;
   int prefixCode;
 
-  QuestionCategoryWithPrefixCode(
-      {required this.category, required this.prefixCode});
+  QuestionCategoryDifficultyWithPrefixCode(
+      {required this.category, this.difficulty, required this.prefixCode});
 
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is QuestionCategoryWithPrefixCode &&
+      other is QuestionCategoryDifficultyWithPrefixCode &&
           runtimeType == other.runtimeType &&
           category == other.category &&
+          difficulty == other.difficulty &&
           prefixCode == other.prefixCode;
 
   @override
-  int get hashCode => category.hashCode ^ prefixCode.hashCode;
+  int get hashCode =>
+      category.hashCode ^ difficulty.hashCode ^ prefixCode.hashCode;
 }

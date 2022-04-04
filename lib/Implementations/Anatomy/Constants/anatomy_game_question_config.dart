@@ -23,8 +23,11 @@ class AnatomyGameQuestionConfig extends GameQuestionConfig {
 
   late QuestionDifficulty diff0;
   late QuestionDifficulty diff1;
+  late QuestionDifficulty diff2;
+  late QuestionDifficulty diff3;
+  late QuestionDifficulty diff4;
 
-  late Map<QuestionCategory, Size> categoryImgDimen;
+  late Map<QuestionCategory, Size> categoryDiagramImgDimen;
 
   static final AnatomyGameQuestionConfig singleton =
       AnatomyGameQuestionConfig.internal();
@@ -33,12 +36,18 @@ class AnatomyGameQuestionConfig extends GameQuestionConfig {
     singleton.difficulties = [
       singleton.diff0 = QuestionDifficulty(index: 0),
       singleton.diff1 = QuestionDifficulty(index: 1),
+      singleton.diff2 = QuestionDifficulty(index: 2),
+      singleton.diff3 = QuestionDifficulty(index: 3),
+      singleton.diff4 = QuestionDifficulty(index: 4),
     ];
     //
     //
     var questionCategoryServiceMap = {
       singleton.diff0: ImageClickCategoryQuestionService(),
       singleton.diff1: DependentAnswersCategoryQuestionService(),
+      singleton.diff2: DependentAnswersCategoryQuestionService(),
+      singleton.diff3: DependentAnswersCategoryQuestionService(),
+      singleton.diff4: DependentAnswersCategoryQuestionService(),
     };
     singleton.categories = [
       singleton.cat0 = QuestionCategory(
@@ -90,7 +99,7 @@ class AnatomyGameQuestionConfig extends GameQuestionConfig {
           questionCategoryServiceMap: questionCategoryServiceMap,
           categoryLabel: "Chemical elements of the human body"),
     ];
-    singleton.categoryImgDimen = {
+    singleton.categoryDiagramImgDimen = {
       singleton.cat0: const Size(252, 580),
       singleton.cat1: const Size(252, 580),
       singleton.cat2: const Size(252, 580),
@@ -110,8 +119,14 @@ class AnatomyGameQuestionConfig extends GameQuestionConfig {
   AnatomyGameQuestionConfig.internal();
 
   @override
-  Map<QuestionCategoryWithPrefixCode, String> get prefixLabelForCode {
-    Map<QuestionCategoryWithPrefixCode, String> res = HashMap();
+  Map<QuestionCategoryDifficultyWithPrefixCode, String> get prefixLabelForCode {
+    Map<QuestionCategoryDifficultyWithPrefixCode, String> res = HashMap();
+
+    res.putIfAbsent(
+        QuestionCategoryDifficultyWithPrefixCode(
+            category: cat0, difficulty: diff4, prefixCode: 0),
+        () => "Identify the organ");
+
     return res;
   }
 }
