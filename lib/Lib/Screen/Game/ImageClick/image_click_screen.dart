@@ -12,12 +12,11 @@ import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
 import '../quiz_question_manager.dart';
 
-
 mixin ImageClickScreen<TQuizQuestionManager extends QuizQuestionManager> {
   final ScreenDimensionsService _screenDimensions = ScreenDimensionsService();
   final ImageService _imageService = ImageService();
-  late QuestionInfo _currentQuestionInfo;
   late TQuizQuestionManager quizQuestionManager;
+  late QuestionInfo _currentQuestionInfo;
 
   void initImageClickScreen(TQuizQuestionManager quizQuestionManager,
       QuestionInfo currentQuestionInfo) {
@@ -195,7 +194,32 @@ mixin ImageClickScreen<TQuizQuestionManager extends QuizQuestionManager> {
   Visibility _createAnswerButton(ImageClickInfo imageClickInfo,
       VoidCallback refreshSetState, VoidCallback goToNextScreenAfterPress) {
     var btnSide = _getAnswerBtnSideDimen();
-    var answerBtn = Visibility(
+    var btnDisabled = _currentQuestionInfo.pressedAnswers.isNotEmpty ||
+        quizQuestionManager.hintDisabledPossibleAnswers
+            .contains(imageClickInfo.answerLabel.toLowerCase());
+    var btnFontConfig = FontConfig(
+        fontColor: Colors.white,
+        fontWeight: FontWeight.w800,
+        borderColor: Colors.black);
+    var btnSkin = ButtonSkinConfig(
+        borderRadius: FontConfig.standardBorderRadius * 4,
+        borderColor: Colors.red,
+        backgroundColor: Colors.lightGreenAccent);
+    var answerBtn = MyButton(
+        disabled: btnDisabled,
+        onClick: () {
+          quizQuestionManager.onClickAnswerOptionBtn(
+            _currentQuestionInfo.question,
+            imageClickInfo.answerLabel,
+            refreshSetState,
+            goToNextScreenAfterPress,
+          );
+        },
+        text: "?",
+        fontConfig: btnFontConfig,
+        size: Size(btnSide, btnSide),
+        buttonSkinConfig: btnSkin);
+    return Visibility(
         visible: !_pressedAnswerEqualsButton(imageClickInfo),
         child: SizedBox(
             width: btnSide,
@@ -205,34 +229,14 @@ mixin ImageClickScreen<TQuizQuestionManager extends QuizQuestionManager> {
                   child: SizedBox(
                       height: btnSide,
                       width: btnSide,
-                      child: AnimateZoomInZoomOut(
-                          toAnimateWidgetSize: Size(btnSide, btnSide),
-                          zoomAmount:
-                              AnimateZoomInZoomOut.defaultZoomAmount * 5,
-                          toAnimateWidget: MyButton(
-                              disabled: _currentQuestionInfo
-                                  .pressedAnswers.isNotEmpty,
-                              onClick: () {
-                                quizQuestionManager.onClickAnswerOptionBtn(
-                                  _currentQuestionInfo.question,
-                                  imageClickInfo.answerLabel,
-                                  refreshSetState,
-                                  goToNextScreenAfterPress,
-                                );
-                              },
-                              text: "?",
-                              fontConfig: FontConfig(
-                                  fontColor: Colors.white,
-                                  fontWeight: FontWeight.w800,
-                                  borderColor: Colors.black),
-                              size: Size(btnSide, btnSide),
-                              buttonSkinConfig: ButtonSkinConfig(
-                                  borderRadius:
-                                      FontConfig.standardBorderRadius * 4,
-                                  borderColor: Colors.red,
-                                  backgroundColor: Colors.lightGreenAccent))))),
+                      child: btnDisabled
+                          ? answerBtn
+                          : AnimateZoomInZoomOut(
+                              toAnimateWidgetSize: Size(btnSide, btnSide),
+                              zoomAmount:
+                                  AnimateZoomInZoomOut.defaultZoomAmount * 5,
+                              toAnimateWidget: answerBtn))),
             ])));
-    return answerBtn;
   }
 
   Visibility _createAnswerLabel(ImageClickInfo imageClickInfo) {

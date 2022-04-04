@@ -13,9 +13,9 @@ import '../quiz_question_manager.dart';
 
 
 mixin QuizOptionsGameScreen<TQuizQuestionManager extends QuizQuestionManager> {
-  late TQuizQuestionManager quizQuestionManager;
   final ScreenDimensionsService _screenDimensions = ScreenDimensionsService();
   final ImageService _imageService = ImageService();
+  late TQuizQuestionManager quizQuestionManager;
   late QuestionInfo _currentQuestionInfo;
 
   Image? _questionImage;

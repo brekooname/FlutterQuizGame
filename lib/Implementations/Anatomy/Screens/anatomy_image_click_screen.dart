@@ -56,6 +56,12 @@ class AnatomyImageClickScreenState extends State<AnatomyImageClickScreen>
     var mainColumn = Column(children: <Widget>[
       AnatomyLevelHeader(
         questionText: widget.currentQuestionInfo.question.questionToBeDisplayed,
+        disableHintBtn:
+        widget.quizQuestionManager.hintDisabledPossibleAnswers.isNotEmpty,
+        hintButtonOnClick: () {
+          widget.quizQuestionManager.onHintButtonClick(setStateCallback);
+        },
+        availableHints: widget.gameContext.amountAvailableHints,
       ),
       widget.createImageClickContainer(
           widget.gameQuestionConfig.categoryDiagramImgDimen

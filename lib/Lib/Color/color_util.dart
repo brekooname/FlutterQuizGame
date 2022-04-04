@@ -21,7 +21,7 @@ class ColorUtil {
     );
   }
 
-  static Widget imageToGreyScale(Widget image, [double amount = 0.002]) {
+  static Widget imageToGreyScale(Widget image, [double amount = 0.001]) {
     return imageDarken(
         ColorFiltered(
           colorFilter: ColorFilter.matrix(

@@ -47,7 +47,7 @@ class MyApp extends StatefulWidget {
   // static String webAppKey = "perstest";
   // static String webAppKey = "dopewars";
   static String webAppKey = "anatomy";
-  static CampaignLevel campaignLevel = AnatomyCampaignLevelService().level_48;
+  static CampaignLevel campaignLevel = AnatomyCampaignLevelService().level_image_click;
 
   //
   static Language webLanguage = Language.en;

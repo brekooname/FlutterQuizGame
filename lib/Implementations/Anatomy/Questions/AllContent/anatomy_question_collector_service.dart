@@ -3,6 +3,7 @@ import 'package:flutter_app_quiz_game/Game/Question/Model/category_difficulty.da
 import 'package:flutter_app_quiz_game/Game/Question/Model/question.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
+import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/DependentAnswers/dependent_answers_question_parser.dart';
 import 'package:flutter_app_quiz_game/Game/Question/question_collector_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/Anatomy/Constants/anatomy_game_question_config.dart';
 import 'package:flutter_app_quiz_game/Implementations/Anatomy/Questions/AllContent/anatomy_all_questions.dart';
@@ -38,7 +39,7 @@ class AnatomyQuestionCollectorService extends QuestionCollectorService<
           .get<CategoryDifficulty, List<Question>>(
               CategoryDifficulty(category, gameQuestionConfig.diff1))!
           .map((e) => Question(e.index, e.difficulty, e.category,
-              _processRawStringForDependentQuestion(e)))
+              _processRawStringForDependentQuestion(e, true, true)))
           .toList();
     }
     //
@@ -59,7 +60,7 @@ class AnatomyQuestionCollectorService extends QuestionCollectorService<
           .get<CategoryDifficulty, List<Question>>(
               CategoryDifficulty(category, gameQuestionConfig.diff0))!
           .map((e) => Question(e.index, gameQuestionConfig.diff4, e.category,
-              _processRawStringForDependentQuestion(e)))
+              _processRawStringForDependentQuestion(e, false, false)))
           .toList();
     }
     return result
@@ -67,7 +68,8 @@ class AnatomyQuestionCollectorService extends QuestionCollectorService<
         .toList();
   }
 
-  String _processRawStringForDependentQuestion(Question question) {
+  String _processRawStringForDependentQuestion(
+      Question question, bool displayQuestion, bool fixedOptions) {
     Question? questionOpt = getAllQuestions(
             difficulties: [gameQuestionConfig.diff0],
             categories: [question.category])
@@ -78,12 +80,11 @@ class AnatomyQuestionCollectorService extends QuestionCollectorService<
     }
 
     var optString = question.rawString.split(":")[1];
-    return question.rawString.split(":")[0] +
-        ":" +
-        questionOpt.rawString.split(":")[0] +
-        ":" +
-        optString.substring(optString.indexOf(",") + 1) +
-        ":";
+    var answer = question.rawString.split(":")[0];
+    return DependentAnswersQuestionParser.formRawQuestion(
+        displayQuestion ? answer : "",
+        answer,
+        fixedOptions ? optString.substring(optString.indexOf(",") + 1) : "");
   }
 
   @override

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
+import 'package:flutter_app_quiz_game/Implementations/Anatomy/Components/anatomy_level_header.dart';
 import 'package:flutter_app_quiz_game/Implementations/Anatomy/Constants/anatomy_campaign_level_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/Anatomy/Constants/anatomy_game_question_config.dart';
 import 'package:flutter_app_quiz_game/Implementations/Anatomy/Questions/anatomy_game_context.dart';
@@ -67,7 +68,19 @@ class AnatomyQuestionScreenState extends State<AnatomyQuestionScreen>
         setStateCallback, widget.goToNextGameScreenCallBack(context));
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[questionContainer, optionsRows],
+      children: <Widget>[
+        AnatomyLevelHeader(
+          questionText: "",
+          disableHintBtn:
+          widget.quizQuestionManager.hintDisabledPossibleAnswers.isNotEmpty,
+          hintButtonOnClick: () {
+            widget.quizQuestionManager.onHintButtonClick(setStateCallback);
+          },
+          availableHints: widget.gameContext.amountAvailableHints,
+        ),
+        questionContainer,
+        optionsRows
+      ],
     );
   }
 

@@ -21,6 +21,16 @@ class DependentAnswersQuestionParser extends QuestionParser {
     return question.rawString.split(":")[0].trim();
   }
 
+  static String formRawQuestion(
+      String questionToBeDisplayed, String correctAnswer, String wrongOptions) {
+    return questionToBeDisplayed +
+        ":" +
+        correctAnswer +
+        ":" +
+        wrongOptions +
+        ":";
+  }
+
   //We return a list in case of multiple correct answers
   // but for this case there is only one correct answer
   @override

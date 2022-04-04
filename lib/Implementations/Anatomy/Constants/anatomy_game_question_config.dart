@@ -122,11 +122,29 @@ class AnatomyGameQuestionConfig extends GameQuestionConfig {
   Map<QuestionCategoryDifficultyWithPrefixCode, String> get prefixLabelForCode {
     Map<QuestionCategoryDifficultyWithPrefixCode, String> res = HashMap();
 
-    res.putIfAbsent(
-        QuestionCategoryDifficultyWithPrefixCode(
-            category: cat0, difficulty: diff4, prefixCode: 0),
-        () => "Identify the organ");
-
+    //
+    //Trivia images
+    //
+    Map<QuestionCategory, String> prefixes = {
+      cat0: "Identify the organ",
+      cat1: "Identify the bone",
+      cat2: "Identify the muscle",
+      cat3: "Identify this part of the circulatory system",
+      cat4: "Identify this part of the nervous system",
+      cat5: "Identify this part of the the mouth",
+      cat6: "Identify this part of the brain",
+      cat7: "Identify this part of the ear",
+      cat8: "Identify this part of the heart",
+      cat9: "Identify this part of the eye",
+      cat10: "Identify this part of the cell",
+      cat11: "Identify the chemical element",
+    };
+    for (MapEntry<QuestionCategory, String> e in prefixes.entries) {
+      res.putIfAbsent(
+          QuestionCategoryDifficultyWithPrefixCode(
+              category: e.key, difficulty: diff4, prefixCode: 0),
+          () => e.value);
+    }
     return res;
   }
 }
