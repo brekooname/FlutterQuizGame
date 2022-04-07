@@ -43,6 +43,7 @@ class AnatomyQuestionScreen
           gameContext, currentQuestionInfo, AnatomyLocalStorage()),
       currentQuestionInfo,
       questionImage: questionImg,
+      zoomableImage: true,
     );
   }
 

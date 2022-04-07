@@ -112,7 +112,7 @@ mixin QuizOptionsGameScreen<TQuizQuestionManager extends QuizQuestionManager> {
     );
     return Container(
         decoration: BoxDecoration(
-            color: Colors.grey.shade200,
+            color: Colors.white,
             border: Border.all(
                 color: Colors.blue.shade700,
                 width: _screenDimensions.dimen(0.3)),

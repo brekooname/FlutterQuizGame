@@ -6,10 +6,10 @@ import 'package:flutter_app_quiz_game/Implementations/Anatomy/Constants/anatomy_
 
 class AnatomyCampaignLevelService extends CampaignLevelService {
   late CampaignLevel level_image_click; //Organs diagram image click
-  late CampaignLevel level_trivia;//Organs trivia
-  late CampaignLevel level_disease_trivia;//Organs disease trivia
-  late CampaignLevel level_disease_symp;//Organs disease symptoms
-  late CampaignLevel level_image_trivia;//Organs image trivia
+  late CampaignLevel level_trivia; //Organs trivia
+  late CampaignLevel level_disease_trivia; //Organs disease trivia
+  late CampaignLevel level_disease_symp; //Organs disease symptoms
+  late CampaignLevel level_image_trivia; //Organs image trivia
 
   static final AnatomyCampaignLevelService singleton =
       AnatomyCampaignLevelService.internal();
@@ -17,8 +17,12 @@ class AnatomyCampaignLevelService extends CampaignLevelService {
   factory AnatomyCampaignLevelService() {
     var questionConfig = AnatomyGameQuestionConfig();
     singleton.allLevels = [];
-    for (QuestionDifficulty diff in questionConfig.difficulties) {
-      for (QuestionCategory cat in questionConfig.categories) {
+    for (QuestionCategory cat in questionConfig.categories) {
+      for (QuestionDifficulty diff in questionConfig.difficulties) {
+        if (diff == questionConfig.diff3 &&
+            (cat == questionConfig.cat6 || cat == questionConfig.cat8)) {
+          continue;
+        }
         singleton.allLevels.add(CampaignLevel(
           difficulty: diff,
           categories: [

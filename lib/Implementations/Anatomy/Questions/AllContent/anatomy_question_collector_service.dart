@@ -1,4 +1,5 @@
 import 'package:collection/src/iterable_extensions.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/category_difficulty.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
@@ -83,10 +84,11 @@ class AnatomyQuestionCollectorService extends QuestionCollectorService<
           ["No diff 0 question found for cat " + question.category.name]);
     }
 
+    var questionToBeDisplayed = question.rawString.split(":")[0];
+    var answer = questionOpt.rawString.split(":")[0];
     var optString = question.rawString.split(":")[1];
-    var answer = question.rawString.split(":")[0];
     return DependentAnswersQuestionParser.formRawQuestion(
-        displayQuestion ? answer : "",
+        displayQuestion ? questionToBeDisplayed : "",
         answer,
         takeInAccountOptions
             ? optString.substring(optString.indexOf(",") + 1)

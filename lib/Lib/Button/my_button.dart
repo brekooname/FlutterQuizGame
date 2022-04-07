@@ -70,7 +70,7 @@ class MyButton extends StatefulWidget {
         text: text!,
         fontConfig: this.fontConfig,
         maxLines: textMaxLines,
-        width: this.size.width / 1.1,
+        width: this.size.width / 1.05,
       );
     } else {
       if (this.buttonSkinConfig.image != null) {

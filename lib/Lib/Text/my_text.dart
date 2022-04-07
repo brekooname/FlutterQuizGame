@@ -91,8 +91,8 @@ class MyText extends StatelessWidget {
     )..layout(
         minWidth: minWidth,
         maxWidth: maxWidth -
-            (fontConfig.borderWidth * text.length) -
-            textAllPadding * 2);
+            ((fontConfig.borderWidth / 4) *
+                (text.length - text.split(" ").length)));
     return textPainter.didExceedMaxLines;
   }
 }

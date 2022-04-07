@@ -203,11 +203,11 @@ class MyAppState extends State<MyApp> {
       //   MyApp.gameScreenManager.currentScreen!.gameScreenManagerState
       //       .showNewGameScreen(MyApp.campaignLevel);
       // });
-      Future.delayed(const Duration(milliseconds: 100), () {
-        (MyApp.gameScreenManager.currentScreen!.gameScreenManagerState
-                as AnatomyScreenManagerState)
-            .showLevelsScreen(AnatomyGameQuestionConfig().cat0);
-      });
+      // Future.delayed(const Duration(milliseconds: 100), () {
+      //   (MyApp.gameScreenManager.currentScreen!.gameScreenManagerState
+      //           as AnatomyScreenManagerState)
+      //       .showLevelsScreen(AnatomyGameQuestionConfig().cat0);
+      // });
       ////
       //
       ////
@@ -284,7 +284,7 @@ class MyAppState extends State<MyApp> {
                 ////
                 //
                 ////
-                color: Colors.blue,
+                // color: Colors.blue,
                 ////
                 //
                 ////

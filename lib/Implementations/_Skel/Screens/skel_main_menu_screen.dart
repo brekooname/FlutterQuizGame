@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app_quiz_game/Implementations/_Skel/Service/skel_screen_manager.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/floating_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Localization/label_mixin.dart';
 import 'package:flutter_app_quiz_game/Lib/Popup/settings_popup.dart';
-import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen_manager_state.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/standard_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/game_title.dart';
@@ -10,8 +10,8 @@ import 'package:flutter_app_quiz_game/Lib/Text/game_title.dart';
 import '../../../Lib/Font/font_config.dart';
 import '../../../main.dart';
 
-class SkelMainMenuScreen extends StandardScreen {
-  SkelMainMenuScreen(GameScreenManagerState gameScreenManagerState, {Key? key})
+class SkelMainMenuScreen extends StandardScreen<SkelScreenManagerState> {
+  SkelMainMenuScreen(SkelScreenManagerState gameScreenManagerState, {Key? key})
       : super(gameScreenManagerState, key: key);
 
   @override

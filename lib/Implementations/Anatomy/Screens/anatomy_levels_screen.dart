@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Game/Game/campaign_level.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
+import 'package:flutter_app_quiz_game/Implementations/Anatomy/Components/anatomy_component_creator_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/Anatomy/Constants/anatomy_campaign_level_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/Anatomy/Constants/anatomy_game_question_config.dart';
+import 'package:flutter_app_quiz_game/Implementations/Anatomy/Service/anatomy_screen_manager.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/button_skin_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/floating_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_back_button.dart';
@@ -21,11 +23,14 @@ import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import '../../../Lib/Font/font_config.dart';
 import '../../../main.dart';
 
-class AnatomyLevelsScreen extends StandardScreen {
+class AnatomyLevelsScreen extends StandardScreen<AnatomyScreenManagerState> {
   QuestionCategory category;
   late Image backgroundImage;
 
-  AnatomyLevelsScreen(GameScreenManagerState gameScreenManagerState,
+  AnatomyComponentCreatorService anatomyComponentCreatorService =
+      AnatomyComponentCreatorService();
+
+  AnatomyLevelsScreen(AnatomyScreenManagerState gameScreenManagerState,
       {Key? key, required this.category})
       : super(gameScreenManagerState, key: key);
 
@@ -50,7 +55,7 @@ class AnatomyLevelsScreenState extends State<AnatomyLevelsScreen>
     List<Widget> levelBtns = [];
     var btnPadding = screenDimensions.dimen(1);
     var btnWidth = screenDimensions.dimen(45);
-    var btnHeight = screenDimensions.dimen(45);
+    var btnHeight = screenDimensions.dimen(49);
     var btnSize = Size(btnWidth, btnHeight);
     var questionConfig = AnatomyGameQuestionConfig();
     var campaignLevelService = AnatomyCampaignLevelService();
@@ -127,23 +132,30 @@ class AnatomyLevelsScreenState extends State<AnatomyLevelsScreen>
       QuestionDifficulty diff,
       double btnWidth,
       Map<QuestionDifficulty, String> levelString) {
+    int totalWonQuestions = 1;
+    int totalQuestionsForCampaignLevel = 2;
+    var margin = SizedBox(
+      height: screenDimensions.dimen(1.5),
+    );
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
+        margin,
+        MyText(
+            width: btnWidth / 1.05,
+            fontSize: FontConfig.getCustomFontSize(1),
+            text: levelString.get<QuestionDifficulty, String>(diff)!,
+            maxLines: 2),
+        margin,
         imageService.getSpecificImage(
             imageName: levelIcon.get<QuestionDifficulty, String>(diff)!,
-            maxWidth: btnWidth / 1.7,
+            maxWidth: btnWidth / 2.2,
             module: "buttons",
             imageExtension: "png"),
-        SizedBox(
-          height: screenDimensions.h(1),
-        ),
-        MyText(
-          width: btnWidth / 1.05,
-          text: levelString.get<QuestionDifficulty, String>(diff)!,
-          maxLines: 2,
-        )
+        margin,
+        widget.anatomyComponentCreatorService.createScoreMyText(6, 7, btnWidth),
+        margin,
       ],
     );
   }
@@ -163,11 +175,11 @@ class AnatomyLevelsScreenState extends State<AnatomyLevelsScreen>
   Map<QuestionDifficulty, Color> _getLevelColors(
       AnatomyGameQuestionConfig questionConfig) {
     Map<QuestionDifficulty, Color> levelColor = {
-      questionConfig.diff0: Colors.blue.shade200,
-      questionConfig.diff1: Colors.red.shade200,
-      questionConfig.diff2: Colors.yellow.shade200,
-      questionConfig.diff3: Colors.green.shade200,
-      questionConfig.diff4: Colors.purple.shade200,
+      questionConfig.diff0: Colors.blue.shade100,
+      questionConfig.diff1: Colors.red.shade100,
+      questionConfig.diff2: Colors.yellow.shade100,
+      questionConfig.diff3: Colors.green.shade100,
+      questionConfig.diff4: Colors.purple.shade100,
     };
     return levelColor;
   }

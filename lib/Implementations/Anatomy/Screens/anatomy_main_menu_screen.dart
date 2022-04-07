@@ -1,23 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Game/Game/campaign_level.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
+import 'package:flutter_app_quiz_game/Implementations/Anatomy/Components/anatomy_component_creator_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/Anatomy/Constants/anatomy_campaign_level_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/Anatomy/Constants/anatomy_game_question_config.dart';
+import 'package:flutter_app_quiz_game/Implementations/Anatomy/Service/anatomy_screen_manager.dart';
+import 'package:flutter_app_quiz_game/Lib/Button/button_skin_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/floating_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Localization/label_mixin.dart';
 import 'package:flutter_app_quiz_game/Lib/Popup/settings_popup.dart';
-import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen_manager_state.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/standard_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/game_title.dart';
+import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 import '../../../Lib/Font/font_config.dart';
 import '../../../main.dart';
 
-class AnatomyMainMenuScreen extends StandardScreen {
-  AnatomyMainMenuScreen(GameScreenManagerState gameScreenManagerState,
+class AnatomyMainMenuScreen extends StandardScreen<AnatomyScreenManagerState> {
+  AnatomyComponentCreatorService anatomyComponentCreatorService =
+      AnatomyComponentCreatorService();
+
+  AnatomyMainMenuScreen(AnatomyScreenManagerState gameScreenManagerState,
       {Key? key})
       : super(gameScreenManagerState, key: key);
 
@@ -48,21 +54,23 @@ class AnatomyMainMenuScreenState extends State<AnatomyMainMenuScreen>
           borderColor: Colors.green),
     );
 
-    var campaignLevels = AnatomyCampaignLevelService().allLevels;
+    var categs = AnatomyGameQuestionConfig().categories;
 
     ScrollablePositionedList listView = ScrollablePositionedList.builder(
       physics: const ClampingScrollPhysics(),
-      itemCount: campaignLevels.length ~/ 2,
+      itemCount: categs.length,
       itemScrollController: itemScrollController,
       itemBuilder: (BuildContext context, int index) {
+        var btnMargin = SizedBox(
+              height: screenDimensions.dimen(3),
+            );
         return Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            _createCategoryItem(campaignLevels.elementAt(index)),
-            SizedBox(
-              height: screenDimensions.dimen(4),
-            )
+            btnMargin,
+            _createCategoryItem(categs.elementAt(index)),
+            btnMargin
           ],
         );
       },
@@ -97,23 +105,48 @@ class AnatomyMainMenuScreenState extends State<AnatomyMainMenuScreen>
         floatingActionButtonLocation: FloatingActionButtonLocation.startTop);
   }
 
-  Widget _createCategoryItem(CampaignLevel campaignLevel) {
+  Widget _createCategoryItem(QuestionCategory category) {
     Size btnSize = Size(screenDimensions.dimen(40), screenDimensions.dimen(60));
 
-    var cat = campaignLevel.categories[0];
     Image catImg = imageService.getSpecificImage(
-        imageName: cat.index.toString() + "s",
+        imageName: category.index.toString() + "s",
         imageExtension: "png",
         module: "categories",
         maxHeight: btnSize.height,
         maxWidth: screenDimensions.dimen(55));
 
+    var totalWonQuestions = 36;
+    var totalQuestionsLevel = 37;
+    var customContent = Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          MyText(
+            text: category.categoryLabel!,
+            fontConfig: FontConfig(
+                fontSize: FontConfig.getCustomFontSize(1.2),
+                fontColor: Colors.white,
+                borderWidth: FontConfig.standardBorderWidth * 1.3,
+                borderColor: Colors.black),
+          ),
+          SizedBox(
+            height: screenDimensions.dimen(5),
+          ),
+          widget.anatomyComponentCreatorService.createScoreMyText(
+              totalWonQuestions, totalQuestionsLevel, btnSize.width),
+        ]);
+
     MyButton lvlBtn = MyButton(
       textMaxLines: 4,
-      text: cat.categoryLabel,
+      width: btnSize.width,
+      customContent: customContent,
       size: btnSize,
+      buttonSkinConfig: ButtonSkinConfig(
+          backgroundColor: totalWonQuestions == totalQuestionsLevel
+              ? Colors.green.shade200
+              : Colors.blue.shade300),
       onClick: () {
-        widget.gameScreenManagerState.showNewGameScreen(campaignLevel);
+        widget.gameScreenManagerState.showLevelsScreen(category);
       },
     );
 
