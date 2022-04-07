@@ -126,9 +126,9 @@ class AnatomyGameQuestionConfig extends GameQuestionConfig {
     //Trivia images
     //
     Map<QuestionCategory, String> prefixes = {
-      cat0: "Identify the organ",
-      cat1: "Identify the bone",
-      cat2: "Identify the muscle",
+      cat0: "Identify this organ",
+      cat1: "Identify this bone",
+      cat2: "Identify this muscle",
       cat3: "Identify this part of the circulatory system",
       cat4: "Identify this part of the nervous system",
       cat5: "Identify this part of the the mouth",
@@ -137,7 +137,7 @@ class AnatomyGameQuestionConfig extends GameQuestionConfig {
       cat8: "Identify this part of the heart",
       cat9: "Identify this part of the eye",
       cat10: "Identify this part of the cell",
-      cat11: "Identify the chemical element",
+      cat11: "Identify this chemical element",
     };
     for (MapEntry<QuestionCategory, String> e in prefixes.entries) {
       res.putIfAbsent(

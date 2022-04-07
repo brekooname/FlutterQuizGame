@@ -28,7 +28,7 @@ class AnatomyQuestionCollectorService extends QuestionCollectorService<
     //
     if (difficulty == gameQuestionConfig.diff0) {
       var list = allQuestions.get<CategoryDifficulty, List<Question>>(
-          CategoryDifficulty(category, gameQuestionConfig.diff0))!;
+          CategoryDifficulty(category, difficulty))!;
       result = list;
     }
     //
@@ -37,20 +37,24 @@ class AnatomyQuestionCollectorService extends QuestionCollectorService<
     else if (difficulty == gameQuestionConfig.diff1) {
       result = allQuestions
           .get<CategoryDifficulty, List<Question>>(
-              CategoryDifficulty(category, gameQuestionConfig.diff1))!
+              CategoryDifficulty(category, difficulty))!
           .map((e) => Question(e.index, e.difficulty, e.category,
-              _processRawStringForDependentQuestion(e, true, true)))
+              _processRawStringForDependentQuestionWith_Cat0_Options(e, true, true)))
           .toList();
     }
     //
     //Disease Trivia
     //
     else if (difficulty == gameQuestionConfig.diff2) {
+      result = allQuestions.get<CategoryDifficulty, List<Question>>(
+          CategoryDifficulty(category, difficulty))!;
     }
     //
     //Disease Symptoms
     //
     else if (difficulty == gameQuestionConfig.diff3) {
+      result = allQuestions.get<CategoryDifficulty, List<Question>>(
+          CategoryDifficulty(category, difficulty))!;
     }
     //
     //Main Image Trivia
@@ -59,8 +63,8 @@ class AnatomyQuestionCollectorService extends QuestionCollectorService<
       result = allQuestions
           .get<CategoryDifficulty, List<Question>>(
               CategoryDifficulty(category, gameQuestionConfig.diff0))!
-          .map((e) => Question(e.index, gameQuestionConfig.diff4, e.category,
-              _processRawStringForDependentQuestion(e, false, false)))
+          .map((e) => Question(e.index, difficulty, e.category,
+              _processRawStringForDependentQuestionWith_Cat0_Options(e, false, false)))
           .toList();
     }
     return result
@@ -68,8 +72,8 @@ class AnatomyQuestionCollectorService extends QuestionCollectorService<
         .toList();
   }
 
-  String _processRawStringForDependentQuestion(
-      Question question, bool displayQuestion, bool fixedOptions) {
+  String _processRawStringForDependentQuestionWith_Cat0_Options(
+      Question question, bool displayQuestion, bool takeInAccountOptions) {
     Question? questionOpt = getAllQuestions(
             difficulties: [gameQuestionConfig.diff0],
             categories: [question.category])
@@ -84,7 +88,9 @@ class AnatomyQuestionCollectorService extends QuestionCollectorService<
     return DependentAnswersQuestionParser.formRawQuestion(
         displayQuestion ? answer : "",
         answer,
-        fixedOptions ? optString.substring(optString.indexOf(",") + 1) : "");
+        takeInAccountOptions
+            ? optString.substring(optString.indexOf(",") + 1)
+            : "");
   }
 
   @override

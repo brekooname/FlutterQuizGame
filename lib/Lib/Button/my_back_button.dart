@@ -13,8 +13,9 @@ class MyBackButton extends StatelessWidget {
   final ImageService _imageService = ImageService();
   final ScreenDimensionsService _screenDimensions = ScreenDimensionsService();
   late Size buttonSize;
+  double buttonAllPadding;
 
-  MyBackButton({Key? key}) : super(key: key) {
+  MyBackButton({Key? key, this.buttonAllPadding = 0}) : super(key: key) {
     var side = _screenDimensions.dimen(12);
     buttonSize = Size(side, side);
   }
@@ -22,6 +23,7 @@ class MyBackButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget btn = MyButton(
+        buttonAllPadding: buttonAllPadding,
         size: buttonSize,
         onClick: () {
           var currentScreen = MyApp.gameScreenManager.currentScreen;

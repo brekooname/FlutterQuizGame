@@ -173,5 +173,149 @@ class AnatomyAllQuestions extends AllQuestionsService {
         questionConfig.cat11, //
         questionConfig.diff1, //
         ["What is used to oxidize our food, in the process of cellular respiration, thus releasing energy?:0,1,2,3", "What is the second most abundant element in the human body?:1,2,3,4", "What is used to keep the human body hydrated?:2,3,4,5", "What is used to make amino acids in our body which in turn make proteins?:3,5,4", "What is used to build and maintain strong bones?:4,0,1,2", "What is used in the formation of bones and teeth?:5,1,2,3"]);
+    addQuestions(
+        result, //
+        language, //
+        questionConfig.cat0, //
+        questionConfig.diff2, //
+        ["What is a disease in which your liver becomes inflamed?:Hepatitis:", "What is a disease in which a parasite infects the gastro-intestinal tract of humans?:Intestinal Parasites:", "What is a disease in which your pancreas becomes inflamed?:Pancreatitis:", "What is a disease that causes a break in the inner lining of the stomach?:Gastric ulcer:", "What is a disease in which your appendix becomes inflamed?:Appendicitis:", "What is a disease in which your inner lining of the stomach becomes inflamed?:Gastritis:", "What disease causes swollen veins in your lower rectum?:Hemorrhoids:", "What are hard deposits made of minerals and salts?:Kidney Stones:", "What is scarring of the liver caused by long-term liver damage?:Cirrhosis:", "What is a type of inflammatory bowel disease?:Crohn's Disease:"]);
+    addQuestions(
+        result, //
+        language, //
+        questionConfig.cat1, //
+        questionConfig.diff2, //
+        ["What disease causes pain and inflammation in a joint?:Arthritis:", "What is a break in the continuity of a bone?:Bone fracture:", "What disease weakens bones, making them fragile and more likely to break?:Osteoporosis:", "What disease causes a sideways curvature of the spine?:Scoliosis:", "What is a type of arthritis that causes sudden, severe joint pain?:Gout:"]);
+    addQuestions(
+        result, //
+        language, //
+        questionConfig.cat2, //
+        questionConfig.diff2, //
+        ["What disease causes progressive weakness and loss of muscle mass?:muscular dystrophy:", "What disease is caused by lack of physical activity?:muscular atrophy:", "What disease causes the inflammation or irritation of a tendon?:tendinitis:", "What is a sudden and involuntary contraction of one of your muscles?:muscular cramps:", "What occurs when your muscle is overstretched or torn?:muscular strains:"]);
+    addQuestions(
+        result, //
+        language, //
+        questionConfig.cat3, //
+        questionConfig.diff2, //
+        ["What is a type of cancer that starts in cells that are part of the body's immune system?:Lymphoma:", "What is a type of cancer that usually begins in the bone marrow?:Leukemia:", "What is caused by prolonged exposures to very cold temperatures?:Hypothermia:", "What is a hardening of your arteries caused by gradual plaque buildup?:Atherosclerosis:"]);
+    addQuestions(
+        result, //
+        language, //
+        questionConfig.cat4, //
+        questionConfig.diff2, //
+        ["What is an acute inflammation of the protective membranes covering the brain and spinal cord?:Meningitis:", "What is a disease that can affect your brain and spinal cord, and can cause problems with vision, balance, muscle control?:Multiple sclerosis:", "What is a brain disorder that leads to shaking, stiffness, and difficulty with walking, balance, and coordination?:Parkinson's disease:", "What is characterized by multiple movement tics and at least one vocal tic?:Tourette syndrome:", "What is an incurable, hereditary brain disorder that damages brain cells?:Huntington's disease:"]);
+    addQuestions(
+        result, //
+        language, //
+        questionConfig.cat5, //
+        questionConfig.diff2, //
+        ["What is a serious gum infection that damages the soft tissue and that can destroy the bone that supports your teeth?:Periodontitis:", "What is a mild form of gum disease that causes irritation, redness and swelling of your gingiva?:gingivitis:", "What are permanently damaged areas in the hard surface of your teeth?:Cavities:", "What is an infection of the tonsils at the back of your throat?:Tonsillitis:", "What happens if the tissue that makes up the lip does not join completely before birth?:Cleft lip:"]);
+    addQuestions(
+        result, //
+        language, //
+        questionConfig.cat6, //
+        questionConfig.diff2, //
+        ["What brain disorder destroys memory and thinking skills and, eventually, the ability to carry out the simplest tasks?:Alzheimer's Disease:", "What is an uncommon but serious condition in which the brain becomes inflamed?:Encephalitis:", "What is a headache disorder characterized by recurrent headaches that are moderate to severe?:Migraine:", "What is a disease that affects the brain and causes frequent seizures?:Epilepsy:"]);
+    addQuestions(
+        result, //
+        language, //
+        questionConfig.cat7, //
+        questionConfig.diff2, //
+        ["What occurs when a virus or bacteria cause the area behind the eardrum to become inflamed?:Otitis‎:", "What refers to the total or partial inability to hear sounds?:Deafness:", "What is a condition in which you hear sounds when there is no outside source of the sounds?:Tinnitus:", "What is a disorder of the inner ear that can lead to dizzy spells (vertigo) and hearing loss?:Meniere's disease:"]);
+    addQuestions(
+        result, //
+        language, //
+        questionConfig.cat8, //
+        questionConfig.diff2, //
+        ["What is a chest pain caused by reduced blood flow to the heart muscles?:Angina:", "What is blood pressure that is higher than normal?:Hypertension:", "What occurs when blood flow decreases or stops to the coronary artery of the heart?:Myocardial infarction:", "What is a serious condition in which the heart doesn't pump blood as efficiently as it should?:Congestive Heart Failure:", "What is a word for high levels of cholesterol in the blood?:Hypercholesterolemia:", "What is an abnormality of the heart's rhythm?:Arrhythmia:"]);
+    addQuestions(
+        result, //
+        language, //
+        questionConfig.cat9, //
+        questionConfig.diff2, //
+        ["What is a cloudy area in the lens of the eye that leads to a decrease in vision?:Cataract:", "What is an eye condition caused by infection or allergies?:Conjunctivitis:", "What is an eye condition where the optic nerve, which connects the eye to the brain, becomes damaged?:Glaucoma:", "What is a disorder of sight in which the brain fails to fully process inputs from one eye and over time favors the other eye?:Amblyopia:"]);
+    addQuestions(
+        result, //
+        language, //
+        questionConfig.cat10, //
+        questionConfig.diff2, //
+        ["What is a type of cancer that may include a lump in the breast or a change in breast shape?:Breast cancer:", "What is the most common type of cancer that affects only men?:Prostate cancer:", "What is a type of cancer in which cells in the colon or rectum grow out of control?:Colorectal cancer:", "What type of cancer is caused by long-term tobacco smoking?:Lung cancer:", "What type of cancer is caused by overexposure to ultraviolet rays from the sun?:Skin cancer:"]);
+    addQuestions(
+        result, //
+        language, //
+        questionConfig.cat11, //
+        questionConfig.diff2, //
+        ["What is a below-normal level of oxygen in your blood called, specifically in the arteries?:Hypoxemia:", "What is a below-normal level of calcium in your blood called?:Hypocalcemia:", "What is an above-normal level of calcium in your blood called?:Hypercalcemia:", "What is a below-normal level of phosphate in your blood called?:hypophosphatemia:", "What is an above-normal level of phosphate in your blood called?:Hyperphosphatemia:"]);
+    addQuestions(
+        result, //
+        language, //
+        questionConfig.cat0, //
+        questionConfig.diff3, //
+        ["Yellowing of the skin and the whites of your eyes:Hepatitis:3,4,5", "Rash or itching around the rectum:Intestinal Parasites:2,7,8", "Moderate to severe abdominal pain that may spread to your back:Pancreatitis:1,3,4", "Severe stomach pain:Gastric ulcer:6,7,8", "Sudden pain that begins on the right side of the lower abdomen:Appendicitis:0,3,7", "Nausea or recurrent upset stomach:Gastritis:4,2,1", "Extreme itching around the anus:Hemorrhoids:0,2,3", "Pain or burning sensation while urinating:Kidney Stones:3,9,1", "Yellowing of the skin and the whites of your eyes:Cirrhosis:7,5,4", "Blood in the stool:Crohn's Disease:2,7,8"]);
+    addQuestions(
+        result, //
+        language, //
+        questionConfig.cat1, //
+        questionConfig.diff3, //
+        ["joint pain:Arthritis:1,2,3", "immediate, severe pain:Bone fracture:2,3", "Loss of height over time:Osteoporosis:1,3,4", "a visibly curved spine:Scoliosis:0,1,2", "red, shiny skin over the affected joint:Gout:1,2,3"]);
+    addQuestions(
+        result, //
+        language, //
+        questionConfig.cat2, //
+        questionConfig.diff3, //
+        ["Trouble running and jumping:muscular dystrophy:2,3,4", "One arm or one leg is smaller than the other:muscular atrophy:2,3,4", "pain in a tendon that gets worse when you move:tendinitis:1,3,4", "A sudden, sharp pain:muscular cramps:1,2", "sudden pain that worsens while contracting the muscle:muscular strains:1,2"]);
+    addQuestions(
+        result, //
+        language, //
+        questionConfig.cat3, //
+        questionConfig.diff3, //
+        ["Painless swelling of lymph nodes in your neck, armpits or groin:Lymphoma:2,3", "Swollen lymph nodes, enlarged liver or spleen:Leukemia:2,3", "Shivering:Hypothermia:0,1", "Numbness or weakness in your arms or legs:Atherosclerosis:0,1,2"]);
+    addQuestions(
+        result, //
+        language, //
+        questionConfig.cat4, //
+        questionConfig.diff3, //
+        ["Sudden high fever, severe headache that seems different from normal:Meningitis:1,2,3", "blindness in one eye:Multiple sclerosis:0,3,4", "Tremor in hands:Parkinson's disease:0,3,4", "movement tics:Tourette syndrome:0,1,4", "difficulty concentrating and memory lapses:Huntington's disease:0,1,2"]);
+    addQuestions(
+        result, //
+        language, //
+        questionConfig.cat5, //
+        questionConfig.diff3, //
+        ["Red or swollen gums:Periodontitis:2,3,4", "Red or swollen gums:gingivitis:2,3,4", "Toothache:Cavities:0,4,3", "problems swallowing:Tonsillitis:0,2,4", "Deformities of the upper jaw:Cleft lip:0,2,3"]);
+    addQuestions(
+        result, //
+        language, //
+        questionConfig.cat6, //
+        questionConfig.diff3, //
+        []);
+    addQuestions(
+        result, //
+        language, //
+        questionConfig.cat7, //
+        questionConfig.diff3, //
+        ["fluid that drains from the ear:Otitis‎:1,2,3", "Loss of hearing:Deafness:0,2,3", "a ringing noise in the ears:Tinnitus:0,1,3", "vertigo:Meniere's disease:0,1,2"]);
+    addQuestions(
+        result, //
+        language, //
+        questionConfig.cat8, //
+        questionConfig.diff3, //
+        []);
+    addQuestions(
+        result, //
+        language, //
+        questionConfig.cat9, //
+        questionConfig.diff3, //
+        ["Clouded vision:Cataract:1,2,3", "Pink or red color in the white of the eye:Conjunctivitis:0,2,3", "intense eye pain:Glaucoma:0,1,3", "Poor depth perception and peripheral vision:Amblyopia:0,1,2"]);
+    addQuestions(
+        result, //
+        language, //
+        questionConfig.cat10, //
+        questionConfig.diff3, //
+        ["A new lump in the breast or underarm:Breast cancer:1,2,3", "Blood in the urine:Prostate cancer:2,3,4", "A change in bowel habits:Colorectal cancer:1,3,4", "a cough that doesn't go away after 2 or 3 weeks:Lung cancer:1,2,4", "A mole that changes in color, size or feel or that bleeds:Skin cancer:0,1,3"]);
+    addQuestions(
+        result, //
+        language, //
+        questionConfig.cat11, //
+        questionConfig.diff3, //
+        ["Bluish color in skin, fingernails, and lips:Hypoxemia:1,2,3", "Twitching in your hands, face, and feet:Hypocalcemia:0,2,4", "More frequent urination and thirst:Hypercalcemia:0,1", "weakening of bones:hypophosphatemia:0,4", "muscle cramps or spasms:Hyperphosphatemia:0,1"]);
   }
 }

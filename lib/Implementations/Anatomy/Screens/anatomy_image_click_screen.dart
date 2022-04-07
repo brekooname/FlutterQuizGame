@@ -13,6 +13,7 @@ import 'package:flutter_app_quiz_game/Lib/Screen/Game/ImageClick/image_click_scr
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/quiz_question_manager.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
+import 'package:flutter_app_quiz_game/Lib/Screen/standard_screen.dart';
 
 class AnatomyImageClickScreen
     extends GameScreen<AnatomyGameContext, AnatomyScreenManagerState>

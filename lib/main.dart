@@ -284,7 +284,7 @@ class MyAppState extends State<MyApp> {
                 ////
                 //
                 ////
-                // color: Colors.blue,
+                color: Colors.blue,
                 ////
                 //
                 ////

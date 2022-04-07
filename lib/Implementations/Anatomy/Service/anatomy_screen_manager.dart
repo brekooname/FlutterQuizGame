@@ -50,6 +50,12 @@ class AnatomyScreenManagerState extends State<AnatomyScreenManager>
   bool goBack(StandardScreen standardScreen) {
     if (standardScreen.runtimeType == AnatomyMainMenuScreen) {
       return true;
+    } else if (standardScreen.runtimeType == AnatomyImageClickScreen) {
+      showLevelsScreen((standardScreen as AnatomyImageClickScreen).category);
+      return false;
+    } else if (standardScreen.runtimeType == AnatomyQuestionScreen) {
+      showLevelsScreen((standardScreen as AnatomyQuestionScreen).category);
+      return false;
     } else {
       showMainScreen();
       return false;
