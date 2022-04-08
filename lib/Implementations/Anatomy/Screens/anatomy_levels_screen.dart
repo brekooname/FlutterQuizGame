@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Game/Game/campaign_level.dart';
+import 'package:flutter_app_quiz_game/Game/Question/Model/category_difficulty.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
 import 'package:flutter_app_quiz_game/Implementations/Anatomy/Components/anatomy_component_creator_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/Anatomy/Constants/anatomy_campaign_level_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/Anatomy/Constants/anatomy_game_question_config.dart';
+import 'package:flutter_app_quiz_game/Implementations/Anatomy/Questions/AllContent/anatomy_question_collector_service.dart';
+import 'package:flutter_app_quiz_game/Implementations/Anatomy/Service/anatomy_local_storage.dart';
 import 'package:flutter_app_quiz_game/Implementations/Anatomy/Service/anatomy_screen_manager.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/button_skin_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/floating_button.dart';
@@ -24,11 +27,13 @@ import '../../../Lib/Font/font_config.dart';
 import '../../../main.dart';
 
 class AnatomyLevelsScreen extends StandardScreen<AnatomyScreenManagerState> {
+  final AnatomyQuestionCollectorService _anatomyQuestionCollectorService =
+      AnatomyQuestionCollectorService();
+  final AnatomyComponentCreatorService _anatomyComponentCreatorService =
+      AnatomyComponentCreatorService();
+  final AnatomyLocalStorage _anatomyLocalStorage = AnatomyLocalStorage();
   QuestionCategory category;
   late Image backgroundImage;
-
-  AnatomyComponentCreatorService anatomyComponentCreatorService =
-      AnatomyComponentCreatorService();
 
   AnatomyLevelsScreen(AnatomyScreenManagerState gameScreenManagerState,
       {Key? key, required this.category})
@@ -132,8 +137,6 @@ class AnatomyLevelsScreenState extends State<AnatomyLevelsScreen>
       QuestionDifficulty diff,
       double btnWidth,
       Map<QuestionDifficulty, String> levelString) {
-    int totalWonQuestions = 1;
-    int totalQuestionsForCampaignLevel = 2;
     var margin = SizedBox(
       height: screenDimensions.dimen(1.5),
     );
@@ -154,7 +157,14 @@ class AnatomyLevelsScreenState extends State<AnatomyLevelsScreen>
             module: "buttons",
             imageExtension: "png"),
         margin,
-        widget.anatomyComponentCreatorService.createScoreMyText(6, 7, btnWidth),
+        widget._anatomyComponentCreatorService.createScoreMyText(
+            widget._anatomyLocalStorage.getTotalWonQuestions(diff),
+            widget._anatomyQuestionCollectorService
+                    .totalNrOfQuestionsForCategoryDifficulty
+                    .get<CategoryDifficulty, int>(
+                        CategoryDifficulty(widget.category, diff)) ??
+                0,
+            btnWidth),
         margin,
       ],
     );
@@ -163,11 +173,11 @@ class AnatomyLevelsScreenState extends State<AnatomyLevelsScreen>
   Map<QuestionDifficulty, String> _getLevelLabels(
       AnatomyGameQuestionConfig questionConfig) {
     Map<QuestionDifficulty, String> levelString = {
-      questionConfig.diff0: "Diagram of the human anatomy",
+      questionConfig.diff0: "Diagram",
       questionConfig.diff1: "General knowledge",
-      questionConfig.diff2: "Anatomy and disease",
-      questionConfig.diff3: "Symptoms and signs",
-      questionConfig.diff4: "Human anatomy pictures",
+      questionConfig.diff2: "Diseases",
+      questionConfig.diff3: "Symptoms",
+      questionConfig.diff4: "Illustrations and Pictures",
     };
     return levelString;
   }

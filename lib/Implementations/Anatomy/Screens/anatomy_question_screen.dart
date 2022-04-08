@@ -66,21 +66,27 @@ class AnatomyQuestionScreenState extends State<AnatomyQuestionScreen>
       4,
     );
     Widget optionsRows = widget.createOptionRows(
-        setStateCallback, widget.goToNextGameScreenCallBack(context));
+        setStateCallback, widget.goToNextGameScreenCallBack(context),
+        widgetBetweenImageAndOptionRows: SizedBox(
+          height: screenDimensions.dimen(10),
+        ));
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         AnatomyLevelHeader(
           questionText: "",
           disableHintBtn:
-          widget.quizQuestionManager.hintDisabledPossibleAnswers.isNotEmpty,
+              widget.quizQuestionManager.hintDisabledPossibleAnswers.isNotEmpty,
           hintButtonOnClick: () {
             widget.quizQuestionManager.onHintButtonClick(setStateCallback);
           },
           availableHints: widget.gameContext.amountAvailableHints,
         ),
+        const Spacer(),
         questionContainer,
-        optionsRows
+        const Spacer(),
+        optionsRows,
+        SizedBox(height: screenDimensions.dimen(5))
       ],
     );
   }

@@ -1,5 +1,6 @@
+import 'dart:collection';
+
 import 'package:collection/src/iterable_extensions.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/category_difficulty.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
@@ -12,6 +13,9 @@ import 'package:flutter_app_quiz_game/Lib/Extensions/map_extension.dart';
 
 class AnatomyQuestionCollectorService extends QuestionCollectorService<
     AnatomyAllQuestions, AnatomyGameQuestionConfig> {
+  final Map<CategoryDifficulty, int> _totalNrOfQuestionsForCategoryDifficulty =
+      HashMap();
+
   static final AnatomyQuestionCollectorService singleton =
       AnatomyQuestionCollectorService.internal();
 
@@ -20,6 +24,37 @@ class AnatomyQuestionCollectorService extends QuestionCollectorService<
   }
 
   AnatomyQuestionCollectorService.internal();
+
+  Map<CategoryDifficulty, int> get totalNrOfQuestionsForCategoryDifficulty {
+    if (_totalNrOfQuestionsForCategoryDifficulty.isEmpty) {
+      initTotalQuestions();
+    }
+    return _totalNrOfQuestionsForCategoryDifficulty;
+  }
+
+  void initTotalQuestions() {
+    AnatomyGameQuestionConfig questionConfig = AnatomyGameQuestionConfig();
+    for (QuestionCategory cat in questionConfig.categories) {
+      for (QuestionDifficulty diff in questionConfig.difficulties) {
+        int nrOfQuestions = 0;
+        if (diff == questionConfig.diff0 || diff == questionConfig.diff4) {
+          nrOfQuestions = allQuestions
+                  .get<CategoryDifficulty, List<Question>>(
+                      CategoryDifficulty(cat, questionConfig.diff0))
+                  ?.length ??
+              0;
+        } else {
+          nrOfQuestions = allQuestions
+                  .get<CategoryDifficulty, List<Question>>(
+                      CategoryDifficulty(cat, diff))
+                  ?.length ??
+              0;
+        }
+        _totalNrOfQuestionsForCategoryDifficulty.putIfAbsent(
+            CategoryDifficulty(cat, diff), () => nrOfQuestions);
+      }
+    }
+  }
 
   List<Question> getAllQuestionsForCategoryAndDifficulty(
       QuestionCategory category, QuestionDifficulty difficulty) {
@@ -39,8 +74,12 @@ class AnatomyQuestionCollectorService extends QuestionCollectorService<
       result = allQuestions
           .get<CategoryDifficulty, List<Question>>(
               CategoryDifficulty(category, difficulty))!
-          .map((e) => Question(e.index, e.difficulty, e.category,
-              _processRawStringForDependentQuestionWith_Cat0_Options(e, true, true)))
+          .map((e) => Question(
+              e.index,
+              e.difficulty,
+              e.category,
+              _processRawStringForDependentQuestionWith_Cat0_Options(
+                  e, true, true)))
           .toList();
     }
     //
@@ -64,8 +103,12 @@ class AnatomyQuestionCollectorService extends QuestionCollectorService<
       result = allQuestions
           .get<CategoryDifficulty, List<Question>>(
               CategoryDifficulty(category, gameQuestionConfig.diff0))!
-          .map((e) => Question(e.index, difficulty, e.category,
-              _processRawStringForDependentQuestionWith_Cat0_Options(e, false, false)))
+          .map((e) => Question(
+              e.index,
+              difficulty,
+              e.category,
+              _processRawStringForDependentQuestionWith_Cat0_Options(
+                  e, false, false)))
           .toList();
     }
     return result

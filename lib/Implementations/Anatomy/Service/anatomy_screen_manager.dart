@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_app_quiz_game/Game/Game/campaign_level.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
+import 'package:flutter_app_quiz_game/Game/Question/Model/question_config.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
 import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/ImageClick/image_click_question_category_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/Anatomy/Questions/anatomy_game_context.dart';
@@ -38,12 +39,21 @@ class AnatomyScreenManagerState extends State<AnatomyScreenManager>
     return showScreen(widget.currentScreen);
   }
 
+  @override
+  StandardScreen getScreenAfterGameOver(QuestionConfig questionConfig) {
+    return _createAnatomyLevelsScreen(questionConfig.categories.first);
+  }
+
   void showLevelsScreen(QuestionCategory category) {
-    setCurrentScreenState(AnatomyLevelsScreen(
+    setCurrentScreenState(_createAnatomyLevelsScreen(category));
+  }
+
+  AnatomyLevelsScreen _createAnatomyLevelsScreen(QuestionCategory category) {
+    return AnatomyLevelsScreen(
       this,
       key: UniqueKey(),
       category: category,
-    ));
+    );
   }
 
   @override

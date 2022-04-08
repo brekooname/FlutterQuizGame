@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_app_quiz_game/Game/Game/campaign_level.dart';
 import 'package:flutter_app_quiz_game/Game/Game/game_context.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
+import 'package:flutter_app_quiz_game/Game/Question/Model/question_config.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/standard_screen.dart';
 
@@ -60,6 +61,10 @@ mixin GameScreenManagerState<TGameContext extends GameContext> {
         : Container();
   }
 
+  StandardScreen getScreenAfterGameOver(QuestionConfig questionConfig) {
+    return createMainScreen();
+  }
+
   StandardScreen _getScreen(QuestionDifficulty difficulty,
       QuestionCategory? category, TGameContext gameContext) {
     debugPrint("get screen for config " +
@@ -67,7 +72,7 @@ mixin GameScreenManagerState<TGameContext extends GameContext> {
         " " +
         (category?.name ?? "no category"));
     if (category == null) {
-      return createMainScreen();
+      return getScreenAfterGameOver(gameContext.questionConfig);
     } else {
       return getScreenForConfig(gameContext, difficulty, category);
     }

@@ -11,7 +11,6 @@ import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
 import '../quiz_question_manager.dart';
 
-
 mixin QuizOptionsGameScreen<TQuizQuestionManager extends QuizQuestionManager> {
   final ScreenDimensionsService _screenDimensions = ScreenDimensionsService();
   final ImageService _imageService = ImageService();
@@ -22,8 +21,8 @@ mixin QuizOptionsGameScreen<TQuizQuestionManager extends QuizQuestionManager> {
   bool? _zoomableImage;
   ButtonSkinConfig? _buttonSkinConfig;
 
-  void initQuizOptionsScreen(
-      TQuizQuestionManager quizQuestionManager, QuestionInfo currentQuestionInfo,
+  void initQuizOptionsScreen(TQuizQuestionManager quizQuestionManager,
+      QuestionInfo currentQuestionInfo,
       {ButtonSkinConfig? buttonSkinConfig,
       ButtonSkinConfig? multipleCorrectAnswersButtonSkinConfig,
       Image? questionImage,
@@ -40,7 +39,8 @@ mixin QuizOptionsGameScreen<TQuizQuestionManager extends QuizQuestionManager> {
   }
 
   Widget createOptionRows(
-      VoidCallback refreshSetState, VoidCallback goToNextScreenAfterPress) {
+      VoidCallback refreshSetState, VoidCallback goToNextScreenAfterPress,
+      {Widget? widgetBetweenImageAndOptionRows}) {
     List<Row> answerRows = [];
     int answersOnRow = 2;
     List<Widget> answerBtns = [];
@@ -72,6 +72,7 @@ mixin QuizOptionsGameScreen<TQuizQuestionManager extends QuizQuestionManager> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         _createImageContainer(_currentQuestionInfo.question),
+        widgetBetweenImageAndOptionRows ?? Container(),
         btnContainer
       ],
     );

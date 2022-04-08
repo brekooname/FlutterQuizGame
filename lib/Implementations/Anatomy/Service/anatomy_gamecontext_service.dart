@@ -21,8 +21,9 @@ class AnatomyGameContextService {
     var gameContext = GameContextService()
         .createGameContextWithHintsAndQuestions(
             MyApp.isExtraContentLocked ? 8 : 3,
-            MyApp.appId.gameConfig.questionCollectorService
-                .getAllQuestions(categories: [campaignLevel.categories.first]));
+            MyApp.appId.gameConfig.questionCollectorService.getAllQuestions(
+                categories: [campaignLevel.categories.first],
+                difficulties: [campaignLevel.difficulty]));
     var anatomyGameContext = AnatomyGameContext(gameContext);
     return anatomyGameContext;
   }
