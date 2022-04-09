@@ -3,6 +3,7 @@ import 'package:flutter_app_quiz_game/Game/Game/campaign_level.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_config.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
+import 'package:flutter_app_quiz_game/Game/Question/Model/question_info_status.dart';
 import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/ImageClick/image_click_question_category_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/Anatomy/Questions/anatomy_game_context.dart';
 import 'package:flutter_app_quiz_game/Implementations/Anatomy/Screens/anatomy_image_click_screen.dart';
@@ -54,6 +55,15 @@ class AnatomyScreenManagerState extends State<AnatomyScreenManager>
       key: UniqueKey(),
       category: category,
     );
+  }
+
+  @override
+  void showNextGameScreen(CampaignLevel campaignLevel, AnatomyGameContext gameContext) {
+    gameContext.gameUser
+        .getAllQuestions([QuestionInfoStatus.lost]).forEach((element) {
+      gameContext.gameUser.resetQuestion(element);
+    });
+    super.showNextGameScreen(campaignLevel, gameContext);
   }
 
   @override

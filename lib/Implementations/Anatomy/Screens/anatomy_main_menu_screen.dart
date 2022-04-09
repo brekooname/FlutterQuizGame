@@ -5,6 +5,7 @@ import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.da
 import 'package:flutter_app_quiz_game/Implementations/Anatomy/Components/anatomy_component_creator_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/Anatomy/Constants/anatomy_game_question_config.dart';
 import 'package:flutter_app_quiz_game/Implementations/Anatomy/Questions/AllContent/anatomy_question_collector_service.dart';
+import 'package:flutter_app_quiz_game/Implementations/Anatomy/Service/anatomy_local_storage.dart';
 import 'package:flutter_app_quiz_game/Implementations/Anatomy/Service/anatomy_screen_manager.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/button_skin_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/floating_button.dart';
@@ -26,6 +27,7 @@ class AnatomyMainMenuScreen extends StandardScreen<AnatomyScreenManagerState> {
       AnatomyComponentCreatorService();
   final AnatomyQuestionCollectorService _anatomyQuestionCollectorService =
       AnatomyQuestionCollectorService();
+  final AnatomyLocalStorage _anatomyLocalStorage = AnatomyLocalStorage();
 
   AnatomyMainMenuScreen(AnatomyScreenManagerState gameScreenManagerState,
       {Key? key})
@@ -103,7 +105,7 @@ class AnatomyMainMenuScreenState extends State<AnatomyMainMenuScreen>
             iconName: "btn_settings",
             myPopupToDisplay: SettingsPopup(
               resetContent: () {
-                // widget.anatomyLocalStorage.clearAll();
+                widget._anatomyLocalStorage.clearAll();
               },
             ),
           ),
@@ -121,7 +123,8 @@ class AnatomyMainMenuScreenState extends State<AnatomyMainMenuScreen>
         maxHeight: btnSize.height,
         maxWidth: screenDimensions.dimen(55));
 
-    int totalWonQuestions = 36;
+    int totalWonQuestions =
+        widget._anatomyLocalStorage.getWonQuestionsForCat(category).length;
     int totalQuestionsLevel = difficulties
         .map((diff) =>
             widget._anatomyQuestionCollectorService
@@ -149,13 +152,15 @@ class AnatomyMainMenuScreenState extends State<AnatomyMainMenuScreen>
               totalWonQuestions, totalQuestionsLevel, btnSize.width),
         ]);
 
+    var allQuestionsAnswered = totalWonQuestions == totalQuestionsLevel;
     MyButton lvlBtn = MyButton(
       textMaxLines: 4,
       width: btnSize.width,
       customContent: customContent,
       size: btnSize,
       buttonSkinConfig: ButtonSkinConfig(
-          backgroundColor: totalWonQuestions == totalQuestionsLevel
+          borderColor: allQuestionsAnswered ? Colors.green : Colors.white,
+          backgroundColor: allQuestionsAnswered
               ? Colors.green.shade200
               : Colors.blue.shade300),
       onClick: () {

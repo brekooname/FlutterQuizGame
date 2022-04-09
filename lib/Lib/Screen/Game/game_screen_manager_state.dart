@@ -15,6 +15,13 @@ mixin GameScreenManagerState<TGameContext extends GameContext> {
   @protected
   void setCurrentScreenState(StandardScreen statefulWidget);
 
+  @protected
+  TGameContext createGameContext(CampaignLevel campaignLevel);
+
+  @protected
+  GameScreen getScreenForConfig(TGameContext gameContext,
+      QuestionDifficulty difficulty, QuestionCategory category);
+
   bool goBack(StandardScreen standardScreen);
 
   void showMainScreen() {
@@ -39,13 +46,6 @@ mixin GameScreenManagerState<TGameContext extends GameContext> {
       QuestionCategory? category, TGameContext gameContext) {
     setCurrentScreenState(_getScreen(difficulty, category, gameContext));
   }
-
-  @protected
-  TGameContext createGameContext(CampaignLevel campaignLevel);
-
-  @protected
-  GameScreen getScreenForConfig(TGameContext gameContext,
-      QuestionDifficulty difficulty, QuestionCategory category);
 
   @protected
   Widget showScreen(StandardScreen? currentScreen) {

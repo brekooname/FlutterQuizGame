@@ -65,12 +65,12 @@ class HistoryGameQuestionScreenState extends State<HistoryGameQuestionScreen>
 
   @override
   Widget build(BuildContext context) {
-    debugPrint("build question");
     HistoryGameLevelHeader header = createHeader();
+    var historyGameQuestionConfig = HistoryGameQuestionConfig();
     Widget questionContainer = createQuestionTextContainer(
       widget.currentQuestionInfo.question,
-      widget.category == HistoryGameQuestionConfig().cat0 ? 1 : 2,
-      widget.category == HistoryGameQuestionConfig().cat3 ? 4 : 2,
+      widget.category == historyGameQuestionConfig.cat0 ? 1 : 2,
+      widget.category == historyGameQuestionConfig.cat3 ? 4 : 2,
     );
     Widget optionsRows = widget.createOptionRows(
         setStateCallback, widget.goToNextGameScreenCallBack(context));

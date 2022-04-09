@@ -59,15 +59,10 @@ class AnatomyLevelsScreenState extends State<AnatomyLevelsScreen>
   Widget build(BuildContext context) {
     List<Widget> levelBtns = [];
     var btnPadding = screenDimensions.dimen(1);
-    var btnWidth = screenDimensions.dimen(45);
-    var btnHeight = screenDimensions.dimen(49);
-    var btnSize = Size(btnWidth, btnHeight);
+    var btnSize = Size(_getLevelBtnWidth(), screenDimensions.dimen(49));
     var questionConfig = AnatomyGameQuestionConfig();
     var campaignLevelService = AnatomyCampaignLevelService();
-    Map<QuestionDifficulty, String> levelIcon = _getLevelIcons(questionConfig);
     Map<QuestionDifficulty, Color> levelColor = _getLevelColors(questionConfig);
-    Map<QuestionDifficulty, String> levelString =
-        _getLevelLabels(questionConfig);
     for (QuestionDifficulty diff in questionConfig.difficulties) {
       CampaignLevel campaignLevel;
       try {
@@ -77,9 +72,22 @@ class AnatomyLevelsScreenState extends State<AnatomyLevelsScreen>
         //No campaign level found for cat/diff combination
         continue;
       }
+      var totalWonQuestions = widget._anatomyLocalStorage
+          .getWonQuestionsForDiffAndCat(diff, widget.category)
+          .length;
+      var totalQuestionsLevel = widget._anatomyQuestionCollectorService
+              .totalNrOfQuestionsForCategoryDifficulty
+              .get<CategoryDifficulty, int>(
+                  CategoryDifficulty(widget.category, diff)) ??
+          0;
+      var allQuestionsAnswered = totalWonQuestions == totalQuestionsLevel;
+      var btnColor = allQuestionsAnswered
+          ? Colors.green.shade200
+          : levelColor.get<QuestionDifficulty, Color>(diff)!;
       levelBtns.add(MyButton(
         buttonSkinConfig: ButtonSkinConfig(
-            backgroundColor: levelColor.get<QuestionDifficulty, Color>(diff)!),
+            borderColor: allQuestionsAnswered ? Colors.green : Colors.white,
+            backgroundColor: btnColor),
         buttonAllPadding: btnPadding,
         size: btnSize,
         onClick: () {
@@ -87,7 +95,7 @@ class AnatomyLevelsScreenState extends State<AnatomyLevelsScreen>
               .showNewGameScreen(campaignLevel);
         },
         customContent: _createLevelBtnCustomContent(
-            levelIcon, diff, btnWidth, levelString),
+            diff, questionConfig, totalWonQuestions, totalQuestionsLevel),
       ));
     }
     List<Widget> levelRows = [];
@@ -132,14 +140,17 @@ class AnatomyLevelsScreenState extends State<AnatomyLevelsScreen>
         ));
   }
 
+  double _getLevelBtnWidth() => screenDimensions.dimen(45);
+
   Column _createLevelBtnCustomContent(
-      Map<QuestionDifficulty, String> levelIcon,
       QuestionDifficulty diff,
-      double btnWidth,
-      Map<QuestionDifficulty, String> levelString) {
+      AnatomyGameQuestionConfig questionConfig,
+      int totalWonQuestions,
+      int totalQuestionsLevel) {
     var margin = SizedBox(
       height: screenDimensions.dimen(1.5),
     );
+    var btnWidth = _getLevelBtnWidth();
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -148,23 +159,19 @@ class AnatomyLevelsScreenState extends State<AnatomyLevelsScreen>
         MyText(
             width: btnWidth / 1.05,
             fontSize: FontConfig.getCustomFontSize(1),
-            text: levelString.get<QuestionDifficulty, String>(diff)!,
+            text: _getLevelLabels(questionConfig)
+                .get<QuestionDifficulty, String>(diff)!,
             maxLines: 2),
         margin,
         imageService.getSpecificImage(
-            imageName: levelIcon.get<QuestionDifficulty, String>(diff)!,
+            imageName: _getLevelIcons(questionConfig)
+                .get<QuestionDifficulty, String>(diff)!,
             maxWidth: btnWidth / 2.2,
             module: "buttons",
             imageExtension: "png"),
         margin,
         widget._anatomyComponentCreatorService.createScoreMyText(
-            widget._anatomyLocalStorage.getTotalWonQuestions(diff),
-            widget._anatomyQuestionCollectorService
-                    .totalNrOfQuestionsForCategoryDifficulty
-                    .get<CategoryDifficulty, int>(
-                        CategoryDifficulty(widget.category, diff)) ??
-                0,
-            btnWidth),
+            totalWonQuestions, totalQuestionsLevel, btnWidth),
         margin,
       ],
     );
@@ -188,7 +195,7 @@ class AnatomyLevelsScreenState extends State<AnatomyLevelsScreen>
       questionConfig.diff0: Colors.blue.shade100,
       questionConfig.diff1: Colors.red.shade100,
       questionConfig.diff2: Colors.yellow.shade100,
-      questionConfig.diff3: Colors.green.shade100,
+      questionConfig.diff3: Colors.orange.shade100,
       questionConfig.diff4: Colors.purple.shade100,
     };
     return levelColor;

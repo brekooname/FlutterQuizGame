@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app_quiz_game/Game/Question/Model/category_difficulty.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
 import 'package:flutter_app_quiz_game/Implementations/Anatomy/Components/anatomy_level_header.dart';
 import 'package:flutter_app_quiz_game/Implementations/Anatomy/Constants/anatomy_campaign_level_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/Anatomy/Constants/anatomy_game_question_config.dart';
+import 'package:flutter_app_quiz_game/Implementations/Anatomy/Questions/AllContent/anatomy_question_collector_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/Anatomy/Questions/anatomy_game_context.dart';
 import 'package:flutter_app_quiz_game/Implementations/Anatomy/Service/anatomy_local_storage.dart';
 import 'package:flutter_app_quiz_game/Implementations/Anatomy/Service/anatomy_screen_manager.dart';
+import 'package:flutter_app_quiz_game/Lib/Color/color_util.dart';
+import 'package:flutter_app_quiz_game/Lib/Extensions/map_extension.dart';
 import 'package:flutter_app_quiz_game/Lib/Localization/label_mixin.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/Options/quiz_options_game_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen.dart';
@@ -17,6 +21,9 @@ import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
 class AnatomyQuestionScreen
     extends GameScreen<AnatomyGameContext, AnatomyScreenManagerState>
     with QuizOptionsGameScreen<QuizQuestionManager> {
+  final AnatomyQuestionCollectorService _anatomyQuestionCollectorService =
+      AnatomyQuestionCollectorService();
+
   AnatomyQuestionScreen(
     AnatomyScreenManagerState gameScreenManagerState, {
     Key? key,
@@ -58,6 +65,28 @@ class AnatomyQuestionScreen
 
 class AnatomyQuestionScreenState extends State<AnatomyQuestionScreen>
     with ScreenState, QuizQuestionContainer, LabelMixin {
+  late Image checkImg;
+  late Widget checkImgGrayscale;
+
+  @override
+  void initState() {
+    super.initState();
+    var checkImgDimen = screenDimensions.dimen(5);
+    checkImg = imageService.getSpecificImage(
+        maxWidth: checkImgDimen,
+        maxHeight: checkImgDimen,
+        imageName: "check",
+        imageExtension: "png",
+        module: "general");
+    checkImgGrayscale = ColorUtil.imageToGreyScale(checkImg);
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    precacheImage(checkImg.image, context);
+  }
+
   @override
   Widget build(BuildContext context) {
     Widget questionContainer = createQuestionTextContainer(
@@ -74,7 +103,16 @@ class AnatomyQuestionScreenState extends State<AnatomyQuestionScreen>
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         AnatomyLevelHeader(
-          questionText: "",
+          checkImg: checkImg,
+          checkImgGrayscale: checkImgGrayscale,
+          totalWonQuestions: widget.quizQuestionManager.quizGameLocalStorage
+              .getWonQuestionsForDiffAndCat(widget.difficulty, widget.category)
+              .length,
+          totalQuestionsLevel: widget._anatomyQuestionCollectorService
+                  .totalNrOfQuestionsForCategoryDifficulty
+                  .get<CategoryDifficulty, int>(
+                      CategoryDifficulty(widget.category, widget.difficulty)) ??
+              0,
           disableHintBtn:
               widget.quizQuestionManager.hintDisabledPossibleAnswers.isNotEmpty,
           hintButtonOnClick: () {

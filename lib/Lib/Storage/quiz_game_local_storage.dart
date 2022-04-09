@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
@@ -9,6 +10,13 @@ import '../../main.dart';
 abstract class QuizGameLocalStorage extends MyLocalStorage {
   List<QuestionKey> getWonQuestionsForDiff(QuestionDifficulty diff) {
     return decodeStringQuestionList(_getWonQuestionsFieldName(diff));
+  }
+
+  List<QuestionKey> getWonQuestionsForCat(QuestionCategory cat) {
+    return MyApp.appId.gameConfig.gameQuestionConfig.difficulties
+        .map((diff) => getWonQuestionsForDiffAndCat(diff, cat))
+        .expand((i) => i)
+        .toList();
   }
 
   List<QuestionKey> getWonQuestionsForDiffAndCat(
@@ -55,6 +63,7 @@ abstract class QuizGameLocalStorage extends MyLocalStorage {
   }
 
   void setWonQuestion(Question question) {
+    debugPrint("WONNN");
     List<QuestionKey> list = getWonQuestionsForDiff(question.difficulty);
     updateList(question.difficulty, question.category, question.index, list,
         _getWonQuestionsFieldName(question.difficulty));

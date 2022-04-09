@@ -17,23 +17,34 @@ mixin ImageClickScreen<TQuizQuestionManager extends QuizQuestionManager> {
   final ImageService _imageService = ImageService();
   late TQuizQuestionManager quizQuestionManager;
   late QuestionInfo _currentQuestionInfo;
+  late Image imageToClick;
+  late Size _rawImageToClickSize;
 
   void initImageClickScreen(TQuizQuestionManager quizQuestionManager,
-      QuestionInfo currentQuestionInfo) {
-    this.quizQuestionManager = quizQuestionManager;
+      QuestionInfo currentQuestionInfo, Size rawImageToClickSize) {
     _currentQuestionInfo = currentQuestionInfo;
+    this.quizQuestionManager = quizQuestionManager;
+    _rawImageToClickSize = rawImageToClickSize;
+  }
+
+  void initImageToClick() {
+    var heightGreaterThanWidth = _isImageHeightGreaterThanWidth();
+    imageToClick = _imageService.getSpecificImage(
+      imageName: _currentQuestionInfo.question.category.index.toString(),
+      imageExtension: "png",
+      module: "categories",
+      maxWidth: heightGreaterThanWidth ? null : _getMaxImgWidth(),
+      maxHeight: heightGreaterThanWidth ? _getMaxImgHeight() : null,
+    );
   }
 
   Widget createImageClickContainer(
-    Size rawImageSize,
     VoidCallback refreshSetState,
     VoidCallback goToNextScreenAfterPress,
   ) {
-    Image categoryImage = _getImageToClick(rawImageSize);
-    Size imageToClickSize = _getImageToClickAdjustedForScreenSize(rawImageSize);
-    var imageAlignment = _isImageToClickRectangular(rawImageSize)
-        ? Alignment.center
-        : Alignment.centerLeft;
+    Size imageToClickSize = _getImageToClickAdjustedForScreenSize();
+    var imageAlignment =
+        _isImageToClickRectangular() ? Alignment.center : Alignment.centerLeft;
 
     List<Widget> stackChildren = [];
 
@@ -41,7 +52,7 @@ mixin ImageClickScreen<TQuizQuestionManager extends QuizQuestionManager> {
     stackChildren.add(SizedBox(
         height: imageToClickSize.height,
         width: imageToClickSize.width,
-        child: _createImageContainer(imageToClickSize, categoryImage)));
+        child: _createImageContainer()));
 
     //Add answer pointers
     stackChildren.add(Container(
@@ -50,7 +61,7 @@ mixin ImageClickScreen<TQuizQuestionManager extends QuizQuestionManager> {
         alignment: imageAlignment,
         child: Stack(
           children: _createAnswerPointers(
-              rawImageSize, refreshSetState, goToNextScreenAfterPress),
+              _rawImageToClickSize, refreshSetState, goToNextScreenAfterPress),
         )));
 
     return Expanded(
@@ -81,13 +92,13 @@ mixin ImageClickScreen<TQuizQuestionManager extends QuizQuestionManager> {
   ) {
     return Stack(alignment: Alignment.centerLeft, children: [
       Positioned(
-          top: _calculateY(rawImageSize, imageClickInfo),
-          left: _calculateX(rawImageSize, imageClickInfo),
+          top: _calculateY(imageClickInfo),
+          left: _calculateX(imageClickInfo),
           child: Stack(alignment: Alignment.center, children: [
             Row(children: [
               Stack(alignment: Alignment.centerLeft, children: [
-                _createAnswerPointerLine(rawImageSize, imageClickInfo),
-                _createAnswerPointerPoint(rawImageSize),
+                _createAnswerPointerLine(imageClickInfo),
+                _createAnswerPointerPoint(),
               ]),
               _createAnswerButton(
                   imageClickInfo, refreshSetState, goToNextScreenAfterPress),
@@ -97,38 +108,35 @@ mixin ImageClickScreen<TQuizQuestionManager extends QuizQuestionManager> {
     ]);
   }
 
-  double _calculateY(Size rawImageSize, ImageClickInfo imageClickInfo) {
-    Size adjustedImageSize =
-        _getImageToClickAdjustedForScreenSize(rawImageSize);
-    return _calculateOriginY(rawImageSize) +
+  double _calculateY(ImageClickInfo imageClickInfo) {
+    Size adjustedImageSize = _getImageToClickAdjustedForScreenSize();
+    return _calculateOriginY() +
         (100 - imageClickInfo.y) / 100 * adjustedImageSize.height;
   }
 
-  double _calculateX(Size rawImageSize, ImageClickInfo imageClickInfo) {
-    Size adjustedImageSize =
-        _getImageToClickAdjustedForScreenSize(rawImageSize);
+  double _calculateX(ImageClickInfo imageClickInfo) {
+    Size adjustedImageSize = _getImageToClickAdjustedForScreenSize();
     bool isPressedAnswerEqualsButton =
         _pressedAnswerEqualsButton(imageClickInfo);
     var showAnswerLabelOnLeftSide = isPressedAnswerEqualsButton &&
             imageClickInfo.x > 50 &&
-            _isImageToClickRectangular(rawImageSize)
+            _isImageToClickRectangular()
         ? _getAnswerLabelWidth(imageClickInfo) / 1.5
         : 0;
-    return _calculateOriginX(rawImageSize) +
+    return _calculateOriginX() +
         imageClickInfo.x / 100 * adjustedImageSize.width -
         showAnswerLabelOnLeftSide;
   }
 
-  double _calculateOriginX(Size rawImageSize) {
-    return _isImageToClickRectangular(rawImageSize)
+  double _calculateOriginX() {
+    return _isImageToClickRectangular()
         ? _getAnswerBtnSideDimen() / 2 + _getAnswerBtnBorderWidth()
         : -_getPointerDimen() / 2 + _getAnswerBtnBorderWidth();
   }
 
-  double _calculateOriginY(Size rawImageSize) {
-    Size adjustedImageSize =
-        _getImageToClickAdjustedForScreenSize(rawImageSize);
-    return _isImageToClickRectangular(rawImageSize)
+  double _calculateOriginY() {
+    Size adjustedImageSize = _getImageToClickAdjustedForScreenSize();
+    return _isImageToClickRectangular()
         ? (_getImageContainerHeight() - adjustedImageSize.height) / 2 -
             _getAnswerBtnSideDimen() / 2
         : -_getPointerDimen() / 2 +
@@ -147,9 +155,9 @@ mixin ImageClickScreen<TQuizQuestionManager extends QuizQuestionManager> {
 
   double _getAnswerBtnSideDimen() => _screenDimensions.dimen(10);
 
-  Widget _createAnswerPointerPoint(Size rawImageSize) {
+  Widget _createAnswerPointerPoint() {
     var pointerDimen = _getPointerDimen();
-    var answerPointer = _isImageToClickRectangular(rawImageSize)
+    var answerPointer = _isImageToClickRectangular()
         ? Container()
         : SizedBox(
             width: pointerDimen,
@@ -171,9 +179,8 @@ mixin ImageClickScreen<TQuizQuestionManager extends QuizQuestionManager> {
     return answerPointer;
   }
 
-  Widget _createAnswerPointerLine(
-      Size rawImageSize, ImageClickInfo imageClickInfo) {
-    return _isImageToClickRectangular(rawImageSize)
+  Widget _createAnswerPointerLine(ImageClickInfo imageClickInfo) {
+    return _isImageToClickRectangular()
         ? Container()
         : Padding(
             padding: EdgeInsets.only(left: _screenDimensions.w(1)),
@@ -266,24 +273,24 @@ mixin ImageClickScreen<TQuizQuestionManager extends QuizQuestionManager> {
     return answerLabel;
   }
 
-  Size _getImageToClickAdjustedForScreenSize(Size rawImageSize) {
-    var heightGreaterThanWidth = _isImageHeightGreaterThanWidth(rawImageSize);
-    var maxImgHeight = _getMaxImgHeight(rawImageSize);
+  Size _getImageToClickAdjustedForScreenSize() {
+    var heightGreaterThanWidth = _isImageHeightGreaterThanWidth();
+    var maxImgHeight = _getMaxImgHeight();
     var maxImgWidth = _getMaxImgWidth();
     double imgHeight = heightGreaterThanWidth
         ? maxImgHeight
-        : _screenDimensions.getNewHeightForNewWidth(
-            maxImgWidth, rawImageSize.width, rawImageSize.height);
+        : _screenDimensions.getNewHeightForNewWidth(maxImgWidth,
+            _rawImageToClickSize.width, _rawImageToClickSize.height);
     double imgWidth = heightGreaterThanWidth
-        ? _screenDimensions.getNewWidthForNewHeight(
-            maxImgHeight, rawImageSize.width, rawImageSize.height)
+        ? _screenDimensions.getNewWidthForNewHeight(maxImgHeight,
+            _rawImageToClickSize.width, _rawImageToClickSize.height)
         : maxImgWidth;
 
     return Size(imgWidth, imgHeight);
   }
 
-  bool _isImageToClickRectangular(Size rawImageSize) =>
-      rawImageSize.height / rawImageSize.width < 1.2;
+  bool _isImageToClickRectangular() =>
+      _rawImageToClickSize.height / _rawImageToClickSize.width < 1.2;
 
   double _getImageContainerHeight() => _screenDimensions.h(85);
 
@@ -302,41 +309,31 @@ mixin ImageClickScreen<TQuizQuestionManager extends QuizQuestionManager> {
     return quizAnswerOptionsCoordinates;
   }
 
-  GestureDetector _createImageContainer(
-      Size imageToClickSize, Image categoryImage) {
+  GestureDetector _createImageContainer() {
     return GestureDetector(
         onTapCancel: () {},
         onTapUp: (TapUpDetails details) {},
         onTapDown: (TapDownDetails details) {
           debugPrint("x " +
-              (details.localPosition.dx / imageToClickSize.width * 100)
+              (details.localPosition.dx / _rawImageToClickSize.width * 100)
                   .toString() +
               " y " +
-              (100 - details.localPosition.dy / imageToClickSize.height * 100)
+              (100 -
+                      details.localPosition.dy /
+                          _rawImageToClickSize.height *
+                          100)
                   .toString());
         },
-        child: categoryImage);
+        child: imageToClick);
   }
 
-  Image _getImageToClick(Size rawImageSize) {
-    var heightGreaterThanWidth = _isImageHeightGreaterThanWidth(rawImageSize);
-    Image categoryImage = _imageService.getSpecificImage(
-      imageName: _currentQuestionInfo.question.category.index.toString(),
-      imageExtension: "png",
-      module: "categories",
-      maxWidth: heightGreaterThanWidth ? null : _getMaxImgWidth(),
-      maxHeight: heightGreaterThanWidth ? _getMaxImgHeight(rawImageSize) : null,
-    );
-    return categoryImage;
-  }
-
-  bool _isImageHeightGreaterThanWidth(Size rawImageSize) =>
-      rawImageSize.width < rawImageSize.height;
+  bool _isImageHeightGreaterThanWidth() =>
+      _rawImageToClickSize.width < _rawImageToClickSize.height;
 
   double _getMaxImgWidth() => _screenDimensions.w(80);
 
-  double _getMaxImgHeight(Size rawImageSize) => _screenDimensions
-      .h((rawImageSize.height / rawImageSize.width < 2) ? 65 : 80);
+  double _getMaxImgHeight() => _screenDimensions.h(
+      (_rawImageToClickSize.height / _rawImageToClickSize.width < 2) ? 65 : 80);
 
   double _getAnswerLabelWidth(ImageClickInfo imageClickInfo) =>
       imageClickInfo.arrowWidth + _getAnswerBtnSideDimen();
