@@ -63,7 +63,6 @@ abstract class QuizGameLocalStorage extends MyLocalStorage {
   }
 
   void setWonQuestion(Question question) {
-    debugPrint("WONNN");
     List<QuestionKey> list = getWonQuestionsForDiff(question.difficulty);
     updateList(question.difficulty, question.category, question.index, list,
         _getWonQuestionsFieldName(question.difficulty));

@@ -9,7 +9,6 @@ import 'package:flutter_app_quiz_game/Implementations/Anatomy/Questions/AllConte
 import 'package:flutter_app_quiz_game/Implementations/Anatomy/Questions/anatomy_game_context.dart';
 import 'package:flutter_app_quiz_game/Implementations/Anatomy/Service/anatomy_local_storage.dart';
 import 'package:flutter_app_quiz_game/Implementations/Anatomy/Service/anatomy_screen_manager.dart';
-import 'package:flutter_app_quiz_game/Lib/Color/color_util.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/map_extension.dart';
 import 'package:flutter_app_quiz_game/Lib/Localization/label_mixin.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/ImageClick/image_click_screen.dart';
@@ -58,36 +57,23 @@ class AnatomyImageClickScreen
 
 class AnatomyImageClickScreenState extends State<AnatomyImageClickScreen>
     with ScreenState, LabelMixin {
-  late Image checkImg;
-  late Widget checkImgGrayscale;
 
   @override
   void initState() {
     super.initState();
     widget.initImageToClick();
-    var checkImgDimen = screenDimensions.dimen(5);
-    checkImg = imageService.getSpecificImage(
-        maxWidth: checkImgDimen,
-        maxHeight: checkImgDimen,
-        imageName: "check",
-        imageExtension: "png",
-        module: "general");
-    checkImgGrayscale = ColorUtil.imageToGreyScale(checkImg);
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     precacheImage(widget.imageToClick.image, context);
-    precacheImage(checkImg.image, context);
   }
 
   @override
   Widget build(BuildContext context) {
     var mainColumn = Column(children: <Widget>[
       AnatomyLevelHeader(
-        checkImg: checkImg,
-        checkImgGrayscale: checkImgGrayscale,
         totalWonQuestions: widget.quizQuestionManager.quizGameLocalStorage
             .getWonQuestionsForDiffAndCat(widget.difficulty, widget.category)
             .length,

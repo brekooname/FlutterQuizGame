@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/hint_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_back_button.dart';
-import 'package:flutter_app_quiz_game/Lib/Color/color_util.dart';
-import 'package:flutter_app_quiz_game/Lib/Image/image_service.dart';
+import 'package:flutter_app_quiz_game/Lib/Font/font_config.dart';
 import 'package:flutter_app_quiz_game/Lib/ScreenDimensions/screen_dimensions_service.dart';
 
 import '../../../main.dart';
@@ -12,8 +11,6 @@ class AnatomyLevelHeader extends StatelessWidget {
   int availableHints;
   int totalWonQuestions;
   int totalQuestionsLevel;
-  Image checkImg;
-  Widget checkImgGrayscale;
   VoidCallback hintButtonOnClick;
   bool disableHintBtn;
 
@@ -21,8 +18,6 @@ class AnatomyLevelHeader extends StatelessWidget {
       {Key? key,
       required this.totalWonQuestions,
       required this.totalQuestionsLevel,
-      required this.checkImg,
-      required this.checkImgGrayscale,
       this.disableHintBtn = false,
       required this.hintButtonOnClick,
       required this.availableHints})
@@ -43,8 +38,21 @@ class AnatomyLevelHeader extends StatelessWidget {
 
     List<Widget> checkImgList = [];
 
+    var checkContainerDimen = screenDimensions.dimen(6);
+    var checkContainerBorderRadius = FontConfig.standardBorderRadius / 2;
     for (int i = 0; i < totalQuestionsLevel; i++) {
-      checkImgList.add(i < totalWonQuestions ? checkImg : checkImgGrayscale);
+      checkImgList.add(Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.horizontal(
+              left: Radius.circular(i == 0 ? checkContainerBorderRadius : 0),
+              right: Radius.circular(i == totalQuestionsLevel - 1
+                  ? checkContainerBorderRadius
+                  : 0)),
+          color: i < totalWonQuestions ? Colors.green : Colors.grey.shade200,
+        ),
+        height: checkContainerDimen,
+        width: checkContainerDimen,
+      ));
     }
 
     var questionsCheckRow = Row(
@@ -65,7 +73,7 @@ class AnatomyLevelHeader extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 MyBackButton(),
-                SizedBox(width: screenDimensions.dimen(2)),
+                const Spacer(),
                 questionsCheckRow,
                 const Spacer(),
                 hintBtn,

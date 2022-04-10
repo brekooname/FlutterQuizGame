@@ -34,9 +34,6 @@ class AnatomyGameContextService {
           .contains(QuestionKey(q.category, q.difficulty, q.index));
     }).toList();
 
-    debugPrint(notWonQuestions.toString());
-    debugPrint(allQuestions.map((e) => e.index).toList().toString());
-
     var gameContext = GameContextService()
         .createGameContextWithHintsAndQuestions(
             MyApp.isExtraContentLocked ? 8 : 3,

@@ -59,11 +59,11 @@ class AnatomyScreenManagerState extends State<AnatomyScreenManager>
 
   @override
   void showNextGameScreen(CampaignLevel campaignLevel, AnatomyGameContext gameContext) {
-    gameContext.gameUser
-        .getAllQuestions([QuestionInfoStatus.lost]).forEach((element) {
-      gameContext.gameUser.resetQuestion(element);
-    });
-    super.showNextGameScreen(campaignLevel, gameContext);
+      gameContext.gameUser
+          .getAllQuestions([QuestionInfoStatus.lost]).forEach((element) {
+        gameContext.gameUser.resetQuestion(element);
+      });
+      super.showNextGameScreen(campaignLevel, gameContext);
   }
 
   @override

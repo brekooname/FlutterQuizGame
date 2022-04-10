@@ -38,6 +38,7 @@ mixin GameScreenManagerState<TGameContext extends GameContext> {
 
   void showNextGameScreen(
       CampaignLevel campaignLevel, TGameContext gameContext) {
+    debugPrint("gggggxxx");
     showGameScreenWithConfig(campaignLevel.difficulty,
         gameContext.gameUser.getNotPlayedRandomQuestionCategory(), gameContext);
   }
@@ -45,6 +46,7 @@ mixin GameScreenManagerState<TGameContext extends GameContext> {
   void showGameScreenWithConfig(QuestionDifficulty difficulty,
       QuestionCategory? category, TGameContext gameContext) {
     setCurrentScreenState(_getScreen(difficulty, category, gameContext));
+    debugPrint("ggggg1");
   }
 
   @protected

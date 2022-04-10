@@ -1,6 +1,8 @@
 import 'dart:collection';
 import 'dart:ui';
 
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_app_quiz_game/Game/Game/game_context.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_info.dart';
@@ -63,18 +65,23 @@ class QuizQuestionManager<TGameContext extends GameContext,
 
   void _processGameFinished(
       Question question, VoidCallback goToNextScreenAfterPress) {
-    var questionService = question.questionService;
-    if (isGameFinished()) {
-      Future.delayed(
-          durationGoToNextScreen, () => goToNextScreenAfterPress.call());
-      if (isGameFinishedSuccessful()) {
-        gameContext.gameUser.setWonQuestion(_currentQuestionInfo);
-        quizGameLocalStorage.setWonQuestion(question);
-      } else if (questionService.isGameFinishedFailedWithOptionList(
-          correctAnswersForQuestion, _currentQuestionInfo.pressedAnswers)) {
-        gameContext.gameUser.setLostQuestion(_currentQuestionInfo);
-        quizGameLocalStorage.setLostQuestion(question);
+    try {
+      var questionService = question.questionService;
+      if (isGameFinished()) {
+        Future.delayed(
+            durationGoToNextScreen, () => goToNextScreenAfterPress.call());
+        if (isGameFinishedSuccessful()) {
+          gameContext.gameUser.setWonQuestion(_currentQuestionInfo);
+          quizGameLocalStorage.setWonQuestion(question);
+        } else if (questionService.isGameFinishedFailedWithOptionList(
+            correctAnswersForQuestion, _currentQuestionInfo.pressedAnswers)) {
+          gameContext.gameUser.setLostQuestion(_currentQuestionInfo);
+          quizGameLocalStorage.setLostQuestion(question);
+        }
       }
+    } on PlatformException catch (err) {
+      debugPrint("errrrorrorororoor");
+      int i = 0;
     }
   }
 
