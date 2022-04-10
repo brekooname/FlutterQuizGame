@@ -9,7 +9,9 @@ import 'package:flutter_app_quiz_game/Implementations/Anatomy/Questions/AllConte
 import 'package:flutter_app_quiz_game/Implementations/Anatomy/Questions/anatomy_game_context.dart';
 import 'package:flutter_app_quiz_game/Implementations/Anatomy/Service/anatomy_local_storage.dart';
 import 'package:flutter_app_quiz_game/Implementations/Anatomy/Service/anatomy_screen_manager.dart';
+import 'package:flutter_app_quiz_game/Lib/Button/button_skin_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/map_extension.dart';
+import 'package:flutter_app_quiz_game/Lib/Font/font_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Localization/label_mixin.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/Options/quiz_options_game_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen.dart';
@@ -64,14 +66,11 @@ class AnatomyQuestionScreen
 
 class AnatomyQuestionScreenState extends State<AnatomyQuestionScreen>
     with ScreenState, QuizQuestionContainer, LabelMixin {
-
   @override
   Widget build(BuildContext context) {
     Widget questionContainer = createQuestionTextContainer(
-      widget.currentQuestionInfo.question,
-      1,
-      4,
-    );
+        widget.currentQuestionInfo.question, 1, 4,
+        questionContainerDecoration: createQuestionContainerDecoration());
     Widget optionsRows = widget.createOptionRows(
         setStateCallback, widget.goToNextGameScreenCallBack(context),
         widgetBetweenImageAndOptionRows: SizedBox(
@@ -107,5 +106,11 @@ class AnatomyQuestionScreenState extends State<AnatomyQuestionScreen>
 
   void setStateCallback() {
     setState(() {});
+  }
+
+  static BoxDecoration createQuestionContainerDecoration() {
+    return BoxDecoration(
+        color: Colors.green.shade100.withAlpha(150),
+        borderRadius: BorderRadius.circular(FontConfig.standardBorderRadius));
   }
 }

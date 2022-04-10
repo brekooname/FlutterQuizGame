@@ -55,11 +55,21 @@ class AnatomyLevelHeader extends StatelessWidget {
       ));
     }
 
-    var questionsCheckRow = Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: checkImgList,
-    );
+    var questionsCheckRow = Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(checkContainerBorderRadius),
+          boxShadow: [
+            BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                spreadRadius: FontConfig.standardShadowRadius,
+                blurRadius: FontConfig.standardShadowRadius)
+          ],
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: checkImgList,
+        ));
 
     return Container(
         height: screenDimensions.dimen(16),

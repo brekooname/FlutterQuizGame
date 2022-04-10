@@ -13,8 +13,11 @@ import 'package:flutter_app_quiz_game/Lib/Extensions/map_extension.dart';
 import 'package:flutter_app_quiz_game/Lib/Localization/label_mixin.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/ImageClick/image_click_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen.dart';
+import 'package:flutter_app_quiz_game/Lib/Screen/Game/quiz_question_container.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/quiz_question_manager.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
+
+import 'anatomy_question_screen.dart';
 
 class AnatomyImageClickScreen
     extends GameScreen<AnatomyGameContext, AnatomyScreenManagerState>
@@ -56,8 +59,7 @@ class AnatomyImageClickScreen
 }
 
 class AnatomyImageClickScreenState extends State<AnatomyImageClickScreen>
-    with ScreenState, LabelMixin {
-
+    with ScreenState, LabelMixin, QuizQuestionContainer {
   @override
   void initState() {
     super.initState();
@@ -88,6 +90,13 @@ class AnatomyImageClickScreenState extends State<AnatomyImageClickScreen>
           widget.quizQuestionManager.onHintButtonClick(setStateCallback);
         },
         availableHints: widget.gameContext.amountAvailableHints,
+      ),
+      createQuestionTextContainer(
+        widget.currentQuestionInfo.question,
+        1,
+        1,
+        questionContainerDecoration:
+            AnatomyQuestionScreenState.createQuestionContainerDecoration(),
       ),
       widget.createImageClickContainer(() {
         setState(() {});

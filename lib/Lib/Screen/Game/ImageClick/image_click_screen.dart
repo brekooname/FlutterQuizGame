@@ -119,7 +119,7 @@ mixin ImageClickScreen<TQuizQuestionManager extends QuizQuestionManager> {
     bool isPressedAnswerEqualsButton =
         _pressedAnswerEqualsButton(imageClickInfo);
     var showAnswerLabelOnLeftSide = isPressedAnswerEqualsButton &&
-            imageClickInfo.x > 50 &&
+            imageClickInfo.x > _getImageContainerHeightPercent() &&
             _isImageToClickRectangular()
         ? _getAnswerLabelWidth(imageClickInfo) / 1.5
         : 0;
@@ -292,7 +292,10 @@ mixin ImageClickScreen<TQuizQuestionManager extends QuizQuestionManager> {
   bool _isImageToClickRectangular() =>
       _rawImageToClickSize.height / _rawImageToClickSize.width < 1.2;
 
-  double _getImageContainerHeight() => _screenDimensions.h(85);
+  double _getImageContainerHeight() =>
+      _screenDimensions.h(_getImageContainerHeightPercent());
+
+  double _getImageContainerHeightPercent() => 80;
 
   double _getImageContainerWidth() => _screenDimensions.dimen(100);
 
@@ -333,7 +336,9 @@ mixin ImageClickScreen<TQuizQuestionManager extends QuizQuestionManager> {
   double _getMaxImgWidth() => _screenDimensions.w(80);
 
   double _getMaxImgHeight() => _screenDimensions.h(
-      (_rawImageToClickSize.height / _rawImageToClickSize.width < 2) ? 65 : 80);
+      (_rawImageToClickSize.height / _rawImageToClickSize.width < 2)
+          ? 65
+          : _getImageContainerHeightPercent());
 
   double _getAnswerLabelWidth(ImageClickInfo imageClickInfo) =>
       imageClickInfo.arrowWidth + _getAnswerBtnSideDimen();
