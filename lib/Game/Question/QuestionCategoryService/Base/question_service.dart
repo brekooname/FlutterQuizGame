@@ -53,10 +53,13 @@ abstract class QuestionService {
 
   List<String> createWrongAnswerList(QuestionInfo questionInfo,
       List<String> allAnswers, List<String> correctAnswers) {
-    List<String> newAllAnswersList = allAnswers;
+    List<String> newAllAnswersList =
+        allAnswers.map((e) => e.toLowerCase()).toList();
     newAllAnswersList.shuffle();
-    newAllAnswersList.removeAll(questionInfo.pressedAnswers);
-    newAllAnswersList.removeAll(correctAnswers);
+    newAllAnswersList.removeAll(
+        questionInfo.pressedAnswers.map((e) => e.toLowerCase()).toList());
+    newAllAnswersList
+        .removeAll(correctAnswers.map((e) => e.toLowerCase()).toList());
     return newAllAnswersList;
   }
 
@@ -73,8 +76,9 @@ abstract class QuestionService {
 
   List<String> getUnpressedCorrectAnswers(
       Question question, Set<String> pressedAnswers) {
-    List<String> answers = getCorrectAnswers(question);
-    answers.removeAll(pressedAnswers);
+    List<String> answers =
+        getCorrectAnswers(question).map((e) => e.toLowerCase()).toList();
+    answers.removeAll(pressedAnswers.map((e) => e.toLowerCase()).toList());
     return answers;
   }
 
@@ -105,7 +109,10 @@ abstract class QuestionService {
       List<String> correctAnswers, Iterable<String> pressedAnswers) {
     return !isGameFinishedFailedWithOptionList(
             correctAnswers, pressedAnswers) &&
-        pressedAnswers.toSet().containsAll(correctAnswers);
+        pressedAnswers
+            .map((e) => e.toLowerCase())
+            .toSet()
+            .containsAll(correctAnswers.map((e) => e.toLowerCase()).toSet());
   }
 
   bool isGameFinishedFailed(

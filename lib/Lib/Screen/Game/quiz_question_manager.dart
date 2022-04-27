@@ -65,23 +65,18 @@ class QuizQuestionManager<TGameContext extends GameContext,
 
   void _processGameFinished(
       Question question, VoidCallback goToNextScreenAfterPress) {
-    try {
-      var questionService = question.questionService;
-      if (isGameFinished()) {
-        Future.delayed(
-            durationGoToNextScreen, () => goToNextScreenAfterPress.call());
-        if (isGameFinishedSuccessful()) {
-          gameContext.gameUser.setWonQuestion(_currentQuestionInfo);
-          quizGameLocalStorage.setWonQuestion(question);
-        } else if (questionService.isGameFinishedFailedWithOptionList(
-            correctAnswersForQuestion, _currentQuestionInfo.pressedAnswers)) {
-          gameContext.gameUser.setLostQuestion(_currentQuestionInfo);
-          quizGameLocalStorage.setLostQuestion(question);
-        }
+    var questionService = question.questionService;
+    if (isGameFinished()) {
+      Future.delayed(
+          durationGoToNextScreen, () => goToNextScreenAfterPress.call());
+      if (isGameFinishedSuccessful()) {
+        gameContext.gameUser.setWonQuestion(_currentQuestionInfo);
+        quizGameLocalStorage.setWonQuestion(question);
+      } else if (questionService.isGameFinishedFailedWithOptionList(
+          correctAnswersForQuestion, _currentQuestionInfo.pressedAnswers)) {
+        gameContext.gameUser.setLostQuestion(_currentQuestionInfo);
+        quizGameLocalStorage.setLostQuestion(question);
       }
-    } on PlatformException catch (err) {
-      debugPrint("errrrorrorororoor");
-      int i = 0;
     }
   }
 
@@ -102,9 +97,10 @@ class QuizQuestionManager<TGameContext extends GameContext,
   }
 
   bool isGameFinished() {
-    return _currentQuestionInfo.question.questionService
+    var gameFinishedWithOptionList = _currentQuestionInfo.question.questionService
         .isGameFinishedWithOptionList(
             correctAnswersForQuestion, _currentQuestionInfo.pressedAnswers);
+    return gameFinishedWithOptionList;
   }
 
   void onHintButtonClick(VoidCallback refreshSetState) {

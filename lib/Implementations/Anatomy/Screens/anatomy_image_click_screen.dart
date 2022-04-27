@@ -48,6 +48,7 @@ class AnatomyImageClickScreen
             currentQuestionInfo.question.category)!,
         imageContainerHeightPercent:
             category == AnatomyGameQuestionConfig().cat11 ? 70 : null);
+    debugPrint("q " + currentQuestionInfo.question.rawString);
   }
 
   @override

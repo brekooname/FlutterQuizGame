@@ -20,4 +20,10 @@ class AnatomyLocalStorage extends QuizGameLocalStorage {
   String _getLastPressedMainMenuCategoryFieldName() {
     return localStorageName + "_LastPressedMainMenuCategory";
   }
+
+  @override
+  void clearAll() {
+    super.clearAll();
+    setLastPressedMainMenuCategory(0);
+  }
 }
