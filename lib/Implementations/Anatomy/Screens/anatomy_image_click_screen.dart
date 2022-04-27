@@ -45,7 +45,9 @@ class AnatomyImageClickScreen
             gameContext, currentQuestionInfo, AnatomyLocalStorage()),
         currentQuestionInfo,
         gameQuestionConfig.categoryDiagramImgDimen.get<QuestionCategory, Size>(
-            currentQuestionInfo.question.category)!);
+            currentQuestionInfo.question.category)!,
+        imageContainerHeightPercent:
+            category == AnatomyGameQuestionConfig().cat11 ? 70 : null);
   }
 
   @override
@@ -93,7 +95,7 @@ class AnatomyImageClickScreenState extends State<AnatomyImageClickScreen>
       ),
       createQuestionTextContainer(
         widget.currentQuestionInfo.question,
-        1,
+        2,
         1,
         questionContainerDecoration:
             AnatomyQuestionScreenState.createQuestionContainerDecoration(),

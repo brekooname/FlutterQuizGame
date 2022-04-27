@@ -84,6 +84,12 @@ class AnatomyMainMenuScreenState extends State<AnatomyMainMenuScreen>
       },
     );
 
+    Future.delayed(
+        Duration.zero,
+        () => itemScrollController.scrollTo(
+            index: widget._anatomyLocalStorage.getLastPressedMainMenuCategory(),
+            duration: const Duration(milliseconds: 500)));
+
     var mainColumn = Container(
         alignment: Alignment.center,
         child: Column(
@@ -164,6 +170,8 @@ class AnatomyMainMenuScreenState extends State<AnatomyMainMenuScreen>
               ? Colors.green.shade200
               : Colors.blue.shade300),
       onClick: () {
+        widget._anatomyLocalStorage
+            .setLastPressedMainMenuCategory(category.index);
         widget.gameScreenManagerState.showLevelsScreen(category);
       },
     );

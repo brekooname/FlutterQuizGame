@@ -19,9 +19,12 @@ mixin ImageClickScreen<TQuizQuestionManager extends QuizQuestionManager> {
   late QuestionInfo _currentQuestionInfo;
   late Image imageToClick;
   late Size _rawImageToClickSize;
+  late double _imageContainerHeightPercent;
 
   void initImageClickScreen(TQuizQuestionManager quizQuestionManager,
-      QuestionInfo currentQuestionInfo, Size rawImageToClickSize) {
+      QuestionInfo currentQuestionInfo, Size rawImageToClickSize,
+      {double? imageContainerHeightPercent}) {
+    _imageContainerHeightPercent = imageContainerHeightPercent ?? 75;
     _currentQuestionInfo = currentQuestionInfo;
     this.quizQuestionManager = quizQuestionManager;
     _rawImageToClickSize = rawImageToClickSize;
@@ -60,12 +63,14 @@ mixin ImageClickScreen<TQuizQuestionManager extends QuizQuestionManager> {
         height: _getImageContainerHeight(),
         alignment: imageAlignment,
         child: Stack(
+          clipBehavior: Clip.none,
           children: _createAnswerPointers(
               _rawImageToClickSize, refreshSetState, goToNextScreenAfterPress),
         )));
 
     return Expanded(
         child: Stack(
+      clipBehavior: Clip.none,
       alignment: imageAlignment,
       children: stackChildren,
     ));
@@ -90,22 +95,31 @@ mixin ImageClickScreen<TQuizQuestionManager extends QuizQuestionManager> {
     VoidCallback refreshSetState,
     VoidCallback goToNextScreenAfterPress,
   ) {
-    return Stack(alignment: Alignment.centerLeft, children: [
-      Positioned(
-          top: _calculateY(imageClickInfo),
-          left: _calculateX(imageClickInfo),
-          child: Stack(alignment: Alignment.center, children: [
-            Row(children: [
-              Stack(alignment: Alignment.centerLeft, children: [
-                _createAnswerPointerLine(imageClickInfo),
-                _createAnswerPointerPoint(),
-              ]),
-              _createAnswerButton(
-                  imageClickInfo, refreshSetState, goToNextScreenAfterPress),
-            ]),
-            _createAnswerLabel(imageClickInfo)
-          ]))
-    ]);
+    return Stack(
+        alignment: Alignment.centerLeft,
+        clipBehavior: Clip.none,
+        children: [
+          Positioned(
+              top: _calculateY(imageClickInfo),
+              left: _calculateX(imageClickInfo),
+              child: Stack(
+                  alignment: Alignment.center,
+                  clipBehavior: Clip.none,
+                  children: [
+                    Row(children: [
+                      Stack(
+                          alignment: Alignment.centerLeft,
+                          clipBehavior: Clip.none,
+                          children: [
+                            _createAnswerPointerLine(imageClickInfo),
+                            _createAnswerPointerPoint(),
+                          ]),
+                      _createAnswerButton(imageClickInfo, refreshSetState,
+                          goToNextScreenAfterPress),
+                    ]),
+                    _createAnswerLabel(imageClickInfo)
+                  ]))
+        ]);
   }
 
   double _calculateY(ImageClickInfo imageClickInfo) {
@@ -119,7 +133,7 @@ mixin ImageClickScreen<TQuizQuestionManager extends QuizQuestionManager> {
     bool isPressedAnswerEqualsButton =
         _pressedAnswerEqualsButton(imageClickInfo);
     var showAnswerLabelOnLeftSide = isPressedAnswerEqualsButton &&
-            imageClickInfo.x > _getImageContainerHeightPercent() &&
+            imageClickInfo.x > _imageContainerHeightPercent &&
             _isImageToClickRectangular()
         ? _getAnswerLabelWidth(imageClickInfo) / 1.5
         : 0;
@@ -251,7 +265,6 @@ mixin ImageClickScreen<TQuizQuestionManager extends QuizQuestionManager> {
     var answerLabel = Visibility(
         visible: _pressedAnswerEqualsButton(imageClickInfo),
         child: Container(
-            clipBehavior: Clip.none,
             width: answerLabelWidth,
             decoration: BoxDecoration(
               color: (quizQuestionManager.isAnswerCorrectInOptionsList(
@@ -293,9 +306,7 @@ mixin ImageClickScreen<TQuizQuestionManager extends QuizQuestionManager> {
       _rawImageToClickSize.height / _rawImageToClickSize.width < 1.2;
 
   double _getImageContainerHeight() =>
-      _screenDimensions.h(_getImageContainerHeightPercent());
-
-  double _getImageContainerHeightPercent() => 80;
+      _screenDimensions.h(_imageContainerHeightPercent);
 
   double _getImageContainerWidth() => _screenDimensions.dimen(100);
 
@@ -338,7 +349,7 @@ mixin ImageClickScreen<TQuizQuestionManager extends QuizQuestionManager> {
   double _getMaxImgHeight() => _screenDimensions.h(
       (_rawImageToClickSize.height / _rawImageToClickSize.width < 2)
           ? 65
-          : _getImageContainerHeightPercent());
+          : _imageContainerHeightPercent);
 
   double _getAnswerLabelWidth(ImageClickInfo imageClickInfo) =>
       imageClickInfo.arrowWidth + _getAnswerBtnSideDimen();

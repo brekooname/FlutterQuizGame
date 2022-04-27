@@ -8,4 +8,16 @@ class AnatomyLocalStorage extends QuizGameLocalStorage {
   }
 
   AnatomyLocalStorage.internal();
+
+  int getLastPressedMainMenuCategory() {
+    return localStorage.getInt(_getLastPressedMainMenuCategoryFieldName()) ?? 0;
+  }
+
+  void setLastPressedMainMenuCategory(int value) {
+    localStorage.setInt(_getLastPressedMainMenuCategoryFieldName(), value);
+  }
+
+  String _getLastPressedMainMenuCategoryFieldName() {
+    return localStorageName + "_LastPressedMainMenuCategory";
+  }
 }

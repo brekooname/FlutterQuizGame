@@ -47,7 +47,7 @@ class ImageClickQuestionParser extends QuestionParser {
         arrowWidth: screenDimensions.dimen(30),
         answerLabel: getQuestionToBeDisplayed(question));
     if (s.length == 3) {
-      imageClickInfo.arrowWidth = double.parse(s[2]);
+      imageClickInfo.arrowWidth = screenDimensions.dimen(double.parse(s[2]));
     }
     return imageClickInfo;
   }

@@ -56,7 +56,7 @@ class GeoQuizQuestionScreen
     initQuizOptionsScreen(createQuizQuestionManager(), currentQuestionInfo,
         questionImage: getQuestionImage(category),
         zoomableImage: GeoQuizGameQuestionConfig().cat9 == category,
-        buttonSkinConfig: ButtonSkinConfig(
+        optionsButtonSkinConfig: ButtonSkinConfig(
             backgroundGradient: RadialGradient(radius: 4, colors: [
           ColorUtil.colorDarken(Colors.lightBlue.shade100, 0.05),
           Colors.lightBlue.shade600,

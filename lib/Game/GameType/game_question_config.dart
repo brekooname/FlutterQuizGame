@@ -23,17 +23,23 @@ abstract class GameQuestionConfig {
                         category: category,
                         difficulty: null,
                         prefixCode: prefixCode),
-                    ""));
+                    prefixLabelForCode.getOrDefault<
+                            QuestionCategoryDifficultyWithPrefixCode, String>(
+                        QuestionCategoryDifficultyWithPrefixCode(
+                            category: null,
+                            difficulty: difficulty,
+                            prefixCode: prefixCode),
+                        "")));
   }
 }
 
 class QuestionCategoryDifficultyWithPrefixCode {
-  QuestionCategory category;
+  QuestionCategory? category;
   QuestionDifficulty? difficulty;
   int prefixCode;
 
   QuestionCategoryDifficultyWithPrefixCode(
-      {required this.category, this.difficulty, required this.prefixCode});
+      {this.category, this.difficulty, required this.prefixCode});
 
   @override
   bool operator ==(Object other) =>

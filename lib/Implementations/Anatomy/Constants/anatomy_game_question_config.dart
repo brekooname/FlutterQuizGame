@@ -6,8 +6,9 @@ import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
 import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/DependentAnswers/dependent_answers_question_category_service.dart';
 import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/ImageClick/image_click_question_category_service.dart';
+import 'package:flutter_app_quiz_game/Lib/Localization/label_mixin.dart';
 
-class AnatomyGameQuestionConfig extends GameQuestionConfig {
+class AnatomyGameQuestionConfig extends GameQuestionConfig with LabelMixin {
   late QuestionCategory cat0;
   late QuestionCategory cat1;
   late QuestionCategory cat2;
@@ -49,55 +50,56 @@ class AnatomyGameQuestionConfig extends GameQuestionConfig {
       singleton.diff3: DependentAnswersCategoryQuestionService(),
       singleton.diff4: DependentAnswersCategoryQuestionService(),
     };
+    var staticLabel = LabelMixin.staticLabel;
     singleton.categories = [
       singleton.cat0 = QuestionCategory(
           index: 0,
           questionCategoryServiceMap: questionCategoryServiceMap,
-          categoryLabel: "Organs"),
+          categoryLabel: staticLabel.l_organs),
       singleton.cat1 = QuestionCategory(
           index: 1,
           questionCategoryServiceMap: questionCategoryServiceMap,
-          categoryLabel: "Bones"),
+          categoryLabel: staticLabel.l_bones),
       singleton.cat2 = QuestionCategory(
           index: 2,
           questionCategoryServiceMap: questionCategoryServiceMap,
-          categoryLabel: "Muscles"),
+          categoryLabel: staticLabel.l_muscles),
       singleton.cat3 = QuestionCategory(
           index: 3,
           questionCategoryServiceMap: questionCategoryServiceMap,
-          categoryLabel: "Circulatory system"),
+          categoryLabel: staticLabel.l_circulatory_system),
       singleton.cat4 = QuestionCategory(
           index: 4,
           questionCategoryServiceMap: questionCategoryServiceMap,
-          categoryLabel: "Nervous system"),
+          categoryLabel: staticLabel.l_nervous_system),
       singleton.cat5 = QuestionCategory(
           index: 5,
           questionCategoryServiceMap: questionCategoryServiceMap,
-          categoryLabel: "Mouth"),
+          categoryLabel: staticLabel.l_mouth),
       singleton.cat6 = QuestionCategory(
           index: 6,
           questionCategoryServiceMap: questionCategoryServiceMap,
-          categoryLabel: "Brain"),
+          categoryLabel: staticLabel.l_brain),
       singleton.cat7 = QuestionCategory(
           index: 7,
           questionCategoryServiceMap: questionCategoryServiceMap,
-          categoryLabel: "Ear"),
+          categoryLabel: staticLabel.l_ear),
       singleton.cat8 = QuestionCategory(
           index: 8,
           questionCategoryServiceMap: questionCategoryServiceMap,
-          categoryLabel: "Heart"),
+          categoryLabel: staticLabel.l_heart),
       singleton.cat9 = QuestionCategory(
           index: 9,
           questionCategoryServiceMap: questionCategoryServiceMap,
-          categoryLabel: "Eye"),
+          categoryLabel: staticLabel.l_eye),
       singleton.cat10 = QuestionCategory(
           index: 10,
           questionCategoryServiceMap: questionCategoryServiceMap,
-          categoryLabel: "Cell"),
+          categoryLabel: staticLabel.l_cell),
       singleton.cat11 = QuestionCategory(
           index: 11,
           questionCategoryServiceMap: questionCategoryServiceMap,
-          categoryLabel: "Chemical elements of the human body"),
+          categoryLabel: staticLabel.l_chemical_elements_of_the_human_body),
     ];
     singleton.categoryDiagramImgDimen = {
       singleton.cat0: const Size(252, 580),
@@ -122,22 +124,40 @@ class AnatomyGameQuestionConfig extends GameQuestionConfig {
   Map<QuestionCategoryDifficultyWithPrefixCode, String> get prefixLabelForCode {
     Map<QuestionCategoryDifficultyWithPrefixCode, String> res = HashMap();
 
+    res.putIfAbsent(
+        QuestionCategoryDifficultyWithPrefixCode(
+            category: cat11, difficulty: diff0, prefixCode: 0),
+        () => label
+            .l_what_percentage_of_this_chemical_element_is_found_in_the_human_body);
+    res.putIfAbsent(
+        QuestionCategoryDifficultyWithPrefixCode(
+            difficulty: diff1, prefixCode: 0),
+        () => label.l_general_knowledge);
+    res.putIfAbsent(
+        QuestionCategoryDifficultyWithPrefixCode(
+            difficulty: diff2, prefixCode: 0),
+        () => label.l_diseases);
+    res.putIfAbsent(
+        QuestionCategoryDifficultyWithPrefixCode(
+            difficulty: diff3, prefixCode: 0),
+        () => label.l_symptoms);
+
     //
     //Trivia images
     //
     Map<QuestionCategory, String> prefixes = {
-      cat0: "Identify this organ",
-      cat1: "Identify this bone",
-      cat2: "Identify this muscle",
-      cat3: "Identify this part of the circulatory system",
-      cat4: "Identify this part of the nervous system",
-      cat5: "Identify this part of the the mouth",
-      cat6: "Identify this part of the brain",
-      cat7: "Identify this part of the ear",
-      cat8: "Identify this part of the heart",
-      cat9: "Identify this part of the eye",
-      cat10: "Identify this part of the cell",
-      cat11: "Identify this chemical element",
+      cat0: label.l_identify_this_organ,
+      cat1: label.l_identify_this_bone,
+      cat2: label.l_identify_this_muscle,
+      cat3: label.l_identify_this_part_of_the_circulatory_system,
+      cat4: label.l_identify_this_part_of_the_nervous_system,
+      cat5: label.l_identify_this_part_of_the_the_mouth,
+      cat6: label.l_identify_this_part_of_the_brain,
+      cat7: label.l_identify_this_part_of_the_ear,
+      cat8: label.l_identify_this_part_of_the_heart,
+      cat9: label.l_identify_this_part_of_the_eye,
+      cat10: label.l_identify_this_part_of_the_cell,
+      cat11: label.l_identify_this_chemical_element,
     };
     for (MapEntry<QuestionCategory, String> e in prefixes.entries) {
       res.putIfAbsent(

@@ -19,11 +19,11 @@ mixin QuizOptionsGameScreen<TQuizQuestionManager extends QuizQuestionManager> {
 
   Image? _questionImage;
   bool? _zoomableImage;
-  ButtonSkinConfig? _buttonSkinConfig;
+  ButtonSkinConfig? _optionsButtonSkinConfig;
 
   void initQuizOptionsScreen(TQuizQuestionManager quizQuestionManager,
       QuestionInfo currentQuestionInfo,
-      {ButtonSkinConfig? buttonSkinConfig,
+      {ButtonSkinConfig? optionsButtonSkinConfig,
       ButtonSkinConfig? multipleCorrectAnswersButtonSkinConfig,
       Image? questionImage,
       bool? zoomableImage}) {
@@ -32,10 +32,10 @@ mixin QuizOptionsGameScreen<TQuizQuestionManager extends QuizQuestionManager> {
     _questionImage = questionImage;
     _currentQuestionInfo = currentQuestionInfo;
 
-    _buttonSkinConfig =
+    _optionsButtonSkinConfig =
         this.quizQuestionManager.correctAnswersForQuestion.length == 1
-            ? buttonSkinConfig
-            : multipleCorrectAnswersButtonSkinConfig ?? buttonSkinConfig;
+            ? optionsButtonSkinConfig
+            : multipleCorrectAnswersButtonSkinConfig ?? optionsButtonSkinConfig;
   }
 
   Widget createOptionRows(
@@ -60,7 +60,7 @@ mixin QuizOptionsGameScreen<TQuizQuestionManager extends QuizQuestionManager> {
       children: answerBtns,
     ));
     var btnSize = _getAnswerBtnSize();
-    Widget btnContainer = Container(
+    Widget btnContainer = SizedBox(
         height: (btnSize.height + getAnswerButtonPaddingBetween() * 2) *
             (quizQuestionManager.possibleAnswers.length / 2).ceil(),
         child: ListView(
@@ -152,7 +152,7 @@ mixin QuizOptionsGameScreen<TQuizQuestionManager extends QuizQuestionManager> {
               quizQuestionManager.onClickAnswerOptionBtn(question,
                   answerBtnText, refreshSetState, goToNextScreenAfterPress);
             },
-            buttonSkinConfig: _buttonSkinConfig ?? _defaultButtonSkinConfig(),
+            buttonSkinConfig: _optionsButtonSkinConfig ?? _defaultButtonSkinConfig(),
             customContent: MyText(
               text: answerBtnText,
               maxLines: quizQuestionManager.getValueBasedOnNrOfPossibleAnswers(

@@ -11,7 +11,9 @@ mixin QuizQuestionContainer {
   Widget createQuestionTextContainer(
       Question? question, int questionPrefixMaxLines, int questionTextMaxLines,
       {double? questionContainerHeight,
-      BoxDecoration? questionContainerDecoration}) {
+      double? marginBetweenPrefixAndQuestion,
+      BoxDecoration? questionContainerDecoration,
+      double? questionFontSize}) {
     var vertMargin = _screenDimensions.dimen(1);
     var horizMargin = _screenDimensions.dimen(1);
     var questionPrefixToBeDisplayed = question?.questionPrefixToBeDisplayed;
@@ -44,7 +46,7 @@ mixin QuizQuestionContainer {
         width: _screenDimensions.dimen(95),
         maxLines: questionTextMaxLines,
         text: questionToBeDisplayed ?? "",
-        fontSize: FontConfig.getCustomFontSize(1.1),
+        fontSize: questionFontSize ?? FontConfig.getCustomFontSize(1.1),
       );
       questionText = Padding(
           padding: EdgeInsets.fromLTRB(horizMargin, 0, horizMargin, 0),
@@ -56,6 +58,9 @@ mixin QuizQuestionContainer {
       children: [
         SizedBox(height: vertMargin),
         questionPrefix,
+        SizedBox(
+          height: marginBetweenPrefixAndQuestion ?? 0,
+        ),
         questionText,
         SizedBox(height: vertMargin)
       ],

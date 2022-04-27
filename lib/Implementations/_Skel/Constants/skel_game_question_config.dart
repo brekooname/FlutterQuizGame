@@ -4,8 +4,9 @@ import 'package:flutter_app_quiz_game/Game/GameType/game_question_config.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
 import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/DependentAnswers/dependent_answers_question_category_service.dart';
+import 'package:flutter_app_quiz_game/Lib/Localization/label_mixin.dart';
 
-class SkelGameQuestionConfig extends GameQuestionConfig {
+class SkelGameQuestionConfig extends GameQuestionConfig with LabelMixin {
   late QuestionCategory cat0;
 
   late QuestionDifficulty diff0;

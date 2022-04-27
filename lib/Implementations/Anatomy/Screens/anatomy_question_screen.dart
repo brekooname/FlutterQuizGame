@@ -19,11 +19,14 @@ import 'package:flutter_app_quiz_game/Lib/Screen/Game/quiz_question_container.da
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/quiz_question_manager.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
 
+import 'anatomy_levels_screen.dart';
+
 class AnatomyQuestionScreen
     extends GameScreen<AnatomyGameContext, AnatomyScreenManagerState>
     with QuizOptionsGameScreen<QuizQuestionManager> {
   final AnatomyQuestionCollectorService _anatomyQuestionCollectorService =
       AnatomyQuestionCollectorService();
+  late Image backgroundImage;
 
   AnatomyQuestionScreen(
     AnatomyScreenManagerState gameScreenManagerState, {
@@ -47,12 +50,16 @@ class AnatomyQuestionScreen
             imageName: currentQuestionInfo.question.index.toString())
         : null;
     initQuizOptionsScreen(
-      QuizQuestionManager<AnatomyGameContext, AnatomyLocalStorage>(
-          gameContext, currentQuestionInfo, AnatomyLocalStorage()),
-      currentQuestionInfo,
-      questionImage: questionImg,
-      zoomableImage: true,
-    );
+        QuizQuestionManager<AnatomyGameContext, AnatomyLocalStorage>(
+          gameContext,
+          currentQuestionInfo,
+          AnatomyLocalStorage(),
+        ),
+        currentQuestionInfo,
+        questionImage: questionImg,
+        zoomableImage: true,
+        optionsButtonSkinConfig:
+            ButtonSkinConfig(backgroundColor: Colors.lightBlueAccent.shade100));
   }
 
   @override
@@ -67,41 +74,61 @@ class AnatomyQuestionScreen
 class AnatomyQuestionScreenState extends State<AnatomyQuestionScreen>
     with ScreenState, QuizQuestionContainer, LabelMixin {
   @override
+  void initState() {
+    widget.backgroundImage = imageService.getSpecificImage(
+        imageName: widget.category.index.toString() + "t",
+        module: "categories",
+        imageExtension: "png");
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     Widget questionContainer = createQuestionTextContainer(
         widget.currentQuestionInfo.question, 1, 4,
-        questionContainerDecoration: createQuestionContainerDecoration());
+        questionContainerDecoration: createQuestionContainerDecoration(),
+        questionFontSize: FontConfig.getCustomFontSize(1.25),
+        marginBetweenPrefixAndQuestion: screenDimensions.dimen(2));
     Widget optionsRows = widget.createOptionRows(
         setStateCallback, widget.goToNextGameScreenCallBack(context),
         widgetBetweenImageAndOptionRows: SizedBox(
           height: screenDimensions.dimen(10),
         ));
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        AnatomyLevelHeader(
-          totalWonQuestions: widget.quizQuestionManager.quizGameLocalStorage
-              .getWonQuestionsForDiffAndCat(widget.difficulty, widget.category)
-              .length,
-          totalQuestionsLevel: widget._anatomyQuestionCollectorService
-                  .totalNrOfQuestionsForCategoryDifficulty
-                  .get<CategoryDifficulty, int>(
-                      CategoryDifficulty(widget.category, widget.difficulty)) ??
-              0,
-          disableHintBtn:
-              widget.quizQuestionManager.hintDisabledPossibleAnswers.isNotEmpty,
-          hintButtonOnClick: () {
-            widget.quizQuestionManager.onHintButtonClick(setStateCallback);
-          },
-          availableHints: widget.gameContext.amountAvailableHints,
-        ),
-        const Spacer(),
-        questionContainer,
-        const Spacer(),
-        optionsRows,
-        SizedBox(height: screenDimensions.dimen(5))
-      ],
-    );
+    var decorationImage = widget.difficulty == AnatomyGameQuestionConfig().diff4
+        ? null
+        : DecorationImage(
+            repeat: ImageRepeat.noRepeat,
+            image: widget.backgroundImage.image,
+          );
+    return Container(
+        decoration: BoxDecoration(image: decorationImage),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            AnatomyLevelHeader(
+              totalWonQuestions: widget.quizQuestionManager.quizGameLocalStorage
+                  .getWonQuestionsForDiffAndCat(
+                      widget.difficulty, widget.category)
+                  .length,
+              totalQuestionsLevel: widget._anatomyQuestionCollectorService
+                      .totalNrOfQuestionsForCategoryDifficulty
+                      .get<CategoryDifficulty, int>(CategoryDifficulty(
+                          widget.category, widget.difficulty)) ??
+                  0,
+              disableHintBtn: widget
+                  .quizQuestionManager.hintDisabledPossibleAnswers.isNotEmpty,
+              hintButtonOnClick: () {
+                widget.quizQuestionManager.onHintButtonClick(setStateCallback);
+              },
+              availableHints: widget.gameContext.amountAvailableHints,
+            ),
+            const Spacer(),
+            questionContainer,
+            const Spacer(),
+            optionsRows,
+            SizedBox(height: screenDimensions.dimen(5))
+          ],
+        ));
   }
 
   void setStateCallback() {
@@ -110,7 +137,13 @@ class AnatomyQuestionScreenState extends State<AnatomyQuestionScreen>
 
   static BoxDecoration createQuestionContainerDecoration() {
     return BoxDecoration(
-        color: Colors.green.shade100.withAlpha(150),
-        borderRadius: BorderRadius.circular(FontConfig.standardBorderRadius));
+        color: Colors.green.shade100.withOpacity(0.8),
+        borderRadius: BorderRadius.circular(FontConfig.standardBorderRadius),
+        boxShadow: [
+          BoxShadow(
+              color: Colors.grey.withOpacity(0.2),
+              spreadRadius: FontConfig.standardShadowRadius,
+              blurRadius: FontConfig.standardShadowRadius)
+        ]);
   }
 }

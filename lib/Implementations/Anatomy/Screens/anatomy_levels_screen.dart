@@ -99,12 +99,29 @@ class AnatomyLevelsScreenState extends State<AnatomyLevelsScreen>
       ));
     }
     List<Widget> levelRows = [];
+    var myBackButton = MyBackButton(
+      buttonAllPadding: screenDimensions.dimen(1),
+    );
+    var backBtnWidth = myBackButton.buttonSize.width;
     levelRows.add(Row(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        MyBackButton(
-          buttonAllPadding: screenDimensions.dimen(1),
+        myBackButton,
+        const Spacer(),
+        MyText(
+          text: widget.category.categoryLabel!,
+          width: screenDimensions.dimen(98) - backBtnWidth * 2,
+          maxLines: 2,
+          fontConfig: FontConfig(
+              fontSize: FontConfig.getCustomFontSize(1.1),
+              fontColor: Colors.white,
+              borderWidth: FontConfig.standardBorderWidth * 1.2,
+              borderColor: Colors.black),
+        ),
+        const Spacer(),
+        SizedBox(
+          width: backBtnWidth,
         )
       ],
     ));
@@ -159,7 +176,7 @@ class AnatomyLevelsScreenState extends State<AnatomyLevelsScreen>
         MyText(
             width: btnWidth / 1.05,
             fontSize: FontConfig.getCustomFontSize(1),
-            text: _getLevelLabels(questionConfig)
+            text: getLevelLabels(questionConfig)
                 .get<QuestionDifficulty, String>(diff)!,
             maxLines: 2),
         margin,
@@ -177,14 +194,14 @@ class AnatomyLevelsScreenState extends State<AnatomyLevelsScreen>
     );
   }
 
-  Map<QuestionDifficulty, String> _getLevelLabels(
+  static Map<QuestionDifficulty, String> getLevelLabels(
       AnatomyGameQuestionConfig questionConfig) {
     Map<QuestionDifficulty, String> levelString = {
-      questionConfig.diff0: "Diagram",
-      questionConfig.diff1: "General knowledge",
-      questionConfig.diff2: "Diseases",
-      questionConfig.diff3: "Symptoms",
-      questionConfig.diff4: "Illustrations and Pictures",
+      questionConfig.diff0: LabelMixin.staticLabel.l_diagram,
+      questionConfig.diff1: LabelMixin.staticLabel.l_general_knowledge,
+      questionConfig.diff2: LabelMixin.staticLabel.l_diseases,
+      questionConfig.diff3: LabelMixin.staticLabel.l_symptoms,
+      questionConfig.diff4: LabelMixin.staticLabel.l_illustrations_and_pictures,
     };
     return levelString;
   }

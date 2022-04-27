@@ -53,7 +53,7 @@ class MyApp extends StatefulWidget {
       AnatomyCampaignLevelService().level_image_click;
 
   //
-  static Language webLanguage = Language.en;
+  static Language webLanguage = Language.ro;
   static bool webIsPro = true;
 
   // static bool webIsPro = true;
@@ -206,7 +206,7 @@ class MyAppState extends State<MyApp> {
       Future.delayed(const Duration(milliseconds: 100), () {
         (MyApp.gameScreenManager.currentScreen!.gameScreenManagerState
                 as AnatomyScreenManagerState)
-            .showLevelsScreen(AnatomyGameQuestionConfig().cat0);
+            .showLevelsScreen(AnatomyGameQuestionConfig().cat1);
       });
       ////
       //
