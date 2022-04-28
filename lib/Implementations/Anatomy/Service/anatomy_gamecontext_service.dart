@@ -5,6 +5,8 @@ import 'package:flutter_app_quiz_game/Implementations/Anatomy/Questions/anatomy_
 import 'package:flutter_app_quiz_game/Implementations/Anatomy/Service/anatomy_local_storage.dart';
 import 'package:flutter_app_quiz_game/Lib/Storage/quiz_game_local_storage.dart';
 
+import '../../../Game/Question/Model/question_category.dart';
+import '../../../Game/Question/Model/question_difficulty.dart';
 import '../../../main.dart';
 
 class AnatomyGameContextService {
@@ -36,9 +38,19 @@ class AnatomyGameContextService {
 
     var gameContext = GameContextService()
         .createGameContextWithHintsAndQuestions(
-            MyApp.isExtraContentLocked ? 8 : 3,
+            _getAmountAvailableHints(category, campaignLevel.difficulty),
             notWonQuestions.isEmpty ? allQuestions : notWonQuestions);
     var anatomyGameContext = AnatomyGameContext(gameContext);
     return anatomyGameContext;
+  }
+
+  int _getAmountAvailableHints(QuestionCategory cat, QuestionDifficulty diff) {
+    int currentHints =
+        _anatomyLocalStorage.getRemainingHintsForCatDiff(cat, diff);
+    if (currentHints == -1) {
+      _anatomyLocalStorage.setRemainingHintsForCatDiff(
+          cat, diff, MyApp.isExtraContentLocked ? 8 : 3);
+    }
+    return _anatomyLocalStorage.getRemainingHintsForCatDiff(cat, diff);
   }
 }

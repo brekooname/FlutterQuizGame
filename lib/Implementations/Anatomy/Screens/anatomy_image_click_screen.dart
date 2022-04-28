@@ -48,7 +48,6 @@ class AnatomyImageClickScreen
             currentQuestionInfo.question.category)!,
         imageContainerHeightPercent:
             category == AnatomyGameQuestionConfig().cat11 ? 70 : null);
-    debugPrint("q " + currentQuestionInfo.question.rawString);
   }
 
   @override
@@ -90,7 +89,7 @@ class AnatomyImageClickScreenState extends State<AnatomyImageClickScreen>
         disableHintBtn:
             widget.quizQuestionManager.hintDisabledPossibleAnswers.isNotEmpty,
         hintButtonOnClick: () {
-          widget.quizQuestionManager.onHintButtonClick(setStateCallback);
+          widget.quizQuestionManager.onHintButtonClickForCatDiff(setStateCallback);
         },
         availableHints: widget.gameContext.amountAvailableHints,
       ),

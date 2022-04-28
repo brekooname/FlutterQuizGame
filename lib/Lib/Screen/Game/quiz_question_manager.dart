@@ -67,8 +67,9 @@ class QuizQuestionManager<TGameContext extends GameContext,
       Question question, VoidCallback goToNextScreenAfterPress) {
     var questionService = question.questionService;
     if (isGameFinished()) {
-      Future.delayed(
-          durationGoToNextScreen, () => goToNextScreenAfterPress.call());
+      Future.delayed(durationGoToNextScreen, () {
+        goToNextScreenAfterPress.call();
+      });
       if (isGameFinishedSuccessful()) {
         gameContext.gameUser.setWonQuestion(_currentQuestionInfo);
         quizGameLocalStorage.setWonQuestion(question);
@@ -97,18 +98,39 @@ class QuizQuestionManager<TGameContext extends GameContext,
   }
 
   bool isGameFinished() {
-    var gameFinishedWithOptionList = _currentQuestionInfo.question.questionService
+    var gameFinishedWithOptionList = _currentQuestionInfo
+        .question.questionService
         .isGameFinishedWithOptionList(
             correctAnswersForQuestion, _currentQuestionInfo.pressedAnswers);
     return gameFinishedWithOptionList;
   }
 
-  void onHintButtonClick(VoidCallback refreshSetState) {
-    gameContext.amountAvailableHints--;
-    quizGameLocalStorage.setRemainingHints(
+  void onHintButtonClickForCatDiff(VoidCallback refreshSetState) {
+    _decreaseAvailableHints();
+
+    quizGameLocalStorage.setRemainingHintsForCatDiff(
+        _currentQuestionInfo.question.category,
         _currentQuestionInfo.question.difficulty,
         gameContext.amountAvailableHints);
 
+    _onHintButtonUpdateControls(refreshSetState);
+  }
+
+  void onHintButtonClickForDiff(VoidCallback refreshSetState) {
+    _decreaseAvailableHints();
+
+    quizGameLocalStorage.setRemainingHintsForDiff(
+        _currentQuestionInfo.question.difficulty,
+        gameContext.amountAvailableHints);
+
+    _onHintButtonUpdateControls(refreshSetState);
+  }
+
+  void _decreaseAvailableHints() {
+    gameContext.amountAvailableHints--;
+  }
+
+  void _onHintButtonUpdateControls(VoidCallback refreshSetState) {
     var optionsToDisable = List.of(possibleAnswers);
     optionsToDisable.shuffle();
     optionsToDisable.removeAll(correctAnswersForQuestion);

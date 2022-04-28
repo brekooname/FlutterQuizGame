@@ -29,7 +29,9 @@ void main() {
   if (MyApp.kIsMobile) {
     if (Platform.isAndroid) {
       InAppPurchaseAndroidPlatform.registerPlatform();
-    } else if (Platform.isIOS) {}
+    } else if (Platform.isIOS) {
+      //No register needed
+    }
   }
 
   runApp(MyApp());

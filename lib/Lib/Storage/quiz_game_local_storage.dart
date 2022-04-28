@@ -35,13 +35,28 @@ abstract class QuizGameLocalStorage extends MyLocalStorage {
     return decodeStringQuestionList(_getLostQuestionsFieldName(diff));
   }
 
-  int getRemainingHints(QuestionDifficulty diff) {
-    return localStorage.getInt(_getRemainingHintsFieldName(diff)) ?? -1;
+  int getRemainingHintsForCatDiff(
+      QuestionCategory cat, QuestionDifficulty diff) {
+    return localStorage
+            .getInt(_getRemainingHintsForCatDiffFieldName(cat, diff)) ??
+        -1;
   }
 
-  void setRemainingHints(QuestionDifficulty diff, int hints) {
+  void setRemainingHintsForCatDiff(
+      QuestionCategory cat, QuestionDifficulty diff, int hints) {
     if (hints >= 0) {
-      localStorage.setInt(_getRemainingHintsFieldName(diff), hints);
+      localStorage.setInt(
+          _getRemainingHintsForCatDiffFieldName(cat, diff), hints);
+    }
+  }
+
+  int getRemainingHintsForDiff(QuestionDifficulty diff) {
+    return localStorage.getInt(_getRemainingHintsForDiffFieldName(diff)) ?? -1;
+  }
+
+  void setRemainingHintsForDiff(QuestionDifficulty diff, int hints) {
+    if (hints >= 0) {
+      localStorage.setInt(_getRemainingHintsForDiffFieldName(diff), hints);
     }
   }
 
@@ -93,8 +108,18 @@ abstract class QuizGameLocalStorage extends MyLocalStorage {
     return localStorageName + "_" + difficulty.name + "_TotalWonQuestions";
   }
 
-  String _getRemainingHintsFieldName(QuestionDifficulty difficulty) {
+  String _getRemainingHintsForDiffFieldName(QuestionDifficulty difficulty) {
     return localStorageName + "_" + difficulty.name + "_RemainingHints";
+  }
+
+  String _getRemainingHintsForCatDiffFieldName(
+      QuestionCategory cat, QuestionDifficulty difficulty) {
+    return localStorageName +
+        "_" +
+        cat.name +
+        "_" +
+        difficulty.name +
+        "_RemainingHints";
   }
 
   void clearAll() {
@@ -106,7 +131,7 @@ abstract class QuizGameLocalStorage extends MyLocalStorage {
 
   void resetLevelQuestionsAndHints(QuestionDifficulty diff) {
     resetLevelQuestions(diff);
-    localStorage.setInt(_getRemainingHintsFieldName(diff), -1);
+    localStorage.setInt(_getRemainingHintsForDiffFieldName(diff), -1);
   }
 
   void resetLevelQuestions(QuestionDifficulty diff) {

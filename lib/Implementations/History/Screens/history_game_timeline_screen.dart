@@ -407,7 +407,7 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
     widget.correctAnswerPressed = false;
 
     widget.gameContext.amountAvailableHints--;
-    widget.historyLocalStorage.setRemainingHints(
+    widget.historyLocalStorage.setRemainingHintsForDiff(
         widget.difficulty, widget.gameContext.amountAvailableHints);
 
     widget.shownImagesForTimeLineHints

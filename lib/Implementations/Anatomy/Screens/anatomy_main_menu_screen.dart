@@ -86,9 +86,10 @@ class AnatomyMainMenuScreenState extends State<AnatomyMainMenuScreen>
 
     Future.delayed(
         Duration.zero,
-        () => itemScrollController.scrollTo(
-            index: widget._anatomyLocalStorage.getLastPressedMainMenuCategory(),
-            duration: const Duration(milliseconds: 500)));
+        () => itemScrollController.jumpTo(
+              index:
+                  widget._anatomyLocalStorage.getLastPressedMainMenuCategory(),
+            ));
 
     var mainColumn = Container(
         alignment: Alignment.center,

@@ -31,7 +31,7 @@ class HistoryGameContextService {
     }).toList();
     var gameContext = GameContextService()
         .createGameContextWithHintsAndQuestions(
-            calculateNrOfHints(questions.length, campaignLevel), questions);
+            _calculateNrOfHints(questions.length, campaignLevel), questions);
     var historyGameContext = HistoryGameContext(
         gameContext,
         HistoryAllQuestions()
@@ -40,13 +40,13 @@ class HistoryGameContextService {
     return historyGameContext;
   }
 
-  int calculateNrOfHints(int totalNrOfQuestions, CampaignLevel campaignLevel) {
+  int _calculateNrOfHints(int totalNrOfQuestions, CampaignLevel campaignLevel) {
     int currentHints =
-        historyLocalStorage.getRemainingHints(campaignLevel.difficulty);
+        historyLocalStorage.getRemainingHintsForDiff(campaignLevel.difficulty);
     if (currentHints == -1) {
-      historyLocalStorage.setRemainingHints(campaignLevel.difficulty,
+      historyLocalStorage.setRemainingHintsForDiff(campaignLevel.difficulty,
           (totalNrOfQuestions / (MyApp.isExtraContentLocked ? 11 : 4)).ceil());
     }
-    return historyLocalStorage.getRemainingHints(campaignLevel.difficulty);
+    return historyLocalStorage.getRemainingHintsForDiff(campaignLevel.difficulty);
   }
 }

@@ -118,7 +118,8 @@ class AnatomyQuestionScreenState extends State<AnatomyQuestionScreen>
               disableHintBtn: widget
                   .quizQuestionManager.hintDisabledPossibleAnswers.isNotEmpty,
               hintButtonOnClick: () {
-                widget.quizQuestionManager.onHintButtonClick(setStateCallback);
+                widget.quizQuestionManager
+                    .onHintButtonClickForCatDiff(setStateCallback);
               },
               availableHints: widget.gameContext.amountAvailableHints,
             ),

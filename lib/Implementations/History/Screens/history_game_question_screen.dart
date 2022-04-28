@@ -59,7 +59,7 @@ class HistoryGameQuestionScreenState extends State<HistoryGameQuestionScreen>
   void initState() {
     super.initState();
     initScreenState(onUserEarnedReward: () {
-      widget.quizQuestionManager.onHintButtonClick(setStateCallback);
+      widget.quizQuestionManager.onHintButtonClickForDiff(setStateCallback);
     });
   }
 
@@ -95,7 +95,7 @@ class HistoryGameQuestionScreenState extends State<HistoryGameQuestionScreen>
               "/" +
               widget.gameContext.totalNrOfQuestionsForCampaignLevel.toString()),
       hintButtonOnClick: () {
-        widget.quizQuestionManager.onHintButtonClick(setStateCallback);
+        widget.quizQuestionManager.onHintButtonClickForDiff(setStateCallback);
       },
     );
     return header;
