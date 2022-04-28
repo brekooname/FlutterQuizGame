@@ -352,5 +352,7 @@ mixin ImageClickScreen<TQuizQuestionManager extends QuizQuestionManager> {
           : _imageContainerHeightPercent);
 
   double _getAnswerLabelWidth(ImageClickInfo imageClickInfo) =>
-      imageClickInfo.arrowWidth + _getAnswerBtnSideDimen();
+      _isImageToClickRectangular()
+          ? _screenDimensions.dimen(40)
+          : imageClickInfo.arrowWidth + _getAnswerBtnSideDimen();
 }

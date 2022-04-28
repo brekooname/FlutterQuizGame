@@ -35,7 +35,7 @@ void testImageClickQuestions() {
       expect(q1.questionToBeDisplayed, "Liver");
       expect(q1.questionService.getCorrectAnswers(q1), ["Liver"]);
       expect(q1.questionService.getQuizAnswerOptions(q1),
-          ['Mouth', 'Esophagus', 'Large intestine']);
+          ['Liver', 'Mouth', 'Esophagus', 'Large intestine']);
       expect(q1.questionService.getQuestionToBeDisplayed(q1), "Liver");
     }
   }

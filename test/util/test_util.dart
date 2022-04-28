@@ -6,16 +6,20 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class TestUtil {
-  static Future<void> initApp(
-      Language lang, String appKey, WidgetTester tester) async {
+  static Future<void> initApp(WidgetTester tester) async {
     SharedPreferences.setMockInitialValues({});
     FontConfig.fontScale = 30;
     MyApp.kIsAutomatedTest = true;
     MyApp.webIsPro = true;
-    MyApp.webLanguage = lang;
-    MyApp.webAppKey = appKey;
     await MyAppState.initAppConfig(MyAppState.createWebAppConfig());
     MyApp.appId.gameConfig.allQuestionsService.clearCache();
+    await TestUtil.pumpWidget(tester, MyApp.gameScreenManager);
+  }
+
+  static Future<void> updateAppKeyAndLang(
+      String appKey, Language lang, WidgetTester tester) async {
+    MyApp.webLanguage = lang;
+    MyApp.webAppKey = appKey;
     await TestUtil.pumpWidget(tester, MyApp.gameScreenManager);
   }
 

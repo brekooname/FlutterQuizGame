@@ -10,6 +10,7 @@ class GameTitle extends StatelessWidget {
   String text;
   String? backgroundImagePath;
   double? backgroundImageOpacity;
+  Color? backgroundColor;
   Shadow? textShadow;
   double? textWidth;
 
@@ -20,6 +21,7 @@ class GameTitle extends StatelessWidget {
     this.textShadow,
     this.backgroundImagePath,
     this.backgroundImageOpacity,
+    this.backgroundColor,
     double? backgroundImageWidth,
     double? textWidth,
   }) : super(key: key) {
@@ -51,6 +53,6 @@ class GameTitle extends StatelessWidget {
       ),
     ]);
 
-    return imageWithText;
+    return Container(color: backgroundColor, width: textWidth, child: imageWithText);
   }
 }

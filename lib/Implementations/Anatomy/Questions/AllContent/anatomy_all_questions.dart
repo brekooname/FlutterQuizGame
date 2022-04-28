@@ -400,181 +400,181 @@ class AnatomyAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat0, //
         questionConfig.diff1, //
-        ["What organ produces bile necessary for digestion?:0,7,6,8", "What is the first portion of the alimentary canal that receives food and produces saliva?:1,2,6,5", "Through which organ food passes from the pharynx to the stomach?:2,6,9,7", "What organ is the last part of the digestive system?:3,4,7,8", "Where does the most absorption of nutrients and minerals from food take place?:4,5,3,0", "What organ secretes digestive enzymes and gastric acid to aid in food digestion?:5,4,7,3", "What is the part of the throat behind the mouth and nasal cavity named?:6,2,9,8", "Where is bile stored and concentrated before it is released into the small intestine?:7,6,9,8", "Where is insulin secreted from?:8,0,7,6", "What organ is located in the lower right abdomen?:9,0,7,2"]);
+        ["Ce organ produce bila necesară digestiei?:0,7,6,8", "Care este prima porțiune a canalului alimentar care primește hrană și produce saliva?:1,2,6,5", "Prin ce organ trece alimentele din faringe în stomac?:2,6,9,7", "Ce organ este ultima parte a sistemului digestiv?:3,4,7,8", "Unde are loc cea mai mare absorbție de nutrienți și minerale din alimente?:4,5,3,0", "Ce organ secretă enzime digestive și acid gastric pentru a ajuta digestia alimentelor?:5,4,7,3", "Cum se numește partea gâtului din spatele gurii și cavității nazale?:6,2,9,8", "Unde este depozitată și concentrată bila înainte de a fi eliberată în intestinul subțire?:7,6,9,8", "De unde este secretată insulina?:8,0,7,6", "Ce organ este situat în partea dreaptă jos a abdomenului?:9,0,7,2"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat1, //
         questionConfig.diff1, //
-        ["What is a bone structure that forms the head?:0,1,9,7", "What is known also as the shoulder bone?:1,9,11,6", "What is a semi-rigid bony and cartilaginous structure which surrounds the thoracic cavity?:2,7,8,11", "What is the defining characteristic of a vertebrate?:3,0,11,2", "What is the larger of the two bones in the leg below the knee?:4,6,9,5", "What is the longest and strongest bone in your body?:5,6,9,1", "What is a long bone in the arm that runs from the shoulder to the elbow?:6,5,1,7", "What is a group of five bones of the hand between the phalanges and the wrist?:7,5,1,3", "What bones make up the wrist?:8,7,9,10", "What is a cluster of seven articulating bones in each foot?:9,7,8,1", "What is a group of five long bones in the foot?:10,8,7,4", "What is the lower part of the torso?:11,6,3,2"]);
+        ["Ce este o structură osoasă care formează capul?:0,1,9,7", "Ce este cunoscut și sub numele de osul umărului?:1,9,11,6", "Ce este o structură osoasă și cartilaginoasă semirigidă care înconjoară cavitatea toracică?:2,7,8,11", "Care este caracteristica definitorie a unei vertebrate?:3,0,11,2", "Care este cel mai mare dintre cele două oase ale piciorului de sub genunchi?:4,6,9,5", "Care este cel mai lung și mai puternic os din corpul tău?:5,6,9,1", "Ce este un os lung al brațului care merge de la umăr la cot?:6,5,1,7", "Ce este un grup de cinci oase ale mâinii între falange și încheietura mâinii?:7,5,1,3", "Ce oase alcătuiesc încheietura mâinii?:8,7,9,10", "Ce este un grup de șapte oase articulate în fiecare picior?:9,7,8,1", "Ce este un grup de cinci oase lungi în picior?:10,8,7,4", "Care este partea inferioară a trunchiului?:11,6,3,2"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat2, //
         questionConfig.diff1, //
-        ["What is the muscle forming the rounded contour of the human shoulder?:0,1,3,5", "What is a large muscle that lies on the front of the upper arm between the shoulder and the elbow?:1,0,2,3", "What muscle is situated at the chest of the human body?:2,3,5,1", "What is a triangular muscle located on the posterior aspect of the neck?:3,1,2,5", "What muscle is the largest of the lateral abdominal muscles?:4,1,2,0", "What is the largest of 4 muscles in the anterior compartment of the leg?:5,3,0,1"]);
+        ["Care este mușchiul care formează conturul rotunjit al umărului uman?:0,1,3,5", "Ce este un mușchi mare care se află pe partea din față a brațului, între umăr și cot?:1,0,2,3", "Ce mușchi este situat în pieptul corpului uman?:2,3,5,1", "Ce este un mușchi triunghiular situat pe partea posterioară a gâtului?:3,1,2,5", "Care mușchi este cel mai mare dintre mușchii abdominali laterali?:4,1,2,0", "Care este cel mai mare dintre cei 4 mușchi din compartimentul anterior al piciorului?:5,3,0,1"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat3, //
         questionConfig.diff1, //
-        ["What is a muscular organ which pumps blood through the blood vessels of the circulatory system?:0,1,3,5", "What is the main and largest artery in the human body?:1,4,3,2", "What are veins that drain the kidney?:2,5,4,1", "What are paired arteries that supply the kidneys with blood?:3,2,1,5", "What are veins that take deoxygenated blood from the head back to the heart?:4,2,5,1", "What is a large vein located deep within the thigh?:5,2,1,4"]);
+        ["Ce este un organ muscular care pompează sângele prin vasele de sânge ale sistemului circulator?:0,1,3,5", "Care este artera principală și cea mai mare din corpul uman?:1,4,3,2", "Ce sunt venele care drenează rinichiul?:2,5,4,1", "Care sunt arterele pereche care alimentează rinichii cu sânge?:3,2,1,5", "Ce sunt venele care duc sângele dezoxigenat de la cap înapoi la inimă?:4,2,5,1", "Ce este o venă mare situată adânc în interiorul coapsei?:5,2,1,4"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat4, //
         questionConfig.diff1, //
-        ["What is an organ that serves as the center of the nervous system?:0,1,2,5", "What is a major feature of the hindbrain of all vertebrates?:1,5,0,2", "What is a long, thin, tubular structure made up of nervous tissue?:2,1,3,4", "What is a large nerve that runs alongside the hip joint?:3,2,1,5", "What is a branch of the sciatic nerve?:4,5,2,1", "What is a group of neuron cell bodies in the peripheral nervous system?:5,1,0,2"]);
+        ["Ce este un organ care servește ca centru al sistemului nervos?:0,1,2,5", "Care este o caracteristică majoră a creierului posterior al tuturor vertebratelor?:1,5,0,2", "Ce este o structură tubulară lungă, subțire, formată din țesut nervos?:2,1,3,4", "Ce este un nerv mare care trece pe lângă articulația șoldului?:3,2,1,5", "Ce este o ramură a nervului sciatic?:4,5,2,1", "Ce este un grup de corpuri celulare neuronale din sistemul nervos periferic?:5,1,0,2"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat5, //
         questionConfig.diff1, //
-        ["What are muscular folds that encircle the mouth?:0,1,4,7", "What is a fleshy extension which hangs above the throat?:1,4,0,7", "What are flat teeth at the back of the mouth?:2,3,5,6", "What are the front teeth?:3,2,5,6", "What is a muscular organ in the mouth?:4,5,6,1", "What organs play an important role in the immune system?:5,1,4,0", "What is a thin horizontal bony plate made up of two bones of the facial skeleton?:6,7,2,5", "What is the soft tissue constituting the back of the roof of the mouth?:7,5,1,0"]);
+        ["Ce sunt pliurile musculare care înconjoară gura?:0,1,4,7", "Ce este o extensie cărnoasă care atârnă deasupra gâtului?:1,4,0,7", "Ce sunt dinții plati din spatele gurii?:2,3,5,6", "Care sunt dinții din față?:3,2,5,6", "Ce este un organ muscular în gură?:4,5,6,1", "Ce organe joacă un rol important în sistemul imunitar?:5,1,4,0", "Ce este o placă osoasă orizontală subțire formată din două oase ale scheletului facial?:6,7,2,5", "Care este țesutul moale care constituie partea din spate a cerului gurii?:7,5,1,0"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat6, //
         questionConfig.diff1, //
-        ["What is the largest of the four major lobes of the brain?:0,3,1,4", "What sits behind the ears and is the second largest lobe?:1,0,3,2", "What is involved in the perception of sensation, including touch, temperature, pain?:2,0,3,5", "What is the visual processing center of the brain?:3,0,1,4", "What plays an important role in balance control?:4,5,0,1", "What helps to control heart rate and breathing rate?:5,0,4,3"]);
+        ["Care este cel mai mare dintre cei patru lobi majori ai creierului?:0,3,1,4", "Ce se află în spatele urechilor și este al doilea lob ca mărime?:1,0,3,2", "Ce este implicat în percepția senzației, inclusiv atingerea, temperatura, durerea?:2,0,3,5", "Care este centrul de procesare vizuală al creierului?:3,0,1,4", "Ce joacă un rol important în controlul echilibrului?:4,5,0,1", "Ce ajută la controlul ritmului cardiac și al respirației?:5,0,4,3"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat7, //
         questionConfig.diff1, //
-        ["What is the visible part of the ear that is outside the head?:0,3,6,2", "What is a pathway running from the outer ear to the middle ear?:1,2,3,0", "What is a thin flap of skin that is stretched tight like a drum and vibrates when sound hits it?:2,0,5,3", "What are three bones in the middle ear that are among the smallest bones in the human body?:3,0,6,2", "What resembles to the shell of a snail?:4,2,0,6", "What carries auditory sensory information from the cochlea of the inner ear directly to the brain?:5,2,0,6", "What is also known as the auditory tube?:6,1,4,0"]);
+        ["Care este partea vizibilă a urechii care se află în afara capului?:0,3,6,2", "Ce este o cale care merge de la urechea externă la urechea medie?:1,2,3,0", "Ce este o clapă subțire de piele care este întinsă strâns ca o tobă și vibrează când sunetul îl lovește?:2,0,5,3", "Care sunt trei oase din urechea medie care sunt printre cele mai mici oase din corpul uman?:3,0,6,2", "Ce seamănă cu coaja unui melc?:4,2,0,6", "Ce transportă informațiile senzoriale auditive de la cohleea urechii interne direct la creier?:5,2,0,6", "Ce este cunoscut și sub numele de tub auditiv?:6,1,4,0"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat8, //
         questionConfig.diff1, //
-        ["What is the main and largest artery in the human body?:0,3,8,6", "Which vein carries blood from your head, neck, arms and chest back to your heart?:1,3,0,2", "Which vein carries blood from your lower body back to your heart?:2,1,0,3", "What is the upper chamber through which blood enters the ventricles of the heart?:3,5,6,2", "what heart chamber receives oxygenated blood from the lungs?:4,3,6,8", "What valve separates the two chambers of the left side of the heart?:5,8,7,3", "What is muscular chamber that pumps blood out of the heart and into the circulatory system?:6,5,8,2", "Which is one of four chambers of the heart?:7,0,1,2", "It's role is to prevent back flow of blood from the right ventricle into the right atrium.:8,2,5,4"]);
+        ["Care este artera principală și cea mai mare din corpul uman?:0,3,8,6", "Care venă duce sângele din cap, gât, brațe și piept înapoi la inimă?:1,3,0,2", "Care venă duce sângele din partea inferioară a corpului înapoi la inimă?:2,1,0,3", "Care este camera superioară prin care sângele pătrunde în ventriculii inimii?:3,5,6,2", "ce cameră a inimii primește sânge oxigenat din plămâni?:4,3,6,8", "Ce supapă separă cele două camere din partea stângă a inimii?:5,8,7,3", "Ce este camera musculară care pompează sângele din inimă și în sistemul circulator?:6,5,8,2", "Care este una dintre cele patru camere ale inimii?:7,0,1,2", "Rolul său este de a preveni fluxul înapoi de sânge din ventriculul drept în atriul drept.:8,2,5,4"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat9, //
         questionConfig.diff1, //
-        ["What is a thin structure in the eye, responsible for controlling the diameter and size of the pupil?:0,1,3,2", "What is the transparent front part of the eye that covers the iris?:1,2,3,0", "What is a transparent structure in the eye that helps to refract light to be focused on the retina?:2,3,0,1", "What is the innermost, light-sensitive layer of tissue of the eye?:3,1,0,2", "What transmits visual information from the retina to the brain?:4,6,5,3", "What is the front part of the eye between the cornea and the iris?:5,6,2,3", "What eye chamber is located behind the lens and in front of the optic nerve?:6,5,3,0"]);
+        ["Ce este o structură subțire a ochiului, responsabilă pentru controlul diametrului și mărimii pupilei?:0,1,3,2", "Care este partea frontală transparentă a ochiului care acoperă irisul?:1,2,3,0", "Ce este o structură transparentă în ochi care ajută la refracția luminii pentru a fi focalizată pe retină?:2,3,0,1", "Care este cel mai interior strat de țesut al ochiului, sensibil la lumină?:3,1,0,2", "Ce transmite informațiile vizuale de la retină la creier?:4,6,5,3", "Care este partea din față a ochiului dintre cornee și iris?:5,6,2,3", "Ce cameră oculară se află în spatele cristalinului și în fața nervului optic?:6,5,3,0"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat10, //
         questionConfig.diff1, //
-        ["What is found in the middle of the cell and it contains DNA arranged in chromosomes?:0,1,2,3", "What region within the cell is concerned with producing the cell ribosomes?:1,2,3,4", "What is a gelatinous liquid that fills the inside of a cell?:2,3,4,5", "What protects the cell from its external environment?:3,4,2,1", "What is a cell structure that produces protein?:4,3,2,1", "What converts chemical energy into an energy form that the cell can use?:5,4,3,2", "What is the transportation system of the eukaryotic cell?:6,5,0,1"]);
+        ["Ce se găsește în mijlocul celulei și conține ADN aranjat în cromozomi?:0,1,2,3", "Ce regiune din interiorul celulei este preocupată de producerea ribozomilor celulari?:1,2,3,4", "Ce este un lichid gelatinos care umple interiorul unei celule?:2,3,4,5", "Ce protejează celula de mediul ei extern?:3,4,2,1", "Ce este o structură celulară care produce proteine?:4,3,2,1", "Ce transformă energia chimică într-o formă de energie pe care o poate folosi celula?:5,4,3,2", "Care este sistemul de transport al celulei eucariote?:6,5,0,1"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat11, //
         questionConfig.diff1, //
-        ["What is used to oxidize our food, in the process of cellular respiration, thus releasing energy?:0,1,2,3", "What is the second most abundant element in the human body?:1,2,3,4", "What is used to keep the human body hydrated?:2,3,4,5", "What is used to make amino acids in our body which in turn make proteins?:3,5,4", "What is used to build and maintain strong bones?:4,0,1,2", "What is used in the formation of bones and teeth?:5,1,2,3"]);
+        ["Cu ce ​​se oxidează alimentele noastre, în procesul de respirație celulară, eliberând astfel energie?:0,1,2,3", "Care este al doilea element cel mai abundent din corpul uman?:1,2,3,4", "Ce se folosește pentru a menține corpul uman hidratat?:2,3,4,5", "Ce se folosește pentru a produce aminoacizi în corpul nostru, care la rândul lor produc proteine?:3,5,4", "Ce se folosește pentru a construi și menține oase puternice?:4,0,1,2", "Ce se folosește în formarea oaselor și a dinților?:5,1,2,3"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat0, //
         questionConfig.diff2, //
-        ["What is a disease in which your liver becomes inflamed?:hepatită::", "What is a disease in which a parasite infects the gastro-intestinal tract of humans?:Paraziți intestinali::", "What is a disease in which your pancreas becomes inflamed?:Pancreatită::", "What is a disease that causes a break in the inner lining of the stomach?:Ulcer gastric::", "What is a disease in which your appendix becomes inflamed?:Apendicită::", "What is a disease in which your inner lining of the stomach becomes inflamed?:Gastrită::", "What disease causes swollen veins in your lower rectum?:Hemoroizi::", "What are hard deposits made of minerals and salts?:Pietre la rinichi::", "What is scarring of the liver caused by long-term liver damage?:Ciroză::", "What is a type of inflammatory bowel disease?:Boala Crohn::"]);
+        ["Care este o boală în care ficatul tău devine inflamat?:hepatită::", "Ce este o boală în care un parazit infectează tractul gastro-intestinal al omului?:Paraziți intestinali::", "Care este o boală în care pancreasul tău devine inflamat?:Pancreatită::", "Ce este o boală care provoacă o ruptură a mucoasei interioare a stomacului?:Ulcer gastric::", "Care este o boală în care apendicele tău se inflama?:Apendicită::", "Care este o boală în care mucoasa interioară a stomacului devine inflamată?:Gastrită::", "Ce boală provoacă umflarea venelor în rectul inferior?:Hemoroizi::", "Ce sunt depozitele dure formate din minerale și săruri?:Pietre la rinichi::", "Ce este cicatrizarea ficatului cauzată de leziunile hepatice pe termen lung?:Ciroză::", "Ce este un tip de boală inflamatorie intestinală?:Boala Crohn::"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat1, //
         questionConfig.diff2, //
-        ["What disease causes pain and inflammation in a joint?:Artrită::", "What is a break in the continuity of a bone?:Fractură osoasă::", "What disease weakens bones, making them fragile and more likely to break?:Osteoporoza::", "What disease causes a sideways curvature of the spine?:scolioza::", "What is a type of arthritis that causes sudden, severe joint pain?:Gută::"]);
+        ["Ce boală provoacă durere și inflamație într-o articulație?:Artrită::", "Ce este o întrerupere în continuitatea unui os?:Fractură osoasă::", "Ce boală slăbește oasele, făcându-le fragile și mai susceptibile de a se rupe?:Osteoporoza::", "Ce boală provoacă o curbură laterală a coloanei vertebrale?:scolioza::", "Care este un tip de artrită care provoacă dureri articulare bruște și severe?:Gută::"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat2, //
         questionConfig.diff2, //
-        ["What disease causes progressive weakness and loss of muscle mass?:distrofie musculara::", "What disease is caused by lack of physical activity?:atrofie musculară::", "What disease causes the inflammation or irritation of a tendon?:tendinita::", "What is a sudden and involuntary contraction of one of your muscles?:crampe musculare::", "What occurs when your muscle is overstretched or torn?:ruptură musculară::"]);
+        ["Ce boală provoacă slăbiciune progresivă și pierderea masei musculare?:distrofie musculara::", "Ce boală este cauzată de lipsa de activitate fizică?:atrofie musculară::", "Ce boală provoacă inflamația sau iritația unui tendon?:tendinita::", "Ce este o contracție bruscă și involuntară a unuia dintre mușchii tăi?:crampe musculare::", "Ce se întâmplă când mușchiul tău este supraîntindet sau rupt?:ruptură musculară::"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat3, //
         questionConfig.diff2, //
-        ["What is a type of cancer that starts in cells that are part of the body's immune system?:Limfom::", "What is a type of cancer that usually begins in the bone marrow?:leucemie::", "What is caused by prolonged exposures to very cold temperatures?:Hipotermie::", "What is a hardening of your arteries caused by gradual plaque buildup?:Ateroscleroza::"]);
+        ["Care este un tip de cancer care începe în celulele care fac parte din sistemul imunitar al organismului?:Limfom::", "Care este un tip de cancer care începe de obicei în măduva osoasă?:leucemie::", "Ce este cauzat de expunerea prelungită la temperaturi foarte scăzute?:Hipotermie::", "Ce este o întărire a arterelor tale cauzată de acumularea treptată a plăcii?:Ateroscleroza::"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat4, //
         questionConfig.diff2, //
-        ["What is an acute inflammation of the protective membranes covering the brain and spinal cord?:Meningita::", "What is a disease that can affect your brain and spinal cord, and can cause problems with vision, balance, muscle control?:Scleroză multiplă::", "What is a brain disorder that leads to shaking, stiffness, and difficulty with walking, balance, and coordination?:boala Parkinson::", "What is characterized by multiple movement tics and at least one vocal tic?:sindromul Tourette::", "What is an incurable, hereditary brain disorder that damages brain cells?:boala Huntington::"]);
+        ["Ce este o inflamație acută a membranelor protectoare care acoperă creierul și măduva spinării?:Meningita::", "Care este o boală care vă poate afecta creierul și măduva spinării și poate cauza probleme cu vederea, echilibrul, controlul muscular?:Scleroză multiplă::", "Ce este o tulburare a creierului care duce la tremurături, rigiditate și dificultăți de mers, echilibru și coordonare?:boala Parkinson::", "Ce se caracterizează prin ticuri de mișcare multiple și cel puțin un tic vocal?:sindromul Tourette::", "Ce este o tulburare a creierului ereditară, incurabilă, care dăunează celulelor creierului?:boala Huntington::"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat5, //
         questionConfig.diff2, //
-        ["What is a serious gum infection that damages the soft tissue and that can destroy the bone that supports your teeth?:Parodontita::", "What is a mild form of gum disease that causes irritation, redness and swelling of your gingiva?:gingivita::", "What are permanently damaged areas in the hard surface of your teeth?:Carie dentară::", "What is an infection of the tonsils at the back of your throat?:Amigdalită::", "What happens if the tissue that makes up the lip does not join completely before birth?:Buza despicată::"]);
+        ["Ce este o infecție gravă a gingiilor care dăunează țesutului moale și care poate distruge osul care susține dinții tăi?:Parodontita::", "Ce este o formă ușoară de boală a gingiilor care provoacă iritație, roșeață și umflare a gingiilor?:gingivita::", "Care sunt zonele deteriorate permanent de pe suprafața tare a dinților tăi?:Carie dentară::", "Ce este o infecție a amigdalelor din spatele gâtului?:Amigdalită::", "Ce se întâmplă dacă țesutul care alcătuiește buza nu se unește complet înainte de naștere?:Buza despicată::"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat6, //
         questionConfig.diff2, //
-        ["What brain disorder destroys memory and thinking skills and, eventually, the ability to carry out the simplest tasks?:Boala Alzheimer::", "What is an uncommon but serious condition in which the brain becomes inflamed?:Encefalită::", "What is a headache disorder characterized by recurrent headaches that are moderate to severe?:Migrenă::", "What is a disease that affects the brain and causes frequent seizures?:Epilepsie::"]);
+        ["Ce tulburare a creierului distruge memoria și abilitățile de gândire și, în cele din urmă, capacitatea de a îndeplini cele mai simple sarcini?:Boala Alzheimer::", "Care este o afecțiune neobișnuită, dar gravă, în care creierul devine inflamat?:Encefalită::", "Ce este o tulburare de cefalee caracterizată prin dureri de cap recurente care sunt moderate până la severe?:Migrenă::", "Ce este o boală care afectează creierul și provoacă convulsii frecvente?:Epilepsie::"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat7, //
         questionConfig.diff2, //
-        ["What occurs when a virus or bacteria cause the area behind the eardrum to become inflamed?:Otita::", "What refers to the total or partial inability to hear sounds?:Surditate::", "What is a condition in which you hear sounds when there is no outside source of the sounds?:Tinitus::", "What is a disorder of the inner ear that can lead to dizzy spells (vertigo) and hearing loss?:boala Meniere::"]);
+        ["Ce se întâmplă atunci când un virus sau o bacterie provoacă inflamarea zonei din spatele timpanului?:Otita::", "Ce se referă la incapacitatea totală sau parțială de a auzi sunete?:Surditate::", "Care este starea în care auziți sunete când nu există nicio sursă exterioară a sunetelor?:Tinitus::", "Ce este o tulburare a urechii interne care poate duce la amețeli (vertij) și pierderea auzului?:boala Meniere::"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat8, //
         questionConfig.diff2, //
-        ["What is a chest pain caused by reduced blood flow to the heart muscles?:angina pectorală::", "What is blood pressure that is higher than normal?:Hipertensiune::", "What occurs when blood flow decreases or stops to the coronary artery of the heart?:Infarct miocardic::", "What is a serious condition in which the heart doesn't pump blood as efficiently as it should?:Insuficiență cardiacă congestivă::", "What is a word for high levels of cholesterol in the blood?:Hipercolesterolemie::", "What is an abnormality of the heart's rhythm?:Aritmie::"]);
+        ["Ce este o durere în piept cauzată de fluxul sanguin redus către mușchii inimii?:angina pectorală::", "Care este tensiunea arterială mai mare decât în ​​mod normal?:Hipertensiune::", "Ce se întâmplă când fluxul sanguin scade sau se oprește în artera coronară a inimii?:Infarct miocardic::", "Care este o afecțiune gravă în care inima nu pompează sânge atât de eficient pe cât ar trebui?:Insuficiență cardiacă congestivă::", "Care este un cuvânt pentru niveluri ridicate de colesterol în sânge?:Hipercolesterolemie::", "Ce este o anomalie a ritmului inimii?:Aritmie::"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat9, //
         questionConfig.diff2, //
-        ["What is a cloudy area in the lens of the eye that leads to a decrease in vision?:Cataractă::", "What is an eye condition caused by infection or allergies?:Conjunctivită::", "What is an eye condition where the optic nerve, which connects the eye to the brain, becomes damaged?:Glaucom::", "What is a disorder of sight in which the brain fails to fully process inputs from one eye and over time favors the other eye?:Ambliopia::"]);
+        ["Ce este o zonă tulbure din cristalinul ochiului care duce la scăderea vederii?:Cataractă::", "Ce este o afecțiune a ochiului cauzată de infecție sau alergii?:Conjunctivită::", "Care este o afecțiune a ochiului în care nervul optic, care conectează ochiul de creier, este deteriorat?:Glaucom::", "Ce este o tulburare a vederii în care creierul nu reușește să proceseze complet intrările de la un ochi și, în timp, favorizează celălalt ochi?:Ambliopia::"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat10, //
         questionConfig.diff2, //
-        ["What is a type of cancer that may include a lump in the breast or a change in breast shape?:Cancer mamar::", "What is the most common type of cancer that affects only men?:Cancer de prostată::", "What is a type of cancer in which cells in the colon or rectum grow out of control?:Cancer colorectal::", "What type of cancer is caused by long-term tobacco smoking?:Cancer de plamani::", "What type of cancer is caused by overexposure to ultraviolet rays from the sun?:Cancer de piele::"]);
+        ["Care este un tip de cancer care poate include un nodul la sân sau o modificare a formei sânului?:Cancer mamar::", "Care este cel mai frecvent tip de cancer care afectează numai bărbații?:Cancer de prostată::", "Care este un tip de cancer în care celulele din colon sau rect cresc fără control?:Cancer colorectal::", "Ce tip de cancer este cauzat de fumatul pe termen lung?:Cancer de plamani::", "Ce tip de cancer este cauzat de supraexpunerea la razele ultraviolete de la soare?:Cancer de piele::"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat11, //
         questionConfig.diff2, //
-        ["What is a below-normal level of oxygen in your blood called, specifically in the arteries?:Hipoxemie::", "What is a below-normal level of calcium in your blood called?:Hipocalcemie::", "What is an above-normal level of calcium in your blood called?:Hipercalcemie::", "What is a below-normal level of phosphate in your blood called?:hipofosfatemie::", "What is an above-normal level of phosphate in your blood called?:Hiperfosfatemia::"]);
+        ["Cum se numește un nivel sub normal de oxigen din sângele tău, în special în artere?:Hipoxemie::", "Cum se numește un nivel sub normal de calciu din sângele tău?:Hipocalcemie::", "Cum se numește un nivel peste normal de calciu din sângele tău?:Hipercalcemie::", "Cum se numește un nivel sub normal de fosfat din sângele tău?:hipofosfatemie::", "Cum se numește un nivel peste normal de fosfat în sângele tău?:Hiperfosfatemia::"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat0, //
         questionConfig.diff3, //
-        ["Yellowing of the skin and the whites of your eyes:hepatită:3,4,5:", "Rash or itching around the rectum:Paraziți intestinali:2,7,8:", "Moderate to severe abdominal pain that may spread to your back:Pancreatită:1,3,4:", "Severe stomach pain:Ulcer gastric:6,7,8:", "Sudden pain that begins on the right side of the lower abdomen:Apendicită:0,3,7:", "Nausea or recurrent upset stomach:Gastrită:4,2,1:", "Extreme itching around the anus:Hemoroizi:0,2,3:", "Pain or burning sensation while urinating:Pietre la rinichi:3,9,1:", "Yellowing of the skin and the whites of your eyes:Ciroză:7,5,4:", "Blood in the stool:Boala Crohn:2,7,8:"]);
+        ["Îngălbenirea pielii și a albului ochilor:hepatită:3,4,5:", "Erupție cutanată sau mâncărime în jurul rectului:Paraziți intestinali:2,7,8:", "Dureri abdominale moderate până la severe care se pot răspândi la spate:Pancreatită:1,3,4:", "Dureri severe de stomac:Ulcer gastric:6,7,8:", "Durere bruscă care începe în partea dreaptă a abdomenului inferior:Apendicită:0,3,7:", "Greață sau tulburări de stomac recurente:Gastrită:4,2,1:", "Mâncărime extremă în jurul anusului:Hemoroizi:0,2,3:", "Durere sau senzație de arsură în timpul urinării:Pietre la rinichi:3,9,1:", "Îngălbenirea pielii și a albului ochilor:Ciroză:7,5,4:", "Sânge în scaun:Boala Crohn:2,7,8:"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat1, //
         questionConfig.diff3, //
-        ["joint pain:Artrită:1,2,3:", "immediate, severe pain:Fractură osoasă:2,3:", "Loss of height over time:Osteoporoza:1,3,4:", "a visibly curved spine:scolioza:0,1,2:", "red, shiny skin over the affected joint:Gută:1,2,3:"]);
+        ["dureri articulare:Artrită:1,2,3:", "durere imediată, puternică:Fractură osoasă:2,3:", "Pierderea înălțimii în timp:Osteoporoza:1,3,4:", "o coloană vertebrală vizibil curbată:scolioza:0,1,2:", "piele roșie, strălucitoare peste articulația afectată:Gută:1,2,3:"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat2, //
         questionConfig.diff3, //
-        ["Large calf muscles:distrofie musculara:2,3,4:", "One arm or one leg is smaller than the other:atrofie musculară:2,3,4:", "pain in a tendon that gets worse when you move:tendinita:1,3,4:", "A sudden, sharp pain:crampe musculare:1,2:", "sudden pain that worsens while contracting the muscle:ruptură musculară:1,2:"]);
+        ["Mușchi mari ale gambei:distrofie musculara:2,3,4:", "Un braț sau un picior este mai mic decât celălalt:atrofie musculară:2,3,4:", "durere la un tendon care se agravează atunci când vă mișcați:tendinita:1,3,4:", "O durere bruscă, ascuțită:crampe musculare:1,2:", "durere bruscă care se agravează în timpul contractării mușchiului:ruptură musculară:1,2:"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat3, //
         questionConfig.diff3, //
-        ["Painless swelling of lymph nodes in your neck, armpits or groin:Limfom:2,3:", "Swollen lymph nodes, enlarged liver or spleen:leucemie:2,3:", "Shivering:Hipotermie:0,1:", "Numbness or weakness in your arms or legs:Ateroscleroza:0,1,2:"]);
+        ["Umflarea nedureroasă a ganglionilor limfatici la nivelul gâtului, axilelor sau inghinală:Limfom:2,3:", "Ganglioni limfatici umflați, ficatul sau splina mărite:leucemie:2,3:", "Tremurând:Hipotermie:0,1:", "Amorțeală sau slăbiciune în brațe sau picioare:Ateroscleroza:0,1,2:"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat4, //
         questionConfig.diff3, //
-        ["Sudden high fever, severe headache that seems different from normal:Meningita:1,2,3:", "blindness in one eye:Scleroză multiplă:0,3,4:", "Tremor in hands:boala Parkinson:0,3,4:", "movement tics:sindromul Tourette:0,1,4:", "difficulty concentrating and memory lapses:boala Huntington:0,1,2:"]);
+        ["Febră ridicată bruscă, cefalee severă care pare diferită de normal:Meningita:1,2,3:", "orbire la un ochi:Scleroză multiplă:0,3,4:", "Tremor în mâini:boala Parkinson:0,3,4:", "ticuri de mișcare:sindromul Tourette:0,1,4:", "dificultăți de concentrare și pierderi de memorie:boala Huntington:0,1,2:"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat5, //
         questionConfig.diff3, //
-        ["Red or swollen gums:Parodontita:2,3,4:", "Red or swollen gums:gingivita:2,3,4:", "Toothache:Carie dentară:0,4,3:", "problems swallowing:Amigdalită:0,2,4:", "Deformities of the upper jaw:Buza despicată:0,2,3:"]);
+        ["Gingii roșii sau umflate:Parodontita:2,3,4:", "Gingii roșii sau umflate:gingivita:2,3,4:", "Durere de dinţi:Carie dentară:0,4,3:", "probleme la înghițire:Amigdalită:0,2,4:", "Deformări ale maxilarului superior:Buza despicată:0,2,3:"]);
     addQuestions(
         result, //
         language, //
@@ -586,7 +586,7 @@ class AnatomyAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat7, //
         questionConfig.diff3, //
-        ["fluid that drains from the ear:Otita:1,2,3:", "Loss of hearing:Surditate:0,2,3:", "a ringing noise in the ears:Tinitus:0,1,3:", "vertigo:boala Meniere:0,1,2:"]);
+        ["lichid care se scurge din ureche:Otita:1,2,3:", "Pierderea auzului:Surditate:0,2,3:", "un zgomot în urechi:Tinitus:0,1,3:", "vertij:boala Meniere:0,1,2:"]);
     addQuestions(
         result, //
         language, //
@@ -598,19 +598,20 @@ class AnatomyAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat9, //
         questionConfig.diff3, //
-        ["Clouded vision:Cataractă:1,2,3:", "Pink or red color in the white of the eye:Conjunctivită:0,2,3:", "intense eye pain:Glaucom:0,1,3:", "Poor depth perception and peripheral vision:Ambliopia:0,1,2:"]);
+        ["Vedere tulbure:Cataractă:1,2,3:", "Culoare roz sau roșie în albul ochiului:Conjunctivită:0,2,3:", "durere oculară intensă:Glaucom:0,1,3:", "Percepție slabă a profunzimii și vedere periferică:Ambliopia:0,1,2:"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat10, //
         questionConfig.diff3, //
-        ["A new lump in the breast or underarm:Cancer mamar:1,2,3:", "Blood in the urine:Cancer de prostată:2,3,4:", "A change in bowel habits:Cancer colorectal:1,3,4:", "a cough that doesn't go away after 2 or 3 weeks:Cancer de plamani:1,2,4:", "A mole that changes in color, size or that bleeds:Cancer de piele:0,1,3:"]);
+        ["Un nou nodul la sân sau la subrat:Cancer mamar:1,2,3:", "Sânge în urină:Cancer de prostată:2,3,4:", "O schimbare a obiceiurilor intestinale:Cancer colorectal:1,3,4:", "o tuse care nu dispare după 2 sau 3 săptămâni:Cancer de plamani:1,2,4:", "O aluniță care își schimbă culoarea, dimensiunea sau care sângerează:Cancer de piele:0,1,3:"]);
     addQuestions(
         result, //
         language, //
         questionConfig.cat11, //
         questionConfig.diff3, //
-        ["Bluish color in skin, fingernails, and lips:Hipoxemie:1,2,3:", "Twitching in your hands, face, and feet:Hipocalcemie:0,2,4:", "More frequent urination and thirst:Hipercalcemie:0,1:", "weakening of bones:hipofosfatemie:0,4:", "muscle cramps or spasms:Hiperfosfatemia:0,1:"]);
+        ["Culoare albăstruie în piele, unghii și buze:Hipoxemie:1,2,3:", "Tremurări în mâini, față și picioare:Hipocalcemie:0,2,4:", "Urinări mai frecvente și sete:Hipercalcemie:0,1:", "slăbirea oaselor:hipofosfatemie:0,4:", "crampe sau spasme musculare:Hiperfosfatemia:0,1:"]);
   }
+
 
 }

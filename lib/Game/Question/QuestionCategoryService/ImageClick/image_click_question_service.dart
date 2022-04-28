@@ -39,11 +39,6 @@ class ImageClickQuestionService extends QuestionService {
   }
 
   @override
-  bool isAnswerCorrectInQuestion(Question question, String answer) {
-    return true;
-  }
-
-  @override
   bool isGameFinishedFailed(
       Question question, Iterable<String> pressedAnswers) {
     return pressedAnswers.isNotEmpty &&

@@ -1,12 +1,10 @@
 import 'package:collection/src/iterable_extensions.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_info.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_info_status.dart';
 import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/Base/question_service.dart';
-import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Constants/geoquiz_game_question_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/list_extension.dart';
 
 class GameUser {

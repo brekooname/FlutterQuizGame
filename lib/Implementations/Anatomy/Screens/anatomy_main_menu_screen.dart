@@ -7,9 +7,11 @@ import 'package:flutter_app_quiz_game/Implementations/Anatomy/Constants/anatomy_
 import 'package:flutter_app_quiz_game/Implementations/Anatomy/Questions/AllContent/anatomy_question_collector_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/Anatomy/Service/anatomy_local_storage.dart';
 import 'package:flutter_app_quiz_game/Implementations/Anatomy/Service/anatomy_screen_manager.dart';
+import 'package:flutter_app_quiz_game/Implementations/Anatomy/anatomy_game_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/button_skin_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/floating_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
+import 'package:flutter_app_quiz_game/Lib/Color/color_util.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/map_extension.dart';
 import 'package:flutter_app_quiz_game/Lib/Localization/label_mixin.dart';
 import 'package:flutter_app_quiz_game/Lib/Popup/settings_popup.dart';
@@ -28,6 +30,7 @@ class AnatomyMainMenuScreen extends StandardScreen<AnatomyScreenManagerState> {
   final AnatomyQuestionCollectorService _anatomyQuestionCollectorService =
       AnatomyQuestionCollectorService();
   final AnatomyLocalStorage _anatomyLocalStorage = AnatomyLocalStorage();
+  final AnatomyGameConfig _anatomyGameConfig = AnatomyGameConfig();
 
   AnatomyMainMenuScreen(AnatomyScreenManagerState gameScreenManagerState,
       {Key? key})
@@ -51,13 +54,19 @@ class AnatomyMainMenuScreenState extends State<AnatomyMainMenuScreen>
   Widget build(BuildContext context) {
     debugPrint("build main menu");
     var gameTitle = GameTitle(
+      textWidth: screenDimensions.dimen(50),
+      textShadow: Shadow(
+        offset: Offset(
+            FontConfig.standardShadowOffset, FontConfig.standardShadowOffset),
+        blurRadius: FontConfig.standardShadowRadius * 2,
+        color: Colors.black.withOpacity(0.2),
+      ),
       text: MyApp.appTitle,
-      backgroundImageWidth: screenDimensions.dimen(70),
       fontConfig: FontConfig(
           fontColor: Colors.lightGreenAccent,
-          fontWeight: FontWeight.normal,
-          fontSize: FontConfig.bigFontSize,
-          borderColor: Colors.green),
+          fontWeight: FontWeight.w600,
+          fontSize: FontConfig.getCustomFontSize(1.5),
+          borderColor: Colors.green.shade900),
     );
 
     AnatomyGameQuestionConfig questionConfig = AnatomyGameQuestionConfig();

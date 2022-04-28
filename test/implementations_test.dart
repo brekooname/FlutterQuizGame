@@ -7,8 +7,10 @@ import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Constants/geoquiz_
 import 'package:flutter_app_quiz_game/Implementations/History/Constants/history_campaign_level_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/PersTest/Constants/perstest_campaign_level_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Constants/language.dart';
+import 'package:flutter_app_quiz_game/Lib/Screen/Game/ImageClick/image_click_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/Options/quiz_options_game_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen.dart';
+import 'package:flutter_app_quiz_game/Lib/Screen/Game/quiz_question_manager.dart';
 import 'package:flutter_app_quiz_game/main.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -29,6 +31,7 @@ List<TestAppConfig> getAppsToTest() {
 void main() {
   testWidgets('all game implementations are tested',
       (WidgetTester tester) async {
+    await TestUtil.initApp(tester);
     for (TestAppConfig testAppConfig in getAppsToTest()) {
       for (Language lang in testAppConfig.languages) {
         await testApp(tester, testAppConfig.appKey, lang,
@@ -42,7 +45,7 @@ void main() {
 Future<void> testApp(WidgetTester tester, String appKey, Language lang,
     CampaignLevelService campaignLevelService, bool hasQuizScreens) async {
   for (int i = 0; i < 2; i++) {
-    await TestUtil.initApp(lang, appKey, tester);
+    await TestUtil.updateAppKeyAndLang(appKey, lang, tester);
     debugPrint("testing =======> " +
         appKey +
         " lang: " +
@@ -55,13 +58,12 @@ Future<void> testApp(WidgetTester tester, String appKey, Language lang,
 Future<void> testAllCampaignLevels(WidgetTester tester, String appKey,
     CampaignLevelService campaignLevelService, bool hasQuizScreens) async {
   for (CampaignLevel campaignLevel in campaignLevelService.allLevels) {
-    MyApp.gameScreenManager.currentScreen!.gameScreenManagerState
-        .showNewGameScreen(campaignLevel);
+    var currentScreen = MyApp.gameScreenManager.currentScreen!;
+    currentScreen.gameScreenManagerState.showNewGameScreen(campaignLevel);
     await TestUtil.pumpWidget(tester, MyApp.gameScreenManager);
 
     for (QuestionCategory category in campaignLevel.categories) {
-      var gameContext =
-          (MyApp.gameScreenManager.currentScreen! as GameScreen).gameContext;
+      var gameContext = (currentScreen as GameScreen).gameContext;
       if (gameContext.gameUser
               .getOpenQuestions()
               .where((element) => element.question.category == category)
@@ -69,23 +71,32 @@ Future<void> testAllCampaignLevels(WidgetTester tester, String appKey,
           appKey == "geoquiz") {
         continue;
       }
-      MyApp.gameScreenManager.currentScreen!.gameScreenManagerState
-          .showGameScreenWithConfig(
-              campaignLevel.difficulty, category, gameContext);
+      currentScreen.gameScreenManagerState.showGameScreenWithConfig(
+          campaignLevel.difficulty, category, gameContext);
       await TestUtil.pumpWidget(tester, MyApp.gameScreenManager);
 
-      var gameScreen = MyApp.gameScreenManager.currentScreen! as GameScreen;
       if (hasQuizScreens) {
-        var quizOptionsGameScreen =
-            MyApp.gameScreenManager.currentScreen! as QuizOptionsGameScreen;
+        QuizQuestionManager? quizQuestionManager;
+
+        if (currentScreen is QuizOptionsGameScreen) {
+          quizQuestionManager =
+              (currentScreen as QuizOptionsGameScreen).quizQuestionManager;
+        } else if (currentScreen is ImageClickScreen) {
+          quizQuestionManager =
+              (currentScreen as ImageClickScreen).quizQuestionManager;
+        }
+
+        if (quizQuestionManager == null) {
+          throw Exception("No QuizQuestionManager set");
+        }
+
         debugPrint("-----" +
-            gameScreen.listOfCurrentQuestionInfo.first.question.rawString);
-        expect(
-            quizOptionsGameScreen.quizQuestionManager.possibleAnswers.length >=
-                4,
-            true);
+            currentScreen.listOfCurrentQuestionInfo.first.question.rawString);
+        expect(quizQuestionManager!.possibleAnswers.length >= 3, true,
+            reason: "actual " +
+                quizQuestionManager.possibleAnswers.length.toString());
       }
-      expect(gameScreen.listOfCurrentQuestionInfo.isNotEmpty, true);
+      expect(currentScreen.listOfCurrentQuestionInfo.isNotEmpty, true);
     }
   }
 }
