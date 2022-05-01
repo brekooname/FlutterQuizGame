@@ -19,8 +19,6 @@ import 'package:flutter_app_quiz_game/Lib/Screen/Game/quiz_question_container.da
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/quiz_question_manager.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
 
-import 'anatomy_levels_screen.dart';
-
 class AnatomyQuestionScreen
     extends GameScreen<AnatomyGameContext, AnatomyScreenManagerState>
     with QuizOptionsGameScreen<QuizQuestionManager> {
@@ -75,11 +73,12 @@ class AnatomyQuestionScreenState extends State<AnatomyQuestionScreen>
     with ScreenState, QuizQuestionContainer, LabelMixin {
   @override
   void initState() {
+    super.initState();
     widget.backgroundImage = imageService.getSpecificImage(
         imageName: widget.category.index.toString() + "t",
         module: "categories",
         imageExtension: "png");
-    super.initState();
+    // initScreenState(onUserEarnedReward: () {  _onHintButtonClick();  });
   }
 
   @override
@@ -118,8 +117,7 @@ class AnatomyQuestionScreenState extends State<AnatomyQuestionScreen>
               disableHintBtn: widget
                   .quizQuestionManager.hintDisabledPossibleAnswers.isNotEmpty,
               hintButtonOnClick: () {
-                widget.quizQuestionManager
-                    .onHintButtonClickForCatDiff(setStateCallback);
+                _onHintButtonClick();
               },
               availableHints: widget.gameContext.amountAvailableHints,
             ),
@@ -130,6 +128,10 @@ class AnatomyQuestionScreenState extends State<AnatomyQuestionScreen>
             SizedBox(height: screenDimensions.dimen(5))
           ],
         ));
+  }
+
+  void _onHintButtonClick() {
+    widget.quizQuestionManager.onHintButtonClickForCatDiff(setStateCallback);
   }
 
   void setStateCallback() {

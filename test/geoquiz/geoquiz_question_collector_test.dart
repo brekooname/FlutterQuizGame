@@ -21,7 +21,7 @@ GeoQuizQuestionCollectorService collectorService =
 void main() {
   testWidgets('GeoQuizQuestionCollectorService is tested',
       (WidgetTester tester) async {
-    await TestUtil.initApp(Language.en, "geoquiz", tester);
+    await TestUtil.initApp("geoquiz", Language.en, tester);
 
     testStatisticsQuestions(
         questionConfig.cat0, questionConfig.diff0, questionConfig.diff1);
@@ -94,17 +94,13 @@ Map<CategoryDifficulty, ExpectedRankedCountries>
             80, 85, "Germany", "Romania", "Malaysia", "Andorra"),
     //////////////////////////////////////////////////////////////
     CategoryDifficulty(questionConfig.cat9, questionConfig.diff0):
-        ExpectedRankedCountries(
-            10, 15, "Germany", "Italy", "Croatia", "Nepal"),
+        ExpectedRankedCountries(10, 15, "Germany", "Italy", "Croatia", "Nepal"),
     CategoryDifficulty(questionConfig.cat9, questionConfig.diff1):
-        ExpectedRankedCountries(
-            15, 20, "Germany", "Italy", "Croatia", "Nepal"),
+        ExpectedRankedCountries(15, 20, "Germany", "Italy", "Croatia", "Nepal"),
     CategoryDifficulty(questionConfig.cat9, questionConfig.diff2):
-        ExpectedRankedCountries(
-            25, 30, "Germany", "Italy", "Croatia", "Nepal"),
+        ExpectedRankedCountries(25, 30, "Germany", "Italy", "Croatia", "Nepal"),
     CategoryDifficulty(questionConfig.cat9, questionConfig.diff3):
-        ExpectedRankedCountries(
-            55, 60, "Germany", "Italy", "Croatia", "Nepal"),
+        ExpectedRankedCountries(55, 60, "Germany", "Italy", "Croatia", "Nepal"),
   };
 }
 

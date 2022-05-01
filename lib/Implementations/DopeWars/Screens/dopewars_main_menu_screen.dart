@@ -51,7 +51,7 @@ class DopeWarsMainMenuScreenState extends State<DopeWarsMainMenuScreen>
     debugPrint("build main menu");
     var titleColor = ColorUtil.colorDarken(Colors.green.shade900);
     var gameTitle = GameTitle(
-      backgroundImageWidth: screenDimensions.w(80),
+      backgroundImageWidth: screenDimensions.dimen(80),
       backgroundImagePath: assetsService.getSpecificAssetPath(
           assetExtension: "png", assetName: "title_background"),
       text: MyApp.appTitle,

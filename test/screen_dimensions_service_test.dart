@@ -8,7 +8,7 @@ import 'util/test_util.dart';
 void main() {
   testWidgets('ScreenDimensionsService is tested', (WidgetTester tester) async {
     //PORTRAIT
-    await TestUtil.initApp(Language.en, "geoquiz", tester);
+    await TestUtil.initApp("geoquiz", Language.en, tester);
     expectDimensions(const MediaQueryData(size: Size(1280, 552)), 310.5, 552);
     expectDimensions(
         const MediaQueryData(size: Size(552, 1280)), 552.0, 981.3333333333333);
@@ -18,7 +18,7 @@ void main() {
         const MediaQueryData(size: Size(1000, 1000)), 562.5, 1000.0);
 
     //LANDSCAPE
-    await TestUtil.initApp(Language.en, "perstest", tester);
+    await TestUtil.initApp("perstest", Language.en, tester);
     expectDimensions(
         const MediaQueryData(size: Size(1280, 552)), 981.3333333333333, 552);
     expectDimensions(const MediaQueryData(size: Size(1280, 1000)), 1280, 720);

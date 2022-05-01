@@ -49,7 +49,7 @@ class AnatomyGameContextService {
         _anatomyLocalStorage.getRemainingHintsForCatDiff(cat, diff);
     if (currentHints == -1) {
       _anatomyLocalStorage.setRemainingHintsForCatDiff(
-          cat, diff, MyApp.isExtraContentLocked ? 8 : 3);
+          cat, diff, MyApp.isExtraContentLocked ? 3 : 8);
     }
     return _anatomyLocalStorage.getRemainingHintsForCatDiff(cat, diff);
   }

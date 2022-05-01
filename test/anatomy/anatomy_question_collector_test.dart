@@ -15,7 +15,7 @@ AnatomyQuestionCollectorService collectorService =
 void main() {
   testWidgets('AnatomyQuestionCollectorService is tested',
       (WidgetTester tester) async {
-    await TestUtil.initApp(Language.en, "anatomy", tester);
+    await TestUtil.initApp("anatomy", Language.en, tester);
     questionConfig.categories;
     questionConfig.difficulties;
     testDependentQuestions();

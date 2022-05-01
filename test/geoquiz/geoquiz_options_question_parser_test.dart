@@ -6,21 +6,21 @@ import 'package:flutter_test/flutter_test.dart';
 import '../util/test_util.dart';
 
 void main() {
-  testWidgets('getAllPossibleAnswersForQuestion is tested', (WidgetTester tester) async {
-    await TestUtil.initApp(Language.en, "geoquiz", tester);
+  testWidgets('getAllPossibleAnswersForQuestion is tested',
+      (WidgetTester tester) async {
+    await TestUtil.initApp("geoquiz", Language.en, tester);
 
     GeoQuizCountryUtils geoQuizCountryUtils = GeoQuizCountryUtils();
 
     GeoQuizOptionsQuestionParser questionParser =
-    GeoQuizOptionsQuestionParser();
+        GeoQuizOptionsQuestionParser();
 
     int opt1 = 0;
     int opt2 = 0;
     var triesToTest = 20;
     for (int i = 0; i < triesToTest; i++) {
-      Set<String> res =
-          questionParser.getAnswerOptionsInCountryRange(
-              "Italy", {"Austria", "Germany"}, {"Switzerland"}, 1, 4);
+      Set<String> res = questionParser.getAnswerOptionsInCountryRange(
+          "Italy", {"Austria", "Germany"}, {"Switzerland"}, 1, 4);
 
       expect(res.length, 4);
       expect(res.contains("Italy"), false);
@@ -38,9 +38,8 @@ void main() {
     expect(opt1 + opt2, triesToTest);
 
     for (int i = 0; i < triesToTest; i++) {
-      Set<String> res =
-          questionParser.getAnswerOptionsInCountryRange(
-              "Italy", {"Austria"}, {"Germany"}, 1, 4);
+      Set<String> res = questionParser.getAnswerOptionsInCountryRange(
+          "Italy", {"Austria"}, {"Germany"}, 1, 4);
 
       expect(res.length, 4);
       expect(res.contains("Italy"), false);

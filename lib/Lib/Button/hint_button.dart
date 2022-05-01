@@ -31,8 +31,10 @@ class HintButton extends StatefulWidget {
       : super(key: key) {
     var side = screenDimensions.dimen(14);
     this.buttonSize = buttonSize ?? Size(side, side);
-    assert(!watchRewardedAdForHint ||
-        watchRewardedAdForHint && _adService.watchRewardedAdPopup != null);
+    if (watchRewardedAdForHint && _adService.watchRewardedAdPopup == null) {
+      throw Exception(
+          "Init watchRewardedAdPopup inside initState() method with: initScreenState(onUserEarnedReward: () {  _onHintButtonClick();  });");
+    }
   }
 
   @override

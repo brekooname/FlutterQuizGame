@@ -53,6 +53,6 @@ class GameTitle extends StatelessWidget {
       ),
     ]);
 
-    return Container(color: backgroundColor, width: textWidth, child: imageWithText);
+    return Container(color: backgroundColor, width: backgroundImageWidth, child: imageWithText);
   }
 }

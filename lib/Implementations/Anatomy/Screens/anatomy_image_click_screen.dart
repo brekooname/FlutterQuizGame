@@ -66,6 +66,9 @@ class AnatomyImageClickScreenState extends State<AnatomyImageClickScreen>
   void initState() {
     super.initState();
     widget.initImageToClick();
+    initScreenState(onUserEarnedReward: () {
+      _onHintButtonClick();
+    });
   }
 
   @override
@@ -89,7 +92,7 @@ class AnatomyImageClickScreenState extends State<AnatomyImageClickScreen>
         disableHintBtn:
             widget.quizQuestionManager.hintDisabledPossibleAnswers.isNotEmpty,
         hintButtonOnClick: () {
-          widget.quizQuestionManager.onHintButtonClickForCatDiff(setStateCallback);
+          _onHintButtonClick();
         },
         availableHints: widget.gameContext.amountAvailableHints,
       ),
@@ -106,6 +109,10 @@ class AnatomyImageClickScreenState extends State<AnatomyImageClickScreen>
     ]);
 
     return mainColumn;
+  }
+
+  void _onHintButtonClick() {
+    widget.quizQuestionManager.onHintButtonClickForCatDiff(setStateCallback);
   }
 
   void setStateCallback() {

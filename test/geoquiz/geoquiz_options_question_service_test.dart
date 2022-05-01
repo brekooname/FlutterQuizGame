@@ -21,7 +21,7 @@ GeoQuizOptionsQuestionService questionService = GeoQuizOptionsQuestionService(
 
 void main() {
   testWidgets('question service is tested', (WidgetTester tester) async {
-    await TestUtil.initApp(Language.en, "geoquiz", tester);
+    await TestUtil.initApp("geoquiz", Language.en, tester);
 
     //CAT0
     //CAT1

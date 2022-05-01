@@ -26,13 +26,13 @@ class QuestionCategory {
   QuestionCategoryService getQuestionCategoryService(QuestionDifficulty diff) {
     var questionCategoryService = _questionCategoryServiceMap
         .get<QuestionDifficulty, QuestionCategoryService>(diff);
-    if (questionCategoryService == null) {
+    if (questionCategoryService == null && _questionCategoryService == null) {
       throw UnsupportedError("No question service found for diff " +
           diff.name +
           " and cat " +
           name);
     }
-    return questionCategoryService;
+    return questionCategoryService ?? _questionCategoryService!;
   }
 
   String get name {

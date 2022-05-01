@@ -6,7 +6,13 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class TestUtil {
-  static Future<void> initApp(WidgetTester tester) async {
+  static Future<void> initApp(
+      String appKey, Language lang, WidgetTester tester) async {
+    initBaseApp(tester);
+    updateAppKeyAndLang(appKey, lang, tester);
+  }
+
+  static Future<void> initBaseApp(WidgetTester tester) async {
     SharedPreferences.setMockInitialValues({});
     FontConfig.fontScale = 30;
     MyApp.kIsAutomatedTest = true;

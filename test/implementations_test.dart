@@ -31,7 +31,7 @@ List<TestAppConfig> getAppsToTest() {
 void main() {
   testWidgets('all game implementations are tested',
       (WidgetTester tester) async {
-    await TestUtil.initApp(tester);
+    await TestUtil.initBaseApp(tester);
     for (TestAppConfig testAppConfig in getAppsToTest()) {
       for (Language lang in testAppConfig.languages) {
         await testApp(tester, testAppConfig.appKey, lang,
