@@ -128,10 +128,10 @@ flutter:
     ########################
     ###### DOPEWARS ################################################################################
     ########################
-    - assets/implementations/dopewars/
-    - assets/implementations/dopewars/buttons/
-    - assets/implementations/dopewars/general/
-    - assets/implementations/dopewars/resource_background/
+    #- assets/implementations/dopewars/
+    #- assets/implementations/dopewars/buttons/
+    #- assets/implementations/dopewars/general/
+    #- assets/implementations/dopewars/resource_background/
     ########################
     ###### PERSTEST ################################################################################
     ########################

@@ -175,8 +175,7 @@ abstract class PersTestGameTypeReport with LabelMixin {
                   context, PersTestDescriptionPopup(attr.description));
             },
             contentLockedConfig: ContentLockedConfig(
-                isContentLocked: MyApp.isExtraContentLocked,
-                contentLockedMode: ContentLockedMode.contentLockedButtonNormal),
+                isContentLocked: MyApp.isExtraContentLocked),
             textMaxLines: 1,
             text: attr.label,
             size: btnSize,

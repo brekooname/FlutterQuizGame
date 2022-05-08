@@ -124,13 +124,20 @@ abstract class QuizGameLocalStorage extends MyLocalStorage {
 
   void clearAll() {
     for (var diff in MyApp.appId.gameConfig.questionDifficulties) {
-      resetLevelQuestionsAndHints(diff);
+      for (var cat in MyApp.appId.gameConfig.questionCategories) {
+        resetHintsForCatDiff(cat, diff);
+      }
+      resetHintsForDiff(diff);
+      resetLevelQuestions(diff);
       localStorage.setInt(_getTotalWonQuestionsFieldName(diff), 0);
     }
   }
 
-  void resetLevelQuestionsAndHints(QuestionDifficulty diff) {
-    resetLevelQuestions(diff);
+  void resetHintsForCatDiff(QuestionCategory cat, QuestionDifficulty diff) {
+    localStorage.setInt(_getRemainingHintsForCatDiffFieldName(cat, diff), -1);
+  }
+
+  void resetHintsForDiff(QuestionDifficulty diff) {
     localStorage.setInt(_getRemainingHintsForDiffFieldName(diff), -1);
   }
 

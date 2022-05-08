@@ -81,7 +81,7 @@ class AnatomyGameConfig extends GameConfig {
       case Language.ja:
         return "解剖学";
       case Language.ko:
-        return "해부";
+        return "해부학";
       case Language.ms:
         return "Anatomi";
       case Language.nl:

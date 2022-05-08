@@ -49,16 +49,15 @@ class MyApp extends StatefulWidget {
   // static String webAppKey = "history";
   // static String webAppKey = "geoquiz";
   // static String webAppKey = "perstest";
-  static String webAppKey = "dopewars";
-  // static String webAppKey = "anatomy";
+  // static String webAppKey = "dopewars";
+  static String webAppKey = "anatomy";
   static CampaignLevel campaignLevel =
       AnatomyCampaignLevelService().level_image_click;
 
   //
-  static Language webLanguage = Language.en;
+  static Language webLanguage = Language.he;
   static bool webIsPro = true;
-
-  // static bool webIsPro = true;
+  // static bool webIsPro = false;
 
   ////////////
   //////

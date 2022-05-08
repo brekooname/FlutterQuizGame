@@ -11,7 +11,6 @@ import 'package:flutter_app_quiz_game/Implementations/Anatomy/anatomy_game_confi
 import 'package:flutter_app_quiz_game/Lib/Button/button_skin_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/floating_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
-import 'package:flutter_app_quiz_game/Lib/Color/color_util.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/map_extension.dart';
 import 'package:flutter_app_quiz_game/Lib/Localization/label_mixin.dart';
 import 'package:flutter_app_quiz_game/Lib/Popup/settings_popup.dart';
@@ -131,6 +130,7 @@ class AnatomyMainMenuScreenState extends State<AnatomyMainMenuScreen>
 
   Widget _createCategoryItem(
       QuestionCategory category, List<QuestionDifficulty> difficulties) {
+    AnatomyGameQuestionConfig questionConfig = AnatomyGameQuestionConfig();
     Size btnSize = Size(screenDimensions.dimen(40), screenDimensions.dimen(60));
     Image catImg = imageService.getSpecificImage(
         imageName: category.index.toString() + "s",
@@ -169,7 +169,17 @@ class AnatomyMainMenuScreenState extends State<AnatomyMainMenuScreen>
         ]);
 
     var allQuestionsAnswered = totalWonQuestions == totalQuestionsLevel;
+    var contentLocked = MyApp.isExtraContentLocked &&
+        [questionConfig.cat10, questionConfig.cat11].contains(category);
     MyButton lvlBtn = MyButton(
+      contentLockedConfig: ContentLockedConfig(
+          isContentLocked: contentLocked,
+          lockedIcon: contentLocked
+              ? imageService.getSpecificImage(
+                  imageName: "btn_locked",
+                  imageExtension: "png",
+                  module: "buttons")
+              : null),
       textMaxLines: 4,
       width: btnSize.width,
       customContent: customContent,

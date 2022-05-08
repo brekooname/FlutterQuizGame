@@ -44,10 +44,13 @@ class AnatomyLevelHeader extends StatelessWidget {
       checkImgList.add(Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.horizontal(
-              left: Radius.circular(i == 0 ? checkContainerBorderRadius : 0),
-              right: Radius.circular(i == totalQuestionsLevel - 1
+              left: Radius.circular(i == 0 && !FontConfig.isRtlLanguage
                   ? checkContainerBorderRadius
-                  : 0)),
+                  : 0),
+              right: Radius.circular(
+                  (i == totalQuestionsLevel - 1) && !FontConfig.isRtlLanguage
+                      ? checkContainerBorderRadius
+                      : 0)),
           color: i < totalWonQuestions ? Colors.green : Colors.grey.shade200,
         ),
         height: checkContainerDimen,

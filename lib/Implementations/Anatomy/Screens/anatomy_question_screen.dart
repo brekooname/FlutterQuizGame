@@ -78,7 +78,9 @@ class AnatomyQuestionScreenState extends State<AnatomyQuestionScreen>
         imageName: widget.category.index.toString() + "t",
         module: "categories",
         imageExtension: "png");
-    // initScreenState(onUserEarnedReward: () {  _onHintButtonClick();  });
+    initScreenState(onUserEarnedReward: () {
+      _onHintButtonClick();
+    });
   }
 
   @override

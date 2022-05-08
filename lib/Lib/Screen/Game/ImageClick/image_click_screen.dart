@@ -95,6 +95,23 @@ mixin ImageClickScreen<TQuizQuestionManager extends QuizQuestionManager> {
     VoidCallback refreshSetState,
     VoidCallback goToNextScreenAfterPress,
   ) {
+    List<Widget> answerPointerChildren = [];
+    var answerBtn = _createAnswerButton(
+        imageClickInfo, refreshSetState, goToNextScreenAfterPress);
+    var answerLine = Stack(
+        alignment: Alignment.centerLeft,
+        clipBehavior: Clip.none,
+        children: [
+          _createAnswerPointerLine(imageClickInfo),
+          _createAnswerPointerPoint(),
+        ]);
+    if (FontConfig.isRtlLanguage) {
+      answerPointerChildren.add(answerBtn);
+      answerPointerChildren.add(answerLine);
+    } else {
+      answerPointerChildren.add(answerLine);
+      answerPointerChildren.add(answerBtn);
+    }
     return Stack(
         alignment: Alignment.centerLeft,
         clipBehavior: Clip.none,
@@ -106,17 +123,7 @@ mixin ImageClickScreen<TQuizQuestionManager extends QuizQuestionManager> {
                   alignment: Alignment.center,
                   clipBehavior: Clip.none,
                   children: [
-                    Row(children: [
-                      Stack(
-                          alignment: Alignment.centerLeft,
-                          clipBehavior: Clip.none,
-                          children: [
-                            _createAnswerPointerLine(imageClickInfo),
-                            _createAnswerPointerPoint(),
-                          ]),
-                      _createAnswerButton(imageClickInfo, refreshSetState,
-                          goToNextScreenAfterPress),
-                    ]),
+                    Row(children: answerPointerChildren),
                     _createAnswerLabel(imageClickInfo)
                   ]))
         ]);

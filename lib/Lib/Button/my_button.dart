@@ -100,10 +100,7 @@ class MyButtonState extends State<MyButton> {
     }
 
     if (widget.contentLockedConfig.isContentLocked) {
-      if (widget.contentLockedConfig.contentLockedMode ==
-          ContentLockedMode.contentLockedButtonLock) {
-        buttonContent = buildContentLocked(buttonContent);
-      }
+      buttonContent = buildContentLocked(buttonContent);
       widget.onClick = () {
         InAppPurchasesPopupService(buildContext: context).showPopup();
       };
@@ -153,6 +150,10 @@ class MyButtonState extends State<MyButton> {
       !widget.disabled || widget.contentLockedConfig.isContentLocked;
 
   Widget buildContentLocked(Widget buttonContent) {
+    if (widget.contentLockedConfig.lockedIcon == null) {
+      return buttonContent;
+    }
+
     var decoration = BoxDecoration(
       borderRadius: BorderRadius.circular(widget.buttonSkinConfig.borderRadius),
       color: Colors.grey.shade400.withOpacity(0.5),
@@ -169,11 +170,7 @@ class MyButtonState extends State<MyButton> {
       ),
       AnimateZoomInZoomOut(
           toAnimateWidgetSize: Size(lockedImageSide, lockedImageSide),
-          toAnimateWidget: widget._imageService.getMainImage(
-              imageName: "btn_locked",
-              module: "buttons",
-              imageExtension: "png",
-              maxHeight: lockedImageSide))
+          toAnimateWidget: widget.contentLockedConfig.lockedIcon!)
     ]);
     return stack;
   }
@@ -269,21 +266,7 @@ class MyButtonState extends State<MyButton> {
 
 class ContentLockedConfig {
   bool isContentLocked;
-  late ContentLockedMode contentLockedMode;
+  Image? lockedIcon;
 
-  ContentLockedConfig(
-      {required this.isContentLocked, ContentLockedMode? contentLockedMode}) {
-    if (isContentLocked) {
-      this.contentLockedMode =
-          contentLockedMode ?? ContentLockedMode.contentLockedButtonLock;
-    } else {
-      this.contentLockedMode = ContentLockedMode.contentUnlocked;
-    }
-  }
-}
-
-enum ContentLockedMode {
-  contentLockedButtonLock,
-  contentLockedButtonNormal,
-  contentUnlocked
+  ContentLockedConfig({required this.isContentLocked, this.lockedIcon});
 }
