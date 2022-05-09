@@ -80,17 +80,7 @@ class AnatomyLevelsScreenState extends State<AnatomyLevelsScreen>
       var btnColor = allQuestionsAnswered
           ? Colors.green.shade200
           : levelColor.get<QuestionDifficulty, Color>(diff)!;
-      var contentLocked =
-          MyApp.isExtraContentLocked && diff == anatomyGameQuestionConfig.diff4;
       levelBtns.add(MyButton(
-        contentLockedConfig: ContentLockedConfig(
-            isContentLocked: contentLocked,
-            lockedIcon: contentLocked
-                ? imageService.getSpecificImage(
-                    imageName: "btn_locked",
-                    imageExtension: "png",
-                    module: "buttons")
-                : null),
         buttonSkinConfig: ButtonSkinConfig(
             borderColor: allQuestionsAnswered ? Colors.green : Colors.white,
             backgroundColor: btnColor),

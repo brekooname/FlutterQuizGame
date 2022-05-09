@@ -26,6 +26,7 @@ class TestUtil {
       String appKey, Language lang, WidgetTester tester) async {
     MyApp.webLanguage = lang;
     MyApp.webAppKey = appKey;
+    MyApp.appId.gameConfig.allQuestionsService.clearCache();
     await TestUtil.pumpWidget(tester, MyApp.gameScreenManager);
   }
 

@@ -34,22 +34,25 @@ void main() {
     await TestUtil.initBaseApp(tester);
     for (TestAppConfig testAppConfig in getAppsToTest()) {
       for (Language lang in testAppConfig.languages) {
-        await testApp(tester, testAppConfig.appKey, lang,
-            testAppConfig.campaignLevelService, testAppConfig.hasQuizScreens);
+        await TestUtil.updateAppKeyAndLang(testAppConfig.appKey, lang, tester);
+        await TestUtil.pumpWidget(tester, MyApp.gameScreenManager);
         _startApp();
+        debugPrint(
+            "testing ======================================================================> " +
+                testAppConfig.appKey +
+                " lang: " +
+                MyApp.appLocalizations.localeName);
+
+        await testApp(tester, testAppConfig.appKey,
+            testAppConfig.campaignLevelService, testAppConfig.hasQuizScreens);
       }
     }
   });
 }
 
-Future<void> testApp(WidgetTester tester, String appKey, Language lang,
+Future<void> testApp(WidgetTester tester, String appKey,
     CampaignLevelService campaignLevelService, bool hasQuizScreens) async {
-  for (int i = 0; i < 2; i++) {
-    await TestUtil.updateAppKeyAndLang(appKey, lang, tester);
-    debugPrint("testing =======> " +
-        appKey +
-        " lang: " +
-        MyApp.appLocalizations.localeName);
+  for (int i = 0; i < 10; i++) {
     await testAllCampaignLevels(
         tester, appKey, campaignLevelService, hasQuizScreens);
   }
@@ -57,33 +60,38 @@ Future<void> testApp(WidgetTester tester, String appKey, Language lang,
 
 Future<void> testAllCampaignLevels(WidgetTester tester, String appKey,
     CampaignLevelService campaignLevelService, bool hasQuizScreens) async {
+  await TestUtil.pumpWidget(tester, MyApp.gameScreenManager);
   for (CampaignLevel campaignLevel in campaignLevelService.allLevels) {
-    var currentScreen = MyApp.gameScreenManager.currentScreen!;
-    currentScreen.gameScreenManagerState.showNewGameScreen(campaignLevel);
+    MyApp.gameScreenManager.currentScreen!.gameScreenManagerState
+        .showNewGameScreen(campaignLevel);
     await TestUtil.pumpWidget(tester, MyApp.gameScreenManager);
 
     for (QuestionCategory category in campaignLevel.categories) {
-      var gameContext = (currentScreen as GameScreen).gameContext;
-      if (gameContext.gameUser
+      var gameContext =
+          (MyApp.gameScreenManager.currentScreen! as GameScreen).gameContext;
+      if (appKey == "geoquiz" &&
+          gameContext.gameUser
               .getOpenQuestions()
               .where((element) => element.question.category == category)
-              .isEmpty &&
-          appKey == "geoquiz") {
+              .isEmpty) {
         continue;
       }
-      currentScreen.gameScreenManagerState.showGameScreenWithConfig(
-          campaignLevel.difficulty, category, gameContext);
+      MyApp.gameScreenManager.currentScreen!.gameScreenManagerState
+          .showGameScreenWithConfig(
+              campaignLevel.difficulty, category, gameContext);
       await TestUtil.pumpWidget(tester, MyApp.gameScreenManager);
 
       if (hasQuizScreens) {
         QuizQuestionManager? quizQuestionManager;
 
-        if (currentScreen is QuizOptionsGameScreen) {
+        if (MyApp.gameScreenManager.currentScreen! is QuizOptionsGameScreen) {
           quizQuestionManager =
-              (currentScreen as QuizOptionsGameScreen).quizQuestionManager;
-        } else if (currentScreen is ImageClickScreen) {
+              (MyApp.gameScreenManager.currentScreen! as QuizOptionsGameScreen)
+                  .quizQuestionManager;
+        } else if (MyApp.gameScreenManager.currentScreen! is ImageClickScreen) {
           quizQuestionManager =
-              (currentScreen as ImageClickScreen).quizQuestionManager;
+              (MyApp.gameScreenManager.currentScreen! as ImageClickScreen)
+                  .quizQuestionManager;
         }
 
         if (quizQuestionManager == null) {
@@ -91,12 +99,20 @@ Future<void> testAllCampaignLevels(WidgetTester tester, String appKey,
         }
 
         debugPrint("-----" +
-            currentScreen.listOfCurrentQuestionInfo.first.question.rawString);
-        expect(quizQuestionManager!.possibleAnswers.length >= 3, true,
+            (MyApp.gameScreenManager.currentScreen! as GameScreen)
+                .listOfCurrentQuestionInfo
+                .first
+                .question
+                .rawString);
+        expect(quizQuestionManager.possibleAnswers.length >= 3, true,
             reason: "actual " +
                 quizQuestionManager.possibleAnswers.length.toString());
       }
-      expect(currentScreen.listOfCurrentQuestionInfo.isNotEmpty, true);
+      expect(
+          (MyApp.gameScreenManager.currentScreen! as GameScreen)
+              .listOfCurrentQuestionInfo
+              .isNotEmpty,
+          true);
     }
   }
 }

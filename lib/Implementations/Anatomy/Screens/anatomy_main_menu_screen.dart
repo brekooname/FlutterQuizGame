@@ -11,6 +11,7 @@ import 'package:flutter_app_quiz_game/Implementations/Anatomy/anatomy_game_confi
 import 'package:flutter_app_quiz_game/Lib/Button/button_skin_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/floating_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
+import 'package:flutter_app_quiz_game/Lib/Constants/language.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/map_extension.dart';
 import 'package:flutter_app_quiz_game/Lib/Localization/label_mixin.dart';
 import 'package:flutter_app_quiz_game/Lib/Popup/settings_popup.dart';
@@ -149,12 +150,18 @@ class AnatomyMainMenuScreenState extends State<AnatomyMainMenuScreen>
                     CategoryDifficulty(category, diff)) ??
             0)
         .reduce((a, b) => a + b);
+    var catLabel = category.categoryLabel!;
     var customContent = Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           MyText(
-            text: category.categoryLabel!,
+            text: catLabel,
+            width: btnSize.width / 1.05,
+            maxLines: ![Language.th.name].contains(MyApp.languageCode) &&
+                    !catLabel.contains(" ")
+                ? 1
+                : 5,
             fontConfig: FontConfig(
                 fontSize: FontConfig.getCustomFontSize(1.2),
                 fontColor: Colors.white,
@@ -170,7 +177,12 @@ class AnatomyMainMenuScreenState extends State<AnatomyMainMenuScreen>
 
     var allQuestionsAnswered = totalWonQuestions == totalQuestionsLevel;
     var contentLocked = MyApp.isExtraContentLocked &&
-        [questionConfig.cat10, questionConfig.cat11].contains(category);
+        [
+          questionConfig.cat8,
+          questionConfig.cat9,
+          questionConfig.cat10,
+          questionConfig.cat11
+        ].contains(category);
     MyButton lvlBtn = MyButton(
       contentLockedConfig: ContentLockedConfig(
           isContentLocked: contentLocked,
@@ -180,7 +192,6 @@ class AnatomyMainMenuScreenState extends State<AnatomyMainMenuScreen>
                   imageExtension: "png",
                   module: "buttons")
               : null),
-      textMaxLines: 4,
       width: btnSize.width,
       customContent: customContent,
       size: btnSize,

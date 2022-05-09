@@ -86,7 +86,7 @@ class AnatomyQuestionScreenState extends State<AnatomyQuestionScreen>
   @override
   Widget build(BuildContext context) {
     Widget questionContainer = createQuestionTextContainer(
-        widget.currentQuestionInfo.question, 1, 4,
+        widget.currentQuestionInfo.question, 2, 6,
         questionContainerDecoration: createQuestionContainerDecoration(),
         questionFontSize: FontConfig.getCustomFontSize(1.25),
         marginBetweenPrefixAndQuestion: screenDimensions.dimen(2));
@@ -127,7 +127,9 @@ class AnatomyQuestionScreenState extends State<AnatomyQuestionScreen>
             questionContainer,
             const Spacer(),
             optionsRows,
-            SizedBox(height: screenDimensions.dimen(5))
+            SizedBox(
+                height:
+                    screenDimensions.dimen(widget.questionHasImage() ? 2 : 5))
           ],
         ));
   }

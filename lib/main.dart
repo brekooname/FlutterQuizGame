@@ -55,7 +55,7 @@ class MyApp extends StatefulWidget {
       AnatomyCampaignLevelService().level_image_click;
 
   //
-  static Language webLanguage = Language.he;
+  static Language webLanguage = Language.zh;
   static bool webIsPro = true;
   // static bool webIsPro = false;
 

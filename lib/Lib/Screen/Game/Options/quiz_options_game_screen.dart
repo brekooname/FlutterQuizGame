@@ -38,6 +38,10 @@ mixin QuizOptionsGameScreen<TQuizQuestionManager extends QuizQuestionManager> {
             : multipleCorrectAnswersButtonSkinConfig ?? optionsButtonSkinConfig;
   }
 
+  bool questionHasImage() {
+    return _questionImage != null;
+  }
+
   Widget createOptionRows(
       VoidCallback refreshSetState, VoidCallback goToNextScreenAfterPress,
       {Widget? widgetBetweenImageAndOptionRows}) {
@@ -152,7 +156,8 @@ mixin QuizOptionsGameScreen<TQuizQuestionManager extends QuizQuestionManager> {
               quizQuestionManager.onClickAnswerOptionBtn(question,
                   answerBtnText, refreshSetState, goToNextScreenAfterPress);
             },
-            buttonSkinConfig: _optionsButtonSkinConfig ?? _defaultButtonSkinConfig(),
+            buttonSkinConfig:
+                _optionsButtonSkinConfig ?? _defaultButtonSkinConfig(),
             customContent: MyText(
               text: answerBtnText,
               maxLines: quizQuestionManager.getValueBasedOnNrOfPossibleAnswers(

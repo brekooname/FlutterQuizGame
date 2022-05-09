@@ -371,7 +371,7 @@ class AnatomyAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat2, //
         questionConfig.diff0, //
-        ["Делтовидна:4,1,5:65.3,80.2", "Бицепс:5,0,4:67.3,71.5", "Пекторален:5,0,4:52.5,76.4", "трапец:1,5,4:51.4,85.5", "Коремна външна наклонена:1,5,0:54.2,65.9", "Tibialis anterior:1,0,3:59.7,21.8"]);
+        ["Делтовидна:4,1,5:65.3,80.2", "Бицепс:5,0,4:67.3,71.5", "Пекторален:5,0,4:52.5,76.4", "трапец:1,5,4:51.4,85.5", "Коремна външна наклонена:1,5,0:54.2,65.9", "Преден тибиален мускул:1,0,3:59.7,21.8"]);
     addQuestions(
         result, //
         language, //
@@ -2542,7 +2542,7 @@ class AnatomyAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat10, //
         questionConfig.diff1, //
-        ["Mitä löytyy solun keskeltä ja se sisältää DNA:ta kromosomeihin järjestyneenä?:0,1,2,3", "Mikä solun alue liittyy solun ribosomien tuottamiseen?:1,2,3,4", "Mikä on hyytelömäinen neste, joka täyttää solun sisäpuolen?:2,3,4,5", "Mikä suojaa solua sen ulkoiselta ympäristöltä?:3,4,2,1", "Mikä on proteiinia tuottava solurakenne?:4,3,2,1", "Mikä muuntaa kemiallisen energian energiamuodoksi, jota solu voi käyttää?:5,4,3,2", "Mikä on eukaryoottisolun kuljetusjärjestelmä?:6,5,0,1"]);
+        ["Mitä löytyy solun keskeltä ja se sisältää DNA ta kromosomeihin järjestyneenä?:0,1,2,3", "Mikä solun alue liittyy solun ribosomien tuottamiseen?:1,2,3,4", "Mikä on hyytelömäinen neste, joka täyttää solun sisäpuolen?:2,3,4,5", "Mikä suojaa solua sen ulkoiselta ympäristöltä?:3,4,2,1", "Mikä on proteiinia tuottava solurakenne?:4,3,2,1", "Mikä muuntaa kemiallisen energian energiamuodoksi, jota solu voi käyttää?:5,4,3,2", "Mikä on eukaryoottisolun kuljetusjärjestelmä?:6,5,0,1"]);
     addQuestions(
         result, //
         language, //
@@ -10019,8 +10019,4 @@ class AnatomyAllQuestions extends AllQuestionsService {
         questionConfig.diff3, //
         ["皮肤、指甲和嘴唇呈蓝色:低氧血症:1,2,3:", "手、脸和脚抽搐:低钙血症:0,2,4:", "更频繁的排尿和口渴:高钙血症:0,1:", "骨骼变弱:低磷血症:0,4:", "肌肉痉挛或痉挛:高磷血症:0,1:"]);
   }
-
-
-
-
 }
