@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Game/GameType/game_config.dart';
 import 'package:flutter_app_quiz_game/Game/GameType/game_question_config.dart';
@@ -41,7 +43,14 @@ class AnatomyGameConfig extends GameConfig {
   Color get screenBackgroundColor => const Color.fromRGBO(198, 236, 255, 1);
 
   @override
-  String get extraContentProductId => "extracontent.anatomy";
+  String get extraContentProductId {
+    if (Platform.isAndroid) {
+      return "extracontent.anatomy";
+    } else if (Platform.isIOS) {
+      return "extraContentAnatomy";
+    }
+    throw UnsupportedError("Unsupported platform");
+  }
 
   @override
   String getTitle(Language language) {
