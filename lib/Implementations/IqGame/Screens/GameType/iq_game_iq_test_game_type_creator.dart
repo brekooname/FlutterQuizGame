@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_info.dart';
-import 'package:flutter_app_quiz_game/Implementations/IqGame/Components/iq_game_iq_test_bar_chart.dart';
+import 'package:flutter_app_quiz_game/Implementations/IqGame/Components/iq_game_iq_test_correct_answers_popup.dart';
 import 'package:flutter_app_quiz_game/Implementations/IqGame/Questions/iq_game_context.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/button_skin_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/string_extension.dart';
+import 'package:flutter_app_quiz_game/Lib/Popup/my_popup.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
 import '../../../../Lib/Font/font_config.dart';
@@ -103,25 +104,65 @@ class IqGameIqTestGameTypeCreator extends IqGameGameTypeCreator {
   }
 
   @override
-  Widget createGameOverContainer(IqGameContext gameContext) {
-    var graphHeight = screenDimensionsService.dimen(70);
-    var graphWidth = screenDimensionsService.dimen(95);
-    return Material(
-        color: Colors.white.withOpacity(0.6),
-        textStyle: const TextStyle(decoration: TextDecoration.none),
-        child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                        width: graphWidth,
-                        height: graphHeight,
-                        child: IqGameIqTestBarChart(100, 140))
-                  ])
-            ]));
+  Widget createGameOverContainer(
+      BuildContext context, IqGameContext gameContext) {
+    var imgWidth = screenDimensionsService.dimen(100);
+    var pointerWidth = screenDimensionsService.dimen(2);
+    var graphStack = Stack(children: [
+      imageService.getSpecificImage(
+          maxWidth: imgWidth, imageName: "finalscore", imageExtension: "png"),
+      Positioned(
+          top: 0,
+          left: screenDimensionsService.dimen(33) - pointerWidth / 2,
+          child: Container(
+            width: pointerWidth,
+            height: screenDimensionsService.dimen(41),
+            decoration: const BoxDecoration(color: Colors.red),
+          ))
+    ]);
+    return Column(children: [
+      graphStack,
+      SizedBox(
+        height: screenDimensionsService.dimen(5),
+      ),
+      MyText(
+          text: "115",
+          fontConfig: FontConfig(
+              fontWeight: FontWeight.w700,
+              fontSize: FontConfig.getCustomFontSize(1.4),
+              fontColor: Colors.red)),
+      SizedBox(
+        height: screenDimensionsService.dimen(1),
+      ),
+      MyText(
+          text: "(High)",
+          fontConfig: FontConfig(
+              fontWeight: FontWeight.w700,
+              fontSize: FontConfig.getCustomFontSize(1.1),
+              fontColor: Colors.black)),
+      SizedBox(
+        height: screenDimensionsService.dimen(2),
+      ),
+      MyText(
+          maxLines: 100,
+          width: screenDimensionsService.dimen(95),
+          text:
+              "The distribution of IQ in the population. The left side of the red line indicates the part of the population with an IQ lower than your own."),
+      SizedBox(
+        height: screenDimensionsService.dimen(10),
+      ),
+      MyButton(
+        text: "Show correct answers",
+        onClick: () {
+          MyPopup.showPopup(
+              context,
+              IqGameIqTestCorrectAnswersPopup(
+                  gameContext,
+                  "cat" +
+                      gameContext.questionConfig.categories.first.index
+                          .toString()));
+        },
+      ),
+    ]);
   }
 }

@@ -14,6 +14,7 @@ mixin MyPopup {
   late SizedBox margin;
   late NavigatorService _navigatorService;
   late double marginDoubleVal;
+  double? height;
   SnackBarService snackBarService = SnackBarService();
   ImageService imageService = ImageService();
   ButtonSize buttonSize = ButtonSize();
@@ -72,6 +73,7 @@ mixin MyPopup {
                   image: decorationImage,
                 ),
                 width: width,
+                height: height,
                 child: Padding(
                   padding: EdgeInsets.fromLTRB(marginDoubleVal, marginDoubleVal,
                       marginDoubleVal, marginDoubleVal * 2),

@@ -15,5 +15,6 @@ abstract class IqGameGameTypeCreator {
   Widget createGameContainer(QuestionInfo currentQuestionInfo,
       IqGameContext gameContext, VoidCallback goToNextScreen);
 
-  Widget createGameOverContainer(IqGameContext gameContext);
+  Widget createGameOverContainer(
+      BuildContext context, IqGameContext gameContext);
 }

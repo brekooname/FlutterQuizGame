@@ -37,7 +37,7 @@ class IqGameGameOverScreenState extends State<IqGameGameOverScreen>
               IqGameLevelHeader(null),
               const Spacer(),
               widget.iqGameGameTypeCreator
-                  .createGameOverContainer(widget.gameContext),
+                  .createGameOverContainer(context, widget.gameContext),
               const Spacer(),
             ]));
   }
