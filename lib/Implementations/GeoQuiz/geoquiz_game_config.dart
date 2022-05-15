@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Game/GameType/game_config.dart';
 import 'package:flutter_app_quiz_game/Game/GameType/game_question_config.dart';
@@ -43,7 +44,9 @@ class GeoQuizGameConfig extends GameConfig {
 
   @override
   String get extraContentProductId {
-    if (Platform.isAndroid) {
+    if (kIsWeb) {
+      return "extraContent";
+    } else if (Platform.isAndroid) {
       return "extracontent.geoquiz";
     } else if (Platform.isIOS) {
       return "extraContent";

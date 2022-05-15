@@ -32,7 +32,7 @@ class SkelScreenManagerState extends State<SkelScreenManager>
 
   @override
   Widget build(BuildContext context) {
-    return showScreen(widget.currentScreen);
+    return createScreen(widget.currentScreen);
   }
 
   @override

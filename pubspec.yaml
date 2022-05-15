@@ -107,6 +107,14 @@ flutter:
     - assets/main/popup/
     - assets/main/audio/
     ########################
+    ###### IQGAME ################################################################################
+    ########################
+    - assets/implementations/iqgame/
+    - assets/implementations/iqgame/buttons/
+    - assets/implementations/iqgame/cat0/
+    - assets/implementations/iqgame/cat1/
+    - assets/implementations/iqgame/cat2/
+    ########################
     ###### ANATOMY #################################################################################
     ########################
     - assets/implementations/anatomy/

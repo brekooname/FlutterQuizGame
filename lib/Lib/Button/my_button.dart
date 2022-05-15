@@ -11,7 +11,6 @@ import 'button_size.dart';
 
 class MyButton extends StatefulWidget {
   final ButtonSize _buttonSize = ButtonSize();
-  final ImageService _imageService = ImageService();
 
   late FontConfig fontConfig;
   late Color disabledBackgroundColor;
@@ -24,6 +23,7 @@ class MyButton extends StatefulWidget {
   bool pressed = false;
   bool disabled;
   bool visible;
+  bool unpressedShadow;
 
   double buttonAllPadding;
 
@@ -37,6 +37,7 @@ class MyButton extends StatefulWidget {
     this.buttonAllPadding = 0,
     this.disabled = false,
     this.visible = true,
+    this.unpressedShadow = true,
     Color? disabledBackgroundColor,
     VoidCallback? onClick,
     Size? size,
@@ -74,12 +75,12 @@ class MyButton extends StatefulWidget {
       );
     } else {
       if (this.buttonSkinConfig.image != null) {
-        customContent = createImageButtonContent();
+        customContent = _createImageButtonContent();
       }
     }
   }
 
-  Widget createImageButtonContent() {
+  Widget _createImageButtonContent() {
     return disabled
         ? ColorUtil.imageToGreyScale(buttonSkinConfig.image!)
         : buttonSkinConfig.image!;
@@ -185,7 +186,7 @@ class MyButtonState extends State<MyButton> {
 
   BoxDecoration? createImageButtonDecoration() {
     return BoxDecoration(
-        boxShadow: [createImageButtonShadow()],
+        boxShadow: createImageButtonShadow(),
         borderRadius:
             BorderRadius.circular(widget.buttonSkinConfig.borderRadius));
   }
@@ -216,13 +217,17 @@ class MyButtonState extends State<MyButton> {
             color: borderColor, width: buttonSkinConfig.borderWidth));
   }
 
-  BoxShadow createImageButtonShadow() {
-    return BoxShadow(
-        color: widget.pressed
-            ? Colors.grey.withOpacity(0.6)
-            : Colors.grey.withOpacity(0.2),
+  List<BoxShadow> createImageButtonShadow() {
+    var boxShadowColor = widget.pressed
+        ? Colors.grey.withOpacity(0.6)
+        : Colors.grey.withOpacity(0.2);
+    var boxShadow = BoxShadow(
+        color: boxShadowColor,
         spreadRadius: FontConfig.standardShadowRadius,
         blurRadius: FontConfig.standardShadowRadius);
+    return widget.unpressedShadow
+        ? [boxShadow]
+        : (widget.pressed ? [boxShadow] : []);
   }
 
   BoxShadow createButtonShadow() {

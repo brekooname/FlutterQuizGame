@@ -5,7 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_app_quiz_game/Implementations/Anatomy/Constants/anatomy_campaign_level_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/Anatomy/Constants/anatomy_game_question_config.dart';
+import 'package:flutter_app_quiz_game/Implementations/IqGame/Constants/iq_game_campaign_level_service.dart';
+import 'package:flutter_app_quiz_game/Implementations/IqGame/Service/iq_game_screen_manager.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/enum_extension.dart';
+import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -15,6 +18,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'Game/Constants/app_id.dart';
 import 'Game/Game/campaign_level.dart';
 import 'Implementations/Anatomy/Service/anatomy_screen_manager.dart';
+import 'Implementations/IqGame/Questions/iq_game_context.dart';
 import 'Lib/Ads/ad_service.dart';
 import 'Lib/Constants/language.dart';
 import 'Lib/Image/image_service.dart';
@@ -44,19 +48,20 @@ class MyApp extends StatefulWidget {
   static bool kIsAutomatedTest = false;
 
   //TODO ---VALUE CHANGED--- should be false
-  static bool kIsManualTest = false;
+  static bool kIsManualTest = true;
 
   // static String webAppKey = "history";
   // static String webAppKey = "geoquiz";
   // static String webAppKey = "perstest";
   // static String webAppKey = "dopewars";
-  static String webAppKey = "anatomy";
-  static CampaignLevel campaignLevel =
-      AnatomyCampaignLevelService().level_image_click;
+  // static String webAppKey = "anatomy";
+  static String webAppKey = "iqgame";
+  static CampaignLevel campaignLevel = IqGameCampaignLevelService().level_0;
 
   //
-  static Language webLanguage = Language.zh;
-  static bool webIsPro = false;
+  static Language webLanguage = Language.en;
+  static bool webIsPro = true;
+
   // static bool webIsPro = false;
 
   ////////////
@@ -200,15 +205,19 @@ class MyAppState extends State<MyApp> {
       ////
       // GeoQuizLocalStorage().setExperience(14000);
       widgetToShow = createScreen(MyApp.gameScreenManager, widget.bannerAd);
-      // Future.delayed(const Duration(milliseconds: 100), () {
-      //   MyApp.gameScreenManager.currentScreen!.gameScreenManagerState
-      //       .showNewGameScreen(MyApp.campaignLevel);
-      // });
-      // Future.delayed(const Duration(milliseconds: 100), () {
-      //   (MyApp.gameScreenManager.currentScreen!.gameScreenManagerState
-      //           as AnatomyScreenManagerState)
-      //       .showLevelsScreen(AnatomyGameQuestionConfig().cat1);
-      // });
+      Future.delayed(const Duration(milliseconds: 100), () {
+        MyApp.gameScreenManager.currentScreen!.gameScreenManagerState
+            .showNewGameScreen(MyApp.campaignLevel);
+      });
+      Future.delayed(const Duration(milliseconds: 100), () {
+        (MyApp.gameScreenManager.currentScreen!.gameScreenManagerState
+                as IqGameScreenManagerState)
+            .setCurrentScreenState((MyApp.gameScreenManager.currentScreen!
+                    .gameScreenManagerState as IqGameScreenManagerState)
+                .createGameOverScreen(
+                    (MyApp.gameScreenManager.currentScreen! as GameScreen)
+                        .gameContext as IqGameContext));
+      });
       ////
       //
       ////

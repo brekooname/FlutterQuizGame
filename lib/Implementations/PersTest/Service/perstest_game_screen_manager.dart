@@ -34,7 +34,7 @@ class PersTestGameScreenManagerState extends State<PersTestGameScreenManager>
 
   @override
   Widget build(BuildContext context) {
-    return showScreen(widget.currentScreen);
+    return createScreen(widget.currentScreen);
   }
 
   @override

@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_app_quiz_game/Game/Game/campaign_level.dart';
 import 'package:flutter_app_quiz_game/Game/Game/game_context.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
-import 'package:flutter_app_quiz_game/Game/Question/Model/question_config.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/standard_screen.dart';
 
@@ -48,7 +47,7 @@ mixin GameScreenManagerState<TGameContext extends GameContext> {
   }
 
   @protected
-  Widget showScreen(StandardScreen? currentScreen) {
+  Widget createScreen(StandardScreen? currentScreen) {
     return currentScreen != null
         ? SafeArea(
             child: AnimatedSwitcher(
@@ -61,7 +60,7 @@ mixin GameScreenManagerState<TGameContext extends GameContext> {
         : Container();
   }
 
-  StandardScreen getScreenAfterGameOver(QuestionConfig questionConfig) {
+  StandardScreen getScreenAfterGameOver(TGameContext gameContext) {
     return createMainScreen();
   }
 
@@ -72,7 +71,7 @@ mixin GameScreenManagerState<TGameContext extends GameContext> {
         " " +
         (category?.name ?? "no category"));
     if (category == null) {
-      return getScreenAfterGameOver(gameContext.questionConfig);
+      return getScreenAfterGameOver(gameContext);
     } else {
       return getScreenForConfig(gameContext, difficulty, category);
     }

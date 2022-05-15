@@ -1,8 +1,8 @@
 CFBundleDisplayName="Anatomy Game";
 language="en";
 appKey="anatomy";
-isPro="false";
-appRatingPackage="1486431352";
+isPro="true";
+appRatingPackage="1486431245";
 GADApplicationIdentifier="ca-app-pub-9432399956064043~2183898720";
 admobBannerId="ca-app-pub-9432399956064043/3938149317";
 admobInterId="ca-app-pub-9432399956064043/1892733617";

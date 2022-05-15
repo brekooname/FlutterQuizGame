@@ -32,7 +32,7 @@ class DopeWarsScreenManagerState extends State<DopeWarsScreenManager>
 
   @override
   Widget build(BuildContext context) {
-    return showScreen(widget.currentScreen);
+    return createScreen(widget.currentScreen);
   }
 
   @override

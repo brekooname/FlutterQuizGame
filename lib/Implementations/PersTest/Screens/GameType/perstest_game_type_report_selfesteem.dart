@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_app_quiz_game/Game/Game/campaign_level.dart';
 import 'package:flutter_app_quiz_game/Implementations/PersTest/Components/perst_test_selfesteem_bar_chart.dart';
 import 'package:flutter_app_quiz_game/Implementations/PersTest/Questions/perstest_game_context.dart';
@@ -94,7 +92,6 @@ class PersTestGameTypeReportSelfEsteem extends PersTestGameTypeReport {
                         ))
                   ])
             ]));
-    // return null;
   }
 
   @override
