@@ -3,8 +3,9 @@ import 'package:flutter_app_quiz_game/Game/Game/campaign_level.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
 import 'package:flutter_app_quiz_game/Implementations/IqGame/Questions/iq_game_context.dart';
+import 'package:flutter_app_quiz_game/Implementations/IqGame/Screens/GameType/IqTest/iq_game_iq_test_game_type_creator.dart';
+import 'package:flutter_app_quiz_game/Implementations/IqGame/Screens/GameType/Spatial/iq_game_spatial_game_type_creator.dart';
 import 'package:flutter_app_quiz_game/Implementations/IqGame/Screens/GameType/iq_game_game_type_creator.dart';
-import 'package:flutter_app_quiz_game/Implementations/IqGame/Screens/GameType/iq_game_iq_test_game_type_creator.dart';
 import 'package:flutter_app_quiz_game/Implementations/IqGame/Screens/iq_game_game_over_screen.dart';
 import 'package:flutter_app_quiz_game/Implementations/IqGame/Screens/iq_game_main_menu_screen.dart';
 import 'package:flutter_app_quiz_game/Implementations/IqGame/Screens/iq_game_question_screen.dart';
@@ -96,6 +97,8 @@ class IqGameScreenManagerState extends State<IqGameScreenManager>
     IqGameQuestionConfig questionConfig = IqGameQuestionConfig();
     if (category == questionConfig.cat0) {
       creator = IqGameIqTestGameTypeCreator();
+    } else if (category == questionConfig.cat1) {
+      creator = IqGameSpatialGameTypeCreator();
     }
     if (creator == null) {
       throw UnsupportedError(

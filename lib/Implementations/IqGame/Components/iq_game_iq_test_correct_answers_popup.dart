@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app_quiz_game/Game/Question/Model/question_info_status.dart';
+import 'package:flutter_app_quiz_game/Lib/Extensions/string_extension.dart';
 import 'package:flutter_app_quiz_game/Lib/Popup/my_popup.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
@@ -50,10 +52,17 @@ class IqGameIqTestCorrectAnswersPopupState
 
   List<Widget> _createAnswersRows() {
     List<Widget> qs = [];
+    var allQuestions = widget.iqGameContext.gameUser
+        .getAllQuestions([QuestionInfoStatus.won, QuestionInfoStatus.lost]);
     for (int i = 0;
         i < IqGameQuestionCollectorService.iqTestTotalQuestions;
         i++) {
-      qs.add(_createAnswersRow(i, 1, 2));
+      var questionInfo = allQuestions
+          .firstWhere((element) => element.question.rawString.parseToInt == i);
+      qs.add(_createAnswersRow(
+          i,
+          questionInfo.question.correctAnswers.first.parseToInt,
+          questionInfo.pressedAnswers.first.parseToInt));
       qs.add(Divider(
         height: screenDimensions.dimen(0.5),
         thickness: screenDimensions.dimen(0.5),
@@ -115,7 +124,7 @@ class IqGameIqTestCorrectAnswersPopupState
           text: (questionNr + 1).toString(),
           fontConfig: FontConfig(
               fontWeight: FontWeight.w700,
-              fontSize: FontConfig.getCustomFontSize(1.1),
+              fontSize: FontConfig.getCustomFontSize(1.0),
               fontColor: Colors.red)),
       margin,
       imageService.getSpecificImage(

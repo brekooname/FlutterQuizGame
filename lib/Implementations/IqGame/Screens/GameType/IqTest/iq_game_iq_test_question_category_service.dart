@@ -1,6 +1,6 @@
 import 'package:flutter_app_quiz_game/Game/Constants/hint_button_type.dart';
 import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/Base/question_category_service.dart';
-import 'package:flutter_app_quiz_game/Implementations/IqGame/Screens/GameType/iq_game_iq_test_question_service.dart';
+import 'package:flutter_app_quiz_game/Implementations/IqGame/Screens/GameType/IqTest/iq_game_iq_test_question_service.dart';
 
 import 'iq_game_iq_test_question_parser.dart';
 

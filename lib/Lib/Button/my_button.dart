@@ -23,7 +23,6 @@ class MyButton extends StatefulWidget {
   bool pressed = false;
   bool disabled;
   bool visible;
-  bool unpressedShadow;
 
   double buttonAllPadding;
 
@@ -37,7 +36,6 @@ class MyButton extends StatefulWidget {
     this.buttonAllPadding = 0,
     this.disabled = false,
     this.visible = true,
-    this.unpressedShadow = true,
     Color? disabledBackgroundColor,
     VoidCallback? onClick,
     Size? size,
@@ -138,7 +136,7 @@ class MyButtonState extends State<MyButton> {
                   duration: const Duration(milliseconds: 100),
                   width: widget.size.width,
                   height: widget.size.height,
-                  decoration: createButtonDecoration(),
+                  decoration: createButtonDecoration(widget.buttonSkinConfig),
                   alignment: Alignment.center,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -176,17 +174,18 @@ class MyButtonState extends State<MyButton> {
     return stack;
   }
 
-  BoxDecoration? createButtonDecoration() {
+  BoxDecoration? createButtonDecoration(ButtonSkinConfig buttonSkinConfig) {
     if (widget.buttonSkinConfig.backgroundGradient != null) {
       return createGradientButtonDecoration();
     } else {
-      return createImageButtonDecoration();
+      return createImageButtonDecoration(buttonSkinConfig);
     }
   }
 
-  BoxDecoration? createImageButtonDecoration() {
+  BoxDecoration? createImageButtonDecoration(
+      ButtonSkinConfig buttonSkinConfig) {
     return BoxDecoration(
-        boxShadow: createImageButtonShadow(),
+        boxShadow: createImageButtonShadow(buttonSkinConfig),
         borderRadius:
             BorderRadius.circular(widget.buttonSkinConfig.borderRadius));
   }
@@ -204,7 +203,7 @@ class MyButtonState extends State<MyButton> {
         : buttonSkinConfig.borderColor;
 
     return BoxDecoration(
-        boxShadow: [createButtonShadow()],
+        boxShadow: createButtonShadow(buttonSkinConfig),
         borderRadius:
             BorderRadius.circular(widget.buttonSkinConfig.borderRadius),
         gradient: widget.pressed
@@ -217,22 +216,26 @@ class MyButtonState extends State<MyButton> {
             color: borderColor, width: buttonSkinConfig.borderWidth));
   }
 
-  List<BoxShadow> createImageButtonShadow() {
+  List<BoxShadow> createImageButtonShadow(ButtonSkinConfig buttonSkinConfig) {
     var boxShadowColor = widget.pressed
-        ? Colors.grey.withOpacity(0.6)
-        : Colors.grey.withOpacity(0.2);
+        ? buttonSkinConfig.buttonPressedShadowColor ??
+            Colors.grey.withOpacity(0.6)
+        : buttonSkinConfig.buttonUnpressedShadowColor ??
+            Colors.grey.withOpacity(0.2);
     var boxShadow = BoxShadow(
         color: boxShadowColor,
         spreadRadius: FontConfig.standardShadowRadius,
         blurRadius: FontConfig.standardShadowRadius);
-    return widget.unpressedShadow
-        ? [boxShadow]
-        : (widget.pressed ? [boxShadow] : []);
+    return [boxShadow];
   }
 
-  BoxShadow createButtonShadow() {
-    return BoxShadow(
-      color: Colors.grey.withOpacity(0.9),
+  List<BoxShadow> createButtonShadow(ButtonSkinConfig buttonSkinConfig) {
+    var boxShadow = BoxShadow(
+      color: widget.pressed
+          ? buttonSkinConfig.buttonPressedShadowColor ??
+              Colors.grey.withOpacity(0.9)
+          : buttonSkinConfig.buttonUnpressedShadowColor ??
+              Colors.grey.withOpacity(0.9),
       spreadRadius: widget.disabled
           ? 0
           : widget.pressed
@@ -247,6 +250,8 @@ class MyButtonState extends State<MyButton> {
               ? 0
               : FontConfig.standardShadowOffset), // changes position of shadow
     );
+
+    return [boxShadow];
   }
 
   RadialGradient createPressedBackgroundGradient(Gradient backgroundGradient) {

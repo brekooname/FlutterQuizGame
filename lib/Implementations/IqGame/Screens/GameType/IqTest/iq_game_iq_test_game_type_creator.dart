@@ -1,6 +1,9 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_info.dart';
+import 'package:flutter_app_quiz_game/Game/Question/Model/question_info_status.dart';
 import 'package:flutter_app_quiz_game/Implementations/IqGame/Components/iq_game_iq_test_correct_answers_popup.dart';
 import 'package:flutter_app_quiz_game/Implementations/IqGame/Questions/iq_game_context.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/button_skin_config.dart';
@@ -9,9 +12,9 @@ import 'package:flutter_app_quiz_game/Lib/Extensions/string_extension.dart';
 import 'package:flutter_app_quiz_game/Lib/Popup/my_popup.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
-import '../../../../Lib/Font/font_config.dart';
-import '../../Questions/AllContent/iq_game_question_collector_service.dart';
-import 'iq_game_game_type_creator.dart';
+import '../../../../../Lib/Font/font_config.dart';
+import '../../../Questions/AllContent/iq_game_question_collector_service.dart';
+import '../iq_game_game_type_creator.dart';
 
 class IqGameIqTestGameTypeCreator extends IqGameGameTypeCreator {
   static final IqGameIqTestGameTypeCreator singleton =
@@ -48,9 +51,10 @@ class IqGameIqTestGameTypeCreator extends IqGameGameTypeCreator {
           imageExtension: "png",
           module: questionImgModule);
       answImgList.add(MyButton(
-        unpressedShadow: false,
         size: Size(answImgDimen, answImgDimen),
         buttonSkinConfig: ButtonSkinConfig(
+          buttonUnpressedShadowColor: Colors.transparent,
+          buttonPressedShadowColor: Colors.grey.withOpacity(0.3),
           image: image,
         ),
         onClick: () {
@@ -106,6 +110,21 @@ class IqGameIqTestGameTypeCreator extends IqGameGameTypeCreator {
   @override
   Widget createGameOverContainer(
       BuildContext context, IqGameContext gameContext) {
+    // for (QuestionInfo q in gameContext.gameUser.getOpenQuestions()) {
+    //   gameContext.gameUser
+    //       .addAnswerToQuestionInfo(q.question, Random().nextInt(8).toString());
+    // }
+    int minIqVal = 57;
+    int maxIqVal = 143;
+    int iqValDiff = maxIqVal - minIqVal;
+
+    double ratio = 2.2;
+    int iqValue = (minIqVal +
+            (gameContext.gameUser.countAllQuestions([QuestionInfoStatus.won]) *
+                ratio))
+        .ceil();
+    double xPosIqValue = ((iqValDiff - (maxIqVal - iqValue)) / iqValDiff) * 100;
+
     var imgWidth = screenDimensionsService.dimen(100);
     var pointerWidth = screenDimensionsService.dimen(2);
     var graphStack = Stack(children: [
@@ -113,7 +132,7 @@ class IqGameIqTestGameTypeCreator extends IqGameGameTypeCreator {
           maxWidth: imgWidth, imageName: "finalscore", imageExtension: "png"),
       Positioned(
           top: 0,
-          left: screenDimensionsService.dimen(33) - pointerWidth / 2,
+          left: screenDimensionsService.dimen(xPosIqValue) - pointerWidth / 2,
           child: Container(
             width: pointerWidth,
             height: screenDimensionsService.dimen(41),
@@ -126,7 +145,7 @@ class IqGameIqTestGameTypeCreator extends IqGameGameTypeCreator {
         height: screenDimensionsService.dimen(5),
       ),
       MyText(
-          text: "115",
+          text: iqValue.toString(),
           fontConfig: FontConfig(
               fontWeight: FontWeight.w700,
               fontSize: FontConfig.getCustomFontSize(1.4),
@@ -135,7 +154,7 @@ class IqGameIqTestGameTypeCreator extends IqGameGameTypeCreator {
         height: screenDimensionsService.dimen(1),
       ),
       MyText(
-          text: "(High)",
+          text: "(" + _getLevelForScore(iqValue) + ")",
           fontConfig: FontConfig(
               fontWeight: FontWeight.w700,
               fontSize: FontConfig.getCustomFontSize(1.1),
@@ -164,5 +183,19 @@ class IqGameIqTestGameTypeCreator extends IqGameGameTypeCreator {
         },
       ),
     ]);
+  }
+
+  String _getLevelForScore(int score) {
+    if (score < 70) {
+      return "Very low";
+    } else if (score < 90) {
+      return "Low";
+    } else if (score < 110) {
+      return "Average";
+    } else if (score < 130) {
+      return "High";
+    } else {
+      return "Very high";
+    }
   }
 }

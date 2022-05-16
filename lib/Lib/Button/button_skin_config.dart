@@ -9,6 +9,8 @@ class ButtonSkinConfig {
   Image? _image;
   Icon? _icon;
   bool withBorder;
+  Color? buttonPressedShadowColor;
+  Color? buttonUnpressedShadowColor;
 
   late double borderWidth;
 
@@ -20,7 +22,9 @@ class ButtonSkinConfig {
       Color? borderColor,
       double? borderRadius,
       double borderWidth = 0,
-      this.withBorder = true}) {
+      this.withBorder = true,
+      this.buttonPressedShadowColor,
+      this.buttonUnpressedShadowColor}) {
     if (backgroundGradient != null) {
       this.backgroundGradient = backgroundGradient;
       backgroundColor = backgroundGradient.colors.first;

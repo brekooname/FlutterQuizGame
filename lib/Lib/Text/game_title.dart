@@ -34,16 +34,16 @@ class GameTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     var imageWithText =
         Stack(alignment: AlignmentDirectional.center, children: <Widget>[
-      backgroundImagePath != null
-          ? Opacity(
+      backgroundImagePath == null
+          ? const SizedBox()
+          : Opacity(
               opacity: backgroundImageOpacity ?? 1,
               child: Image.asset(
                 backgroundImagePath!,
                 fit: BoxFit.fitWidth,
                 alignment: Alignment.center,
                 width: backgroundImageWidth,
-              ))
-          : const SizedBox(),
+              )),
       MyText(
         text: text,
         textShadow: textShadow,
@@ -53,6 +53,9 @@ class GameTitle extends StatelessWidget {
       ),
     ]);
 
-    return Container(color: backgroundColor, width: backgroundImageWidth, child: imageWithText);
+    return Container(
+        color: backgroundColor,
+        width: backgroundImageWidth,
+        child: imageWithText);
   }
 }

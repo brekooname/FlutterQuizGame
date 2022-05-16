@@ -9,6 +9,7 @@ import '../../../../Game/Question/Model/question_difficulty.dart';
 class IqGameQuestionCollectorService
     extends QuestionCollectorService<IqGameAllQuestions, IqGameQuestionConfig> {
   static const int iqTestTotalQuestions = 39;
+  static const int spatialTotalQuestions = 10;
 
   static final IqGameQuestionCollectorService singleton =
       IqGameQuestionCollectorService.internal();
@@ -33,6 +34,11 @@ class IqGameQuestionCollectorService
         if (diff == gameQuestionConfig.diff0) {
           if (cat == gameQuestionConfig.cat0) {
             for (int qNr = 0; qNr < iqTestTotalQuestions; qNr++) {
+              result.add(Question(i, diff, cat, qNr.toString()));
+              i++;
+            }
+          } else if (cat == gameQuestionConfig.cat1) {
+            for (int qNr = 0; qNr < spatialTotalQuestions; qNr++) {
               result.add(Question(i, diff, cat, qNr.toString()));
               i++;
             }
