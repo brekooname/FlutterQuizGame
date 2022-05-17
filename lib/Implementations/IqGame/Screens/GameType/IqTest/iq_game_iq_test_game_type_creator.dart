@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_info.dart';
@@ -13,10 +11,10 @@ import 'package:flutter_app_quiz_game/Lib/Popup/my_popup.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
 import '../../../../../Lib/Font/font_config.dart';
-import '../../../Questions/AllContent/iq_game_question_collector_service.dart';
 import '../iq_game_game_type_creator.dart';
 
 class IqGameIqTestGameTypeCreator extends IqGameGameTypeCreator {
+  static const int totalQuestions = 39;
   static final IqGameIqTestGameTypeCreator singleton =
       IqGameIqTestGameTypeCreator.internal();
 
@@ -30,7 +28,7 @@ class IqGameIqTestGameTypeCreator extends IqGameGameTypeCreator {
   Widget createGameContainer(QuestionInfo currentQuestionInfo,
       IqGameContext gameContext, VoidCallback goToNextScreen) {
     var question = currentQuestionInfo.question;
-    var questionImgModule = "cat" + question.category.index.toString();
+    var questionImgModule = getQuestionImageModuleName(gameContext);
     var imgHeight = screenDimensionsService.h(40);
     Widget qContainer = SizedBox(
       height: imgHeight,
@@ -58,8 +56,8 @@ class IqGameIqTestGameTypeCreator extends IqGameGameTypeCreator {
           image: image,
         ),
         onClick: () {
-          gameContext.answerQuestion(currentQuestionInfo, i.toString());
-          goToNextScreen.call();
+          answerQuestion(
+              currentQuestionInfo, i, gameContext, goToNextScreen, true);
         },
       ));
       if (i == 3 || i == 7) {
@@ -95,8 +93,7 @@ class IqGameIqTestGameTypeCreator extends IqGameGameTypeCreator {
                     borderColor: Colors.black),
                 text: (question.rawString.parseToInt + 1).toString() +
                     "/" +
-                    IqGameQuestionCollectorService.iqTestTotalQuestions
-                        .toString()),
+                    totalQuestions.toString()),
             margin,
             qContainer,
             margin,
@@ -176,13 +173,15 @@ class IqGameIqTestGameTypeCreator extends IqGameGameTypeCreator {
           MyPopup.showPopup(
               context,
               IqGameIqTestCorrectAnswersPopup(
-                  gameContext,
-                  "cat" +
-                      gameContext.questionConfig.categories.first.index
-                          .toString()));
+                  gameContext, getQuestionImageModuleName(gameContext)));
         },
       ),
     ]);
+  }
+
+  @override
+  bool canGoToNextQuestion(QuestionInfo currentQuestionInfo) {
+    return true;
   }
 
   String _getLevelForScore(int score) {

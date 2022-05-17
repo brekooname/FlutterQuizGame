@@ -19,52 +19,7 @@ class IqGameSpatialQuestionService extends QuestionService {
 
   @override
   List<String> getCorrectAnswers(Question question) {
-    return [
-      [
-        3,
-        5,
-        1,
-        6,
-        0,
-        7,
-        1,
-        4,
-        7,
-        0,
-        //
-        2,
-        5,
-        1,
-        3,
-        7,
-        4,
-        5,
-        2,
-        4,
-        3,
-        //
-        6,
-        0,
-        1,
-        7,
-        1,
-        0,
-        7,
-        6,
-        4,
-        0,
-        //
-        3,
-        4,
-        6,
-        6,
-        2,
-        5,
-        7,
-        5,
-        1
-      ].elementAt(question.rawString.parseToInt).toString()
-    ];
+    return [question.toString().split(":")[1]];
   }
 
   @override

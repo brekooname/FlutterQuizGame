@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_info_status.dart';
+import 'package:flutter_app_quiz_game/Implementations/IqGame/Screens/GameType/IqTest/iq_game_iq_test_game_type_creator.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/string_extension.dart';
 import 'package:flutter_app_quiz_game/Lib/Popup/my_popup.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
@@ -54,9 +55,7 @@ class IqGameIqTestCorrectAnswersPopupState
     List<Widget> qs = [];
     var allQuestions = widget.iqGameContext.gameUser
         .getAllQuestions([QuestionInfoStatus.won, QuestionInfoStatus.lost]);
-    for (int i = 0;
-        i < IqGameQuestionCollectorService.iqTestTotalQuestions;
-        i++) {
+    for (int i = 0; i < IqGameIqTestGameTypeCreator.totalQuestions; i++) {
       var questionInfo = allQuestions
           .firstWhere((element) => element.question.rawString.parseToInt == i);
       qs.add(_createAnswersRow(

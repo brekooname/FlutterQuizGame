@@ -56,7 +56,7 @@ class MyApp extends StatefulWidget {
   // static String webAppKey = "dopewars";
   // static String webAppKey = "anatomy";
   static String webAppKey = "iqgame";
-  static CampaignLevel campaignLevel = IqGameCampaignLevelService().level_0;
+  static CampaignLevel campaignLevel = IqGameCampaignLevelService().level_1;
 
   //
   static Language webLanguage = Language.en;
@@ -205,10 +205,10 @@ class MyAppState extends State<MyApp> {
       ////
       // GeoQuizLocalStorage().setExperience(14000);
       widgetToShow = createScreen(MyApp.gameScreenManager, widget.bannerAd);
-      // Future.delayed(const Duration(milliseconds: 100), () {
-      //   MyApp.gameScreenManager.currentScreen!.gameScreenManagerState
-      //       .showNewGameScreen(MyApp.campaignLevel);
-      // });
+      Future.delayed(const Duration(milliseconds: 100), () {
+        MyApp.gameScreenManager.currentScreen!.gameScreenManagerState
+            .showNewGameScreen(MyApp.campaignLevel);
+      });
       // Future.delayed(const Duration(milliseconds: 100), () {
       //   (MyApp.gameScreenManager.currentScreen!.gameScreenManagerState
       //           as IqGameScreenManagerState)

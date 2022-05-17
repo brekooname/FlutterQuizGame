@@ -11,11 +11,14 @@ import 'package:flutter_app_quiz_game/Lib/Screen/Game/quiz_question_container.da
 import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
 
 import '../../../Game/Question/Model/question_info.dart';
+import '../../../Game/Question/Model/question_info_status.dart';
 import '../Components/iq_game_level_header.dart';
+import '../Service/iq_game_local_storage.dart';
 
 class IqGameQuestionScreen
     extends GameScreen<IqGameContext, IqGameScreenManagerState> {
   IqGameGameTypeCreator iqGameGameTypeCreator;
+  IqGameLocalStorage iqGameLocalStorage = IqGameLocalStorage();
 
   IqGameQuestionScreen(
     this.iqGameGameTypeCreator,
@@ -73,25 +76,57 @@ class IqGameQuestionScreenState extends State<IqGameQuestionScreen>
     with ScreenState, QuizQuestionContainer, LabelMixin {
   @override
   Widget build(BuildContext context) {
+    int? score = widget.iqGameGameTypeCreator.getScore(widget.gameContext);
     return Container(
         color: Colors.white,
         child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              IqGameLevelHeader(() {
-                skipQuestion();
-              }),
+              IqGameLevelHeader(
+                questionInfoStatus: widget.currentQuestionInfo.status,
+                nextQuestion: widget.iqGameGameTypeCreator
+                        .canGoToNextQuestion(widget.currentQuestionInfo)
+                    ? () {
+                        nextQuestion();
+                      }
+                    : null,
+                nextQuestionIconName: widget.iqGameGameTypeCreator
+                        .goToNextScreenOnlyOnNextButtonPress()
+                    ? "btn_next"
+                    : "btn_skip",
+                restartLevel: () {
+                  restartCategory();
+                },
+                score: score,
+              ),
               const Spacer(),
               widget.iqGameGameTypeCreator.createGameContainer(
-                  widget.currentQuestionInfo,
-                  widget.gameContext,
-                  widget.goToNextGameScreenCallBack(context)),
+                  widget.currentQuestionInfo, widget.gameContext, () {
+                goToNextScreen(context, score);
+              }),
               const Spacer(),
             ]));
   }
 
-  void skipQuestion() {
+  void restartCategory() {
+    widget.iqGameLocalStorage.putAnsweredQuestions({}, widget.category);
+    widget.gameScreenManagerState.showNewGameScreen(widget.campaignLevel);
+  }
+
+  void goToNextScreen(BuildContext context, int? score) {
+    if (widget.gameContext.gameUser.getOpenQuestions().isEmpty) {
+      widget.iqGameLocalStorage.putAnsweredQuestions({}, widget.category);
+    }
+    if (score != null) {
+      setState(() {});
+    }
+    if (!widget.iqGameGameTypeCreator.goToNextScreenOnlyOnNextButtonPress()) {
+      widget.goToNextGameScreen(context);
+    }
+  }
+
+  void nextQuestion() {
     widget.gameContext.skipQuestion(widget.currentQuestionInfo);
     widget.gameScreenManagerState
         .showNextGameScreen(widget.campaignLevel, widget.gameContext);

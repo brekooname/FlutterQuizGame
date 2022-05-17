@@ -16,9 +16,11 @@ import '../../../Lib/Font/font_config.dart';
 import '../../../Lib/Text/my_text.dart';
 import '../../../main.dart';
 import '../Constants/iq_game_question_config.dart';
+import '../Service/iq_game_local_storage.dart';
 
 class IqGameMainMenuScreen extends StandardScreen<IqGameScreenManagerState> {
   late Image backgroundImage;
+  IqGameLocalStorage iqGameLocalStorage = IqGameLocalStorage();
   final IqGameCampaignLevelService _iqGameCampaignLevelService =
       IqGameCampaignLevelService();
   final IqGameQuestionConfig _iqGameQuestionConfig = IqGameQuestionConfig();
@@ -88,7 +90,7 @@ class IqGameMainMenuScreenState extends State<IqGameMainMenuScreen>
             iconName: "btn_settings",
             myPopupToDisplay: SettingsPopup(
               resetContent: () {
-                // widget.iq_gameLocalStorage.clearAll();
+                widget.iqGameLocalStorage.clearAll();
               },
             ),
           ),

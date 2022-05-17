@@ -34,7 +34,7 @@ class IqGameGameOverScreenState extends State<IqGameGameOverScreen>
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              IqGameLevelHeader(null),
+              IqGameLevelHeader(),
               const Spacer(),
               widget.iqGameGameTypeCreator
                   .createGameOverContainer(context, widget.gameContext),
