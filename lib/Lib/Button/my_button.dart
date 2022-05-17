@@ -269,6 +269,10 @@ class MyButtonState extends State<MyButton> {
             : ColorUtil.colorDarken(widget.disabledBackgroundColor, 0.2);
     return ButtonSkinConfig(
         backgroundColor: widget.disabledBackgroundColor,
+        buttonPressedShadowColor:
+            widget.buttonSkinConfig.buttonPressedShadowColor,
+        buttonUnpressedShadowColor:
+            widget.buttonSkinConfig.buttonUnpressedShadowColor,
         borderColor: borderColor,
         borderWidth: widget.buttonSkinConfig.borderWidth);
   }

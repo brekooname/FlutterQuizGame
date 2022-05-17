@@ -55,6 +55,8 @@ class IqGameSpatialGameTypeCreator extends IqGameGameTypeCreator {
       );
 
       answImgList.add(MyButton(
+          disabled: !currentQuestionInfo.isQuestionOpen(),
+          disabledBackgroundColor: Colors.transparent,
           onClick: () {
             answerQuestion(
                 currentQuestionInfo, i, gameContext, goToNextScreen, false);

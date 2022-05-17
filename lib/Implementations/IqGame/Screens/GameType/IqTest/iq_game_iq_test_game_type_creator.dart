@@ -49,6 +49,8 @@ class IqGameIqTestGameTypeCreator extends IqGameGameTypeCreator {
           imageExtension: "png",
           module: questionImgModule);
       answImgList.add(MyButton(
+        disabled: !currentQuestionInfo.isQuestionOpen(),
+        disabledBackgroundColor: Colors.transparent,
         size: Size(answImgDimen, answImgDimen),
         buttonSkinConfig: ButtonSkinConfig(
           buttonUnpressedShadowColor: Colors.transparent,
