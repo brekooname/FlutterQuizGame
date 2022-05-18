@@ -87,15 +87,8 @@ class IqGameIqTestGameTypeCreator extends IqGameGameTypeCreator {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            MyText(
-                fontConfig: FontConfig(
-                    fontSize: FontConfig.getCustomFontSize(1.2),
-                    fontColor: Colors.white,
-                    borderWidth: FontConfig.standardBorderWidth * 1.3,
-                    borderColor: Colors.black),
-                text: (question.rawString.parseToInt + 1).toString() +
-                    "/" +
-                    totalQuestions.toString()),
+            createCurrentQuestionNr(
+                question.rawString.parseToInt, totalQuestions),
             margin,
             qContainer,
             margin,
@@ -118,10 +111,11 @@ class IqGameIqTestGameTypeCreator extends IqGameGameTypeCreator {
     int iqValDiff = maxIqVal - minIqVal;
 
     double ratio = 2.2;
-    int iqValue = (minIqVal +
-            (gameContext.gameUser.countAllQuestions([QuestionInfoStatus.won]) *
-                ratio))
-        .ceil();
+    var wonQuestions =
+        gameContext.gameUser.countAllQuestions([QuestionInfoStatus.won]);
+    int iqValue = (minIqVal + (wonQuestions * ratio)).ceil();
+    iqGameLocalStorage.setMaxScoreForCat(
+        getGameTypeCategory(gameContext), iqValue);
     double xPosIqValue = ((iqValDiff - (maxIqVal - iqValue)) / iqValDiff) * 100;
 
     var imgWidth = screenDimensionsService.dimen(100);

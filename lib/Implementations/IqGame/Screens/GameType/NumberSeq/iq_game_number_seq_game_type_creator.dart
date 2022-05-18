@@ -14,17 +14,17 @@ import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 import '../../../../../Lib/Font/font_config.dart';
 import '../iq_game_game_type_creator.dart';
 
-class IqGameSpatialGameTypeCreator extends IqGameGameTypeCreator {
+class IqGameNumberSeqGameTypeCreator extends IqGameGameTypeCreator {
   static const int totalOptions = 4;
   static const int totalQuestions = 10;
-  static final IqGameSpatialGameTypeCreator singleton =
-      IqGameSpatialGameTypeCreator.internal();
+  static final IqGameNumberSeqGameTypeCreator singleton =
+      IqGameNumberSeqGameTypeCreator.internal();
 
-  factory IqGameSpatialGameTypeCreator() {
+  factory IqGameNumberSeqGameTypeCreator() {
     return singleton;
   }
 
-  IqGameSpatialGameTypeCreator.internal();
+  IqGameNumberSeqGameTypeCreator.internal();
 
   @override
   Widget createGameContainer(QuestionInfo currentQuestionInfo,
@@ -105,7 +105,7 @@ class IqGameSpatialGameTypeCreator extends IqGameGameTypeCreator {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             createCurrentQuestionNr(
-                _getQuestionNr(question.rawString), totalQuestions),
+                question.rawString.parseToInt, totalQuestions),
             margin,
             MyText(text: "Find the odd one out"),
             margin,

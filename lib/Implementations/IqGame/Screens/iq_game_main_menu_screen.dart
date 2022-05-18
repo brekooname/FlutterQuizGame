@@ -112,6 +112,30 @@ class IqGameMainMenuScreenState extends State<IqGameMainMenuScreen>
     var btnSize = Size(screenDimensions.dimen(80), screenDimensions.dimen(26));
     var iconContainerSize = Size(btnSize.width, btnSize.height / 1.7);
     var iconDimen = iconContainerSize.height / 1.1;
+    var maxScoreForCat = widget.iqGameLocalStorage.getMaxScoreForCat(cat);
+    var levelIcon = imageService.getSpecificImage(
+        imageName: "btn_level_main_" + cat.index.toString(),
+        imageExtension: "png",
+        maxWidth: iconDimen,
+        maxHeight: iconDimen,
+        module: "buttons");
+    var levelLabel = MyText(
+        text: cat.categoryLabel!,
+        width: btnSize.width - iconDimen * 1.3,
+        maxLines: 2,
+        fontConfig: FontConfig(
+            borderColor: Colors.black,
+            fontColor: Colors.white,
+            fontWeight: FontWeight.w500,
+            fontSize: FontConfig.getCustomFontSize(1.2)));
+    var levelScore = MyText(
+      fontConfig: FontConfig(
+          fontColor: maxScoreForCat == -1 ? Colors.white : Colors.greenAccent,
+          fontWeight:
+              maxScoreForCat == -1 ? FontWeight.normal : FontWeight.w800,
+          fontSize: FontConfig.normalFontSize),
+      text: _getScoreText(cat, maxScoreForCat),
+    );
     Widget content = Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -125,22 +149,9 @@ class IqGameMainMenuScreenState extends State<IqGameMainMenuScreen>
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      imageService.getSpecificImage(
-                          imageName: "btn_level_main_" + cat.index.toString(),
-                          imageExtension: "png",
-                          maxWidth: iconDimen,
-                          maxHeight: iconDimen,
-                          module: "buttons"),
+                      levelIcon,
                       const Spacer(),
-                      MyText(
-                          text: cat.categoryLabel!,
-                          width: btnSize.width - iconDimen * 1.3,
-                          maxLines: 2,
-                          fontConfig: FontConfig(
-                              borderColor: Colors.black,
-                              fontColor: Colors.white,
-                              fontWeight: FontWeight.w500,
-                              fontSize: FontConfig.getCustomFontSize(1.2))),
+                      levelLabel,
                       const Spacer(),
                     ]))),
         Container(
@@ -150,13 +161,7 @@ class IqGameMainMenuScreenState extends State<IqGameMainMenuScreen>
                     bottom: Radius.circular(FontConfig.standardBorderRadius))),
             height: (btnSize.height - iconContainerSize.height) / 1.2 -
                 iconPadding * 2,
-            child: MyText(
-              fontConfig: FontConfig(
-                  fontColor: Colors.white,
-                  fontWeight: FontWeight.normal,
-                  fontSize: FontConfig.normalFontSize),
-              text: "IQ 66",
-            ))
+            child: levelScore)
       ],
     );
     return MyButton(
@@ -173,5 +178,11 @@ class IqGameMainMenuScreenState extends State<IqGameMainMenuScreen>
           backgroundColor: Colors.blue.withOpacity(0.8)),
       customContent: content,
     );
+  }
+
+  String _getScoreText(QuestionCategory cat, int score) {
+    IqGameQuestionConfig config = IqGameQuestionConfig();
+    return (cat == config.cat0 ? "IQ " : "Score ") +
+        (score == -1 ? "??" : score.toString());
   }
 }

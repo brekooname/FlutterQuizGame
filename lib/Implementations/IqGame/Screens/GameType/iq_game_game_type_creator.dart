@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
 import 'package:flutter_app_quiz_game/Implementations/IqGame/Service/iq_game_local_storage.dart';
@@ -5,6 +6,8 @@ import 'package:flutter_app_quiz_game/Lib/Image/image_service.dart';
 import 'package:flutter_app_quiz_game/Lib/ScreenDimensions/screen_dimensions_service.dart';
 
 import '../../../../Game/Question/Model/question_info.dart';
+import '../../../../Lib/Font/font_config.dart';
+import '../../../../Lib/Text/my_text.dart';
 import '../../Questions/iq_game_context.dart';
 
 abstract class IqGameGameTypeCreator {
@@ -63,4 +66,16 @@ abstract class IqGameGameTypeCreator {
 
   QuestionCategory getGameTypeCategory(IqGameContext gameContext) =>
       gameContext.questionConfig.categories.first;
+
+  MyText createCurrentQuestionNr(int currentQuestionNr, int totalQuestions) {
+    return MyText(
+        fontConfig: FontConfig(
+            fontSize: FontConfig.getCustomFontSize(1.2),
+            fontColor: Colors.white,
+            borderWidth: FontConfig.standardBorderWidth * 1.3,
+            borderColor: Colors.black),
+        text: (currentQuestionNr + 1).toString() +
+            "/" +
+            totalQuestions.toString());
+  }
 }

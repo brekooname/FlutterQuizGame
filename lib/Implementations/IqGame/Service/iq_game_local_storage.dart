@@ -34,6 +34,20 @@ class IqGameLocalStorage extends QuizGameLocalStorage {
     return result;
   }
 
+  int getMaxScoreForCat(QuestionCategory cat) {
+    return localStorage.getInt(_getMaxScoreForCatFieldName(cat)) ?? -1;
+  }
+
+  void setMaxScoreForCat(QuestionCategory cat, int val) {
+    if (getMaxScoreForCat(cat) < val) {
+      localStorage.setInt(_getMaxScoreForCatFieldName(cat), val);
+    }
+  }
+
+  String _getMaxScoreForCatFieldName(QuestionCategory cat) {
+    return localStorageName + "_" + cat.name + "_MaxScoreForCat";
+  }
+
   String _answeredQuestionsFieldName(QuestionCategory category) {
     return localStorageName + "_" + category.name + "_answeredQuestions";
   }
