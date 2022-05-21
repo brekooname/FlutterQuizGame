@@ -27,8 +27,11 @@ class IqGameSpatialGameTypeCreator extends IqGameGameTypeCreator {
   IqGameSpatialGameTypeCreator.internal();
 
   @override
-  Widget createGameContainer(QuestionInfo currentQuestionInfo,
-      IqGameContext gameContext, VoidCallback goToNextScreen) {
+  Widget createGameContainer(
+      QuestionInfo currentQuestionInfo,
+      IqGameContext gameContext,
+      VoidCallback refreshScreen,
+      VoidCallback goToNextScreen) {
     var question = currentQuestionInfo.question;
     var questionImgModule = getQuestionImageModuleName(gameContext);
     var imgHeight = screenDimensionsService.dimen(30);

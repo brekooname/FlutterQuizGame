@@ -29,30 +29,28 @@ class IqGameQuestionCollectorService
     List<Question> result = [];
     int i = 0;
     var random = Random();
-    for (QuestionDifficulty diff
-        in difficulties ?? gameQuestionConfig.difficulties) {
-      for (QuestionCategory cat
-          in categories ?? gameQuestionConfig.categories) {
-        if (diff == gameQuestionConfig.diff0) {
-          if (cat == gameQuestionConfig.cat0) {
-            for (int qNr = 0;
-                qNr < IqGameIqTestGameTypeCreator.totalQuestions;
-                qNr++) {
-              result.add(Question(i, diff, cat, qNr.toString()));
-              i++;
-            }
-          } else if (cat == gameQuestionConfig.cat1) {
-            for (int qNr = 0;
-                qNr < IqGameSpatialGameTypeCreator.totalQuestions;
-                qNr++) {
-              int wrongImagePos =
-                  random.nextInt(IqGameSpatialGameTypeCreator.totalOptions);
-              var _rawString = qNr.toString() + ":" + wrongImagePos.toString();
-              result.add(Question(i, diff, cat, _rawString));
-              i++;
-            }
-          }
+    var diff = gameQuestionConfig.diff0;
+    for (QuestionCategory cat in categories ?? gameQuestionConfig.categories) {
+      if (cat == gameQuestionConfig.cat0) {
+        for (int qNr = 0;
+            qNr < IqGameIqTestGameTypeCreator.totalQuestions;
+            qNr++) {
+          result.add(Question(i, diff, cat, qNr.toString()));
+          i++;
         }
+      } else if (cat == gameQuestionConfig.cat1) {
+        for (int qNr = 0;
+            qNr < IqGameSpatialGameTypeCreator.totalQuestions;
+            qNr++) {
+          int wrongImagePos =
+              random.nextInt(IqGameSpatialGameTypeCreator.totalOptions);
+          var _rawString = qNr.toString() + ":" + wrongImagePos.toString();
+          result.add(Question(i, diff, cat, _rawString));
+          i++;
+        }
+      } else if (cat == gameQuestionConfig.cat2) {
+        return allQuestionsService
+            .getAllQuestionsForCategory(gameQuestionConfig.cat2);
       }
     }
     return result;

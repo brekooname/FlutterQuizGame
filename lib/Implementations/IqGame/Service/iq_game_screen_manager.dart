@@ -17,6 +17,7 @@ import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen_manager_state.
 import 'package:flutter_app_quiz_game/Lib/Screen/standard_screen.dart';
 
 import '../Constants/iq_game_question_config.dart';
+import '../Screens/GameType/NumberSeq/iq_game_number_seq_game_type_creator.dart';
 
 class IqGameScreenManager extends GameScreenManager {
   IqGameScreenManager({Key? key}) : super(key: key);
@@ -99,6 +100,8 @@ class IqGameScreenManagerState extends State<IqGameScreenManager>
       creator = IqGameIqTestGameTypeCreator();
     } else if (category == questionConfig.cat1) {
       creator = IqGameSpatialGameTypeCreator();
+    } else if (category == questionConfig.cat2) {
+      creator = IqGameNumberSeqGameTypeCreator();
     }
     if (creator == null) {
       throw UnsupportedError(

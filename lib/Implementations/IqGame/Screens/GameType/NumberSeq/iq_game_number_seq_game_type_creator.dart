@@ -1,22 +1,16 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_info.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_info_status.dart';
 import 'package:flutter_app_quiz_game/Implementations/IqGame/Questions/iq_game_context.dart';
-import 'package:flutter_app_quiz_game/Lib/Animation/animation_rotate.dart';
-import 'package:flutter_app_quiz_game/Lib/Button/button_skin_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/string_extension.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
+import '../../../../../Lib/Button/button_skin_config.dart';
 import '../../../../../Lib/Font/font_config.dart';
 import '../iq_game_game_type_creator.dart';
 
 class IqGameNumberSeqGameTypeCreator extends IqGameGameTypeCreator {
-  static const int totalOptions = 4;
-  static const int totalQuestions = 10;
   static final IqGameNumberSeqGameTypeCreator singleton =
       IqGameNumberSeqGameTypeCreator.internal();
 
@@ -26,60 +20,81 @@ class IqGameNumberSeqGameTypeCreator extends IqGameGameTypeCreator {
 
   IqGameNumberSeqGameTypeCreator.internal();
 
+  String? pressedNumbers;
+
   @override
-  Widget createGameContainer(QuestionInfo currentQuestionInfo,
-      IqGameContext gameContext, VoidCallback goToNextScreen) {
+  void initGameTypeCreator() {
+    resetPressedNumbers();
+  }
+
+  @override
+  Widget createGameContainer(
+      QuestionInfo currentQuestionInfo,
+      IqGameContext gameContext,
+      VoidCallback refreshScreen,
+      VoidCallback goToNextScreen) {
     var question = currentQuestionInfo.question;
     var questionImgModule = getQuestionImageModuleName(gameContext);
-    var imgHeight = screenDimensionsService.dimen(30);
+
+    var imgWidth = screenDimensionsService.w(90);
+    var imgHeight = screenDimensionsService.h(40);
+    var leftMargin = (screenDimensionsService.w(100) - imgWidth) / 2;
+    var questionImg = imageService.getSpecificImage(
+        imageName: "q" + currentQuestionInfo.question.index.toString(),
+        imageExtension: "png",
+        maxWidth: imgWidth,
+        maxHeight: imgHeight,
+        module: questionImgModule);
+
+    List<Widget> stackChildren = [];
+    stackChildren.add(questionImg);
+    var qInfo = currentQuestionInfo.question.rawString.split(",");
+    var questionMarkDimen = screenDimensionsService.w(10);
+    var img = 
+    stackChildren.add(Positioned(
+        top: (qInfo[3].split("###")[0].parseToDouble / 100) * imgHeight -
+            questionMarkDimen / 2,
+        left: (qInfo[2].parseToDouble / 100) * imgWidth - leftMargin,
+        child: imageService.getSpecificImage(
+            imageName: "btn_submit",
+            imageExtension: "png",
+            maxHeight: questionMarkDimen,
+            maxWidth: questionMarkDimen,
+            module: "buttons")));
+
+    AnimateZoomInZoomOut(
+                toAnimateWidgetSize: answerBtnSize,
+                zoomInZoomOutOnce: true,Stack stack = Stack(
+                duration: Duration(milliseconds: millisForZoomInZoomOut),  alignment: Alignment.center,
+                toAnimateWidget: answerBtn,  children: stackChildren,
+              ));
+
+    var heightMargin = SizedBox(
+      height: screenDimensionsService.h(2),
+    );
 
     List<Widget> answRows = [];
     List<Widget> answImgList = [];
-    var random = Random();
-    for (int i = 0; i < totalOptions; i++) {
-      var getQuestionCorrectAnswer =
-          _getQuestionCorrectAnswer(question.rawString);
-      Widget qContainer = RotationTransition(
-        turns: AlwaysStoppedAnimation(
-            currentQuestionInfo.isQuestionOpen() ? random.nextDouble() : 0),
-        child: SizedBox(
-          height: imgHeight,
-          child: imageService.getSpecificImage(
-              maxHeight: imgHeight,
-              imageName: "q" +
-                  _getQuestionNr(question.rawString).toString() +
-                  (i == getQuestionCorrectAnswer ? "w" : "c"),
-              imageExtension: "png",
-              module: questionImgModule),
-        ),
-      );
 
+    var btnSizeDimen = getBtnSizeDimen();
+    var btnPad = screenDimensionsService.dimen(2);
+    for (int i = 0; i <= 9; i++) {
       answImgList.add(MyButton(
-          disabled: !currentQuestionInfo.isQuestionOpen(),
-          disabledBackgroundColor: getQuestionCorrectAnswer == i
-              ? Colors.green.shade300
-              : currentQuestionInfo.pressedAnswers.isNotEmpty &&
-                      i == currentQuestionInfo.pressedAnswers.first.parseToInt
-                  ? Colors.red.shade300
-                  : Colors.transparent,
-          onClick: () {
-            answerQuestion(
-                currentQuestionInfo, i, gameContext, goToNextScreen, false);
-            iqGameLocalStorage.setMaxScoreForCat(
-                getGameTypeCategory(gameContext), getScore(gameContext) ?? 0);
-          },
-          size: Size(imgHeight * 1.5, imgHeight * 1.5),
-          buttonSkinConfig: ButtonSkinConfig(
-              buttonUnpressedShadowColor: Colors.transparent,
-              buttonPressedShadowColor: Colors.blue.shade400.withOpacity(0.2),
-              backgroundColor: Colors.transparent),
-          customContent: AnimateRotate(
-            toAnimateWidget: qContainer,
-            rotationSpeed: currentQuestionInfo.isQuestionOpen()
-                ? RotationSpeed.slow
-                : RotationSpeed.stop,
-          )));
-      if (i == 1 || i == 3) {
+        buttonAllPadding: btnPad,
+        fontConfig: FontConfig(
+            fontWeight: FontWeight.w700,
+            fontSize: FontConfig.getCustomFontSize(1.1),
+            fontColor: Colors.black),
+        text: i.toString(),
+        onClick: () {
+          if ((pressedNumbers ?? "").length < 5) {
+            pressedNumbers = (pressedNumbers ?? "") + i.toString();
+            refreshScreen.call();
+          }
+        },
+        size: Size(btnSizeDimen, btnSizeDimen),
+      ));
+      if (i == 4 || i == 9) {
         answRows.add(Row(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -88,16 +103,14 @@ class IqGameNumberSeqGameTypeCreator extends IqGameGameTypeCreator {
         answImgList = [];
       }
     }
+
     Column answerColumn = Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: answRows,
     );
 
-    var margin = SizedBox(
-      height: screenDimensionsService.h(2),
-    );
-
+    var horizMargin = SizedBox(width: screenDimensionsService.dimen(2));
     return Container(
         color: Colors.white,
         child: Column(
@@ -105,21 +118,59 @@ class IqGameNumberSeqGameTypeCreator extends IqGameGameTypeCreator {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             createCurrentQuestionNr(
-                question.rawString.parseToInt, totalQuestions),
-            margin,
-            MyText(text: "Find the odd one out"),
-            margin,
+                question.index, gameContext.questionConfig.amountOfQuestions),
+            heightMargin,
+            MyText(text: "Find the unknown number in the sequence"),
+            heightMargin,
+            stack,
+            SizedBox(
+                height: btnSizeDimen + btnPad * 2,
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      createSubmitClearBtn(btnPad, true, refreshScreen),
+                      horizMargin,
+                      MyText(text: pressedNumbers ?? ""),
+                      horizMargin,
+                      createSubmitClearBtn(btnPad, false, refreshScreen),
+                    ])),
+            heightMargin,
             answerColumn,
           ],
         ));
   }
 
-  int _getQuestionNr(String rawString) {
-    return rawString.split(":")[0].parseToInt;
+  double getBtnSizeDimen() => screenDimensionsService.dimen(14);
+
+  Widget createSubmitClearBtn(
+      double btnPad, bool clearBtn, VoidCallback refreshScreen) {
+    var btnSizeDimen = getBtnSizeDimen();
+    return pressedNumbers == null
+        ? Container()
+        : MyButton(
+            buttonSkinConfig: ButtonSkinConfig(
+                image: (imageService.getSpecificImage(
+                    imageName: clearBtn ? "btn_delete" : "btn_submit",
+                    imageExtension: "png",
+                    module: "buttons",
+                    maxWidth: btnSizeDimen,
+                    maxHeight: btnSizeDimen))),
+            buttonAllPadding: btnPad,
+            fontConfig: FontConfig(
+                fontWeight: FontWeight.w700,
+                fontSize: FontConfig.getCustomFontSize(1.1),
+                fontColor: Colors.black),
+            onClick: () {
+              resetPressedNumbers();
+              refreshScreen.call();
+            },
+            size: Size(btnSizeDimen, btnSizeDimen),
+          );
   }
 
-  int _getQuestionCorrectAnswer(String rawString) {
-    return rawString.split(":")[1].parseToInt;
+  void resetPressedNumbers() {
+    pressedNumbers = null;
   }
 
   @override

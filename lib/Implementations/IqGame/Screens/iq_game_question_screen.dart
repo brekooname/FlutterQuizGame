@@ -11,7 +11,6 @@ import 'package:flutter_app_quiz_game/Lib/Screen/Game/quiz_question_container.da
 import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
 
 import '../../../Game/Question/Model/question_info.dart';
-import '../../../Game/Question/Model/question_info_status.dart';
 import '../Components/iq_game_level_header.dart';
 import '../Service/iq_game_local_storage.dart';
 
@@ -42,7 +41,9 @@ class IqGameQuestionScreen
                       .getOpenQuestionsForConfig(difficulty, category),
                   gameContext.skippedQuestions),
             ],
-            key: key);
+            key: key) {
+    iqGameGameTypeCreator.initGameTypeCreator();
+  }
 
   @override
   State<IqGameQuestionScreen> createState() => IqGameQuestionScreenState();
@@ -102,7 +103,9 @@ class IqGameQuestionScreenState extends State<IqGameQuestionScreen>
               ),
               const Spacer(),
               widget.iqGameGameTypeCreator.createGameContainer(
-                  widget.currentQuestionInfo, widget.gameContext, () {
+                  widget.currentQuestionInfo,
+                  widget.gameContext,
+                  setStateCallback, () {
                 goToNextScreen(context, score);
               }),
               const Spacer(),
