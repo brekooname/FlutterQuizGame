@@ -11,7 +11,6 @@ import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/string_extension.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
-import '../../../../../Lib/Font/font_config.dart';
 import '../iq_game_game_type_creator.dart';
 
 class IqGameSpatialGameTypeCreator extends IqGameGameTypeCreator {
@@ -28,6 +27,7 @@ class IqGameSpatialGameTypeCreator extends IqGameGameTypeCreator {
 
   @override
   Widget createGameContainer(
+      BuildContext context,
       QuestionInfo currentQuestionInfo,
       IqGameContext gameContext,
       VoidCallback refreshScreen,

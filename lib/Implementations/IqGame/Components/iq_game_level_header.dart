@@ -39,11 +39,8 @@ class IqGameLevelHeader extends StatelessWidget {
     var margin = SizedBox(
       width: _screenDimensions.w(2),
     );
-    return Container(
+    return SizedBox(
         height: _screenDimensions.dimen(16),
-        decoration: const BoxDecoration(
-          color: Colors.white,
-        ),
         child: Padding(
             padding: EdgeInsets.all(_screenDimensions.dimen(1)),
             child: Row(

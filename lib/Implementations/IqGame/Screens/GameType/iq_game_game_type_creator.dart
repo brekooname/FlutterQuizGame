@@ -5,7 +5,9 @@ import 'package:flutter_app_quiz_game/Implementations/IqGame/Service/iq_game_loc
 import 'package:flutter_app_quiz_game/Lib/Image/image_service.dart';
 import 'package:flutter_app_quiz_game/Lib/ScreenDimensions/screen_dimensions_service.dart';
 
+import '../../../../Game/Question/Model/question.dart';
 import '../../../../Game/Question/Model/question_info.dart';
+import '../../../../Lib/Color/color_util.dart';
 import '../../../../Lib/Font/font_config.dart';
 import '../../../../Lib/Text/my_text.dart';
 import '../../Questions/iq_game_context.dart';
@@ -15,10 +17,10 @@ abstract class IqGameGameTypeCreator {
   ImageService imageService = ImageService();
   ScreenDimensionsService screenDimensionsService = ScreenDimensionsService();
 
-  void initGameTypeCreator(){
-  }
+  void initGameTypeCreator() {}
 
   Widget createGameContainer(
+      BuildContext context,
       QuestionInfo currentQuestionInfo,
       IqGameContext gameContext,
       VoidCallback refreshScreen,
@@ -72,6 +74,10 @@ abstract class IqGameGameTypeCreator {
 
   QuestionCategory getGameTypeCategory(IqGameContext gameContext) =>
       gameContext.questionConfig.categories.first;
+
+  Color getBackgroundColor(Question question) {
+    return ColorUtil.hexToColor('#' + question.rawString.split("###")[1]);
+  }
 
   MyText createCurrentQuestionNr(int currentQuestionNr, int totalQuestions) {
     return MyText(

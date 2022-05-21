@@ -1,13 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_info.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_info_status.dart';
+import 'package:flutter_app_quiz_game/Implementations/IqGame/Components/iq_game_number_seq_answer_popup.dart';
 import 'package:flutter_app_quiz_game/Implementations/IqGame/Questions/iq_game_context.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/string_extension.dart';
+import 'package:flutter_app_quiz_game/Lib/Image/image_service.dart';
+import 'package:flutter_app_quiz_game/Lib/ScreenDimensions/screen_dimensions_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
+import '../../../../../Game/Question/Model/question.dart';
+import '../../../../../Lib/Animation/animation_fade_in_fade_out_text.dart';
+import '../../../../../Lib/Animation/animation_zoom_in_zoom_out.dart';
 import '../../../../../Lib/Button/button_skin_config.dart';
 import '../../../../../Lib/Font/font_config.dart';
+import '../../../../../Lib/Popup/my_popup.dart';
 import '../iq_game_game_type_creator.dart';
 
 class IqGameNumberSeqGameTypeCreator extends IqGameGameTypeCreator {
@@ -27,20 +34,15 @@ class IqGameNumberSeqGameTypeCreator extends IqGameGameTypeCreator {
     resetPressedNumbers();
   }
 
-  @override
-  Widget createGameContainer(
-      QuestionInfo currentQuestionInfo,
-      IqGameContext gameContext,
-      VoidCallback refreshScreen,
-      VoidCallback goToNextScreen) {
-    var question = currentQuestionInfo.question;
-    var questionImgModule = getQuestionImageModuleName(gameContext);
-
+  static Widget createQuestionImageStack(
+      String questionImgModule, String answerText, Question question) {
+    var screenDimensionsService = ScreenDimensionsService();
+    var imageService = ImageService();
     var imgWidth = screenDimensionsService.w(90);
     var imgHeight = screenDimensionsService.h(40);
     var leftMargin = (screenDimensionsService.w(100) - imgWidth) / 2;
     var questionImg = imageService.getSpecificImage(
-        imageName: "q" + currentQuestionInfo.question.index.toString(),
+        imageName: "q" + question.index.toString(),
         imageExtension: "png",
         maxWidth: imgWidth,
         maxHeight: imgHeight,
@@ -48,26 +50,35 @@ class IqGameNumberSeqGameTypeCreator extends IqGameGameTypeCreator {
 
     List<Widget> stackChildren = [];
     stackChildren.add(questionImg);
-    var qInfo = currentQuestionInfo.question.rawString.split(",");
+    var qInfo = question.rawString.split(",");
     var questionMarkDimen = screenDimensionsService.w(10);
-    var img = 
     stackChildren.add(Positioned(
         top: (qInfo[3].split("###")[0].parseToDouble / 100) * imgHeight -
             questionMarkDimen / 2,
         left: (qInfo[2].parseToDouble / 100) * imgWidth - leftMargin,
-        child: imageService.getSpecificImage(
-            imageName: "btn_submit",
-            imageExtension: "png",
-            maxHeight: questionMarkDimen,
-            maxWidth: questionMarkDimen,
-            module: "buttons")));
+        child: MyText(
+          width: questionMarkDimen,
+          fontConfig: FontConfig(
+              fontSize: FontConfig.getCustomFontSize(2),
+              fontColor: Colors.white,
+              borderWidth: FontConfig.standardBorderWidth * 1.3,
+              borderColor: Colors.black),
+          text: answerText,
+        )));
+    return Stack(
+      alignment: Alignment.center,
+      children: stackChildren,
+    );
+  }
 
-    AnimateZoomInZoomOut(
-                toAnimateWidgetSize: answerBtnSize,
-                zoomInZoomOutOnce: true,Stack stack = Stack(
-                duration: Duration(milliseconds: millisForZoomInZoomOut),  alignment: Alignment.center,
-                toAnimateWidget: answerBtn,  children: stackChildren,
-              ));
+  @override
+  Widget createGameContainer(
+      BuildContext context,
+      QuestionInfo currentQuestionInfo,
+      IqGameContext gameContext,
+      VoidCallback refreshScreen,
+      VoidCallback goToNextScreen) {
+    var question = currentQuestionInfo.question;
 
     var heightMargin = SizedBox(
       height: screenDimensionsService.h(2),
@@ -111,40 +122,46 @@ class IqGameNumberSeqGameTypeCreator extends IqGameGameTypeCreator {
     );
 
     var horizMargin = SizedBox(width: screenDimensionsService.dimen(2));
-    return Container(
-        color: Colors.white,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            createCurrentQuestionNr(
-                question.index, gameContext.questionConfig.amountOfQuestions),
-            heightMargin,
-            MyText(text: "Find the unknown number in the sequence"),
-            heightMargin,
-            stack,
-            SizedBox(
-                height: btnSizeDimen + btnPad * 2,
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      createSubmitClearBtn(btnPad, true, refreshScreen),
-                      horizMargin,
-                      MyText(text: pressedNumbers ?? ""),
-                      horizMargin,
-                      createSubmitClearBtn(btnPad, false, refreshScreen),
-                    ])),
-            heightMargin,
-            answerColumn,
-          ],
-        ));
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        createCurrentQuestionNr(
+            question.index, gameContext.questionConfig.amountOfQuestions),
+        heightMargin,
+        MyText(text: "Find the unknown number in the sequence"),
+        heightMargin,
+        createQuestionImageStack(getQuestionImageModuleName(gameContext), "?",
+            currentQuestionInfo.question),
+        SizedBox(
+            height: btnSizeDimen + btnPad * 2,
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  createSubmitClearBtn(btnPad, true, refreshScreen),
+                  horizMargin,
+                  SizedBox(
+                      width: screenDimensionsService.dimen(40),
+                      child: MyText(
+                          text: pressedNumbers ?? "",
+                          fontConfig: FontConfig(
+                              fontWeight: FontWeight.w700,
+                              fontSize: FontConfig.getCustomFontSize(1.3),
+                              fontColor: Colors.black))),
+                  horizMargin,
+                  createSubmitClearBtn(btnPad, false, refreshScreen),
+                ])),
+        heightMargin,
+        answerColumn,
+      ],
+    );
   }
 
   double getBtnSizeDimen() => screenDimensionsService.dimen(14);
 
-  Widget createSubmitClearBtn(
-      double btnPad, bool clearBtn, VoidCallback refreshScreen) {
+  Widget createSubmitClearBtn(BuildContext context, double btnPad,
+      bool clearBtn, VoidCallback refreshScreen) {
     var btnSizeDimen = getBtnSizeDimen();
     return pressedNumbers == null
         ? Container()
@@ -162,8 +179,15 @@ class IqGameNumberSeqGameTypeCreator extends IqGameGameTypeCreator {
                 fontSize: FontConfig.getCustomFontSize(1.1),
                 fontColor: Colors.black),
             onClick: () {
-              resetPressedNumbers();
-              refreshScreen.call();
+              if (clearBtn) {
+                resetPressedNumbers();
+                refreshScreen.call();
+              } else {
+                MyPopup.showPopup(
+                    context,
+                    IqGameIqNumberSeqAnswerPopup(
+                        getQuestionImageModuleName(gameContext)));
+              }
             },
             size: Size(btnSizeDimen, btnSizeDimen),
           );

@@ -10,11 +10,11 @@ class AnimateZoomInZoomOut extends StatefulWidget {
 
   AnimateZoomInZoomOut(
       {Key? key,
-        this.zoomAmount = defaultZoomAmount,
-        this.zoomInZoomOutOnce = false,
-        this.duration = const Duration(seconds: 1),
-        required this.toAnimateWidgetSize,
-        required this.toAnimateWidget})
+      this.zoomAmount = defaultZoomAmount,
+      this.zoomInZoomOutOnce = false,
+      this.duration = const Duration(seconds: 1),
+      required this.toAnimateWidgetSize,
+      required this.toAnimateWidget})
       : super(key: key);
 
   @override
@@ -63,26 +63,27 @@ class InternalAnimatedWidget extends AnimatedWidget {
 
   InternalAnimatedWidget(
       {Key? key,
-        required this.zoomAmount,
-        required this.toAnimateWidgetSize,
-        required this.toAnimateWidget,
-        required Animation<double> animation})
+      required this.zoomAmount,
+      required this.toAnimateWidgetSize,
+      required this.toAnimateWidget,
+      required Animation<double> animation})
       : super(key: key, listenable: animation);
 
   @override
   Widget build(BuildContext context) {
     final animation = listenable as Animation<double>;
+
     return Center(
       child: SizedBox(
         height: Tween<double>(
-            begin: toAnimateWidgetSize.height,
-            end: toAnimateWidgetSize.height -
-                (toAnimateWidgetSize.height / zoomAmount))
+                begin: toAnimateWidgetSize.height,
+                end: toAnimateWidgetSize.height -
+                    (toAnimateWidgetSize.height / zoomAmount))
             .evaluate(animation),
         width: Tween<double>(
-            begin: toAnimateWidgetSize.width,
-            end: toAnimateWidgetSize.width -
-                (toAnimateWidgetSize.width / zoomAmount))
+                begin: toAnimateWidgetSize.width,
+                end: toAnimateWidgetSize.width -
+                    (toAnimateWidgetSize.width / zoomAmount))
             .evaluate(animation),
         child: toAnimateWidget,
       ),

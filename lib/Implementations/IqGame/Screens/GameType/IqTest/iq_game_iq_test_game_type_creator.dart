@@ -26,6 +26,7 @@ class IqGameIqTestGameTypeCreator extends IqGameGameTypeCreator {
 
   @override
   Widget createGameContainer(
+      BuildContext context,
       QuestionInfo currentQuestionInfo,
       IqGameContext gameContext,
       VoidCallback refreshScreen,

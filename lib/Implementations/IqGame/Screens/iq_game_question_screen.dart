@@ -78,8 +78,10 @@ class IqGameQuestionScreenState extends State<IqGameQuestionScreen>
   @override
   Widget build(BuildContext context) {
     int? score = widget.iqGameGameTypeCreator.getScore(widget.gameContext);
+    var backgroundColor = widget.iqGameGameTypeCreator
+        .getBackgroundColor(widget.currentQuestionInfo.question);
     return Container(
-        color: Colors.white,
+        color: backgroundColor,
         child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -103,6 +105,7 @@ class IqGameQuestionScreenState extends State<IqGameQuestionScreen>
               ),
               const Spacer(),
               widget.iqGameGameTypeCreator.createGameContainer(
+                  context,
                   widget.currentQuestionInfo,
                   widget.gameContext,
                   setStateCallback, () {

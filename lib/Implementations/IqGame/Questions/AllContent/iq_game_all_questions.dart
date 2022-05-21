@@ -34,7 +34,7 @@ class IqGameAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat2, //
         questionConfig.diff0, //
-        ["question_mark_orange,9,92.9,50###e5f1ff###1 * 3 = 3###3 * 3 = 9###9 * 3 = 27###27 * 3 = 81###81 * 3 = 243"]);
+        ["question_mark_orange,9,91.3,48###e5f1ff###1 * 3 = 3###3 * 3 = 9###9 * 3 = 27###27 * 3 = 81###81 * 3 = 243"]);
     addQuestions(
         result, //
         language, //
