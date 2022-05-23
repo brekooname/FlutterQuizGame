@@ -5,6 +5,7 @@ import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
 import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/DependentAnswers/dependent_answers_question_category_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/IqGame/Screens/GameType/IqTest/iq_game_iq_test_question_category_service.dart';
+import 'package:flutter_app_quiz_game/Implementations/IqGame/Screens/GameType/NumberSeq/iq_game_number_seq_question_category_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Localization/label_mixin.dart';
 
 class IqGameQuestionConfig extends GameQuestionConfig with LabelMixin {
@@ -35,7 +36,7 @@ class IqGameQuestionConfig extends GameQuestionConfig with LabelMixin {
       singleton.cat2 = QuestionCategory(
           index: 2,
           categoryLabel: "Number Sequences",
-          questionCategoryService: DependentAnswersCategoryQuestionService()),
+          questionCategoryService: IqGameNumberSeqCategoryQuestionService()),
       singleton.cat3 = QuestionCategory(
           index: 3,
           categoryLabel: "Short Term Memory",

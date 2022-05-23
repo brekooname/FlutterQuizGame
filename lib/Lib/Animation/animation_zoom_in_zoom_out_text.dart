@@ -81,8 +81,8 @@ class InternalAnimatedWidget extends AnimatedWidget {
     return MyText(
         fontConfig: FontConfig(
             fontColor: colorTo == null
-                ? fontConfig.textColor
-                : ColorTween(begin: fontConfig.textColor, end: colorTo)
+                ? fontConfig.fontColor
+                : ColorTween(begin: fontConfig.fontColor, end: colorTo)
                     .evaluate(animation),
             fontWeight: fontConfig.fontWeight,
             borderWidth: fontConfig.borderWidth,

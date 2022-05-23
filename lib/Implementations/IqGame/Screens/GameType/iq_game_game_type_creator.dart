@@ -7,7 +7,6 @@ import 'package:flutter_app_quiz_game/Lib/ScreenDimensions/screen_dimensions_ser
 
 import '../../../../Game/Question/Model/question.dart';
 import '../../../../Game/Question/Model/question_info.dart';
-import '../../../../Lib/Color/color_util.dart';
 import '../../../../Lib/Font/font_config.dart';
 import '../../../../Lib/Text/my_text.dart';
 import '../../Questions/iq_game_context.dart';
@@ -29,15 +28,15 @@ abstract class IqGameGameTypeCreator {
   Widget createGameOverContainer(
       BuildContext context, IqGameContext gameContext);
 
-  bool goToNextScreenOnlyOnNextButtonPress() {
-    return false;
-  }
-
   int? getScore(IqGameContext gameContext) {
     return null;
   }
 
-  bool canGoToNextQuestion(QuestionInfo currentQuestionInfo) {
+  bool hasGoToNextQuestionBtn(QuestionInfo currentQuestionInfo) {
+    return false;
+  }
+
+  bool hasSkipButton() {
     return false;
   }
 
@@ -45,14 +44,20 @@ abstract class IqGameGameTypeCreator {
       QuestionInfo questionInfo,
       int answer,
       IqGameContext gameContext,
-      VoidCallback goToNextScreen,
+      VoidCallback refreshScreen,
       bool storeAnswersInStorage) {
     if (questionInfo.isQuestionOpen()) {
       gameContext.answerQuestion(questionInfo, answer.toString());
       if (storeAnswersInStorage) {
         _storeCurrentAnswers(gameContext);
       }
-      goToNextScreen.call();
+      if (gameContext.gameUser.getOpenQuestions().isEmpty) {
+        iqGameLocalStorage
+            .putAnsweredQuestions({}, getGameTypeCategory(gameContext));
+      }
+      if (getScore(gameContext) != null) {
+        refreshScreen.call();
+      }
     }
   }
 
@@ -76,7 +81,7 @@ abstract class IqGameGameTypeCreator {
       gameContext.questionConfig.categories.first;
 
   Color getBackgroundColor(Question question) {
-    return ColorUtil.hexToColor('#' + question.rawString.split("###")[1]);
+    return Colors.white;
   }
 
   MyText createCurrentQuestionNr(int currentQuestionNr, int totalQuestions) {

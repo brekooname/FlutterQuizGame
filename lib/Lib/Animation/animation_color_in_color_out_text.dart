@@ -66,7 +66,7 @@ class InternalAnimatedWidget extends AnimatedWidget {
     var fontConfig = toAnimateText.fontConfig;
     return MyText(
         fontConfig: FontConfig(
-            fontColor: ColorTween(begin: fontConfig.textColor, end: colorTo)
+            fontColor: ColorTween(begin: fontConfig.fontColor, end: colorTo)
                 .evaluate(animation),
             fontWeight: fontConfig.fontWeight,
             borderWidth: fontConfig.borderWidth,

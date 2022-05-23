@@ -10,7 +10,7 @@ import 'font_util.dart';
 class FontConfig {
   static var fontScale = _initFontScale();
 
-  late Color textColor;
+  late Color fontColor;
 
   late Color borderColor;
 
@@ -27,7 +27,7 @@ class FontConfig {
       double? borderWidth,
       this.fontWeight = FontWeight.w500}) {
     this.fontSize = fontSize ?? normalFontSize;
-    this.textColor = fontColor ?? FontUtil.getFontDefaultColor();
+    this.fontColor = fontColor ?? FontUtil.getFontDefaultColor();
     this.borderWidth = borderColor == Colors.transparent
         ? 0
         : borderWidth ?? getStandardBorderWidthBasedOnFontSize(this.fontSize);

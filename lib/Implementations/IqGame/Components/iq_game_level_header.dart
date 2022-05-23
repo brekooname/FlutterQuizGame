@@ -16,15 +16,15 @@ class IqGameLevelHeader extends StatelessWidget {
   final ImageService _imageService = ImageService();
   int? score;
   VoidCallback? nextQuestion;
+  VoidCallback? skipQuestion;
   VoidCallback? restartLevel;
-  String? nextQuestionIconName;
   QuestionInfoStatus? questionInfoStatus;
 
   IqGameLevelHeader(
       {Key? key,
       this.nextQuestion,
       this.restartLevel,
-      this.nextQuestionIconName,
+      this.skipQuestion,
       this.questionInfoStatus,
       this.score})
       : super(key: key);
@@ -39,6 +39,9 @@ class IqGameLevelHeader extends StatelessWidget {
     var margin = SizedBox(
       width: _screenDimensions.w(2),
     );
+    var emptyBtnSize = SizedBox(
+      width: _getBtnContainerWidth(myBackButton.buttonSize),
+    );
     return SizedBox(
         height: _screenDimensions.dimen(16),
         child: Padding(
@@ -46,36 +49,38 @@ class IqGameLevelHeader extends StatelessWidget {
             child: Row(
               children: <Widget>[
                 SizedBox(
-                    width: getBtnContainerWidth(myBackButton.buttonSize),
+                    width: _getBtnContainerWidth(myBackButton.buttonSize),
                     child: myBackButton),
                 margin,
-                SizedBox(
-                  width: getBtnContainerWidth(myBackButton.buttonSize),
-                ),
+                emptyBtnSize,
+                emptyBtnSize,
                 const Spacer(),
-                createScoreText(),
+                createScoreText(myBackButton.buttonSize.width / 2),
                 const Spacer(),
-                createControlBtn(
-                    myBackButton.buttonSize,
-                    nextQuestionIconName ?? "btn_skip",
-                    nextQuestionIconName == "btn_next",
-                    nextQuestion),
+                _createControlBtn(
+                    myBackButton.buttonSize, "btn_skip", false, skipQuestion),
+                _createControlBtn(
+                    myBackButton.buttonSize, "btn_next", true, nextQuestion),
                 margin,
-                createControlBtn(myBackButton.buttonSize, "btn_restart", false,
+                _createControlBtn(myBackButton.buttonSize, "btn_restart", false,
                     restartLevel),
               ],
             )));
   }
 
-  Widget createScoreText() {
+  Widget createScoreText(double textWidth) {
     if (score == null) {
       return Container();
     }
-    var fontColor = Colors.green.shade400;
+    var fontColor = Colors.lightGreenAccent.shade700;
     var scoreText = MyText(
-        text: score! > 0 ? "+" + score.toString() : "0",
+        width: textWidth,
+        maxLines: 1,
+        text: (score ?? 0).toString(),
         fontConfig: FontConfig(
             fontColor: fontColor,
+            borderColor: Colors.black,
+            borderWidth: FontConfig.standardBorderWidth,
             fontWeight: FontWeight.w700,
             fontSize: FontConfig.getCustomFontSize(2)));
     return AnimateZoomInZoomOutText(
@@ -91,32 +96,33 @@ class IqGameLevelHeader extends StatelessWidget {
         toAnimateText: scoreText);
   }
 
-  Widget createControlBtn(Size size, String btnIconName,
-      bool animateZoomInZoomOut, VoidCallback? voidCallback) {
-    if (voidCallback == null) {
+  Widget _createControlBtn(Size size, String btnIconName,
+      bool animateZoomInZoomOut, VoidCallback? onBtnClick) {
+    if (onBtnClick == null) {
       return SizedBox(
-        width: getBtnContainerWidth(size),
+        width: _getBtnContainerWidth(size),
       );
     }
+    ImageService imageService = ImageService();
     var btn = MyButton(
         size: size,
         onClick: () {
-          voidCallback.call();
+          onBtnClick.call();
         },
         buttonSkinConfig: ButtonSkinConfig(
-          image: (_imageService.getSpecificImage(
+          image: (imageService.getSpecificImage(
               imageName: btnIconName,
               imageExtension: "png",
               module: "buttons",
               maxWidth: size.width)),
         ));
     return SizedBox(
-        width: getBtnContainerWidth(size),
+        width: _getBtnContainerWidth(size),
         child: animateZoomInZoomOut
             ? AnimateZoomInZoomOut(
                 toAnimateWidgetSize: size, toAnimateWidget: btn)
             : btn);
   }
 
-  double getBtnContainerWidth(Size size) => size.width * 1.2;
+  static double _getBtnContainerWidth(Size size) => size.width * 1.2;
 }

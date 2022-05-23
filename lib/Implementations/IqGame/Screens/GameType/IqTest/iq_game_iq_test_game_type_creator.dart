@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_info.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_info_status.dart';
 import 'package:flutter_app_quiz_game/Implementations/IqGame/Components/iq_game_iq_test_correct_answers_popup.dart';
@@ -63,7 +62,8 @@ class IqGameIqTestGameTypeCreator extends IqGameGameTypeCreator {
         ),
         onClick: () {
           answerQuestion(
-              currentQuestionInfo, i, gameContext, goToNextScreen, true);
+              currentQuestionInfo, i, gameContext, refreshScreen, true);
+          goToNextScreen.call();
         },
       ));
       if (i == 3 || i == 7) {
@@ -180,8 +180,13 @@ class IqGameIqTestGameTypeCreator extends IqGameGameTypeCreator {
   }
 
   @override
-  bool canGoToNextQuestion(QuestionInfo currentQuestionInfo) {
+  bool hasSkipButton() {
     return true;
+  }
+
+  @override
+  bool hasGoToNextQuestionBtn(QuestionInfo currentQuestionInfo) {
+    return false;
   }
 
   String _getLevelForScore(int score) {

@@ -67,8 +67,8 @@ mixin MyPopup {
           children: [
             Container(
                 decoration: BoxDecoration(
-                  borderRadius:
-                      BorderRadius.circular(FontConfig.standardBorderRadius),
+                  borderRadius: BorderRadius.circular(
+                      FontConfig.standardBorderRadius / 2),
                   color: Colors.white,
                   image: decorationImage,
                 ),
@@ -92,7 +92,7 @@ mixin MyPopup {
     _navigatorService.pop(context);
   }
 
-  MyButton createClosePopupBtn(
+  Widget createClosePopupBtn(
       BuildContext context, VoidCallback? onCloseBtnClick) {
     var closeBtnWidth = screenDimensions.dimen(9);
     return MyButton(
@@ -112,6 +112,7 @@ mixin MyPopup {
     Future.delayed(
         Duration.zero,
         () => showDialog(
+            barrierDismissible: false,
             context: context,
             builder: (BuildContext context) {
               return popupToShow;

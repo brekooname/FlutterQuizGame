@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_info.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_info_status.dart';
 import 'package:flutter_app_quiz_game/Implementations/IqGame/Questions/iq_game_context.dart';
@@ -67,7 +66,7 @@ class IqGameSpatialGameTypeCreator extends IqGameGameTypeCreator {
                   : Colors.transparent,
           onClick: () {
             answerQuestion(
-                currentQuestionInfo, i, gameContext, goToNextScreen, false);
+                currentQuestionInfo, i, gameContext, refreshScreen, false);
             iqGameLocalStorage.setMaxScoreForCat(
                 getGameTypeCategory(gameContext), getScore(gameContext) ?? 0);
           },
@@ -137,12 +136,7 @@ class IqGameSpatialGameTypeCreator extends IqGameGameTypeCreator {
   }
 
   @override
-  bool canGoToNextQuestion(QuestionInfo currentQuestionInfo) {
+  bool hasGoToNextQuestionBtn(QuestionInfo currentQuestionInfo) {
     return !currentQuestionInfo.isQuestionOpen();
-  }
-
-  @override
-  bool goToNextScreenOnlyOnNextButtonPress() {
-    return true;
   }
 }

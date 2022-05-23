@@ -130,6 +130,7 @@ class IqGameMainMenuScreenState extends State<IqGameMainMenuScreen>
             fontSize: FontConfig.getCustomFontSize(1.2)));
     var levelScore = MyText(
       fontConfig: FontConfig(
+          borderColor: Colors.black,
           fontColor: maxScoreForCat == -1 ? Colors.white : Colors.greenAccent,
           fontWeight:
               maxScoreForCat == -1 ? FontWeight.normal : FontWeight.w800,

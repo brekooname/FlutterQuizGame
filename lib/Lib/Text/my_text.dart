@@ -63,7 +63,7 @@ class MyText extends StatelessWidget {
     var textStyle = TextStyle(
         decoration: TextDecoration.none,
         fontWeight: fontConfig.fontWeight,
-        color: fontConfig.textColor,
+        color: fontConfig.fontColor,
         fontSize: fontConfig.fontSize,
         shadows: shadows);
 
@@ -73,7 +73,7 @@ class MyText extends StatelessWidget {
       textStyle = TextStyle(
           decoration: TextDecoration.none,
           fontWeight: fontConfig.fontWeight,
-          color: fontConfig.textColor,
+          color: fontConfig.fontColor,
           fontSize: fontConfig.fontSize);
     }
     return textStyle;
