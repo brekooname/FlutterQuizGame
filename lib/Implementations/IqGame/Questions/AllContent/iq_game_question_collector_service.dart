@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter_app_quiz_game/Game/Question/question_collector_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/IqGame/Constants/iq_game_question_config.dart';
 import 'package:flutter_app_quiz_game/Implementations/IqGame/Questions/AllContent/iq_game_all_questions.dart';
+import 'package:flutter_app_quiz_game/Implementations/IqGame/Screens/GameType/MemTest/iq_game_memtest_game_type_creator.dart';
 
 import '../../../../Game/Question/Model/question.dart';
 import '../../../../Game/Question/Model/question_category.dart';
@@ -51,6 +52,13 @@ class IqGameQuestionCollectorService
       } else if (cat == gameQuestionConfig.cat2) {
         return allQuestionsService
             .getAllQuestionsForCategory(gameQuestionConfig.cat2);
+      } else if (cat == gameQuestionConfig.cat3) {
+        for (int qNr = 0;
+            qNr < IqGameMemTestGameTypeCreator.totalQuestions;
+            qNr++) {
+          result.add(Question(i, diff, cat, qNr.toString()));
+          i++;
+        }
       }
     }
     return result;
