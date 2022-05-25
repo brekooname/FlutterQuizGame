@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_info.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_info_status.dart';
 import 'package:flutter_app_quiz_game/Implementations/IqGame/Questions/iq_game_context.dart';
+import 'package:flutter_app_quiz_game/Lib/Animation/animation_fade_in_fade_out_text.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/button_skin_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Font/font_config.dart';
@@ -44,26 +45,34 @@ class IqGameMemTestGameTypeCreator extends IqGameGameTypeCreator {
     );
     Widget mainContent;
 
+    var durationEye = 2000;
+    var durationShowNr = 1000;
     if (_memTestGameTypeScreenState !=
         IqGameMemTestGameTypeScreenState.HIDE_NUMBERS) {
-      Future.delayed(const Duration(milliseconds: 5000), () {
-        _memTestGameTypeScreenState =
-            IqGameMemTestGameTypeScreenState.SHOW_NUMBERS;
+      Future.delayed(
+          Duration(
+              milliseconds: _memTestGameTypeScreenState ==
+                      IqGameMemTestGameTypeScreenState.LOADING
+                  ? durationEye
+                  : durationShowNr), () {
+        _memTestGameTypeScreenState = _memTestGameTypeScreenState ==
+                IqGameMemTestGameTypeScreenState.SHOW_NUMBERS
+            ? IqGameMemTestGameTypeScreenState.HIDE_NUMBERS
+            : IqGameMemTestGameTypeScreenState.SHOW_NUMBERS;
         refreshScreen.call();
-        Future.delayed(const Duration(milliseconds: 5000), () {
-          _memTestGameTypeScreenState =
-              IqGameMemTestGameTypeScreenState.HIDE_NUMBERS;
-          refreshScreen.call();
-        });
       });
     }
 
     if (_memTestGameTypeScreenState ==
         IqGameMemTestGameTypeScreenState.LOADING) {
-      mainContent = imageService.getSpecificImage(
-          imageName: "eye",
-          imageExtension: "png",
-          maxHeight: screenDimensionsService.dimen(50));
+      mainContent = AnimateFadeInFadeOut(
+        onlyFadeOut: true,
+        duration: Duration(milliseconds: durationEye),
+        toAnimateWidget: imageService.getSpecificImage(
+            imageName: "eye",
+            imageExtension: "png",
+            maxHeight: screenDimensionsService.dimen(50)),
+      );
     } else {
       var btnSideDimen = screenDimensionsService.dimen(17);
       var btnPad = screenDimensionsService.dimen(1);
@@ -122,7 +131,10 @@ class IqGameMemTestGameTypeCreator extends IqGameGameTypeCreator {
             margin,
             MyText(text: "Find the odd one out"),
             margin,
-            mainContent,
+            SizedBox(
+              height: screenDimensionsService.h(50),
+              child: mainContent,
+            )
           ],
         ));
   }

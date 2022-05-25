@@ -1,23 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
-class AnimateFadeInFadeOutText extends StatefulWidget {
-  MyText toAnimateText;
+class AnimateFadeInFadeOut extends StatefulWidget {
+  Widget toAnimateWidget;
   bool fadeInFadeOutOnce;
+  bool onlyFadeOut;
   Duration duration;
 
-  AnimateFadeInFadeOutText(
+  AnimateFadeInFadeOut(
       {Key? key,
       this.fadeInFadeOutOnce = false,
+      this.onlyFadeOut = false,
       this.duration = const Duration(milliseconds: 500),
-      required this.toAnimateText})
-      : super(key: key);
+      required this.toAnimateWidget})
+      : super(key: key) {
+    if (onlyFadeOut) {
+      fadeInFadeOutOnce = true;
+    }
+  }
 
   @override
   MyAnimatedWidgetState createState() => MyAnimatedWidgetState();
 }
 
-class MyAnimatedWidgetState extends State<AnimateFadeInFadeOutText>
+class MyAnimatedWidgetState extends State<AnimateFadeInFadeOut>
     with TickerProviderStateMixin {
   late Animation<double> animation;
   late AnimationController controller;
@@ -26,7 +31,7 @@ class MyAnimatedWidgetState extends State<AnimateFadeInFadeOutText>
     controller = AnimationController(duration: widget.duration, vsync: this);
     animation = CurvedAnimation(parent: controller, curve: Curves.ease);
     animation.addStatusListener((status) {
-      if (status == AnimationStatus.completed) {
+      if (status == AnimationStatus.completed && !widget.onlyFadeOut) {
         controller.reverse();
       } else if (status == AnimationStatus.dismissed &&
           !widget.fadeInFadeOutOnce) {
@@ -41,7 +46,10 @@ class MyAnimatedWidgetState extends State<AnimateFadeInFadeOutText>
   Widget build(BuildContext context) {
     startAnimation();
     return InternalAnimatedWidget(
-        toAnimateText: widget.toAnimateText, animation: animation);
+        duration: widget.duration,
+        onlyFadeOut: widget.onlyFadeOut,
+        toAnimateWidget: widget.toAnimateWidget,
+        animation: animation);
   }
 
   @override
@@ -52,11 +60,15 @@ class MyAnimatedWidgetState extends State<AnimateFadeInFadeOutText>
 }
 
 class InternalAnimatedWidget extends AnimatedWidget {
-  MyText toAnimateText;
+  Widget toAnimateWidget;
+  Duration duration;
+  bool onlyFadeOut;
 
   InternalAnimatedWidget(
       {Key? key,
-      required this.toAnimateText,
+      required this.toAnimateWidget,
+      required this.duration,
+      required this.onlyFadeOut,
       required Animation<double> animation})
       : super(key: key, listenable: animation);
 
@@ -64,9 +76,14 @@ class InternalAnimatedWidget extends AnimatedWidget {
   Widget build(BuildContext context) {
     final animation = listenable as Animation<double>;
 
+    Duration duration = Duration(
+        milliseconds: onlyFadeOut
+            ? this.duration.inMilliseconds ~/ 8
+            : this.duration.inMilliseconds);
     return AnimatedOpacity(
-        duration: const Duration(milliseconds: 100),
-        opacity: Tween<double>(begin: 1, end: 0.1).evaluate(animation),
-        child: toAnimateText);
+        duration: duration,
+        opacity: Tween<double>(begin: 1, end: onlyFadeOut ? 0 : 0.1)
+            .evaluate(animation),
+        child: toAnimateWidget);
   }
 }
