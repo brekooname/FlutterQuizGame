@@ -7,6 +7,8 @@ class IqGameCampaignLevelService extends CampaignLevelService {
   late CampaignLevel level_1;
   late CampaignLevel level_2;
   late CampaignLevel level_3;
+  late CampaignLevel level_4;
+  late CampaignLevel level_5;
 
   static final IqGameCampaignLevelService singleton =
       IqGameCampaignLevelService.internal();
@@ -36,6 +38,18 @@ class IqGameCampaignLevelService extends CampaignLevelService {
         difficulty: questionConfig.diff0,
         categories: [
           questionConfig.cat3,
+        ],
+      ),
+      singleton.level_4 = CampaignLevel(
+        difficulty: questionConfig.diff0,
+        categories: [
+          questionConfig.cat4,
+        ],
+      ),
+      singleton.level_5 = CampaignLevel(
+        difficulty: questionConfig.diff0,
+        categories: [
+          questionConfig.cat5,
         ],
       )
     ];

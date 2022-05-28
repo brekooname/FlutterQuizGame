@@ -28,11 +28,13 @@ class MyButton extends StatefulWidget {
 
   String? text;
   int textMaxLines;
+  bool textFirstCharUppercase;
 
   MyButton({
     Key? key,
     this.text,
     this.textMaxLines = 2,
+    this.textFirstCharUppercase = true,
     this.buttonAllPadding = 0,
     this.disabled = false,
     this.visible = true,
@@ -66,6 +68,7 @@ class MyButton extends StatefulWidget {
 
     if (customContent == null && text != null) {
       customContent = MyText(
+        firstCharUppercase: textFirstCharUppercase,
         text: text!,
         fontConfig: this.fontConfig,
         maxLines: textMaxLines,

@@ -42,7 +42,7 @@ class IqGameQuestionScreen
                       .getOpenQuestionsForConfig(difficulty, category),
                   gameContext.skippedQuestions),
             ],
-            key: key) ;
+            key: key);
 
   @override
   State<IqGameQuestionScreen> createState() => IqGameQuestionScreenState();
@@ -77,7 +77,8 @@ class IqGameQuestionScreenState extends State<IqGameQuestionScreen>
   @override
   void initState() {
     super.initState();
-    widget.iqGameGameTypeCreator.initGameTypeCreator();
+    widget.iqGameGameTypeCreator
+        .initGameTypeCreator(widget.currentQuestionInfo, setStateCallback);
   }
 
   @override
@@ -141,7 +142,7 @@ class IqGameQuestionScreenState extends State<IqGameQuestionScreen>
 
   @override
   void setState(fn) {
-    if(mounted) {
+    if (mounted) {
       super.setState(fn);
     }
   }

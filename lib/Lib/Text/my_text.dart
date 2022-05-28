@@ -13,6 +13,7 @@ class MyText extends StatelessWidget {
   Alignment alignmentInsideContainer;
   String text;
   double textAllPadding;
+  bool firstCharUppercase;
 
   MyText(
       {Key? key,
@@ -24,9 +25,10 @@ class MyText extends StatelessWidget {
       this.alignmentInsideContainer = Alignment.center,
       this.width,
       this.textShadow,
+      this.firstCharUppercase = true,
       this.maxLines = 2})
       : super(key: key) {
-    text = text.capitalized.trim();
+    text = firstCharUppercase ? text.capitalized.trim() : text.trim();
     this.fontConfig =
         fontConfig ?? FontConfig(fontSize: fontSize, fontColor: fontColor);
   }

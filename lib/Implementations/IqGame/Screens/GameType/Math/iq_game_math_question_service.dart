@@ -1,18 +1,18 @@
 import 'package:flutter_app_quiz_game/Game/Question/Model/question.dart';
 import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/Base/question_service.dart';
 
-class IqGameMemTestQuestionService extends QuestionService {
+class IqGameMathQuestionService extends QuestionService {
   static const int allAnswersPressedCorrectly = 1;
   static const int notAllAnswersPressedCorrectly = -1;
 
-  static final IqGameMemTestQuestionService singleton =
-      IqGameMemTestQuestionService.internal();
+  static final IqGameMathQuestionService singleton =
+      IqGameMathQuestionService.internal();
 
-  factory IqGameMemTestQuestionService() {
+  factory IqGameMathQuestionService() {
     return singleton;
   }
 
-  IqGameMemTestQuestionService.internal();
+  IqGameMathQuestionService.internal();
 
   @override
   String getQuestionToBeDisplayed(Question question) {

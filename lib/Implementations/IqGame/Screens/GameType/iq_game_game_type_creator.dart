@@ -16,7 +16,10 @@ abstract class IqGameGameTypeCreator {
   ImageService imageService = ImageService();
   ScreenDimensionsService screenDimensionsService = ScreenDimensionsService();
 
-  void initGameTypeCreator() {}
+  void initGameTypeCreator(
+    QuestionInfo currentQuestionInfo,
+    VoidCallback refreshScreen,
+  ) {}
 
   Widget createGameContainer(
       BuildContext context,

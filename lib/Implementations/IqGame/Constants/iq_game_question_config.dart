@@ -5,6 +5,8 @@ import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
 import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/DependentAnswers/dependent_answers_question_category_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/IqGame/Screens/GameType/IqTest/iq_game_iq_test_question_category_service.dart';
+import 'package:flutter_app_quiz_game/Implementations/IqGame/Screens/GameType/Math/iq_game_math_question_category_service.dart';
+import 'package:flutter_app_quiz_game/Implementations/IqGame/Screens/GameType/MemTest/iq_game_memtest_question_category_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/IqGame/Screens/GameType/NumberSeq/iq_game_number_seq_question_category_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Localization/label_mixin.dart';
 
@@ -13,6 +15,8 @@ class IqGameQuestionConfig extends GameQuestionConfig with LabelMixin {
   late QuestionCategory cat1;
   late QuestionCategory cat2;
   late QuestionCategory cat3;
+  late QuestionCategory cat4;
+  late QuestionCategory cat5;
 
   late QuestionDifficulty diff0;
 
@@ -40,7 +44,15 @@ class IqGameQuestionConfig extends GameQuestionConfig with LabelMixin {
       singleton.cat3 = QuestionCategory(
           index: 3,
           categoryLabel: "Short Term Memory",
-          questionCategoryService: DependentAnswersCategoryQuestionService())
+          questionCategoryService: IqGameMemTestCategoryQuestionService()),
+      singleton.cat4 = QuestionCategory(
+          index: 4,
+          categoryLabel: "Math",
+          questionCategoryService: IqGameMathCategoryQuestionService()),
+      singleton.cat5 = QuestionCategory(
+          index: 5,
+          categoryLabel: "Math",
+          questionCategoryService: IqGameMathCategoryQuestionService()),
     ];
     return singleton;
   }

@@ -27,7 +27,10 @@ class IqGameNumberSeqGameTypeCreator extends IqGameGameTypeCreator {
   String? pressedNumbers;
 
   @override
-  void initGameTypeCreator() {
+  void initGameTypeCreator(
+    QuestionInfo currentQuestionInfo,
+    VoidCallback refreshScreen,
+  ) {
     resetPressedNumbers();
   }
 
@@ -175,7 +178,8 @@ class IqGameNumberSeqGameTypeCreator extends IqGameGameTypeCreator {
                 answerQuestion(currentQuestionInfo, pressedNumbers!.parseToInt,
                     gameContext, refreshScreen, true);
                 iqGameLocalStorage.setMaxScoreForCat(
-                    getGameTypeCategory(gameContext), getScore(gameContext) ?? 0);
+                    getGameTypeCategory(gameContext),
+                    getScore(gameContext) ?? 0);
                 MyPopup.showPopup(
                     context,
                     IqGameIqNumberSeqAnswerPopup(

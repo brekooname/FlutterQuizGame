@@ -4,6 +4,7 @@ import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
 import 'package:flutter_app_quiz_game/Implementations/IqGame/Questions/iq_game_context.dart';
 import 'package:flutter_app_quiz_game/Implementations/IqGame/Screens/GameType/IqTest/iq_game_iq_test_game_type_creator.dart';
+import 'package:flutter_app_quiz_game/Implementations/IqGame/Screens/GameType/Math/iq_game_math_game_type_creator.dart';
 import 'package:flutter_app_quiz_game/Implementations/IqGame/Screens/GameType/MemTest/iq_game_memtest_game_type_creator.dart';
 import 'package:flutter_app_quiz_game/Implementations/IqGame/Screens/GameType/Spatial/iq_game_spatial_game_type_creator.dart';
 import 'package:flutter_app_quiz_game/Implementations/IqGame/Screens/GameType/iq_game_game_type_creator.dart';
@@ -105,6 +106,8 @@ class IqGameScreenManagerState extends State<IqGameScreenManager>
       creator = IqGameNumberSeqGameTypeCreator();
     } else if (category == questionConfig.cat3) {
       creator = IqGameMemTestGameTypeCreator();
+    } else if (category == questionConfig.cat4) {
+      creator = IqGameMathGameTypeCreator();
     }
     if (creator == null) {
       throw UnsupportedError(
