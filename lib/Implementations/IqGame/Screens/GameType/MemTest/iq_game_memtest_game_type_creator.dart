@@ -34,6 +34,7 @@ class IqGameMemTestGameTypeCreator extends IqGameGameTypeCreator {
   @override
   void initGameTypeCreator(
     QuestionInfo currentQuestionInfo,
+      IqGameContext gameContext,
     VoidCallback refreshScreen,
   ) {
     _memTestGameTypeScreenState = IqGameMemTestGameTypeScreenState.LOADING;

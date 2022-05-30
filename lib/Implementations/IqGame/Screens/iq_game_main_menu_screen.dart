@@ -6,6 +6,7 @@ import 'package:flutter_app_quiz_game/Implementations/IqGame/Service/iq_game_scr
 import 'package:flutter_app_quiz_game/Lib/Button/button_skin_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/floating_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
+import 'package:flutter_app_quiz_game/Lib/Extensions/map_extension.dart';
 import 'package:flutter_app_quiz_game/Lib/Localization/label_mixin.dart';
 import 'package:flutter_app_quiz_game/Lib/Popup/settings_popup.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
@@ -50,7 +51,7 @@ class IqGameMainMenuScreenState extends State<IqGameMainMenuScreen>
       text: MyApp.appTitle,
       backgroundImagePath: assetsService.getSpecificAssetPath(
           assetExtension: "png", assetName: "title_clouds_background"),
-      backgroundImageWidth: screenDimensions.dimen(70),
+      backgroundImageWidth: screenDimensions.dimen(60),
       textShadow: Shadow(
         blurRadius: FontConfig.standardShadowRadius * 2,
         color: Colors.black.withOpacity(0.3),
@@ -58,7 +59,7 @@ class IqGameMainMenuScreenState extends State<IqGameMainMenuScreen>
       fontConfig: FontConfig(
           fontColor: Colors.white,
           fontWeight: FontWeight.normal,
-          fontSize: FontConfig.getCustomFontSize(1.6),
+          fontSize: FontConfig.getCustomFontSize(1.2),
           borderColor: Colors.red),
     );
 
@@ -100,41 +101,53 @@ class IqGameMainMenuScreenState extends State<IqGameMainMenuScreen>
 
   Widget _createLevelBtns() {
     var config = IqGameQuestionConfig();
-    return SizedBox(
-        height: screenDimensions.h(71),
-        child: ListView(
-          children: config.categories.map((e) => _createLevelBtn(e)).toList(),
-        ));
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: config.categories.map((e) => _createLevelBtn(e)).toList(),
+    );
   }
 
   Widget _createLevelBtn(QuestionCategory cat) {
+    Color categColor = getBtnCategoryColor().get<QuestionCategory, Color>(cat)!;
     var iconPadding = screenDimensions.dimen(1);
-    var btnSize = Size(screenDimensions.dimen(80), screenDimensions.dimen(26));
-    var iconContainerSize = Size(btnSize.width, btnSize.height / 1.7);
-    var iconDimen = iconContainerSize.height / 1.1;
+    var btnSize = Size(screenDimensions.dimen(60), screenDimensions.dimen(20));
+    var iconDimen = btnSize.height / 1.7;
     var maxScoreForCat = widget.iqGameLocalStorage.getMaxScoreForCat(cat);
-    var levelIcon = imageService.getSpecificImage(
-        imageName: "btn_level_main_" + cat.index.toString(),
-        imageExtension: "png",
-        maxWidth: iconDimen,
-        maxHeight: iconDimen,
-        module: "buttons");
+    var levelIcon = Container(
+        height: iconDimen,
+        width: iconDimen,
+        decoration: BoxDecoration(
+            color: categColor,
+            borderRadius: BorderRadius.all(
+                Radius.circular(FontConfig.standardBorderRadius))),
+        child: imageService.getSpecificImage(
+            imageName: "btn_level_main_" + cat.index.toString(),
+            imageExtension: "png",
+            maxWidth: iconDimen,
+            maxHeight: iconDimen,
+            module: "buttons"));
+    var catLabelText = cat.categoryLabel!;
     var levelLabel = MyText(
-        text: cat.categoryLabel!,
-        width: btnSize.width - iconDimen * 1.3,
+        text: catLabelText,
+        width: btnSize.width - iconDimen * 1.5,
         maxLines: 2,
+        textShadow: Shadow(
+          blurRadius: FontConfig.standardShadowRadius * 2,
+          color: Colors.black.withOpacity(0.3),
+        ),
         fontConfig: FontConfig(
             borderColor: Colors.black,
             fontColor: Colors.white,
             fontWeight: FontWeight.w500,
-            fontSize: FontConfig.getCustomFontSize(1.2)));
+            fontSize: FontConfig.getCustomFontSize(1.0)));
     var levelScore = MyText(
       fontConfig: FontConfig(
           borderColor: Colors.black,
           fontColor: maxScoreForCat == -1 ? Colors.white : Colors.greenAccent,
           fontWeight:
               maxScoreForCat == -1 ? FontWeight.normal : FontWeight.w800,
-          fontSize: FontConfig.normalFontSize),
+          fontSize: FontConfig.getCustomFontSize(0.8)),
       text: _getScoreText(cat, maxScoreForCat),
     );
     Widget content = Column(
@@ -144,25 +157,26 @@ class IqGameMainMenuScreenState extends State<IqGameMainMenuScreen>
         Padding(
             padding: EdgeInsets.all(iconPadding),
             child: SizedBox(
-                width: iconContainerSize.width,
-                height: iconContainerSize.height,
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      levelIcon,
-                      const Spacer(),
-                      levelLabel,
-                      const Spacer(),
-                    ]))),
-        Container(
-            decoration: BoxDecoration(
-                color: Colors.red.shade400,
-                borderRadius: BorderRadius.vertical(
-                    bottom: Radius.circular(FontConfig.standardBorderRadius))),
-            height: (btnSize.height - iconContainerSize.height) / 1.2 -
-                iconPadding * 2,
-            child: levelScore)
+                  SizedBox(
+                    width: screenDimensions.dimen(2),
+                  ),
+                  levelIcon,
+                  const Spacer(),
+                  levelLabel,
+                  const Spacer(),
+                ]))),
+        // Container(
+        //     decoration: BoxDecoration(
+        //         color: Colors.red.shade400,
+        //         borderRadius: BorderRadius.vertical(
+        //             bottom: Radius.circular(FontConfig.standardBorderRadius))),
+        //     height: (btnSize.height - iconContainerSize.height) / 1.2 -
+        //         iconPadding * 2,
+        //     child: levelScore)
       ],
     );
     return MyButton(
@@ -172,13 +186,25 @@ class IqGameMainMenuScreenState extends State<IqGameMainMenuScreen>
             .campaignLevel(widget._iqGameQuestionConfig.diff0, cat));
       },
       size: btnSize,
-      buttonAllPadding: screenDimensions.dimen(2),
+      buttonAllPadding: screenDimensions.dimen(1.5),
       buttonSkinConfig: ButtonSkinConfig(
           buttonUnpressedShadowColor: Colors.transparent,
-          buttonPressedShadowColor: Colors.blue.withOpacity(0.6),
-          backgroundColor: Colors.blue.withOpacity(0.8)),
+          buttonPressedShadowColor: categColor.withOpacity(0.6),
+          backgroundColor: categColor.withOpacity(0.9)),
       customContent: content,
     );
+  }
+
+  Map<QuestionCategory, Color> getBtnCategoryColor() {
+    IqGameQuestionConfig config = IqGameQuestionConfig();
+    return {
+      config.cat0: Colors.blue,
+      config.cat1: Colors.green,
+      config.cat2: Colors.orange,
+      config.cat3: Colors.purple,
+      config.cat4: Colors.red,
+      config.cat5: Colors.teal,
+    };
   }
 
   String _getScoreText(QuestionCategory cat, int score) {

@@ -29,6 +29,7 @@ class IqGameNumberSeqGameTypeCreator extends IqGameGameTypeCreator {
   @override
   void initGameTypeCreator(
     QuestionInfo currentQuestionInfo,
+      IqGameContext gameContext,
     VoidCallback refreshScreen,
   ) {
     resetPressedNumbers();

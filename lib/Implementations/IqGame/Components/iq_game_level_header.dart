@@ -51,17 +51,13 @@ class IqGameLevelHeader extends StatelessWidget {
                 SizedBox(
                     width: _getBtnContainerWidth(myBackButton.buttonSize),
                     child: myBackButton),
-                margin,
                 emptyBtnSize,
                 emptyBtnSize,
-                const Spacer(),
-                createScoreText(myBackButton.buttonSize.width / 2),
-                const Spacer(),
+                createScoreText(myBackButton.buttonSize.width / 1.2),
                 _createControlBtn(
                     myBackButton.buttonSize, "btn_skip", false, skipQuestion),
                 _createControlBtn(
                     myBackButton.buttonSize, "btn_next", true, nextQuestion),
-                margin,
                 _createControlBtn(myBackButton.buttonSize, "btn_restart", false,
                     restartLevel),
               ],
@@ -74,26 +70,28 @@ class IqGameLevelHeader extends StatelessWidget {
     }
     var fontColor = Colors.lightGreenAccent.shade700;
     var scoreText = MyText(
-        width: textWidth,
         maxLines: 1,
+        width: textWidth,
         text: (score ?? 0).toString(),
         fontConfig: FontConfig(
             fontColor: fontColor,
             borderColor: Colors.black,
             borderWidth: FontConfig.standardBorderWidth,
             fontWeight: FontWeight.w700,
-            fontSize: FontConfig.getCustomFontSize(2)));
-    return AnimateZoomInZoomOutText(
-        zoomAmount: questionInfoStatus == QuestionInfoStatus.lost
-            ? 0.8
-            : questionInfoStatus == QuestionInfoStatus.won
-                ? 1.1
-                : 1,
-        executeAnimationOnlyOnce: true,
-        colorTo: questionInfoStatus == QuestionInfoStatus.lost
-            ? Colors.red
-            : fontColor,
-        toAnimateText: scoreText);
+            fontSize: FontConfig.getCustomFontSize(1.8)));
+    return questionInfoStatus == QuestionInfoStatus.open
+        ? scoreText
+        : AnimateZoomInZoomOutText(
+            zoomAmount: questionInfoStatus == QuestionInfoStatus.lost
+                ? 0.8
+                : questionInfoStatus == QuestionInfoStatus.won
+                    ? 1.1
+                    : 1,
+            executeAnimationOnlyOnce: true,
+            colorTo: questionInfoStatus == QuestionInfoStatus.lost
+                ? Colors.red
+                : fontColor,
+            toAnimateText: scoreText);
   }
 
   Widget _createControlBtn(Size size, String btnIconName,

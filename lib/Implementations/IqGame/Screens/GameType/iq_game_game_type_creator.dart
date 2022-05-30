@@ -18,6 +18,7 @@ abstract class IqGameGameTypeCreator {
 
   void initGameTypeCreator(
     QuestionInfo currentQuestionInfo,
+      IqGameContext gameContext,
     VoidCallback refreshScreen,
   ) {}
 
@@ -37,6 +38,9 @@ abstract class IqGameGameTypeCreator {
 
   bool hasGoToNextQuestionBtn(QuestionInfo currentQuestionInfo) {
     return false;
+  }
+
+  void resetGameType() {
   }
 
   bool hasSkipButton() {

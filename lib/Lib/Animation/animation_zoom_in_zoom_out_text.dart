@@ -29,6 +29,8 @@ class MyAnimatedWidgetState extends State<AnimateZoomInZoomOutText>
   late AnimationController controller;
 
   void startAnimation() {
+    debugPrint("animate   xxx ");
+
     controller = AnimationController(duration: widget.duration, vsync: this);
     animation = CurvedAnimation(parent: controller, curve: Curves.ease);
     animation.addStatusListener((status) {

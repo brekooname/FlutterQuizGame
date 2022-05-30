@@ -77,8 +77,8 @@ class IqGameQuestionScreenState extends State<IqGameQuestionScreen>
   @override
   void initState() {
     super.initState();
-    widget.iqGameGameTypeCreator
-        .initGameTypeCreator(widget.currentQuestionInfo, setStateCallback);
+    widget.iqGameGameTypeCreator.initGameTypeCreator(
+        widget.currentQuestionInfo, widget.gameContext, setStateCallback);
   }
 
   @override
@@ -128,6 +128,7 @@ class IqGameQuestionScreenState extends State<IqGameQuestionScreen>
   void restartCategory() {
     widget.iqGameLocalStorage.putAnsweredQuestions({}, widget.category);
     widget.gameScreenManagerState.showNewGameScreen(widget.campaignLevel);
+    widget.iqGameGameTypeCreator.resetGameType();
   }
 
   void nextQuestion() {
