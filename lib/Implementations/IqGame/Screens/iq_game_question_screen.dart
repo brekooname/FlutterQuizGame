@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
 import 'package:flutter_app_quiz_game/Implementations/IqGame/Constants/iq_game_campaign_level_service.dart';
-import 'package:flutter_app_quiz_game/Implementations/IqGame/Constants/iq_game_question_config.dart';
 import 'package:flutter_app_quiz_game/Implementations/IqGame/Questions/iq_game_context.dart';
 import 'package:flutter_app_quiz_game/Implementations/IqGame/Screens/GameType/iq_game_game_type_creator.dart';
 import 'package:flutter_app_quiz_game/Implementations/IqGame/Service/iq_game_screen_manager.dart';
@@ -78,12 +77,13 @@ class IqGameQuestionScreenState extends State<IqGameQuestionScreen>
   void initState() {
     super.initState();
     widget.iqGameGameTypeCreator.initGameTypeCreator(
-        widget.currentQuestionInfo, widget.gameContext, setStateCallback);
+        widget.currentQuestionInfo, widget.gameContext, setStateCallback, () {
+      nextQuestion();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    IqGameQuestionConfig questionConfig = IqGameQuestionConfig();
     int? score = widget.iqGameGameTypeCreator.getScore(widget.gameContext);
     var backgroundColor = widget.iqGameGameTypeCreator
         .getBackgroundColor(widget.currentQuestionInfo.question);
@@ -128,7 +128,6 @@ class IqGameQuestionScreenState extends State<IqGameQuestionScreen>
   void restartCategory() {
     widget.iqGameLocalStorage.putAnsweredQuestions({}, widget.category);
     widget.gameScreenManagerState.showNewGameScreen(widget.campaignLevel);
-    widget.iqGameGameTypeCreator.resetGameType();
   }
 
   void nextQuestion() {
@@ -139,6 +138,12 @@ class IqGameQuestionScreenState extends State<IqGameQuestionScreen>
 
   void setStateCallback() {
     setState(() {});
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    widget.iqGameGameTypeCreator.disposeGameTypeCreator();
   }
 
   @override

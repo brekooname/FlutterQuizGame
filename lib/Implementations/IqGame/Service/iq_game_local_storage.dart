@@ -34,18 +34,26 @@ class IqGameLocalStorage extends QuizGameLocalStorage {
     return result;
   }
 
-  int getMaxScoreForCat(QuestionCategory cat) {
-    return localStorage.getInt(_getMaxScoreForCatFieldName(cat)) ?? -1;
-  }
-
-  void setMaxScoreForCat(QuestionCategory cat, int val) {
-    if (getMaxScoreForCat(cat) < val) {
-      localStorage.setInt(_getMaxScoreForCatFieldName(cat), val);
+  List<IqGameScoreInfo> getScoreForCat(String cat) {
+    List<String>? jsonList =
+        localStorage.getStringList(_getScoreForCatFieldName(cat));
+    if (jsonList == null || jsonList.isEmpty) {
+      return [];
     }
+    return jsonList
+        .map((json) => IqGameScoreInfo.fromJson(jsonDecode(json)))
+        .toList();
   }
 
-  String _getMaxScoreForCatFieldName(QuestionCategory cat) {
-    return localStorageName + "_" + cat.name + "_MaxScoreForCat";
+  void setScoreForCat(IqGameScoreInfo scoreInfo) {
+    List<IqGameScoreInfo> scoreList = getScoreForCat(scoreInfo.category);
+    scoreList.add(scoreInfo);
+    localStorage.setStringList(_getScoreForCatFieldName(scoreInfo.category),
+        scoreList.map((e) => jsonEncode(scoreInfo.toJson())).toList());
+  }
+
+  String _getScoreForCatFieldName(String cat) {
+    return localStorageName + "_" + cat + "_ScoreForCat";
   }
 
   String _answeredQuestionsFieldName(QuestionCategory category) {
@@ -59,5 +67,26 @@ class IqGameLocalStorage extends QuizGameLocalStorage {
       localStorage.setString(_answeredQuestionsFieldName(cat), "");
     }
     super.clearAll();
+  }
+}
+
+class IqGameScoreInfo {
+  String category;
+  int score;
+  DateTime timeStamp;
+
+  IqGameScoreInfo(this.category, this.score, this.timeStamp);
+
+  IqGameScoreInfo.fromJson(Map<String, dynamic> json)
+      : category = json['category'],
+        score = json['score'],
+        timeStamp = DateTime.parse(json['timeStamp']);
+
+  Map<String, dynamic> toJson() {
+    return {
+      'category': category,
+      'score': score,
+      'timeStamp': timeStamp.toString(),
+    };
   }
 }

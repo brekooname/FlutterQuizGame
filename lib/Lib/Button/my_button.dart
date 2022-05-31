@@ -22,6 +22,7 @@ class MyButton extends StatefulWidget {
 
   bool pressed = false;
   bool disabled;
+  bool touchable;
   bool visible;
 
   double buttonAllPadding;
@@ -37,6 +38,7 @@ class MyButton extends StatefulWidget {
     this.textFirstCharUppercase = true,
     this.buttonAllPadding = 0,
     this.disabled = false,
+    this.touchable = true,
     this.visible = true,
     Color? disabledBackgroundColor,
     VoidCallback? onClick,
@@ -58,6 +60,9 @@ class MyButton extends StatefulWidget {
     this.onClick = onClick ?? () {};
     this.contentLockedConfig =
         contentLockedConfig ?? ContentLockedConfig(isContentLocked: false);
+    touchable = !disabled || this.contentLockedConfig.isContentLocked
+        ? touchable
+        : false;
     this.buttonSkinConfig = buttonSkinConfig ??
         ButtonSkinConfig(
             backgroundColor:
@@ -114,14 +119,14 @@ class MyButtonState extends State<MyButton> {
           padding: EdgeInsets.all(widget.buttonAllPadding),
           child: GestureDetector(
               onTapCancel: () {
-                if (isTouchEnabled()) {
+                if (widget.touchable) {
                   setState(() {
                     widget.pressed = false;
                   });
                 }
               },
               onTapUp: (TapUpDetails details) {
-                if (isTouchEnabled()) {
+                if (widget.touchable) {
                   setState(() {
                     widget.onClick.call();
                     widget.pressed = false;
@@ -129,7 +134,7 @@ class MyButtonState extends State<MyButton> {
                 }
               },
               onTapDown: (TapDownDetails details) {
-                if (isTouchEnabled()) {
+                if (widget.touchable) {
                   setState(() {
                     widget.pressed = true;
                   });
@@ -147,9 +152,6 @@ class MyButtonState extends State<MyButton> {
                   )))),
     );
   }
-
-  bool isTouchEnabled() =>
-      !widget.disabled || widget.contentLockedConfig.isContentLocked;
 
   Widget buildContentLocked(Widget buttonContent) {
     if (widget.contentLockedConfig.lockedIcon == null) {

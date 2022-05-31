@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
 import 'package:flutter_app_quiz_game/Implementations/IqGame/Service/iq_game_local_storage.dart';
 import 'package:flutter_app_quiz_game/Lib/Image/image_service.dart';
@@ -18,8 +17,9 @@ abstract class IqGameGameTypeCreator {
 
   void initGameTypeCreator(
     QuestionInfo currentQuestionInfo,
-      IqGameContext gameContext,
+    IqGameContext gameContext,
     VoidCallback refreshScreen,
+    VoidCallback goToNextScreen,
   ) {}
 
   Widget createGameContainer(
@@ -40,8 +40,7 @@ abstract class IqGameGameTypeCreator {
     return false;
   }
 
-  void resetGameType() {
-  }
+  void disposeGameTypeCreator() {}
 
   bool hasSkipButton() {
     return false;

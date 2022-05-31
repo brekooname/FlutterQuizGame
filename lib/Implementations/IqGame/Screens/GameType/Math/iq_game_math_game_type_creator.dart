@@ -17,8 +17,6 @@ class IqGameMathGameTypeCreator extends IqGameGameTypeCreator {
   static const int totalQuestions = 10;
   static const int startSeconds = 5;
   static const List<String> operators = ["+", "-", "*", "/"];
-  static final IqGameMathGameTypeCreator singleton =
-      IqGameMathGameTypeCreator.internal();
   Map<int, int> randomPosForBtns = {};
   List<int> answersToPress = [];
   Timer? timer;
@@ -28,26 +26,21 @@ class IqGameMathGameTypeCreator extends IqGameGameTypeCreator {
   String? operator;
   String? pressedOperator;
 
-  factory IqGameMathGameTypeCreator() {
-    return singleton;
-  }
-
-  IqGameMathGameTypeCreator.internal();
-
   @override
   void initGameTypeCreator(
     QuestionInfo currentQuestionInfo,
     IqGameContext gameContext,
     VoidCallback refreshScreen,
+    VoidCallback goToNextScreen,
   ) {
+    super.initGameTypeCreator(
+        currentQuestionInfo, gameContext, refreshScreen, goToNextScreen);
     remainingSeconds = startSeconds;
     pressedOperator = null;
 
     initOperatorAndNrs();
 
-    if (timer != null) {
-      timer!.cancel();
-    }
+    timer?.cancel();
 
     timer = Timer.periodic(
       const Duration(seconds: 1),
@@ -60,6 +53,9 @@ class IqGameMathGameTypeCreator extends IqGameGameTypeCreator {
               gameContext,
               refreshScreen,
               false);
+          Future.delayed(const Duration(seconds: 1), () {
+            goToNextScreen.call();
+          });
         }
         remainingSeconds--;
         refreshScreen.call();
@@ -99,8 +95,6 @@ class IqGameMathGameTypeCreator extends IqGameGameTypeCreator {
       height: screenDimensionsService.h(2),
       width: screenDimensionsService.dimen(2),
     );
-    Widget mainContent;
-
     var questionNr = question.index;
 
     var nrFontConfig = FontConfig(
@@ -128,13 +122,14 @@ class IqGameMathGameTypeCreator extends IqGameGameTypeCreator {
               currentQuestionInfo,
               gameContext,
               refreshScreen,
+              goToNextScreen,
               nr1!,
               nr2!),
           opMargin,
           MyText(text: nr2.toString(), fontConfig: nrFontConfig),
           opMargin,
           createOperationBtn("=", true, currentQuestionInfo, gameContext,
-              refreshScreen, nr1!, nr2!),
+              refreshScreen, goToNextScreen, nr1!, nr2!),
           opMargin,
           MyText(
               text: getNr1Nr2Interpret().toString(), fontConfig: nrFontConfig),
@@ -180,7 +175,7 @@ class IqGameMathGameTypeCreator extends IqGameGameTypeCreator {
                   margin,
                   margin,
                   createOperationBtns(nr1!, nr2!, currentQuestionInfo,
-                      gameContext, refreshScreen),
+                      gameContext, refreshScreen, goToNextScreen),
                 ],
               ),
             )
@@ -194,13 +189,14 @@ class IqGameMathGameTypeCreator extends IqGameGameTypeCreator {
     QuestionInfo currentQuestionInfo,
     IqGameContext gameContext,
     VoidCallback refreshScreen,
+    VoidCallback goToNextScreen,
   ) {
     return Row(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: operators
             .map((e) => createOperationBtn(e, false, currentQuestionInfo,
-                gameContext, refreshScreen, nr1, nr2))
+                gameContext, refreshScreen, goToNextScreen, nr1, nr2))
             .toList());
   }
 
@@ -210,6 +206,7 @@ class IqGameMathGameTypeCreator extends IqGameGameTypeCreator {
       QuestionInfo currentQuestionInfo,
       IqGameContext gameContext,
       VoidCallback refreshScreen,
+      VoidCallback goToNextScreen,
       int nr1,
       int nr2) {
     var btnSideDimen = screenDimensionsService.dimen(17);
@@ -228,9 +225,12 @@ class IqGameMathGameTypeCreator extends IqGameGameTypeCreator {
         answerQuestion(
             currentQuestionInfo, answer, gameContext, refreshScreen, false);
         timer!.cancel();
+        Future.delayed(const Duration(seconds: 1), () {
+          goToNextScreen.call();
+        });
       },
       textFirstCharUppercase: false,
-      disabled: isDisabledOperation,
+      disabled: isDisabledOperation || !currentQuestionInfo.isQuestionOpen(),
       disabledBackgroundColor:
           isDisabledOperation && currentQuestionInfo.isQuestionOpen() ||
                   operation == "="
@@ -279,6 +279,13 @@ class IqGameMathGameTypeCreator extends IqGameGameTypeCreator {
 
   @override
   bool hasGoToNextQuestionBtn(QuestionInfo currentQuestionInfo) {
-    return !currentQuestionInfo.isQuestionOpen();
+    return false;
+  }
+
+  @override
+  void disposeGameTypeCreator() {
+    super.disposeGameTypeCreator();
+    timer?.cancel();
+    timer = null;
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
+import 'package:flutter_app_quiz_game/Implementations/IqGame/Components/iq_game_score_progress_popup.dart';
 import 'package:flutter_app_quiz_game/Implementations/IqGame/Constants/iq_game_campaign_level_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/IqGame/Constants/iq_game_question_config.dart';
 import 'package:flutter_app_quiz_game/Implementations/IqGame/Service/iq_game_screen_manager.dart';
@@ -8,6 +9,7 @@ import 'package:flutter_app_quiz_game/Lib/Button/floating_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/map_extension.dart';
 import 'package:flutter_app_quiz_game/Lib/Localization/label_mixin.dart';
+import 'package:flutter_app_quiz_game/Lib/Popup/my_popup.dart';
 import 'package:flutter_app_quiz_game/Lib/Popup/settings_popup.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/standard_screen.dart';
@@ -113,7 +115,8 @@ class IqGameMainMenuScreenState extends State<IqGameMainMenuScreen>
     var iconPadding = screenDimensions.dimen(1);
     var btnSize = Size(screenDimensions.dimen(60), screenDimensions.dimen(20));
     var iconDimen = btnSize.height / 1.7;
-    var maxScoreForCat = widget.iqGameLocalStorage.getMaxScoreForCat(cat);
+    var maxScoreForCat = widget.iqGameLocalStorage.getScoreForCat(cat.name);
+    maxScoreForCat.sort((a, b) => a.score.compareTo(b.score));
     var levelIcon = Container(
         height: iconDimen,
         width: iconDimen,
@@ -141,15 +144,33 @@ class IqGameMainMenuScreenState extends State<IqGameMainMenuScreen>
             fontColor: Colors.white,
             fontWeight: FontWeight.w500,
             fontSize: FontConfig.getCustomFontSize(1.0)));
-    var levelScore = MyText(
-      fontConfig: FontConfig(
-          borderColor: Colors.black,
-          fontColor: maxScoreForCat == -1 ? Colors.white : Colors.greenAccent,
-          fontWeight:
-              maxScoreForCat == -1 ? FontWeight.normal : FontWeight.w800,
-          fontSize: FontConfig.getCustomFontSize(0.8)),
-      text: _getScoreText(cat, maxScoreForCat),
-    );
+    var scoreBtnSizeDimen = screenDimensions.dimen(15);
+    var scoreIconDimen = scoreBtnSizeDimen / 2;
+    var levelScore = Stack(alignment: Alignment.center, children: [
+      Container(
+          height: iconDimen,
+          width: iconDimen,
+          decoration: BoxDecoration(
+              color: categColor,
+              borderRadius: BorderRadius.all(
+                  Radius.circular(FontConfig.standardBorderRadius))),
+          child: MyText(
+            textShadow: Shadow(
+              blurRadius: FontConfig.standardShadowRadius * 2,
+              color: Colors.black.withOpacity(0.3),
+            ),
+            fontConfig: FontConfig(
+                borderColor: Colors.black,
+                fontColor:
+                    maxScoreForCat.isEmpty ? Colors.white : Colors.greenAccent,
+                fontWeight: maxScoreForCat.isEmpty
+                    ? FontWeight.normal
+                    : FontWeight.w800,
+                fontSize: FontConfig.getCustomFontSize(1.1)),
+            text: _getScoreText(
+                cat, maxScoreForCat.isEmpty ? -1 : maxScoreForCat.first.score),
+          )),
+    ]);
     Widget content = Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -169,30 +190,38 @@ class IqGameMainMenuScreenState extends State<IqGameMainMenuScreen>
                   levelLabel,
                   const Spacer(),
                 ]))),
-        // Container(
-        //     decoration: BoxDecoration(
-        //         color: Colors.red.shade400,
-        //         borderRadius: BorderRadius.vertical(
-        //             bottom: Radius.circular(FontConfig.standardBorderRadius))),
-        //     height: (btnSize.height - iconContainerSize.height) / 1.2 -
-        //         iconPadding * 2,
-        //     child: levelScore)
       ],
     );
-    return MyButton(
-      onClick: () {
-        widget.gameScreenManagerState.showNewGameScreen(widget
-            ._iqGameCampaignLevelService
-            .campaignLevel(widget._iqGameQuestionConfig.diff0, cat));
-      },
-      size: btnSize,
-      buttonAllPadding: screenDimensions.dimen(1.5),
-      buttonSkinConfig: ButtonSkinConfig(
-          buttonUnpressedShadowColor: Colors.transparent,
-          buttonPressedShadowColor: categColor.withOpacity(0.6),
-          backgroundColor: categColor.withOpacity(0.9)),
-      customContent: content,
-    );
+    return Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          MyButton(
+            onClick: () {
+              widget.gameScreenManagerState.showNewGameScreen(widget
+                  ._iqGameCampaignLevelService
+                  .campaignLevel(widget._iqGameQuestionConfig.diff0, cat));
+            },
+            size: btnSize,
+            buttonAllPadding: screenDimensions.dimen(1.5),
+            buttonSkinConfig: ButtonSkinConfig(
+                buttonUnpressedShadowColor: Colors.transparent,
+                buttonPressedShadowColor: categColor.withOpacity(0.6),
+                backgroundColor: categColor.withOpacity(0.9)),
+            customContent: content,
+          ),
+          MyButton(
+            onClick: () {
+              MyPopup.showPopup(context, IqGameScoreProgressPopup(cat));
+            },
+            size: Size(scoreBtnSizeDimen, scoreBtnSizeDimen),
+            buttonAllPadding: screenDimensions.dimen(1.5),
+            buttonSkinConfig: ButtonSkinConfig(
+                buttonUnpressedShadowColor: Colors.transparent,
+                backgroundColor: categColor.withOpacity(0.9)),
+            customContent: levelScore,
+          )
+        ]);
   }
 
   Map<QuestionCategory, Color> getBtnCategoryColor() {
@@ -209,7 +238,7 @@ class IqGameMainMenuScreenState extends State<IqGameMainMenuScreen>
 
   String _getScoreText(QuestionCategory cat, int score) {
     IqGameQuestionConfig config = IqGameQuestionConfig();
-    return (cat == config.cat0 ? "IQ " : "Score ") +
-        (score == -1 ? "??" : score.toString());
+    return (cat == config.cat0 ? "" : "") +
+        (score == -1 ? "-" : score.toString());
   }
 }

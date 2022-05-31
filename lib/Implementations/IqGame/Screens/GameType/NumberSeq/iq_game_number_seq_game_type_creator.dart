@@ -12,26 +12,22 @@ import '../../../../../Lib/Button/button_skin_config.dart';
 import '../../../../../Lib/Color/color_util.dart';
 import '../../../../../Lib/Font/font_config.dart';
 import '../../../../../Lib/Popup/my_popup.dart';
+import '../../../Service/iq_game_local_storage.dart';
 import '../iq_game_game_type_creator.dart';
 
 class IqGameNumberSeqGameTypeCreator extends IqGameGameTypeCreator {
-  static final IqGameNumberSeqGameTypeCreator singleton =
-      IqGameNumberSeqGameTypeCreator.internal();
-
-  factory IqGameNumberSeqGameTypeCreator() {
-    return singleton;
-  }
-
-  IqGameNumberSeqGameTypeCreator.internal();
 
   String? pressedNumbers;
 
   @override
   void initGameTypeCreator(
     QuestionInfo currentQuestionInfo,
-      IqGameContext gameContext,
+    IqGameContext gameContext,
     VoidCallback refreshScreen,
+    VoidCallback goToNextScreen,
   ) {
+    super.initGameTypeCreator(
+        currentQuestionInfo, gameContext, refreshScreen, goToNextScreen);
     resetPressedNumbers();
   }
 
@@ -178,9 +174,10 @@ class IqGameNumberSeqGameTypeCreator extends IqGameGameTypeCreator {
               } else {
                 answerQuestion(currentQuestionInfo, pressedNumbers!.parseToInt,
                     gameContext, refreshScreen, true);
-                iqGameLocalStorage.setMaxScoreForCat(
-                    getGameTypeCategory(gameContext),
-                    getScore(gameContext) ?? 0);
+                iqGameLocalStorage.setScoreForCat(IqGameScoreInfo(
+                    getGameTypeCategory(gameContext).name,
+                    getScore(gameContext) ?? 0,
+                    DateTime.now()));
                 MyPopup.showPopup(
                     context,
                     IqGameIqNumberSeqAnswerPopup(

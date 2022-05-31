@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_info.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_info_status.dart';
 import 'package:flutter_app_quiz_game/Implementations/IqGame/Questions/iq_game_context.dart';
+import 'package:flutter_app_quiz_game/Implementations/IqGame/Service/iq_game_local_storage.dart';
 import 'package:flutter_app_quiz_game/Lib/Animation/animation_rotate.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/button_skin_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
@@ -67,8 +68,10 @@ class IqGameSpatialGameTypeCreator extends IqGameGameTypeCreator {
           onClick: () {
             answerQuestion(
                 currentQuestionInfo, i, gameContext, refreshScreen, false);
-            iqGameLocalStorage.setMaxScoreForCat(
-                getGameTypeCategory(gameContext), getScore(gameContext) ?? 0);
+            iqGameLocalStorage.setScoreForCat(IqGameScoreInfo(
+                getGameTypeCategory(gameContext).name,
+                getScore(gameContext) ?? 0,
+                DateTime.now()));
           },
           size: Size(imgHeight * 1.5, imgHeight * 1.5),
           buttonSkinConfig: ButtonSkinConfig(

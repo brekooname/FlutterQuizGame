@@ -11,6 +11,7 @@ import 'package:flutter_app_quiz_game/Lib/Extensions/map_extension.dart';
 import 'package:flutter_app_quiz_game/Lib/Font/font_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
+import '../../../Service/iq_game_local_storage.dart';
 import '../iq_game_game_type_creator.dart';
 import 'iq_game_memtest_question_service.dart';
 
@@ -18,25 +19,20 @@ class IqGameMemTestGameTypeCreator extends IqGameGameTypeCreator {
   static const int totalQuestions = 10;
   static const int rows = 4;
   static const int columns = 4;
-  static final IqGameMemTestGameTypeCreator singleton =
-      IqGameMemTestGameTypeCreator.internal();
   IqGameMemTestGameTypeScreenState _memTestGameTypeScreenState =
       IqGameMemTestGameTypeScreenState.LOADING;
   Map<int, int> randomPosForBtns = {};
   List<int> answersToPress = [];
 
-  factory IqGameMemTestGameTypeCreator() {
-    return singleton;
-  }
-
-  IqGameMemTestGameTypeCreator.internal();
-
   @override
   void initGameTypeCreator(
     QuestionInfo currentQuestionInfo,
-      IqGameContext gameContext,
+    IqGameContext gameContext,
     VoidCallback refreshScreen,
+    VoidCallback goToNextScreen,
   ) {
+    super.initGameTypeCreator(
+        currentQuestionInfo, gameContext, refreshScreen, goToNextScreen);
     _memTestGameTypeScreenState = IqGameMemTestGameTypeScreenState.LOADING;
     randomPosForBtns =
         _createRandomPositionsForNumbers(currentQuestionInfo.question.index);
@@ -108,6 +104,8 @@ class IqGameMemTestGameTypeCreator extends IqGameGameTypeCreator {
                           : !answersToPress.contains(btnVal)
                               ? btnBackground
                               : Colors.grey.shade500,
+              touchable: _memTestGameTypeScreenState !=
+                  IqGameMemTestGameTypeScreenState.SHOW_NUMBERS,
               disabled: !currentQuestionInfo.isQuestionOpen() ||
                   answersToPress.isEmpty,
               text: _memTestGameTypeScreenState ==
@@ -128,9 +126,10 @@ class IqGameMemTestGameTypeCreator extends IqGameGameTypeCreator {
                           gameContext,
                           refreshScreen,
                           false);
-                      iqGameLocalStorage.setMaxScoreForCat(
-                          getGameTypeCategory(gameContext),
-                          getScore(gameContext) ?? 0);
+                      iqGameLocalStorage.setScoreForCat(IqGameScoreInfo(
+                          getGameTypeCategory(gameContext).name,
+                          getScore(gameContext) ?? 0,
+                          DateTime.now()));
                     } else {
                       refreshScreen.call();
                     }

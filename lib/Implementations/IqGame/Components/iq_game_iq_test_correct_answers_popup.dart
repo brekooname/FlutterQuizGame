@@ -7,7 +7,6 @@ import 'package:flutter_app_quiz_game/Lib/Popup/my_popup.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
 import '../../../Lib/Font/font_config.dart';
-import '../Questions/AllContent/iq_game_question_collector_service.dart';
 import '../Questions/iq_game_context.dart';
 
 class IqGameIqTestCorrectAnswersPopup extends StatefulWidget with MyPopup {

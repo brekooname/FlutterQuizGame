@@ -10,18 +10,11 @@ import 'package:flutter_app_quiz_game/Lib/Popup/my_popup.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
 import '../../../../../Lib/Font/font_config.dart';
+import '../../../Service/iq_game_local_storage.dart';
 import '../iq_game_game_type_creator.dart';
 
 class IqGameIqTestGameTypeCreator extends IqGameGameTypeCreator {
   static const int totalQuestions = 39;
-  static final IqGameIqTestGameTypeCreator singleton =
-      IqGameIqTestGameTypeCreator.internal();
-
-  factory IqGameIqTestGameTypeCreator() {
-    return singleton;
-  }
-
-  IqGameIqTestGameTypeCreator.internal();
 
   @override
   Widget createGameContainer(
@@ -118,8 +111,8 @@ class IqGameIqTestGameTypeCreator extends IqGameGameTypeCreator {
     var wonQuestions =
         gameContext.gameUser.countAllQuestions([QuestionInfoStatus.won]);
     int iqValue = (minIqVal + (wonQuestions * ratio)).ceil();
-    iqGameLocalStorage.setMaxScoreForCat(
-        getGameTypeCategory(gameContext), iqValue);
+    iqGameLocalStorage.setScoreForCat(IqGameScoreInfo(
+        getGameTypeCategory(gameContext).name, iqValue, DateTime.now()));
     double xPosIqValue = ((iqValDiff - (maxIqVal - iqValue)) / iqValDiff) * 100;
 
     var imgWidth = screenDimensionsService.dimen(100);
