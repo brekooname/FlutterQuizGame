@@ -49,7 +49,7 @@ class IqGameLocalStorage extends QuizGameLocalStorage {
     List<IqGameScoreInfo> scoreList = getScoreForCat(scoreInfo.category);
     scoreList.add(scoreInfo);
     localStorage.setStringList(_getScoreForCatFieldName(scoreInfo.category),
-        scoreList.map((e) => jsonEncode(scoreInfo.toJson())).toList());
+        scoreList.map((e) => jsonEncode(e.toJson())).toList());
   }
 
   String _getScoreForCatFieldName(String cat) {
@@ -65,6 +65,7 @@ class IqGameLocalStorage extends QuizGameLocalStorage {
     IqGameQuestionConfig config = IqGameQuestionConfig();
     for (QuestionCategory cat in config.categories) {
       localStorage.setString(_answeredQuestionsFieldName(cat), "");
+      localStorage.setStringList(_getScoreForCatFieldName(cat.name), []);
     }
     super.clearAll();
   }

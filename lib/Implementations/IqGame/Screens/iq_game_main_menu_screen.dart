@@ -116,7 +116,6 @@ class IqGameMainMenuScreenState extends State<IqGameMainMenuScreen>
     var btnSize = Size(screenDimensions.dimen(60), screenDimensions.dimen(20));
     var iconDimen = btnSize.height / 1.7;
     var maxScoreForCat = widget.iqGameLocalStorage.getScoreForCat(cat.name);
-    maxScoreForCat.sort((a, b) => a.score.compareTo(b.score));
     var levelIcon = Container(
         height: iconDimen,
         width: iconDimen,
@@ -145,16 +144,15 @@ class IqGameMainMenuScreenState extends State<IqGameMainMenuScreen>
             fontWeight: FontWeight.w500,
             fontSize: FontConfig.getCustomFontSize(1.0)));
     var scoreBtnSizeDimen = screenDimensions.dimen(15);
-    var scoreIconDimen = scoreBtnSizeDimen / 2;
     var levelScore = Stack(alignment: Alignment.center, children: [
       Container(
-          height: iconDimen,
-          width: iconDimen,
-          decoration: BoxDecoration(
-              color: categColor,
-              borderRadius: BorderRadius.all(
-                  Radius.circular(FontConfig.standardBorderRadius))),
-          child: MyText(
+        height: iconDimen,
+        width: iconDimen,
+        decoration: BoxDecoration(
+            color: categColor,
+            borderRadius: BorderRadius.all(
+                Radius.circular(FontConfig.standardBorderRadius))),
+        child: MyText(
             textShadow: Shadow(
               blurRadius: FontConfig.standardShadowRadius * 2,
               color: Colors.black.withOpacity(0.3),
@@ -168,8 +166,13 @@ class IqGameMainMenuScreenState extends State<IqGameMainMenuScreen>
                     : FontWeight.w800,
                 fontSize: FontConfig.getCustomFontSize(1.1)),
             text: _getScoreText(
-                cat, maxScoreForCat.isEmpty ? -1 : maxScoreForCat.first.score),
-          )),
+                cat,
+                maxScoreForCat.isEmpty
+                    ? -1
+                    : maxScoreForCat
+                        .reduce((a1, a2) => a1.score > a2.score ? a1 : a2)
+                        .score)),
+      ),
     ]);
     Widget content = Column(
       mainAxisAlignment: MainAxisAlignment.center,

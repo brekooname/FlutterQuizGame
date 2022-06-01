@@ -5,6 +5,9 @@ import 'package:flutter_app_quiz_game/Implementations/IqGame/Components/iq_game_
 import 'package:flutter_app_quiz_game/Implementations/IqGame/Service/iq_game_local_storage.dart';
 import 'package:flutter_app_quiz_game/Lib/Localization/label_mixin.dart';
 import 'package:flutter_app_quiz_game/Lib/Popup/my_popup.dart';
+import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
+
+import '../../../Lib/Font/font_config.dart';
 
 class IqGameScoreProgressPopup extends StatefulWidget with MyPopup {
   final IqGameLocalStorage _iqGameLocalStorage = IqGameLocalStorage();
@@ -31,15 +34,62 @@ class IqGameScoreProgressPopupState extends State<IqGameScoreProgressPopup>
         widget._iqGameLocalStorage.getScoreForCat(widget.cat.name);
     var graphHeight = screenDimensions.dimen(40);
     var graphWidth = screenDimensions.w(70);
+    int maxScore =
+        scoreInfo.reduce((a1, a2) => a1.score > a2.score ? a1 : a2).score;
+    var legendFontConfig = FontConfig(
+        fontColor: Colors.black,
+        fontWeight: FontWeight.w600,
+        fontSize: FontConfig.getCustomFontSize(0.8));
     return createDialog(
       Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(
-                width: graphWidth,
-                height: graphHeight,
-                child: IqGameScoreProgressBarChart(scoreInfo))
+            MyText(
+                text: "Score history",
+                fontConfig: FontConfig(
+                    fontColor: Colors.black,
+                    fontWeight: FontWeight.w700,
+                    fontSize: FontConfig.getCustomFontSize(1.0))),
+            scoreInfo.isEmpty
+                ? Container()
+                : Padding(
+                    padding: EdgeInsets.only(bottom: screenDimensions.dimen(5)),
+                    child: MyText(
+                      text: "Maximum score: " + maxScore.toString(),
+                      fontColor: Colors.green.shade600,
+                    )),
+            scoreInfo.isEmpty
+                ? MyText(text: "No score to display.")
+                : Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                        Padding(
+                            padding: EdgeInsets.only(
+                                bottom: screenDimensions.dimen(5)),
+                            child: RotatedBox(
+                              quarterTurns: -1,
+                              child: MyText(
+                                text: "Score",
+                                fontConfig: legendFontConfig,
+                              ),
+                            )),
+                        Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              SizedBox(
+                                  width: graphWidth,
+                                  height: graphHeight,
+                                  child: IqGameScoreProgressBarChart(
+                                      scoreInfo, maxScore)),
+                              MyText(
+                                  fontConfig: legendFontConfig,
+                                  text: "Games played: " +
+                                      scoreInfo.length.toString())
+                            ]),
+                      ]),
           ]),
       context: context,
     );
