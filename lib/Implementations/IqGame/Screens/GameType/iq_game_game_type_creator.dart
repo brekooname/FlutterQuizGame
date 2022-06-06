@@ -53,7 +53,7 @@ abstract class IqGameGameTypeCreator {
       VoidCallback refreshScreen,
       bool storeAnswersInStorage) {
     if (questionInfo.isQuestionOpen()) {
-      gameContext.answerQuestion(questionInfo, answer.toString());
+      bool isCorrectAnswer = gameContext.answerQuestion(questionInfo, answer.toString());
       if (storeAnswersInStorage) {
         _storeCurrentAnswers(gameContext);
       }

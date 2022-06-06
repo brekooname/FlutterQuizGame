@@ -51,7 +51,7 @@ class IqGameQuestionConfig extends GameQuestionConfig with LabelMixin {
           questionCategoryService: IqGameMathCategoryQuestionService()),
       singleton.cat5 = QuestionCategory(
           index: 5,
-          categoryLabel: "Math",
+          categoryLabel: "General Knowledge",
           questionCategoryService: IqGameMathCategoryQuestionService()),
     ];
     return singleton;

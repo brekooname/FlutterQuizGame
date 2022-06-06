@@ -13,8 +13,8 @@ class IqGameContext extends GameContext {
     skippedQuestions.add(questionInfo);
   }
 
-  void answerQuestion(QuestionInfo questionInfo, String answer) {
-    gameUser.addAnswerToQuestionInfo(questionInfo.question, answer);
+  bool answerQuestion(QuestionInfo questionInfo, String answer) {
     skippedQuestions.remove(questionInfo);
+    return gameUser.addAnswerToQuestionInfo(questionInfo.question, answer);
   }
 }

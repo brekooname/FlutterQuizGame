@@ -210,6 +210,11 @@ class IqGameNumberSeqGameTypeCreator extends IqGameGameTypeCreator {
   }
 
   @override
+  bool hasSkipButton() {
+    return true;
+  }
+
+  @override
   Color getBackgroundColor(Question question) {
     return ColorUtil.hexToColor('#' + question.rawString.split("###")[1]);
   }

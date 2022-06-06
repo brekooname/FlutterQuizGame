@@ -34,8 +34,9 @@ class IqGameScoreProgressPopupState extends State<IqGameScoreProgressPopup>
         widget._iqGameLocalStorage.getScoreForCat(widget.cat.name);
     var graphHeight = screenDimensions.dimen(40);
     var graphWidth = screenDimensions.w(70);
-    int maxScore =
-        scoreInfo.reduce((a1, a2) => a1.score > a2.score ? a1 : a2).score;
+    int maxScore = scoreInfo.isEmpty
+        ? -1
+        : scoreInfo.reduce((a1, a2) => a1.score > a2.score ? a1 : a2).score;
     var legendFontConfig = FontConfig(
         fontColor: Colors.black,
         fontWeight: FontWeight.w600,

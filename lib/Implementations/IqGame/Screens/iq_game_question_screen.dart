@@ -64,8 +64,10 @@ class IqGameQuestionScreen
         break;
       }
     }
-    if (currentQuestionInfo == null && skippedQuestions.isNotEmpty) {
-      currentQuestionInfo = skippedQuestions.first;
+    var openSkippedQuestions =
+        skippedQuestions.where((element) => element.isQuestionOpen());
+    if (currentQuestionInfo == null && openSkippedQuestions.isNotEmpty) {
+      currentQuestionInfo = openSkippedQuestions.first;
     }
     return currentQuestionInfo!;
   }
