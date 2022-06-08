@@ -78,15 +78,18 @@ class IqGameQuestionScreenState extends State<IqGameQuestionScreen>
   @override
   void initState() {
     super.initState();
-    widget.iqGameGameTypeCreator.initGameTypeCreator(
-        widget.currentQuestionInfo, widget.gameContext, setStateCallback, () {
+    widget.iqGameGameTypeCreator.initGameTypeCreator(widget.currentQuestionInfo,
+        refreshScreen: setStateCallback, goToNextScreen: () {
       nextQuestion();
+    }, goToGameOverScreen: () {
+      widget.gameScreenManagerState.setCurrentScreenState(widget
+          .gameScreenManagerState
+          .createGameOverScreen(widget.gameContext));
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    int? score = widget.iqGameGameTypeCreator.getScore(widget.gameContext);
     var backgroundColor = widget.iqGameGameTypeCreator
         .getBackgroundColor(widget.currentQuestionInfo.question);
     return Container(
@@ -97,12 +100,12 @@ class IqGameQuestionScreenState extends State<IqGameQuestionScreen>
             children: [
               IqGameLevelHeader(
                 questionInfoStatus: widget.currentQuestionInfo.status,
-                nextQuestion: widget.iqGameGameTypeCreator
-                        .hasGoToNextQuestionBtn(widget.currentQuestionInfo)
-                    ? () {
-                        nextQuestion();
-                      }
-                    : null,
+                nextQuestion:
+                    widget.iqGameGameTypeCreator.hasGoToNextQuestionBtn()
+                        ? () {
+                            nextQuestion();
+                          }
+                        : null,
                 skipQuestion: widget.iqGameGameTypeCreator.hasSkipButton()
                     ? () {
                         nextQuestion();
@@ -111,17 +114,13 @@ class IqGameQuestionScreenState extends State<IqGameQuestionScreen>
                 restartLevel: () {
                   restartCategory();
                 },
-                score: score,
+                score: widget.iqGameGameTypeCreator.showScore()
+                    ? widget.iqGameGameTypeCreator.getScore()
+                    : null,
               ),
               const Spacer(),
               widget.iqGameGameTypeCreator.createGameContainer(
                 context,
-                widget.currentQuestionInfo,
-                widget.gameContext,
-                setStateCallback,
-                () {
-                  nextQuestion();
-                },
               ),
               const Spacer(),
             ]));

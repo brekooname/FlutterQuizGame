@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app_quiz_game/Game/Question/Model/question_info.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_info_status.dart';
 import 'package:flutter_app_quiz_game/Implementations/IqGame/Components/iq_game_iq_test_correct_answers_popup.dart';
 import 'package:flutter_app_quiz_game/Implementations/IqGame/Questions/iq_game_context.dart';
@@ -16,13 +15,13 @@ import '../iq_game_game_type_creator.dart';
 class IqGameIqTestGameTypeCreator extends IqGameGameTypeCreator {
   static const int totalQuestions = 39;
 
+  static const int minIqVal = 57;
+  static const int maxIqVal = 143;
+
+  IqGameIqTestGameTypeCreator(IqGameContext gameContext) : super(gameContext);
+
   @override
-  Widget createGameContainer(
-      BuildContext context,
-      QuestionInfo currentQuestionInfo,
-      IqGameContext gameContext,
-      VoidCallback refreshScreen,
-      VoidCallback goToNextScreen) {
+  Widget createGameContainer(BuildContext context) {
     var question = currentQuestionInfo.question;
     var questionImgModule = getQuestionImageModuleName(gameContext);
     var imgHeight = screenDimensionsService.h(40);
@@ -54,8 +53,7 @@ class IqGameIqTestGameTypeCreator extends IqGameGameTypeCreator {
           image: image,
         ),
         onClick: () {
-          answerQuestion(
-              currentQuestionInfo, i, gameContext, refreshScreen, true);
+          answerQuestion(i, true);
           goToNextScreen.call();
         },
       ));
@@ -97,22 +95,9 @@ class IqGameIqTestGameTypeCreator extends IqGameGameTypeCreator {
   }
 
   @override
-  Widget createGameOverContainer(
-      BuildContext context, IqGameContext gameContext) {
-    // for (QuestionInfo q in gameContext.gameUser.getOpenQuestions()) {
-    //   gameContext.gameUser
-    //       .addAnswerToQuestionInfo(q.question, Random().nextInt(8).toString());
-    // }
-    int minIqVal = 57;
-    int maxIqVal = 143;
+  Widget createGameOverContainer(BuildContext context) {
     int iqValDiff = maxIqVal - minIqVal;
-
-    double ratio = 2.2;
-    var wonQuestions =
-        gameContext.gameUser.countAllQuestions([QuestionInfoStatus.won]);
-    int iqValue = (minIqVal + (wonQuestions * ratio)).ceil();
-    iqGameLocalStorage.setScoreForCat(IqGameScoreInfo(
-        getGameTypeCategory(gameContext).name, iqValue, DateTime.now()));
+    int iqValue = getScore();
     double xPosIqValue = ((iqValDiff - (maxIqVal - iqValue)) / iqValDiff) * 100;
 
     var imgWidth = screenDimensionsService.dimen(100);
@@ -178,9 +163,23 @@ class IqGameIqTestGameTypeCreator extends IqGameGameTypeCreator {
   }
 
   @override
-  bool hasGoToNextQuestionBtn(QuestionInfo currentQuestionInfo) {
+  int getScore() {
+    double ratio = 2.2;
+    var wonQuestions =
+        gameContext.gameUser.countAllQuestions([QuestionInfoStatus.won]);
+    return (minIqVal + (wonQuestions * ratio)).ceil();
+  }
+
+  @override
+  bool isGameOverOnFirstWrongAnswer() {
     return false;
   }
+
+  @override
+  bool showScore(){
+    return false;
+  }
+
 
   String _getLevelForScore(int score) {
     if (score < 70) {

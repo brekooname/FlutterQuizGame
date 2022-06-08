@@ -205,19 +205,19 @@ class MyAppState extends State<MyApp> {
       ////
       // GeoQuizLocalStorage().setExperience(14000);
       widgetToShow = createScreen(MyApp.gameScreenManager, widget.bannerAd);
-      // Future.delayed(const Duration(milliseconds: 100), () {
-      //   MyApp.gameScreenManager.currentScreen!.gameScreenManagerState
-      //       .showNewGameScreen(MyApp.campaignLevel);
-      // });
-      // Future.delayed(const Duration(milliseconds: 100), () {
-      //   (MyApp.gameScreenManager.currentScreen!.gameScreenManagerState
-      //           as IqGameScreenManagerState)
-      //       .setCurrentScreenState((MyApp.gameScreenManager.currentScreen!
-      //               .gameScreenManagerState as IqGameScreenManagerState)
-      //           .createGameOverScreen(
-      //               (MyApp.gameScreenManager.currentScreen! as GameScreen)
-      //                   .gameContext as IqGameContext));
-      // });
+      Future.delayed(const Duration(milliseconds: 100), () {
+        MyApp.gameScreenManager.currentScreen!.gameScreenManagerState
+            .showNewGameScreen(MyApp.campaignLevel);
+      });
+      Future.delayed(const Duration(milliseconds: 100), () {
+        (MyApp.gameScreenManager.currentScreen!.gameScreenManagerState
+                as IqGameScreenManagerState)
+            .setCurrentScreenState((MyApp.gameScreenManager.currentScreen!
+                    .gameScreenManagerState as IqGameScreenManagerState)
+                .createGameOverScreen(
+                    (MyApp.gameScreenManager.currentScreen! as GameScreen)
+                        .gameContext as IqGameContext));
+      });
       ////
       //
       ////

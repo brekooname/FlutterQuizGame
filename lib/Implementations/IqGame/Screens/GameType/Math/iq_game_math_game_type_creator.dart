@@ -26,15 +26,17 @@ class IqGameMathGameTypeCreator extends IqGameGameTypeCreator {
   String? operator;
   String? pressedOperator;
 
+  IqGameMathGameTypeCreator(IqGameContext gameContext) : super(gameContext);
+
   @override
-  void initGameTypeCreator(
-    QuestionInfo currentQuestionInfo,
-    IqGameContext gameContext,
-    VoidCallback refreshScreen,
-    VoidCallback goToNextScreen,
-  ) {
-    super.initGameTypeCreator(
-        currentQuestionInfo, gameContext, refreshScreen, goToNextScreen);
+  void initGameTypeCreator(QuestionInfo currentQuestionInfo,
+      {required VoidCallback refreshScreen,
+      required VoidCallback goToNextScreen,
+      required VoidCallback goToGameOverScreen}) {
+    super.initGameTypeCreator(currentQuestionInfo,
+        refreshScreen: refreshScreen,
+        goToNextScreen: goToNextScreen,
+        goToGameOverScreen: goToGameOverScreen);
     remainingSeconds = startSeconds;
     pressedOperator = null;
 
@@ -48,11 +50,7 @@ class IqGameMathGameTypeCreator extends IqGameGameTypeCreator {
         if (remainingSeconds == 1) {
           timer.cancel();
           answerQuestion(
-              currentQuestionInfo,
-              IqGameMathQuestionService.notAllAnswersPressedCorrectly,
-              gameContext,
-              refreshScreen,
-              false);
+              IqGameMathQuestionService.notAllAnswersPressedCorrectly, false);
           Future.delayed(const Duration(seconds: 1), () {
             goToNextScreen.call();
           });
@@ -84,12 +82,7 @@ class IqGameMathGameTypeCreator extends IqGameGameTypeCreator {
   }
 
   @override
-  Widget createGameContainer(
-      BuildContext context,
-      QuestionInfo currentQuestionInfo,
-      IqGameContext gameContext,
-      VoidCallback refreshScreen,
-      VoidCallback goToNextScreen) {
+  Widget createGameContainer(BuildContext context) {
     var question = currentQuestionInfo.question;
     var margin = SizedBox(
       height: screenDimensionsService.h(2),
@@ -222,12 +215,13 @@ class IqGameMathGameTypeCreator extends IqGameGameTypeCreator {
         } else {
           answer = IqGameMathQuestionService.notAllAnswersPressedCorrectly;
         }
-        answerQuestion(
-            currentQuestionInfo, answer, gameContext, refreshScreen, false);
+        answerQuestion(answer, false);
         timer!.cancel();
-        Future.delayed(const Duration(seconds: 1), () {
-          goToNextScreen.call();
-        });
+        if (correctAnswerPressed) {
+          Future.delayed(const Duration(seconds: 1), () {
+            goToNextScreen.call();
+          });
+        }
       },
       textFirstCharUppercase: false,
       disabled: isDisabledOperation || !currentQuestionInfo.isQuestionOpen(),
@@ -267,19 +261,13 @@ class IqGameMathGameTypeCreator extends IqGameGameTypeCreator {
   }
 
   @override
-  int? getScore(IqGameContext gameContext) {
+  int getScore() {
     return gameContext.gameUser.countAllQuestions([QuestionInfoStatus.won]);
   }
 
   @override
-  Widget createGameOverContainer(
-      BuildContext context, IqGameContext gameContext) {
-    return Container();
-  }
-
-  @override
-  bool hasGoToNextQuestionBtn(QuestionInfo currentQuestionInfo) {
-    return false;
+  bool isGameOverOnFirstWrongAnswer() {
+    return true;
   }
 
   @override

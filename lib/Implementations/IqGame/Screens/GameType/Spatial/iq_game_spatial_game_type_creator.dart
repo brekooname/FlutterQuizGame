@@ -1,10 +1,8 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_app_quiz_game/Game/Question/Model/question_info.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_info_status.dart';
 import 'package:flutter_app_quiz_game/Implementations/IqGame/Questions/iq_game_context.dart';
-import 'package:flutter_app_quiz_game/Implementations/IqGame/Service/iq_game_local_storage.dart';
 import 'package:flutter_app_quiz_game/Lib/Animation/animation_rotate.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/button_skin_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
@@ -16,22 +14,13 @@ import '../iq_game_game_type_creator.dart';
 class IqGameSpatialGameTypeCreator extends IqGameGameTypeCreator {
   static const int totalOptions = 4;
   static const int totalQuestions = 10;
-  static final IqGameSpatialGameTypeCreator singleton =
-      IqGameSpatialGameTypeCreator.internal();
 
-  factory IqGameSpatialGameTypeCreator() {
-    return singleton;
-  }
-
-  IqGameSpatialGameTypeCreator.internal();
+  IqGameSpatialGameTypeCreator(IqGameContext gameContext) : super(gameContext);
 
   @override
   Widget createGameContainer(
-      BuildContext context,
-      QuestionInfo currentQuestionInfo,
-      IqGameContext gameContext,
-      VoidCallback refreshScreen,
-      VoidCallback goToNextScreen) {
+    BuildContext context,
+  ) {
     var question = currentQuestionInfo.question;
     var questionImgModule = getQuestionImageModuleName(gameContext);
     var imgHeight = screenDimensionsService.dimen(30);
@@ -66,12 +55,7 @@ class IqGameSpatialGameTypeCreator extends IqGameGameTypeCreator {
                   ? Colors.red.shade300
                   : Colors.transparent,
           onClick: () {
-            answerQuestion(
-                currentQuestionInfo, i, gameContext, refreshScreen, false);
-            iqGameLocalStorage.setScoreForCat(IqGameScoreInfo(
-                getGameTypeCategory(gameContext).name,
-                getScore(gameContext) ?? 0,
-                DateTime.now()));
+            answerQuestion(i, false);
           },
           size: Size(imgHeight * 1.5, imgHeight * 1.5),
           buttonSkinConfig: ButtonSkinConfig(
@@ -128,18 +112,17 @@ class IqGameSpatialGameTypeCreator extends IqGameGameTypeCreator {
   }
 
   @override
-  int? getScore(IqGameContext gameContext) {
+  int getScore() {
     return gameContext.gameUser.countAllQuestions([QuestionInfoStatus.won]);
   }
 
   @override
-  Widget createGameOverContainer(
-      BuildContext context, IqGameContext gameContext) {
-    return Container();
+  bool isGameOverOnFirstWrongAnswer() {
+    return false;
   }
 
   @override
-  bool hasGoToNextQuestionBtn(QuestionInfo currentQuestionInfo) {
+  bool hasGoToNextQuestionBtn() {
     return !currentQuestionInfo.isQuestionOpen();
   }
 }

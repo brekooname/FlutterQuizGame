@@ -12,32 +12,30 @@ import '../../../../../Lib/Button/button_skin_config.dart';
 import '../../../../../Lib/Color/color_util.dart';
 import '../../../../../Lib/Font/font_config.dart';
 import '../../../../../Lib/Popup/my_popup.dart';
-import '../../../Service/iq_game_local_storage.dart';
 import '../iq_game_game_type_creator.dart';
 
 class IqGameNumberSeqGameTypeCreator extends IqGameGameTypeCreator {
-
   String? pressedNumbers;
 
+  IqGameNumberSeqGameTypeCreator(IqGameContext gameContext)
+      : super(gameContext);
+
   @override
-  void initGameTypeCreator(
-    QuestionInfo currentQuestionInfo,
-    IqGameContext gameContext,
-    VoidCallback refreshScreen,
-    VoidCallback goToNextScreen,
-  ) {
-    super.initGameTypeCreator(
-        currentQuestionInfo, gameContext, refreshScreen, goToNextScreen);
+  void initGameTypeCreator(QuestionInfo currentQuestionInfo,
+      {required VoidCallback refreshScreen,
+      required VoidCallback goToNextScreen,
+      required VoidCallback goToGameOverScreen}) {
+    super.initGameTypeCreator(currentQuestionInfo,
+        refreshScreen: refreshScreen,
+        goToNextScreen: goToNextScreen,
+        goToGameOverScreen: goToGameOverScreen);
     resetPressedNumbers();
   }
 
   @override
   Widget createGameContainer(
-      BuildContext context,
-      QuestionInfo currentQuestionInfo,
-      IqGameContext gameContext,
-      VoidCallback refreshScreen,
-      VoidCallback goToNextScreen) {
+    BuildContext context,
+  ) {
     var question = currentQuestionInfo.question;
 
     var heightMargin = SizedBox(
@@ -172,12 +170,7 @@ class IqGameNumberSeqGameTypeCreator extends IqGameGameTypeCreator {
                 resetPressedNumbers();
                 refreshScreen.call();
               } else {
-                answerQuestion(currentQuestionInfo, pressedNumbers!.parseToInt,
-                    gameContext, refreshScreen, true);
-                iqGameLocalStorage.setScoreForCat(IqGameScoreInfo(
-                    getGameTypeCategory(gameContext).name,
-                    getScore(gameContext) ?? 0,
-                    DateTime.now()));
+                answerQuestion(pressedNumbers!.parseToInt, true);
                 MyPopup.showPopup(
                     context,
                     IqGameIqNumberSeqAnswerPopup(
@@ -199,19 +192,18 @@ class IqGameNumberSeqGameTypeCreator extends IqGameGameTypeCreator {
   }
 
   @override
-  int? getScore(IqGameContext gameContext) {
+  int getScore() {
     return gameContext.gameUser.countAllQuestions([QuestionInfoStatus.won]);
-  }
-
-  @override
-  Widget createGameOverContainer(
-      BuildContext context, IqGameContext gameContext) {
-    return Container();
   }
 
   @override
   bool hasSkipButton() {
     return true;
+  }
+
+  @override
+  bool isGameOverOnFirstWrongAnswer() {
+    return false;
   }
 
   @override

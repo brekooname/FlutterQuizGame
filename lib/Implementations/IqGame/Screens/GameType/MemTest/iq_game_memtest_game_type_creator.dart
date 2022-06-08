@@ -16,24 +16,26 @@ import '../iq_game_game_type_creator.dart';
 import 'iq_game_memtest_question_service.dart';
 
 class IqGameMemTestGameTypeCreator extends IqGameGameTypeCreator {
-  static const int totalQuestions = 10;
+  static const int totalQuestions = 2;
   static const int rows = 4;
   static const int columns = 4;
   IqGameMemTestGameTypeScreenState _memTestGameTypeScreenState =
-      IqGameMemTestGameTypeScreenState.LOADING;
+      IqGameMemTestGameTypeScreenState.loading;
   Map<int, int> randomPosForBtns = {};
   List<int> answersToPress = [];
 
+  IqGameMemTestGameTypeCreator(IqGameContext gameContext) : super(gameContext);
+
   @override
-  void initGameTypeCreator(
-    QuestionInfo currentQuestionInfo,
-    IqGameContext gameContext,
-    VoidCallback refreshScreen,
-    VoidCallback goToNextScreen,
-  ) {
-    super.initGameTypeCreator(
-        currentQuestionInfo, gameContext, refreshScreen, goToNextScreen);
-    _memTestGameTypeScreenState = IqGameMemTestGameTypeScreenState.LOADING;
+  void initGameTypeCreator(QuestionInfo currentQuestionInfo,
+      {required VoidCallback refreshScreen,
+      required VoidCallback goToNextScreen,
+      required VoidCallback goToGameOverScreen}) {
+    super.initGameTypeCreator(currentQuestionInfo,
+        refreshScreen: refreshScreen,
+        goToNextScreen: goToNextScreen,
+        goToGameOverScreen: goToGameOverScreen);
+    _memTestGameTypeScreenState = IqGameMemTestGameTypeScreenState.loading;
     randomPosForBtns =
         _createRandomPositionsForNumbers(currentQuestionInfo.question.index);
     answersToPress = randomPosForBtns.values.toList();
@@ -41,11 +43,8 @@ class IqGameMemTestGameTypeCreator extends IqGameGameTypeCreator {
 
   @override
   Widget createGameContainer(
-      BuildContext context,
-      QuestionInfo currentQuestionInfo,
-      IqGameContext gameContext,
-      VoidCallback refreshScreen,
-      VoidCallback goToNextScreen) {
+    BuildContext context,
+  ) {
     var question = currentQuestionInfo.question;
     var margin = SizedBox(
       height: screenDimensionsService.h(2),
@@ -56,23 +55,23 @@ class IqGameMemTestGameTypeCreator extends IqGameGameTypeCreator {
     var durationEye = 2000;
     var durationShowNr = 1000;
     if (_memTestGameTypeScreenState !=
-        IqGameMemTestGameTypeScreenState.HIDE_NUMBERS) {
+        IqGameMemTestGameTypeScreenState.hideNumbers) {
       Future.delayed(
           Duration(
               milliseconds: _memTestGameTypeScreenState ==
-                      IqGameMemTestGameTypeScreenState.LOADING
+                      IqGameMemTestGameTypeScreenState.loading
                   ? durationEye
                   : durationShowNr), () {
         _memTestGameTypeScreenState = _memTestGameTypeScreenState ==
-                IqGameMemTestGameTypeScreenState.SHOW_NUMBERS
-            ? IqGameMemTestGameTypeScreenState.HIDE_NUMBERS
-            : IqGameMemTestGameTypeScreenState.SHOW_NUMBERS;
+                IqGameMemTestGameTypeScreenState.showNumbers
+            ? IqGameMemTestGameTypeScreenState.hideNumbers
+            : IqGameMemTestGameTypeScreenState.showNumbers;
         refreshScreen.call();
       });
     }
 
     if (_memTestGameTypeScreenState ==
-        IqGameMemTestGameTypeScreenState.LOADING) {
+        IqGameMemTestGameTypeScreenState.loading) {
       mainContent = AnimateFadeInFadeOut(
         onlyFadeOut: true,
         duration: Duration(milliseconds: durationEye),
@@ -105,11 +104,11 @@ class IqGameMemTestGameTypeCreator extends IqGameGameTypeCreator {
                               ? btnBackground
                               : Colors.grey.shade500,
               touchable: _memTestGameTypeScreenState !=
-                  IqGameMemTestGameTypeScreenState.SHOW_NUMBERS,
+                  IqGameMemTestGameTypeScreenState.showNumbers,
               disabled: !currentQuestionInfo.isQuestionOpen() ||
                   answersToPress.isEmpty,
               text: _memTestGameTypeScreenState ==
-                          IqGameMemTestGameTypeScreenState.SHOW_NUMBERS ||
+                          IqGameMemTestGameTypeScreenState.showNumbers ||
                       !answersToPress.contains(btnVal) ||
                       currentQuestionInfo.status == QuestionInfoStatus.lost
                   ? btnVal.toString()
@@ -120,26 +119,24 @@ class IqGameMemTestGameTypeCreator extends IqGameGameTypeCreator {
                     answersToPress.remove(btnVal);
                     if (answersToPress.isEmpty) {
                       answerQuestion(
-                          currentQuestionInfo,
                           IqGameMemTestQuestionService
                               .allAnswersPressedCorrectly,
-                          gameContext,
-                          refreshScreen,
                           false);
-                      iqGameLocalStorage.setScoreForCat(IqGameScoreInfo(
-                          getGameTypeCategory(gameContext).name,
-                          getScore(gameContext) ?? 0,
-                          DateTime.now()));
+                      Future.delayed(
+                          Duration(
+                              seconds: currentQuestionInfo.status ==
+                                      QuestionInfoStatus.won
+                                  ? 1
+                                  : 2), () {
+                        goToNextScreen.call();
+                      });
                     } else {
                       refreshScreen.call();
                     }
                   } else {
                     answerQuestion(
-                        currentQuestionInfo,
                         IqGameMemTestQuestionService
                             .notAllAnswersPressedCorrectly,
-                        gameContext,
-                        refreshScreen,
                         false);
                   }
                 }
@@ -228,20 +225,14 @@ class IqGameMemTestGameTypeCreator extends IqGameGameTypeCreator {
   }
 
   @override
-  int? getScore(IqGameContext gameContext) {
+  int getScore() {
     return gameContext.gameUser.countAllQuestions([QuestionInfoStatus.won]);
   }
 
   @override
-  Widget createGameOverContainer(
-      BuildContext context, IqGameContext gameContext) {
-    return Container();
-  }
-
-  @override
-  bool hasGoToNextQuestionBtn(QuestionInfo currentQuestionInfo) {
-    return !currentQuestionInfo.isQuestionOpen();
+  bool isGameOverOnFirstWrongAnswer() {
+    return true;
   }
 }
 
-enum IqGameMemTestGameTypeScreenState { LOADING, SHOW_NUMBERS, HIDE_NUMBERS }
+enum IqGameMemTestGameTypeScreenState { loading, showNumbers, hideNumbers }

@@ -16,14 +16,19 @@ class IqGameScoreProgressBarChart extends StatelessWidget with LabelMixin {
   IqGameScoreProgressBarChart(this.scoreInfo, this.maxScore, {Key? key})
       : super(key: key);
 
+  Iterable<num> getNumericExtends(int min, int max) {
+    return [min, max == 0 ? 1 : max];
+  }
+
   @override
   Widget build(BuildContext context) {
     var yAxisStyle = buildNumericAxisSpec(
         charts.MaterialPalette.blue.shadeDefault.darker,
-        charts.NumericExtents(scoreInfo.length == 1 ? 0 : 1, maxScore));
+        charts.NumericExtents.fromValues(getNumericExtends(0, maxScore)));
     var xAxisStyle = buildNumericAxisSpec(
         charts.MaterialPalette.green.shadeDefault.darker,
-        charts.NumericExtents(scoreInfo.length == 1 ? 0 : 1, scoreInfo.length));
+        charts.NumericExtents.fromValues(
+            getNumericExtends(0, scoreInfo.length)));
 
     var data = scoreInfo
         .map((e) => LinearSales(e.score, scoreInfo.indexOf(e) + 1, 0.0))

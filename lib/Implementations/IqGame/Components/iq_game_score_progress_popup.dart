@@ -87,8 +87,7 @@ class IqGameScoreProgressPopupState extends State<IqGameScoreProgressPopup>
                                       scoreInfo, maxScore)),
                               MyText(
                                   fontConfig: legendFontConfig,
-                                  text: "Games played: " +
-                                      scoreInfo.length.toString())
+                                  text: "Number of games played")
                             ]),
                       ]),
           ]),

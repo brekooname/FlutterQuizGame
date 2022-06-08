@@ -5,7 +5,7 @@ import 'package:flutter_app_quiz_game/Game/Question/Model/question.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_info_status.dart';
 
 class QuestionInfo {
-  late Question question;
+  Question question;
   final Set<String> _pressedAnswers = HashSet<String>();
   QuestionInfoStatus _status = QuestionInfoStatus.open;
   DateTime? questionAnsweredAt;

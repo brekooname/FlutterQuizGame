@@ -27,6 +27,17 @@ class IqGameGameOverScreen extends StandardScreen<IqGameScreenManagerState> {
 class IqGameGameOverScreenState extends State<IqGameGameOverScreen>
     with ScreenState, QuizQuestionContainer, LabelMixin {
   @override
+  void initState() {
+    super.initState();
+    widget.iqGameGameTypeCreator.initGameOverTypeCreator(
+        refreshScreen: setStateCallback,
+        goToGameOverScreen: () {
+          widget.gameScreenManagerState.showMainScreen();
+        });
+    widget.iqGameGameTypeCreator.executeOnGameOver();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Container(
         color: Colors.white,
@@ -36,8 +47,7 @@ class IqGameGameOverScreenState extends State<IqGameGameOverScreen>
             children: [
               IqGameLevelHeader(),
               const Spacer(),
-              widget.iqGameGameTypeCreator
-                  .createGameOverContainer(context, widget.gameContext),
+              widget.iqGameGameTypeCreator.createGameOverContainer(context),
               const Spacer(),
             ]));
   }

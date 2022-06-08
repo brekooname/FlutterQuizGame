@@ -42,31 +42,46 @@ class IqGameLevelHeader extends StatelessWidget {
     var emptyBtnSize = SizedBox(
       width: _getBtnContainerWidth(myBackButton.buttonSize),
     );
+    List<Widget> headerElements = [];
+    headerElements.add(SizedBox(
+        width: _getBtnContainerWidth(myBackButton.buttonSize),
+        child: myBackButton));
+    headerElements.add(emptyBtnSize);
+    headerElements.add(emptyBtnSize);
+    headerElements.add(createScoreText(myBackButton.buttonSize.width / 1.2));
+    headerElements.addAll(_createControlBtns(myBackButton.buttonSize));
     return SizedBox(
         height: _screenDimensions.dimen(16),
         child: Padding(
             padding: EdgeInsets.all(_screenDimensions.dimen(1)),
             child: Row(
-              children: <Widget>[
-                SizedBox(
-                    width: _getBtnContainerWidth(myBackButton.buttonSize),
-                    child: myBackButton),
-                emptyBtnSize,
-                emptyBtnSize,
-                createScoreText(myBackButton.buttonSize.width / 1.2),
-                _createControlBtn(
-                    myBackButton.buttonSize, "btn_skip", false, skipQuestion),
-                _createControlBtn(
-                    myBackButton.buttonSize, "btn_next", true, nextQuestion),
-                _createControlBtn(myBackButton.buttonSize, "btn_restart", false,
-                    restartLevel),
-              ],
+              children: headerElements,
             )));
+  }
+
+  List<Widget> _createControlBtns(Size btnSize) {
+    List<Widget> controlBtns = [];
+    if (nextQuestion == null) {
+      controlBtns
+          .add(_createControlBtn(btnSize, "btn_next", true, nextQuestion));
+      controlBtns
+          .add(_createControlBtn(btnSize, "btn_skip", false, skipQuestion));
+    } else {
+      controlBtns
+          .add(_createControlBtn(btnSize, "btn_skip", false, skipQuestion));
+      controlBtns
+          .add(_createControlBtn(btnSize, "btn_next", true, nextQuestion));
+    }
+    controlBtns
+        .add(_createControlBtn(btnSize, "btn_restart", false, restartLevel));
+    return controlBtns;
   }
 
   Widget createScoreText(double textWidth) {
     if (score == null) {
-      return Container();
+      return SizedBox(
+        width: _getBtnContainerWidth(Size(textWidth / 1.2, 0)),
+      );
     }
     var fontColor = Colors.lightGreenAccent.shade700;
     var scoreText = MyText(

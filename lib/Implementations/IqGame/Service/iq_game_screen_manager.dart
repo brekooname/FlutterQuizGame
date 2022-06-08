@@ -64,9 +64,7 @@ class IqGameScreenManagerState extends State<IqGameScreenManager>
 
   StandardScreen createGameOverScreen(IqGameContext gameContext) {
     return IqGameGameOverScreen(
-        getGameTypeCreator(gameContext.questionConfig.categories.first),
-        gameContext,
-        this);
+        _getGameTypeCreator(gameContext), gameContext, this);
   }
 
   @override
@@ -83,7 +81,7 @@ class IqGameScreenManagerState extends State<IqGameScreenManager>
     QuestionDifficulty difficulty,
     QuestionCategory category,
   ) {
-    return IqGameQuestionScreen(getGameTypeCreator(category), this,
+    return IqGameQuestionScreen(_getGameTypeCreator(gameContext), this,
         key: UniqueKey(),
         gameContext: gameContext,
         category: category,
@@ -95,19 +93,20 @@ class IqGameScreenManagerState extends State<IqGameScreenManager>
     return createGameOverScreen(gameContext);
   }
 
-  IqGameGameTypeCreator getGameTypeCreator(QuestionCategory category) {
+  IqGameGameTypeCreator _getGameTypeCreator(IqGameContext gameContext) {
+    QuestionCategory category = gameContext.questionConfig.categories.first;
     IqGameGameTypeCreator? creator;
     IqGameQuestionConfig questionConfig = IqGameQuestionConfig();
     if (category == questionConfig.cat0) {
-      creator = IqGameIqTestGameTypeCreator();
+      creator = IqGameIqTestGameTypeCreator(gameContext);
     } else if (category == questionConfig.cat1) {
-      creator = IqGameSpatialGameTypeCreator();
+      creator = IqGameSpatialGameTypeCreator(gameContext);
     } else if (category == questionConfig.cat2) {
-      creator = IqGameNumberSeqGameTypeCreator();
+      creator = IqGameNumberSeqGameTypeCreator(gameContext);
     } else if (category == questionConfig.cat3) {
-      creator = IqGameMemTestGameTypeCreator();
+      creator = IqGameMemTestGameTypeCreator(gameContext);
     } else if (category == questionConfig.cat4) {
-      creator = IqGameMathGameTypeCreator();
+      creator = IqGameMathGameTypeCreator(gameContext);
     }
     if (creator == null) {
       throw UnsupportedError(
