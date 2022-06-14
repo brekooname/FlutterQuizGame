@@ -120,7 +120,7 @@ class IqGameMemTestGameTypeCreator extends IqGameGameTypeCreator {
                     if (answersToPress.isEmpty) {
                       answerQuestion(
                           IqGameMemTestQuestionService
-                              .allAnswersPressedCorrectly,
+                              .allAnswersPressedCorrectly.toString(),
                           false);
                       Future.delayed(
                           Duration(
@@ -136,7 +136,7 @@ class IqGameMemTestGameTypeCreator extends IqGameGameTypeCreator {
                   } else {
                     answerQuestion(
                         IqGameMemTestQuestionService
-                            .notAllAnswersPressedCorrectly,
+                            .notAllAnswersPressedCorrectly.toString(),
                         false);
                   }
                 }

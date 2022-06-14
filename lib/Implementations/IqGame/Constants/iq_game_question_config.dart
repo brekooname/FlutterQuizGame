@@ -4,6 +4,8 @@ import 'package:flutter_app_quiz_game/Game/GameType/game_question_config.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
 import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/DependentAnswers/dependent_answers_question_category_service.dart';
+import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/UniqueAnswers/unique_answers_question_service.dart';
+import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/UniqueAnswers/unqiue_answers_question_category_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/IqGame/Screens/GameType/IqTest/iq_game_iq_test_question_category_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/IqGame/Screens/GameType/Math/iq_game_math_question_category_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/IqGame/Screens/GameType/MemTest/iq_game_memtest_question_category_service.dart';
@@ -52,7 +54,7 @@ class IqGameQuestionConfig extends GameQuestionConfig with LabelMixin {
       singleton.cat5 = QuestionCategory(
           index: 5,
           categoryLabel: "General Knowledge",
-          questionCategoryService: IqGameMathCategoryQuestionService()),
+          questionCategoryService: UniqueAnswersCategoryQuestionService()),
     ];
     return singleton;
   }

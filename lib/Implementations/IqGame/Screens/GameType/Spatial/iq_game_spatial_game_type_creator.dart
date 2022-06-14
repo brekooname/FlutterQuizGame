@@ -55,7 +55,7 @@ class IqGameSpatialGameTypeCreator extends IqGameGameTypeCreator {
                   ? Colors.red.shade300
                   : Colors.transparent,
           onClick: () {
-            answerQuestion(i, false);
+            answerQuestion(i.toString(), false);
           },
           size: Size(imgHeight * 1.5, imgHeight * 1.5),
           buttonSkinConfig: ButtonSkinConfig(

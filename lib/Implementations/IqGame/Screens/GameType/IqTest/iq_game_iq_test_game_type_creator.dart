@@ -53,7 +53,7 @@ class IqGameIqTestGameTypeCreator extends IqGameGameTypeCreator {
           image: image,
         ),
         onClick: () {
-          answerQuestion(i, true);
+          answerQuestion(i.toString(), true);
           goToNextScreen.call();
         },
       ));

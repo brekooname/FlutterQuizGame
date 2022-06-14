@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
+import 'package:flutter_app_quiz_game/Game/Question/Model/question_info_status.dart';
 import 'package:flutter_app_quiz_game/Implementations/IqGame/Service/iq_game_local_storage.dart';
 import 'package:flutter_app_quiz_game/Lib/Image/image_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Localization/label_mixin.dart';
@@ -44,22 +45,37 @@ abstract class IqGameGameTypeCreator with LabelMixin {
   Widget createGameContainer(BuildContext context);
 
   Widget createGameOverContainer(BuildContext context) {
-    // if (gameContext.gameUser.getAllQuestions([]).length ==
-    //     gameContext.gameUser.getAllQuestions([QuestionInfoStatus.won]).length) {
-    return createGameFinishedSuccessfullyContainer();
-    // } else {
-    //   return Container();
-    // }
-  }
-
-  bool isGameOverOnFirstWrongAnswer();
-
-  int getScore();
-
-  Widget createGameFinishedSuccessfullyContainer() {
     var margin = SizedBox(
       height: screenDimensionsService.h(5),
     );
+    List<Widget> infoContainers = [];
+    if (gameContext.gameUser.getAllQuestions([]).length ==
+        gameContext.gameUser.getAllQuestions([QuestionInfoStatus.won]).length) {
+      infoContainers.add(createMainGameOverInfoText(label.l_congratulations,
+          Colors.lightGreenAccent.shade400, Colors.green.shade800));
+      infoContainers.add(margin);
+      infoContainers.add(margin);
+      infoContainers.add(MyText(
+          text: "Game finished successfully",
+          fontConfig: FontConfig(
+              fontWeight: FontWeight.w700,
+              fontSize: FontConfig.getCustomFontSize(1.5),
+              fontColor: Colors.black)));
+      infoContainers.add(margin);
+    } else {
+      infoContainers.add(createMainGameOverInfoText("Game finished!",
+          Colors.lightGreenAccent.shade400, Colors.green.shade800));
+      infoContainers.add(margin);
+    }
+    infoContainers.add(MyText(
+        text:
+            formatTextWithOneParam(label.l_score_param0, getScore().toString()),
+        fontConfig: FontConfig(
+            fontWeight: FontWeight.w700,
+            fontSize: FontConfig.getCustomFontSize(1.8),
+            fontColor: Colors.blue.shade800)));
+    infoContainers.add(margin);
+    infoContainers.add(margin);
     return Container(
         height: screenDimensionsService.h(80),
         decoration: BoxDecoration(
@@ -76,34 +92,23 @@ abstract class IqGameGameTypeCreator with LabelMixin {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            MyText(
-                text: label.l_congratulations,
-                fontConfig: FontConfig(
-                    fontWeight: FontWeight.w700,
-                    borderColor: Colors.green.shade800,
-                    fontSize: FontConfig.getCustomFontSize(2),
-                    fontColor: Colors.lightGreenAccent.shade400)),
-            margin,
-            margin,
-            MyText(
-                text: "Game finished successfully",
-                fontConfig: FontConfig(
-                    fontWeight: FontWeight.w700,
-                    fontSize: FontConfig.getCustomFontSize(1.5),
-                    fontColor: Colors.black)),
-            margin,
-            MyText(
-                text: formatTextWithOneParam(
-                    label.l_score_param0, getScore().toString()),
-                fontConfig: FontConfig(
-                    fontWeight: FontWeight.w700,
-                    fontSize: FontConfig.getCustomFontSize(1.8),
-                    fontColor: Colors.blue.shade800)),
-            margin,
-            margin,
-          ],
+          children: infoContainers,
         ));
+  }
+
+  bool isGameOverOnFirstWrongAnswer();
+
+  int getScore();
+
+  MyText createMainGameOverInfoText(
+      String text, Color textColor, Color borderColor) {
+    return MyText(
+        text: text,
+        fontConfig: FontConfig(
+            fontWeight: FontWeight.w700,
+            borderColor: borderColor,
+            fontSize: FontConfig.getCustomFontSize(2),
+            fontColor: textColor));
   }
 
   bool hasGoToNextQuestionBtn() {
@@ -121,14 +126,14 @@ abstract class IqGameGameTypeCreator with LabelMixin {
         getGameTypeCategory(gameContext).name, getScore(), DateTime.now()));
   }
 
-  bool showScore(){
+  bool showScore() {
     return true;
   }
 
-  void answerQuestion(int answer, bool storeAnswersInStorage) {
+  void answerQuestion(String answer, bool storeAnswersInStorage) {
     if (currentQuestionInfo.isQuestionOpen()) {
       bool isCorrectAnswer =
-          gameContext.answerQuestion(currentQuestionInfo, answer.toString());
+          gameContext.answerQuestion(currentQuestionInfo, answer);
       if (storeAnswersInStorage) {
         _storeCurrentAnswers(gameContext);
       }

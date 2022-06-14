@@ -56,7 +56,7 @@ class MyApp extends StatefulWidget {
   // static String webAppKey = "dopewars";
   // static String webAppKey = "anatomy";
   static String webAppKey = "iqgame";
-  static CampaignLevel campaignLevel = IqGameCampaignLevelService().level_4;
+  static CampaignLevel campaignLevel = IqGameCampaignLevelService().level_5;
 
   //
   static Language webLanguage = Language.en;
@@ -209,15 +209,15 @@ class MyAppState extends State<MyApp> {
         MyApp.gameScreenManager.currentScreen!.gameScreenManagerState
             .showNewGameScreen(MyApp.campaignLevel);
       });
-      Future.delayed(const Duration(milliseconds: 100), () {
-        (MyApp.gameScreenManager.currentScreen!.gameScreenManagerState
-                as IqGameScreenManagerState)
-            .setCurrentScreenState((MyApp.gameScreenManager.currentScreen!
-                    .gameScreenManagerState as IqGameScreenManagerState)
-                .createGameOverScreen(
-                    (MyApp.gameScreenManager.currentScreen! as GameScreen)
-                        .gameContext as IqGameContext));
-      });
+      // Future.delayed(const Duration(milliseconds: 100), () {
+      //   (MyApp.gameScreenManager.currentScreen!.gameScreenManagerState
+      //           as IqGameScreenManagerState)
+      //       .setCurrentScreenState((MyApp.gameScreenManager.currentScreen!
+      //               .gameScreenManagerState as IqGameScreenManagerState)
+      //           .createGameOverScreen(
+      //               (MyApp.gameScreenManager.currentScreen! as GameScreen)
+      //                   .gameContext as IqGameContext));
+      // });
       ////
       //
       ////

@@ -3,6 +3,7 @@ import 'package:flutter_app_quiz_game/Game/Game/campaign_level.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
 import 'package:flutter_app_quiz_game/Implementations/IqGame/Questions/iq_game_context.dart';
+import 'package:flutter_app_quiz_game/Implementations/IqGame/Screens/GameType/GenKnow/iq_game_genknow_game_type_creator.dart';
 import 'package:flutter_app_quiz_game/Implementations/IqGame/Screens/GameType/IqTest/iq_game_iq_test_game_type_creator.dart';
 import 'package:flutter_app_quiz_game/Implementations/IqGame/Screens/GameType/Math/iq_game_math_game_type_creator.dart';
 import 'package:flutter_app_quiz_game/Implementations/IqGame/Screens/GameType/MemTest/iq_game_memtest_game_type_creator.dart';
@@ -107,6 +108,8 @@ class IqGameScreenManagerState extends State<IqGameScreenManager>
       creator = IqGameMemTestGameTypeCreator(gameContext);
     } else if (category == questionConfig.cat4) {
       creator = IqGameMathGameTypeCreator(gameContext);
+    } else if (category == questionConfig.cat5) {
+      creator = IqGameGenKnowGameTypeCreator(gameContext);
     }
     if (creator == null) {
       throw UnsupportedError(

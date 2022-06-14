@@ -115,6 +115,7 @@ flutter:
     - assets/implementations/iqgame/cat0/
     - assets/implementations/iqgame/cat1/
     - assets/implementations/iqgame/cat2/
+    - assets/implementations/iqgame/cat5/
     ########################
     ###### ANATOMY #################################################################################
     ########################

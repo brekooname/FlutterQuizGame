@@ -54,5 +54,11 @@ class IqGameAllQuestions extends AllQuestionsService {
           "question_mark_blue,8,66.6,11.16###ffc90d###56 - 49 = 7###24 - 16 = 8###75 - 71 = 4###61 - 58 = 3###42 - 36 = 6",
           "question_mark_blue,9,44.4,13.3###c3c3c3###137 - (1 + 3 + 7) = 126###126 - (1 + 2 + 6) = 117###117 - (1 + 1 + 7) = 108###108 - (1 + 0 + 8) = 99###99 - (9 + 9) = 81"
         ]);
+    addQuestions(
+        result, //
+        language, //
+        questionConfig.cat5, //
+        questionConfig.diff0, //
+        ["Which planet is the closest to the sun?::Mercury##Venus##Saturn##Jupiter::0", "What is the atomic sign for Helium on the periodic table?::O##He##Fe##Se::1", "Where is the Taj Mahal located?::China##India##France##Japan::1", "Where is Mount Kilimanjaro located?::Tanzania##Brazil##Egypt##Japan::0", "Which painter belongs to the Surrealism movement?::Leonardo da Vinci##Salvador Dali##Pablo Picasso##Marc Chagall::1", "In which country did the Olympics originate?::France##Italy##Greece##Switzerland::2", "How many lobes does the human brain have?::1##2##3##4::3", "Which bird was commonly used by humans to send messages?::Pigeon##Hawk##Eagle##Sparrow::0", "Arachnophobia is the fear of what?::Spiders##Small spaces##Crowd##Airplane::0", "What is the oldest civilization we know of?::The Sumerian civilization##The Egyptian civilization##The Chinese civilization##The Indian civilization::0"]);
   }
 }

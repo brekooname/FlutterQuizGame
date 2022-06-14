@@ -50,7 +50,7 @@ class IqGameMathGameTypeCreator extends IqGameGameTypeCreator {
         if (remainingSeconds == 1) {
           timer.cancel();
           answerQuestion(
-              IqGameMathQuestionService.notAllAnswersPressedCorrectly, false);
+              IqGameMathQuestionService.notAllAnswersPressedCorrectly.toString(), false);
           Future.delayed(const Duration(seconds: 1), () {
             goToNextScreen.call();
           });
@@ -215,7 +215,7 @@ class IqGameMathGameTypeCreator extends IqGameGameTypeCreator {
         } else {
           answer = IqGameMathQuestionService.notAllAnswersPressedCorrectly;
         }
-        answerQuestion(answer, false);
+        answerQuestion(answer.toString(), false);
         timer!.cancel();
         if (correctAnswerPressed) {
           Future.delayed(const Duration(seconds: 1), () {

@@ -170,7 +170,7 @@ class IqGameNumberSeqGameTypeCreator extends IqGameGameTypeCreator {
                 resetPressedNumbers();
                 refreshScreen.call();
               } else {
-                answerQuestion(pressedNumbers!.parseToInt, true);
+                answerQuestion(pressedNumbers!, true);
                 MyPopup.showPopup(
                     context,
                     IqGameIqNumberSeqAnswerPopup(

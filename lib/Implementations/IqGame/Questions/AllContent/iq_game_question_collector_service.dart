@@ -33,6 +33,8 @@ class IqGameQuestionCollectorService
     var random = Random();
     var diff = gameQuestionConfig.diff0;
     for (QuestionCategory cat in categories ?? gameQuestionConfig.categories) {
+      ////////////
+      ////////////
       if (cat == gameQuestionConfig.cat0) {
         for (int qNr = 0;
             qNr < IqGameIqTestGameTypeCreator.totalQuestions;
@@ -40,7 +42,10 @@ class IqGameQuestionCollectorService
           result.add(Question(i, diff, cat, qNr.toString()));
           i++;
         }
-      } else if (cat == gameQuestionConfig.cat1) {
+      } else
+      ////////////
+      ////////////
+      if (cat == gameQuestionConfig.cat1) {
         for (int qNr = 0;
             qNr < IqGameSpatialGameTypeCreator.totalQuestions;
             qNr++) {
@@ -50,25 +55,39 @@ class IqGameQuestionCollectorService
           result.add(Question(i, diff, cat, _rawString));
           i++;
         }
-      } else if (cat == gameQuestionConfig.cat2) {
-        return allQuestionsService
-            .getAllQuestionsForCategory(gameQuestionConfig.cat2);
-      } else if (cat == gameQuestionConfig.cat3) {
+      } else
+      ////////////
+      ////////////
+      if (cat == gameQuestionConfig.cat2) {
+        return allQuestionsService.getAllQuestionsForCategory(cat);
+      } else
+      ////////////
+      ////////////
+      if (cat == gameQuestionConfig.cat3) {
         for (int qNr = 0;
             qNr < IqGameMemTestGameTypeCreator.totalQuestions;
             qNr++) {
           result.add(Question(i, diff, cat, qNr.toString()));
           i++;
         }
-      } else if (cat == gameQuestionConfig.cat4) {
+      } else
+      ////////////
+      ////////////
+      if (cat == gameQuestionConfig.cat4) {
         for (int qNr = 0;
-        qNr < IqGameMathGameTypeCreator.totalQuestions;
-        qNr++) {
+            qNr < IqGameMathGameTypeCreator.totalQuestions;
+            qNr++) {
           result.add(Question(i, diff, cat, qNr.toString()));
           i++;
         }
+      } else
+      ////////////
+      ////////////
+      if (cat == gameQuestionConfig.cat5) {
+        return allQuestionsService.getAllQuestionsForCategory(cat);
       }
     }
+
     return result;
   }
 }
