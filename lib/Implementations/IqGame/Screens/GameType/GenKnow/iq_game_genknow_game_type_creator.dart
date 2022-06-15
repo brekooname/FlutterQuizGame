@@ -12,8 +12,6 @@ import '../iq_game_game_type_creator.dart';
 
 class IqGameGenKnowGameTypeCreator extends IqGameGameTypeCreator
     with QuizQuestionContainer, QuizOptionsGameScreen {
-  static const int totalQuestions = 10;
-
   IqGameGenKnowGameTypeCreator(IqGameContext gameContext) : super(gameContext);
 
   @override
@@ -40,9 +38,17 @@ class IqGameGenKnowGameTypeCreator extends IqGameGameTypeCreator
     Widget questionContainer =
         createQuestionTextContainer(currentQuestionInfo.question, 1, 5);
     Widget optionsRows = createOptionRows(refreshScreen, goToNextScreen);
+    int totalQuestions = gameContext.gameUser.getAllQuestions([]).length;
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[questionContainer, optionsRows],
+      children: <Widget>[
+        createCurrentQuestionNr(
+            gameContext.gameUser
+                .getAllQuestions([]).indexOf(currentQuestionInfo),
+            totalQuestions),
+        questionContainer,
+        optionsRows
+      ],
     );
   }
 
@@ -72,5 +78,11 @@ class IqGameGenKnowQuizQuestionManager
   void onClickAnswerOptionBtn(Question question, String answerBtnText,
       VoidCallback refreshSetState, VoidCallback goToNextScreenAfterPress) {
     iqGameGenKnowGameTypeCreator.answerQuestion(answerBtnText, false);
+    if (!isAnswerCorrectInOptionsList(question, answerBtnText)) {
+      wrongPressedAnswer.add(answerBtnText);
+    }
+    Future.delayed(const Duration(seconds: 1), () {
+      iqGameGenKnowGameTypeCreator.goToNextScreen.call();
+    });
   }
 }

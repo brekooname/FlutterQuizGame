@@ -11,12 +11,11 @@ import 'package:flutter_app_quiz_game/Lib/Extensions/map_extension.dart';
 import 'package:flutter_app_quiz_game/Lib/Font/font_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
-import '../../../Service/iq_game_local_storage.dart';
 import '../iq_game_game_type_creator.dart';
 import 'iq_game_memtest_question_service.dart';
 
 class IqGameMemTestGameTypeCreator extends IqGameGameTypeCreator {
-  static const int totalQuestions = 2;
+  static const int totalQuestions = 10;
   static const int rows = 4;
   static const int columns = 4;
   IqGameMemTestGameTypeScreenState _memTestGameTypeScreenState =
@@ -120,7 +119,8 @@ class IqGameMemTestGameTypeCreator extends IqGameGameTypeCreator {
                     if (answersToPress.isEmpty) {
                       answerQuestion(
                           IqGameMemTestQuestionService
-                              .allAnswersPressedCorrectly.toString(),
+                              .allAnswersPressedCorrectly
+                              .toString(),
                           false);
                       Future.delayed(
                           Duration(
@@ -136,7 +136,8 @@ class IqGameMemTestGameTypeCreator extends IqGameGameTypeCreator {
                   } else {
                     answerQuestion(
                         IqGameMemTestQuestionService
-                            .notAllAnswersPressedCorrectly.toString(),
+                            .notAllAnswersPressedCorrectly
+                            .toString(),
                         false);
                   }
                 }
@@ -183,7 +184,7 @@ class IqGameMemTestGameTypeCreator extends IqGameGameTypeCreator {
           children: [
             createCurrentQuestionNr(questionNr, totalQuestions),
             margin,
-            MyText(text: "Find the odd one out"),
+            createInfoMyText("Select the numbers in ascending order", 1.0),
             margin,
             SizedBox(
               height: screenDimensionsService.h(50),

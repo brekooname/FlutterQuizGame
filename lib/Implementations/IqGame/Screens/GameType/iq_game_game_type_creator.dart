@@ -174,14 +174,22 @@ abstract class IqGameGameTypeCreator with LabelMixin {
   }
 
   MyText createCurrentQuestionNr(int currentQuestionNr, int totalQuestions) {
+    return createInfoMyText(
+        (currentQuestionNr + 1).toString() + "/" + totalQuestions.toString(),
+        1.2);
+  }
+
+  MyText createInfoMyText(String text, double fontSize) {
     return MyText(
+        textShadow: Shadow(
+          blurRadius: FontConfig.standardShadowRadius * 2,
+          color: Colors.black.withOpacity(0.3),
+        ),
         fontConfig: FontConfig(
-            fontSize: FontConfig.getCustomFontSize(1.2),
+            fontSize: FontConfig.getCustomFontSize(fontSize),
             fontColor: Colors.white,
             borderWidth: FontConfig.standardBorderWidth * 1.3,
             borderColor: Colors.black),
-        text: (currentQuestionNr + 1).toString() +
-            "/" +
-            totalQuestions.toString());
+        text: text);
   }
 }

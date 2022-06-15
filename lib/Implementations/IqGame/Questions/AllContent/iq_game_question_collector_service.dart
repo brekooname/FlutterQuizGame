@@ -84,7 +84,9 @@ class IqGameQuestionCollectorService
       ////////////
       ////////////
       if (cat == gameQuestionConfig.cat5) {
-        return allQuestionsService.getAllQuestionsForCategory(cat);
+        var allQuestionsForCategory = allQuestionsService.getAllQuestionsForCategory(cat);
+        allQuestionsForCategory.shuffle();
+        return allQuestionsForCategory;
       }
     }
 

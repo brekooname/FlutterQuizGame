@@ -88,10 +88,7 @@ class IqGameNumberSeqGameTypeCreator extends IqGameGameTypeCreator {
         createCurrentQuestionNr(
             question.index, gameContext.questionConfig.amountOfQuestions),
         heightMargin,
-        MyText(
-            text: "Find the unknown number in the sequence",
-            fontConfig:
-                FontConfig(borderColor: Colors.black, fontColor: Colors.white)),
+        createInfoMyText("Find the unknown number in the sequence", 1.0),
         heightMargin,
         imageService.getSpecificImage(
             imageName: "q" + question.index.toString(),

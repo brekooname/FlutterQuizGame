@@ -87,7 +87,7 @@ class IqGameIqTestGameTypeCreator extends IqGameGameTypeCreator {
             margin,
             qContainer,
             margin,
-            MyText(text: "Choose an answer"),
+            createInfoMyText("Choose an answer", 1.0),
             margin,
             answerColumn,
           ],
@@ -176,10 +176,9 @@ class IqGameIqTestGameTypeCreator extends IqGameGameTypeCreator {
   }
 
   @override
-  bool showScore(){
+  bool showScore() {
     return false;
   }
-
 
   String _getLevelForScore(int score) {
     if (score < 70) {

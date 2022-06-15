@@ -50,10 +50,9 @@ class IqGameMathGameTypeCreator extends IqGameGameTypeCreator {
         if (remainingSeconds == 1) {
           timer.cancel();
           answerQuestion(
-              IqGameMathQuestionService.notAllAnswersPressedCorrectly.toString(), false);
-          Future.delayed(const Duration(seconds: 1), () {
-            goToNextScreen.call();
-          });
+              IqGameMathQuestionService.notAllAnswersPressedCorrectly
+                  .toString(),
+              false);
         }
         remainingSeconds--;
         refreshScreen.call();
@@ -154,7 +153,7 @@ class IqGameMathGameTypeCreator extends IqGameGameTypeCreator {
                       maxWidth: screenDimensionsService.dimen(10))
                 ]),
             margin,
-            MyText(text: "Calculate"),
+            createInfoMyText("Solve the mathematical operation", 1.0),
             margin,
             SizedBox(
               height: screenDimensionsService.h(50),

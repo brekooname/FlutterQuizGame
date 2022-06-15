@@ -96,7 +96,7 @@ class IqGameSpatialGameTypeCreator extends IqGameGameTypeCreator {
             createCurrentQuestionNr(
                 _getQuestionNr(question.rawString), totalQuestions),
             margin,
-            MyText(text: "Find the odd one out"),
+            createInfoMyText("Find the odd one out", 1.0),
             margin,
             answerColumn,
           ],

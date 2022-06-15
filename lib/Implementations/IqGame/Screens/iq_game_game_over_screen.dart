@@ -8,6 +8,7 @@ import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
 
 import '../../../Lib/Screen/standard_screen.dart';
 import '../Components/iq_game_level_header.dart';
+import '../Constants/iq_game_campaign_level_service.dart';
 
 class IqGameGameOverScreen extends StandardScreen<IqGameScreenManagerState> {
   IqGameGameTypeCreator iqGameGameTypeCreator;
@@ -45,7 +46,12 @@ class IqGameGameOverScreenState extends State<IqGameGameOverScreen>
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              IqGameLevelHeader(),
+              IqGameLevelHeader(restartLevel: () {
+                widget.gameScreenManagerState.showNewGameScreen(
+                    IqGameCampaignLevelService().campaignLevel(
+                        widget.gameContext.questionConfig.difficulties.first,
+                        widget.gameContext.questionConfig.categories.first));
+              }),
               const Spacer(),
               widget.iqGameGameTypeCreator.createGameOverContainer(context),
               const Spacer(),
