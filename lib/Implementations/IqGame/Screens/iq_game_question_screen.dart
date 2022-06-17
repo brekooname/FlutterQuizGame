@@ -119,7 +119,7 @@ class IqGameQuestionScreenState extends State<IqGameQuestionScreen>
                     : null,
               ),
               const Spacer(),
-              widget.iqGameGameTypeCreator.createGameContainer(
+              widget.iqGameGameTypeCreator.createGameContainerWithDecoration(
                 context,
               ),
               const Spacer(),

@@ -39,6 +39,17 @@ class ImageService {
         maxHeight);
   }
 
+  AssetImage getSpecificAssetImage({
+    required String imageName,
+    required String imageExtension,
+    String? module,
+  }) {
+    return getAssetByImagePath(
+      _assetsService.getSpecificAssetPath(
+          module: module, assetName: imageName, assetExtension: imageExtension),
+    );
+  }
+
   AssetImage getMainAssetImage({
     required String imageName,
     required String imageExtension,

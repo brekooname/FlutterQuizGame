@@ -93,6 +93,11 @@ class IqGameIqTestGameTypeCreator extends IqGameGameTypeCreator {
           ],
         ));
   }
+  
+  @override
+  Widget createGameContainerWithDecoration(BuildContext context) {
+    return createGameContainer(context);
+  }
 
   @override
   Widget createGameOverContainer(BuildContext context) {

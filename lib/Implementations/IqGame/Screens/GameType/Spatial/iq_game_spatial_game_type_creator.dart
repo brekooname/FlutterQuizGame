@@ -88,7 +88,6 @@ class IqGameSpatialGameTypeCreator extends IqGameGameTypeCreator {
     );
 
     return Container(
-        color: Colors.white,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,

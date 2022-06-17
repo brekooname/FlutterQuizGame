@@ -9,7 +9,6 @@ import 'package:flutter_app_quiz_game/Lib/Button/button_skin_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/map_extension.dart';
 import 'package:flutter_app_quiz_game/Lib/Font/font_config.dart';
-import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
 import '../iq_game_game_type_creator.dart';
 import 'iq_game_memtest_question_service.dart';
@@ -177,7 +176,6 @@ class IqGameMemTestGameTypeCreator extends IqGameGameTypeCreator {
     }
 
     return Container(
-        color: Colors.white,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -188,7 +186,8 @@ class IqGameMemTestGameTypeCreator extends IqGameGameTypeCreator {
             margin,
             SizedBox(
               height: screenDimensionsService.h(50),
-              child: mainContent,
+              width: screenDimensionsService.w(100),
+              child: Container(child: mainContent),
             )
           ],
         ));

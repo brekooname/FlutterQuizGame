@@ -42,6 +42,23 @@ abstract class IqGameGameTypeCreator with LabelMixin {
     this.goToGameOverScreen = goToGameOverScreen;
   }
 
+  Widget createGameContainerWithDecoration(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        image: DecorationImage(
+            fit: BoxFit.contain,
+            colorFilter: ColorFilter.mode(
+                Colors.white.withOpacity(0.1), BlendMode.dstATop),
+            image: imageService.getSpecificAssetImage(
+              imageName: "backgr_cat" +
+                  gameContext.questionConfig.categories.first.index.toString(),
+              imageExtension: "png",
+            )),
+      ),
+      child: createGameContainer(context),
+    );
+  }
+
   Widget createGameContainer(BuildContext context);
 
   Widget createGameOverContainer(BuildContext context) {

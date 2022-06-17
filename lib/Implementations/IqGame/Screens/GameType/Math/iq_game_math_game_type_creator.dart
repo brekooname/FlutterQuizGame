@@ -15,7 +15,7 @@ import 'iq_game_math_question_service.dart';
 
 class IqGameMathGameTypeCreator extends IqGameGameTypeCreator {
   static const int totalQuestions = 10;
-  static const int startSeconds = 5;
+  static const int startSeconds = 3;
   static const List<String> operators = ["+", "-", "*", "/"];
   Map<int, int> randomPosForBtns = {};
   List<int> answersToPress = [];
@@ -127,52 +127,52 @@ class IqGameMathGameTypeCreator extends IqGameGameTypeCreator {
               text: getNr1Nr2Interpret().toString(), fontConfig: nrFontConfig),
         ]);
 
-    return Container(
-        color: Colors.white,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            createCurrentQuestionNr(questionNr, totalQuestions),
-            Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  MyText(
-                    text: remainingSeconds.toString(),
-                    fontConfig: FontConfig(
-                        fontWeight: FontWeight.w700,
-                        borderColor: Colors.black,
-                        fontSize: FontConfig.getCustomFontSize(1.7),
-                        fontColor: Colors.white),
-                  ),
-                  margin,
-                  imageService.getSpecificImage(
-                      imageName: "alarm",
-                      imageExtension: "png",
-                      maxWidth: screenDimensionsService.dimen(10))
-                ]),
-            margin,
-            createInfoMyText("Solve the mathematical operation", 1.0),
-            margin,
-            SizedBox(
-              height: screenDimensionsService.h(50),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    child: expressionTextRow,
-                  ),
-                  margin,
-                  margin,
-                  createOperationBtns(nr1!, nr2!, currentQuestionInfo,
-                      gameContext, refreshScreen, goToNextScreen),
-                ],
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        createCurrentQuestionNr(questionNr, totalQuestions),
+        margin,
+        createInfoMyText("Solve the mathematical operation", 1.0),
+        margin,
+        margin,
+        Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              MyText(
+                text: remainingSeconds.toString(),
+                fontConfig: FontConfig(
+                    fontWeight: FontWeight.w700,
+                    borderColor: Colors.black,
+                    fontSize: FontConfig.getCustomFontSize(1.7),
+                    fontColor: Colors.white),
               ),
-            )
-          ],
-        ));
+              margin,
+              imageService.getSpecificImage(
+                  imageName: "alarm",
+                  imageExtension: "png",
+                  maxWidth: screenDimensionsService.dimen(10))
+            ]),
+        margin,
+        SizedBox(
+          height: screenDimensionsService.h(50),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                child: expressionTextRow,
+              ),
+              margin,
+              margin,
+              createOperationBtns(nr1!, nr2!, currentQuestionInfo, gameContext,
+                  refreshScreen, goToNextScreen),
+            ],
+          ),
+        )
+      ],
+    );
   }
 
   Widget createOperationBtns(

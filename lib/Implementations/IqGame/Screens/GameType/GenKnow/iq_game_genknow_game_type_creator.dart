@@ -53,6 +53,11 @@ class IqGameGenKnowGameTypeCreator extends IqGameGameTypeCreator
   }
 
   @override
+  Widget createGameContainerWithDecoration(BuildContext context) {
+    return createGameContainer(context);
+  }
+
+  @override
   int getScore() {
     return gameContext.gameUser.countAllQuestions([QuestionInfoStatus.won]);
   }
