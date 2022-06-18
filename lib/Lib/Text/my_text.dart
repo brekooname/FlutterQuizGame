@@ -4,7 +4,7 @@ import 'package:flutter_app_quiz_game/Lib/Font/font_config.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class MyText extends StatelessWidget {
-  final MyTextCreatorService _myTextCreatorService = MyTextCreatorService();
+  final MyTextService _myTextCreatorService = MyTextService();
 
   late FontConfig fontConfig;
   late int maxLines;
@@ -108,7 +108,7 @@ class OutlinedTextStroke {
 }
 
 class OutlinedText extends StatelessWidget {
-  final MyTextCreatorService _myTextCreatorService = MyTextCreatorService();
+  final MyTextService _myTextCreatorService = MyTextService();
   final Text? text;
   final int maxLines;
 
@@ -144,14 +144,14 @@ class OutlinedText extends StatelessWidget {
   }
 }
 
-class MyTextCreatorService {
-  static final MyTextCreatorService singleton = MyTextCreatorService.internal();
+class MyTextService {
+  static final MyTextService singleton = MyTextService.internal();
 
-  factory MyTextCreatorService() {
+  factory MyTextService() {
     return singleton;
   }
 
-  MyTextCreatorService.internal();
+  MyTextService.internal();
 
   Text _createText(
       String text, TextStyle textStyle, TextAlign? textAlign, int maxLines) {
@@ -163,5 +163,24 @@ class MyTextCreatorService {
       textAlign: textAlign,
       style: GoogleFonts.roboto(textStyle: textStyle),
     );
+  }
+
+  List<MyText> createMyTextWithOneParam(String labelText, Object param,
+      FontConfig staticTextFontConfig, FontConfig paramFontConfig) {
+    List<String> labelSplit = labelText.split("{0}");
+    return [
+      MyText(
+        text: labelSplit[0],
+        fontConfig: staticTextFontConfig,
+      ),
+      MyText(
+        text: param.toString(),
+        fontConfig: paramFontConfig,
+      ),
+      MyText(
+        text: labelSplit[1],
+        fontConfig: staticTextFontConfig,
+      ),
+    ];
   }
 }

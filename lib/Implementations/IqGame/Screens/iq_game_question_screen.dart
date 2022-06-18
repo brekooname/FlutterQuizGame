@@ -2,15 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
 import 'package:flutter_app_quiz_game/Implementations/IqGame/Constants/iq_game_campaign_level_service.dart';
+import 'package:flutter_app_quiz_game/Implementations/IqGame/Constants/iq_game_question_config.dart';
 import 'package:flutter_app_quiz_game/Implementations/IqGame/Questions/iq_game_context.dart';
 import 'package:flutter_app_quiz_game/Implementations/IqGame/Screens/GameType/iq_game_game_type_creator.dart';
 import 'package:flutter_app_quiz_game/Implementations/IqGame/Service/iq_game_screen_manager.dart';
 import 'package:flutter_app_quiz_game/Lib/Localization/label_mixin.dart';
+import 'package:flutter_app_quiz_game/Lib/Popup/settings_popup.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/quiz_question_container.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
 
 import '../../../Game/Question/Model/question_info.dart';
+import '../../../Lib/Popup/buy_pro_popup.dart';
+import '../../../Lib/Popup/my_popup.dart';
 import '../Components/iq_game_level_header.dart';
 import '../Service/iq_game_local_storage.dart';
 
@@ -86,12 +90,20 @@ class IqGameQuestionScreenState extends State<IqGameQuestionScreen>
           .gameScreenManagerState
           .createGameOverScreen(widget.gameContext));
     });
+
+    if (isIqTestCategory()) {
+      var qIndex = widget.currentQuestionInfo.question.index;
+      if (qIndex == 9) {
+        MyPopup.showPopup(context, BuyProPopup());
+      }
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     var backgroundColor = widget.iqGameGameTypeCreator
         .getBackgroundColor(widget.currentQuestionInfo.question);
+
     return Container(
         color: backgroundColor,
         child: Column(
@@ -133,8 +145,27 @@ class IqGameQuestionScreenState extends State<IqGameQuestionScreen>
 
   void nextQuestion() {
     widget.gameContext.skipQuestion(widget.currentQuestionInfo);
-    widget.gameScreenManagerState
-        .showNextGameScreen(widget.campaignLevel, widget.gameContext);
+    goToNextGameScreen();
+  }
+
+  void goToNextGameScreen() {
+    var playedQ = widget.gameLocalStorage.getTotalPlayedQuestions();
+    var showOnNrOfQ = widget.nrOfQuestionsToShowInterstitialAd();
+    var qIndex = widget.currentQuestionInfo.question.index;
+    var iqTestCategory = isIqTestCategory();
+    var showInterstitialAd =
+        (iqTestCategory && (qIndex == 20 || qIndex == 30)) ||
+            (!iqTestCategory && playedQ > 0 && playedQ % showOnNrOfQ == 0);
+    adService.showInterstitialAd(context, showInterstitialAd,
+        executeAfterClose: () {
+      widget.gameScreenManagerState
+          .showNextGameScreen(widget.campaignLevel, widget.gameContext);
+    });
+  }
+
+  bool isIqTestCategory() {
+    var iqGameQuestionConfig = IqGameQuestionConfig();
+    return widget.category == iqGameQuestionConfig.cat0;
   }
 
   void setStateCallback() {
