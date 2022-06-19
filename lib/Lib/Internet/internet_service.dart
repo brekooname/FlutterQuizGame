@@ -6,7 +6,6 @@ import 'package:flutter_app_quiz_game/Lib/Extensions/string_extension.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class InternetService {
-
   static final InternetService singleton = InternetService.internal();
 
   factory InternetService() {
@@ -50,7 +49,7 @@ class InternetService {
           } else {
             url = "itms-apps://itunes.apple.com/xy/app/foo/id" +
                 storeAppId +
-                "?action=write-review";
+                (rateApp ? "?action=write-review" : "");
           }
           await launch(url);
         } on Exception {

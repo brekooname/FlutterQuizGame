@@ -54,7 +54,7 @@ class BuyProPopupState extends State<BuyProPopup> with MyPopup, LabelMixin {
             onClick: () {
               closePopup(context);
               widget.internetService
-                  .openAppUrl(MyApp.appRatingPackage, true, context);
+                  .openAppUrl(MyApp.appProStoreId, false, context);
             },
           ),
         ],

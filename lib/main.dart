@@ -78,6 +78,7 @@ class MyApp extends StatefulWidget {
   static late String appTitle;
   static late String languageCode;
   static late String appRatingPackage;
+  static late String appProStoreId;
   static late String adBannerId;
   static late String adInterstitialId;
   static late String adRewardedId;
@@ -138,6 +139,8 @@ class MyAppState extends State<MyApp> {
       languageCode: await MyApp.platform.invokeMethod('getLanguageCode'),
       appRatingPackage:
           await MyApp.platform.invokeMethod('getAppRatingPackage'),
+      appProStoreId:
+          await MyApp.platform.invokeMethod('getAppProStoreId'),
       adBannerId: await MyApp.platform.invokeMethod('getAdBannerId'),
       adInterstitialId:
           await MyApp.platform.invokeMethod('getAdInterstitialId'),
@@ -153,6 +156,7 @@ class MyAppState extends State<MyApp> {
       appKey: appId.appKey,
       languageCode: MyApp.webLanguage.name,
       appRatingPackage: "",
+      appProStoreId: "",
       adBannerId: "",
       adInterstitialId: "",
       adRewardedId: "",
@@ -344,6 +348,7 @@ class AppConfig {
   String appKey;
   String languageCode;
   String appRatingPackage;
+  String appProStoreId;
   String adBannerId;
   String adInterstitialId;
   String adRewardedId;
@@ -354,6 +359,7 @@ class AppConfig {
       required this.appKey,
       required this.languageCode,
       required this.appRatingPackage,
+      required this.appProStoreId,
       required this.adBannerId,
       required this.adInterstitialId,
       required this.adRewardedId,

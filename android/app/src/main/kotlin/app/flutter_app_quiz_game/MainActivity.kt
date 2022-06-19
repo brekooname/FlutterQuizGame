@@ -41,6 +41,8 @@ class MainActivity : FlutterActivity() {
                 result.success(getLanguageCode())
             } else if (call.method == "getAppRatingPackage") {
                 result.success(getAppRatingPackage())
+            } else if (call.method == "getAppProStoreId") {
+                result.success(getAppProStoreId())
             }
         }
     }
@@ -55,6 +57,10 @@ class MainActivity : FlutterActivity() {
 
     private fun getAppRatingPackage(): String {
         return context.packageName
+    }
+
+    private fun getAppProStoreId(): String {
+        return resources.getString(R.string.app_pro_store_id)
     }
 
     private fun getLanguageCode(): String {

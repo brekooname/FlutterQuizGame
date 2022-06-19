@@ -31,6 +31,8 @@ import Flutter
                 result(self.language())
             } else if (call.method == "getAppRatingPackage") {
                 result(self.appRatingPackage())
+            } else if (call.method == "getAppProStoreId") {
+                result(self.appProStoreId())
             }
 
         })
@@ -42,6 +44,10 @@ import Flutter
 
     func appRatingPackage() -> String {
         return langString(key: "appRatingPackage")
+    }
+
+    func appProStoreId() -> String {
+        return langString(key: "appProStoreId")
     }
     
     func language() -> String {
