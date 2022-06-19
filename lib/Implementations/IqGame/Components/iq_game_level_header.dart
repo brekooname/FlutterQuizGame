@@ -13,7 +13,6 @@ import '../../../Lib/Font/font_config.dart';
 
 class IqGameLevelHeader extends StatelessWidget {
   final ScreenDimensionsService _screenDimensions = ScreenDimensionsService();
-  final ImageService _imageService = ImageService();
   int? score;
   VoidCallback? nextQuestion;
   VoidCallback? skipQuestion;
@@ -35,26 +34,26 @@ class IqGameLevelHeader extends StatelessWidget {
   }
 
   Widget createLevelHeader(BuildContext context) {
+    int totalNrOfElementsInHeader = 7;
+    double elementWidth = _screenDimensions.w(100) / totalNrOfElementsInHeader;
+    Size btnSize = Size(elementWidth, elementWidth);
     var myBackButton = MyBackButton();
-    var margin = SizedBox(
-      width: _screenDimensions.w(2),
-    );
     var emptyBtnSize = SizedBox(
-      width: _getBtnContainerWidth(myBackButton.buttonSize),
+      width: elementWidth,
     );
     List<Widget> headerElements = [];
-    headerElements.add(SizedBox(
-        width: _getBtnContainerWidth(myBackButton.buttonSize),
-        child: myBackButton));
+    headerElements.add(SizedBox(width: elementWidth, child: myBackButton));
     headerElements.add(emptyBtnSize);
     headerElements.add(emptyBtnSize);
-    headerElements.add(createScoreText(myBackButton.buttonSize.width / 1.2));
-    headerElements.addAll(_createControlBtns(myBackButton.buttonSize));
+    headerElements.add(createScoreText(elementWidth));
+    headerElements.addAll(_createControlBtns(btnSize));
     return SizedBox(
-        height: _screenDimensions.dimen(16),
+        height: elementWidth,
         child: Padding(
             padding: EdgeInsets.all(_screenDimensions.dimen(1)),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: headerElements,
             )));
   }
@@ -80,7 +79,7 @@ class IqGameLevelHeader extends StatelessWidget {
   Widget createScoreText(double textWidth) {
     if (score == null) {
       return SizedBox(
-        width: _getBtnContainerWidth(Size(textWidth / 1.2, 0)),
+        width: textWidth,
       );
     }
     var fontColor = Colors.lightGreenAccent.shade700;
@@ -113,7 +112,7 @@ class IqGameLevelHeader extends StatelessWidget {
       bool animateZoomInZoomOut, VoidCallback? onBtnClick) {
     if (onBtnClick == null) {
       return SizedBox(
-        width: _getBtnContainerWidth(size),
+        width: size.width,
       );
     }
     ImageService imageService = ImageService();
@@ -127,15 +126,14 @@ class IqGameLevelHeader extends StatelessWidget {
               imageName: btnIconName,
               imageExtension: "png",
               module: "buttons",
-              maxWidth: size.width)),
+              maxWidth: size.width / 1.2)),
         ));
     return SizedBox(
-        width: _getBtnContainerWidth(size),
+        width: size.width,
+        height: size.height,
         child: animateZoomInZoomOut
             ? AnimateZoomInZoomOut(
-                toAnimateWidgetSize: size, toAnimateWidget: btn)
+                zoomAmount: 3, toAnimateWidgetSize: size, toAnimateWidget: btn)
             : btn);
   }
-
-  static double _getBtnContainerWidth(Size size) => size.width * 1.2;
 }

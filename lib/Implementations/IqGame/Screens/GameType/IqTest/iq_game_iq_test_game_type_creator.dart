@@ -9,7 +9,6 @@ import 'package:flutter_app_quiz_game/Lib/Popup/my_popup.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
 import '../../../../../Lib/Font/font_config.dart';
-import '../../../Service/iq_game_local_storage.dart';
 import '../iq_game_game_type_creator.dart';
 
 class IqGameIqTestGameTypeCreator extends IqGameGameTypeCreator {

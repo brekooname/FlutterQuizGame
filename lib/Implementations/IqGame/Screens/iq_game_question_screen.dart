@@ -15,6 +15,7 @@ import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
 import '../../../Game/Question/Model/question_info.dart';
 import '../../../Lib/Popup/buy_pro_popup.dart';
 import '../../../Lib/Popup/my_popup.dart';
+import '../../../main.dart';
 import '../Components/iq_game_level_header.dart';
 import '../Service/iq_game_local_storage.dart';
 
@@ -91,10 +92,16 @@ class IqGameQuestionScreenState extends State<IqGameQuestionScreen>
           .createGameOverScreen(widget.gameContext));
     });
 
-    if (isIqTestCategory()) {
-      var qIndex = widget.currentQuestionInfo.question.index;
-      if (qIndex == 9) {
-        MyPopup.showPopup(context, BuyProPopup());
+    var qIndex = widget.currentQuestionInfo.question.index;
+    if (MyApp.isExtraContentLocked) {
+      if (isIqTestCategory()) {
+        if (qIndex == 9) {
+          MyPopup.showPopup(context, BuyProPopup());
+        }
+      } else if (isNumberSeqCategory()) {
+        if (qIndex == 6) {
+          MyPopup.showPopup(context, BuyProPopup());
+        }
       }
     }
   }
@@ -153,9 +160,14 @@ class IqGameQuestionScreenState extends State<IqGameQuestionScreen>
     var showOnNrOfQ = widget.nrOfQuestionsToShowInterstitialAd();
     var qIndex = widget.currentQuestionInfo.question.index;
     var iqTestCategory = isIqTestCategory();
+    var iqNumberSeqCategory = isNumberSeqCategory();
     var showInterstitialAd =
         (iqTestCategory && (qIndex == 20 || qIndex == 30)) ||
-            (!iqTestCategory && playedQ > 0 && playedQ % showOnNrOfQ == 0);
+            (iqNumberSeqCategory && (qIndex == 12 || qIndex == 17)) ||
+            (!iqTestCategory &&
+                !iqNumberSeqCategory &&
+                playedQ > 0 &&
+                playedQ % showOnNrOfQ == 0);
     adService.showInterstitialAd(context, showInterstitialAd,
         executeAfterClose: () {
       widget.gameScreenManagerState
@@ -164,8 +176,11 @@ class IqGameQuestionScreenState extends State<IqGameQuestionScreen>
   }
 
   bool isIqTestCategory() {
-    var iqGameQuestionConfig = IqGameQuestionConfig();
-    return widget.category == iqGameQuestionConfig.cat0;
+    return widget.category == IqGameQuestionConfig().cat0;
+  }
+
+  bool isNumberSeqCategory() {
+    return widget.category == IqGameQuestionConfig().cat2;
   }
 
   void setStateCallback() {

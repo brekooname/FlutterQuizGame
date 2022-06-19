@@ -60,7 +60,7 @@ class MyApp extends StatefulWidget {
 
   //
   static Language webLanguage = Language.en;
-  static bool webIsPro = true;
+  static bool webIsPro = false;
 
   // static bool webIsPro = false;
 

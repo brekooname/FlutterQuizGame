@@ -13,8 +13,8 @@ import 'in_app_purchase_popup.dart';
 import 'my_popup.dart';
 
 class BuyProPopup extends StatefulWidget {
-  InternetService internetService = InternetService();
-  MyTextService _myTextService = MyTextService();
+  final InternetService _internetService = InternetService();
+  final MyTextService _myTextService = MyTextService();
 
   BuyProPopup({Key? key}) : super(key: key);
 
@@ -53,7 +53,7 @@ class BuyProPopupState extends State<BuyProPopup> with MyPopup, LabelMixin {
             backgroundColor: Colors.lightGreenAccent,
             onClick: () {
               closePopup(context);
-              widget.internetService
+              widget._internetService
                   .openAppUrl(MyApp.appProStoreId, false, context);
             },
           ),
