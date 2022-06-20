@@ -4,7 +4,6 @@ import 'package:flutter_app_quiz_game/Game/GameType/game_question_config.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
 import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/DependentAnswers/dependent_answers_question_category_service.dart';
-import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/UniqueAnswers/unique_answers_question_service.dart';
 import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/UniqueAnswers/unqiue_answers_question_category_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/IqGame/Screens/GameType/IqTest/iq_game_iq_test_question_category_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/IqGame/Screens/GameType/Math/iq_game_math_question_category_service.dart';
@@ -30,30 +29,31 @@ class IqGameQuestionConfig extends GameQuestionConfig with LabelMixin {
     ];
     //
     //
+    var staticLabel = LabelMixin.staticLabel;
     singleton.categories = [
       singleton.cat0 = QuestionCategory(
           index: 0,
-          categoryLabel: "IQ",
+          categoryLabel: staticLabel.l_iq,
           questionCategoryService: IqGameIqTestCategoryQuestionService()),
       singleton.cat1 = QuestionCategory(
           index: 1,
-          categoryLabel: "Spatial Reasoning",
+          categoryLabel: staticLabel.l_spatial_reasoning,
           questionCategoryService: DependentAnswersCategoryQuestionService()),
       singleton.cat2 = QuestionCategory(
           index: 2,
-          categoryLabel: "Number Sequences",
+          categoryLabel: staticLabel.l_number_sequences,
           questionCategoryService: IqGameNumberSeqCategoryQuestionService()),
       singleton.cat3 = QuestionCategory(
           index: 3,
-          categoryLabel: "Short Term Memory",
+          categoryLabel: staticLabel.l_short_term_memory,
           questionCategoryService: IqGameMemTestCategoryQuestionService()),
       singleton.cat4 = QuestionCategory(
           index: 4,
-          categoryLabel: "Math",
+          categoryLabel: staticLabel.l_math,
           questionCategoryService: IqGameMathCategoryQuestionService()),
       singleton.cat5 = QuestionCategory(
           index: 5,
-          categoryLabel: "General Knowledge",
+          categoryLabel: staticLabel.l_general_knowledge,
           questionCategoryService: UniqueAnswersCategoryQuestionService()),
     ];
     return singleton;

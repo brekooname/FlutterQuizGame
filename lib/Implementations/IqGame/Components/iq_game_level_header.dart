@@ -34,7 +34,7 @@ class IqGameLevelHeader extends StatelessWidget {
   }
 
   Widget createLevelHeader(BuildContext context) {
-    int totalNrOfElementsInHeader = 7;
+    int totalNrOfElementsInHeader = 8;
     double elementWidth = _screenDimensions.w(100) / totalNrOfElementsInHeader;
     Size btnSize = Size(elementWidth, elementWidth);
     var myBackButton = MyBackButton();
@@ -48,7 +48,7 @@ class IqGameLevelHeader extends StatelessWidget {
     headerElements.add(createScoreText(elementWidth));
     headerElements.addAll(_createControlBtns(btnSize));
     return SizedBox(
-        height: elementWidth,
+        height: myBackButton.buttonSize.height * 1.5,
         child: Padding(
             padding: EdgeInsets.all(_screenDimensions.dimen(1)),
             child: Row(

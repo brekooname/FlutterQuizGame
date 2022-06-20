@@ -175,22 +175,21 @@ class IqGameMemTestGameTypeCreator extends IqGameGameTypeCreator {
       );
     }
 
-    return Container(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            createCurrentQuestionNr(questionNr, totalQuestions),
-            margin,
-            createInfoMyText("Select the numbers in ascending order", 1.0),
-            margin,
-            SizedBox(
-              height: screenDimensionsService.h(50),
-              width: screenDimensionsService.w(100),
-              child: Container(child: mainContent),
-            )
-          ],
-        ));
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        createCurrentQuestionNr(questionNr, totalQuestions),
+        margin,
+        createInfoMyText(label.l_select_the_numbers_in_ascending_order, 1.0),
+        margin,
+        SizedBox(
+          height: screenDimensionsService.h(50),
+          width: screenDimensionsService.w(100),
+          child: Container(child: mainContent),
+        )
+      ],
+    );
   }
 
   bool isAnswerCorrect(int answer) {

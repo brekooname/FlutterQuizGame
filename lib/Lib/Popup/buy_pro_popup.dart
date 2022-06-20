@@ -38,7 +38,7 @@ class BuyProPopupState extends State<BuyProPopup> with MyPopup, LabelMixin {
           margin,
           Column(
             children: widget._myTextService.createMyTextWithOneParam(
-              label.l_download_param0_pro_for_more_levels,
+              label.l_download_param0_for_more_levels,
               MyApp.appTitle + " Pro",
               FontConfig(),
               FontConfig(

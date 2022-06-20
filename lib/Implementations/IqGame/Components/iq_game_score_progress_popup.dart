@@ -47,7 +47,7 @@ class IqGameScoreProgressPopupState extends State<IqGameScoreProgressPopup>
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             MyText(
-                text: "Score history",
+                text: label.l_score_history,
                 fontConfig: FontConfig(
                     fontColor: Colors.black,
                     fontWeight: FontWeight.w700,
@@ -57,11 +57,11 @@ class IqGameScoreProgressPopupState extends State<IqGameScoreProgressPopup>
                 : Padding(
                     padding: EdgeInsets.only(bottom: screenDimensions.dimen(5)),
                     child: MyText(
-                      text: "Maximum score: " + maxScore.toString(),
+                      text: label.l_maximum_score + ": " + maxScore.toString(),
                       fontColor: Colors.green.shade600,
                     )),
             scoreInfo.isEmpty
-                ? MyText(text: "No score to display.")
+                ? MyText(text: label.l_not_available)
                 : Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -72,7 +72,7 @@ class IqGameScoreProgressPopupState extends State<IqGameScoreProgressPopup>
                             child: RotatedBox(
                               quarterTurns: -1,
                               child: MyText(
-                                text: "Score",
+                                text: label.l_score,
                                 fontConfig: legendFontConfig,
                               ),
                             )),
@@ -87,7 +87,7 @@ class IqGameScoreProgressPopupState extends State<IqGameScoreProgressPopup>
                                       scoreInfo, maxScore)),
                               MyText(
                                   fontConfig: legendFontConfig,
-                                  text: "Number of games played")
+                                  text: label.l_number_of_games_played)
                             ]),
                       ]),
           ]),

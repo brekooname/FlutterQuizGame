@@ -7,7 +7,6 @@ import 'package:flutter_app_quiz_game/Lib/Animation/animation_rotate.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/button_skin_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/string_extension.dart';
-import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
 import '../iq_game_game_type_creator.dart';
 
@@ -87,19 +86,18 @@ class IqGameSpatialGameTypeCreator extends IqGameGameTypeCreator {
       height: screenDimensionsService.h(2),
     );
 
-    return Container(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            createCurrentQuestionNr(
-                _getQuestionNr(question.rawString), totalQuestions),
-            margin,
-            createInfoMyText("Find the odd one out", 1.0),
-            margin,
-            answerColumn,
-          ],
-        ));
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        createCurrentQuestionNr(
+            _getQuestionNr(question.rawString), totalQuestions),
+        margin,
+        createInfoMyText(label.l_which_picture_is_different_from_the_others, 1.0),
+        margin,
+        answerColumn,
+      ],
+    );
   }
 
   int _getQuestionNr(String rawString) {

@@ -86,13 +86,13 @@ class IqGameIqTestGameTypeCreator extends IqGameGameTypeCreator {
             margin,
             qContainer,
             margin,
-            createInfoMyText("Choose an answer", 1.0),
+            createInfoMyText(label.l_choose_an_answer, 1.0),
             margin,
             answerColumn,
           ],
         ));
   }
-  
+
   @override
   Widget createGameContainerWithDecoration(BuildContext context) {
     return createGameContainer(context);
@@ -144,13 +144,12 @@ class IqGameIqTestGameTypeCreator extends IqGameGameTypeCreator {
       MyText(
           maxLines: 100,
           width: screenDimensionsService.dimen(95),
-          text:
-              "The distribution of IQ in the population. The left side of the red line indicates the part of the population with an IQ lower than your own."),
+          text: label.l_the_distribution_of_iq_in_the_population_the_left_side_of_the_red_line_indicates_the_part_of_the_p),
       SizedBox(
         height: screenDimensionsService.dimen(10),
       ),
       MyButton(
-        text: "Show correct answers",
+        text: label.l_show_correct_answers,
         onClick: () {
           MyPopup.showPopup(
               context,
@@ -186,15 +185,15 @@ class IqGameIqTestGameTypeCreator extends IqGameGameTypeCreator {
 
   String _getLevelForScore(int score) {
     if (score < 70) {
-      return "Very low";
+      return label.l_very_low;
     } else if (score < 90) {
-      return "Low";
+      return label.l_low;
     } else if (score < 110) {
-      return "Average";
+      return label.l_normal;
     } else if (score < 130) {
-      return "High";
+      return label.l_high;
     } else {
-      return "Very high";
+      return label.l_very_high;
     }
   }
 }

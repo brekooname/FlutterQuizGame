@@ -140,7 +140,7 @@ class MyAppState extends State<MyApp> {
       appRatingPackage:
           await MyApp.platform.invokeMethod('getAppRatingPackage'),
       appProStoreId:
-          await MyApp.platform.invokeMethod('getAppProStoreId'),
+          await MyApp.platform.invokeMethod('getAppProVersionStoreId'),
       adBannerId: await MyApp.platform.invokeMethod('getAdBannerId'),
       adInterstitialId:
           await MyApp.platform.invokeMethod('getAdInterstitialId'),

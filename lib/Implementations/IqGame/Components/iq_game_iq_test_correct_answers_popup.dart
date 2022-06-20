@@ -7,6 +7,7 @@ import 'package:flutter_app_quiz_game/Lib/Popup/my_popup.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
 import '../../../Lib/Font/font_config.dart';
+import '../../../Lib/Localization/label_mixin.dart';
 import '../Questions/iq_game_context.dart';
 
 class IqGameIqTestCorrectAnswersPopup extends StatefulWidget with MyPopup {
@@ -25,7 +26,7 @@ class IqGameIqTestCorrectAnswersPopup extends StatefulWidget with MyPopup {
 }
 
 class IqGameIqTestCorrectAnswersPopupState
-    extends State<IqGameIqTestCorrectAnswersPopup> with MyPopup {
+    extends State<IqGameIqTestCorrectAnswersPopup> with MyPopup, LabelMixin {
   @override
   void initState() {
     initPopup();
@@ -87,7 +88,8 @@ class IqGameIqTestCorrectAnswersPopupState
     var correctColor = Colors.green.shade200;
     if (correctAnswer == userAnswer) {
       answerImgs.add(Column(children: [
-        MyText(text: "Your answer is correct", fontConfig: infoFontConfig),
+        MyText(
+            text: label.l_your_answer_is_correct, fontConfig: infoFontConfig),
         Container(
           color: correctColor,
           child: correctAnswerImg,
@@ -101,7 +103,7 @@ class IqGameIqTestCorrectAnswersPopupState
         module: widget.iqTestQuestionImgModuleName,
       );
       answerImgs.add(Column(children: [
-        MyText(text: "Correct answer", fontConfig: infoFontConfig),
+        MyText(text: label.l_correct_answer, fontConfig: infoFontConfig),
         Container(
           color: correctColor,
           child: correctAnswerImg,
@@ -109,7 +111,7 @@ class IqGameIqTestCorrectAnswersPopupState
       ]));
       answerImgs.add(const Spacer());
       answerImgs.add(Column(children: [
-        MyText(text: "Your answer", fontConfig: infoFontConfig),
+        MyText(text: label.l_your_answer, fontConfig: infoFontConfig),
         Container(
           color: Colors.red.shade200,
           child: userAnswerImg,

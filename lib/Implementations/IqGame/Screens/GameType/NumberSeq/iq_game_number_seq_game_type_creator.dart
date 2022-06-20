@@ -4,7 +4,6 @@ import 'package:flutter_app_quiz_game/Game/Question/Model/question_info_status.d
 import 'package:flutter_app_quiz_game/Implementations/IqGame/Components/iq_game_number_seq_answer_popup.dart';
 import 'package:flutter_app_quiz_game/Implementations/IqGame/Questions/iq_game_context.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
-import 'package:flutter_app_quiz_game/Lib/Extensions/string_extension.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
 import '../../../../../Game/Question/Model/question.dart';
@@ -93,7 +92,7 @@ class IqGameNumberSeqGameTypeCreator extends IqGameGameTypeCreator {
         createCurrentQuestionNr(
             question.index, gameContext.questionConfig.amountOfQuestions),
         heightMargin,
-        createInfoMyText("Find the unknown number in the sequence", 1.0),
+        createInfoMyText(label.l_find_the_missing_number_in_the_sequence, 1.0),
         heightMargin,
         imageService.getSpecificImage(
             imageName: "q" + question.index.toString(),

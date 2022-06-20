@@ -16,19 +16,30 @@ class IqGameScoreProgressBarChart extends StatelessWidget with LabelMixin {
   IqGameScoreProgressBarChart(this.scoreInfo, this.maxScore, {Key? key})
       : super(key: key);
 
-  Iterable<num> getNumericExtends(int min, int max) {
-    return [min, max == 0 ? 1 : max];
+  List<charts.TickSpec<int>> getTickSpec(int min, int max) {
+    List<charts.TickSpec<int>> res = [];
+    if (max - min < 6) {
+      for (int i = min; i <= max; i++) {
+        res.add(charts.TickSpec(i));
+      }
+    } else {
+      res.add(charts.TickSpec(min));
+      res.add(charts.TickSpec((max / 4).ceil()));
+      res.add(charts.TickSpec((max / 2).ceil()));
+      res.add(charts.TickSpec((max / 1.33).ceil()));
+      res.add(charts.TickSpec(max));
+    }
+    return res;
   }
 
   @override
   Widget build(BuildContext context) {
     var yAxisStyle = buildNumericAxisSpec(
         charts.MaterialPalette.blue.shadeDefault.darker,
-        charts.NumericExtents.fromValues(getNumericExtends(0, maxScore)));
+        getTickSpec(0, maxScore));
     var xAxisStyle = buildNumericAxisSpec(
         charts.MaterialPalette.green.shadeDefault.darker,
-        charts.NumericExtents.fromValues(
-            getNumericExtends(0, scoreInfo.length)));
+        getTickSpec(1, scoreInfo.length));
 
     var data = scoreInfo
         .map((e) => LinearSales(e.score, scoreInfo.indexOf(e) + 1, 0.0))
@@ -57,12 +68,10 @@ class IqGameScoreProgressBarChart extends StatelessWidget with LabelMixin {
   }
 
   charts.NumericAxisSpec buildNumericAxisSpec(
-      charts.Color? fontColor, NumericExtents viewPort) {
+      charts.Color? fontColor, List<charts.TickSpec<int>> staticTicks) {
     return charts.NumericAxisSpec(
-        tickProviderSpec: const charts.BasicNumericTickProviderSpec(
-            dataIsInWholeNumbers: true, desiredMinTickCount: 5),
+        tickProviderSpec: charts.StaticNumericTickProviderSpec(staticTicks),
         showAxisLine: true,
-        viewport: viewPort,
         renderSpec: charts.GridlineRendererSpec(
             labelStyle:
                 charts.TextStyleSpec(fontSize: fontSize, color: fontColor),

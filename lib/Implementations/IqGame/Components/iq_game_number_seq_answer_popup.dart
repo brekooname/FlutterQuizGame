@@ -62,25 +62,25 @@ class IqGameIqNumberSeqAnswerPopupState
       answerInfoFontConfig.fontColor = correctAnswerColor;
       answerInfo.add(MyText(
           fontConfig: answerInfoFontConfig,
-          text: "Correct answer: " + widget.userAnswer));
+          text: label.l_correct_answer + ": " + widget.userAnswer));
     } else {
       answerInfoFontConfig.fontColor = wrongAnswerColor;
       if (!widget.isShowExplanationPopup) {
-        answerInfo.add(
-            MyText(fontConfig: answerInfoFontConfig, text: "Wrong answer"));
+        answerInfo.add(MyText(
+            fontConfig: answerInfoFontConfig, text: label.l_wrong_answer));
       }
       answerInfo.add(MyText(
           fontConfig: FontConfig(
             fontColor: answerInfoFontConfig.fontColor,
             fontSize: FontConfig.getCustomFontSize(1.1),
           ),
-          text: "Your answer: " + widget.userAnswer));
+          text: label.l_your_answer + ": " + widget.userAnswer));
       answerInfo.add(MyText(
           fontConfig: FontConfig(
             fontColor: correctAnswerColor,
             fontSize: FontConfig.getCustomFontSize(1.1),
           ),
-          text: "Correct answer: " + widget.correctAnswer));
+          text: label.l_correct_answer + ": " + widget.correctAnswer));
     }
     var vertMargin = SizedBox(
       height: screenDimensions.h(2.5),
@@ -98,7 +98,7 @@ class IqGameIqNumberSeqAnswerPopupState
       }
     } else {
       answerInfo.add(MyButton(
-        text: "Show explanation",
+        text: label.l_show_explanation,
         onClick: () {
           closePopup(context);
           MyPopup.showPopup(
@@ -115,7 +115,7 @@ class IqGameIqNumberSeqAnswerPopupState
     }
     answerInfo.add(vertMargin);
     answerInfo.add(MyButton(
-      text: "Next question",
+      text: label.l_next_question,
       onClick: () {
         closePopup(context);
         widget.nextQuestion.call();

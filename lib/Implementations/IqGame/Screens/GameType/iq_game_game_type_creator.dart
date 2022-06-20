@@ -73,14 +73,14 @@ abstract class IqGameGameTypeCreator with LabelMixin {
       infoContainers.add(margin);
       infoContainers.add(margin);
       infoContainers.add(MyText(
-          text: "Game finished successfully",
+          text: label.l_game_finished,
           fontConfig: FontConfig(
               fontWeight: FontWeight.w700,
               fontSize: FontConfig.getCustomFontSize(1.5),
               fontColor: Colors.black)));
       infoContainers.add(margin);
     } else {
-      infoContainers.add(createMainGameOverInfoText("Game finished!",
+      infoContainers.add(createMainGameOverInfoText(label.l_game_finished,
           Colors.lightGreenAccent.shade400, Colors.green.shade800));
       infoContainers.add(margin);
     }
