@@ -36,8 +36,9 @@ class IqGameGenKnowGameTypeCreator extends IqGameGameTypeCreator
   @override
   Widget createGameContainer(BuildContext context) {
     Widget questionContainer =
-        createQuestionTextContainer(currentQuestionInfo.question, 1, 5);
-    Widget optionsRows = createOptionRows(refreshScreen, goToNextScreen);
+        createQuestionTextContainer(currentQuestionInfo.question, 1, 3);
+    Widget optionsRows = createOptionRows(refreshScreen, goToNextScreen,
+        questionImageHeightPercent: 33);
     int totalQuestions = gameContext.gameUser.getAllQuestions([]).length;
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,

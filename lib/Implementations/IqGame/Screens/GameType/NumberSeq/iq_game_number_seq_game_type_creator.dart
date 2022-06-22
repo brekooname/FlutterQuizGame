@@ -92,7 +92,8 @@ class IqGameNumberSeqGameTypeCreator extends IqGameGameTypeCreator {
         createCurrentQuestionNr(
             question.index, gameContext.questionConfig.amountOfQuestions),
         heightMargin,
-        createInfoMyText(label.l_find_the_missing_number_in_the_sequence, 1.0),
+        createInfoMyText(
+            label.l_find_the_missing_number_in_this_numerical_sequence, 1.0),
         heightMargin,
         imageService.getSpecificImage(
             imageName: "q" + question.index.toString(),

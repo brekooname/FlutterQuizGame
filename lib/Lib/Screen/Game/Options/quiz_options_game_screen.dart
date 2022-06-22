@@ -44,7 +44,8 @@ mixin QuizOptionsGameScreen<TQuizQuestionManager extends QuizQuestionManager> {
 
   Widget createOptionRows(
       VoidCallback refreshSetState, VoidCallback goToNextScreenAfterPress,
-      {Widget? widgetBetweenImageAndOptionRows}) {
+      {Widget? widgetBetweenImageAndOptionRows,
+      double? questionImageHeightPercent}) {
     List<Row> answerRows = [];
     int answersOnRow = 2;
     List<Widget> answerBtns = [];
@@ -75,20 +76,22 @@ mixin QuizOptionsGameScreen<TQuizQuestionManager extends QuizQuestionManager> {
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        _createImageContainer(_currentQuestionInfo.question),
+        _createImageContainer(
+            _currentQuestionInfo.question, questionImageHeightPercent),
         widgetBetweenImageAndOptionRows ?? Container(),
         btnContainer
       ],
     );
   }
 
-  Widget _createImageContainer(Question question) {
+  Widget _createImageContainer(
+      Question question, double? questionImageHeightPercent) {
     if (_questionImage == null) {
       return Container();
     }
     return SizedBox(
         width: _screenDimensions.dimen(98),
-        height: _screenDimensions.dimen(70),
+        height: _screenDimensions.h(questionImageHeightPercent ?? 36),
         child: _zoomableImage ?? false
             ? createZoomableContainer()
             : _questionImage!);
