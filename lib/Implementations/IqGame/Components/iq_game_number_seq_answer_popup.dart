@@ -7,6 +7,7 @@ import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
 import '../../../Lib/Button/my_button.dart';
 import '../../../Lib/Font/font_config.dart';
+import '../../../main.dart';
 
 class IqGameIqNumberSeqAnswerPopup extends StatefulWidget with MyPopup {
   QuestionInfo questionInfo;
@@ -99,6 +100,8 @@ class IqGameIqNumberSeqAnswerPopupState
     } else {
       answerInfo.add(MyButton(
         text: label.l_show_explanation,
+        contentLockedConfig:
+            ContentLockedConfig(isContentLocked: MyApp.isExtraContentLocked),
         onClick: () {
           closePopup(context);
           MyPopup.showPopup(

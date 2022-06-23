@@ -14,7 +14,7 @@ import '../iq_game_game_type_creator.dart';
 import 'iq_game_math_question_service.dart';
 
 class IqGameMathGameTypeCreator extends IqGameGameTypeCreator {
-  static const int totalQuestions = 3;
+  static const int totalQuestions = 10;
   static const int startSeconds = 3;
   static const List<String> operators = ["+", "-", "*", "/"];
   Map<int, int> randomPosForBtns = {};

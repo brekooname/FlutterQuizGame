@@ -87,7 +87,7 @@ class IqGameMainMenuScreenState extends State<IqGameMainMenuScreen>
         body: mainColumn,
         backgroundColor: Colors.transparent,
         floatingActionButton: Align(
-          alignment: const Alignment(-1.2, -1),
+          alignment: Alignment(FontConfig.isRtlLanguage ? -0.9 : -1.2, -1),
           child: FloatingButton(
             context: context,
             iconName: "btn_settings",
@@ -133,7 +133,7 @@ class IqGameMainMenuScreenState extends State<IqGameMainMenuScreen>
     var levelLabel = MyText(
         text: catLabelText,
         width: btnSize.width - iconDimen * 1.5,
-        maxLines: 2,
+        maxLines: catLabelText.contains(" ") ? 2 : 1,
         textShadow: Shadow(
           blurRadius: FontConfig.standardShadowRadius * 2,
           color: Colors.black.withOpacity(0.3),
@@ -195,6 +195,7 @@ class IqGameMainMenuScreenState extends State<IqGameMainMenuScreen>
                 ]))),
       ],
     );
+    var iqQConfig = IqGameQuestionConfig();
     return Row(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -205,6 +206,13 @@ class IqGameMainMenuScreenState extends State<IqGameMainMenuScreen>
                   ._iqGameCampaignLevelService
                   .campaignLevel(widget._iqGameQuestionConfig.diff0, cat));
             },
+            contentLockedConfig: ContentLockedConfig(
+                isContentLocked:
+                    cat == iqQConfig.cat5 && MyApp.isExtraContentLocked,
+                lockedIcon: imageService.getMainImage(
+                    imageName: "btn_locked",
+                    imageExtension: "png",
+                    module: "buttons")),
             size: btnSize,
             buttonAllPadding: screenDimensions.dimen(1.5),
             buttonSkinConfig: ButtonSkinConfig(

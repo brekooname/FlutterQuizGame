@@ -9,6 +9,7 @@ import 'package:flutter_app_quiz_game/Lib/Popup/my_popup.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
 import '../../../../../Lib/Font/font_config.dart';
+import '../../../../../main.dart';
 import '../iq_game_game_type_creator.dart';
 
 class IqGameIqTestGameTypeCreator extends IqGameGameTypeCreator {
@@ -144,12 +145,18 @@ class IqGameIqTestGameTypeCreator extends IqGameGameTypeCreator {
       MyText(
           maxLines: 100,
           width: screenDimensionsService.dimen(95),
-          text: label.l_the_distribution_of_iq_in_the_population_the_left_side_of_the_red_line_indicates_the_part_of_the_p),
+          text: label
+              .l_the_distribution_of_iq_in_the_population_the_left_side_of_the_red_line_indicates_the_part_of_the_p),
       SizedBox(
         height: screenDimensionsService.dimen(10),
       ),
       MyButton(
+        contentLockedConfig:
+            ContentLockedConfig(isContentLocked: MyApp.isExtraContentLocked),
         text: label.l_show_correct_answers,
+        textMaxLines: 2,
+        size: Size(screenDimensionsService.dimen(60),
+            screenDimensionsService.dimen(18)),
         onClick: () {
           MyPopup.showPopup(
               context,

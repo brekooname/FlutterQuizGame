@@ -8,11 +8,13 @@ import 'package:flutter_app_quiz_game/Lib/ScreenDimensions/screen_dimensions_ser
 
 import '../../../../Game/Question/Model/question.dart';
 import '../../../../Game/Question/Model/question_info.dart';
+import '../../../../Lib/Audio/my_audio_player.dart';
 import '../../../../Lib/Font/font_config.dart';
 import '../../../../Lib/Text/my_text.dart';
 import '../../Questions/iq_game_context.dart';
 
 abstract class IqGameGameTypeCreator with LabelMixin {
+  final MyAudioPlayer audioPlayer = MyAudioPlayer();
   IqGameLocalStorage iqGameLocalStorage = IqGameLocalStorage();
   ImageService imageService = ImageService();
   ScreenDimensionsService screenDimensionsService = ScreenDimensionsService();
@@ -159,6 +161,14 @@ abstract class IqGameGameTypeCreator with LabelMixin {
             .putAnsweredQuestions({}, getGameTypeCategory(gameContext));
       }
       refreshScreen.call();
+      if (showScore()) {
+        if (isCorrectAnswer) {
+          audioPlayer.playSuccess();
+        } else {
+          audioPlayer.playFail();
+        }
+      }
+
       if (!isCorrectAnswer && isGameOverOnFirstWrongAnswer()) {
         Future.delayed(const Duration(seconds: 1), () {
           goToGameOverScreen.call();

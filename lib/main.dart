@@ -59,8 +59,8 @@ class MyApp extends StatefulWidget {
   static CampaignLevel campaignLevel = IqGameCampaignLevelService().level_5;
 
   //
-  static Language webLanguage = Language.zh;
-  static bool webIsPro = false;
+  static Language webLanguage = Language.en;
+  static bool webIsPro = true;
 
   // static bool webIsPro = false;
 
