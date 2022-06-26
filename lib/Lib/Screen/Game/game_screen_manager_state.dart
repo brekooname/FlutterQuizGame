@@ -5,6 +5,8 @@ import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/standard_screen.dart';
 
+import '../../../main.dart';
+import '../../ScreenDimensions/screen_dimensions_service.dart';
 import 'game_screen.dart';
 
 mixin GameScreenManagerState<TGameContext extends GameContext> {
@@ -48,16 +50,51 @@ mixin GameScreenManagerState<TGameContext extends GameContext> {
 
   @protected
   Widget createScreen(StandardScreen? currentScreen) {
-    return currentScreen != null
-        ? SafeArea(
+    if (currentScreen == null) {
+      return Container();
+    }
+    var expanded = Expanded(
+        child: SafeArea(
             child: AnimatedSwitcher(
-            duration: const Duration(milliseconds: 200),
-            transitionBuilder: (Widget child, Animation<double> animation) {
-              return FadeTransition(child: child, opacity: animation);
-            },
-            child: currentScreen,
-          ))
-        : Container();
+      duration: const Duration(milliseconds: 200),
+      transitionBuilder: (Widget child, Animation<double> animation) {
+        return FadeTransition(child: child, opacity: animation);
+      },
+      child: currentScreen,
+    )));
+    var boxDecoration = BoxDecoration(
+        image: DecorationImage(
+      repeat: MyApp.appId.gameConfig.backgroundTextureRepeat,
+      image: MyApp.backgroundTexture.image,
+    ));
+    return Container(
+      color: currentScreen.screenBackgroundColor ??
+          MyApp.appId.gameConfig.defaultScreenBackgroundColor,
+      child: Container(
+        decoration: boxDecoration,
+        alignment: Alignment.center,
+        child: AspectRatio(
+          aspectRatio: ScreenDimensionsService.isPortrait() ? 9 / 16 : 16 / 9,
+          child: Container(
+            ////
+            //
+            ////
+            //
+            ////
+            // color: Colors.blue,
+            ////
+            //
+            ////
+            //
+            ////
+            alignment: Alignment.center,
+            child: Column(
+              children: <Widget>[MyApp.bannerAdContainer, expanded],
+            ),
+          ),
+        ),
+      ),
+    );
   }
 
   StandardScreen getScreenAfterGameOver(TGameContext gameContext) {

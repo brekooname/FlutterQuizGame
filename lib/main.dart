@@ -3,12 +3,8 @@ import 'dart:io';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_app_quiz_game/Implementations/Anatomy/Constants/anatomy_campaign_level_service.dart';
-import 'package:flutter_app_quiz_game/Implementations/Anatomy/Constants/anatomy_game_question_config.dart';
 import 'package:flutter_app_quiz_game/Implementations/IqGame/Constants/iq_game_campaign_level_service.dart';
-import 'package:flutter_app_quiz_game/Implementations/IqGame/Service/iq_game_screen_manager.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/enum_extension.dart';
-import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -17,8 +13,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'Game/Constants/app_id.dart';
 import 'Game/Game/campaign_level.dart';
-import 'Implementations/Anatomy/Service/anatomy_screen_manager.dart';
-import 'Implementations/IqGame/Questions/iq_game_context.dart';
 import 'Lib/Ads/ad_service.dart';
 import 'Lib/Constants/language.dart';
 import 'Lib/Image/image_service.dart';
@@ -82,12 +76,12 @@ class MyApp extends StatefulWidget {
   static late String adBannerId;
   static late String adInterstitialId;
   static late String adRewardedId;
+  static late Image backgroundTexture;
+  static late Container bannerAdContainer;
   static late GameScreenManager gameScreenManager;
   static bool isExtraContentLocked = true;
 
-  BannerAd? bannerAd;
   bool initAsyncCompleted = false;
-  late Image backgroundTexture;
 
   MyApp({Key? key}) : super(key: key);
 
@@ -118,13 +112,16 @@ class MyAppState extends State<MyApp> {
 
     await initAppConfig(appConfig);
 
-    widget.backgroundTexture = ImageService().getSpecificImage(
-        imageName: "background_texture", imageExtension: "png");
+    BannerAd? bannerAd;
     if (MyApp.kIsMobile && MyApp.isExtraContentLocked) {
       MobileAds.instance.initialize();
       widget.adService.initInterstitialAd();
-      widget.bannerAd = widget.adService.initBannerAd();
+      bannerAd = widget.adService.initBannerAd();
     }
+
+    MyApp.backgroundTexture = ImageService().getSpecificImage(
+        imageName: "background_texture", imageExtension: "png");
+    MyApp.bannerAdContainer = createBannerAdContainer(bannerAd);
 
     setState(() {});
 
@@ -139,8 +136,7 @@ class MyAppState extends State<MyApp> {
       languageCode: await MyApp.platform.invokeMethod('getLanguageCode'),
       appRatingPackage:
           await MyApp.platform.invokeMethod('getAppRatingPackage'),
-      appProStoreId:
-          await MyApp.platform.invokeMethod('getAppProStoreId'),
+      appProStoreId: await MyApp.platform.invokeMethod('getAppProStoreId'),
       adBannerId: await MyApp.platform.invokeMethod('getAdBannerId'),
       adInterstitialId:
           await MyApp.platform.invokeMethod('getAdInterstitialId'),
@@ -209,7 +205,7 @@ class MyAppState extends State<MyApp> {
       //
       ////
       // GeoQuizLocalStorage().setExperience(14000);
-      widgetToShow = createScreen(MyApp.gameScreenManager, widget.bannerAd);
+      widgetToShow = createScreen(MyApp.gameScreenManager);
       // Future.delayed(const Duration(milliseconds: 100), () {
       //   MyApp.gameScreenManager.currentScreen!.gameScreenManagerState
       //       .showNewGameScreen(MyApp.campaignLevel);
@@ -274,51 +270,13 @@ class MyAppState extends State<MyApp> {
           ];
   }
 
-  Widget createScreen(GameScreenManager gameScreenManager, BannerAd? bannerAd) {
-    Container bannerAdContainer = createBannerAdContainer(bannerAd);
+  Widget createScreen(GameScreenManager gameScreenManager) {
     return WillPopScope(
         onWillPop: () async {
           var currentScreen = gameScreenManager.currentScreen;
           return currentScreen!.gameScreenManagerState.goBack(currentScreen);
         },
-        child: Container(
-          color: MyApp.appId.gameConfig.screenBackgroundColor,
-          child: Container(
-            decoration: BoxDecoration(
-                image: DecorationImage(
-              repeat: MyApp.appId.gameConfig.backgroundTextureRepeat,
-              image: widget.backgroundTexture.image,
-            )),
-            alignment: Alignment.center,
-            child: AspectRatio(
-              aspectRatio:
-                  ScreenDimensionsService.isPortrait() ? 9 / 16 : 16 / 9,
-              child: Container(
-                ////
-                //
-                ////
-                //
-                ////
-                // color: Colors.blue,
-                ////
-                //
-                ////
-                //
-                ////
-                alignment: Alignment.center,
-                child: Column(
-                  children: <Widget>[
-                    bannerAdContainer,
-                    Expanded(
-                        child: widget.initAsyncCompleted
-                            ? gameScreenManager
-                            : Container())
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ));
+        child: widget.initAsyncCompleted ? gameScreenManager : Container());
   }
 
   Container createBannerAdContainer(BannerAd? bannerAd) {

@@ -26,7 +26,7 @@ abstract class GameConfig {
   //TODO Check extra content "iOS" and "Android" may be different
   String get extraContentProductId;
 
-  Color get screenBackgroundColor;
+  Color get defaultScreenBackgroundColor;
 
   GameScreenManager get gameScreenManager;
 

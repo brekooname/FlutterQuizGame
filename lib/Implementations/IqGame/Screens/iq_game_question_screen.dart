@@ -75,6 +75,10 @@ class IqGameQuestionScreen
     }
     return currentQuestionInfo!;
   }
+
+  @override
+  Color? get screenBackgroundColor =>
+      iqGameGameTypeCreator.getBackgroundColor(currentQuestionInfo.question);
 }
 
 class IqGameQuestionScreenState extends State<IqGameQuestionScreen>
@@ -107,41 +111,35 @@ class IqGameQuestionScreenState extends State<IqGameQuestionScreen>
 
   @override
   Widget build(BuildContext context) {
-    var backgroundColor = widget.iqGameGameTypeCreator
-        .getBackgroundColor(widget.currentQuestionInfo.question);
-
-    return Container(
-        color: backgroundColor,
-        child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              IqGameLevelHeader(
-                questionInfoStatus: widget.currentQuestionInfo.status,
-                nextQuestion:
-                    widget.iqGameGameTypeCreator.hasGoToNextQuestionBtn()
-                        ? () {
-                            nextQuestion();
-                          }
-                        : null,
-                skipQuestion: widget.iqGameGameTypeCreator.hasSkipButton()
-                    ? () {
-                        nextQuestion();
-                      }
-                    : null,
-                restartLevel: () {
-                  restartCategory();
-                },
-                score: widget.iqGameGameTypeCreator.showScore()
-                    ? widget.iqGameGameTypeCreator.getScore()
-                    : null,
-              ),
-              const Spacer(),
-              widget.iqGameGameTypeCreator.createGameContainerWithDecoration(
-                context,
-              ),
-              const Spacer(),
-            ]));
+    return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          IqGameLevelHeader(
+            questionInfoStatus: widget.currentQuestionInfo.status,
+            nextQuestion: widget.iqGameGameTypeCreator.hasGoToNextQuestionBtn()
+                ? () {
+                    nextQuestion();
+                  }
+                : null,
+            skipQuestion: widget.iqGameGameTypeCreator.hasSkipButton()
+                ? () {
+                    nextQuestion();
+                  }
+                : null,
+            restartLevel: () {
+              restartCategory();
+            },
+            score: widget.iqGameGameTypeCreator.showScore()
+                ? widget.iqGameGameTypeCreator.getScore()
+                : null,
+          ),
+          const Spacer(),
+          widget.iqGameGameTypeCreator.createGameContainerWithDecoration(
+            context,
+          ),
+          const Spacer(),
+        ]);
   }
 
   void restartCategory() {

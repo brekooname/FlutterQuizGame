@@ -41,7 +41,7 @@ class AnatomyGameConfig extends GameConfig {
   ImageRepeat get backgroundTextureRepeat => ImageRepeat.noRepeat;
 
   @override
-  Color get screenBackgroundColor => const Color.fromRGBO(198, 236, 255, 1);
+  Color get defaultScreenBackgroundColor => const Color.fromRGBO(198, 236, 255, 1);
 
   @override
   String get extraContentProductId {

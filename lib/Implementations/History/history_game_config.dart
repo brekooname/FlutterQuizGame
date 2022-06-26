@@ -36,7 +36,7 @@ class HistoryGameConfig extends GameConfig {
       HistoryGameScreenManager(key: UniqueKey());
 
   @override
-  Color get screenBackgroundColor => Colors.amber.shade100;
+  Color get defaultScreenBackgroundColor => Colors.amber.shade100;
 
   @override
   String get extraContentProductId => "extracontent.history";

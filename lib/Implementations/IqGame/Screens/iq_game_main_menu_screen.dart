@@ -87,7 +87,7 @@ class IqGameMainMenuScreenState extends State<IqGameMainMenuScreen>
         body: mainColumn,
         backgroundColor: Colors.transparent,
         floatingActionButton: Align(
-          alignment: Alignment(FontConfig.isRtlLanguage ? -0.9 : -1.2, -1),
+          alignment: Alignment(FontConfig.isRtlLanguage ? -0.9 : -1.1, -1),
           child: FloatingButton(
             context: context,
             iconName: "btn_settings",
