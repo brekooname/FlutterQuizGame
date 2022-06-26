@@ -3,6 +3,7 @@ language="en";
 appKey="iqgame";
 isPro="false";
 appRatingPackage="1486431245";
+appProStoreId="xxx";
 GADApplicationIdentifier="ca-app-pub-9432399956064043~2183898720";
 admobBannerId="ca-app-pub-9432399956064043/3938149317";
 admobInterId="ca-app-pub-9432399956064043/1892733617";

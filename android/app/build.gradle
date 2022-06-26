@@ -100,7 +100,7 @@ android {
     flavorDimensions "game"
     productFlavors {
 /////////////////////////////////////////////////////////////////////////////
-        anatomy {
+        iqgame {
             applicationIdSuffix ".iqtest"
             versionCode 6
             versionName "2.0"
@@ -108,7 +108,7 @@ android {
             manifestPlaceholders = [appIcon: "@drawable/iqgame_icon"]
         }
 /////////////////////////////////////////////////////////////////////////////
-        anatomyPro {
+        iqgamePro {
             applicationIdSuffix ".iqtestPro"
             versionCode 3
             versionName "2.0"

@@ -3,13 +3,13 @@
 
     <string name="app_name">Intelligence Test</string>
     <string name="language">en</string>
-    <string name="game_id">skelgame</string>
-    <string name="app_pro_store_id">xxx</string>
+    <string name="game_id">iqgame</string>
+    <string name="app_pro_store_id">com.habapps.iqtestPro</string>
 
-    <string name="admob_banner_id">xxx</string>
-    <string name="admob_inter_id">xxx</string>
-    <string name="admob_video_id">xxx</string>
-    <string name="admob_app_id">xxx</string>
+    <string name="admob_banner_id">ca-app-pub-9432399956064043/2050450320</string>
+    <string name="admob_inter_id">ca-app-pub-9432399956064043/7111205319</string>
+    <string name="admob_video_id">ca-app-pub-9432399956064043/5798123646</string>
+    <string name="admob_app_id">ca-app-pub-9432399956064043~8615858677</string>
 
-    <bool name="is_pro">false</bool>
+    <bool name="is_pro">true</bool>
 </resources>

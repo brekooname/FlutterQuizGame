@@ -67,13 +67,15 @@ class IqGameMathGameTypeCreator extends IqGameGameTypeCreator {
     nr1 = random.nextInt(10);
     nr2 = random.nextInt(10);
 
-    var interpret = getNr1Nr2Interpret();
-    while (interpret is! int || (nr2 == 0 && operator == "/")) {
+    num interpret = getNr1Nr2Interpret();
+    while (!isInteger(interpret) || (nr2 == 0 && operator == "/")) {
       nr1 = random.nextInt(10);
       nr2 = random.nextInt(10);
       interpret = getNr1Nr2Interpret();
     }
   }
+
+  bool isInteger(num value) => (value % 1) == 0;
 
   num getNr1Nr2Interpret() {
     return (nr1.toString() + " " + operator! + " " + nr2.toString())
@@ -124,7 +126,7 @@ class IqGameMathGameTypeCreator extends IqGameGameTypeCreator {
               refreshScreen, goToNextScreen, nr1!, nr2!),
           opMargin,
           MyText(
-              text: getNr1Nr2Interpret().toString(), fontConfig: nrFontConfig),
+              text: getNr1Nr2Interpret().toInt().toString(), fontConfig: nrFontConfig),
         ]);
 
     return Column(

@@ -60,7 +60,7 @@ class MyApp extends StatefulWidget {
 
   //
   static Language webLanguage = Language.en;
-  static bool webIsPro = true;
+  static bool webIsPro = false;
 
   // static bool webIsPro = false;
 
@@ -140,7 +140,7 @@ class MyAppState extends State<MyApp> {
       appRatingPackage:
           await MyApp.platform.invokeMethod('getAppRatingPackage'),
       appProStoreId:
-          await MyApp.platform.invokeMethod('getAppProVersionStoreId'),
+          await MyApp.platform.invokeMethod('getAppProStoreId'),
       adBannerId: await MyApp.platform.invokeMethod('getAdBannerId'),
       adInterstitialId:
           await MyApp.platform.invokeMethod('getAdInterstitialId'),
@@ -173,6 +173,7 @@ class MyAppState extends State<MyApp> {
     MyApp.languageCode = appConfig.languageCode;
     MyApp.localStorage = localStorage;
     MyApp.appRatingPackage = appConfig.appRatingPackage;
+    MyApp.appProStoreId = appConfig.appProStoreId;
     MyApp.adBannerId = appConfig.adBannerId;
     MyApp.adInterstitialId = appConfig.adInterstitialId;
     MyApp.adRewardedId = appConfig.adRewardedId;

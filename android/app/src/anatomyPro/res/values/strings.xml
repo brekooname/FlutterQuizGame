@@ -4,6 +4,7 @@
     <string name="app_name">Anatomy Game</string>
     <string name="language">en</string>
     <string name="game_id">anatomy</string>
+    <string name="app_pro_store_id">com.habapps.anatomypro</string>
 
     <string name="admob_banner_id">ca-app-pub-9432399956064043/9190475999</string>
     <string name="admob_inter_id">ca-app-pub-9432399956064043/7877394327</string>

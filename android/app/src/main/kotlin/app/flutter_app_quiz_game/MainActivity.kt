@@ -12,7 +12,7 @@ import io.flutter.plugin.common.MethodChannel
 
 class MainActivity : FlutterActivity() {
 
-    private val CHANNEL = "main.flutter"
+    private val channel = "main.flutter"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setWindowAttrs()
@@ -23,7 +23,7 @@ class MainActivity : FlutterActivity() {
         super.configureFlutterEngine(flutterEngine)
         MethodChannel(
             flutterEngine.dartExecutor.binaryMessenger,
-            CHANNEL
+            channel
         ).setMethodCallHandler { call, result ->
             if (call.method == "getAppTitle") {
                 result.success(getAppTitle())

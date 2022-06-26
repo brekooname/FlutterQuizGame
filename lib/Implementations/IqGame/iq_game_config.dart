@@ -41,7 +41,7 @@ class IqGameConfig extends GameConfig {
   Color get screenBackgroundColor => const Color.fromRGBO(198, 236, 255, 1);
 
   @override
-  String get extraContentProductId => "extracontent.iqgame";
+  String get extraContentProductId => "extracontent.iqtest";
 
   @override
   String getTitle(Language language) {
