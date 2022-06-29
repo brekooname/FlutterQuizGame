@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Game/GameType/game_config.dart';
 import 'package:flutter_app_quiz_game/Game/GameType/game_question_config.dart';
@@ -41,7 +44,16 @@ class IqGameConfig extends GameConfig {
   Color get defaultScreenBackgroundColor => const Color.fromRGBO(198, 236, 255, 1);
 
   @override
-  String get extraContentProductId => "extracontent.iqtest";
+  String get extraContentProductId {
+    if (kIsWeb) {
+      return "extraContent";
+    } else if (Platform.isAndroid) {
+      return "extracontent.iqtest";
+    } else if (Platform.isIOS) {
+      return "extraContentIqtest";
+    }
+    throw UnsupportedError("Unsupported platform");
+  }
 
   @override
   String getTitle(Language language) {

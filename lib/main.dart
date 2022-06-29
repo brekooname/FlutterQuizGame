@@ -42,7 +42,7 @@ class MyApp extends StatefulWidget {
   static bool kIsAutomatedTest = false;
 
   //TODO ---VALUE CHANGED--- should be false
-  static bool kIsManualTest = true;
+  static bool kIsManualTest = false;
 
   // static String webAppKey = "history";
   // static String webAppKey = "geoquiz";
@@ -54,7 +54,7 @@ class MyApp extends StatefulWidget {
 
   //
   static Language webLanguage = Language.en;
-  static bool webIsPro = false;
+  static bool webIsPro = true;
 
   // static bool webIsPro = false;
 
@@ -183,6 +183,7 @@ class MyAppState extends State<MyApp> {
     MyApp.isExtraContentLocked = false;
     MyApp.gameScreenManager.currentScreen!.gameScreenManagerState
         .showMainScreen();
+    MyApp.bannerAdContainer = Container();
     setState(() {});
   }
 

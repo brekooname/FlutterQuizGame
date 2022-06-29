@@ -149,7 +149,7 @@ abstract class IqGameGameTypeCreator with LabelMixin {
     return true;
   }
 
-  void answerQuestion(String answer, bool storeAnswersInStorage) {
+  bool? answerQuestion(String answer, bool storeAnswersInStorage) {
     if (currentQuestionInfo.isQuestionOpen()) {
       bool isCorrectAnswer =
           gameContext.answerQuestion(currentQuestionInfo, answer);
@@ -174,7 +174,9 @@ abstract class IqGameGameTypeCreator with LabelMixin {
           goToGameOverScreen.call();
         });
       }
+      return isCorrectAnswer;
     }
+    return null;
   }
 
   void _storeCurrentAnswers(IqGameContext gameContext) {
@@ -208,6 +210,8 @@ abstract class IqGameGameTypeCreator with LabelMixin {
 
   MyText createInfoMyText(String text, double fontSize) {
     return MyText(
+        maxLines: 2,
+        width: screenDimensionsService.w(99),
         textShadow: Shadow(
           blurRadius: FontConfig.standardShadowRadius * 2,
           color: Colors.black.withOpacity(0.3),

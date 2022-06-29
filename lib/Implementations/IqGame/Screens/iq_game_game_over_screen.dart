@@ -23,6 +23,9 @@ class IqGameGameOverScreen extends StandardScreen<IqGameScreenManagerState> {
 
   @override
   State<IqGameGameOverScreen> createState() => IqGameGameOverScreenState();
+
+  @override
+  Color? get screenBackgroundColor => Colors.white;
 }
 
 class IqGameGameOverScreenState extends State<IqGameGameOverScreen>

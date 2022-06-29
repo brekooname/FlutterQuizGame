@@ -6,6 +6,7 @@ import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Image/image_service.dart';
 import 'package:flutter_app_quiz_game/Lib/ScreenDimensions/screen_dimensions_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
+import 'dart:math' as math;
 
 import '../../../Game/Question/Model/question_info_status.dart';
 import '../../../Lib/Animation/animation_zoom_in_zoom_out_text.dart';
@@ -34,7 +35,7 @@ class IqGameLevelHeader extends StatelessWidget {
   }
 
   Widget createLevelHeader(BuildContext context) {
-    int totalNrOfElementsInHeader = 8;
+    int totalNrOfElementsInHeader = 10;
     double elementWidth = _screenDimensions.w(100) / totalNrOfElementsInHeader;
     Size btnSize = Size(elementWidth, elementWidth);
     var myBackButton = MyBackButton();
@@ -45,8 +46,9 @@ class IqGameLevelHeader extends StatelessWidget {
     headerElements.add(SizedBox(width: elementWidth, child: myBackButton));
     headerElements.add(emptyBtnSize);
     headerElements.add(emptyBtnSize);
+    headerElements.add(emptyBtnSize);
     headerElements.add(createScoreText(elementWidth));
-    headerElements.addAll(_createControlBtns(btnSize));
+    headerElements.addAll(_createControlBtns(emptyBtnSize, btnSize));
     return SizedBox(
         height: myBackButton.buttonSize.height * 1.5,
         child: Padding(
@@ -58,7 +60,7 @@ class IqGameLevelHeader extends StatelessWidget {
             )));
   }
 
-  List<Widget> _createControlBtns(Size btnSize) {
+  List<Widget> _createControlBtns(SizedBox emptyBtnSize, Size btnSize) {
     List<Widget> controlBtns = [];
     if (nextQuestion == null) {
       controlBtns
@@ -71,6 +73,7 @@ class IqGameLevelHeader extends StatelessWidget {
       controlBtns
           .add(_createControlBtn(btnSize, "btn_next", true, nextQuestion));
     }
+    controlBtns.add(emptyBtnSize);
     controlBtns
         .add(_createControlBtn(btnSize, "btn_restart", false, restartLevel));
     return controlBtns;
@@ -116,7 +119,7 @@ class IqGameLevelHeader extends StatelessWidget {
       );
     }
     ImageService imageService = ImageService();
-    var btn = MyButton(
+    Widget btn = MyButton(
         size: size,
         onClick: () {
           onBtnClick.call();
@@ -128,6 +131,12 @@ class IqGameLevelHeader extends StatelessWidget {
               module: "buttons",
               maxWidth: size.width / 1.2)),
         ));
+    if (FontConfig.isRtlLanguage) {
+      btn = Transform.rotate(
+        angle: -math.pi,
+        child: btn,
+      );
+    }
     return SizedBox(
         width: size.width,
         height: size.height,

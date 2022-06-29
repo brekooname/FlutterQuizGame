@@ -68,6 +68,7 @@ class IqGameMainMenuScreenState extends State<IqGameMainMenuScreen>
     var mainColumn = Container(
         decoration: BoxDecoration(
             image: DecorationImage(
+          opacity: 180,
           repeat: ImageRepeat.noRepeat,
           image: widget.backgroundImage.image,
         )),

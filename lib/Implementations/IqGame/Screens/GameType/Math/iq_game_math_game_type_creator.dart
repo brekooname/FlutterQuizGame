@@ -53,6 +53,9 @@ class IqGameMathGameTypeCreator extends IqGameGameTypeCreator {
               IqGameMathQuestionService.notAllAnswersPressedCorrectly
                   .toString(),
               false);
+          Future.delayed(const Duration(seconds: 1), () {
+            goToNextScreen.call();
+          });
         }
         remainingSeconds--;
         refreshScreen.call();
@@ -126,7 +129,8 @@ class IqGameMathGameTypeCreator extends IqGameGameTypeCreator {
               refreshScreen, goToNextScreen, nr1!, nr2!),
           opMargin,
           MyText(
-              text: getNr1Nr2Interpret().toInt().toString(), fontConfig: nrFontConfig),
+              text: getNr1Nr2Interpret().toInt().toString(),
+              fontConfig: nrFontConfig),
         ]);
 
     return Column(
@@ -218,11 +222,9 @@ class IqGameMathGameTypeCreator extends IqGameGameTypeCreator {
         }
         answerQuestion(answer.toString(), false);
         timer!.cancel();
-        if (correctAnswerPressed) {
-          Future.delayed(const Duration(seconds: 1), () {
-            goToNextScreen.call();
-          });
-        }
+        Future.delayed(const Duration(seconds: 1), () {
+          goToNextScreen.call();
+        });
       },
       textFirstCharUppercase: false,
       disabled: isDisabledOperation || !currentQuestionInfo.isQuestionOpen(),
@@ -268,7 +270,7 @@ class IqGameMathGameTypeCreator extends IqGameGameTypeCreator {
 
   @override
   bool isGameOverOnFirstWrongAnswer() {
-    return true;
+    return false;
   }
 
   @override
