@@ -53,7 +53,7 @@ mixin GameScreenManagerState<TGameContext extends GameContext> {
     if (currentScreen == null) {
       return Container();
     }
-    var expanded = Expanded(
+    var currentScreenExpanded = Expanded(
         child: SafeArea(
             child: AnimatedSwitcher(
       duration: const Duration(milliseconds: 200),
@@ -67,33 +67,34 @@ mixin GameScreenManagerState<TGameContext extends GameContext> {
       repeat: MyApp.appId.gameConfig.backgroundTextureRepeat,
       image: MyApp.backgroundTexture.image,
     ));
-    return Container(
-      color: currentScreen.screenBackgroundColor ??
-          MyApp.appId.gameConfig.defaultScreenBackgroundColor,
-      child: Container(
-        decoration: boxDecoration,
-        alignment: Alignment.center,
-        child: AspectRatio(
-          aspectRatio: ScreenDimensionsService.isPortrait() ? 9 / 16 : 16 / 9,
-          child: Container(
-            ////
-            //
-            ////
-            //
-            ////
-            // color: Colors.blue,
-            ////
-            //
-            ////
-            //
-            ////
-            alignment: Alignment.center,
-            child: Column(
-              children: <Widget>[MyApp.bannerAdContainer, expanded],
-            ),
+    var screenContainerWithDecoration = Container(
+      decoration: boxDecoration,
+      alignment: Alignment.center,
+      child: AspectRatio(
+        aspectRatio: ScreenDimensionsService.isPortrait() ? 9 / 16 : 16 / 9,
+        child: Container(
+          ////
+          //
+          ////
+          //
+          ////
+          // color: Colors.blue,
+          ////
+          //
+          ////
+          //
+          ////
+          alignment: Alignment.center,
+          child: Column(
+            children: <Widget>[MyApp.bannerAdContainer, currentScreenExpanded],
           ),
         ),
       ),
+    );
+    return Container(
+      color: currentScreen.screenBackgroundColor ??
+          MyApp.appId.gameConfig.defaultScreenBackgroundColor,
+      child: screenContainerWithDecoration,
     );
   }
 

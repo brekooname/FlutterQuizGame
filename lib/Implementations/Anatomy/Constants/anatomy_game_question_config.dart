@@ -142,9 +142,6 @@ class AnatomyGameQuestionConfig extends GameQuestionConfig with LabelMixin {
             difficulty: diff3, prefixCode: 0),
         () => label.l_symptoms);
 
-    //
-    //Trivia images
-    //
     Map<QuestionCategory, String> prefixes = {
       cat0: label.l_identify_this_organ,
       cat1: label.l_identify_this_bone,

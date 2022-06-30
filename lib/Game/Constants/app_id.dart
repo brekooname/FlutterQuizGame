@@ -1,5 +1,6 @@
 import 'package:flutter_app_quiz_game/Game/GameType/game_config.dart';
 import 'package:flutter_app_quiz_game/Implementations/Anatomy/anatomy_game_config.dart';
+import 'package:flutter_app_quiz_game/Implementations/Astronomy/astronomy_game_config.dart';
 import 'package:flutter_app_quiz_game/Implementations/DopeWars/dopewars_game_config.dart';
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/geoquiz_game_config.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/history_game_config.dart';
@@ -32,6 +33,8 @@ class AppIds {
       return AnatomyGameConfig();
     } else if (appKey == "iqgame") {
       return IqGameConfig();
+    } else if (appKey == "astronomy") {
+      return AstronomyGameConfig();
     }
     throw UnsupportedError("Unsupported app key ======> " + appKey);
   }

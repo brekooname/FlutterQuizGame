@@ -42,6 +42,7 @@ dependencies:
   charts_flutter: ^0.12.0
   numberpicker: ^2.1.1
   function_tree: ^0.8.12
+  animated_background: ^2.0.0
   #pod deintegrate; pod install
 
   # The following adds the Cupertino Icons font to your application.
@@ -107,6 +108,12 @@ flutter:
     - assets/main/general/
     - assets/main/popup/
     - assets/main/audio/
+    ########################
+    ###### ASTRONOMY #############################################################################
+    ########################
+    - assets/implementations/astronomy/
+    - assets/implementations/astronomy/buttons/
+    - assets/implementations/astronomy/categories/
     ########################
     ###### IQGAME ################################################################################
     ########################

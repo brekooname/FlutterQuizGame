@@ -47,7 +47,7 @@ mixin ImageClickScreen<TQuizQuestionManager extends QuizQuestionManager> {
   ) {
     Size imageToClickSize = _getImageToClickAdjustedForScreenSize();
     var imageAlignment =
-        _isImageToClickRectangular() ? Alignment.center : Alignment.centerLeft;
+        showAnswerPointerOnOrigin() ? Alignment.center : Alignment.centerLeft;
 
     List<Widget> stackChildren = [];
 
@@ -141,7 +141,7 @@ mixin ImageClickScreen<TQuizQuestionManager extends QuizQuestionManager> {
         _pressedAnswerEqualsButton(imageClickInfo);
     var showAnswerLabelOnLeftSide = isPressedAnswerEqualsButton &&
             imageClickInfo.x > _imageContainerHeightPercent &&
-            _isImageToClickRectangular()
+            showAnswerPointerOnOrigin()
         ? _getAnswerLabelWidth(imageClickInfo) / 1.5
         : 0;
     return _calculateOriginX() +
@@ -150,14 +150,14 @@ mixin ImageClickScreen<TQuizQuestionManager extends QuizQuestionManager> {
   }
 
   double _calculateOriginX() {
-    return _isImageToClickRectangular()
+    return showAnswerPointerOnOrigin()
         ? _getAnswerBtnSideDimen() / 2 + _getAnswerBtnBorderWidth()
         : -_getPointerDimen() / 2 + _getAnswerBtnBorderWidth();
   }
 
   double _calculateOriginY() {
     Size adjustedImageSize = _getImageToClickAdjustedForScreenSize();
-    return _isImageToClickRectangular()
+    return showAnswerPointerOnOrigin()
         ? (_getImageContainerHeight() - adjustedImageSize.height) / 2 -
             _getAnswerBtnSideDimen() / 2
         : -_getPointerDimen() / 2 +
@@ -178,7 +178,7 @@ mixin ImageClickScreen<TQuizQuestionManager extends QuizQuestionManager> {
 
   Widget _createAnswerPointerPoint() {
     var pointerDimen = _getPointerDimen();
-    var answerPointer = _isImageToClickRectangular()
+    var answerPointer = showAnswerPointerOnOrigin()
         ? Container()
         : SizedBox(
             width: pointerDimen,
@@ -201,7 +201,7 @@ mixin ImageClickScreen<TQuizQuestionManager extends QuizQuestionManager> {
   }
 
   Widget _createAnswerPointerLine(ImageClickInfo imageClickInfo) {
-    return _isImageToClickRectangular()
+    return showAnswerPointerOnOrigin()
         ? Container()
         : Padding(
             padding: EdgeInsets.only(left: _screenDimensions.w(1)),
@@ -309,7 +309,7 @@ mixin ImageClickScreen<TQuizQuestionManager extends QuizQuestionManager> {
     return Size(imgWidth, imgHeight);
   }
 
-  bool _isImageToClickRectangular() =>
+  bool showAnswerPointerOnOrigin() =>
       _rawImageToClickSize.height / _rawImageToClickSize.width < 1.2;
 
   double _getImageContainerHeight() =>
@@ -359,7 +359,7 @@ mixin ImageClickScreen<TQuizQuestionManager extends QuizQuestionManager> {
           : _imageContainerHeightPercent);
 
   double _getAnswerLabelWidth(ImageClickInfo imageClickInfo) =>
-      _isImageToClickRectangular()
+      showAnswerPointerOnOrigin()
           ? _screenDimensions.dimen(40)
           : imageClickInfo.arrowWidth + _getAnswerBtnSideDimen();
 }

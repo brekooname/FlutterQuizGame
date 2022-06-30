@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_app_quiz_game/Implementations/Astronomy/Constants/astronomy_campaign_level_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/IqGame/Constants/iq_game_campaign_level_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/enum_extension.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -49,8 +50,9 @@ class MyApp extends StatefulWidget {
   // static String webAppKey = "perstest";
   // static String webAppKey = "dopewars";
   // static String webAppKey = "anatomy";
-  static String webAppKey = "iqgame";
-  static CampaignLevel campaignLevel = IqGameCampaignLevelService().level_5;
+  // static String webAppKey = "iqgame";
+  static String webAppKey = "astronomy";
+  static CampaignLevel campaignLevel = AstronomyCampaignLevelService().level_0;
 
   //
   static Language webLanguage = Language.en;
@@ -207,10 +209,10 @@ class MyAppState extends State<MyApp> {
       ////
       // GeoQuizLocalStorage().setExperience(14000);
       widgetToShow = createScreen(MyApp.gameScreenManager);
-      // Future.delayed(const Duration(milliseconds: 100), () {
-      //   MyApp.gameScreenManager.currentScreen!.gameScreenManagerState
-      //       .showNewGameScreen(MyApp.campaignLevel);
-      // });
+      Future.delayed(const Duration(milliseconds: 100), () {
+        MyApp.gameScreenManager.currentScreen!.gameScreenManagerState
+            .showNewGameScreen(MyApp.campaignLevel);
+      });
       // Future.delayed(const Duration(milliseconds: 100), () {
       //   (MyApp.gameScreenManager.currentScreen!.gameScreenManagerState
       //           as IqGameScreenManagerState)
