@@ -107,7 +107,7 @@ class MyButtonState extends State<MyButton> {
     }
 
     if (widget.contentLockedConfig.isContentLocked) {
-      buttonContent = buildContentLocked(buttonContent);
+      buttonContent = _buildContentLocked(buttonContent);
       widget.onClick = () {
         InAppPurchasesPopupService(buildContext: context).showPopup();
       };
@@ -144,7 +144,7 @@ class MyButtonState extends State<MyButton> {
                   duration: const Duration(milliseconds: 100),
                   width: widget.size.width,
                   height: widget.size.height,
-                  decoration: createButtonDecoration(widget.buttonSkinConfig),
+                  decoration: _createButtonDecoration(widget.buttonSkinConfig),
                   alignment: Alignment.center,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -153,7 +153,7 @@ class MyButtonState extends State<MyButton> {
     );
   }
 
-  Widget buildContentLocked(Widget buttonContent) {
+  Widget _buildContentLocked(Widget buttonContent) {
     if (widget.contentLockedConfig.lockedIcon == null) {
       return buttonContent;
     }
@@ -179,26 +179,26 @@ class MyButtonState extends State<MyButton> {
     return stack;
   }
 
-  BoxDecoration? createButtonDecoration(ButtonSkinConfig buttonSkinConfig) {
+  BoxDecoration? _createButtonDecoration(ButtonSkinConfig buttonSkinConfig) {
     if (widget.buttonSkinConfig.backgroundGradient != null) {
-      return createGradientButtonDecoration();
+      return _createGradientButtonDecoration();
     } else {
-      return createImageButtonDecoration(buttonSkinConfig);
+      return _createImageButtonDecoration(buttonSkinConfig);
     }
   }
 
-  BoxDecoration? createImageButtonDecoration(
+  BoxDecoration? _createImageButtonDecoration(
       ButtonSkinConfig buttonSkinConfig) {
     return BoxDecoration(
-        boxShadow: createImageButtonShadow(buttonSkinConfig),
+        boxShadow: _createImageButtonShadow(buttonSkinConfig),
         borderRadius:
             BorderRadius.circular(widget.buttonSkinConfig.borderRadius));
   }
 
-  BoxDecoration? createGradientButtonDecoration() {
+  BoxDecoration? _createGradientButtonDecoration() {
     ButtonSkinConfig buttonSkinConfig;
     if (widget.disabled) {
-      buttonSkinConfig = createDisabledButtonSkinConfig();
+      buttonSkinConfig = _createDisabledButtonSkinConfig();
     } else {
       buttonSkinConfig = widget.buttonSkinConfig;
     }
@@ -208,20 +208,20 @@ class MyButtonState extends State<MyButton> {
         : buttonSkinConfig.borderColor;
 
     return BoxDecoration(
-        boxShadow: createButtonShadow(buttonSkinConfig),
+        boxShadow: _createButtonShadow(buttonSkinConfig),
         borderRadius:
             BorderRadius.circular(widget.buttonSkinConfig.borderRadius),
         gradient: widget.pressed
             ? buttonSkinConfig.backgroundGradient == null
                 ? null
-                : createPressedBackgroundGradient(
+                : _createPressedBackgroundGradient(
                     buttonSkinConfig.backgroundGradient!)
             : buttonSkinConfig.backgroundGradient,
         border: Border.all(
             color: borderColor, width: buttonSkinConfig.borderWidth));
   }
 
-  List<BoxShadow> createImageButtonShadow(ButtonSkinConfig buttonSkinConfig) {
+  List<BoxShadow> _createImageButtonShadow(ButtonSkinConfig buttonSkinConfig) {
     var boxShadowColor = widget.pressed
         ? buttonSkinConfig.buttonPressedShadowColor ??
             Colors.grey.withOpacity(0.6)
@@ -234,7 +234,7 @@ class MyButtonState extends State<MyButton> {
     return [boxShadow];
   }
 
-  List<BoxShadow> createButtonShadow(ButtonSkinConfig buttonSkinConfig) {
+  List<BoxShadow> _createButtonShadow(ButtonSkinConfig buttonSkinConfig) {
     var boxShadow = BoxShadow(
       color: widget.pressed
           ? buttonSkinConfig.buttonPressedShadowColor ??
@@ -259,7 +259,7 @@ class MyButtonState extends State<MyButton> {
     return [boxShadow];
   }
 
-  RadialGradient createPressedBackgroundGradient(Gradient backgroundGradient) {
+  RadialGradient _createPressedBackgroundGradient(Gradient backgroundGradient) {
     var darken = ColorUtil.colorDarken(backgroundGradient.colors.first, 0.05);
     return RadialGradient(
         colors: [darken, darken],
@@ -267,7 +267,7 @@ class MyButtonState extends State<MyButton> {
         transform: backgroundGradient.transform);
   }
 
-  ButtonSkinConfig createDisabledButtonSkinConfig() {
+  ButtonSkinConfig _createDisabledButtonSkinConfig() {
     Color borderColor =
         widget.buttonSkinConfig.borderColor == Colors.transparent
             ? Colors.transparent

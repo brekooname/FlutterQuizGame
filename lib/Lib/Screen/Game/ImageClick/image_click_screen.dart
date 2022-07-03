@@ -20,14 +20,16 @@ mixin ImageClickScreen<TQuizQuestionManager extends QuizQuestionManager> {
   late Image imageToClick;
   late Size _rawImageToClickSize;
   late double _imageContainerHeightPercent;
+  ButtonSkinConfig? _answerBtnSkin;
 
   void initImageClickScreen(TQuizQuestionManager quizQuestionManager,
       QuestionInfo currentQuestionInfo, Size rawImageToClickSize,
-      {double? imageContainerHeightPercent}) {
+      {double? imageContainerHeightPercent, ButtonSkinConfig? answerBtnSkin}) {
     _imageContainerHeightPercent = imageContainerHeightPercent ?? 75;
     _currentQuestionInfo = currentQuestionInfo;
     this.quizQuestionManager = quizQuestionManager;
     _rawImageToClickSize = rawImageToClickSize;
+    _answerBtnSkin = answerBtnSkin;
   }
 
   void initImageToClick() {
@@ -45,7 +47,7 @@ mixin ImageClickScreen<TQuizQuestionManager extends QuizQuestionManager> {
     VoidCallback refreshSetState,
     VoidCallback goToNextScreenAfterPress,
   ) {
-    Size imageToClickSize = _getImageToClickAdjustedForScreenSize();
+    Size imageToClickSize = getImageToClickAdjustedForScreenSize();
     var imageAlignment =
         showAnswerPointerOnOrigin() ? Alignment.center : Alignment.centerLeft;
 
@@ -68,12 +70,11 @@ mixin ImageClickScreen<TQuizQuestionManager extends QuizQuestionManager> {
               _rawImageToClickSize, refreshSetState, goToNextScreenAfterPress),
         )));
 
-    return Expanded(
-        child: Stack(
+    return Stack(
       clipBehavior: Clip.none,
       alignment: imageAlignment,
       children: stackChildren,
-    ));
+    );
   }
 
   List<Widget> _createAnswerPointers(Size rawImageSize,
@@ -123,40 +124,65 @@ mixin ImageClickScreen<TQuizQuestionManager extends QuizQuestionManager> {
                   alignment: Alignment.center,
                   clipBehavior: Clip.none,
                   children: [
+                    ////
+                    ////
+                    ////
+                    ////
+                    ////
                     Row(children: answerPointerChildren),
+                    ////
+                    ////
+                    ////
+                    ////
+                    ////
                     _createAnswerLabel(imageClickInfo)
                   ]))
         ]);
   }
 
   double _calculateY(ImageClickInfo imageClickInfo) {
-    Size adjustedImageSize = _getImageToClickAdjustedForScreenSize();
+    Size adjustedImageSize = getImageToClickAdjustedForScreenSize();
     return _calculateOriginY() +
         (100 - imageClickInfo.y) / 100 * adjustedImageSize.height;
   }
 
   double _calculateX(ImageClickInfo imageClickInfo) {
-    Size adjustedImageSize = _getImageToClickAdjustedForScreenSize();
+    Size adjustedImageSize = getImageToClickAdjustedForScreenSize();
     bool isPressedAnswerEqualsButton =
         _pressedAnswerEqualsButton(imageClickInfo);
-    var showAnswerLabelOnLeftSide = isPressedAnswerEqualsButton &&
-            imageClickInfo.x > _imageContainerHeightPercent &&
-            showAnswerPointerOnOrigin()
-        ? _getAnswerLabelWidth(imageClickInfo) / 1.5
-        : 0;
+    double paddingForAnswerLabel = 0;
+    if (isPressedAnswerEqualsButton) {
+      var percentBuffer = 20;
+      if (imageClickInfo.x > percentBuffer &&
+          imageClickInfo.x < 100 - percentBuffer) {
+        paddingForAnswerLabel = _getAnswerLabelWidth(imageClickInfo) / 2 -
+            _getAnswerBtnSideDimen() / 2;
+      } else {
+        paddingForAnswerLabel = showAnswerLabelOnLeftSide(imageClickInfo)
+            ? _getAnswerLabelWidth(imageClickInfo) / 1.5
+            : 0;
+      }
+    }
     return _calculateOriginX() +
         imageClickInfo.x / 100 * adjustedImageSize.width -
-        showAnswerLabelOnLeftSide;
+        paddingForAnswerLabel;
+  }
+
+  bool showAnswerLabelOnLeftSide(ImageClickInfo imageClickInfo) {
+    return imageClickInfo.x > _imageContainerHeightPercent &&
+        showAnswerPointerOnOrigin();
   }
 
   double _calculateOriginX() {
     return showAnswerPointerOnOrigin()
-        ? _getAnswerBtnSideDimen() / 2 + _getAnswerBtnBorderWidth()
+        //To verify if it works with - or +
+        // ?  +_getAnswerBtnSideDimen() / 2 + _getAnswerBtnBorderWidth()
+        ? -_getAnswerBtnSideDimen() / 2 + _getAnswerBtnBorderWidth()
         : -_getPointerDimen() / 2 + _getAnswerBtnBorderWidth();
   }
 
   double _calculateOriginY() {
-    Size adjustedImageSize = _getImageToClickAdjustedForScreenSize();
+    Size adjustedImageSize = getImageToClickAdjustedForScreenSize();
     return showAnswerPointerOnOrigin()
         ? (_getImageContainerHeight() - adjustedImageSize.height) / 2 -
             _getAnswerBtnSideDimen() / 2
@@ -226,13 +252,14 @@ mixin ImageClickScreen<TQuizQuestionManager extends QuizQuestionManager> {
         quizQuestionManager.hintDisabledPossibleAnswers
             .contains(imageClickInfo.answerLabel.toLowerCase());
     var btnFontConfig = FontConfig(
-        fontColor: Colors.white,
+        fontColor: Colors.lightGreenAccent,
         fontWeight: FontWeight.w800,
         borderColor: Colors.black);
-    var btnSkin = ButtonSkinConfig(
-        borderRadius: FontConfig.standardBorderRadius * 4,
-        borderColor: Colors.red,
-        backgroundColor: Colors.lightGreenAccent);
+    var btnSkin = _answerBtnSkin ??
+        ButtonSkinConfig(
+            borderRadius: FontConfig.standardBorderRadius * 4,
+            borderColor: Colors.red,
+            backgroundColor: Colors.lightGreenAccent);
     var answerBtn = MyButton(
         disabled: btnDisabled,
         onClick: () {
@@ -262,7 +289,7 @@ mixin ImageClickScreen<TQuizQuestionManager extends QuizQuestionManager> {
                           : AnimateZoomInZoomOut(
                               toAnimateWidgetSize: Size(btnSide, btnSide),
                               zoomAmount:
-                                  AnimateZoomInZoomOut.defaultZoomAmount * 5,
+                                  AnimateZoomInZoomOut.defaultZoomAmount,
                               toAnimateWidget: answerBtn))),
             ])));
   }
@@ -293,7 +320,7 @@ mixin ImageClickScreen<TQuizQuestionManager extends QuizQuestionManager> {
     return answerLabel;
   }
 
-  Size _getImageToClickAdjustedForScreenSize() {
+  Size getImageToClickAdjustedForScreenSize() {
     var heightGreaterThanWidth = _isImageHeightGreaterThanWidth();
     var maxImgHeight = _getMaxImgHeight();
     var maxImgWidth = _getMaxImgWidth();

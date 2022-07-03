@@ -43,7 +43,7 @@ class MyApp extends StatefulWidget {
   static bool kIsAutomatedTest = false;
 
   //TODO ---VALUE CHANGED--- should be false
-  static bool kIsManualTest = false;
+  static bool kIsManualTest = true;
 
   // static String webAppKey = "history";
   // static String webAppKey = "geoquiz";

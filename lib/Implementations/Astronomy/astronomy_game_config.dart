@@ -7,6 +7,7 @@ import 'package:flutter_app_quiz_game/Implementations/Astronomy/Service/astronom
 import 'package:flutter_app_quiz_game/Lib/Constants/language.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen_manager.dart';
 
+import '../../Lib/Constants/contrast.dart';
 import 'Constants/astronomy_game_question_config.dart';
 import 'Questions/AllContent/astronomy_all_questions.dart';
 import 'Questions/AllContent/astronomy_question_collector_service.dart';
@@ -23,6 +24,9 @@ class AstronomyGameConfig extends GameConfig {
   @override
   QuestionCollectorService get questionCollectorService =>
       AstronomyQuestionCollectorService();
+
+  @override
+  Contrast get screenContrast => Contrast.dark;
 
   @override
   GameQuestionConfig get gameQuestionConfig => AstronomyGameQuestionConfig();

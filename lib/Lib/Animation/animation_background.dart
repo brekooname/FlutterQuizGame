@@ -26,10 +26,10 @@ class MyAnimatedWidgetState extends State<AnimateBackground>
     opacityChangeRate: 0.25,
     minOpacity: 0.1,
     maxOpacity: 0.4,
-    particleCount: 35,
+    particleCount: 45,
     spawnMaxRadius: 15.0,
-    spawnMaxSpeed: 7.0,
-    spawnMinSpeed: 3.0,
+    spawnMaxSpeed: 10.0,
+    spawnMinSpeed: 5.0,
     spawnMinRadius: 7.0,
   );
 
@@ -37,7 +37,7 @@ class MyAnimatedWidgetState extends State<AnimateBackground>
   void initState() {
     super.initState();
     controller =
-        AnimationController(duration: Duration(seconds: 1), vsync: this);
+        AnimationController(duration: const Duration(seconds: 1), vsync: this);
     animation = CurvedAnimation(parent: controller, curve: Curves.ease);
     animation.addStatusListener((status) {
       if (status == AnimationStatus.completed) {

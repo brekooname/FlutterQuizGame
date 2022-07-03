@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app_quiz_game/Lib/Color/color_util.dart';
 import 'package:flutter_app_quiz_game/Lib/Constants/contrast.dart';
 import 'package:flutter_app_quiz_game/Lib/Image/image_service.dart';
 import 'package:flutter_app_quiz_game/Lib/ScreenDimensions/screen_dimensions_service.dart';
@@ -22,6 +23,16 @@ class MyBackButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Widget backBtnIcon = _imageService.getMainImage(
+        imageName: "btn_back_up",
+        imageExtension: "png",
+        module: "buttons",
+        maxWidth: buttonSize.width);
+
+    if (MyApp.appId.gameConfig.screenContrast == Contrast.dark) {
+      backBtnIcon = ColorUtil.imageDarken(backBtnIcon, 1);
+    }
+
     Widget btn = MyButton(
         buttonAllPadding: buttonAllPadding,
         size: buttonSize,
@@ -30,13 +41,7 @@ class MyBackButton extends StatelessWidget {
           currentScreen!.gameScreenManagerState.goBack(currentScreen);
         },
         buttonSkinConfig: ButtonSkinConfig(
-          image: (_imageService.getMainImage(
-              imageName: MyApp.appId.gameConfig.screenContrast == Contrast.light
-                  ? "btn_back_up"
-                  : "btn_back_up_white",
-              imageExtension: "png",
-              module: "buttons",
-              maxWidth: buttonSize.width)),
+          image: backBtnIcon,
         ),
         fontConfig: FontConfig());
 

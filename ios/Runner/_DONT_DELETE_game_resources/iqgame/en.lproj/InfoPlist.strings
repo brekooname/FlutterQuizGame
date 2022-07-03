@@ -1,8 +1,8 @@
 CFBundleDisplayName="Intelligence Test";
 language="en";
 appKey="iqgame";
-isPro="false";
-appRatingPackage="1470777147";
+isPro="true";
+appRatingPackage="1473489377";
 appProStoreId="1473489377";
 GADApplicationIdentifier="ca-app-pub-9894292627655692~1984049171";
 admobBannerId="ca-app-pub-9894292627655692/2871461723";

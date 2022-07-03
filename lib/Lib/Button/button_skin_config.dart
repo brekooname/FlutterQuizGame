@@ -6,7 +6,7 @@ class ButtonSkinConfig {
   late double borderRadius;
   late Color borderColor;
   Gradient? backgroundGradient;
-  Image? _image;
+  Widget? _image;
   Icon? _icon;
   bool withBorder;
   Color? buttonPressedShadowColor;
@@ -17,7 +17,7 @@ class ButtonSkinConfig {
   ButtonSkinConfig(
       {Color? backgroundColor,
       Gradient? backgroundGradient,
-      Image? image,
+      Widget? image,
       Icon? icon,
       Color? borderColor,
       double? borderRadius,

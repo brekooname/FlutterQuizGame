@@ -11,14 +11,24 @@ import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
 
 import '../../../Game/Question/Model/question_category.dart';
 import '../../../Game/Question/Model/question_difficulty.dart';
+import '../../../Game/Question/Model/question_info_status.dart';
+import '../../../Game/Question/QuestionCategoryService/ImageClick/image_click_question_parser.dart';
+import '../../../Lib/Animation/animation_background.dart';
+import '../../../Lib/Button/button_skin_config.dart';
+import '../../../Lib/Font/font_config.dart';
 import '../../../Lib/Screen/Game/ImageClick/image_click_screen.dart';
 import '../../../Lib/Screen/Game/quiz_question_manager.dart';
+import '../../../Lib/ScreenDimensions/screen_dimensions_service.dart';
+import '../../../Lib/Text/my_text.dart';
+import '../Components/astronomy_level_header.dart';
 
 class AstronomySolarSystemScreen
     extends GameScreen<AstronomyGameContext, AstronomyScreenManagerState>
     with ImageClickScreen<QuizQuestionManager> {
+  ScreenDimensionsService screenDimensions = ScreenDimensionsService();
   AstronomyGameQuestionConfig gameQuestionConfig =
       AstronomyGameQuestionConfig();
+  late Size _rawImageToClickSize;
 
   AstronomySolarSystemScreen(
     AstronomyScreenManagerState gameScreenManagerState, {
@@ -34,13 +44,19 @@ class AstronomySolarSystemScreen
             category,
             [gameContext.gameUser.getRandomQuestion(difficulty, category)],
             key: key) {
+    _rawImageToClickSize = gameQuestionConfig.categoryDiagramImgDimen
+        .get<QuestionCategory, Size>(currentQuestionInfo.question.category)!;
     initImageClickScreen(
-      QuizQuestionManager<AstronomyGameContext, AstronomyLocalStorage>(
-          gameContext, currentQuestionInfo, AstronomyLocalStorage()),
-      currentQuestionInfo,
-      gameQuestionConfig.categoryDiagramImgDimen
-          .get<QuestionCategory, Size>(currentQuestionInfo.question.category)!,
-    );
+        QuizQuestionManager<AstronomyGameContext, AstronomyLocalStorage>(
+            gameContext, currentQuestionInfo, AstronomyLocalStorage()),
+        currentQuestionInfo,
+        _rawImageToClickSize,
+        imageContainerHeightPercent: 75,
+        answerBtnSkin: ButtonSkinConfig(
+            buttonUnpressedShadowColor: Colors.transparent,
+            borderRadius: FontConfig.standardBorderRadius * 4,
+            borderColor: Colors.red,
+            backgroundColor: Colors.transparent));
   }
 
   @override
@@ -55,6 +71,19 @@ class AstronomySolarSystemScreen
   @override
   bool showAnswerPointerOnOrigin() {
     return true;
+  }
+
+  @override
+  bool showAnswerLabelOnLeftSide(ImageClickInfo imageClickInfo) {
+    return imageClickInfo.x > 50;
+  }
+
+  @override
+  Size getImageToClickAdjustedForScreenSize() {
+    return Size(
+        screenDimensions.w(100),
+        screenDimensions.getNewHeightForNewWidth(screenDimensions.w(100),
+            _rawImageToClickSize.width, _rawImageToClickSize.height));
   }
 }
 
@@ -74,8 +103,52 @@ class AstronomySolarSystemScreenState extends State<AstronomySolarSystemScreen>
 
   @override
   Widget build(BuildContext context) {
-    return widget.createImageClickContainer(() {
+    var imageClickContainer = widget.createImageClickContainer(() {
       setState(() {});
     }, widget.goToNextGameScreenCallBack(context));
+    Column mainColumn = Column(
+      children: [
+        _createAstronomyLevelHeader(),
+        _createQuestionContainer(),
+        imageClickContainer,
+      ],
+    );
+    return AnimateBackground(
+      mainContent: mainColumn,
+      particleImage: imageService.getSpecificImage(
+          imageName: "stars", imageExtension: "png"),
+    );
+  }
+
+  Widget _createAstronomyLevelHeader() {
+    return AstronomyLevelHeader(
+      gameContext: widget.gameContext,
+      score: 2,
+      nrOfCorrectAnsweredQuestions: widget.gameContext.gameUser
+          .countAllQuestions([QuestionInfoStatus.won]),
+      availableHints: widget.gameContext.amountAvailableHints,
+      allQuestionsAnswered: false,
+      animateScore: false,
+      animateWrongAnswer: false,
+      disableHintBtn:
+          widget.quizQuestionManager.hintDisabledPossibleAnswers.isNotEmpty,
+      hintButtonOnClick: () {},
+    );
+  }
+
+  Widget _createQuestionContainer() {
+    var questionContainerWidth = screenDimensions.dimen(80);
+    return SizedBox(
+        width: questionContainerWidth,
+        child: MyText(
+          fontConfig: FontConfig(
+              fontColor: Colors.white,
+              fontWeight: FontWeight.w800,
+              fontSize: FontConfig.getCustomFontSize(1.3),
+              borderColor: Colors.black),
+          maxLines: 3,
+          width: questionContainerWidth / 1.1,
+          text: widget.currentQuestionInfo.question.questionToBeDisplayed,
+        ));
   }
 }
