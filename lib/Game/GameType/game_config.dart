@@ -21,6 +21,10 @@ abstract class GameConfig {
 
   Contrast get screenContrast => Contrast.light;
 
+  bool get isLightScreenContrast => screenContrast == Contrast.light;
+
+  bool get hasBackgroundMusic => false;
+
   ScreenOrientation get screenOrientation => ScreenOrientation.portrait;
 
   //TODO Check extra content "iOS" and "Android" may be different

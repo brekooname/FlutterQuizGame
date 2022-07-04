@@ -9,6 +9,7 @@ import 'package:flutter_app_quiz_game/Lib/Screen/standard_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/game_title.dart';
 import 'package:animated_background/animated_background.dart';
 
+import '../../../Lib/Audio/my_audio_player.dart';
 import '../../../Lib/Font/font_config.dart';
 import '../../../main.dart';
 
@@ -56,6 +57,8 @@ class AstronomyMainMenuScreenState extends State<AstronomyMainMenuScreen>
             SizedBox(height: screenDimensions.dimen(14)),
           ],
         ));
+
+    MyAudioPlayer().playSuccess(audioPlayerId: "xxxx");
     return Scaffold(
         body: AnimateBackground(
           mainContent: mainColumn,

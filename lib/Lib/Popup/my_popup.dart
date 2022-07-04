@@ -9,6 +9,8 @@ import 'package:flutter_app_quiz_game/Lib/Navigation/navigator_service.dart';
 import 'package:flutter_app_quiz_game/Lib/ScreenDimensions/screen_dimensions_service.dart';
 import 'package:flutter_app_quiz_game/Lib/SnackBar/snack_bar_service.dart';
 
+import '../../main.dart';
+
 mixin MyPopup {
   late double width;
   late SizedBox margin;
@@ -56,6 +58,7 @@ mixin MyPopup {
     }
 
     var edgeInsets = const EdgeInsets.all(0);
+    var lightScreenContrast = MyApp.appId.gameConfig.isLightScreenContrast;
     return AlertDialog(
         contentPadding: edgeInsets,
         insetPadding: edgeInsets,
@@ -67,9 +70,10 @@ mixin MyPopup {
           children: [
             Container(
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(
-                      FontConfig.standardBorderRadius / 2),
-                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(lightScreenContrast
+                      ? FontConfig.standardBorderRadius / 2
+                      : 0),
+                  color: lightScreenContrast ? Colors.white : Colors.black87,
                   image: decorationImage,
                 ),
                 width: width,

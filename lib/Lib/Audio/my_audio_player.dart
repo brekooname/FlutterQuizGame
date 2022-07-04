@@ -33,6 +33,12 @@ class MyAudioPlayer {
     await _playSound(assetName: "click");
   }
 
+  Future<void> playBackgroundMusic() async {
+    await _playMusic(
+        assetName: "level_success",
+        audioPlayerId: "backgroundMusicAudioPlayerId");
+  }
+
   Future<void> stop({String? audioPlayerId}) async {
     var assetsAudioPlayer = _getAssetsAudioPlayer(audioPlayerId);
     if (assetsAudioPlayer.isPlaying.value) {
@@ -49,10 +55,22 @@ class MyAudioPlayer {
       return;
     }
     var volume = 0.5;
-    _getAssetsAudioPlayer(audioPlayerId).open(Audio(_mp3path(assetName)),
+    _getAssetsAudioPlayer(audioPlayerId).open(Audio(_mp3Path(assetName)),
         loopMode: loop ? LoopMode.playlist : LoopMode.none,
         playSpeed: playSpeed ?? 1,
         volume: volume);
+  }
+
+  Future<void> _playMusic(
+      {String? audioPlayerId,
+      required String assetName,
+      double? playSpeed}) async {
+    if (!_settingsLocalStorage.isMusicOn()) {
+      return;
+    }
+    var volume = 0.5;
+    _getAssetsAudioPlayer(audioPlayerId).open(Audio(_wavPath(assetName)),
+        loopMode: LoopMode.playlist, playSpeed: playSpeed ?? 1, volume: volume);
   }
 
   AssetsAudioPlayer _getAssetsAudioPlayer(String? audioPlayerId) =>
@@ -60,7 +78,13 @@ class MyAudioPlayer {
 
   String _defaultAudioPlayerId() => "audio";
 
-  String _mp3path(String assetName) {
+  String _wavPath(String assetName) {
+    var assetPath = _assetsService.getSpecificAssetPath(
+        module: "audio", assetName: assetName, assetExtension: "wav");
+    return assetPath;
+  }
+
+  String _mp3Path(String assetName) {
     var assetPath = _assetsService.getMainAssetPath(
         module: "audio", assetName: assetName, assetExtension: "mp3");
     return assetPath;

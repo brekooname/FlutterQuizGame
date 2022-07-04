@@ -32,13 +32,17 @@ class SettingsPopupState extends State<SettingsPopup> with MyPopup, LabelMixin {
     initPopup();
     var sideDimen = screenDimensions.dimen(20);
     soundOn = imageService.getMainImage(
-        imageName: "btn_sound_on",
+        imageName: MyApp.appId.gameConfig.isLightScreenContrast
+            ? "btn_sound_on_light_contrast"
+            : "btn_sound_on_dark_contrast",
         imageExtension: "png",
         module: "buttons",
         maxWidth: sideDimen,
         maxHeight: sideDimen);
     soundOff = imageService.getMainImage(
-        imageName: "btn_sound_off",
+        imageName: MyApp.appId.gameConfig.isLightScreenContrast
+            ? "btn_sound_off_light_contrast"
+            : "btn_sound_off_dark_contrast",
         imageExtension: "png",
         module: "buttons",
         maxWidth: sideDimen,

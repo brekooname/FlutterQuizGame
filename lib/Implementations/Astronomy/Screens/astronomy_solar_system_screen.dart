@@ -11,7 +11,6 @@ import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
 
 import '../../../Game/Question/Model/question_category.dart';
 import '../../../Game/Question/Model/question_difficulty.dart';
-import '../../../Game/Question/Model/question_info_status.dart';
 import '../../../Game/Question/QuestionCategoryService/ImageClick/image_click_question_parser.dart';
 import '../../../Lib/Animation/animation_background.dart';
 import '../../../Lib/Button/button_skin_config.dart';
@@ -51,7 +50,7 @@ class AstronomySolarSystemScreen
             gameContext, currentQuestionInfo, AstronomyLocalStorage()),
         currentQuestionInfo,
         _rawImageToClickSize,
-        imageContainerHeightPercent: 75,
+        imageContainerHeightPercent: 85,
         answerBtnSkin: ButtonSkinConfig(
             buttonUnpressedShadowColor: Colors.transparent,
             borderRadius: FontConfig.standardBorderRadius * 4,
@@ -106,7 +105,7 @@ class AstronomySolarSystemScreenState extends State<AstronomySolarSystemScreen>
     var imageClickContainer = widget.createImageClickContainer(() {
       setState(() {});
     }, widget.goToNextGameScreenCallBack(context));
-    Column mainColumn = Column(
+    Widget mainColumn = Column(
       children: [
         _createAstronomyLevelHeader(),
         _createQuestionContainer(),
@@ -123,13 +122,8 @@ class AstronomySolarSystemScreenState extends State<AstronomySolarSystemScreen>
   Widget _createAstronomyLevelHeader() {
     return AstronomyLevelHeader(
       gameContext: widget.gameContext,
-      score: 2,
-      nrOfCorrectAnsweredQuestions: widget.gameContext.gameUser
-          .countAllQuestions([QuestionInfoStatus.won]),
       availableHints: widget.gameContext.amountAvailableHints,
-      allQuestionsAnswered: false,
-      animateScore: false,
-      animateWrongAnswer: false,
+      animateScore: widget.quizQuestionManager.isGameFinished(),
       disableHintBtn:
           widget.quizQuestionManager.hintDisabledPossibleAnswers.isNotEmpty,
       hintButtonOnClick: () {},
@@ -137,18 +131,15 @@ class AstronomySolarSystemScreenState extends State<AstronomySolarSystemScreen>
   }
 
   Widget _createQuestionContainer() {
-    var questionContainerWidth = screenDimensions.dimen(80);
-    return SizedBox(
-        width: questionContainerWidth,
-        child: MyText(
-          fontConfig: FontConfig(
-              fontColor: Colors.white,
-              fontWeight: FontWeight.w800,
-              fontSize: FontConfig.getCustomFontSize(1.3),
-              borderColor: Colors.black),
-          maxLines: 3,
-          width: questionContainerWidth / 1.1,
-          text: widget.currentQuestionInfo.question.questionToBeDisplayed,
-        ));
+    return MyText(
+      fontConfig: FontConfig(
+          fontColor: Colors.white,
+          fontWeight: FontWeight.w800,
+          fontSize: FontConfig.getCustomFontSize(1.3),
+          borderColor: Colors.black),
+      maxLines: 3,
+      width: screenDimensions.dimen(80),
+      text: widget.currentQuestionInfo.question.questionToBeDisplayed,
+    );
   }
 }

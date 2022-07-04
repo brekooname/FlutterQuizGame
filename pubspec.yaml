@@ -112,6 +112,7 @@ flutter:
     ###### ASTRONOMY #############################################################################
     ########################
     - assets/implementations/astronomy/
+    - assets/implementations/astronomy/audio/
     - assets/implementations/astronomy/buttons/
     - assets/implementations/astronomy/categories/
     ########################

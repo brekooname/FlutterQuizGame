@@ -32,6 +32,9 @@ class AstronomyGameConfig extends GameConfig {
   GameQuestionConfig get gameQuestionConfig => AstronomyGameQuestionConfig();
 
   @override
+  bool get hasBackgroundMusic => true;
+
+  @override
   AllQuestionsService get allQuestionsService => AstronomyAllQuestions();
 
   @override

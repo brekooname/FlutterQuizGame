@@ -7,6 +7,7 @@ import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
 import '../../Lib/Button/button_skin_config.dart';
 import '../../Lib/Font/font_config.dart';
+import '../../main.dart';
 import 'button_size.dart';
 
 class MyButton extends StatefulWidget {
@@ -222,11 +223,12 @@ class MyButtonState extends State<MyButton> {
   }
 
   List<BoxShadow> _createImageButtonShadow(ButtonSkinConfig buttonSkinConfig) {
+    var buttonShadow = _getButtonShadow();
     var boxShadowColor = widget.pressed
         ? buttonSkinConfig.buttonPressedShadowColor ??
-            Colors.grey.withOpacity(0.6)
+            buttonShadow.withOpacity(0.6)
         : buttonSkinConfig.buttonUnpressedShadowColor ??
-            Colors.grey.withOpacity(0.2);
+            buttonShadow.withOpacity(0.2);
     var boxShadow = BoxShadow(
         color: boxShadowColor,
         spreadRadius: FontConfig.standardShadowRadius,
@@ -234,13 +236,20 @@ class MyButtonState extends State<MyButton> {
     return [boxShadow];
   }
 
+  Color _getButtonShadow() {
+    return MyApp.appId.gameConfig.isLightScreenContrast
+        ? Colors.grey
+        : Colors.black;
+  }
+
   List<BoxShadow> _createButtonShadow(ButtonSkinConfig buttonSkinConfig) {
+    var buttonShadow = _getButtonShadow();
     var boxShadow = BoxShadow(
       color: widget.pressed
           ? buttonSkinConfig.buttonPressedShadowColor ??
-              Colors.grey.withOpacity(0.9)
+              buttonShadow.withOpacity(0.9)
           : buttonSkinConfig.buttonUnpressedShadowColor ??
-              Colors.grey.withOpacity(0.9),
+              buttonShadow.withOpacity(0.9),
       spreadRadius: widget.disabled
           ? 0
           : widget.pressed

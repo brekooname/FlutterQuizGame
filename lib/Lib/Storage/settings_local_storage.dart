@@ -1,5 +1,7 @@
 import 'package:flutter_app_quiz_game/Lib/Storage/my_local_storage.dart';
 
+import '../../main.dart';
+
 class SettingsLocalStorage extends MyLocalStorage {
   static final SettingsLocalStorage singleton = SettingsLocalStorage.internal();
 
@@ -18,7 +20,8 @@ class SettingsLocalStorage extends MyLocalStorage {
   }
 
   bool isMusicOn() {
-    return localStorage.getBool(_getToggleMusicKey()) ?? true;
+    return localStorage.getBool(_getToggleMusicKey()) ??
+        MyApp.appId.gameConfig.hasBackgroundMusic;
   }
 
   void toggleMusic() {

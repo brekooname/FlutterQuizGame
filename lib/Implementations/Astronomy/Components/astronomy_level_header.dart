@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_info.dart';
+import 'package:flutter_app_quiz_game/Game/Question/Model/question_info_status.dart';
 import 'package:flutter_app_quiz_game/Implementations/Astronomy/Questions/astronomy_game_context.dart';
-import 'package:flutter_app_quiz_game/Lib/Animation/animation_increase_number_text.dart';
+import 'package:flutter_app_quiz_game/Lib/Animation/animation_zoom_in_zoom_out.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/hint_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_back_button.dart';
 import 'package:flutter_app_quiz_game/Lib/ScreenDimensions/screen_dimensions_service.dart';
-import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
-import '../../../Lib/Animation/animation_popin_widget.dart';
-import '../../../Lib/Font/font_config.dart';
 import '../../../Lib/Image/image_service.dart';
 import '../../../main.dart';
 
@@ -19,11 +17,7 @@ class AstronomyLevelHeader extends StatelessWidget {
 
   AstronomyGameContext gameContext;
   bool animateScore;
-  bool animateWrongAnswer;
-  bool allQuestionsAnswered;
-  int score;
   int availableHints;
-  int nrOfCorrectAnsweredQuestions;
 
   VoidCallback hintButtonOnClick;
   bool disableHintBtn;
@@ -38,12 +32,8 @@ class AstronomyLevelHeader extends StatelessWidget {
   AstronomyLevelHeader({
     Key? key,
     this.animateScore = false,
-    this.animateWrongAnswer = false,
-    this.allQuestionsAnswered = false,
     this.disableHintBtn = false,
     required this.gameContext,
-    required this.score,
-    required this.nrOfCorrectAnsweredQuestions,
     required this.hintButtonOnClick,
     required this.availableHints,
   }) : super(key: key);
@@ -68,7 +58,7 @@ class AstronomyLevelHeader extends StatelessWidget {
                 myBackButton,
                 SizedBox(width: screenDimensions.dimen(2)),
                 const Spacer(),
-                hintBtn,
+                // hintBtn,
               ],
             )));
 
@@ -80,7 +70,7 @@ class AstronomyLevelHeader extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           const Spacer(),
-          createScoreContainer(),
+          _createScoreContainer(),
           const Spacer(),
         ],
       ),
@@ -94,30 +84,40 @@ class AstronomyLevelHeader extends StatelessWidget {
     return stack;
   }
 
-  Widget createScoreContainer() {
+  Widget _createScoreContainer() {
     List<Widget> qs = [];
-    var dimen = _screenDimensionsService.dimen(5);
+    var dimen = _screenDimensionsService.dimen(6);
     var imgDimen = dimen / 1.2;
-    for (QuestionInfo qi in gameContext.gameUser.getAllQuestions([])) {
+    var allQuestions = gameContext.gameUser.getAllQuestions([]);
+    allQuestions.sort((a, b) {
+      var maxYear = DateTime(3000);
+      return (a.questionAnsweredAt ?? maxYear)
+          .compareTo(b.questionAnsweredAt ?? maxYear);
+    });
+    for (QuestionInfo qi in allQuestions) {
+      var image = Opacity(
+          opacity: qi.isQuestionOpen() ? 0.5 : 1,
+          child: _imageService.getSpecificImage(
+              maxWidth: imgDimen,
+              maxHeight: imgDimen,
+              imageName: qi.isQuestionOpen()
+                  ? "black_hole_score"
+                  : qi.status == QuestionInfoStatus.won
+                      ? "star_score"
+                      : "supernova_score",
+              imageExtension: "png"));
       qs.add(Padding(
-          padding: EdgeInsets.all(screenDimensions.dimen(0.5)),
-          child: Container(
-            child: AnimatePopInWidget(
-              mainContent: _imageService.getSpecificImage(
-                  maxWidth: imgDimen,
-                  maxHeight: imgDimen,
-                  imageName: "star_score",
-                  imageExtension: "png"),
-            ),
+          padding: EdgeInsets.all(screenDimensions.dimen(0.2)),
+          child: SizedBox(
+            child: animateScore &&
+                    qi.question.index == getMostRecentAnswered()?.question.index
+                ? AnimateZoomInZoomOut(
+                    toAnimateWidget: image,
+                    toAnimateWidgetSize: Size(imgDimen, imgDimen),
+                  )
+                : image,
             width: dimen,
             height: dimen,
-            // decoration: BoxDecoration(
-            //   borderRadius:
-            //       BorderRadius.circular(FontConfig.standardBorderRadius * 4),
-            //   border: Border.all(
-            //       color: Colors.lightGreenAccent.shade400,
-            //       width: FontConfig.standardBorderWidth/2),
-            // ),
           )));
     }
     Row questionRow = Row(
@@ -126,5 +126,11 @@ class AstronomyLevelHeader extends StatelessWidget {
       children: qs,
     );
     return questionRow;
+  }
+
+  QuestionInfo? getMostRecentAnswered() {
+    return gameContext.gameUser.getMostRecentAnsweredQuestion(
+      questionInfoStatus: [QuestionInfoStatus.lost, QuestionInfoStatus.won],
+    );
   }
 }

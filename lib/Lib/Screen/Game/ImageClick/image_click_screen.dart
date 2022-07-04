@@ -70,11 +70,14 @@ mixin ImageClickScreen<TQuizQuestionManager extends QuizQuestionManager> {
               _rawImageToClickSize, refreshSetState, goToNextScreenAfterPress),
         )));
 
-    return Stack(
-      clipBehavior: Clip.none,
-      alignment: imageAlignment,
-      children: stackChildren,
-    );
+    return SizedBox(
+        width: _getImageContainerWidth(),
+        height: _getImageContainerHeight(),
+        child: Stack(
+          clipBehavior: Clip.none,
+          alignment: imageAlignment,
+          children: stackChildren,
+        ));
   }
 
   List<Widget> _createAnswerPointers(Size rawImageSize,
