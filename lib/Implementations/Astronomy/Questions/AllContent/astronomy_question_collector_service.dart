@@ -33,9 +33,33 @@ class AstronomyQuestionCollectorService extends QuestionCollectorService<
       } else
       ////////////
       ////////////
-      if (cat == gameQuestionConfig.cat1) {}
+      if (cat == gameQuestionConfig.cat1) {
+        var qPlanets = gameQuestionConfig.planets
+            .where((element) => element.radius != 0)
+            .toList();
+        for (AstronomyPlanetProperties p in qPlanets) {
+          var opts = [_getRadius(p.id)];
+          opts.addAll(getRandomOptsForQuestion(qPlanets, p.id)
+              .map((e) => _getRadius(e))
+              .toList());
+          result.add(Question(p.id, gameQuestionConfig.diff0, cat,
+              "Radius::" + opts.join("##") + "::0"));
+        }
+      }
     }
     return result;
+  }
+
+  List<int> getRandomOptsForQuestion(
+      List<AstronomyPlanetProperties> planets, int correctPlanetId) {
+    var validQPlanets = planets.map((e) => e.id).toList();
+    validQPlanets.shuffle();
+    validQPlanets.remove(correctPlanetId);
+    return [
+      validQPlanets.elementAt(0),
+      validQPlanets.elementAt(1),
+      validQPlanets.elementAt(2)
+    ];
   }
 
   AstronomyPlanetProperties _getById(int id) {

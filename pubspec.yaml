@@ -115,6 +115,7 @@ flutter:
     - assets/implementations/astronomy/audio/
     - assets/implementations/astronomy/buttons/
     - assets/implementations/astronomy/categories/
+    - assets/implementations/astronomy/planets/
     ########################
     ###### IQGAME ################################################################################
     ########################

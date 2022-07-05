@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:flutter_app_quiz_game/Game/GameType/game_question_config.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
+import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/UniqueAnswers/unqiue_answers_question_category_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Localization/label_mixin.dart';
 
 import '../../../Game/Question/QuestionCategoryService/ImageClick/image_click_question_category_service.dart';
@@ -39,27 +40,27 @@ class AstronomyGameQuestionConfig extends GameQuestionConfig with LabelMixin {
       singleton.cat1 = QuestionCategory(
           index: 1,
           categoryLabel: "radius",
-          questionCategoryService: ImageClickCategoryQuestionService()),
+          questionCategoryService: UniqueAnswersCategoryQuestionService()),
       singleton.cat2 = QuestionCategory(
           index: 2,
           categoryLabel: "gravity",
-          questionCategoryService: ImageClickCategoryQuestionService()),
+          questionCategoryService: UniqueAnswersCategoryQuestionService()),
       singleton.cat3 = QuestionCategory(
           index: 3,
           categoryLabel: "distance from Sun",
-          questionCategoryService: ImageClickCategoryQuestionService()),
+          questionCategoryService: UniqueAnswersCategoryQuestionService()),
       singleton.cat4 = QuestionCategory(
           index: 4,
           categoryLabel: "mass",
-          questionCategoryService: ImageClickCategoryQuestionService()),
+          questionCategoryService: UniqueAnswersCategoryQuestionService()),
       singleton.cat5 = QuestionCategory(
           index: 5,
           categoryLabel: "orbital Period",
-          questionCategoryService: ImageClickCategoryQuestionService()),
+          questionCategoryService: UniqueAnswersCategoryQuestionService()),
       singleton.cat6 = QuestionCategory(
           index: 6,
           categoryLabel: "average Temperature",
-          questionCategoryService: ImageClickCategoryQuestionService()),
+          questionCategoryService: UniqueAnswersCategoryQuestionService()),
     ];
 
     singleton.categoryDiagramImgDimen = {

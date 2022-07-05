@@ -53,7 +53,7 @@ class MyApp extends StatefulWidget {
   // static String webAppKey = "anatomy";
   // static String webAppKey = "iqgame";
   static String webAppKey = "astronomy";
-  static CampaignLevel campaignLevel = AstronomyCampaignLevelService().level_0;
+  static CampaignLevel campaignLevel = AstronomyCampaignLevelService().level_1;
 
   //
   static Language webLanguage = Language.en;
