@@ -85,8 +85,8 @@ class AstronomyLevelHeader extends StatelessWidget {
   }
 
   Widget _createScoreContainer() {
-    List<Widget> qs = [];
-    var dimen = _screenDimensionsService.dimen(6);
+    List<Widget> scoreColumnRows = [];
+    var dimen = _screenDimensionsService.dimen(8);
     var imgDimen = dimen / 1.2;
     var allQuestions = gameContext.gameUser.getAllQuestions([]);
     allQuestions.sort((a, b) {
@@ -94,18 +94,20 @@ class AstronomyLevelHeader extends StatelessWidget {
       return (a.questionAnsweredAt ?? maxYear)
           .compareTo(b.questionAnsweredAt ?? maxYear);
     });
+    List<Widget> qs = [];
+    int i = 0;
     for (QuestionInfo qi in allQuestions) {
-      var image = Opacity(
-          opacity: qi.isQuestionOpen() ? 0.5 : 1,
-          child: _imageService.getSpecificImage(
-              maxWidth: imgDimen,
-              maxHeight: imgDimen,
-              imageName: qi.isQuestionOpen()
-                  ? "black_hole_score"
-                  : qi.status == QuestionInfoStatus.won
-                      ? "star_score"
-                      : "supernova_score",
-              imageExtension: "png"));
+      var specificImage = _imageService.getSpecificImage(
+          maxWidth: imgDimen,
+          maxHeight: imgDimen,
+          imageName: qi.isQuestionOpen()
+              ? "black_hole_score"
+              : qi.status == QuestionInfoStatus.won
+                  ? "star_score"
+                  : "supernova_score",
+          imageExtension: "png");
+      var image =
+          Opacity(opacity: qi.isQuestionOpen() ? 0.5 : 1, child: specificImage);
       qs.add(Padding(
           padding: EdgeInsets.all(screenDimensions.dimen(0.2)),
           child: SizedBox(
@@ -119,13 +121,25 @@ class AstronomyLevelHeader extends StatelessWidget {
             width: dimen,
             height: dimen,
           )));
+      if (i > 0 && i % 5 == 0) {
+        scoreColumnRows.add(Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: qs.toList(),
+        ));
+        qs = [];
+      }
+      i++;
     }
-    Row questionRow = Row(
+    scoreColumnRows.add(Row(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
-      children: qs,
-    );
-    return questionRow;
+      children: qs.toList(),
+    ));
+    return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: scoreColumnRows);
   }
 
   QuestionInfo? getMostRecentAnswered() {

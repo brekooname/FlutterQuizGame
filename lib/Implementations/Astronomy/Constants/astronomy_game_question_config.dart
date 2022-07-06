@@ -177,6 +177,11 @@ class AstronomyGameQuestionConfig extends GameQuestionConfig with LabelMixin {
   @override
   Map<QuestionCategoryDifficultyWithPrefixCode, String> get prefixLabelForCode {
     Map<QuestionCategoryDifficultyWithPrefixCode, String> res = HashMap();
+
+    res.putIfAbsent(
+        QuestionCategoryDifficultyWithPrefixCode(category: cat1, prefixCode: 0),
+        () => "Planet radius compared to earth radius");
+
     return res;
   }
 }
