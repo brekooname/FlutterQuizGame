@@ -26,9 +26,17 @@ class ButtonSkinConfig {
       this.buttonPressedShadowColor,
       this.buttonUnpressedShadowColor}) {
     if (backgroundGradient != null) {
+      if (_image != null || _icon != null) {
+        throw AssertionError(
+            "image or icon can't be set as the same time as backgroundGradient");
+      }
       this.backgroundGradient = backgroundGradient;
       backgroundColor = backgroundGradient.colors.first;
     } else if (backgroundColor != null) {
+      if (_image != null || _icon != null) {
+        throw AssertionError(
+            "image or icon can't be set as the same time as backgroundColor");
+      }
       this.backgroundGradient = RadialGradient(radius: 4, colors: [
         ColorUtil.colorDarken(backgroundColor, -0.05),
         backgroundColor,

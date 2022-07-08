@@ -12,7 +12,7 @@ import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 import '../quiz_question_manager.dart';
 
 mixin QuizOptionsGameScreen<TQuizQuestionManager extends QuizQuestionManager> {
-  final ScreenDimensionsService _screenDimensions = ScreenDimensionsService();
+  final ScreenDimensionsService screenDimensions = ScreenDimensionsService();
   final ImageService _imageService = ImageService();
   late TQuizQuestionManager quizQuestionManager;
   late QuestionInfo _currentQuestionInfo;
@@ -50,7 +50,7 @@ mixin QuizOptionsGameScreen<TQuizQuestionManager extends QuizQuestionManager> {
     int answersOnRow = 2;
     List<Widget> answerBtns = [];
     for (String possibleAnswer in quizQuestionManager.possibleAnswers) {
-      answerBtns.add(_createPossibleAnswerButton(
+      answerBtns.add(createPossibleAnswerButton(
           refreshSetState, goToNextScreenAfterPress, possibleAnswer));
       if (answerBtns.length == answersOnRow) {
         answerRows.add(Row(
@@ -64,7 +64,7 @@ mixin QuizOptionsGameScreen<TQuizQuestionManager extends QuizQuestionManager> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: answerBtns,
     ));
-    var btnSize = _getAnswerBtnSize();
+    var btnSize = getAnswerBtnSize();
     Widget btnContainer = SizedBox(
         height: (btnSize.height + getAnswerButtonPaddingBetween() * 2) *
             (quizQuestionManager.possibleAnswers.length / 2).ceil(),
@@ -90,15 +90,15 @@ mixin QuizOptionsGameScreen<TQuizQuestionManager extends QuizQuestionManager> {
       return Container();
     }
     return SizedBox(
-        width: _screenDimensions.dimen(98),
-        height: _screenDimensions.h(questionImageHeightPercent ?? 36),
+        width: screenDimensions.dimen(98),
+        height: screenDimensions.h(questionImageHeightPercent ?? 36),
         child: _zoomableImage ?? false
             ? createZoomableContainer()
             : _questionImage!);
   }
 
   Widget createZoomableContainer() {
-    var pinchIconSideDimen = _screenDimensions.dimen(10);
+    var pinchIconSideDimen = screenDimensions.dimen(10);
     Stack stack = Stack(
       alignment: Alignment.center,
       children: [
@@ -108,7 +108,7 @@ mixin QuizOptionsGameScreen<TQuizQuestionManager extends QuizQuestionManager> {
           child: _questionImage!,
         ),
         Padding(
-            padding: EdgeInsets.all(_screenDimensions.dimen(5)),
+            padding: EdgeInsets.all(screenDimensions.dimen(5)),
             child: Container(
                 alignment: Alignment.bottomRight,
                 child: _imageService.getMainImage(
@@ -123,64 +123,74 @@ mixin QuizOptionsGameScreen<TQuizQuestionManager extends QuizQuestionManager> {
             color: Colors.white,
             border: Border.all(
                 color: Colors.blue.shade700,
-                width: _screenDimensions.dimen(0.3)),
+                width: screenDimensions.dimen(0.3)),
             borderRadius:
                 BorderRadius.circular(FontConfig.standardBorderRadius * 0.1)),
         child: stack);
   }
 
-  Widget _createPossibleAnswerButton(VoidCallback refreshSetState,
-      VoidCallback goToNextScreenAfterPress, String answerBtnText) {
-    var question = _currentQuestionInfo.question;
-    var btnSize = _getAnswerBtnSize();
-    var answerBtnDisabled = quizQuestionManager.wrongPressedAnswer.isNotEmpty ||
-        quizQuestionManager.correctAnswersForQuestion.contains(answerBtnText) &&
-            _currentQuestionInfo.pressedAnswers.contains(answerBtnText) ||
-        quizQuestionManager.isGameFinished() ||
-        quizQuestionManager.hintDisabledPossibleAnswers
-            .contains(answerBtnText.toLowerCase());
-
-    var disabledBackgroundColor = answerBtnDisabled
-        ? quizQuestionManager.wrongPressedAnswer.contains(answerBtnText)
-            ? Colors.red
-            : quizQuestionManager.isAnswerCorrectInOptionsList(
-                    question, answerBtnText)
-                ? Colors.green
-                : null
-        : null;
+  Widget createPossibleAnswerButton(VoidCallback refreshSetState,
+      VoidCallback goToNextScreenAfterPress, String answerBtnText,
+      {Widget? customContent}) {
+    var btnSize = getAnswerBtnSize();
 
     return Padding(
         padding: EdgeInsets.all(getAnswerButtonPaddingBetween()),
         child: MyButton(
             size: btnSize,
-            disabled: answerBtnDisabled,
-            disabledBackgroundColor: disabledBackgroundColor,
+            disabled: isAnswerBtnDisabled(answerBtnText),
+            disabledBackgroundColor: getAnswerBtnDisabledColor(answerBtnText),
             onClick: () {
-              quizQuestionManager.onClickAnswerOptionBtn(question,
-                  answerBtnText, refreshSetState, goToNextScreenAfterPress);
+              quizQuestionManager.onClickAnswerOptionBtn(
+                  _currentQuestionInfo.question,
+                  answerBtnText,
+                  refreshSetState,
+                  goToNextScreenAfterPress);
             },
             buttonSkinConfig:
                 _optionsButtonSkinConfig ?? _defaultButtonSkinConfig(),
-            customContent: MyText(
-              text: answerBtnText,
-              maxLines: quizQuestionManager.getValueBasedOnNrOfPossibleAnswers(
-                  3, 3, 2, 1, true, _questionImage == null ? 2 : 1),
-              width: btnSize.width / 1.1,
-            )));
+            customContent: customContent ??
+                MyText(
+                  text: answerBtnText,
+                  maxLines:
+                      quizQuestionManager.getValueBasedOnNrOfPossibleAnswers(
+                          3, 3, 2, 1, true, _questionImage == null ? 2 : 1),
+                  width: btnSize.width / 1.1,
+                )));
   }
 
   ButtonSkinConfig _defaultButtonSkinConfig() {
     return ButtonSkinConfig(backgroundColor: Colors.lightBlueAccent);
   }
 
-  Size _getAnswerBtnSize() {
+  Size getAnswerBtnSize() {
     return Size(
-        _screenDimensions.dimen(45),
-        _screenDimensions.dimen(quizQuestionManager
+        screenDimensions.dimen(45),
+        screenDimensions.dimen(quizQuestionManager
             .getValueBasedOnNrOfPossibleAnswers(
                 26, 23, 19, 16, true, _questionImage == null ? 2 : 1)
             .toDouble()));
   }
 
-  double getAnswerButtonPaddingBetween() => _screenDimensions.dimen(1);
+  double getAnswerButtonPaddingBetween() => screenDimensions.dimen(1);
+
+  MaterialColor? getAnswerBtnDisabledColor(String answerBtnText) {
+    return isAnswerBtnDisabled(answerBtnText)
+        ? quizQuestionManager.wrongPressedAnswer.contains(answerBtnText)
+            ? Colors.red
+            : quizQuestionManager.isAnswerCorrectInOptionsList(
+                    _currentQuestionInfo.question, answerBtnText)
+                ? Colors.green
+                : null
+        : null;
+  }
+
+  bool isAnswerBtnDisabled(String answerBtnText) {
+    return quizQuestionManager.wrongPressedAnswer.isNotEmpty ||
+        quizQuestionManager.correctAnswersForQuestion.contains(answerBtnText) &&
+            _currentQuestionInfo.pressedAnswers.contains(answerBtnText) ||
+        quizQuestionManager.isGameFinished() ||
+        quizQuestionManager.hintDisabledPossibleAnswers
+            .contains(answerBtnText.toLowerCase());
+  }
 }

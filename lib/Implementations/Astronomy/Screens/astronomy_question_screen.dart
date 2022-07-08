@@ -7,7 +7,6 @@ import 'package:flutter_app_quiz_game/Implementations/Astronomy/Questions/astron
 import 'package:flutter_app_quiz_game/Implementations/Astronomy/Service/astronomy_local_storage.dart';
 import 'package:flutter_app_quiz_game/Implementations/Astronomy/Service/astronomy_screen_manager.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/button_skin_config.dart';
-import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Font/font_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Localization/label_mixin.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/Options/quiz_options_game_screen.dart';
@@ -41,9 +40,13 @@ class AstronomyQuestionScreen
             [gameContext.gameUser.getRandomQuestion(difficulty, category)],
             key: key) {
     initQuizOptionsScreen(
-        QuizQuestionManager<AstronomyGameContext, AstronomyLocalStorage>(
-            gameContext, currentQuestionInfo, AstronomyLocalStorage()),
-        currentQuestionInfo);
+      QuizQuestionManager<AstronomyGameContext, AstronomyLocalStorage>(
+          gameContext, currentQuestionInfo, AstronomyLocalStorage()),
+      currentQuestionInfo,
+      optionsButtonSkinConfig: ButtonSkinConfig(
+          backgroundColor: Colors.blue.withOpacity(0.5),
+          borderRadius: FontConfig.standardBorderRadius * 4),
+    );
   }
 
   @override
@@ -53,6 +56,17 @@ class AstronomyQuestionScreen
   @override
   int nrOfQuestionsToShowInterstitialAd() {
     return 8;
+  }
+
+  @override
+  double getAnswerButtonPaddingBetween() {
+    return screenDimensions.dimen(7);
+  }
+
+  @override
+  Size getAnswerBtnSize() {
+    var dimen = screenDimensions.dimen(33);
+    return Size(dimen, dimen);
   }
 }
 
@@ -83,6 +97,7 @@ class AstronomyQuestionScreenState extends State<AstronomyQuestionScreen>
           .getPrefixToBeDisplayedForQuestion(
               widget.category, widget.difficulty, 0),
     );
+    debugPrint(widget.currentQuestionInfo.question.rawString);
     var firstRowOpts = Row(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -120,12 +135,14 @@ class AstronomyQuestionScreenState extends State<AstronomyQuestionScreen>
     var margin = SizedBox(
       height: screenDimensions.dimen(2),
     );
+    const spacer = const Spacer();
     var container = Container(
       child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             _createAstronomyLevelHeader(),
+            spacer,
             margin,
             margin,
             questionText,
@@ -135,6 +152,7 @@ class AstronomyQuestionScreenState extends State<AstronomyQuestionScreen>
             margin,
             planetImg,
             secondRowOpts,
+            spacer,
           ]),
     );
     return AnimateBackground(
@@ -143,14 +161,20 @@ class AstronomyQuestionScreenState extends State<AstronomyQuestionScreen>
             imageName: "stars", imageExtension: "png"));
   }
 
+  void _onHintButtonClick() {
+    widget.quizQuestionManager.onHintButtonClickForCatDiff(setStateCallback);
+  }
+
   Widget _createAstronomyLevelHeader() {
     return AstronomyLevelHeader(
       gameContext: widget.gameContext,
       availableHints: widget.gameContext.amountAvailableHints,
       animateScore: widget.quizQuestionManager.isGameFinished(),
       disableHintBtn:
-      widget.quizQuestionManager.hintDisabledPossibleAnswers.isNotEmpty,
-      hintButtonOnClick: () {},
+          widget.quizQuestionManager.hintDisabledPossibleAnswers.isNotEmpty,
+      hintButtonOnClick: () {
+        _onHintButtonClick();
+      },
     );
   }
 
@@ -181,24 +205,9 @@ class AstronomyQuestionScreenState extends State<AstronomyQuestionScreen>
         ],
       );
     }
-    var btnDimen = screenDimensions.dimen(33);
-    return Padding(
-        padding: EdgeInsets.all(screenDimensions.dimen(7)),
-        child: MyButton(
-          buttonSkinConfig: ButtonSkinConfig(
-              backgroundColor: Colors.blue.withOpacity(0.5),
-              borderRadius: FontConfig.standardBorderRadius * 4),
-          size: Size(btnDimen, btnDimen),
-          disabled: !widget.currentQuestionInfo.isQuestionOpen(),
-          customContent: btnContent ?? optMyText,
-          onClick: () {
-            widget.quizQuestionManager.onClickAnswerOptionBtn(
-                widget.currentQuestionInfo.question,
-                optText,
-                setStateCallback,
-                widget.goToNextGameScreenCallBack(context));
-          },
-        ));
+    return widget.createPossibleAnswerButton(
+        setStateCallback, widget.goToNextGameScreenCallBack(context), optText,
+        customContent: btnContent ?? optMyText);
   }
 
   void setStateCallback() {

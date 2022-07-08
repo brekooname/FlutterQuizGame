@@ -9,8 +9,6 @@ class AstronomyCampaignLevelService extends CampaignLevelService {
   late CampaignLevel level_3;
   late CampaignLevel level_4;
   late CampaignLevel level_5;
-  late CampaignLevel level_6;
-  late CampaignLevel level_7;
 
   static final AstronomyCampaignLevelService singleton =
       AstronomyCampaignLevelService.internal();
@@ -28,6 +26,11 @@ class AstronomyCampaignLevelService extends CampaignLevelService {
         difficulty: questionConfig.diff0,
         categories: [
           questionConfig.cat1,
+          questionConfig.cat2,
+          questionConfig.cat3,
+          questionConfig.cat4,
+          questionConfig.cat5,
+          questionConfig.cat6,
         ],
       ),
       singleton.level_2 = CampaignLevel(

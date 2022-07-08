@@ -39,6 +39,8 @@ class FontConfig {
 
   static double get standardBorderWidth => displayDimensionScale / 150;
 
+  static double get standardMinMargin => displayDimensionScale / 100;
+
   static double get standardBorderRadius => displayDimensionScale / 20;
 
   static double get standardShadowOffset => displayDimensionScale / 100;

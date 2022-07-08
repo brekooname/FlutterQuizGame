@@ -21,10 +21,10 @@ class AstronomyGameQuestionConfig extends GameQuestionConfig with LabelMixin {
   late QuestionDifficulty diff0;
 
   late Map<QuestionCategory, Size> categoryDiagramImgDimen;
+  late List<AstronomyPlanetProperties> planets;
+
   static final AstronomyGameQuestionConfig singleton =
       AstronomyGameQuestionConfig.internal();
-
-  late List<AstronomyPlanetProperties> planets;
 
   factory AstronomyGameQuestionConfig() {
     singleton.difficulties = [
@@ -184,6 +184,7 @@ class AstronomyGameQuestionConfig extends GameQuestionConfig with LabelMixin {
 
     return res;
   }
+
 }
 
 class AstronomyPlanetProperties {

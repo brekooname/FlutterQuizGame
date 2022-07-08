@@ -38,28 +38,36 @@ class AstronomyQuestionCollectorService extends QuestionCollectorService<
             .where((element) => element.radius != 0)
             .toList();
         for (AstronomyPlanetProperties p in qPlanets) {
-          var opts = [_getRadius(p.id)];
-          opts.addAll(getRandomOptsForQuestion(qPlanets, p.id)
-              .map((e) => _getRadius(e))
-              .toList());
-          result.add(Question(p.id, gameQuestionConfig.diff0, cat,
-              "Radius::" + opts.join("##") + "::0"));
+          var correctAnswer = _getRadius(p.id);
+          var opts = getRandomOptsForQuestion(
+              qPlanets.map((e) => _getRadius(e.id)).toList(), correctAnswer);
+          result.add(Question(
+              p.id,
+              gameQuestionConfig.diff0,
+              cat,
+              "Radius::" +
+                  opts.join("##") +
+                  "::" +
+                  opts.indexOf(correctAnswer).toString()));
         }
       }
     }
     return result;
   }
 
-  List<int> getRandomOptsForQuestion(
-      List<AstronomyPlanetProperties> planets, int correctPlanetId) {
-    var validQPlanets = planets.map((e) => e.id).toList();
-    validQPlanets.shuffle();
-    validQPlanets.remove(correctPlanetId);
-    return [
-      validQPlanets.elementAt(0),
-      validQPlanets.elementAt(1),
-      validQPlanets.elementAt(2)
+  List<String> getRandomOptsForQuestion(
+      List<String> allOptions, String correctAnswer) {
+    var validOptions = allOptions.toSet();
+    validOptions.remove(correctAnswer);
+    List<String> validOptionsList = validOptions.toList();
+    var res = [
+      validOptionsList.elementAt(0),
+      validOptionsList.elementAt(1),
+      validOptionsList.elementAt(2)
     ];
+    res.add(correctAnswer);
+    res.shuffle();
+    return res;
   }
 
   AstronomyPlanetProperties _getById(int id) {

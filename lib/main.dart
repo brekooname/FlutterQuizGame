@@ -4,6 +4,8 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_app_quiz_game/Implementations/Astronomy/Constants/astronomy_campaign_level_service.dart';
+import 'package:flutter_app_quiz_game/Implementations/Astronomy/Constants/astronomy_game_question_config.dart';
+import 'package:flutter_app_quiz_game/Implementations/Astronomy/Service/astronomy_screen_manager.dart';
 import 'package:flutter_app_quiz_game/Implementations/IqGame/Constants/iq_game_campaign_level_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/enum_extension.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -211,9 +213,14 @@ class MyAppState extends State<MyApp> {
       // GeoQuizLocalStorage().setExperience(14000);
       widgetToShow = createScreen(MyApp.gameScreenManager);
       Future.delayed(const Duration(milliseconds: 100), () {
-        MyApp.gameScreenManager.currentScreen!.gameScreenManagerState
-            .showNewGameScreen(MyApp.campaignLevel);
+        (MyApp.gameScreenManager.currentScreen!.gameScreenManagerState
+                as AstronomyScreenManagerState)
+            .showLevelsScreen(AstronomyGameQuestionConfig().gameTypes.first);
       });
+      // Future.delayed(const Duration(milliseconds: 100), () {
+      //   MyApp.gameScreenManager.currentScreen!.gameScreenManagerState
+      //       .showNewGameScreen(MyApp.campaignLevel);
+      // });
       // Future.delayed(const Duration(milliseconds: 100), () {
       //   (MyApp.gameScreenManager.currentScreen!.gameScreenManagerState
       //           as IqGameScreenManagerState)

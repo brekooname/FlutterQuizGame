@@ -7,6 +7,7 @@ import 'package:flutter_app_quiz_game/Lib/Button/hint_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_back_button.dart';
 import 'package:flutter_app_quiz_game/Lib/ScreenDimensions/screen_dimensions_service.dart';
 
+import '../../../Lib/Font/font_config.dart';
 import '../../../Lib/Image/image_service.dart';
 import '../../../main.dart';
 
@@ -58,7 +59,7 @@ class AstronomyLevelHeader extends StatelessWidget {
                 myBackButton,
                 SizedBox(width: screenDimensions.dimen(2)),
                 const Spacer(),
-                // hintBtn,
+                hintBtn,
               ],
             )));
 
@@ -81,12 +82,17 @@ class AstronomyLevelHeader extends StatelessWidget {
       children: [headerButtonsContainer, scoreContainer],
     );
 
-    return stack;
+    return Container(
+        decoration: BoxDecoration(
+            color: Colors.black.withOpacity(0.8),
+            borderRadius:
+                BorderRadius.circular(FontConfig.standardBorderRadius)),
+        child: stack);
   }
 
   Widget _createScoreContainer() {
     List<Widget> scoreColumnRows = [];
-    var dimen = _screenDimensionsService.dimen(8);
+    var dimen = _screenDimensionsService.dimen(7);
     var imgDimen = dimen / 1.2;
     var allQuestions = gameContext.gameUser.getAllQuestions([]);
     allQuestions.sort((a, b) {

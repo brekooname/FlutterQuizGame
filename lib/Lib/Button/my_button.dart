@@ -19,7 +19,7 @@ class MyButton extends StatefulWidget {
   late VoidCallback onClick;
   late Size size;
   late ContentLockedConfig contentLockedConfig;
-  Widget? customContent;
+  late Widget customContent;
 
   bool pressed = false;
   bool disabled;
@@ -50,7 +50,7 @@ class MyButton extends StatefulWidget {
     Color? backgroundColor,
     ButtonSkinConfig? buttonSkinConfig,
     ContentLockedConfig? contentLockedConfig,
-    this.customContent,
+    Widget? customContent,
   }) : super(key: key) {
     this.size = size == null
         ? width == null
@@ -68,23 +68,56 @@ class MyButton extends StatefulWidget {
         ButtonSkinConfig(
             backgroundColor:
                 backgroundColor ?? Colors.lightBlueAccent.shade200);
-
     this.disabledBackgroundColor =
         disabledBackgroundColor ?? Colors.grey.shade400;
+    this.customContent = customContent ?? _createCustomContent();
+  }
 
-    if (customContent == null && text != null) {
-      customContent = MyText(
-        firstCharUppercase: textFirstCharUppercase,
-        text: text!,
-        fontConfig: this.fontConfig,
-        maxLines: textMaxLines,
-        width: this.size.width / 1.05,
+  Widget _createCustomContent() {
+    if (text != null && buttonSkinConfig.image != null) {
+      var labelContainerDecoration = BoxDecoration(
+          color: Colors.white.withOpacity(0.9),
+          borderRadius: BorderRadius.circular(FontConfig.standardBorderRadius));
+      var labelWithPadding = Padding(
+          padding: EdgeInsets.all(FontConfig.standardMinMargin),
+          child: _createMyText());
+      var labelContainer = Container(
+          decoration: labelContainerDecoration, child: labelWithPadding);
+      return SizedBox(
+        width: size.width,
+        height: size.height,
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  buttonSkinConfig.image!,
+                  SizedBox(
+                    height: FontConfig.standardMinMargin,
+                  ),
+                  labelContainer,
+                ])
+          ],
+        ),
       );
-    } else {
-      if (this.buttonSkinConfig.image != null) {
-        customContent = _createImageButtonContent();
-      }
+    } else if (text != null) {
+      return _createMyText();
+    } else if (buttonSkinConfig.image != null) {
+      return _createImageButtonContent();
     }
+    throw AssertionError("No content set for button!!!");
+  }
+
+  MyText _createMyText() {
+    return MyText(
+      firstCharUppercase: textFirstCharUppercase,
+      text: text!,
+      fontConfig: this.fontConfig,
+      maxLines: textMaxLines,
+      width: this.size.width / 1.05,
+    );
   }
 
   Widget _createImageButtonContent() {
@@ -101,10 +134,10 @@ class MyButtonState extends State<MyButton> {
   @override
   Widget build(BuildContext context) {
     Widget buttonContent;
-    if (widget.pressed && widget.buttonSkinConfig.image != null) {
-      buttonContent = ColorUtil.imageDarken(widget.buttonSkinConfig.image!);
+    if (widget.pressed) {
+      buttonContent = ColorUtil.imageDarken(widget.customContent);
     } else {
-      buttonContent = widget.customContent ?? Container();
+      buttonContent = widget.customContent;
     }
 
     if (widget.contentLockedConfig.isContentLocked) {
