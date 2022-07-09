@@ -65,7 +65,7 @@ class AstronomyQuestionScreen
 
   @override
   Size getAnswerBtnSize() {
-    var dimen = screenDimensions.dimen(33);
+    var dimen = screenDimensions.dimen(36);
     return Size(dimen, dimen);
   }
 }
@@ -135,26 +135,24 @@ class AstronomyQuestionScreenState extends State<AstronomyQuestionScreen>
     var margin = SizedBox(
       height: screenDimensions.dimen(2),
     );
-    const spacer = const Spacer();
-    var container = Container(
-      child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            _createAstronomyLevelHeader(),
-            spacer,
-            margin,
-            margin,
-            questionText,
-            margin,
-            firstRowOpts,
-            planetName,
-            margin,
-            planetImg,
-            secondRowOpts,
-            spacer,
-          ]),
-    );
+    const spacer = Spacer();
+    var container = Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          _createAstronomyLevelHeader(),
+          spacer,
+          margin,
+          margin,
+          questionText,
+          margin,
+          firstRowOpts,
+          planetName,
+          margin,
+          planetImg,
+          secondRowOpts,
+          spacer,
+        ]);
     return AnimateBackground(
         mainContent: container,
         particleImage: imageService.getSpecificImage(
@@ -180,25 +178,30 @@ class AstronomyQuestionScreenState extends State<AstronomyQuestionScreen>
 
   Widget createOptionBtn(String optText) {
     Widget? btnContent;
+    var catsWithEarthIcon = [
+      widget._astronomyGameQuestionConfig.cat1,
+      widget._astronomyGameQuestionConfig.cat4
+    ].contains(widget.category);
     MyText optMyText = MyText(
       text: optText,
       fontConfig: FontConfig(
           fontWeight: FontWeight.w700,
           borderColor: Colors.black,
-          fontSize: FontConfig.getCustomFontSize(1.1),
+          fontSize: FontConfig.getCustomFontSize(
+              catsWithEarthIcon && optText.length > 6 ? 1.0 : 1.1),
           fontColor: Colors.white),
     );
-    if (widget.category == widget._astronomyGameQuestionConfig.cat1) {
+    if (catsWithEarthIcon) {
       btnContent = Row(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           optMyText,
           SizedBox(
-            width: screenDimensions.dimen(2.5),
+            width: screenDimensions.dimen(2),
           ),
           imageService.getSpecificImage(
-              maxWidth: screenDimensions.dimen(10),
+              maxWidth: screenDimensions.dimen(8),
               imageName: "earth_stroke",
               imageExtension: "png",
               module: "planets")

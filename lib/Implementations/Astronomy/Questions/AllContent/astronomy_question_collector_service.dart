@@ -102,6 +102,7 @@ class AstronomyQuestionCollectorService extends QuestionCollectorService<
     var validOptions = allOptions.toSet();
     validOptions.remove(correctAnswer);
     List<String> validOptionsList = validOptions.toList();
+    validOptionsList.shuffle();
     var res = [
       validOptionsList.elementAt(0),
       validOptionsList.elementAt(1),
