@@ -215,7 +215,8 @@ class MyAppState extends State<MyApp> {
       Future.delayed(const Duration(milliseconds: 100), () {
         (MyApp.gameScreenManager.currentScreen!.gameScreenManagerState
                 as AstronomyScreenManagerState)
-            .showLevelsScreen(AstronomyGameQuestionConfig().gameTypes.first);
+            .showLevelsScreen(
+                AstronomyCampaignLevelService().gameTypes.elementAt(1));
       });
       // Future.delayed(const Duration(milliseconds: 100), () {
       //   MyApp.gameScreenManager.currentScreen!.gameScreenManagerState

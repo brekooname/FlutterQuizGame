@@ -181,10 +181,24 @@ class AstronomyGameQuestionConfig extends GameQuestionConfig with LabelMixin {
     res.putIfAbsent(
         QuestionCategoryDifficultyWithPrefixCode(category: cat1, prefixCode: 0),
         () => "Planet radius compared to earth radius");
+    res.putIfAbsent(
+        QuestionCategoryDifficultyWithPrefixCode(category: cat2, prefixCode: 0),
+        () => "How much does 1 kg weigh on this planet?");
+    res.putIfAbsent(
+        QuestionCategoryDifficultyWithPrefixCode(category: cat3, prefixCode: 0),
+        () => "Planet radius compared to earth radius");
+    res.putIfAbsent(
+        QuestionCategoryDifficultyWithPrefixCode(category: cat4, prefixCode: 0),
+        () => "Planet radius compared to earth radius");
+    res.putIfAbsent(
+        QuestionCategoryDifficultyWithPrefixCode(category: cat5, prefixCode: 0),
+        () => "Planet radius compared to earth radius");
+    res.putIfAbsent(
+        QuestionCategoryDifficultyWithPrefixCode(category: cat6, prefixCode: 0),
+        () => "Planet radius compared to earth radius");
 
     return res;
   }
-
 }
 
 class AstronomyPlanetProperties {

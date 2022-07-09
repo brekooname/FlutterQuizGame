@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Game/Game/campaign_level.dart';
+import 'package:flutter_app_quiz_game/Implementations/Astronomy/Components/astronomy_components_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/Astronomy/Constants/astronomy_campaign_level_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/Astronomy/Constants/astronomy_game_question_config.dart';
 import 'package:flutter_app_quiz_game/Implementations/Astronomy/Service/astronomy_screen_manager.dart';
 import 'package:flutter_app_quiz_game/Lib/Animation/animation_background.dart';
-import 'package:flutter_app_quiz_game/Lib/Button/button_skin_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/floating_button.dart';
-import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Localization/label_mixin.dart';
 import 'package:flutter_app_quiz_game/Lib/Popup/settings_popup.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
@@ -18,6 +17,8 @@ import '../../../main.dart';
 
 class AstronomyMainMenuScreen
     extends StandardScreen<AstronomyScreenManagerState> {
+  final AstronomyComponentsService _astronomyComponentsService =
+      AstronomyComponentsService();
   final AstronomyGameQuestionConfig _questionConfig =
       AstronomyGameQuestionConfig();
 
@@ -68,10 +69,14 @@ class AstronomyMainMenuScreenState extends State<AstronomyMainMenuScreen>
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
-              children: widget._campaignLevelService.allLevels
-                  .map((e) => _createLevelBtn(
-                      e, widget._campaignLevelService.allLevels.indexOf(e)))
-                  .toList(),
+              children: widget._campaignLevelService.gameTypes.map((gameType) {
+                var levelIndexOf =
+                    widget._campaignLevelService.gameTypes.indexOf(gameType);
+                return widget._astronomyComponentsService.createLevelBtn(() {
+                  onLevelBtnClick(gameType);
+                }, "btn_gametype" + levelIndexOf.toString(),
+                    gameType.gameTypeLabel);
+              }).toList(),
             )
           ],
         ));
@@ -97,26 +102,12 @@ class AstronomyMainMenuScreenState extends State<AstronomyMainMenuScreen>
         floatingActionButtonLocation: FloatingActionButtonLocation.startTop);
   }
 
-  Widget _createLevelBtn(CampaignLevel campaignLevel, int index) {
-    return MyButton(
-      onClick: () {
-        if (campaignLevel.categories.length == 1) {
-          widget.gameScreenManagerState.showNewGameScreen(campaignLevel);
-        } else {
-          widget.gameScreenManagerState.showLevelsScreen(campaignLevel);
-        }
-      },
-      buttonAllPadding: screenDimensions.dimen(10),
-      buttonSkinConfig: ButtonSkinConfig(
-          image: imageService.getSpecificImage(
-              maxWidth: screenDimensions.dimen(25),
-              imageName: "btn_gametype" + index.toString(),
-              imageExtension: "png",
-              module: "buttons"),
-          borderRadius: FontConfig.standardBorderRadius * 4),
-      size: Size(screenDimensions.dimen(30), screenDimensions.dimen(45)),
-      fontConfig: FontConfig(fontColor: Colors.black),
-      text: campaignLevel.name,
-    );
+  void onLevelBtnClick(AstronomyGameType astronomyGameType) {
+    if (astronomyGameType.gameTypeCampaignLevels.length == 1) {
+      widget.gameScreenManagerState
+          .showNewGameScreen(astronomyGameType.gameTypeCampaignLevels.first);
+    } else {
+      widget.gameScreenManagerState.showLevelsScreen(astronomyGameType);
+    }
   }
 }

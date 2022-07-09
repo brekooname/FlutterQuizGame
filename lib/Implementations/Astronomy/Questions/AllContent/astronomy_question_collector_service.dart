@@ -1,4 +1,5 @@
 import 'package:flutter_app_quiz_game/Game/Question/question_collector_service.dart';
+import 'package:flutter_app_quiz_game/Implementations/Astronomy/Constants/astronomy_campaign_level_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/Astronomy/Constants/astronomy_game_question_config.dart';
 import 'package:flutter_app_quiz_game/Implementations/Astronomy/Questions/AllContent/astronomy_all_questions.dart';
 
@@ -10,6 +11,8 @@ import 'dart:math';
 
 class AstronomyQuestionCollectorService extends QuestionCollectorService<
     AstronomyAllQuestions, AstronomyGameQuestionConfig> {
+  final AstronomyCampaignLevelService _campaignLevelService =
+      AstronomyCampaignLevelService();
   static final AstronomyQuestionCollectorService singleton =
       AstronomyQuestionCollectorService.internal();
 
@@ -33,26 +36,65 @@ class AstronomyQuestionCollectorService extends QuestionCollectorService<
       } else
       ////////////
       ////////////
-      if (cat == gameQuestionConfig.cat1) {
+      //This is the "Planets" game type
+      if (_campaignLevelService.findGameTypeForCategory(cat).id == 1) {
         var qPlanets = gameQuestionConfig.planets
-            .where((element) => element.radius != 0)
+            .where((planet) => _getPlanetProperty(cat, planet, true) != "0")
             .toList();
-        for (AstronomyPlanetProperties p in qPlanets) {
-          var correctAnswer = _getRadius(p.id);
+        for (AstronomyPlanetProperties planet in qPlanets) {
+          var correctAnswer = _getPlanetProperty(cat, planet, false);
           var opts = getRandomOptsForQuestion(
-              qPlanets.map((e) => _getRadius(e.id)).toList(), correctAnswer);
-          result.add(Question(
-              p.id,
-              gameQuestionConfig.diff0,
-              cat,
-              "Radius::" +
-                  opts.join("##") +
-                  "::" +
-                  opts.indexOf(correctAnswer).toString()));
+              qPlanets.map((e) => _getPlanetProperty(cat, e, false)).toList(),
+              correctAnswer);
+          result.add(createPlanetPropertyQuestion(
+              planet.id, "", cat, opts, correctAnswer));
         }
       }
     }
     return result;
+  }
+
+  String _getPlanetProperty(QuestionCategory cat,
+      AstronomyPlanetProperties planet, bool rawProperty) {
+    int planetId = planet.id;
+    if (cat == gameQuestionConfig.cat1) {
+      return rawProperty ? planet.radius.toString() : _getRadius(planetId);
+    } else if (cat == gameQuestionConfig.cat2) {
+      return rawProperty
+          ? planet.gravityInRelationToEarth.toString()
+          : _getGravityInRelationToEarth(planetId);
+    } else if (cat == gameQuestionConfig.cat3) {
+      return rawProperty
+          ? planet.lightFromSunInSec.toString()
+          : _getLightFromSunInSec(planetId);
+    } else if (cat == gameQuestionConfig.cat4) {
+      return rawProperty
+          ? planet.massInRelationToEarth.toString()
+          : _getMassInRelationToEarth(planetId);
+    } else if (cat == gameQuestionConfig.cat5) {
+      return rawProperty
+          ? planet.orbitalPeriodInDays.toString()
+          : _getOrbitalPeriod(planetId);
+    } else if (cat == gameQuestionConfig.cat6) {
+      return rawProperty
+          ? planet.meanTempInC.toString()
+          : _getMeanTemp(planetId);
+    }
+    throw AssertionError(
+        "Category" + cat.name + " has no planet property configured!");
+  }
+
+  Question createPlanetPropertyQuestion(int planetId, String question,
+      QuestionCategory cat, List<String> opts, String correctAnswer) {
+    return Question(
+        planetId,
+        gameQuestionConfig.diff0,
+        cat,
+        question +
+            "::" +
+            opts.join("##") +
+            "::" +
+            opts.indexOf(correctAnswer).toString());
   }
 
   List<String> getRandomOptsForQuestion(
@@ -139,7 +181,7 @@ class AstronomyQuestionCollectorService extends QuestionCollectorService<
         res = val.toStringAsFixed(2);
       }
     }
-    return res + " x ";
+    return res + " × ";
   }
 
   AstronomyPlanetProperties _getEarth() => _getById(3);
