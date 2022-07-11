@@ -7,16 +7,29 @@ import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.da
 import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/UniqueAnswers/unqiue_answers_question_category_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Localization/label_mixin.dart';
 
+import '../../../Game/Question/QuestionCategoryService/DependentAnswers/dependent_answers_question_category_service.dart';
 import '../../../Game/Question/QuestionCategoryService/ImageClick/image_click_question_category_service.dart';
 
 class AstronomyGameQuestionConfig extends GameQuestionConfig with LabelMixin {
+  //Solar system
   late QuestionCategory cat0;
+
+  //Planet properties
   late QuestionCategory cat1;
   late QuestionCategory cat2;
   late QuestionCategory cat3;
   late QuestionCategory cat4;
   late QuestionCategory cat5;
   late QuestionCategory cat6;
+
+  //General knowledge
+  late QuestionCategory cat7;
+  late QuestionCategory cat8;
+  late QuestionCategory cat9;
+  late QuestionCategory cat10;
+  late QuestionCategory cat11;
+  late QuestionCategory cat12;
+  late QuestionCategory cat13;
 
   late QuestionDifficulty diff0;
 
@@ -37,6 +50,9 @@ class AstronomyGameQuestionConfig extends GameQuestionConfig with LabelMixin {
           index: 0,
           categoryLabel: "solar system",
           questionCategoryService: ImageClickCategoryQuestionService()),
+      ////////////////
+      ////////////////
+      ////////////////
       singleton.cat1 = QuestionCategory(
           index: 1,
           categoryLabel: "radius",
@@ -61,6 +77,37 @@ class AstronomyGameQuestionConfig extends GameQuestionConfig with LabelMixin {
           index: 6,
           categoryLabel: "average Temperature",
           questionCategoryService: UniqueAnswersCategoryQuestionService()),
+      ////////////////
+      ////////////////
+      ////////////////
+      singleton.cat7 = QuestionCategory(
+          index: 7,
+          categoryLabel: "basic astronomy",
+          questionCategoryService: UniqueAnswersCategoryQuestionService()),
+      singleton.cat8 = QuestionCategory(
+          index: 8,
+          categoryLabel: "the universe",
+          questionCategoryService: UniqueAnswersCategoryQuestionService()),
+      singleton.cat9 = QuestionCategory(
+          index: 9,
+          categoryLabel: "the planets",
+          questionCategoryService: DependentAnswersCategoryQuestionService()),
+      singleton.cat10 = QuestionCategory(
+          index: 10,
+          categoryLabel: "important events",
+          questionCategoryService: UniqueAnswersCategoryQuestionService()),
+      singleton.cat11 = QuestionCategory(
+          index: 11,
+          categoryLabel: "space exploration",
+          questionCategoryService: DependentAnswersCategoryQuestionService()),
+      singleton.cat12 = QuestionCategory(
+          index: 12,
+          categoryLabel: "astronomical objects",
+          questionCategoryService: DependentAnswersCategoryQuestionService()),
+      singleton.cat13 = QuestionCategory(
+          index: 13,
+          categoryLabel: "astronomical instruments",
+          questionCategoryService: DependentAnswersCategoryQuestionService()),
     ];
 
     singleton.categoryDiagramImgDimen = {

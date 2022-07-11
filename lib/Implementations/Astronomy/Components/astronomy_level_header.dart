@@ -20,7 +20,7 @@ class AstronomyLevelHeader extends StatelessWidget {
   bool animateScore;
   int availableHints;
 
-  VoidCallback hintButtonOnClick;
+  VoidCallback? hintButtonOnClick;
   bool disableHintBtn;
 
   ScreenDimensionsService screenDimensions = ScreenDimensionsService();
@@ -34,20 +34,22 @@ class AstronomyLevelHeader extends StatelessWidget {
     Key? key,
     this.animateScore = false,
     this.disableHintBtn = false,
+    this.hintButtonOnClick,
     required this.gameContext,
-    required this.hintButtonOnClick,
     required this.availableHints,
   }) : super(key: key);
 
   Widget createLevelHeader(BuildContext context) {
     var myBackButton = MyBackButton();
-    var hintBtn = HintButton(
-        onClick: hintButtonOnClick,
-        availableHints: availableHints,
-        buttonSize: myBackButton.buttonSize,
-        disabled: disableHintBtn,
-        watchRewardedAdForHint: MyApp.isExtraContentLocked,
-        showAvailableHintsText: true);
+    var hintBtn = hintButtonOnClick == null
+        ? Container()
+        : HintButton(
+            onClick: hintButtonOnClick!,
+            availableHints: availableHints,
+            buttonSize: myBackButton.buttonSize,
+            disabled: disableHintBtn,
+            watchRewardedAdForHint: MyApp.isExtraContentLocked,
+            showAvailableHintsText: true);
 
     var headerHeight = screenDimensions.dimen(14);
     var headerButtonsContainer = SizedBox(

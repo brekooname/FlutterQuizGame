@@ -124,9 +124,8 @@ class AstronomySolarSystemScreenState extends State<AstronomySolarSystemScreen>
       gameContext: widget.gameContext,
       availableHints: widget.gameContext.amountAvailableHints,
       animateScore: widget.quizQuestionManager.isGameFinished(),
-      disableHintBtn:
-          widget.quizQuestionManager.hintDisabledPossibleAnswers.isNotEmpty,
-      hintButtonOnClick: () {},
+      disableHintBtn: true,
+      hintButtonOnClick: null,
     );
   }
 
