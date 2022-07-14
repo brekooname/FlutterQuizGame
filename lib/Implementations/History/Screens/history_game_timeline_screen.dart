@@ -29,7 +29,8 @@ import '../../../Lib/Button/button_skin_config.dart';
 import '../../../Lib/Font/font_config.dart';
 
 class HistoryGameTimelineScreen
-    extends GameScreen<HistoryGameContext, HistoryGameScreenManagerState>
+    extends GameScreen<HistoryGameContext, HistoryGameScreenManagerState,
+        HistoryCampaignLevelService>
     with QuizQuestionContainer {
   static const int scrollToItemDurationMillis = 600;
   static const int showInterstitialAdEveryNQuestions = 8;

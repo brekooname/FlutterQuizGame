@@ -26,8 +26,8 @@ import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'dart:math' as math;
 
-class DopeWarsQuestionScreen
-    extends GameScreen<DopeWarsGameContext, DopeWarsScreenManagerState> {
+class DopeWarsQuestionScreen extends GameScreen<DopeWarsGameContext,
+    DopeWarsScreenManagerState, DopeWarsCampaignLevelService> {
   late DopeWarsResourceTransactionService dopeWarsResourceTransactionService;
 
   DopeWarsQuestionScreen(

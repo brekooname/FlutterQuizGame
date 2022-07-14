@@ -19,11 +19,12 @@ import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 import '../../../Lib/Animation/animation_background.dart';
 import '../Components/astronomy_level_header.dart';
 
-class AstronomyQuestionScreen
-    extends GameScreen<AstronomyGameContext, AstronomyScreenManagerState>
+class AstronomyQuestionScreen extends GameScreen<AstronomyGameContext,
+        AstronomyScreenManagerState, AstronomyCampaignLevelService>
     with QuizOptionsGameScreen<QuizQuestionManager> {
   final AstronomyGameQuestionConfig _astronomyGameQuestionConfig =
       AstronomyGameQuestionConfig();
+  late AstronomyGameType _gameType;
 
   AstronomyQuestionScreen(
     AstronomyScreenManagerState gameScreenManagerState, {
@@ -39,14 +40,28 @@ class AstronomyQuestionScreen
             category,
             [gameContext.gameUser.getRandomQuestion(difficulty, category)],
             key: key) {
+    _gameType = campaignLevelService.findGameTypeForCategory(category);
     initQuizOptionsScreen(
       QuizQuestionManager<AstronomyGameContext, AstronomyLocalStorage>(
           gameContext, currentQuestionInfo, AstronomyLocalStorage()),
       currentQuestionInfo,
-      optionsButtonSkinConfig: ButtonSkinConfig(
-          backgroundColor: Colors.blue.withOpacity(0.5),
-          borderRadius: FontConfig.standardBorderRadius * 4),
+      questionImage: _getQuestionImage(),
+      optionsButtonSkinConfig: campaignLevelService.isPlanetsGameType(_gameType)
+          ? ButtonSkinConfig(
+              backgroundColor: Colors.blue.withOpacity(0.5),
+              borderRadius: FontConfig.standardBorderRadius * 4)
+          : null,
     );
+  }
+
+  Image? _getQuestionImage() {
+    if (campaignLevelService.isImageQuestionGameType(_gameType)) {
+      var imageName = currentQuestionInfo.question.index.toString();
+      var module = "questions/" + category.name;
+      return imageService.getSpecificImage(
+          module: module, imageExtension: "jpg", imageName: imageName);
+    }
+    return null;
   }
 
   @override
@@ -60,13 +75,19 @@ class AstronomyQuestionScreen
 
   @override
   double getAnswerButtonPaddingBetween() {
-    return screenDimensions.dimen(7);
+    return campaignLevelService.isPlanetsGameType(_gameType)
+        ? screenDimensions.dimen(7)
+        : super.getAnswerButtonPaddingBetween();
   }
 
   @override
   Size getAnswerBtnSize() {
-    var dimen = screenDimensions.dimen(36);
-    return Size(dimen, dimen);
+    if (campaignLevelService.isPlanetsGameType(_gameType)) {
+      var dimen = screenDimensions.dimen(36);
+      return Size(dimen, dimen);
+    } else {
+      return super.getAnswerBtnSize();
+    }
   }
 }
 
@@ -74,6 +95,39 @@ class AstronomyQuestionScreenState extends State<AstronomyQuestionScreen>
     with ScreenState, QuizQuestionContainer, LabelMixin {
   @override
   Widget build(BuildContext context) {
+    Widget container =
+        widget.campaignLevelService.isPlanetsGameType(widget._gameType)
+            ? _createPlanetsQuestionContainer()
+            : _createQuestionContainer();
+    return AnimateBackground(
+        mainContent: container,
+        particleImage: imageService.getSpecificImage(
+            imageName: "stars", imageExtension: "png"));
+  }
+
+  Widget _createQuestionContainer() {
+    Widget questionContainer = createQuestionTextContainer(
+      widget.currentQuestionInfo.question,
+      2,
+      4,
+    );
+    Widget optionsRows = widget.createOptionRows(
+        setStateCallback, widget.goToNextGameScreenCallBack(context));
+    const spacer = Spacer();
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: <Widget>[
+        _createAstronomyLevelHeader(),
+        spacer,
+        questionContainer,
+        optionsRows,
+        spacer,
+      ],
+    );
+  }
+
+  Widget _createPlanetsQuestionContainer() {
     var planetDimen = screenDimensions.dimen(25);
     var question = widget.currentQuestionInfo.question;
     var planetId = question.index;
@@ -153,10 +207,7 @@ class AstronomyQuestionScreenState extends State<AstronomyQuestionScreen>
           secondRowOpts,
           spacer,
         ]);
-    return AnimateBackground(
-        mainContent: container,
-        particleImage: imageService.getSpecificImage(
-            imageName: "stars", imageExtension: "png"));
+    return container;
   }
 
   void _onHintButtonClick() {

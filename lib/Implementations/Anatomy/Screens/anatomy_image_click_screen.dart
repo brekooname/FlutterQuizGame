@@ -19,9 +19,10 @@ import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
 
 import 'anatomy_question_screen.dart';
 
-class AnatomyImageClickScreen
-    extends GameScreen<AnatomyGameContext, AnatomyScreenManagerState>
-    with ImageClickScreen<QuizQuestionManager> {
+class AnatomyImageClickScreen extends GameScreen<
+    AnatomyGameContext,
+    AnatomyScreenManagerState,
+    AnatomyCampaignLevelService> with ImageClickScreen<QuizQuestionManager> {
   final AnatomyQuestionCollectorService _anatomyQuestionCollectorService =
       AnatomyQuestionCollectorService();
   AnatomyGameQuestionConfig gameQuestionConfig = AnatomyGameQuestionConfig();

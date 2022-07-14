@@ -114,9 +114,9 @@ class MyButton extends StatefulWidget {
     return MyText(
       firstCharUppercase: textFirstCharUppercase,
       text: text!,
-      fontConfig: this.fontConfig,
+      fontConfig: fontConfig,
       maxLines: textMaxLines,
-      width: this.size.width / 1.05,
+      width: size.width / 1.05,
     );
   }
 

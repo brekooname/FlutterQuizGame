@@ -13,13 +13,16 @@ import 'package:flutter_app_quiz_game/Lib/Storage/game_local_storage.dart';
 
 import 'game_screen_manager_state.dart';
 
-abstract class GameScreen<TGameContext extends GameContext,
-        TGameScreenManagerState extends GameScreenManagerState>
+abstract class GameScreen<
+        TGameContext extends GameContext,
+        TGameScreenManagerState extends GameScreenManagerState,
+        TCampaignLevelService extends CampaignLevelService>
     extends StandardScreen<TGameScreenManagerState> {
   GameLocalStorage gameLocalStorage = GameLocalStorage();
   AdService adService = AdService();
   MyAudioPlayer audioPlayer = MyAudioPlayer();
   ImageService imageService = ImageService();
+  TCampaignLevelService campaignLevelService;
   late CampaignLevel campaignLevel;
   TGameContext gameContext;
   QuestionDifficulty difficulty;
@@ -28,7 +31,7 @@ abstract class GameScreen<TGameContext extends GameContext,
 
   GameScreen(
       TGameScreenManagerState gameScreenManagerState,
-      CampaignLevelService campaignLevelService,
+      this.campaignLevelService,
       this.gameContext,
       this.difficulty,
       this.category,

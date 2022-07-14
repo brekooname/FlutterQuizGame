@@ -31,11 +31,6 @@ class AstronomyQuestionCollectorService extends QuestionCollectorService<
     for (QuestionCategory cat in categories ?? gameQuestionConfig.categories) {
       ////////////
       ////////////
-      if (cat == gameQuestionConfig.cat0) {
-        result.addAll(allQuestionsService.getAllQuestionsForCategory(cat));
-      } else
-      ////////////
-      ////////////
       //This is the "Planets" game type
       if (_campaignLevelService.findGameTypeForCategory(cat).id == 1) {
         var qPlanets = gameQuestionConfig.planets
@@ -49,6 +44,11 @@ class AstronomyQuestionCollectorService extends QuestionCollectorService<
           result.add(createPlanetPropertyQuestion(
               planet.id, "", cat, opts, correctAnswer));
         }
+      }
+      ////////////
+      ////////////
+      else {
+        result.addAll(allQuestionsService.getAllQuestionsForCategory(cat));
       }
     }
     return result;

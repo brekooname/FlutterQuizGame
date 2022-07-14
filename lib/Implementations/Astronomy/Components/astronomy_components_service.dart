@@ -26,7 +26,7 @@ class AstronomyComponentsService extends QuizGameLocalStorage {
 
   Widget createLevelBtn(
       VoidCallback onClick, String btnImageName, String btnText) {
-    var horizMargin = _screenDimensions.dimen(8);
+    var horizMargin = _screenDimensions.dimen(3);
     var vertMargin = _screenDimensions.dimen(2);
     return Padding(
         padding: EdgeInsets.only(
@@ -38,7 +38,6 @@ class AstronomyComponentsService extends QuizGameLocalStorage {
           onClick: () {
             onClick.call();
           },
-          // buttonAllPadding: _screenDimensions.dimen(10),
           buttonSkinConfig: ButtonSkinConfig(
               image: _imageService.getSpecificImage(
                   maxWidth: _screenDimensions.dimen(20),
@@ -46,7 +45,7 @@ class AstronomyComponentsService extends QuizGameLocalStorage {
                   imageExtension: "png",
                   module: "buttons"),
               borderRadius: FontConfig.standardBorderRadius * 4),
-          size: Size(_screenDimensions.dimen(32), _screenDimensions.dimen(42)),
+          size: Size(_screenDimensions.dimen(40), _screenDimensions.dimen(42)),
           fontConfig: FontConfig(fontColor: Colors.black),
           text: btnText,
           textMaxLines: 2,

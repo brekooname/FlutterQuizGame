@@ -21,9 +21,10 @@ import '../../../Lib/ScreenDimensions/screen_dimensions_service.dart';
 import '../../../Lib/Text/my_text.dart';
 import '../Components/astronomy_level_header.dart';
 
-class AstronomySolarSystemScreen
-    extends GameScreen<AstronomyGameContext, AstronomyScreenManagerState>
-    with ImageClickScreen<QuizQuestionManager> {
+class AstronomySolarSystemScreen extends GameScreen<
+    AstronomyGameContext,
+    AstronomyScreenManagerState,
+    AstronomyCampaignLevelService> with ImageClickScreen<QuizQuestionManager> {
   ScreenDimensionsService screenDimensions = ScreenDimensionsService();
   AstronomyGameQuestionConfig gameQuestionConfig =
       AstronomyGameQuestionConfig();

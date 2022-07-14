@@ -116,15 +116,18 @@ flutter:
     - assets/implementations/astronomy/buttons/
     - assets/implementations/astronomy/categories/
     - assets/implementations/astronomy/planets/
+    - assets/implementations/astronomy/questions/cat11/
+    - assets/implementations/astronomy/questions/cat12/
+    - assets/implementations/astronomy/questions/cat13/
     ########################
     ###### IQGAME ################################################################################
     ########################
-    - assets/implementations/iqgame/
-    - assets/implementations/iqgame/buttons/
-    - assets/implementations/iqgame/cat0/
-    - assets/implementations/iqgame/cat1/
-    - assets/implementations/iqgame/cat2/
-    - assets/implementations/iqgame/cat5/
+#    - assets/implementations/iqgame/
+#    - assets/implementations/iqgame/buttons/
+#    - assets/implementations/iqgame/cat0/
+#    - assets/implementations/iqgame/cat1/
+#    - assets/implementations/iqgame/cat2/
+#    - assets/implementations/iqgame/cat5/
     ########################
     ###### ANATOMY #################################################################################
     ########################

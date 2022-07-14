@@ -38,7 +38,7 @@ class AstronomyLevelsScreenState extends State<AstronomyLevelsScreen>
   Widget build(BuildContext context) {
     debugPrint("build main menu");
     var campaignText = MyText(
-        text: "Planets",
+        text: widget.gameType.gameTypeLabel,
         fontConfig: FontConfig(
             fontColor: Colors.blue.shade50,
             borderColor: Colors.indigo.shade800,
@@ -98,6 +98,11 @@ class AstronomyLevelsScreenState extends State<AstronomyLevelsScreen>
       }
       i++;
     }
+    btnRows.add(Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: btns,
+    ));
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,

@@ -66,18 +66,7 @@ class AstronomyMainMenuScreenState extends State<AstronomyMainMenuScreen>
             SizedBox(height: screenDimensions.dimen(11)),
             gameTitle,
             SizedBox(height: screenDimensions.dimen(14)),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: widget._campaignLevelService.gameTypes.map((gameType) {
-                var levelIndexOf =
-                    widget._campaignLevelService.gameTypes.indexOf(gameType);
-                return widget._astronomyComponentsService.createLevelBtn(() {
-                  onLevelBtnClick(gameType);
-                }, "btn_gametype" + levelIndexOf.toString(),
-                    gameType.gameTypeLabel);
-              }).toList(),
-            )
+            _createGameTypeBtnRows(),
           ],
         ));
 
@@ -100,6 +89,36 @@ class AstronomyMainMenuScreenState extends State<AstronomyMainMenuScreen>
           ),
         ]),
         floatingActionButtonLocation: FloatingActionButtonLocation.startTop);
+  }
+
+  Widget _createGameTypeBtnRows() {
+    List<Widget> btnRows = [];
+    List<Widget> btns = [];
+    int i = 0;
+    for (AstronomyGameType gameType in widget._campaignLevelService.gameTypes) {
+      btns.add(widget._astronomyComponentsService.createLevelBtn(() {
+        onLevelBtnClick(gameType);
+      }, "btn_gametype" + gameType.id.toString(), gameType.gameTypeLabel));
+      if (i > 0 && (i + 1) % 2 == 0) {
+        btnRows.add(Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: btns,
+        ));
+        btns = [];
+      }
+      i++;
+    }
+    btnRows.add(Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: btns,
+    ));
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: btnRows,
+    );
   }
 
   void onLevelBtnClick(AstronomyGameType astronomyGameType) {

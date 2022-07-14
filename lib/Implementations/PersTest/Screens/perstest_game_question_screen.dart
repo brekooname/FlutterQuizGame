@@ -9,8 +9,8 @@ import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/quiz_question_container.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
 
-class PersTestQuestionScreen
-    extends GameScreen<PersTestGameContext, PersTestGameScreenManagerState> {
+class PersTestQuestionScreen extends GameScreen<PersTestGameContext,
+    PersTestGameScreenManagerState, PersTestCampaignLevelService> {
   late PersTestGameTypePlay persTestGameType;
 
   PersTestQuestionScreen(

@@ -16,8 +16,8 @@ import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
 
 import 'history_game_timeline_screen.dart';
 
-class HistoryGameQuestionScreen
-    extends GameScreen<HistoryGameContext, HistoryGameScreenManagerState>
+class HistoryGameQuestionScreen extends GameScreen<HistoryGameContext,
+        HistoryGameScreenManagerState, HistoryCampaignLevelService>
     with QuizOptionsGameScreen<QuizQuestionManager> {
   HistoryGameQuestionScreen(
     HistoryGameScreenManagerState gameScreenManagerState, {

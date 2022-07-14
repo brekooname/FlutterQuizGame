@@ -3,15 +3,11 @@ import 'package:flutter_app_quiz_game/Game/Game/campaign_level_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/Astronomy/Constants/astronomy_game_question_config.dart';
 
 import '../../../Game/Question/Model/question_category.dart';
+import '../../../Game/Question/Model/question_difficulty.dart';
 
 class AstronomyCampaignLevelService extends CampaignLevelService {
   late CampaignLevel level_0;
   late CampaignLevel level_1;
-  late CampaignLevel level_2;
-  late CampaignLevel level_3;
-  late CampaignLevel level_4;
-  late CampaignLevel level_5;
-  late CampaignLevel level_6;
 
   late List<AstronomyGameType> gameTypes;
 
@@ -20,74 +16,54 @@ class AstronomyCampaignLevelService extends CampaignLevelService {
 
   factory AstronomyCampaignLevelService() {
     var questionConfig = AstronomyGameQuestionConfig();
-    singleton.allLevels = [
-      singleton.level_0 = CampaignLevel(
-        difficulty: questionConfig.diff0,
-        categories: [
-          questionConfig.cat0,
-        ],
-      ),
-      singleton.level_1 = CampaignLevel(
-        difficulty: questionConfig.diff0,
-        categories: [
-          questionConfig.cat1,
-        ],
-      ),
-      singleton.level_2 = CampaignLevel(
-        difficulty: questionConfig.diff0,
-        categories: [
-          questionConfig.cat2,
-        ],
-      ),
-      singleton.level_3 = CampaignLevel(
-        difficulty: questionConfig.diff0,
-        categories: [
-          questionConfig.cat3,
-        ],
-      ),
-      singleton.level_4 = CampaignLevel(
-        difficulty: questionConfig.diff0,
-        categories: [
-          questionConfig.cat4,
-        ],
-      ),
-      singleton.level_5 = CampaignLevel(
-        difficulty: questionConfig.diff0,
-        categories: [
-          questionConfig.cat5,
-        ],
-      ),
-      singleton.level_6 = CampaignLevel(
-        difficulty: questionConfig.diff0,
-        categories: [
-          questionConfig.cat6,
-        ],
-      )
-    ];
+
+    singleton.allLevels = [];
+    for (QuestionCategory cat in questionConfig.categories) {
+      for (QuestionDifficulty diff in questionConfig.difficulties) {
+        singleton.allLevels.add(CampaignLevel(
+          difficulty: diff,
+          categories: [
+            cat,
+          ],
+        ));
+      }
+    }
+
+    singleton.level_0 = singleton.allLevels[0];
+    singleton.level_1 = singleton.allLevels[1];
 
     singleton.gameTypes = [
       AstronomyGameType(
         0,
         "Solar System",
-        [
-          singleton.level_0,
-        ],
+        singleton.allLevels.sublist(0, 1),
       ),
       AstronomyGameType(
         1,
         "Planets",
-        [
-          singleton.level_1,
-          singleton.level_2,
-          singleton.level_3,
-          singleton.level_4,
-          singleton.level_5,
-          singleton.level_6,
-        ],
+        singleton.allLevels.sublist(1, 7),
+      ),
+      AstronomyGameType(
+        2,
+        "Astronomy Trivia",
+        singleton.allLevels.sublist(7, 11),
+      ),
+      AstronomyGameType(
+        3,
+        "Recognize the Image",
+        singleton.allLevels.sublist(11, 14),
       ),
     ];
 
     return singleton;
+  }
+
+  bool isPlanetsGameType(AstronomyGameType gameType) {
+    return gameType.id == 1;
+  }
+
+  bool isImageQuestionGameType(AstronomyGameType gameType) {
+    return gameType.id == 3;
   }
 
   AstronomyGameType findGameTypeForCategory(QuestionCategory cat) {

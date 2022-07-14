@@ -243,6 +243,18 @@ class AstronomyGameQuestionConfig extends GameQuestionConfig with LabelMixin {
     res.putIfAbsent(
         QuestionCategoryDifficultyWithPrefixCode(category: cat6, prefixCode: 0),
         () => "Planet radius compared to earth radius");
+    res.putIfAbsent(
+        QuestionCategoryDifficultyWithPrefixCode(
+            category: cat11, prefixCode: 0),
+        () => "space exploration");
+    res.putIfAbsent(
+        QuestionCategoryDifficultyWithPrefixCode(
+            category: cat12, prefixCode: 0),
+        () => "astronomical objects");
+    res.putIfAbsent(
+        QuestionCategoryDifficultyWithPrefixCode(
+            category: cat13, prefixCode: 0),
+        () => "astronomical instruments");
 
     return res;
   }

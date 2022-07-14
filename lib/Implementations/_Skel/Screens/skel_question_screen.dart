@@ -13,7 +13,7 @@ import 'package:flutter_app_quiz_game/Lib/Screen/Game/quiz_question_manager.dart
 import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
 
 class SkelQuestionScreen
-    extends GameScreen<SkelGameContext, SkelScreenManagerState>
+    extends GameScreen<SkelGameContext, SkelScreenManagerState, SkelCampaignLevelService>
     with QuizOptionsGameScreen<QuizQuestionManager> {
   SkelQuestionScreen(
     SkelScreenManagerState gameScreenManagerState, {

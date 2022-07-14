@@ -18,8 +18,8 @@ import '../../../main.dart';
 import '../Components/iq_game_level_header.dart';
 import '../Service/iq_game_local_storage.dart';
 
-class IqGameQuestionScreen
-    extends GameScreen<IqGameContext, IqGameScreenManagerState> {
+class IqGameQuestionScreen extends GameScreen<IqGameContext,
+    IqGameScreenManagerState, IqGameCampaignLevelService> {
   IqGameGameTypeCreator iqGameGameTypeCreator;
   IqGameLocalStorage iqGameLocalStorage = IqGameLocalStorage();
 

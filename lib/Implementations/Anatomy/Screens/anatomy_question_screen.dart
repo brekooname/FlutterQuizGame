@@ -19,8 +19,8 @@ import 'package:flutter_app_quiz_game/Lib/Screen/Game/quiz_question_container.da
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/quiz_question_manager.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
 
-class AnatomyQuestionScreen
-    extends GameScreen<AnatomyGameContext, AnatomyScreenManagerState>
+class AnatomyQuestionScreen extends GameScreen<AnatomyGameContext,
+        AnatomyScreenManagerState, AnatomyCampaignLevelService>
     with QuizOptionsGameScreen<QuizQuestionManager> {
   final AnatomyQuestionCollectorService _anatomyQuestionCollectorService =
       AnatomyQuestionCollectorService();

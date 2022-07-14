@@ -27,8 +27,8 @@ import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
 
 import 'geoquiz_game_hangman_screen.dart';
 
-class GeoQuizQuestionScreen
-    extends GameScreen<GeoQuizGameContext, GeoQuizGameScreenManagerState>
+class GeoQuizQuestionScreen extends GameScreen<GeoQuizGameContext,
+        GeoQuizGameScreenManagerState, GeoQuizCampaignLevelService>
     with QuizOptionsGameScreen<GeoQuizQuizQuestionManager> {
   final GeoQuizCountryUtils _geoQuizCountryUtils = GeoQuizCountryUtils();
 
