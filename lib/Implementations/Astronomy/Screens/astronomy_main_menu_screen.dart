@@ -1,29 +1,34 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app_quiz_game/Game/Game/campaign_level.dart';
 import 'package:flutter_app_quiz_game/Implementations/Astronomy/Components/astronomy_components_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/Astronomy/Constants/astronomy_campaign_level_service.dart';
-import 'package:flutter_app_quiz_game/Implementations/Astronomy/Constants/astronomy_game_question_config.dart';
 import 'package:flutter_app_quiz_game/Implementations/Astronomy/Service/astronomy_screen_manager.dart';
 import 'package:flutter_app_quiz_game/Lib/Animation/animation_background.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/floating_button.dart';
+import 'package:flutter_app_quiz_game/Lib/Extensions/map_extension.dart';
 import 'package:flutter_app_quiz_game/Lib/Localization/label_mixin.dart';
 import 'package:flutter_app_quiz_game/Lib/Popup/settings_popup.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/standard_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/game_title.dart';
 
+import '../../../Game/Question/Model/category_difficulty.dart';
 import '../../../Lib/Font/font_config.dart';
 import '../../../main.dart';
+import '../Constants/astronomy_game_question_config.dart';
+import '../Questions/AllContent/astronomy_question_collector_service.dart';
+import '../Service/astronomy_local_storage.dart';
 
 class AstronomyMainMenuScreen
     extends StandardScreen<AstronomyScreenManagerState> {
   final AstronomyComponentsService _astronomyComponentsService =
       AstronomyComponentsService();
-  final AstronomyGameQuestionConfig _questionConfig =
-      AstronomyGameQuestionConfig();
-
+  final AstronomyLocalStorage _astronomyLocalStorage = AstronomyLocalStorage();
   final AstronomyCampaignLevelService _campaignLevelService =
       AstronomyCampaignLevelService();
+  final AstronomyQuestionCollectorService _questionCollectorService =
+      AstronomyQuestionCollectorService();
+  final AstronomyGameQuestionConfig _questionConfig =
+      AstronomyGameQuestionConfig();
 
   AstronomyMainMenuScreen(AstronomyScreenManagerState gameScreenManagerState,
       {Key? key})
@@ -98,7 +103,21 @@ class AstronomyMainMenuScreenState extends State<AstronomyMainMenuScreen>
     for (AstronomyGameType gameType in widget._campaignLevelService.gameTypes) {
       btns.add(widget._astronomyComponentsService.createLevelBtn(() {
         onLevelBtnClick(gameType);
-      }, "btn_gametype" + gameType.id.toString(), gameType.gameTypeLabel));
+      },
+          "btn_gametype" + gameType.id.toString(),
+          gameType.gameTypeLabel,
+          gameType.gameTypeAllCategories
+              .map((e) =>
+          widget._astronomyLocalStorage.getWonQuestionsForCat(e).length)
+          .reduce((a, b) => a + b),
+          gameType.gameTypeAllCategories
+              .map((e) =>
+                  widget._questionCollectorService
+                      .totalNrOfQuestionsForCategoryDifficulty
+                      .get(CategoryDifficulty(
+                          e, widget._questionConfig.diff0)) ??
+                  0)
+              .reduce((a, b) => a + b)));
       if (i > 0 && (i + 1) % 2 == 0) {
         btnRows.add(Row(
           mainAxisAlignment: MainAxisAlignment.center,

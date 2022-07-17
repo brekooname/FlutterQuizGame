@@ -1,13 +1,15 @@
+import 'dart:collection';
+
 import 'package:flutter_app_quiz_game/Game/Question/question_collector_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/Astronomy/Constants/astronomy_campaign_level_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/Astronomy/Constants/astronomy_game_question_config.dart';
 import 'package:flutter_app_quiz_game/Implementations/Astronomy/Questions/AllContent/astronomy_all_questions.dart';
+import 'package:flutter_app_quiz_game/Lib/Extensions/map_extension.dart';
 
+import '../../../../Game/Question/Model/category_difficulty.dart';
 import '../../../../Game/Question/Model/question.dart';
 import '../../../../Game/Question/Model/question_category.dart';
 import '../../../../Game/Question/Model/question_difficulty.dart';
-
-import 'dart:math';
 
 class AstronomyQuestionCollectorService extends QuestionCollectorService<
     AstronomyAllQuestions, AstronomyGameQuestionConfig> {
@@ -15,6 +17,27 @@ class AstronomyQuestionCollectorService extends QuestionCollectorService<
       AstronomyCampaignLevelService();
   static final AstronomyQuestionCollectorService singleton =
       AstronomyQuestionCollectorService.internal();
+
+  final Map<CategoryDifficulty, int> _totalNrOfQuestionsForCategoryDifficulty =
+      HashMap();
+
+  Map<CategoryDifficulty, int> get totalNrOfQuestionsForCategoryDifficulty {
+    if (_totalNrOfQuestionsForCategoryDifficulty.isEmpty) {
+      initTotalQuestions();
+    }
+    return _totalNrOfQuestionsForCategoryDifficulty;
+  }
+
+  void initTotalQuestions() {
+    for (QuestionCategory cat in gameQuestionConfig.categories) {
+      for (QuestionDifficulty diff in gameQuestionConfig.difficulties) {
+        int nrOfQuestions =
+            getAllQuestions(difficulties: [diff], categories: [cat]).length;
+        _totalNrOfQuestionsForCategoryDifficulty.putIfAbsent(
+            CategoryDifficulty(cat, diff), () => nrOfQuestions);
+      }
+    }
+  }
 
   factory AstronomyQuestionCollectorService() {
     return singleton;

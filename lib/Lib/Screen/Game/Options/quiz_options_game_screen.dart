@@ -45,13 +45,15 @@ mixin QuizOptionsGameScreen<TQuizQuestionManager extends QuizQuestionManager> {
   Widget createOptionRows(
       VoidCallback refreshSetState, VoidCallback goToNextScreenAfterPress,
       {Widget? widgetBetweenImageAndOptionRows,
-      double? questionImageHeightPercent}) {
+      double? questionImageHeightPercent,
+      FontConfig? optionTextFontConfig}) {
     List<Row> answerRows = [];
     int answersOnRow = 2;
     List<Widget> answerBtns = [];
     for (String possibleAnswer in quizQuestionManager.possibleAnswers) {
       answerBtns.add(createPossibleAnswerButton(
-          refreshSetState, goToNextScreenAfterPress, possibleAnswer));
+          refreshSetState, goToNextScreenAfterPress, possibleAnswer,
+          fontConfig: optionTextFontConfig));
       if (answerBtns.length == answersOnRow) {
         answerRows.add(Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -131,15 +133,15 @@ mixin QuizOptionsGameScreen<TQuizQuestionManager extends QuizQuestionManager> {
 
   Widget createPossibleAnswerButton(VoidCallback refreshSetState,
       VoidCallback goToNextScreenAfterPress, String answerBtnText,
-      {Widget? customContent}) {
+      {Widget? customContent, FontConfig? fontConfig}) {
     var btnSize = getAnswerBtnSize();
 
     return Padding(
         padding: EdgeInsets.all(getAnswerButtonPaddingBetween()),
         child: MyButton(
             size: btnSize,
-            disabled: isAnswerBtnDisabled(answerBtnText),
-            disabledBackgroundColor: getAnswerBtnDisabledColor(answerBtnText),
+            disabled: _isAnswerBtnDisabled(answerBtnText),
+            disabledBackgroundColor: _getAnswerBtnDisabledColor(answerBtnText),
             onClick: () {
               quizQuestionManager.onClickAnswerOptionBtn(
                   _currentQuestionInfo.question,
@@ -151,6 +153,7 @@ mixin QuizOptionsGameScreen<TQuizQuestionManager extends QuizQuestionManager> {
                 _optionsButtonSkinConfig ?? _defaultButtonSkinConfig(),
             customContent: customContent ??
                 MyText(
+                  fontConfig: fontConfig,
                   text: answerBtnText,
                   maxLines:
                       quizQuestionManager.getValueBasedOnNrOfPossibleAnswers(
@@ -174,8 +177,8 @@ mixin QuizOptionsGameScreen<TQuizQuestionManager extends QuizQuestionManager> {
 
   double getAnswerButtonPaddingBetween() => screenDimensions.dimen(1);
 
-  MaterialColor? getAnswerBtnDisabledColor(String answerBtnText) {
-    return isAnswerBtnDisabled(answerBtnText)
+  MaterialColor? _getAnswerBtnDisabledColor(String answerBtnText) {
+    return _isAnswerBtnDisabled(answerBtnText)
         ? quizQuestionManager.wrongPressedAnswer.contains(answerBtnText)
             ? Colors.red
             : quizQuestionManager.isAnswerCorrectInOptionsList(
@@ -185,7 +188,7 @@ mixin QuizOptionsGameScreen<TQuizQuestionManager extends QuizQuestionManager> {
         : null;
   }
 
-  bool isAnswerBtnDisabled(String answerBtnText) {
+  bool _isAnswerBtnDisabled(String answerBtnText) {
     return quizQuestionManager.wrongPressedAnswer.isNotEmpty ||
         quizQuestionManager.correctAnswersForQuestion.contains(answerBtnText) &&
             _currentQuestionInfo.pressedAnswers.contains(answerBtnText) ||

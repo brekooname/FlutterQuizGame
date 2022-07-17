@@ -50,7 +50,9 @@ class AstronomyQuestionScreen extends GameScreen<AstronomyGameContext,
           ? ButtonSkinConfig(
               backgroundColor: Colors.blue.withOpacity(0.5),
               borderRadius: FontConfig.standardBorderRadius * 4)
-          : null,
+          : ButtonSkinConfig(
+              backgroundColor: Colors.blue.withOpacity(0.5),
+              borderRadius: FontConfig.standardBorderRadius),
     );
   }
 
@@ -110,9 +112,25 @@ class AstronomyQuestionScreenState extends State<AstronomyQuestionScreen>
       widget.currentQuestionInfo.question,
       2,
       4,
+      questionColor: Colors.white,
+      questionFontSize: FontConfig.getCustomFontSize(1.3),
+      questionContainerDecoration: BoxDecoration(
+          image: DecorationImage(
+        repeat: ImageRepeat.repeat,
+        opacity: 0.1,
+        image: imageService
+            .getSpecificImage(
+                imageName: "title_background", imageExtension: "png")
+            .image,
+      )),
     );
     Widget optionsRows = widget.createOptionRows(
-        setStateCallback, widget.goToNextGameScreenCallBack(context));
+        setStateCallback, widget.goToNextGameScreenCallBack(context),
+        widgetBetweenImageAndOptionRows: SizedBox(
+          height: screenDimensions.dimen(10),
+        ),
+        optionTextFontConfig:
+            FontConfig(fontColor: Colors.white, borderColor: Colors.black));
     const spacer = Spacer();
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -121,6 +139,9 @@ class AstronomyQuestionScreenState extends State<AstronomyQuestionScreen>
         _createAstronomyLevelHeader(),
         spacer,
         questionContainer,
+        SizedBox(
+          height: screenDimensions.dimen(10),
+        ),
         optionsRows,
         spacer,
       ],

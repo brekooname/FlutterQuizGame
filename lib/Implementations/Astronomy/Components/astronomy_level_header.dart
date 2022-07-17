@@ -12,6 +12,7 @@ import '../../../Lib/Image/image_service.dart';
 import '../../../main.dart';
 
 class AstronomyLevelHeader extends StatelessWidget {
+  static const int _nrOfScoreImgPerRow = 8;
   final ImageService _imageService = ImageService();
   final ScreenDimensionsService _screenDimensionsService =
       ScreenDimensionsService();
@@ -129,7 +130,7 @@ class AstronomyLevelHeader extends StatelessWidget {
             width: dimen,
             height: dimen,
           )));
-      if (i > 0 && i % 5 == 0) {
+      if (i > 0 && (i % (_nrOfScoreImgPerRow - 1)) == 0) {
         scoreColumnRows.add(Row(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,

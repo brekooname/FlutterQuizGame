@@ -13,14 +13,15 @@ mixin QuizQuestionContainer {
       {double? questionContainerHeight,
       double? marginBetweenPrefixAndQuestion,
       BoxDecoration? questionContainerDecoration,
-      double? questionFontSize}) {
+      double? questionFontSize,
+      Color? questionColor}) {
     var vertMargin = _screenDimensions.dimen(1);
     var horizMargin = _screenDimensions.dimen(1);
     var questionPrefixToBeDisplayed = question?.questionPrefixToBeDisplayed;
     var questionToBeDisplayed = question?.questionToBeDisplayed;
     Widget questionPrefix;
-    var questionColor = Colors.grey.shade900;
     var questionToBeDisplayedIsEmpty = (questionToBeDisplayed ?? "").isEmpty;
+    Color processedQuestionColor = questionColor ?? Colors.grey.shade900;
     if ((questionPrefixToBeDisplayed ?? "").isEmpty) {
       questionPrefix = Container();
     } else {
@@ -29,7 +30,7 @@ mixin QuizQuestionContainer {
               questionToBeDisplayedIsEmpty ? 0 : vertMargin),
           child: MyText(
             fontColor: questionToBeDisplayedIsEmpty
-                ? questionColor
+                ? processedQuestionColor
                 : Colors.grey.shade700,
             width: _screenDimensions.dimen(95),
             maxLines: questionPrefixMaxLines,
@@ -42,7 +43,7 @@ mixin QuizQuestionContainer {
       questionText = Container();
     } else {
       var text = MyText(
-        fontColor: questionColor,
+        fontColor: processedQuestionColor,
         width: _screenDimensions.dimen(95),
         maxLines: questionTextMaxLines,
         text: questionToBeDisplayed ?? "",

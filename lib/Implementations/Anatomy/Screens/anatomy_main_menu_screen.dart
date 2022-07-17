@@ -7,7 +7,6 @@ import 'package:flutter_app_quiz_game/Implementations/Anatomy/Constants/anatomy_
 import 'package:flutter_app_quiz_game/Implementations/Anatomy/Questions/AllContent/anatomy_question_collector_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/Anatomy/Service/anatomy_local_storage.dart';
 import 'package:flutter_app_quiz_game/Implementations/Anatomy/Service/anatomy_screen_manager.dart';
-import 'package:flutter_app_quiz_game/Implementations/Anatomy/anatomy_game_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/button_skin_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/floating_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
@@ -30,7 +29,6 @@ class AnatomyMainMenuScreen extends StandardScreen<AnatomyScreenManagerState> {
   final AnatomyQuestionCollectorService _anatomyQuestionCollectorService =
       AnatomyQuestionCollectorService();
   final AnatomyLocalStorage _anatomyLocalStorage = AnatomyLocalStorage();
-  final AnatomyGameConfig _anatomyGameConfig = AnatomyGameConfig();
 
   AnatomyMainMenuScreen(AnatomyScreenManagerState gameScreenManagerState,
       {Key? key})

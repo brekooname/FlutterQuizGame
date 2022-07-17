@@ -8,11 +8,15 @@ import '../../../Game/Question/Model/question_difficulty.dart';
 class AstronomyCampaignLevelService extends CampaignLevelService {
   late CampaignLevel level_0;
   late CampaignLevel level_1;
+  late CampaignLevel level_10;
+  late CampaignLevel level_13;
 
   late List<AstronomyGameType> gameTypes;
 
   static final AstronomyCampaignLevelService singleton =
       AstronomyCampaignLevelService.internal();
+
+  AstronomyCampaignLevelService.internal();
 
   factory AstronomyCampaignLevelService() {
     var questionConfig = AstronomyGameQuestionConfig();
@@ -31,6 +35,8 @@ class AstronomyCampaignLevelService extends CampaignLevelService {
 
     singleton.level_0 = singleton.allLevels[0];
     singleton.level_1 = singleton.allLevels[1];
+    singleton.level_10 = singleton.allLevels[10];
+    singleton.level_13 = singleton.allLevels[13];
 
     singleton.gameTypes = [
       AstronomyGameType(
@@ -71,14 +77,15 @@ class AstronomyCampaignLevelService extends CampaignLevelService {
     return gameTypes.firstWhere((element) => element.gameTypeCampaignLevels
         .contains(campaignLevel(questionConfig.diff0, cat)));
   }
-
-  AstronomyCampaignLevelService.internal();
 }
 
 class AstronomyGameType {
   int id;
   String gameTypeLabel;
   List<CampaignLevel> gameTypeCampaignLevels;
+
+  List<QuestionCategory> get gameTypeAllCategories =>
+      gameTypeCampaignLevels.map((e) => e.categories).expand((e) => e).toList();
 
   AstronomyGameType(this.id, this.gameTypeLabel, this.gameTypeCampaignLevels);
 }
