@@ -28,7 +28,24 @@ class AstronomyComponentsService extends QuizGameLocalStorage {
   Widget createLevelBtn(VoidCallback onClick, String btnImageName,
       String btnText, int answQ, int totalQ) {
     var horizMargin = _screenDimensions.dimen(3);
-    var vertMargin = _screenDimensions.dimen(2);
+    var vertMargin = _screenDimensions.dimen(1);
+    var scoreText = MyText(
+      fontConfig: FontConfig(
+        fontSize: FontConfig.getCustomFontSize(answQ == totalQ
+            ? 1.1
+            : answQ > 0
+                ? 1.0
+                : 0.9),
+        fontWeight: FontWeight.w900,
+        borderWidth: FontConfig.standardBorderWidth / 2,
+        fontColor: answQ == totalQ
+            ? Colors.lightGreenAccent
+            : answQ > 0
+                ? Colors.lightBlueAccent.withOpacity(0.9)
+                : Colors.grey.shade400.withOpacity(0.3),
+      ),
+      text: answQ.toString() + "/" + totalQ.toString(),
+    );
     return Padding(
         padding: EdgeInsets.only(
             left: horizMargin,
@@ -49,17 +66,18 @@ class AstronomyComponentsService extends QuizGameLocalStorage {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  MyText(
-                    fontConfig: FontConfig(
-                      fontSize: FontConfig.getCustomFontSize(1.05),
-                      fontWeight: FontWeight.w900,
-                      fontColor: answQ == totalQ
-                          ? Colors.lightGreenAccent
-                          : answQ > 0
-                              ? Colors.blue
-                              : Colors.grey.shade400.withOpacity(0.3),
-                    ),
-                    text: answQ.toString() + "/" + totalQ.toString(),
+                  Container(
+                    width: _screenDimensions.dimen(20),
+                    decoration: BoxDecoration(
+                        color:
+                            Colors.lightBlueAccent.withOpacity(answQ == totalQ
+                                ? 0.2
+                                : answQ > 0
+                                    ? 0.2
+                                    : 0.1),
+                        borderRadius: BorderRadius.circular(
+                            FontConfig.standardBorderRadius)),
+                    child: scoreText,
                   ),
                   MyButton(
                     onClick: () {
@@ -67,13 +85,13 @@ class AstronomyComponentsService extends QuizGameLocalStorage {
                     },
                     buttonSkinConfig: ButtonSkinConfig(
                         image: _imageService.getSpecificImage(
-                            maxWidth: _screenDimensions.dimen(20),
+                            maxWidth: _screenDimensions.dimen(18),
                             imageName: btnImageName,
                             imageExtension: "png",
                             module: "buttons"),
                         borderRadius: FontConfig.standardBorderRadius * 4),
                     size: Size(_screenDimensions.dimen(40),
-                        _screenDimensions.dimen(42)),
+                        _screenDimensions.dimen(39)),
                     fontConfig: FontConfig(fontColor: Colors.black),
                     text: btnText,
                     textMaxLines: 2,

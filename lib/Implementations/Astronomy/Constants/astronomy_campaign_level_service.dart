@@ -59,6 +59,11 @@ class AstronomyCampaignLevelService extends CampaignLevelService {
         "Recognize the Image",
         singleton.allLevels.sublist(11, 14),
       ),
+      AstronomyGameType(
+        4,
+        "Universe History",
+        singleton.allLevels.sublist(14, 15),
+      ),
     ];
 
     return singleton;
@@ -66,6 +71,10 @@ class AstronomyCampaignLevelService extends CampaignLevelService {
 
   bool isPlanetsGameType(AstronomyGameType gameType) {
     return gameType.id == 1;
+  }
+
+  bool isTimelineGameType(AstronomyGameType gameType) {
+    return gameType.id == 4;
   }
 
   bool isImageQuestionGameType(AstronomyGameType gameType) {

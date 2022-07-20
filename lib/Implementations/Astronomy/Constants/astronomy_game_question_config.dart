@@ -5,6 +5,7 @@ import 'package:flutter_app_quiz_game/Game/GameType/game_question_config.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
 import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/UniqueAnswers/unqiue_answers_question_category_service.dart';
+import 'package:flutter_app_quiz_game/Implementations/Astronomy/Questions/astronomy_timeline_question_category_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Localization/label_mixin.dart';
 
 import '../../../Game/Question/QuestionCategoryService/DependentAnswers/dependent_answers_question_category_service.dart';
@@ -30,6 +31,9 @@ class AstronomyGameQuestionConfig extends GameQuestionConfig with LabelMixin {
   late QuestionCategory cat11;
   late QuestionCategory cat12;
   late QuestionCategory cat13;
+
+  //Big Bang
+  late QuestionCategory cat14;
 
   late QuestionDifficulty diff0;
 
@@ -108,6 +112,10 @@ class AstronomyGameQuestionConfig extends GameQuestionConfig with LabelMixin {
           index: 13,
           categoryLabel: "astronomical instruments",
           questionCategoryService: DependentAnswersCategoryQuestionService()),
+      singleton.cat14 = QuestionCategory(
+          index: 14,
+          categoryLabel: "Universe history",
+          questionCategoryService: AstronomyTimelineCategoryQuestionService()),
     ];
 
     singleton.categoryDiagramImgDimen = {
@@ -255,6 +263,10 @@ class AstronomyGameQuestionConfig extends GameQuestionConfig with LabelMixin {
         QuestionCategoryDifficultyWithPrefixCode(
             category: cat13, prefixCode: 0),
         () => "astronomical instruments");
+    res.putIfAbsent(
+        QuestionCategoryDifficultyWithPrefixCode(
+            category: cat14, prefixCode: 0),
+            () => "When did this event occur?");
 
     return res;
   }

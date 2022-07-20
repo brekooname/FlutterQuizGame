@@ -4,6 +4,7 @@ import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.da
 import 'package:flutter_app_quiz_game/Implementations/Astronomy/Constants/astronomy_campaign_level_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/Astronomy/Constants/astronomy_game_question_config.dart';
 import 'package:flutter_app_quiz_game/Implementations/Astronomy/Questions/astronomy_game_context.dart';
+import 'package:flutter_app_quiz_game/Implementations/Astronomy/Questions/astronomy_timeline_question_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/Astronomy/Service/astronomy_local_storage.dart';
 import 'package:flutter_app_quiz_game/Implementations/Astronomy/Service/astronomy_screen_manager.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/button_skin_config.dart';
@@ -50,9 +51,14 @@ class AstronomyQuestionScreen extends GameScreen<AstronomyGameContext,
           ? ButtonSkinConfig(
               backgroundColor: Colors.blue.withOpacity(0.5),
               borderRadius: FontConfig.standardBorderRadius * 4)
-          : ButtonSkinConfig(
-              backgroundColor: Colors.blue.withOpacity(0.5),
-              borderRadius: FontConfig.standardBorderRadius),
+          : campaignLevelService.isTimelineGameType(_gameType)
+              ? ButtonSkinConfig(
+                  backgroundColor: Colors.purple.withOpacity(0.5),
+                  borderColor: Colors.transparent,
+                  buttonUnpressedShadowColor: Colors.transparent)
+              : ButtonSkinConfig(
+                  backgroundColor: Colors.blue.withOpacity(0.5),
+                  borderRadius: FontConfig.standardBorderRadius),
     );
   }
 
@@ -87,6 +93,8 @@ class AstronomyQuestionScreen extends GameScreen<AstronomyGameContext,
     if (campaignLevelService.isPlanetsGameType(_gameType)) {
       var dimen = screenDimensions.dimen(36);
       return Size(dimen, dimen);
+    } else if (campaignLevelService.isTimelineGameType(_gameType)) {
+      return Size(screenDimensions.dimen(80), screenDimensions.dimen(20));
     } else {
       return super.getAnswerBtnSize();
     }
@@ -100,7 +108,9 @@ class AstronomyQuestionScreenState extends State<AstronomyQuestionScreen>
     Widget container =
         widget.campaignLevelService.isPlanetsGameType(widget._gameType)
             ? _createPlanetsQuestionContainer()
-            : _createQuestionContainer();
+            : widget.campaignLevelService.isTimelineGameType(widget._gameType)
+                ? _createTimelineQuestionContainer()
+                : _createQuestionContainer();
     return AnimateBackground(
         mainContent: container,
         particleImage: imageService.getSpecificImage(
@@ -108,22 +118,7 @@ class AstronomyQuestionScreenState extends State<AstronomyQuestionScreen>
   }
 
   Widget _createQuestionContainer() {
-    Widget questionContainer = createQuestionTextContainer(
-      widget.currentQuestionInfo.question,
-      2,
-      4,
-      questionColor: Colors.white,
-      questionFontSize: FontConfig.getCustomFontSize(1.3),
-      questionContainerDecoration: BoxDecoration(
-          image: DecorationImage(
-        repeat: ImageRepeat.repeat,
-        opacity: 0.1,
-        image: imageService
-            .getSpecificImage(
-                imageName: "title_background", imageExtension: "png")
-            .image,
-      )),
-    );
+    Widget questionContainer = _createQuestionTextContainer();
     Widget optionsRows = widget.createOptionRows(
         setStateCallback, widget.goToNextGameScreenCallBack(context),
         widgetBetweenImageAndOptionRows: SizedBox(
@@ -145,6 +140,59 @@ class AstronomyQuestionScreenState extends State<AstronomyQuestionScreen>
         optionsRows,
         spacer,
       ],
+    );
+  }
+
+  Widget _createTimelineQuestionContainer() {
+    Widget questionContainer = _createQuestionTextContainer();
+    AstronomyTimelineQuestionService questionService = widget
+        .currentQuestionInfo
+        .question
+        .questionService as AstronomyTimelineQuestionService;
+    Set<String> quizAnswerOptions = questionService
+        .getQuizAnswerOptions(widget.currentQuestionInfo.question);
+    List<String> orderedOpts = questionService.getOrderedAnswerOptions(
+        quizAnswerOptions, widget.category);
+
+    List<Widget> optBtns =
+        orderedOpts.map((e) => _createTimelineOptionBtn(e)).toList();
+    const spacer = Spacer();
+    return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          _createAstronomyLevelHeader(),
+          spacer,
+          questionContainer,
+          SizedBox(
+            height: screenDimensions.dimen(10),
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: optBtns,
+          ),
+          spacer,
+        ]);
+  }
+
+  Widget _createQuestionTextContainer() {
+    return createQuestionTextContainer(
+      widget.currentQuestionInfo.question,
+      2,
+      4,
+      questionColor: Colors.white,
+      prefixColor: Colors.grey.shade400,
+      questionFontSize: FontConfig.getCustomFontSize(1.3),
+      questionContainerDecoration: BoxDecoration(
+          image: DecorationImage(
+        repeat: ImageRepeat.repeat,
+        opacity: 0.1,
+        image: imageService
+            .getSpecificImage(
+                imageName: "title_background", imageExtension: "png")
+            .image,
+      )),
     );
   }
 
@@ -177,10 +225,10 @@ class AstronomyQuestionScreenState extends State<AstronomyQuestionScreen>
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        createOptionBtn(
+        _createPlanetsOptionBtn(
           quizAnswerOptions.elementAt(0),
         ),
-        createOptionBtn(
+        _createPlanetsOptionBtn(
           quizAnswerOptions.elementAt(1),
         )
       ],
@@ -189,10 +237,10 @@ class AstronomyQuestionScreenState extends State<AstronomyQuestionScreen>
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        createOptionBtn(
+        _createPlanetsOptionBtn(
           quizAnswerOptions.elementAt(2),
         ),
-        createOptionBtn(
+        _createPlanetsOptionBtn(
           quizAnswerOptions.elementAt(3),
         )
       ],
@@ -231,24 +279,22 @@ class AstronomyQuestionScreenState extends State<AstronomyQuestionScreen>
     return container;
   }
 
-  void _onHintButtonClick() {
-    widget.quizQuestionManager.onHintButtonClickForCatDiff(setStateCallback);
-  }
-
-  Widget _createAstronomyLevelHeader() {
-    return AstronomyLevelHeader(
-      gameContext: widget.gameContext,
-      availableHints: widget.gameContext.amountAvailableHints,
-      animateScore: widget.quizQuestionManager.isGameFinished(),
-      disableHintBtn:
-          widget.quizQuestionManager.hintDisabledPossibleAnswers.isNotEmpty,
-      hintButtonOnClick: () {
-        _onHintButtonClick();
-      },
+  Widget _createTimelineOptionBtn(String optText) {
+    Widget? btnContent;
+    MyText optMyText = MyText(
+      text: optText,
+      fontConfig: FontConfig(
+          fontWeight: FontWeight.w700,
+          borderColor: Colors.black,
+          fontSize: FontConfig.getCustomFontSize(1.1),
+          fontColor: Colors.white),
     );
+    return widget.createPossibleAnswerButton(
+        setStateCallback, widget.goToNextGameScreenCallBack(context), optText,
+        customContent: btnContent ?? optMyText);
   }
 
-  Widget createOptionBtn(String optText) {
+  Widget _createPlanetsOptionBtn(String optText) {
     Widget? btnContent;
     var catsWithEarthIcon = [
       widget._astronomyGameQuestionConfig.cat1,
@@ -283,6 +329,23 @@ class AstronomyQuestionScreenState extends State<AstronomyQuestionScreen>
     return widget.createPossibleAnswerButton(
         setStateCallback, widget.goToNextGameScreenCallBack(context), optText,
         customContent: btnContent ?? optMyText);
+  }
+
+  Widget _createAstronomyLevelHeader() {
+    return AstronomyLevelHeader(
+      gameContext: widget.gameContext,
+      availableHints: widget.gameContext.amountAvailableHints,
+      animateScore: widget.quizQuestionManager.isGameFinished(),
+      disableHintBtn:
+          widget.quizQuestionManager.hintDisabledPossibleAnswers.isNotEmpty,
+      hintButtonOnClick: () {
+        _onHintButtonClick();
+      },
+    );
+  }
+
+  void _onHintButtonClick() {
+    widget.quizQuestionManager.onHintButtonClickForCatDiff(setStateCallback);
   }
 
   void setStateCallback() {

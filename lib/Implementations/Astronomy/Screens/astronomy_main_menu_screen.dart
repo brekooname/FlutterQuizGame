@@ -53,7 +53,7 @@ class AstronomyMainMenuScreenState extends State<AstronomyMainMenuScreen>
     var gameTitle = GameTitle(
         text: MyApp.appTitle,
         backgroundImageOpacity: 0.2,
-        backgroundImageWidth: screenDimensions.dimen(70),
+        backgroundImageWidth: screenDimensions.dimen(60),
         fontConfig: FontConfig(
             fontColor: Colors.blue.shade50,
             borderColor: Colors.indigo.shade800,
@@ -68,9 +68,9 @@ class AstronomyMainMenuScreenState extends State<AstronomyMainMenuScreen>
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            SizedBox(height: screenDimensions.dimen(11)),
+            SizedBox(height: screenDimensions.dimen(1)),
             gameTitle,
-            SizedBox(height: screenDimensions.dimen(14)),
+            SizedBox(height: screenDimensions.dimen(1)),
             _createGameTypeBtnRows(),
           ],
         ));

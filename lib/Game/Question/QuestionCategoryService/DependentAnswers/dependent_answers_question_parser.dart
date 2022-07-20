@@ -38,7 +38,7 @@ class DependentAnswersQuestionParser extends QuestionParser {
     return [question.rawString.split(":")[1].trim()];
   }
 
-  List<int> getAnswerReferences(String questionRawString) {
+  List<int> _getAnswerReferences(String questionRawString) {
     List<String> answers = questionRawString
         .split(":")[2]
         .split(",")
@@ -57,9 +57,9 @@ class DependentAnswersQuestionParser extends QuestionParser {
       bool includeAllDifficulties,
       int defaultNrOfPossibleAnswersWithoutCorrectOne) {
     List<Question> allQuestionsForCategory =
-        getQuestionsToChooseAsPossibleAnswers(includeAllDifficulties, question);
+        _getQuestionsToChooseAsPossibleAnswers(includeAllDifficulties, question);
 
-    var answerReferences = getAnswerReferences(question.rawString);
+    var answerReferences = _getAnswerReferences(question.rawString);
 
     Set<String> possibleAnswersResult = {};
     var correctAnswerForCurrentQuestion =
@@ -67,18 +67,18 @@ class DependentAnswersQuestionParser extends QuestionParser {
     possibleAnswersResult.add(correctAnswerForCurrentQuestion);
     if (answerReferences.isEmpty) {
       possibleAnswersResult.addAll(
-          getPossibleAnswersInCaseNoReferencesWereSpecified(
+          _getPossibleAnswersInCaseNoReferencesWereSpecified(
               correctAnswerForCurrentQuestion,
               allQuestionsForCategory,
               defaultNrOfPossibleAnswersWithoutCorrectOne));
     } else {
-      possibleAnswersResult.addAll(getPossibleAnswersForSpecifiedReferences(
+      possibleAnswersResult.addAll(_getPossibleAnswersForSpecifiedReferences(
           answerReferences, allQuestionsForCategory));
     }
     return possibleAnswersResult.map((e) => e.capitalized).toSet();
   }
 
-  List<Question> getQuestionsToChooseAsPossibleAnswers(
+  List<Question> _getQuestionsToChooseAsPossibleAnswers(
       bool includeAllDifficulties, Question question) {
     return includeAllDifficulties
         ? questionCollectorService
@@ -88,7 +88,7 @@ class DependentAnswersQuestionParser extends QuestionParser {
             categories: [question.category]);
   }
 
-  Set<String> getPossibleAnswersForSpecifiedReferences(
+  Set<String> _getPossibleAnswersForSpecifiedReferences(
       List<int> answerReferences, List<Question> allQuestionsForCategory) {
     Set<String> possibleAnswersResult = HashSet();
     for (int index in answerReferences) {
@@ -103,7 +103,7 @@ class DependentAnswersQuestionParser extends QuestionParser {
     return possibleAnswersResult;
   }
 
-  Set<String> getPossibleAnswersInCaseNoReferencesWereSpecified(
+  Set<String> _getPossibleAnswersInCaseNoReferencesWereSpecified(
       String correctAnswerForCurrentQuestion,
       List<Question> allQuestionsForCategory,
       int defaultNrOfPossibleAnswersWithoutCorrectOne) {

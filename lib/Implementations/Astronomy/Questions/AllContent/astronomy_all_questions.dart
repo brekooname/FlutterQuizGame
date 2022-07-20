@@ -76,6 +76,13 @@ class AstronomyAllQuestions extends AllQuestionsService {
         questionConfig.cat13, //
         questionConfig.diff0, //
         [":Celestial sphere:1,3,5:", ":Sundial:0,2,4:", ":Telescope:3,4,0:", ":Astronomical clock:1,2,0:", ":Photometer:5,1,2:", ":Space telescope:4,1,0:"]);
+    addQuestions(
+        result, //
+        language, //
+        questionConfig.cat14, //
+        questionConfig.diff0, //
+        ["0##The Big Bang:13.8 billion years ago:4,7,8:", "3##The first galaxies:400 million years after the Big Bang:8,3,10:", "2##The first stars:100 million years after the Big Bang:3,4,7:", "1##The first black holes:During the Big Bang:4,8,9:", "7##The Earth:4.6 billion years ago:5,6,7:", "9##Earliest life forms:3.7 billion years ago:4,7,8:", "8##The Moon:50 million years after the solar system was born:10,9,8:", "10##The newest galaxy:500 million years ago:8,1,4:", "5##The Andromeda galaxy:10 billion years ago:9,10,5:", "4##The Milky way galaxy:800 million years after the Big Bang:8,2,3:", "6##The Solar System:4.6 billion years ago:3,0,2:"]);
   }
+
 
 }

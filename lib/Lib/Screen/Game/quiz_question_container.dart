@@ -9,12 +9,16 @@ mixin QuizQuestionContainer {
   final ScreenDimensionsService _screenDimensions = ScreenDimensionsService();
 
   Widget createQuestionTextContainer(
-      Question? question, int questionPrefixMaxLines, int questionTextMaxLines,
-      {double? questionContainerHeight,
-      double? marginBetweenPrefixAndQuestion,
-      BoxDecoration? questionContainerDecoration,
-      double? questionFontSize,
-      Color? questionColor}) {
+    Question? question,
+    int questionPrefixMaxLines,
+    int questionTextMaxLines, {
+    double? questionContainerHeight,
+    double? marginBetweenPrefixAndQuestion,
+    BoxDecoration? questionContainerDecoration,
+    double? questionFontSize,
+    Color? questionColor,
+    Color? prefixColor,
+  }) {
     var vertMargin = _screenDimensions.dimen(1);
     var horizMargin = _screenDimensions.dimen(1);
     var questionPrefixToBeDisplayed = question?.questionPrefixToBeDisplayed;
@@ -31,7 +35,7 @@ mixin QuizQuestionContainer {
           child: MyText(
             fontColor: questionToBeDisplayedIsEmpty
                 ? processedQuestionColor
-                : Colors.grey.shade700,
+                : prefixColor ?? Colors.grey.shade700,
             width: _screenDimensions.dimen(95),
             maxLines: questionPrefixMaxLines,
             text: questionPrefixToBeDisplayed ?? "",

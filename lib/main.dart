@@ -212,12 +212,12 @@ class MyAppState extends State<MyApp> {
       ////
       // GeoQuizLocalStorage().setExperience(14000);
       widgetToShow = createScreen(MyApp.gameScreenManager);
-      Future.delayed(const Duration(milliseconds: 100), () {
-        (MyApp.gameScreenManager.currentScreen!.gameScreenManagerState
-                as AstronomyScreenManagerState)
-            .showLevelsScreen(
-                AstronomyCampaignLevelService().gameTypes.elementAt(1));
-      });
+      // Future.delayed(const Duration(milliseconds: 100), () {
+      //   (MyApp.gameScreenManager.currentScreen!.gameScreenManagerState
+      //           as AstronomyScreenManagerState)
+      //       .showLevelsScreen(
+      //           AstronomyCampaignLevelService().gameTypes.elementAt(1));
+      // });
       // Future.delayed(const Duration(milliseconds: 100), () {
       //   MyApp.gameScreenManager.currentScreen!.gameScreenManagerState
       //       .showNewGameScreen(MyApp.campaignLevel);
