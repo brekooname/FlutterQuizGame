@@ -28,7 +28,7 @@ class AstronomyComponentsService extends QuizGameLocalStorage {
   Widget createLevelBtn(VoidCallback onClick, String btnImageName,
       String btnText, int answQ, int totalQ) {
     var horizMargin = _screenDimensions.dimen(3);
-    var vertMargin = _screenDimensions.dimen(1);
+    var vertMargin = _screenDimensions.dimen(4);
     var scoreText = MyText(
       fontConfig: FontConfig(
         fontSize: FontConfig.getCustomFontSize(answQ == totalQ

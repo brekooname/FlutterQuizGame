@@ -31,9 +31,9 @@ class AstronomyGameQuestionConfig extends GameQuestionConfig with LabelMixin {
   late QuestionCategory cat11;
   late QuestionCategory cat12;
   late QuestionCategory cat13;
-
-  //Big Bang
   late QuestionCategory cat14;
+  late QuestionCategory cat15;
+  late QuestionCategory cat16;
 
   late QuestionDifficulty diff0;
 
@@ -42,6 +42,8 @@ class AstronomyGameQuestionConfig extends GameQuestionConfig with LabelMixin {
 
   static final AstronomyGameQuestionConfig singleton =
       AstronomyGameQuestionConfig.internal();
+
+  AstronomyGameQuestionConfig.internal();
 
   factory AstronomyGameQuestionConfig() {
     singleton.difficulties = [
@@ -52,7 +54,7 @@ class AstronomyGameQuestionConfig extends GameQuestionConfig with LabelMixin {
     singleton.categories = [
       singleton.cat0 = QuestionCategory(
           index: 0,
-          categoryLabel: "solar system",
+          categoryLabel: "The Solar System",
           questionCategoryService: ImageClickCategoryQuestionService()),
       ////////////////
       ////////////////
@@ -86,36 +88,44 @@ class AstronomyGameQuestionConfig extends GameQuestionConfig with LabelMixin {
       ////////////////
       singleton.cat7 = QuestionCategory(
           index: 7,
-          categoryLabel: "basic astronomy",
+          categoryLabel: "Basic Astronomy",
           questionCategoryService: UniqueAnswersCategoryQuestionService()),
       singleton.cat8 = QuestionCategory(
           index: 8,
-          categoryLabel: "the universe",
+          categoryLabel: "Universe Trivia",
           questionCategoryService: UniqueAnswersCategoryQuestionService()),
       singleton.cat9 = QuestionCategory(
           index: 9,
-          categoryLabel: "the planets",
+          categoryLabel: "The Planets",
           questionCategoryService: DependentAnswersCategoryQuestionService()),
       singleton.cat10 = QuestionCategory(
           index: 10,
-          categoryLabel: "important events",
+          categoryLabel: "Important Events",
           questionCategoryService: UniqueAnswersCategoryQuestionService()),
       singleton.cat11 = QuestionCategory(
           index: 11,
-          categoryLabel: "space exploration",
+          categoryLabel: "Space Exploration",
           questionCategoryService: DependentAnswersCategoryQuestionService()),
       singleton.cat12 = QuestionCategory(
           index: 12,
-          categoryLabel: "astronomical objects",
+          categoryLabel: "Astronomical Objects",
           questionCategoryService: DependentAnswersCategoryQuestionService()),
       singleton.cat13 = QuestionCategory(
           index: 13,
-          categoryLabel: "astronomical instruments",
+          categoryLabel: "Astronomical Instruments",
           questionCategoryService: DependentAnswersCategoryQuestionService()),
       singleton.cat14 = QuestionCategory(
           index: 14,
-          categoryLabel: "Universe history",
+          categoryLabel: "The History of the Universe",
           questionCategoryService: AstronomyTimelineCategoryQuestionService()),
+      singleton.cat15 = QuestionCategory(
+          index: 15,
+          categoryLabel: "Famous Astronomers",
+          questionCategoryService: DependentAnswersCategoryQuestionService()),
+      singleton.cat16 = QuestionCategory(
+          index: 16,
+          categoryLabel: "The Solar System",
+          questionCategoryService: DependentAnswersCategoryQuestionService()),
     ];
 
     singleton.categoryDiagramImgDimen = {
@@ -227,7 +237,9 @@ class AstronomyGameQuestionConfig extends GameQuestionConfig with LabelMixin {
     return singleton;
   }
 
-  AstronomyGameQuestionConfig.internal();
+  bool isTimelineCategory(QuestionCategory category) {
+    return category.index == 14;
+  }
 
   @override
   Map<QuestionCategoryDifficultyWithPrefixCode, String> get prefixLabelForCode {
@@ -266,7 +278,15 @@ class AstronomyGameQuestionConfig extends GameQuestionConfig with LabelMixin {
     res.putIfAbsent(
         QuestionCategoryDifficultyWithPrefixCode(
             category: cat14, prefixCode: 0),
-            () => "When did this event occur?");
+        () => "When did this event occur?");
+    res.putIfAbsent(
+        QuestionCategoryDifficultyWithPrefixCode(
+            category: cat15, prefixCode: 0),
+            () => "Famous astronomer");
+    res.putIfAbsent(
+        QuestionCategoryDifficultyWithPrefixCode(
+            category: cat16, prefixCode: 0),
+        () => "The Solar System");
 
     return res;
   }

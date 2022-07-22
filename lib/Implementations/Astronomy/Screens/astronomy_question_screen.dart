@@ -51,7 +51,7 @@ class AstronomyQuestionScreen extends GameScreen<AstronomyGameContext,
           ? ButtonSkinConfig(
               backgroundColor: Colors.blue.withOpacity(0.5),
               borderRadius: FontConfig.standardBorderRadius * 4)
-          : campaignLevelService.isTimelineGameType(_gameType)
+          : _astronomyGameQuestionConfig.isTimelineCategory(category)
               ? ButtonSkinConfig(
                   backgroundColor: Colors.purple.withOpacity(0.5),
                   borderColor: Colors.transparent,
@@ -67,7 +67,10 @@ class AstronomyQuestionScreen extends GameScreen<AstronomyGameContext,
       var imageName = currentQuestionInfo.question.index.toString();
       var module = "questions/" + category.name;
       return imageService.getSpecificImage(
-          module: module, imageExtension: "jpg", imageName: imageName);
+          module: module,
+          imageExtension:
+              category == _astronomyGameQuestionConfig.cat16 ? "png" : "jpg",
+          imageName: imageName);
     }
     return null;
   }
@@ -93,7 +96,7 @@ class AstronomyQuestionScreen extends GameScreen<AstronomyGameContext,
     if (campaignLevelService.isPlanetsGameType(_gameType)) {
       var dimen = screenDimensions.dimen(36);
       return Size(dimen, dimen);
-    } else if (campaignLevelService.isTimelineGameType(_gameType)) {
+    } else if (_astronomyGameQuestionConfig.isTimelineCategory(category)) {
       return Size(screenDimensions.dimen(80), screenDimensions.dimen(20));
     } else {
       return super.getAnswerBtnSize();
@@ -108,7 +111,8 @@ class AstronomyQuestionScreenState extends State<AstronomyQuestionScreen>
     Widget container =
         widget.campaignLevelService.isPlanetsGameType(widget._gameType)
             ? _createPlanetsQuestionContainer()
-            : widget.campaignLevelService.isTimelineGameType(widget._gameType)
+            : widget._astronomyGameQuestionConfig
+                    .isTimelineCategory(widget.category)
                 ? _createTimelineQuestionContainer()
                 : _createQuestionContainer();
     return AnimateBackground(

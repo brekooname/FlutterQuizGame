@@ -41,28 +41,29 @@ class AstronomyCampaignLevelService extends CampaignLevelService {
     singleton.gameTypes = [
       AstronomyGameType(
         0,
-        "Solar System",
-        singleton.allLevels.sublist(0, 1),
+        "Astronomy Trivia",
+        [
+          singleton.allLevels.sublist(7, 11),
+          singleton.allLevels.sublist(14, 15),
+        ].expand((e) => e).toList(),
       ),
       AstronomyGameType(
         1,
-        "Planets",
-        singleton.allLevels.sublist(1, 7),
+        "Recognize the Image",
+        [
+          singleton.allLevels.sublist(11, 14),
+          singleton.allLevels.sublist(15, 17),
+        ].expand((e) => e).toList(),
       ),
       AstronomyGameType(
         2,
-        "Astronomy Trivia",
-        singleton.allLevels.sublist(7, 11),
+        "The Solar System",
+        singleton.allLevels.sublist(0, 1),
       ),
       AstronomyGameType(
         3,
-        "Recognize the Image",
-        singleton.allLevels.sublist(11, 14),
-      ),
-      AstronomyGameType(
-        4,
-        "Universe History",
-        singleton.allLevels.sublist(14, 15),
+        "The Planets",
+        singleton.allLevels.sublist(1, 7),
       ),
     ];
 
@@ -70,15 +71,11 @@ class AstronomyCampaignLevelService extends CampaignLevelService {
   }
 
   bool isPlanetsGameType(AstronomyGameType gameType) {
-    return gameType.id == 1;
-  }
-
-  bool isTimelineGameType(AstronomyGameType gameType) {
-    return gameType.id == 4;
+    return gameType.id == 3;
   }
 
   bool isImageQuestionGameType(AstronomyGameType gameType) {
-    return gameType.id == 3;
+    return gameType.id == 1;
   }
 
   AstronomyGameType findGameTypeForCategory(QuestionCategory cat) {
@@ -89,7 +86,7 @@ class AstronomyCampaignLevelService extends CampaignLevelService {
 }
 
 class AstronomyGameType {
-  int id;
+  final int id;
   String gameTypeLabel;
   List<CampaignLevel> gameTypeCampaignLevels;
 

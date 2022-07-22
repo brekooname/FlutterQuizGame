@@ -1,5 +1,6 @@
 import 'dart:collection';
 
+import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/DependentAnswers/dependent_answers_question_parser.dart';
 import 'package:flutter_app_quiz_game/Game/Question/question_collector_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/Astronomy/Constants/astronomy_campaign_level_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/Astronomy/Constants/astronomy_game_question_config.dart';
@@ -54,8 +55,8 @@ class AstronomyQuestionCollectorService extends QuestionCollectorService<
     for (QuestionCategory cat in categories ?? gameQuestionConfig.categories) {
       ////////////
       ////////////
-      //This is the "Planets" game type
-      if (_campaignLevelService.findGameTypeForCategory(cat).id == 1) {
+      if (_campaignLevelService.isPlanetsGameType(
+          _campaignLevelService.findGameTypeForCategory(cat))) {
         var qPlanets = gameQuestionConfig.planets
             .where((planet) => _getPlanetProperty(cat, planet, true) != "0")
             .toList();
@@ -67,6 +68,18 @@ class AstronomyQuestionCollectorService extends QuestionCollectorService<
           result.add(createPlanetPropertyQuestion(
               planet.id, "", cat, opts, correctAnswer));
         }
+      }
+      ////////////
+      ////////////
+      else if (cat == gameQuestionConfig.cat16) {
+        result.addAll(allQuestionsService
+            .getAllQuestionsForCategory(gameQuestionConfig.cat0)
+            .map((e) => Question(
+                e.index,
+                gameQuestionConfig.diff0,
+                cat,
+                DependentAnswersQuestionParser.formRawQuestion(
+                    "", e.questionToBeDisplayed, ""))));
       }
       ////////////
       ////////////
@@ -104,7 +117,7 @@ class AstronomyQuestionCollectorService extends QuestionCollectorService<
           : _getMeanTemp(planetId);
     }
     throw AssertionError(
-        "Category" + cat.name + " has no planet property configured!");
+        "Category " + cat.name + " has no planet property configured!");
   }
 
   Question createPlanetPropertyQuestion(int planetId, String question,

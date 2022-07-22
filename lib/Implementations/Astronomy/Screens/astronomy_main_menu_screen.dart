@@ -70,7 +70,7 @@ class AstronomyMainMenuScreenState extends State<AstronomyMainMenuScreen>
           children: <Widget>[
             SizedBox(height: screenDimensions.dimen(1)),
             gameTitle,
-            SizedBox(height: screenDimensions.dimen(1)),
+            SizedBox(height: screenDimensions.dimen(10)),
             _createGameTypeBtnRows(),
           ],
         ));

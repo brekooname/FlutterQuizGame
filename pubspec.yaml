@@ -119,6 +119,8 @@ flutter:
     - assets/implementations/astronomy/questions/cat11/
     - assets/implementations/astronomy/questions/cat12/
     - assets/implementations/astronomy/questions/cat13/
+    - assets/implementations/astronomy/questions/cat15/
+    - assets/implementations/astronomy/questions/cat16/
     ########################
     ###### IQGAME ################################################################################
     ########################
