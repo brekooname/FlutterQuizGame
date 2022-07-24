@@ -30,6 +30,9 @@ class Question {
   String get questionPrefixToBeDisplayed =>
       questionService.getPrefixToBeDisplayedForQuestion(this).capitalized;
 
+  String get questionExplanationToBeDisplayed =>
+      questionService.getQuestionExplanation(this).trim().capitalized;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||

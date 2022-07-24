@@ -2,14 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Localization/label_mixin.dart';
-import 'package:flutter_app_quiz_game/Lib/Popup/reset_content_popup.dart';
-import 'package:flutter_app_quiz_game/Lib/ScreenDimensions/screen_dimensions_service.dart';
 
 import '../../main.dart';
 import '../Font/font_config.dart';
 import '../Internet/internet_service.dart';
 import '../Text/my_text.dart';
-import 'in_app_purchase_popup.dart';
 import 'my_popup.dart';
 
 class BuyProPopup extends StatefulWidget {

@@ -11,6 +11,9 @@ import 'package:flutter_app_quiz_game/Lib/Image/image_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/standard_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Storage/game_local_storage.dart';
 
+import '../../../Game/Question/Model/question.dart';
+import '../../Popup/my_popup.dart';
+import '../../Popup/next_question_with_explanation_popup.dart';
 import 'game_screen_manager_state.dart';
 
 abstract class GameScreen<
@@ -69,6 +72,23 @@ abstract class GameScreen<
   }
 
   VoidCallback goToNextGameScreenCallBack(BuildContext context) {
+    return () {
+      if (listOfCurrentQuestionInfo.length != 1 ||
+          currentQuestionInfo
+              .question.questionExplanationToBeDisplayed.isEmpty) {
+        _goToNextGameScreenCallBack(context);
+      } else {
+        Question question = currentQuestionInfo.question;
+        var popup = NextQuestionWithExplanationPopup(
+            question.questionService.getCorrectAnswers(question).join(", "),
+            question.questionExplanationToBeDisplayed,
+            _goToNextGameScreenCallBack(context));
+        MyPopup.showPopup(context, popup);
+      }
+    };
+  }
+
+  VoidCallback _goToNextGameScreenCallBack(BuildContext context) {
     return () {
       goToNextGameScreen(context);
     };

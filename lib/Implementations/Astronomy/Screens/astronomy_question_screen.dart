@@ -137,7 +137,6 @@ class AstronomyQuestionScreenState extends State<AstronomyQuestionScreen>
       children: <Widget>[
         _createAstronomyLevelHeader(),
         spacer,
-        createQuestionExplanationBtn(widget.currentQuestionInfo.question),
         questionContainer,
         SizedBox(
           height: screenDimensions.dimen(10),
