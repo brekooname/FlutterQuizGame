@@ -21,6 +21,10 @@ class DependentAnswersQuestionParser extends QuestionParser {
     return question.rawString.split(":")[0].trim();
   }
 
+  String getQuestionExplanation(Question question) {
+    return question.rawString.split(":")[4].trim();
+  }
+
   static String formRawQuestion(
       String questionToBeDisplayed, String correctAnswer, String wrongOptions) {
     return questionToBeDisplayed +

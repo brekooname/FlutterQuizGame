@@ -282,7 +282,7 @@ class AstronomyGameQuestionConfig extends GameQuestionConfig with LabelMixin {
     res.putIfAbsent(
         QuestionCategoryDifficultyWithPrefixCode(
             category: cat15, prefixCode: 0),
-            () => "Famous astronomer");
+        () => "Famous astronomer");
     res.putIfAbsent(
         QuestionCategoryDifficultyWithPrefixCode(
             category: cat16, prefixCode: 0),

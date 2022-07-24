@@ -35,6 +35,10 @@ abstract class QuestionService {
             question.difficulty, getPrefixCodeForQuestion(question));
   }
 
+  String getQuestionExplanation(Question question) {
+    return "";
+  }
+
   bool addAnswerToGameInfo(
       GameUser gameUser, Question question, String answer) {
     return gameUser.addAnswerToQuestionInfo(question, answer);

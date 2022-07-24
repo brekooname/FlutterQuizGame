@@ -66,7 +66,7 @@ class QuizQuestionManager<TGameContext extends GameContext,
       Question question, VoidCallback goToNextScreenAfterPress) {
     var questionService = question.questionService;
     if (isGameFinished()) {
-      Future.delayed(durationGoToNextScreen, () {
+      Future.delayed(durationGoToNextScreen, () { xx
         goToNextScreenAfterPress.call();
       });
       if (isGameFinishedSuccessful()) {

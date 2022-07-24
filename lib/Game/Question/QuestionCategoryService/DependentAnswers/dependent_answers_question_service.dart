@@ -23,6 +23,11 @@ class DependentAnswersQuestionService extends QuestionService {
   }
 
   @override
+  String getQuestionExplanation(Question question) {
+    return questionParser.getQuestionExplanation(question);
+  }
+
+  @override
   int getPrefixCodeForQuestion(Question question) {
     return questionParser.getPrefixCodeForQuestion(question.rawString);
   }

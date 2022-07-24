@@ -1,12 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question.dart';
+import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Font/font_config.dart';
 import 'package:flutter_app_quiz_game/Lib/ScreenDimensions/screen_dimensions_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
+import '../../Button/button_skin_config.dart';
+
 mixin QuizQuestionContainer {
   final ScreenDimensionsService _screenDimensions = ScreenDimensionsService();
+
+  Widget createQuestionExplanationBtn(Question question) {
+    return question.questionService
+            .getQuestionExplanation(question)
+            .trim()
+            .isEmpty
+        ? Container()
+        : MyButton(
+            buttonSkinConfig: ButtonSkinConfig(
+                icon: Icon(Icons.info_outline,
+                    color: Colors.red, size: _screenDimensions.dimen(9))),
+          );
+  }
 
   Widget createQuestionTextContainer(
     Question? question,
