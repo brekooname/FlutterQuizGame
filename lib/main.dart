@@ -55,7 +55,7 @@ class MyApp extends StatefulWidget {
   // static String webAppKey = "anatomy";
   // static String webAppKey = "iqgame";
   static String webAppKey = "astronomy";
-  static CampaignLevel campaignLevel = AstronomyCampaignLevelService().level_10;
+  static CampaignLevel campaignLevel = AstronomyCampaignLevelService().level_13;
 
   //
   static Language webLanguage = Language.en;
@@ -218,10 +218,10 @@ class MyAppState extends State<MyApp> {
       //       .showLevelsScreen(
       //           AstronomyCampaignLevelService().gameTypes.elementAt(1));
       // });
-      // Future.delayed(const Duration(milliseconds: 100), () {
-      //   MyApp.gameScreenManager.currentScreen!.gameScreenManagerState
-      //       .showNewGameScreen(MyApp.campaignLevel);
-      // });
+      Future.delayed(const Duration(milliseconds: 100), () {
+        MyApp.gameScreenManager.currentScreen!.gameScreenManagerState
+            .showNewGameScreen(MyApp.campaignLevel);
+      });
       // Future.delayed(const Duration(milliseconds: 100), () {
       //   (MyApp.gameScreenManager.currentScreen!.gameScreenManagerState
       //           as IqGameScreenManagerState)

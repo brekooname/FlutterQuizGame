@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/button_size.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/button_skin_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
-import 'package:flutter_app_quiz_game/Lib/Font/font_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Image/image_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Navigation/navigator_service.dart';
 import 'package:flutter_app_quiz_game/Lib/ScreenDimensions/screen_dimensions_service.dart';
 import 'package:flutter_app_quiz_game/Lib/SnackBar/snack_bar_service.dart';
 
 import '../../main.dart';
+import '../Font/font_config.dart';
 
 mixin MyPopup {
   late double width;
@@ -65,15 +65,16 @@ mixin MyPopup {
         actionsPadding: edgeInsets,
         buttonPadding: edgeInsets,
         titlePadding: edgeInsets,
+        shape: RoundedRectangleBorder(
+            borderRadius:
+                BorderRadius.circular(FontConfig.standardBorderRadius)),
+        backgroundColor:
+            lightScreenContrast ? Colors.white : Colors.grey.shade900,
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Container(
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(lightScreenContrast
-                      ? FontConfig.standardBorderRadius / 2
-                      : 0),
-                  color: lightScreenContrast ? Colors.white : Colors.black87,
                   image: decorationImage,
                 ),
                 width: width,

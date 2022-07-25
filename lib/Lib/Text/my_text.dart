@@ -15,19 +15,20 @@ class MyText extends StatelessWidget {
   double textAllPadding;
   bool firstCharUppercase;
 
-  MyText(
-      {Key? key,
-      FontConfig? fontConfig,
-      double? fontSize,
-      Color? fontColor,
-      required this.text,
-      this.textAllPadding = 0,
-      this.alignmentInsideContainer = Alignment.center,
-      this.width,
-      this.textShadow,
-      this.firstCharUppercase = true,
-      this.maxLines = 2})
-      : super(key: key) {
+  MyText({
+    Key? key,
+    FontConfig? fontConfig,
+    double? fontSize,
+    Color? fontColor,
+    int? maxLines,
+    required this.text,
+    this.textAllPadding = 0,
+    this.alignmentInsideContainer = Alignment.center,
+    this.width,
+    this.textShadow,
+    this.firstCharUppercase = true,
+  }) : super(key: key) {
+    this.maxLines = maxLines ?? 2;
     text = firstCharUppercase ? text.capitalized.trim() : text.trim();
     this.fontConfig =
         fontConfig ?? FontConfig(fontSize: fontSize, fontColor: fontColor);
@@ -165,22 +166,32 @@ class MyTextService {
     );
   }
 
-  List<MyText> createMyTextWithOneParam(String labelText, Object param,
-      FontConfig staticTextFontConfig, FontConfig paramFontConfig) {
+  List<Widget> createMyTextWithOneParam(String labelText, String param,
+      FontConfig staticTextFontConfig, FontConfig paramFontConfig,
+      {double? labelWidth, int? staticTextMaxLines}) {
     List<String> labelSplit = labelText.split("{0}");
     return [
       MyText(
+        width: labelWidth,
+        alignmentInsideContainer: Alignment.center,
         text: labelSplit[0],
         fontConfig: staticTextFontConfig,
+        maxLines: staticTextMaxLines,
       ),
       MyText(
-        text: param.toString(),
+        width: labelWidth,
+        alignmentInsideContainer: Alignment.center,
+        text: param,
         fontConfig: paramFontConfig,
       ),
-      MyText(
-        text: labelSplit[1],
-        fontConfig: staticTextFontConfig,
-      ),
+      labelSplit[1].isEmpty
+          ? Container()
+          : MyText(
+              width: labelWidth,
+              alignmentInsideContainer: Alignment.center,
+              text: labelSplit[1],
+              fontConfig: staticTextFontConfig,
+            ),
     ];
   }
 }
