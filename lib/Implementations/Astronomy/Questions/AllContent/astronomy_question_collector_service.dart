@@ -5,7 +5,6 @@ import 'package:flutter_app_quiz_game/Game/Question/question_collector_service.d
 import 'package:flutter_app_quiz_game/Implementations/Astronomy/Constants/astronomy_campaign_level_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/Astronomy/Constants/astronomy_game_question_config.dart';
 import 'package:flutter_app_quiz_game/Implementations/Astronomy/Questions/AllContent/astronomy_all_questions.dart';
-import 'package:flutter_app_quiz_game/Lib/Extensions/map_extension.dart';
 
 import '../../../../Game/Question/Model/category_difficulty.dart';
 import '../../../../Game/Question/Model/question.dart';

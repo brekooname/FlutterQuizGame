@@ -49,54 +49,50 @@ class NextQuestionWithExplanationPopupState
       width: screenDimensions.dimen(2),
     );
     var btnWidth = screenDimensions.dimen(70);
+    var infoParamFontConfig = FontConfig(
+        fontWeight: FontWeight.w700,
+        fontSize: FontConfig.getCustomFontSize(1.15),
+        fontColor: Colors.black);
+    var infoText = widget._myTextService.createMyTextWithOneParam(
+      "More information{0}",
+      widget.title,
+      FontConfig(),
+      infoParamFontConfig,
+      labelWidth: btnWidth / 1.5,
+      staticTextMaxLines: 1,
+    );
+    var infoBtnWidgets = [
+      horizMargin,
+      Icon(Icons.info, color: Colors.blue.shade700, size: iconDimen),
+      horizMargin,
+      Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: infoText,
+      ),
+      horizMargin,
+    ];
+    var infoBtnContent = Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: infoBtnWidgets);
+    var infoBtn = MyButton(
+      size: Size(btnWidth, screenDimensions.dimen(28)),
+      buttonSkinConfig: ButtonSkinConfig(
+          backgroundColor: Colors.lightBlueAccent,
+          borderColor: Colors.lightBlueAccent.shade700),
+      customContent: infoBtnContent,
+      onClick: () {
+        openExplanationPopup(context);
+      },
+    );
     return createDialog(
       Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           margin,
-          MyButton(
-            size: Size(btnWidth, screenDimensions.dimen(28)),
-            buttonSkinConfig: ButtonSkinConfig(
-                backgroundColor: Colors.lightBlueAccent,
-                borderColor: Colors.lightBlueAccent.shade700),
-            customContent: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  horizMargin,
-                  Icon(Icons.info,
-                      color: Colors.blue.shade700, size: iconDimen),
-                  horizMargin,
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: widget._myTextService.createMyTextWithOneParam(
-                      "More information{0}",
-                      widget.title,
-                      FontConfig(),
-                      FontConfig(
-                          fontWeight: FontWeight.w700,
-                          fontSize: FontConfig.getCustomFontSize(1.15),
-                          fontColor: Colors.black),
-                      labelWidth: btnWidth / 1.5,
-                      staticTextMaxLines: 1,
-                    ),
-                  ),
-                  horizMargin,
-                  // SizedBox(
-                  //   width: iconDimen,
-                  // ),
-                  // horizMargin,
-                ]),
-            onClick: () {
-              closePopup(context);
-              MyPopup.showPopup(
-                  context,
-                  ExplanationPopup(
-                      widget.title, widget.explanation, widget.goToNextScreen));
-            },
-          ),
+          infoBtn,
           margin,
           widget._nextQuestionWithExplanationService
               .createNextQuestionBtn(context, widget.goToNextScreen, this)
@@ -104,6 +100,14 @@ class NextQuestionWithExplanationPopupState
       ),
       context: context,
     );
+  }
+
+  void openExplanationPopup(BuildContext context) {
+    closePopup(context);
+    MyPopup.showPopup(
+        context,
+        ExplanationPopup(
+            widget.title, widget.explanation, widget.goToNextScreen));
   }
 }
 
@@ -141,23 +145,25 @@ class ExplanationPopupState extends State<ExplanationPopup> with MyPopup {
 
   @override
   AlertDialog build(BuildContext context) {
+    var title = MyText(
+      fontConfig: FontConfig(
+          fontColor: Colors.grey.shade300,
+          fontSize: FontConfig.getCustomFontSize(1.3)),
+      text: widget.title,
+    );
+    var explanationText = MyText(
+      fontConfig: FontConfig(fontColor: Colors.white),
+      text: widget.explanation,
+    );
     return createDialog(
       Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             margin,
-            MyText(
-              fontConfig: FontConfig(
-                  fontColor: Colors.grey.shade300,
-                  fontSize: FontConfig.getCustomFontSize(1.3)),
-              text: widget.title,
-            ),
+            title,
             margin,
-            MyText(
-              fontConfig: FontConfig(fontColor: Colors.white),
-              text: widget.explanation,
-            ),
+            explanationText,
             margin,
             widget._nextQuestionWithExplanationService
                 .createNextQuestionBtn(context, widget.goToNextScreen, this),

@@ -65,6 +65,7 @@ mixin MyPopup {
         actionsPadding: edgeInsets,
         buttonPadding: edgeInsets,
         titlePadding: edgeInsets,
+        scrollable: true,
         shape: RoundedRectangleBorder(
             borderRadius:
                 BorderRadius.circular(FontConfig.standardBorderRadius)),

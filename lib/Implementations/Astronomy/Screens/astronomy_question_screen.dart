@@ -67,10 +67,7 @@ class AstronomyQuestionScreen extends GameScreen<AstronomyGameContext,
       var imageName = currentQuestionInfo.question.index.toString();
       var module = "questions/" + category.name;
       return imageService.getSpecificImage(
-          module: module,
-          imageExtension:
-              category == _astronomyGameQuestionConfig.cat16 ? "png" : "jpg",
-          imageName: imageName);
+          module: module, imageExtension: "jpg", imageName: imageName);
     }
     return null;
   }
@@ -126,8 +123,9 @@ class AstronomyQuestionScreenState extends State<AstronomyQuestionScreen>
     Widget optionsRows = widget.createOptionRows(
         setStateCallback, widget.goToNextGameScreenCallBack(context),
         widgetBetweenImageAndOptionRows: SizedBox(
-          height: screenDimensions.dimen(10),
+          height: screenDimensions.dimen(3),
         ),
+        questionImageHeightPercent: 45,
         optionTextFontConfig:
             FontConfig(fontColor: Colors.white, borderColor: Colors.black));
     const spacer = Spacer();
@@ -139,7 +137,7 @@ class AstronomyQuestionScreenState extends State<AstronomyQuestionScreen>
         spacer,
         questionContainer,
         SizedBox(
-          height: screenDimensions.dimen(10),
+          height: screenDimensions.dimen(3),
         ),
         optionsRows,
         spacer,

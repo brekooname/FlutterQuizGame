@@ -218,10 +218,10 @@ class MyAppState extends State<MyApp> {
       //       .showLevelsScreen(
       //           AstronomyCampaignLevelService().gameTypes.elementAt(1));
       // });
-      Future.delayed(const Duration(milliseconds: 100), () {
-        MyApp.gameScreenManager.currentScreen!.gameScreenManagerState
-            .showNewGameScreen(MyApp.campaignLevel);
-      });
+      // Future.delayed(const Duration(milliseconds: 100), () {
+      //   MyApp.gameScreenManager.currentScreen!.gameScreenManagerState
+      //       .showNewGameScreen(MyApp.campaignLevel);
+      // });
       // Future.delayed(const Duration(milliseconds: 100), () {
       //   (MyApp.gameScreenManager.currentScreen!.gameScreenManagerState
       //           as IqGameScreenManagerState)

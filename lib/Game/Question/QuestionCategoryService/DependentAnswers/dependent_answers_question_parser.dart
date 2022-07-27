@@ -7,6 +7,8 @@ import 'package:flutter_app_quiz_game/Lib/Extensions/string_extension.dart';
 import '../Base/question_parser.dart';
 
 class DependentAnswersQuestionParser extends QuestionParser {
+  static const String delimiter = "::";
+
   static final DependentAnswersQuestionParser singleton =
       DependentAnswersQuestionParser.internal();
 
@@ -18,33 +20,34 @@ class DependentAnswersQuestionParser extends QuestionParser {
 
   @override
   String getQuestionToBeDisplayed(Question question) {
-    return question.rawString.split(":")[0].trim();
+    return question.rawString.split(delimiter)[0].trim();
   }
 
   String getQuestionExplanation(Question question) {
-    return question.rawString.split(":")[4].trim();
+    var split = question.rawString.split(delimiter);
+    return split.length >= 5 ? split[4].trim() : "";
   }
 
   static String formRawQuestion(
       String questionToBeDisplayed, String correctAnswer, String wrongOptions) {
     return questionToBeDisplayed +
-        ":" +
+        delimiter +
         correctAnswer +
-        ":" +
+        delimiter +
         wrongOptions +
-        ":";
+        delimiter;
   }
 
   //We return a list in case of multiple correct answers
   // but for this case there is only one correct answer
   @override
   List<String> getCorrectAnswersFromRawString(Question question) {
-    return [question.rawString.split(":")[1].trim()];
+    return [question.rawString.split(delimiter)[1].trim()];
   }
 
   List<int> _getAnswerReferences(String questionRawString) {
     List<String> answers = questionRawString
-        .split(":")[2]
+        .split(delimiter)[2]
         .split(",")
         .where((element) => element.trim().isNotEmpty)
         .toList();
@@ -52,7 +55,7 @@ class DependentAnswersQuestionParser extends QuestionParser {
   }
 
   int getPrefixCodeForQuestion(String questionRawString) {
-    var val = questionRawString.split(":")[3].trim();
+    var val = questionRawString.split(delimiter)[3].trim();
     return val.isEmpty ? 0 : val.parseToInt;
   }
 
@@ -61,7 +64,8 @@ class DependentAnswersQuestionParser extends QuestionParser {
       bool includeAllDifficulties,
       int defaultNrOfPossibleAnswersWithoutCorrectOne) {
     List<Question> allQuestionsForCategory =
-        _getQuestionsToChooseAsPossibleAnswers(includeAllDifficulties, question);
+        _getQuestionsToChooseAsPossibleAnswers(
+            includeAllDifficulties, question);
 
     var answerReferences = _getAnswerReferences(question.rawString);
 
