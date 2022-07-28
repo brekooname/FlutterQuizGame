@@ -13,10 +13,11 @@ class NextQuestionWithExplanationPopup extends StatefulWidget {
       NextQuestionWithExplanationService();
   String title;
   String explanation;
+  String nextQuestionBtnLabel;
   VoidCallback goToNextScreen;
 
-  NextQuestionWithExplanationPopup(
-      this.title, this.explanation, this.goToNextScreen,
+  NextQuestionWithExplanationPopup(this.title, this.explanation,
+      this.goToNextScreen, this.nextQuestionBtnLabel,
       {Key? key})
       : super(key: key);
 
@@ -94,8 +95,8 @@ class NextQuestionWithExplanationPopupState
           margin,
           infoBtn,
           margin,
-          widget._nextQuestionWithExplanationService
-              .createNextQuestionBtn(context, widget.goToNextScreen, this)
+          widget._nextQuestionWithExplanationService.createNextQuestionBtn(
+              context, widget.goToNextScreen, this, widget.nextQuestionBtnLabel)
         ],
       ),
       context: context,
@@ -106,8 +107,8 @@ class NextQuestionWithExplanationPopupState
     closePopup(context);
     MyPopup.showPopup(
         context,
-        ExplanationPopup(
-            widget.title, widget.explanation, widget.goToNextScreen));
+        ExplanationPopup(widget.title, widget.explanation,
+            widget.goToNextScreen, widget.nextQuestionBtnLabel));
   }
 }
 
@@ -116,9 +117,11 @@ class ExplanationPopup extends StatefulWidget with MyPopup {
       NextQuestionWithExplanationService();
   String title;
   String explanation;
+  String nextQuestionBtnLabel;
   VoidCallback goToNextScreen;
 
   ExplanationPopup(this.title, this.explanation, this.goToNextScreen,
+      this.nextQuestionBtnLabel,
       {Key? key})
       : super(key: key);
 
@@ -130,7 +133,6 @@ class ExplanationPopupState extends State<ExplanationPopup> with MyPopup {
   @override
   void initState() {
     initPopup();
-    width = screenDimensions.w(90);
     super.initState();
   }
 
@@ -163,10 +165,19 @@ class ExplanationPopupState extends State<ExplanationPopup> with MyPopup {
             margin,
             title,
             margin,
-            explanationText,
+            SizedBox(
+                width: width,
+                height: screenDimensions.dimen(100),
+                child: ListView(
+                  shrinkWrap: true,
+                  children: [explanationText],
+                )),
             margin,
-            widget._nextQuestionWithExplanationService
-                .createNextQuestionBtn(context, widget.goToNextScreen, this),
+            widget._nextQuestionWithExplanationService.createNextQuestionBtn(
+                context,
+                widget.goToNextScreen,
+                this,
+                widget.nextQuestionBtnLabel),
             margin,
           ]),
       context: context,
@@ -175,10 +186,10 @@ class ExplanationPopupState extends State<ExplanationPopup> with MyPopup {
 }
 
 class NextQuestionWithExplanationService with LabelMixin {
-  MyButton createNextQuestionBtn(
-      BuildContext context, VoidCallback goToNextScreen, MyPopup myPopup) {
+  MyButton createNextQuestionBtn(BuildContext context,
+      VoidCallback goToNextScreen, MyPopup myPopup, String btnLabel) {
     return MyButton(
-      text: label.l_next_question,
+      text: btnLabel,
       backgroundColor: Colors.lightGreenAccent,
       onClick: () {
         myPopup.closePopup(context);

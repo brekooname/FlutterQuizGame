@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_app_quiz_game/Game/Game/campaign_level.dart';
+import 'package:flutter_app_quiz_game/Game/Game/game_context.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
 import 'package:flutter_app_quiz_game/Implementations/Astronomy/Constants/astronomy_game_question_config.dart';
@@ -18,6 +19,9 @@ import 'package:flutter_app_quiz_game/Lib/Screen/standard_screen.dart';
 import '../Constants/astronomy_campaign_level_service.dart';
 
 class AstronomyScreenManager extends GameScreenManager {
+  final AstronomyCampaignLevelService _campaignLevelService =
+      AstronomyCampaignLevelService();
+
   AstronomyScreenManager({Key? key}) : super(key: key);
 
   @override
@@ -54,15 +58,20 @@ class AstronomyScreenManagerState extends State<AstronomyScreenManager>
   }
 
   @override
+  StandardScreen getScreenAfterGameOver(GameContext gameContext) {
+    var gameTypeForCategory = widget._campaignLevelService
+        .findGameTypeForCategory(gameContext.questionConfig.categories.first);
+    return _createAstronomyLevelsScreen(gameTypeForCategory);
+  }
+
+  @override
   bool goBack(StandardScreen standardScreen) {
     if (standardScreen.runtimeType == AstronomyMainMenuScreen) {
       return true;
     } else if (standardScreen.runtimeType == AstronomyQuestionScreen) {
       var questionScreen = (standardScreen as AstronomyQuestionScreen);
-      AstronomyCampaignLevelService campaignLevelService =
-          AstronomyCampaignLevelService();
-      var gameTypeForCategory =
-          campaignLevelService.findGameTypeForCategory(questionScreen.category);
+      var gameTypeForCategory = widget._campaignLevelService
+          .findGameTypeForCategory(questionScreen.category);
       if (gameTypeForCategory.gameTypeCampaignLevels.length == 1) {
         showMainScreen();
       } else {

@@ -77,6 +77,12 @@ android {
         iqgamePro {
             assets.srcDirs = ['assets/implementations/iqgame', 'assets/main']
         }
+        astronomy {
+            assets.srcDirs = ['assets/implementations/astronomy', 'assets/main']
+        }
+        astronomyPro {
+            assets.srcDirs = ['assets/implementations/astronomy', 'assets/main']
+        }
     }
 
     defaultConfig {
@@ -99,6 +105,22 @@ android {
 
     flavorDimensions "game"
     productFlavors {
+/////////////////////////////////////////////////////////////////////////////
+        astronomy {
+            applicationIdSuffix ".astronomy"
+            versionCode 3
+            versionName "2.0"
+            dimension "game"
+            manifestPlaceholders = [appIcon: "@drawable/astronomy_icon"]
+        }
+/////////////////////////////////////////////////////////////////////////////
+        astronomyPro {
+            applicationIdSuffix ".astronomypro"
+            versionCode 4
+            versionName "2.0"
+            dimension "game"
+            manifestPlaceholders = [appIcon: "@drawable/astronomypro_icon"]
+        }
 /////////////////////////////////////////////////////////////////////////////
         iqgame {
             applicationIdSuffix ".iqtest"

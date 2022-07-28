@@ -8,6 +8,7 @@ import 'package:flutter_app_quiz_game/Game/Question/Model/question_info.dart';
 import 'package:flutter_app_quiz_game/Lib/Ads/ad_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Audio/my_audio_player.dart';
 import 'package:flutter_app_quiz_game/Lib/Image/image_service.dart';
+import 'package:flutter_app_quiz_game/Lib/Localization/label_mixin.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/standard_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Storage/game_local_storage.dart';
 
@@ -20,7 +21,7 @@ abstract class GameScreen<
         TGameContext extends GameContext,
         TGameScreenManagerState extends GameScreenManagerState,
         TCampaignLevelService extends CampaignLevelService>
-    extends StandardScreen<TGameScreenManagerState> {
+    extends StandardScreen<TGameScreenManagerState> with LabelMixin {
   GameLocalStorage gameLocalStorage = GameLocalStorage();
   AdService adService = AdService();
   MyAudioPlayer audioPlayer = MyAudioPlayer();
@@ -76,13 +77,16 @@ abstract class GameScreen<
       if (listOfCurrentQuestionInfo.length != 1 ||
           currentQuestionInfo
               .question.questionExplanationToBeDisplayed.isEmpty) {
-        _goToNextGameScreenCallBack(context);
+        _goToNextGameScreenCallBack(context).call();
       } else {
         Question question = currentQuestionInfo.question;
         var popup = NextQuestionWithExplanationPopup(
             question.questionService.getCorrectAnswers(question).join(", "),
             question.questionExplanationToBeDisplayed,
-            _goToNextGameScreenCallBack(context));
+            _goToNextGameScreenCallBack(context),
+            gameContext.gameUser.getOpenQuestions().isEmpty
+                ? label.l_go_back
+                : label.l_next_question);
         MyPopup.showPopup(context, popup);
       }
     };

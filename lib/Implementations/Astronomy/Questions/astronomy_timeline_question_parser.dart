@@ -4,6 +4,8 @@ import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/Base
 import 'package:flutter_app_quiz_game/Lib/Extensions/string_extension.dart';
 
 class AstronomyTimelineQuestionParser extends QuestionParser {
+  static const String delimiter = "::";
+  
   static final AstronomyTimelineQuestionParser singleton =
       AstronomyTimelineQuestionParser.internal();
 
@@ -20,11 +22,11 @@ class AstronomyTimelineQuestionParser extends QuestionParser {
 
   @override
   String getQuestionToBeDisplayed(Question question) {
-    return question.rawString.split(":")[0].split("##")[1];
+    return question.rawString.split(delimiter)[0].split("##")[1];
   }
 
   List<String> getCorrectAnswers(Question question) {
-    return [question.rawString.split(":")[1]];
+    return [question.rawString.split(delimiter)[1]];
   }
 
   List<String> getOrderedAnswerOptions(
@@ -50,7 +52,7 @@ class AstronomyTimelineQuestionParser extends QuestionParser {
         .getAllQuestions(categories: [question.category]);
     Set<String> opt = {getCorrectAnswers(question).first};
     List<int> ansRef = question.rawString
-        .split(":")[2]
+        .split(delimiter)[2]
         .split(",")
         .map((e) => e.parseToInt)
         .toList();
