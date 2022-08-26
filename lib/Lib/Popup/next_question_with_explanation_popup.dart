@@ -5,6 +5,7 @@ import 'package:flutter_app_quiz_game/Lib/Localization/label_mixin.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
 import '../Font/font_config.dart';
+import '../Font/font_util.dart';
 import 'my_popup.dart';
 
 class NextQuestionWithExplanationPopup extends StatefulWidget {
@@ -154,7 +155,8 @@ class ExplanationPopupState extends State<ExplanationPopup> with MyPopup {
       text: widget.title,
     );
     var explanationText = MyText(
-      fontConfig: FontConfig(fontColor: Colors.white),
+      fontConfig:
+          FontConfig(fontColor: FontUtil.getFontDefaultColorForContrast()),
       text: widget.explanation,
     );
     return createDialog(

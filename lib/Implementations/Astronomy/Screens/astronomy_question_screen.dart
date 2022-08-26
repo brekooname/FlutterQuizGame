@@ -104,6 +104,14 @@ class AstronomyQuestionScreen extends GameScreen<AstronomyGameContext,
 class AstronomyQuestionScreenState extends State<AstronomyQuestionScreen>
     with ScreenState, QuizQuestionContainer, LabelMixin {
   @override
+  void initState() {
+    super.initState();
+    initScreenState(onUserEarnedReward: () {
+      _onHintButtonClick();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     Widget container =
         widget.campaignLevelService.isPlanetsGameType(widget._gameType)

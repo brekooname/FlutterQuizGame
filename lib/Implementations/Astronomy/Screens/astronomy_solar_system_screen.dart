@@ -92,6 +92,8 @@ class AstronomySolarSystemScreenState extends State<AstronomySolarSystemScreen>
   @override
   void initState() {
     super.initState();
+    initScreenState(onUserEarnedReward: () {
+    });
     widget.initImageToClick();
   }
 

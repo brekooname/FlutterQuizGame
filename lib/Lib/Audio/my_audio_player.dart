@@ -35,9 +35,15 @@ class MyAudioPlayer {
 
   Future<void> playBackgroundMusic() async {
     await _playMusic(
-        assetName: "level_success",
-        audioPlayerId: "backgroundMusicAudioPlayerId");
+        assetName: "background",
+        audioPlayerId: getBackgroundMusicAudioPlayerId());
   }
+
+  Future<void> stopBackgroundMusic() async {
+    await stop(audioPlayerId: getBackgroundMusicAudioPlayerId());
+  }
+
+  String getBackgroundMusicAudioPlayerId() => "backgroundMusicAudioPlayerId";
 
   Future<void> stop({String? audioPlayerId}) async {
     var assetsAudioPlayer = _getAssetsAudioPlayer(audioPlayerId);

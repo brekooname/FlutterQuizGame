@@ -6,6 +6,7 @@ import 'package:flutter_app_quiz_game/Lib/Storage/rate_app_local_storage.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
 import '../../main.dart';
+import '../Font/font_util.dart';
 import 'my_popup.dart';
 
 class RatePopupService {
@@ -52,7 +53,9 @@ class RateAppPopup extends StatelessWidget with MyPopup, LabelMixin {
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
           margin,
-          MyText(text: label.l_thanks_for_your_support),
+          MyText(
+              text: label.l_thanks_for_your_support,
+              fontColor: FontUtil.getFontDefaultColorForContrast()),
           margin,
           MyButton(
             text: label.l_rate_now_the_app,

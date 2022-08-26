@@ -12,9 +12,10 @@ import 'package:flutter_app_quiz_game/Lib/Screen/Game/quiz_question_container.da
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/quiz_question_manager.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
 
-class SkelQuestionScreen
-    extends GameScreen<SkelGameContext, SkelScreenManagerState, SkelCampaignLevelService>
-    with QuizOptionsGameScreen<QuizQuestionManager> {
+class SkelQuestionScreen extends GameScreen<
+    SkelGameContext,
+    SkelScreenManagerState,
+    SkelCampaignLevelService> with QuizOptionsGameScreen<QuizQuestionManager> {
   SkelQuestionScreen(
     SkelScreenManagerState gameScreenManagerState, {
     Key? key,
@@ -46,6 +47,12 @@ class SkelQuestionScreen
 
 class SkelQuestionScreenState extends State<SkelQuestionScreen>
     with ScreenState, QuizQuestionContainer, LabelMixin {
+  @override
+  void initState() {
+    super.initState();
+    initScreenState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container();

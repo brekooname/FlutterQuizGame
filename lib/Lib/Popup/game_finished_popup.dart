@@ -4,6 +4,7 @@ import 'package:flutter_app_quiz_game/Lib/Font/font_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Localization/label_mixin.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
+import '../Font/font_util.dart';
 import 'my_popup.dart';
 
 class GameFinishedPopup extends StatelessWidget with MyPopup, LabelMixin {
@@ -33,6 +34,7 @@ class GameFinishedPopup extends StatelessWidget with MyPopup, LabelMixin {
             SizedBox(height: screenDimensions.dimen(9)),
             MyText(
               text: getGameFinishedText(),
+              fontColor: FontUtil.getFontDefaultColorForContrast(),
               maxLines: 3,
               width: width / 1.2,
             ),

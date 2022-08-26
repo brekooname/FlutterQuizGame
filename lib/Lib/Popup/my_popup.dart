@@ -48,17 +48,19 @@ mixin MyPopup {
   AlertDialog createDialog(Widget mainContent,
       {required BuildContext context, VoidCallback? onCloseBtnClick}) {
     DecorationImage? decorationImage;
+    var lightScreenContrast = MyApp.appId.gameConfig.isLightScreenContrast;
     if (backgroundImage != null) {
       decorationImage = DecorationImage(
         fit: BoxFit.cover,
         colorFilter: ColorFilter.mode(
-            Colors.white.withOpacity(0.175), BlendMode.dstATop),
+            (lightScreenContrast ? Colors.white : Colors.black)
+                .withOpacity(lightScreenContrast ? 0.175 : 0.05),
+            BlendMode.dstATop),
         image: backgroundImage!,
       );
     }
 
     var edgeInsets = const EdgeInsets.all(0);
-    var lightScreenContrast = MyApp.appId.gameConfig.isLightScreenContrast;
     return AlertDialog(
         contentPadding: edgeInsets,
         insetPadding: edgeInsets,

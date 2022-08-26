@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app_quiz_game/Lib/Audio/my_audio_player.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Localization/label_mixin.dart';
 import 'package:flutter_app_quiz_game/Lib/Popup/reset_content_popup.dart';
@@ -12,6 +13,7 @@ import 'my_popup.dart';
 
 class SettingsPopup extends StatefulWidget {
   late SettingsLocalStorage _settingsLocalStorage;
+  final MyAudioPlayer _myAudioPlayer = MyAudioPlayer();
   VoidCallback? resetContent;
 
   SettingsPopup({Key? key, VoidCallback? resetContent}) : super(key: key) {
@@ -26,6 +28,8 @@ class SettingsPopup extends StatefulWidget {
 class SettingsPopupState extends State<SettingsPopup> with MyPopup, LabelMixin {
   late Image soundOn;
   late Image soundOff;
+  late Image musicOn;
+  late Image musicOff;
 
   @override
   void initState() {
@@ -47,6 +51,18 @@ class SettingsPopupState extends State<SettingsPopup> with MyPopup, LabelMixin {
         module: "buttons",
         maxWidth: sideDimen,
         maxHeight: sideDimen);
+    musicOn = imageService.getMainImage(
+        imageName: "btn_music_on",
+        imageExtension: "png",
+        module: "buttons",
+        maxWidth: sideDimen,
+        maxHeight: sideDimen);
+    musicOff = imageService.getMainImage(
+        imageName: "btn_music_off",
+        imageExtension: "png",
+        module: "buttons",
+        maxWidth: sideDimen,
+        maxHeight: sideDimen);
     super.initState();
   }
 
@@ -55,13 +71,31 @@ class SettingsPopupState extends State<SettingsPopup> with MyPopup, LabelMixin {
     super.didChangeDependencies();
     precacheImage(soundOn.image, context);
     precacheImage(soundOff.image, context);
+    precacheImage(musicOn.image, context);
+    precacheImage(musicOff.image, context);
   }
 
   @override
   AlertDialog build(BuildContext context) {
     List<Widget> settingsChildren = [];
     settingsChildren.addAll([
-      soundOnOffButton(context),
+      _createMusicSoundOnOffButton(
+          context, soundOn, soundOff, widget._settingsLocalStorage.isSoundOn(),
+          () {
+        widget._settingsLocalStorage.toggleSound();
+      }),
+      MyApp.appId.gameConfig.hasBackgroundMusic ? margin : Container(),
+      MyApp.appId.gameConfig.hasBackgroundMusic
+          ? _createMusicSoundOnOffButton(context, musicOn, musicOff,
+              widget._settingsLocalStorage.isMusicOn(), () {
+              widget._settingsLocalStorage.toggleMusic();
+              if (widget._settingsLocalStorage.isMusicOn()) {
+                widget._myAudioPlayer.playBackgroundMusic();
+              } else {
+                widget._myAudioPlayer.stopBackgroundMusic();
+              }
+            })
+          : Container(),
       margin,
       Divider(
         height: screenDimensions.dimen(0.5),
@@ -72,12 +106,12 @@ class SettingsPopupState extends State<SettingsPopup> with MyPopup, LabelMixin {
     List<Widget> settingsButtons = [];
     if (MyApp.isExtraContentLocked) {
       settingsButtons.addAll([
-        removeAdsButton(context),
+        _removeAdsButton(context),
         margin,
       ]);
     }
     settingsButtons.addAll([
-      deleteProgressButton(context),
+      _deleteProgressButton(context),
     ]);
     settingsChildren.addAll([
       margin,
@@ -103,7 +137,12 @@ class SettingsPopupState extends State<SettingsPopup> with MyPopup, LabelMixin {
     );
   }
 
-  Row soundOnOffButton(BuildContext context) {
+  Row _createMusicSoundOnOffButton(
+      BuildContext context,
+      Image controlOn,
+      Image controlOff,
+      bool isControlOn,
+      VoidCallback toggleControlOnOffSwitchPress) {
     var switchDimen = screenDimensions.dimen(17);
     var soundImgDimen = screenDimensions.dimen(15);
     return Row(
@@ -113,19 +152,16 @@ class SettingsPopupState extends State<SettingsPopup> with MyPopup, LabelMixin {
           SizedBox(
               height: soundImgDimen,
               width: soundImgDimen,
-              child: FittedBox(
-                  child: widget._settingsLocalStorage.isSoundOn()
-                      ? soundOn
-                      : soundOff)),
+              child: FittedBox(child: isControlOn ? controlOn : controlOff)),
           SizedBox(
               height: switchDimen,
               width: switchDimen,
               child: FittedBox(
                   child: CupertinoSwitch(
-                value: widget._settingsLocalStorage.isSoundOn(),
+                value: isControlOn,
                 onChanged: (value) {
                   setState(() {
-                    widget._settingsLocalStorage.toggleSound();
+                    toggleControlOnOffSwitchPress.call();
                     Future.delayed(const Duration(milliseconds: 300),
                         () => closePopup(context));
                   });
@@ -134,7 +170,7 @@ class SettingsPopupState extends State<SettingsPopup> with MyPopup, LabelMixin {
         ]);
   }
 
-  MyButton deleteProgressButton(BuildContext context) {
+  MyButton _deleteProgressButton(BuildContext context) {
     return MyButton(
       text: label.l_delete_progress,
       backgroundColor: Colors.red.shade200,
@@ -146,7 +182,7 @@ class SettingsPopupState extends State<SettingsPopup> with MyPopup, LabelMixin {
     );
   }
 
-  MyButton removeAdsButton(BuildContext context) {
+  MyButton _removeAdsButton(BuildContext context) {
     return MyButton(
       text: label.l_remove_ads,
       backgroundColor: Colors.green.shade200,

@@ -58,8 +58,8 @@ class MyApp extends StatefulWidget {
   static CampaignLevel campaignLevel = AstronomyCampaignLevelService().level_13;
 
   //
-  static Language webLanguage = Language.en;
-  static bool webIsPro = true;
+  static Language webLanguage = Language.it;
+  static bool webIsPro = false;
 
   // static bool webIsPro = false;
 
@@ -100,15 +100,31 @@ class MyApp extends StatefulWidget {
   State<MyApp> createState() => MyAppState();
 }
 
-class MyAppState extends State<MyApp> {
+class MyAppState extends State<MyApp> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance?.addObserver(this);
     _init().then((value) => {
           setState(() {
             widget.initAsyncCompleted = true;
           })
         });
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance?.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      MyAudioPlayer().playBackgroundMusic();
+    } else {
+      MyAudioPlayer().stopBackgroundMusic();
+    }
   }
 
   Future<void> _init() async {

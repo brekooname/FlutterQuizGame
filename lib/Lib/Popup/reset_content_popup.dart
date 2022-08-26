@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
+import 'package:flutter_app_quiz_game/Lib/Font/font_util.dart';
 import 'package:flutter_app_quiz_game/Lib/Localization/label_mixin.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
@@ -32,7 +33,10 @@ class ResetContentPopupState extends State<ResetContentPopup>
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             margin,
-            MyText(text: label.l_delete_all_progress),
+            MyText(
+              text: label.l_delete_all_progress,
+              fontColor: FontUtil.getFontDefaultColorForContrast(),
+            ),
             margin,
             MyButton(
               text: label.l_yes,
