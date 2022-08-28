@@ -67,7 +67,7 @@ class MyApp extends StatefulWidget {
   //////
   //
 
-  AdService adService = AdService();
+  final AdService _adService = AdService();
   static const platform = MethodChannel('main.flutter');
   static late double screenWidth;
   static late double screenHeight;
@@ -120,10 +120,11 @@ class MyAppState extends State<MyApp> with WidgetsBindingObserver {
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
+    MyAudioPlayer myAudioPlayer = MyAudioPlayer();
     if (state == AppLifecycleState.resumed) {
-      MyAudioPlayer().playBackgroundMusic();
+      myAudioPlayer.playBackgroundMusic();
     } else {
-      MyAudioPlayer().stopBackgroundMusic();
+      myAudioPlayer.stopBackgroundMusic();
     }
   }
 
@@ -136,8 +137,8 @@ class MyAppState extends State<MyApp> with WidgetsBindingObserver {
     BannerAd? bannerAd;
     if (MyApp.kIsMobile && MyApp.isExtraContentLocked) {
       MobileAds.instance.initialize();
-      widget.adService.initInterstitialAd();
-      bannerAd = widget.adService.initBannerAd();
+      widget._adService.initInterstitialAd();
+      bannerAd = widget._adService.initBannerAd();
     }
 
     MyApp.backgroundTexture = ImageService().getSpecificImage(
@@ -148,6 +149,8 @@ class MyAppState extends State<MyApp> with WidgetsBindingObserver {
 
     RateAppLocalStorage rateAppLocalStorage = RateAppLocalStorage();
     rateAppLocalStorage.incrementAppLaunchedCount();
+
+    MyAudioPlayer().playBackgroundMusic();
   }
 
   Future<AppConfig> _createMobileAppConfig() async {

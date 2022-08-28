@@ -179,8 +179,9 @@ mixin ImageClickScreen<TQuizQuestionManager extends QuizQuestionManager> {
   double _calculateOriginX() {
     return showAnswerPointerOnOrigin()
         //To verify if it works with - or +
-        // ?  +_getAnswerBtnSideDimen() / 2 + _getAnswerBtnBorderWidth()
-        ? -_getAnswerBtnSideDimen() / 2 + _getAnswerBtnBorderWidth()
+        // ?  _getAnswerBtnSideDimen() / 2 + _getAnswerBtnBorderWidth()
+        // ?  - _getAnswerBtnSideDimen() / 2 + _getAnswerBtnBorderWidth()
+        ? _getAnswerBtnBorderWidth() / 2
         : -_getPointerDimen() / 2 + _getAnswerBtnBorderWidth();
   }
 
@@ -277,6 +278,12 @@ mixin ImageClickScreen<TQuizQuestionManager extends QuizQuestionManager> {
         fontConfig: btnFontConfig,
         size: Size(btnSide, btnSide),
         buttonSkinConfig: btnSkin);
+    var answerBtnToDisplay = btnDisabled
+        ? answerBtn
+        : AnimateZoomInZoomOut(
+            toAnimateWidgetSize: Size(btnSide, btnSide),
+            zoomAmount: AnimateZoomInZoomOut.defaultZoomAmount,
+            toAnimateWidget: answerBtn);
     return Visibility(
         visible: !_pressedAnswerEqualsButton(imageClickInfo),
         child: SizedBox(
@@ -287,13 +294,7 @@ mixin ImageClickScreen<TQuizQuestionManager extends QuizQuestionManager> {
                   child: SizedBox(
                       height: btnSide,
                       width: btnSide,
-                      child: btnDisabled
-                          ? answerBtn
-                          : AnimateZoomInZoomOut(
-                              toAnimateWidgetSize: Size(btnSide, btnSide),
-                              zoomAmount:
-                                  AnimateZoomInZoomOut.defaultZoomAmount,
-                              toAnimateWidget: answerBtn))),
+                      child: answerBtnToDisplay)),
             ])));
   }
 

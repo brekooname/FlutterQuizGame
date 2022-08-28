@@ -44,6 +44,12 @@ class AstronomyScreenManagerState extends State<AstronomyScreenManager>
     return createScreen(widget.currentScreen);
   }
 
+  @override
+  void showNextGameScreen(
+      CampaignLevel campaignLevel, AstronomyGameContext gameContext) {
+    super.showNextGameScreen(campaignLevel, gameContext);
+  }
+
   void showLevelsScreen(AstronomyGameType astronomyGameType) {
     setCurrentScreenState(_createAstronomyLevelsScreen(astronomyGameType));
   }
@@ -61,7 +67,11 @@ class AstronomyScreenManagerState extends State<AstronomyScreenManager>
   StandardScreen getScreenAfterGameOver(GameContext gameContext) {
     var gameTypeForCategory = widget._campaignLevelService
         .findGameTypeForCategory(gameContext.questionConfig.categories.first);
-    return _createAstronomyLevelsScreen(gameTypeForCategory);
+    if (gameTypeForCategory.gameTypeCampaignLevels.length == 1) {
+      return createMainScreen();
+    } else {
+      return _createAstronomyLevelsScreen(gameTypeForCategory);
+    }
   }
 
   @override

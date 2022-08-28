@@ -2,8 +2,6 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app_quiz_game/Implementations/Astronomy/Questions/AllContent/astronomy_question_collector_service.dart';
-import 'package:flutter_app_quiz_game/Lib/Storage/quiz_game_local_storage.dart';
 
 import '../../../Lib/Button/button_skin_config.dart';
 import '../../../Lib/Button/my_button.dart';
@@ -12,7 +10,7 @@ import '../../../Lib/Image/image_service.dart';
 import '../../../Lib/ScreenDimensions/screen_dimensions_service.dart';
 import '../../../Lib/Text/my_text.dart';
 
-class AstronomyComponentsService extends QuizGameLocalStorage {
+class AstronomyComponentsService {
   final ImageService _imageService = ImageService();
   final ScreenDimensionsService _screenDimensions = ScreenDimensionsService();
 

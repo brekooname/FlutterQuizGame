@@ -80,10 +80,11 @@ class AstronomySolarSystemScreen extends GameScreen<
 
   @override
   Size getImageToClickAdjustedForScreenSize() {
+    var imgWidth = screenDimensions.w(90);
     return Size(
-        screenDimensions.w(100),
-        screenDimensions.getNewHeightForNewWidth(screenDimensions.w(100),
-            _rawImageToClickSize.width, _rawImageToClickSize.height));
+        imgWidth,
+        screenDimensions.getNewHeightForNewWidth(
+            imgWidth, _rawImageToClickSize.width, _rawImageToClickSize.height));
   }
 }
 
@@ -92,8 +93,7 @@ class AstronomySolarSystemScreenState extends State<AstronomySolarSystemScreen>
   @override
   void initState() {
     super.initState();
-    initScreenState(onUserEarnedReward: () {
-    });
+    initScreenState(onUserEarnedReward: () {});
     widget.initImageToClick();
   }
 
