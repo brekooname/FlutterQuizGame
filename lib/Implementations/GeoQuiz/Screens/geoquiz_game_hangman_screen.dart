@@ -23,7 +23,7 @@ import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 class GeoQuizHangmanScreen extends GameScreen<
     GeoQuizGameContext,
     GeoQuizGameScreenManagerState,
-    GeoQuizCampaignLevelService> with LabelMixin {
+    GeoQuizCampaignLevelService> {
   static const int showInterstitialAdEveryNQuestions = 8;
   final GeoQuizLocalStorage _geoQuizLocalStorage = GeoQuizLocalStorage();
   final MyAudioPlayer _audioPlayer = MyAudioPlayer();

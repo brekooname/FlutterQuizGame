@@ -5,6 +5,7 @@ import 'package:flutter_app_quiz_game/Game/Question/question_collector_service.d
 import 'package:flutter_app_quiz_game/Implementations/Astronomy/Constants/astronomy_campaign_level_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/Astronomy/Constants/astronomy_game_question_config.dart';
 import 'package:flutter_app_quiz_game/Implementations/Astronomy/Questions/AllContent/astronomy_all_questions.dart';
+import 'package:flutter_app_quiz_game/Lib/Localization/label_mixin.dart';
 
 import '../../../../Game/Question/Model/category_difficulty.dart';
 import '../../../../Game/Question/Model/question.dart';
@@ -12,7 +13,7 @@ import '../../../../Game/Question/Model/question_category.dart';
 import '../../../../Game/Question/Model/question_difficulty.dart';
 
 class AstronomyQuestionCollectorService extends QuestionCollectorService<
-    AstronomyAllQuestions, AstronomyGameQuestionConfig> {
+    AstronomyAllQuestions, AstronomyGameQuestionConfig> with LabelMixin {
   final AstronomyCampaignLevelService _campaignLevelService =
       AstronomyCampaignLevelService();
   static final AstronomyQuestionCollectorService singleton =
@@ -160,16 +161,23 @@ class AstronomyQuestionCollectorService extends QuestionCollectorService<
     int seconds = secondsLeft - minutes * 60;
 
     String formattedTime = "";
+    bool containsHoursLabel = false;
     if (hours > 0) {
-      formattedTime += hours.toString() + "h ";
+      formattedTime +=
+          formatTextWithOneParam(label.l_param0_hours, hours.toString()) + " ";
+      containsHoursLabel = true;
     }
 
     if (minutes > 0) {
-      formattedTime += minutes.toString() + "min ";
+      formattedTime +=
+          formatTextWithOneParam(label.l_param0_minutes, minutes.toString()) +
+              " ";
     }
 
-    if (seconds > 0 && !formattedTime.contains("h")) {
-      formattedTime += seconds.toString() + "s";
+    if (seconds > 0 && !containsHoursLabel) {
+      formattedTime +=
+          formatTextWithOneParam(label.l_param0_seconds, seconds.toString()) +
+              " ";
     }
 
     return formattedTime;
@@ -177,18 +185,22 @@ class AstronomyQuestionCollectorService extends QuestionCollectorService<
 
   String _getGravityInRelationToEarth(int id) {
     double gravityInRelationToEarth = _getById(id).gravityInRelationToEarth;
-    String res = gravityInRelationToEarth.toStringAsFixed(1) + " kg";
+    String res = formatTextWithOneParam(
+        label.l_param0_kg, gravityInRelationToEarth.toStringAsFixed(1));
     if (gravityInRelationToEarth < 1) {
-      res = (gravityInRelationToEarth * 1000).toStringAsFixed(1) + " g";
+      res = formatTextWithOneParam(label.l_param0_grams,
+          (gravityInRelationToEarth * 1000).toStringAsFixed(1));
     }
     return res;
   }
 
   String _getOrbitalPeriod(int id) {
     int orbitalPeriodInDays = _getById(id).orbitalPeriodInDays;
-    String res = orbitalPeriodInDays.toString() + " days";
+    String res = formatTextWithOneParam(
+        label.l_param0_days, orbitalPeriodInDays.toString());
     if (orbitalPeriodInDays > 999) {
-      res = (orbitalPeriodInDays / 365).round().toString() + " years";
+      res = formatTextWithOneParam(
+          label.l_param0_years, (orbitalPeriodInDays / 365).round().toString());
     }
     return res;
   }

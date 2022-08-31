@@ -1,11 +1,13 @@
 import 'package:flutter_app_quiz_game/Game/Game/campaign_level.dart';
 import 'package:flutter_app_quiz_game/Game/Game/campaign_level_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/Astronomy/Constants/astronomy_game_question_config.dart';
+import 'package:flutter_app_quiz_game/Lib/Localization/label_mixin.dart';
 
 import '../../../Game/Question/Model/question_category.dart';
 import '../../../Game/Question/Model/question_difficulty.dart';
 
-class AstronomyCampaignLevelService extends CampaignLevelService {
+class AstronomyCampaignLevelService extends CampaignLevelService
+    with LabelMixin {
   late CampaignLevel level_0;
   late CampaignLevel level_1;
   late CampaignLevel level_10;
@@ -38,18 +40,20 @@ class AstronomyCampaignLevelService extends CampaignLevelService {
     singleton.level_10 = singleton.allLevels[10];
     singleton.level_13 = singleton.allLevels[13];
 
+    var staticLabel = LabelMixin.staticLabel;
     singleton.gameTypes = [
       AstronomyGameType(
         0,
-        "Astronomy Trivia",
+        staticLabel.l_general_knowledge,
         [
-          singleton.allLevels.sublist(7, 11),
+          singleton.allLevels.sublist(7, 10),
           singleton.allLevels.sublist(14, 15),
+          singleton.allLevels.sublist(10, 11),
         ].expand((e) => e).toList(),
       ),
       AstronomyGameType(
         1,
-        "Recognize the Image",
+        staticLabel.l_recognize_the_image,
         [
           singleton.allLevels.sublist(11, 14),
           singleton.allLevels.sublist(15, 17),
@@ -57,12 +61,12 @@ class AstronomyCampaignLevelService extends CampaignLevelService {
       ),
       AstronomyGameType(
         2,
-        "The Solar System",
+        staticLabel.l_the_solar_system,
         singleton.allLevels.sublist(0, 1),
       ),
       AstronomyGameType(
         3,
-        "The Planets",
+        staticLabel.l_the_planets,
         singleton.allLevels.sublist(1, 7),
       ),
     ];

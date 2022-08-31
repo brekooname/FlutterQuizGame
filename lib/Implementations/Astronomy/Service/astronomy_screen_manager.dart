@@ -19,9 +19,6 @@ import 'package:flutter_app_quiz_game/Lib/Screen/standard_screen.dart';
 import '../Constants/astronomy_campaign_level_service.dart';
 
 class AstronomyScreenManager extends GameScreenManager {
-  final AstronomyCampaignLevelService _campaignLevelService =
-      AstronomyCampaignLevelService();
-
   AstronomyScreenManager({Key? key}) : super(key: key);
 
   @override
@@ -65,7 +62,7 @@ class AstronomyScreenManagerState extends State<AstronomyScreenManager>
 
   @override
   StandardScreen getScreenAfterGameOver(GameContext gameContext) {
-    var gameTypeForCategory = widget._campaignLevelService
+    var gameTypeForCategory = AstronomyCampaignLevelService()
         .findGameTypeForCategory(gameContext.questionConfig.categories.first);
     if (gameTypeForCategory.gameTypeCampaignLevels.length == 1) {
       return createMainScreen();
@@ -80,7 +77,7 @@ class AstronomyScreenManagerState extends State<AstronomyScreenManager>
       return true;
     } else if (standardScreen.runtimeType == AstronomyQuestionScreen) {
       var questionScreen = (standardScreen as AstronomyQuestionScreen);
-      var gameTypeForCategory = widget._campaignLevelService
+      var gameTypeForCategory = AstronomyCampaignLevelService()
           .findGameTypeForCategory(questionScreen.category);
       if (gameTypeForCategory.gameTypeCampaignLevels.length == 1) {
         showMainScreen();

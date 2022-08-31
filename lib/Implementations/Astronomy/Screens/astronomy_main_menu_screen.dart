@@ -21,14 +21,14 @@ import '../Service/astronomy_local_storage.dart';
 class AstronomyMainMenuScreen
     extends StandardScreen<AstronomyScreenManagerState> {
   final AstronomyComponentsService _astronomyComponentsService =
-  AstronomyComponentsService();
+      AstronomyComponentsService();
   final AstronomyLocalStorage _astronomyLocalStorage = AstronomyLocalStorage();
   final AstronomyCampaignLevelService _campaignLevelService =
-  AstronomyCampaignLevelService();
+      AstronomyCampaignLevelService();
   final AstronomyQuestionCollectorService _questionCollectorService =
-  AstronomyQuestionCollectorService();
+      AstronomyQuestionCollectorService();
   final AstronomyGameQuestionConfig _questionConfig =
-  AstronomyGameQuestionConfig();
+      AstronomyGameQuestionConfig();
 
   AstronomyMainMenuScreen(AstronomyScreenManagerState gameScreenManagerState,
       {Key? key})
@@ -108,18 +108,17 @@ class AstronomyMainMenuScreenState extends State<AstronomyMainMenuScreen>
           gameType.gameTypeLabel,
           gameType.gameTypeAllCategories
               .map((e) =>
-          widget._astronomyLocalStorage
-              .getWonQuestionsForCat(e)
-              .length)
+                  widget._astronomyLocalStorage.getWonQuestionsForCat(e).length)
               .reduce((a, b) => a + b),
           gameType.gameTypeAllCategories
               .map((e) =>
-          widget._questionCollectorService
-              .totalNrOfQuestionsForCategoryDifficulty
-              .get(CategoryDifficulty(
-              e, widget._questionConfig.diff0)) ??
-              0)
-              .reduce((a, b) => a + b)));
+                  widget._questionCollectorService
+                      .totalNrOfQuestionsForCategoryDifficulty
+                      .get(CategoryDifficulty(
+                          e, widget._questionConfig.diff0)) ??
+                  0)
+              .reduce((a, b) => a + b),
+          false));
       if (i > 0 && (i + 1) % 2 == 0) {
         btnRows.add(Row(
           mainAxisAlignment: MainAxisAlignment.center,

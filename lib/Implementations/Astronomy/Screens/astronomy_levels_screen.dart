@@ -13,6 +13,7 @@ import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 import '../../../Game/Question/Model/category_difficulty.dart';
 import '../../../Lib/Button/my_back_button.dart';
 import '../../../Lib/Font/font_config.dart';
+import '../../../main.dart';
 import '../Components/astronomy_components_service.dart';
 import '../Constants/astronomy_campaign_level_service.dart';
 import '../Questions/AllContent/astronomy_question_collector_service.dart';
@@ -91,9 +92,21 @@ class AstronomyLevelsScreenState extends State<AstronomyLevelsScreen>
     List<Widget> btnRows = [];
     List<Widget> btns = [];
     int i = 0;
+
+    var lockedCategs = [
+      widget._questionConfig.cat5,
+      widget._questionConfig.cat6,
+      widget._questionConfig.cat10,
+      widget._questionConfig.cat16,
+    ];
+
     for (CampaignLevel campaignLevel
         in widget.gameType.gameTypeCampaignLevels) {
       var category = campaignLevel.categories.first;
+
+      var contentLocked =
+          MyApp.isExtraContentLocked && lockedCategs.contains(category);
+
       btns.add(widget._astronomyComponentsService.createLevelBtn(() {
         widget.gameScreenManagerState.showNewGameScreen(campaignLevel);
       },
@@ -104,7 +117,8 @@ class AstronomyLevelsScreenState extends State<AstronomyLevelsScreen>
                   .totalNrOfQuestionsForCategoryDifficulty
                   .get(CategoryDifficulty(
                       category, widget._questionConfig.diff0)) ??
-              0));
+              0,
+          contentLocked));
       if (i > 0 && (i + 1) % 2 == 0) {
         btnRows.add(Row(
           mainAxisAlignment: MainAxisAlignment.center,

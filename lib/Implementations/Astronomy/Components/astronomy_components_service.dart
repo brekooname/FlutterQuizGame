@@ -24,26 +24,46 @@ class AstronomyComponentsService {
   AstronomyComponentsService.internal();
 
   Widget createLevelBtn(VoidCallback onClick, String btnImageName,
-      String btnText, int answQ, int totalQ) {
+      String btnText, int answQ, int totalQ, bool isContentLocked) {
     var horizMargin = _screenDimensions.dimen(3);
     var vertMargin = _screenDimensions.dimen(4);
+    var allQuestionsAnswered = answQ == totalQ;
+    var atLeastOneQuestionAnswered = answQ > 0;
+    var fontSize = FontConfig.getCustomFontSize(allQuestionsAnswered
+        ? 1.1
+        : atLeastOneQuestionAnswered
+            ? 1.0
+            : 0.9);
     var scoreText = MyText(
       fontConfig: FontConfig(
-        fontSize: FontConfig.getCustomFontSize(answQ == totalQ
-            ? 1.1
-            : answQ > 0
-                ? 1.0
-                : 0.9),
+        fontSize: fontSize,
         fontWeight: FontWeight.w900,
         borderWidth: FontConfig.standardBorderWidth / 2,
-        fontColor: answQ == totalQ
+        fontColor: allQuestionsAnswered
             ? Colors.lightGreenAccent
-            : answQ > 0
+            : atLeastOneQuestionAnswered
                 ? Colors.lightBlueAccent.withOpacity(0.9)
                 : Colors.grey.shade400.withOpacity(0.3),
       ),
       text: answQ.toString() + "/" + totalQ.toString(),
     );
+    var scoreBackgroundOpacity = allQuestionsAnswered
+        ? 0.2
+        : atLeastOneQuestionAnswered
+            ? 0.2
+            : 0.1;
+    var scoreContainer = Container(
+      width: _screenDimensions.dimen(20),
+      decoration: BoxDecoration(
+          color: Colors.lightBlueAccent.withOpacity(scoreBackgroundOpacity),
+          borderRadius: BorderRadius.circular(FontConfig.standardBorderRadius)),
+      child: scoreText,
+    );
+    var btnIcon = _imageService.getSpecificImage(
+        maxWidth: _screenDimensions.dimen(18),
+        imageName: btnImageName,
+        imageExtension: "png",
+        module: "buttons");
     return Padding(
         padding: EdgeInsets.only(
             left: horizMargin,
@@ -64,29 +84,20 @@ class AstronomyComponentsService {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Container(
-                    width: _screenDimensions.dimen(20),
-                    decoration: BoxDecoration(
-                        color:
-                            Colors.lightBlueAccent.withOpacity(answQ == totalQ
-                                ? 0.2
-                                : answQ > 0
-                                    ? 0.2
-                                    : 0.1),
-                        borderRadius: BorderRadius.circular(
-                            FontConfig.standardBorderRadius)),
-                    child: scoreText,
-                  ),
+                  scoreContainer,
                   MyButton(
                     onClick: () {
                       onClick.call();
                     },
+                    contentLockedConfig: ContentLockedConfig(
+                      isContentLocked: isContentLocked,
+                      lockedIcon: _imageService.getSpecificImage(
+                          imageName: "btn_locked",
+                          imageExtension: "png",
+                          module: "buttons"),
+                    ),
                     buttonSkinConfig: ButtonSkinConfig(
-                        image: _imageService.getSpecificImage(
-                            maxWidth: _screenDimensions.dimen(18),
-                            imageName: btnImageName,
-                            imageExtension: "png",
-                            module: "buttons"),
+                        image: btnIcon,
                         borderRadius: FontConfig.standardBorderRadius * 4),
                     size: Size(_screenDimensions.dimen(40),
                         _screenDimensions.dimen(39)),

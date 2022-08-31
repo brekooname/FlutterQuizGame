@@ -46,85 +46,87 @@ class AstronomyGameQuestionConfig extends GameQuestionConfig with LabelMixin {
   AstronomyGameQuestionConfig.internal();
 
   factory AstronomyGameQuestionConfig() {
+
     singleton.difficulties = [
       singleton.diff0 = QuestionDifficulty(index: 0),
     ];
     //
     //
+    var staticLabel = LabelMixin.staticLabel;
     singleton.categories = [
       singleton.cat0 = QuestionCategory(
           index: 0,
-          categoryLabel: "The Solar System",
+          categoryLabel: staticLabel.l_the_solar_system,
           questionCategoryService: ImageClickCategoryQuestionService()),
       ////////////////
       ////////////////
       ////////////////
       singleton.cat1 = QuestionCategory(
           index: 1,
-          categoryLabel: "radius",
+          categoryLabel: staticLabel.l_radius,
           questionCategoryService: UniqueAnswersCategoryQuestionService()),
       singleton.cat2 = QuestionCategory(
           index: 2,
-          categoryLabel: "gravity",
+          categoryLabel: staticLabel.l_gravity,
           questionCategoryService: UniqueAnswersCategoryQuestionService()),
       singleton.cat3 = QuestionCategory(
           index: 3,
-          categoryLabel: "distance from Sun",
+          categoryLabel: staticLabel.l_distance_from_the_sun,
           questionCategoryService: UniqueAnswersCategoryQuestionService()),
       singleton.cat4 = QuestionCategory(
           index: 4,
-          categoryLabel: "mass",
+          categoryLabel: staticLabel.l_mass,
           questionCategoryService: UniqueAnswersCategoryQuestionService()),
       singleton.cat5 = QuestionCategory(
           index: 5,
-          categoryLabel: "orbital Period",
+          categoryLabel: staticLabel.l_orbital_period,
           questionCategoryService: UniqueAnswersCategoryQuestionService()),
       singleton.cat6 = QuestionCategory(
           index: 6,
-          categoryLabel: "average Temperature",
+          categoryLabel: staticLabel.l_average_temperature,
           questionCategoryService: UniqueAnswersCategoryQuestionService()),
       ////////////////
       ////////////////
       ////////////////
       singleton.cat7 = QuestionCategory(
           index: 7,
-          categoryLabel: "Basic Astronomy",
+          categoryLabel: staticLabel.l_basic_astronomy,
           questionCategoryService: UniqueAnswersCategoryQuestionService()),
       singleton.cat8 = QuestionCategory(
           index: 8,
-          categoryLabel: "Universe Trivia",
+          categoryLabel: staticLabel.l_the_universe,
           questionCategoryService: UniqueAnswersCategoryQuestionService()),
       singleton.cat9 = QuestionCategory(
           index: 9,
-          categoryLabel: "The Planets",
+          categoryLabel: staticLabel.l_the_planets,
           questionCategoryService: DependentAnswersCategoryQuestionService()),
       singleton.cat10 = QuestionCategory(
           index: 10,
-          categoryLabel: "Important Events",
+          categoryLabel: staticLabel.l_important_events,
           questionCategoryService: UniqueAnswersCategoryQuestionService()),
       singleton.cat11 = QuestionCategory(
           index: 11,
-          categoryLabel: "Space Exploration",
+          categoryLabel: staticLabel.l_space_exploration,
           questionCategoryService: DependentAnswersCategoryQuestionService()),
       singleton.cat12 = QuestionCategory(
           index: 12,
-          categoryLabel: "Astronomical Objects",
+          categoryLabel: staticLabel.l_astronomical_objects,
           questionCategoryService: DependentAnswersCategoryQuestionService()),
       singleton.cat13 = QuestionCategory(
           index: 13,
-          categoryLabel: "Astronomical Instruments",
+          categoryLabel: staticLabel.l_astronomical_instruments,
           questionCategoryService: DependentAnswersCategoryQuestionService()),
       singleton.cat14 = QuestionCategory(
           index: 14,
-          categoryLabel: "The History of the Universe",
+          categoryLabel: staticLabel.l_the_history_of_the_universe,
           questionCategoryService: AstronomyTimelineCategoryQuestionService()),
       singleton.cat15 = QuestionCategory(
           index: 15,
-          categoryLabel: "Famous Astronomers",
+          categoryLabel: staticLabel.l_famous_astronomers,
           questionCategoryService: DependentAnswersCategoryQuestionService()),
       singleton.cat16 = QuestionCategory(
           index: 16,
-          categoryLabel: "The Solar System",
+          categoryLabel: staticLabel.l_the_solar_system,
           questionCategoryService: DependentAnswersCategoryQuestionService()),
     ];
 
@@ -135,7 +137,7 @@ class AstronomyGameQuestionConfig extends GameQuestionConfig with LabelMixin {
     singleton.planets = [
       AstronomyPlanetProperties(
           id: 0,
-          name: "Sun",
+          name: staticLabel.l_the_sun,
           orbitalPeriodInDays: 0,
           lightFromSunInSec: 0,
           meanTempInC: 5500,
@@ -144,7 +146,7 @@ class AstronomyGameQuestionConfig extends GameQuestionConfig with LabelMixin {
           gravityInRelationToEarth: 27),
       AstronomyPlanetProperties(
           id: 1,
-          name: "Mercury",
+          name: staticLabel.l_mercury,
           orbitalPeriodInDays: 88,
           lightFromSunInSec: 193,
           meanTempInC: 167,
@@ -153,7 +155,7 @@ class AstronomyGameQuestionConfig extends GameQuestionConfig with LabelMixin {
           gravityInRelationToEarth: 0.38),
       AstronomyPlanetProperties(
           id: 2,
-          name: "Venus",
+          name: staticLabel.l_venus,
           orbitalPeriodInDays: 225,
           lightFromSunInSec: 360,
           meanTempInC: 464,
@@ -162,7 +164,7 @@ class AstronomyGameQuestionConfig extends GameQuestionConfig with LabelMixin {
           gravityInRelationToEarth: 0.9),
       AstronomyPlanetProperties(
           id: 3,
-          name: "Terra",
+          name: staticLabel.l_earth,
           orbitalPeriodInDays: 365,
           lightFromSunInSec: 499,
           meanTempInC: 15,
@@ -171,7 +173,7 @@ class AstronomyGameQuestionConfig extends GameQuestionConfig with LabelMixin {
           gravityInRelationToEarth: 1),
       AstronomyPlanetProperties(
           id: 4,
-          name: "Mars",
+          name: staticLabel.l_mars,
           orbitalPeriodInDays: 687,
           lightFromSunInSec: 759,
           meanTempInC: -65,
@@ -180,7 +182,7 @@ class AstronomyGameQuestionConfig extends GameQuestionConfig with LabelMixin {
           gravityInRelationToEarth: 0.38),
       AstronomyPlanetProperties(
           id: 5,
-          name: "Jupiter",
+          name: staticLabel.l_jupiter,
           orbitalPeriodInDays: 4332,
           lightFromSunInSec: 2595,
           meanTempInC: -110,
@@ -189,7 +191,7 @@ class AstronomyGameQuestionConfig extends GameQuestionConfig with LabelMixin {
           gravityInRelationToEarth: 2.4),
       AstronomyPlanetProperties(
           id: 6,
-          name: "Saturn",
+          name: staticLabel.l_saturn,
           orbitalPeriodInDays: 10747,
           lightFromSunInSec: 4759,
           meanTempInC: -140,
@@ -198,7 +200,7 @@ class AstronomyGameQuestionConfig extends GameQuestionConfig with LabelMixin {
           gravityInRelationToEarth: 0.9),
       AstronomyPlanetProperties(
           id: 7,
-          name: "Uranus",
+          name: staticLabel.l_uranus,
           orbitalPeriodInDays: 30589,
           lightFromSunInSec: 9575,
           meanTempInC: -195,
@@ -207,7 +209,7 @@ class AstronomyGameQuestionConfig extends GameQuestionConfig with LabelMixin {
           gravityInRelationToEarth: 0.9),
       AstronomyPlanetProperties(
           id: 8,
-          name: "Neptune",
+          name: staticLabel.l_neptune,
           orbitalPeriodInDays: 59800,
           lightFromSunInSec: 14998,
           meanTempInC: -200,
@@ -216,7 +218,7 @@ class AstronomyGameQuestionConfig extends GameQuestionConfig with LabelMixin {
           gravityInRelationToEarth: 1.1),
       AstronomyPlanetProperties(
           id: 9,
-          name: "Pluto",
+          name: staticLabel.l_pluto,
           orbitalPeriodInDays: 90560,
           lightFromSunInSec: 19680,
           meanTempInC: -225,
@@ -225,7 +227,7 @@ class AstronomyGameQuestionConfig extends GameQuestionConfig with LabelMixin {
           gravityInRelationToEarth: 0.07),
       AstronomyPlanetProperties(
           id: 10,
-          name: "Moon",
+          name: staticLabel.l_moon,
           orbitalPeriodInDays: 0,
           lightFromSunInSec: 0,
           meanTempInC: -20,
@@ -247,46 +249,46 @@ class AstronomyGameQuestionConfig extends GameQuestionConfig with LabelMixin {
 
     res.putIfAbsent(
         QuestionCategoryDifficultyWithPrefixCode(category: cat1, prefixCode: 0),
-        () => "Planet radius compared to earth radius");
+        () => label.l_planet_radius_compared_to_earth_radius);
     res.putIfAbsent(
         QuestionCategoryDifficultyWithPrefixCode(category: cat2, prefixCode: 0),
-        () => "How much does 1 kg weigh on this planet?");
+        () => label.l_how_much_does_1_kg_weigh_on_this_planet);
     res.putIfAbsent(
         QuestionCategoryDifficultyWithPrefixCode(category: cat3, prefixCode: 0),
-        () => "Planet radius compared to earth radius");
+        () => label.l_how_much_time_does_it_take_for_sunlight_to_reach_this_planet);
     res.putIfAbsent(
         QuestionCategoryDifficultyWithPrefixCode(category: cat4, prefixCode: 0),
-        () => "Planet radius compared to earth radius");
+        () => label.l_how_many_times_larger_than_earth_is_this_planet);
     res.putIfAbsent(
         QuestionCategoryDifficultyWithPrefixCode(category: cat5, prefixCode: 0),
-        () => "Planet radius compared to earth radius");
+        () => label.l_how_many_days_does_it_take_for_this_planet_to_orbit_the_sun);
     res.putIfAbsent(
         QuestionCategoryDifficultyWithPrefixCode(category: cat6, prefixCode: 0),
-        () => "Planet radius compared to earth radius");
+        () => label.l_what_is_the_average_temperature_of_this_planet);
     res.putIfAbsent(
         QuestionCategoryDifficultyWithPrefixCode(
             category: cat11, prefixCode: 0),
-        () => "space exploration");
+        () => label.l_space_exploration);
     res.putIfAbsent(
         QuestionCategoryDifficultyWithPrefixCode(
             category: cat12, prefixCode: 0),
-        () => "astronomical objects");
+        () => label.l_astronomical_objects);
     res.putIfAbsent(
         QuestionCategoryDifficultyWithPrefixCode(
             category: cat13, prefixCode: 0),
-        () => "astronomical instruments");
+        () => label.l_astronomical_instruments);
     res.putIfAbsent(
         QuestionCategoryDifficultyWithPrefixCode(
             category: cat14, prefixCode: 0),
-        () => "When did this event occur?");
+        () => label.l_when_did_this_event_occur);
     res.putIfAbsent(
         QuestionCategoryDifficultyWithPrefixCode(
             category: cat15, prefixCode: 0),
-        () => "Famous astronomer");
+        () => label.l_famous_astronomers);
     res.putIfAbsent(
         QuestionCategoryDifficultyWithPrefixCode(
             category: cat16, prefixCode: 0),
-        () => "The Solar System");
+        () => label.l_the_solar_system);
 
     return res;
   }
