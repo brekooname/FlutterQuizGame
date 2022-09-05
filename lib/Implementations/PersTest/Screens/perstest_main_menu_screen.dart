@@ -87,7 +87,7 @@ class PersTestMainMenuScreenState extends State<PersTestMainMenuScreen>
             context: context,
             iconName: "btn_settings",
             myPopupToDisplay: SettingsPopup(
-              resetContent: () {
+              resetContentOnClick: () {
                 widget._persTestLocalStorage.clearAll();
               },
             ),
@@ -156,8 +156,7 @@ class PersTestMainMenuScreenState extends State<PersTestMainMenuScreen>
                       imageExtension: "png",
                       module: "general")),
               onClick: () {
-                MyPopup.showPopup(
-                    context, PersTestDescriptionPopup(levelDescr));
+                MyPopup.showPopup(PersTestDescriptionPopup(levelDescr));
               },
             ),
             MyButton(
@@ -175,8 +174,7 @@ class PersTestMainMenuScreenState extends State<PersTestMainMenuScreen>
                 if (widget._persTestLocalStorage
                     .getGameTypeResults(difficulty, category)
                     .isEmpty) {
-                  MyPopup.showPopup(context,
-                      PersTestReportNotAvailablePopup(() {
+                  MyPopup.showPopup(PersTestReportNotAvailablePopup(() {
                     widget.gameScreenManagerState
                         .showNewGameScreen(campaignLevel);
                   }));

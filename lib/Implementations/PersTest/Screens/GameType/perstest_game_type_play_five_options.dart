@@ -9,8 +9,6 @@ import 'package:flutter_app_quiz_game/Implementations/PersTest/Components/perste
 import 'package:flutter_app_quiz_game/Implementations/PersTest/Constants/perstest_game_question_config.dart';
 import 'package:flutter_app_quiz_game/Implementations/PersTest/Questions/perstest_game_context.dart';
 import 'package:flutter_app_quiz_game/Implementations/PersTest/Screens/GameType/perstest_game_type_play.dart';
-import 'package:flutter_app_quiz_game/Implementations/PersTest/Screens/GameType/perstest_game_type_report.dart';
-import 'package:flutter_app_quiz_game/Implementations/PersTest/Screens/GameType/perstest_game_type_report_selfesteem.dart';
 import 'package:flutter_app_quiz_game/Implementations/PersTest/Service/perstest_game_screen_manager.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/button_skin_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
@@ -230,7 +228,7 @@ class PersTestGameTypePlayFiveOptions extends PersTestGameTypePlay {
     if (questionInfo == null) {
       gameTypeReport.storeResultsToStorage(gameContext);
       if (category == PersTestGameQuestionConfig().cat1) {
-        MyPopup.showPopup(context, PersTestAgePopup(() {
+        MyPopup.showPopup(PersTestAgePopup(() {
           showGameOverScreen(gameScreenManagerState);
         }));
       } else {

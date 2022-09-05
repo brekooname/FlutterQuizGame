@@ -47,7 +47,6 @@ class IqGameIqTestCorrectAnswersPopupState
             shrinkWrap: true,
             children: _createAnswersRows(),
           )),
-      context: context,
     );
   }
 

@@ -72,7 +72,7 @@ abstract class GameScreen<
     });
   }
 
-  VoidCallback goToNextGameScreenCallBack(BuildContext context) {
+  VoidCallback processNextGameScreenCallBack(BuildContext context) {
     return () {
       if (listOfCurrentQuestionInfo.length != 1 ||
           currentQuestionInfo
@@ -87,7 +87,7 @@ abstract class GameScreen<
             gameContext.gameUser.getOpenQuestions().isEmpty
                 ? label.l_go_back
                 : label.l_next_question);
-        MyPopup.showPopup(context, popup);
+        MyPopup.showPopup(popup);
       }
     };
   }

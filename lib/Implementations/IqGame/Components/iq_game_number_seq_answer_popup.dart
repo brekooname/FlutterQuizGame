@@ -42,10 +42,9 @@ class IqGameIqNumberSeqAnswerPopupState
   }
 
   @override
-  Widget createClosePopupBtn(
-      BuildContext context, VoidCallback? onCloseBtnClick) {
-    return super.createClosePopupBtn(context, () {
-      closePopup(context);
+  Widget createClosePopupBtn(VoidCallback? onCloseBtnClick) {
+    return super.createClosePopupBtn(() {
+      closePopup();
       widget.nextQuestion.call();
     });
   }
@@ -103,16 +102,14 @@ class IqGameIqNumberSeqAnswerPopupState
         contentLockedConfig:
             ContentLockedConfig(isContentLocked: MyApp.isExtraContentLocked),
         onClick: () {
-          closePopup(context);
-          MyPopup.showPopup(
-              context,
-              IqGameIqNumberSeqAnswerPopup(
-                  widget.questionInfo,
-                  widget.questionImage,
-                  widget.correctAnswer,
-                  widget.userAnswer,
-                  widget.nextQuestion,
-                  true));
+          closePopup();
+          MyPopup.showPopup(IqGameIqNumberSeqAnswerPopup(
+              widget.questionInfo,
+              widget.questionImage,
+              widget.correctAnswer,
+              widget.userAnswer,
+              widget.nextQuestion,
+              true));
         },
       ));
     }
@@ -120,7 +117,7 @@ class IqGameIqNumberSeqAnswerPopupState
     answerInfo.add(MyButton(
       text: label.l_next_question,
       onClick: () {
-        closePopup(context);
+        closePopup();
         widget.nextQuestion.call();
       },
     ));
@@ -129,7 +126,6 @@ class IqGameIqNumberSeqAnswerPopupState
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: answerInfo),
-      context: context,
     );
   }
 }

@@ -91,7 +91,7 @@ class AnatomyQuestionScreenState extends State<AnatomyQuestionScreen>
         questionFontSize: FontConfig.getCustomFontSize(1.25),
         marginBetweenPrefixAndQuestion: screenDimensions.dimen(2));
     Widget optionsRows = widget.createOptionRows(
-        setStateCallback, widget.goToNextGameScreenCallBack(context),
+        setStateCallback, widget.processNextGameScreenCallBack(context),
         widgetBetweenImageAndOptionRows: SizedBox(
           height: screenDimensions.dimen(10),
         ));

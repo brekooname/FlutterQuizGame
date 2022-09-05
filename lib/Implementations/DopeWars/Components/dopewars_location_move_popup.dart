@@ -79,7 +79,6 @@ class DopeWarsLocationMovePopupState extends State<DopeWarsLocationMovePopup>
   AlertDialog build(BuildContext context) {
     return createDialog(
       createLocations(),
-      context: context,
     );
   }
 
@@ -151,7 +150,7 @@ class DopeWarsLocationMovePopupState extends State<DopeWarsLocationMovePopup>
         widget._dopeWarsResourceTransactionService.dopeWarsLocationMoveService
             .passDayAndMoveLocation(context, location);
         widget._refreshStateCallback.call();
-        closePopup(context);
+        closePopup();
       },
     ));
     locBtnItems.addAll(DopeWarsLocationMovePopup.createPriceAndReputationText(

@@ -126,7 +126,7 @@ class GeoQuizMainMenuScreenState extends State<GeoQuizMainMenuScreen>
             context: context,
             iconName: "btn_settings",
             myPopupToDisplay: SettingsPopup(
-              resetContent: () {
+              resetContentOnClick: () {
                 widget._geoQuizLocalStorage.clearAll();
                 widget.gameScreenManagerState.showMainScreen();
               },

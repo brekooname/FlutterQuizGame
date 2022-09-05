@@ -91,7 +91,6 @@ class IqGameScoreProgressPopupState extends State<IqGameScoreProgressPopup>
                             ]),
                       ]),
           ]),
-      context: context,
     );
   }
 }

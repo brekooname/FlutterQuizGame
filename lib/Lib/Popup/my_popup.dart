@@ -46,84 +46,84 @@ mixin MyPopup {
   double get defaultBackgroundImageWidth => width / 3.4;
 
   AlertDialog createDialog(Widget mainContent,
-      {required BuildContext context, VoidCallback? onCloseBtnClick}) {
+      {VoidCallback? onCloseBtnClick}) {
     DecorationImage? decorationImage;
     var lightScreenContrast = MyApp.appId.gameConfig.isLightScreenContrast;
     if (backgroundImage != null) {
+      var backgroundColor = (lightScreenContrast ? Colors.white : Colors.black)
+          .withOpacity(lightScreenContrast ? 0.175 : 0.05);
       decorationImage = DecorationImage(
         fit: BoxFit.cover,
-        colorFilter: ColorFilter.mode(
-            (lightScreenContrast ? Colors.white : Colors.black)
-                .withOpacity(lightScreenContrast ? 0.175 : 0.05),
-            BlendMode.dstATop),
+        colorFilter: ColorFilter.mode(backgroundColor, BlendMode.dstATop),
         image: backgroundImage!,
       );
     }
 
     var edgeInsets = const EdgeInsets.all(0);
+    var closeBtnContainer = Container(
+        alignment: Alignment.topRight,
+        child: createClosePopupBtn(onCloseBtnClick));
+    var contentWithPadding = Padding(
+      padding: EdgeInsets.fromLTRB(marginDoubleVal, marginDoubleVal,
+          marginDoubleVal, marginDoubleVal * 2),
+      child: Column(children: [closeBtnContainer, mainContent]),
+    );
     return AlertDialog(
-        contentPadding: edgeInsets,
-        insetPadding: edgeInsets,
-        actionsPadding: edgeInsets,
-        buttonPadding: edgeInsets,
-        titlePadding: edgeInsets,
-        scrollable: true,
-        shape: RoundedRectangleBorder(
-            borderRadius:
-                BorderRadius.circular(FontConfig.standardBorderRadius)),
-        backgroundColor:
-            lightScreenContrast ? Colors.white : Colors.grey.shade900,
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-                decoration: BoxDecoration(
-                  image: decorationImage,
-                ),
-                width: width,
-                height: height,
-                child: Padding(
-                  padding: EdgeInsets.fromLTRB(marginDoubleVal, marginDoubleVal,
-                      marginDoubleVal, marginDoubleVal * 2),
-                  child: Column(children: [
-                    Container(
-                        alignment: Alignment.topRight,
-                        child: createClosePopupBtn(context, onCloseBtnClick)),
-                    mainContent
-                  ]),
-                )),
-          ],
-        ));
+      contentPadding: edgeInsets,
+      insetPadding: edgeInsets,
+      actionsPadding: edgeInsets,
+      buttonPadding: edgeInsets,
+      titlePadding: edgeInsets,
+      scrollable: true,
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(FontConfig.standardBorderRadius)),
+      backgroundColor:
+          lightScreenContrast ? Colors.white : Colors.grey.shade900,
+      content: Container(
+          decoration: BoxDecoration(
+            image: decorationImage,
+          ),
+          width: width,
+          height: height,
+          child: contentWithPadding),
+    );
   }
 
-  void closePopup(BuildContext context) {
-    _navigatorService.pop(context);
+  void closePopup() {
+    _navigatorService.pop();
   }
 
-  Widget createClosePopupBtn(
-      BuildContext context, VoidCallback? onCloseBtnClick) {
+  Widget createClosePopupBtn(VoidCallback? onCloseBtnClick) {
     var closeBtnWidth = screenDimensions.dimen(9);
     return MyButton(
         size: Size(closeBtnWidth, closeBtnWidth),
         onClick: () {
-          if (onCloseBtnClick == null) {
-            _navigatorService.pop(context);
-          } else {
-            onCloseBtnClick.call();
-          }
+          _executeOnCloseBtnClick(onCloseBtnClick);
         },
         buttonSkinConfig: ButtonSkinConfig(
             icon: Icon(Icons.clear, color: Colors.red, size: closeBtnWidth)));
   }
 
-  static void showPopup(BuildContext context, Widget popupToShow) {
+  void _executeOnCloseBtnClick(VoidCallback? onCloseBtnClick) {
+    if (onCloseBtnClick == null) {
+      _navigatorService.pop();
+    } else {
+      onCloseBtnClick.call();
+    }
+  }
+
+  static void showPopup(Widget popupToShow) {
     Future.delayed(
         Duration.zero,
         () => showDialog(
             barrierDismissible: false,
-            context: context,
+            context: MyApp.globalKey.currentState!.overlay!.context,
             builder: (BuildContext context) {
-              return popupToShow;
+              return WillPopScope(
+                  onWillPop: () {
+                    return Future.value(false);
+                  },
+                  child: popupToShow);
             }));
   }
 }

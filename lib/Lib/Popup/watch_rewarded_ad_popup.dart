@@ -86,8 +86,8 @@ class WatchRewardedAdPopupState extends State<WatchRewardedAdPopup>
                     disabled: !widget.isRewardedAdLoaded,
                     backgroundColor: Colors.lightGreenAccent,
                     onClick: () {
-                      closePopup(context);
-                      showRewardedAd(context, () {
+                      closePopup();
+                      showRewardedAd(() {
                         widget.onUserEarnedReward.call();
                       });
                     }),
@@ -101,12 +101,11 @@ class WatchRewardedAdPopupState extends State<WatchRewardedAdPopup>
             text: label.l_no,
             backgroundColor: Colors.grey.shade300,
             onClick: () {
-              closePopup(context);
+              closePopup();
             },
           )
         ],
       ),
-      context: context,
     );
   }
 
@@ -121,8 +120,7 @@ class WatchRewardedAdPopupState extends State<WatchRewardedAdPopup>
     });
   }
 
-  void showRewardedAd(
-      BuildContext buildContext, VoidCallback executeAfterClose) {
+  void showRewardedAd(VoidCallback executeAfterClose) {
     if (kIsWeb) {
       widget.isRewardedAdLoaded = false;
       executeAfterClose.call();

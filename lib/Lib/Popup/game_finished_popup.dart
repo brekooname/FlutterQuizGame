@@ -14,10 +14,12 @@ class GameFinishedPopup extends StatelessWidget with MyPopup, LabelMixin {
   VoidCallback goBackClick;
 
   GameFinishedPopup(
-      {Key? key, this.isGameFinishedSuccess = true,
+      {Key? key,
+      this.isGameFinishedSuccess = true,
       this.highScore,
       required this.playAgainClick,
-      required this.goBackClick}) : super(key: key);
+      required this.goBackClick})
+      : super(key: key);
 
   @override
   AlertDialog build(BuildContext context) {
@@ -56,12 +58,11 @@ class GameFinishedPopup extends StatelessWidget with MyPopup, LabelMixin {
             SizedBox(height: screenDimensions.dimen(9)),
           ],
         ),
-        context: context,
         onCloseBtnClick: () => onClickGoBack(context));
   }
 
   void onClickGoBack(BuildContext context) {
-    closePopup(context);
+    closePopup();
     goBackClick.call();
   }
 

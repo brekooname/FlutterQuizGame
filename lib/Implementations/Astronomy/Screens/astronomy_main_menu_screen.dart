@@ -87,7 +87,7 @@ class AstronomyMainMenuScreenState extends State<AstronomyMainMenuScreen>
             context: context,
             iconName: "btn_settings",
             myPopupToDisplay: SettingsPopup(
-              resetContent: () {
+              resetContentOnClick: () {
                 widget._astronomyLocalStorage.clearAll();
               },
             ),

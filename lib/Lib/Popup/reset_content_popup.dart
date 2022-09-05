@@ -45,7 +45,7 @@ class ResetContentPopupState extends State<ResetContentPopup>
                 MyApp.gameScreenManager.currentScreen!.gameScreenManagerState
                     .showMainScreen();
                 widget.resetContent.call();
-                closePopup(context);
+                closePopup();
               },
             ),
             margin,
@@ -53,11 +53,10 @@ class ResetContentPopupState extends State<ResetContentPopup>
               text: label.l_no,
               backgroundColor: Colors.blue.shade300,
               onClick: () {
-                closePopup(context);
+                closePopup();
               },
             ),
           ]),
-      context: context,
     );
   }
 }

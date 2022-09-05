@@ -4,10 +4,8 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_app_quiz_game/Implementations/Astronomy/Constants/astronomy_campaign_level_service.dart';
-import 'package:flutter_app_quiz_game/Implementations/Astronomy/Constants/astronomy_game_question_config.dart';
-import 'package:flutter_app_quiz_game/Implementations/Astronomy/Service/astronomy_screen_manager.dart';
-import 'package:flutter_app_quiz_game/Implementations/IqGame/Constants/iq_game_campaign_level_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/enum_extension.dart';
+import 'package:flutter_app_quiz_game/Lib/Navigation/navigator_service.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -58,7 +56,7 @@ class MyApp extends StatefulWidget {
   static CampaignLevel campaignLevel = AstronomyCampaignLevelService().level_13;
 
   //
-  static Language webLanguage = Language.it;
+  static Language webLanguage = Language.da;
   static bool webIsPro = false;
 
   // static bool webIsPro = false;
@@ -68,7 +66,10 @@ class MyApp extends StatefulWidget {
   //
 
   final AdService _adService = AdService();
+  final NavigatorService _navigatorService = NavigatorService();
   static const platform = MethodChannel('main.flutter');
+  static final GlobalKey<NavigatorState> globalKey =
+      GlobalKey<NavigatorState>();
   static late double screenWidth;
   static late double screenHeight;
   static late SharedPreferences localStorage;
@@ -90,8 +91,20 @@ class MyApp extends StatefulWidget {
 
   MyApp({Key? key}) : super(key: key);
 
-  static void extraContentBought(BuildContext context) {
-    context.findAncestorStateOfType<MyAppState>()!.extraContentBought();
+  static BuildContext currentContext() {
+    if (MyApp.globalKey.currentState == null) {
+      throw AssertionError("No state found for MyApp.");
+    } else if (MyApp.globalKey.currentState!.overlay == null) {
+      throw AssertionError("No overlay found for MyApp current state.");
+    }
+    return MyApp.globalKey.currentState!.overlay!.context;
+  }
+
+  static void extraContentBought(
+      BuildContext context, VoidCallback? executeAfterPurchase) {
+    context
+        .findAncestorStateOfType<MyAppState>()!
+        ._extraContentBought(executeAfterPurchase);
   }
 
   static bool get kIsMobile => !kIsWeb && !MyApp.kIsAutomatedTest;
@@ -143,7 +156,7 @@ class MyAppState extends State<MyApp> with WidgetsBindingObserver {
 
     MyApp.backgroundTexture = ImageService().getSpecificImage(
         imageName: "background_texture", imageExtension: "png");
-    MyApp.bannerAdContainer = createBannerAdContainer(bannerAd);
+    MyApp.bannerAdContainer = _createBannerAdContainer(bannerAd);
 
     setState(() {});
 
@@ -203,10 +216,15 @@ class MyAppState extends State<MyApp> with WidgetsBindingObserver {
     MyApp.gameScreenManager = appId.gameConfig.gameScreenManager;
   }
 
-  void extraContentBought() {
+  void _extraContentBought(VoidCallback? executeAfterPurchase) {
     MyApp.isExtraContentLocked = false;
-    MyApp.gameScreenManager.currentScreen!.gameScreenManagerState
-        .showMainScreen();
+    widget._navigatorService.popAll();
+    if (executeAfterPurchase == null) {
+      MyApp.gameScreenManager.currentScreen!.gameScreenManagerState
+          .showMainScreen();
+    } else {
+      executeAfterPurchase.call();
+    }
     MyApp.bannerAdContainer = Container();
     setState(() {});
   }
@@ -230,7 +248,7 @@ class MyAppState extends State<MyApp> with WidgetsBindingObserver {
       //
       ////
       // GeoQuizLocalStorage().setExperience(14000);
-      widgetToShow = createScreen(MyApp.gameScreenManager);
+      widgetToShow = _createScreen(MyApp.gameScreenManager);
       // Future.delayed(const Duration(milliseconds: 100), () {
       //   (MyApp.gameScreenManager.currentScreen!.gameScreenManagerState
       //           as AstronomyScreenManagerState)
@@ -264,6 +282,7 @@ class MyAppState extends State<MyApp> with WidgetsBindingObserver {
   static MaterialApp buildMaterialApp(
       BuildContext context, Widget widgetToShow, bool initAsyncCompleted) {
     return MaterialApp(
+        navigatorKey: MyApp.globalKey,
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: _getSupportedLocales(),
         debugShowCheckedModeBanner: false,
@@ -301,7 +320,7 @@ class MyAppState extends State<MyApp> with WidgetsBindingObserver {
           ];
   }
 
-  Widget createScreen(GameScreenManager gameScreenManager) {
+  Widget _createScreen(GameScreenManager gameScreenManager) {
     return WillPopScope(
         onWillPop: () async {
           var currentScreen = gameScreenManager.currentScreen;
@@ -310,7 +329,7 @@ class MyAppState extends State<MyApp> with WidgetsBindingObserver {
         child: widget.initAsyncCompleted ? gameScreenManager : Container());
   }
 
-  Container createBannerAdContainer(BannerAd? bannerAd) {
+  Container _createBannerAdContainer(BannerAd? bannerAd) {
     Container bannerAdContainer;
     if (!MyApp.kIsMobile && MyApp.isExtraContentLocked) {
       bannerAdContainer = Container(

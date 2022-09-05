@@ -104,7 +104,7 @@ class HistoryMainMenuScreenState extends State<HistoryMainMenuScreen>
             context: context,
             iconName: "btn_settings",
             myPopupToDisplay: SettingsPopup(
-              resetContent: () {
+              resetContentOnClick: () {
                 widget.historyLocalStorage.clearAll();
               },
             ),

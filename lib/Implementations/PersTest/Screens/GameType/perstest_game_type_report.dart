@@ -169,8 +169,7 @@ abstract class PersTestGameTypeReport with LabelMixin {
     return attr.isButton
         ? MyButton(
             onClick: () {
-              MyPopup.showPopup(
-                  context, PersTestDescriptionPopup(attr.description));
+              MyPopup.showPopup(PersTestDescriptionPopup(attr.description));
             },
             contentLockedConfig: ContentLockedConfig(
                 isContentLocked: MyApp.isExtraContentLocked),

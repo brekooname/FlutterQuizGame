@@ -18,20 +18,20 @@ import '../Font/font_util.dart';
 import 'my_popup.dart';
 
 class InAppPurchasesPopupService {
-  late BuildContext context;
-
   static final InAppPurchasesPopupService singleton =
       InAppPurchasesPopupService.internal();
 
-  factory InAppPurchasesPopupService({required BuildContext buildContext}) {
-    singleton.context = buildContext;
+  factory InAppPurchasesPopupService() {
     return singleton;
   }
 
   InAppPurchasesPopupService.internal();
 
-  void showPopup({String? inAppPurchaseDescription}) {
-    MyPopup.showPopup(context, InAppPurchasePopup());
+  void showPopup(
+      {String? inAppPurchaseDescription, VoidCallback? executeAfterPurchase}) {
+    MyPopup.showPopup(InAppPurchasePopup(
+      executeAfterPurchase: executeAfterPurchase,
+    ));
   }
 }
 
@@ -45,8 +45,9 @@ class InAppPurchasePopup extends StatefulWidget {
   final InAppPurchaseLocalStorage _inAppPurchaseLocalStorage =
       InAppPurchaseLocalStorage();
   late InAppPurchase _inAppPurchase;
+  VoidCallback? executeAfterPurchase;
 
-  InAppPurchasePopup({Key? key}) : super(key: key) {
+  InAppPurchasePopup({this.executeAfterPurchase, Key? key}) : super(key: key) {
     _inAppPurchase = InAppPurchase.instance;
   }
 
@@ -71,7 +72,7 @@ class _InAppPurchaseState extends State<InAppPurchasePopup>
           widget._inAppPurchase.purchaseStream;
       _subscription = purchaseUpdated.listen((purchaseDetailsList) {
         if (purchaseDetailsList.isEmpty) {
-          showSnackBar(label.l_nothing_to_restore);
+          _showSnackBar(label.l_nothing_to_restore);
         } else {
           _listenToPurchaseUpdated(purchaseDetailsList);
         }
@@ -119,7 +120,6 @@ class _InAppPurchaseState extends State<InAppPurchasePopup>
       Stack(
         children: stackWidgets,
       ),
-      context: context,
     );
   }
 
@@ -239,8 +239,8 @@ class _InAppPurchaseState extends State<InAppPurchasePopup>
       onClick: () {
         if (kIsWeb) {
           widget._inAppPurchaseLocalStorage.savePurchase(productDetails.id);
-          MyApp.extraContentBought(context);
-          showSnackBar(label.l_purchased);
+          MyApp.extraContentBought(context, widget.executeAfterPurchase);
+          _showSnackBar(label.l_purchased);
           return;
         }
 
@@ -296,26 +296,26 @@ class _InAppPurchaseState extends State<InAppPurchasePopup>
     return purchaseParam;
   }
 
-  void deliverProduct(PurchaseDetails purchaseDetails) {
+  void _deliverProduct(PurchaseDetails purchaseDetails) {
     if (purchaseDetails.productID == InAppPurchasePopup._kNonConsumableId) {
       widget._inAppPurchaseLocalStorage.savePurchase(purchaseDetails.productID);
-      showSnackBar(label.l_purchased);
-      MyApp.extraContentBought(context);
+      _showSnackBar(label.l_purchased);
+      MyApp.extraContentBought(context, widget.executeAfterPurchase);
       setState(() {
         _purchasePending = false;
       });
     }
   }
 
-  void handleError(IAPError error) {
+  void _handleError(IAPError error) {
     setState(() {
       _purchasePending = false;
     });
-    showSnackBar("Error");
+    _showSnackBar("Error");
   }
 
-  void showSnackBar(String message) {
-    closePopup(context);
+  void _showSnackBar(String message) {
+    closePopup();
     snackBarService.showSnackBar(message, context);
   }
 
@@ -325,11 +325,11 @@ class _InAppPurchaseState extends State<InAppPurchasePopup>
         showPendingUI();
       } else {
         if (purchaseDetails.status == PurchaseStatus.error) {
-          handleError(purchaseDetails.error!);
+          _handleError(purchaseDetails.error!);
         } else if (purchaseDetails.status == PurchaseStatus.purchased) {
-          deliverProduct(purchaseDetails);
+          _deliverProduct(purchaseDetails);
         } else if (purchaseDetails.status == PurchaseStatus.restored) {
-          deliverProduct(purchaseDetails);
+          _deliverProduct(purchaseDetails);
         }
         if (purchaseDetails.pendingCompletePurchase) {
           await widget._inAppPurchase.completePurchase(purchaseDetails);

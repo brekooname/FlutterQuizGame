@@ -39,7 +39,6 @@ class DopeWarsShopPopupState extends State<DopeWarsShopPopup>
   AlertDialog build(BuildContext context) {
     return createDialog(
       createItems(),
-      context: context,
     );
   }
 
@@ -95,7 +94,7 @@ class DopeWarsShopPopupState extends State<DopeWarsShopPopup>
       onClick: () {
         widget._dopeWarsResourceTransactionService.unlockShopItem(item);
         widget._refreshStateCallback.call();
-        closePopup(context);
+        closePopup();
       },
     );
     List<Widget> priceInfoList =

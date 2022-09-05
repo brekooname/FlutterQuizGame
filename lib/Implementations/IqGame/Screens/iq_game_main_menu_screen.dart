@@ -93,7 +93,7 @@ class IqGameMainMenuScreenState extends State<IqGameMainMenuScreen>
             context: context,
             iconName: "btn_settings",
             myPopupToDisplay: SettingsPopup(
-              resetContent: () {
+              resetContentOnClick: () {
                 widget.iqGameLocalStorage.clearAll();
               },
             ),
@@ -224,7 +224,7 @@ class IqGameMainMenuScreenState extends State<IqGameMainMenuScreen>
           ),
           MyButton(
             onClick: () {
-              MyPopup.showPopup(context, IqGameScoreProgressPopup(cat));
+              MyPopup.showPopup(IqGameScoreProgressPopup(cat));
             },
             size: Size(scoreBtnSizeDimen, scoreBtnSizeDimen),
             buttonAllPadding: screenDimensions.dimen(1.5),

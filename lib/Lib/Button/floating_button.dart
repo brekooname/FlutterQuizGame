@@ -48,7 +48,7 @@ class FloatingButton extends StatelessWidget {
                     onPressed: () {},
                     child: MyButton(
                         onClick: () {
-                          MyPopup.showPopup(context, myPopupToDisplay);
+                          MyPopup.showPopup(myPopupToDisplay);
                         },
                         size: _buttonSize,
                         buttonSkinConfig: ButtonSkinConfig(

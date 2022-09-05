@@ -68,11 +68,10 @@ class PersTestAgePopupState extends State<PersTestAgePopup>
                 ]),
             margin
           ],
-        ),
-        context: context, onCloseBtnClick: () {
+        ), onCloseBtnClick: () {
       widget.persTestLocalStorage.clearAge();
       widget.goToGameOverScreenCallback.call();
-      closePopup(context);
+      closePopup();
     });
   }
 
@@ -84,6 +83,6 @@ class PersTestAgePopupState extends State<PersTestAgePopup>
       widget.persTestLocalStorage.clearAge();
     }
     widget.goToGameOverScreenCallback.call();
-    closePopup(context);
+    closePopup();
   }
 }

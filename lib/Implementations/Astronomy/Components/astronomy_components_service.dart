@@ -103,7 +103,8 @@ class AstronomyComponentsService {
                         _screenDimensions.dimen(39)),
                     fontConfig: FontConfig(fontColor: Colors.black),
                     text: btnText,
-                    textMaxLines: 2,
+                    textMaxLines:
+                        btnText.length > 11 && btnText.length < 18 && !btnText.contains(" ") ? 1 : 2,
                   ),
                 ])));
   }

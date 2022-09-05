@@ -33,7 +33,7 @@ class RatePopupService {
       return;
     } else if (rateAppLocalStorage.appLaunchedCount() % launchesUntilPrompt ==
         0) {
-      MyPopup.showPopup(context, RateAppPopup(rateAppLocalStorage));
+      MyPopup.showPopup(RateAppPopup(rateAppLocalStorage));
     }
   }
 }
@@ -61,7 +61,7 @@ class RateAppPopup extends StatelessWidget with MyPopup, LabelMixin {
             text: label.l_rate_now_the_app,
             backgroundColor: Colors.lightGreenAccent,
             onClick: () {
-              closePopup(context);
+              closePopup();
               rateAppLocalStorage.setAlreadyRated();
               internetService.openAppUrl(MyApp.appRatingPackage, true, context);
             },
@@ -71,12 +71,11 @@ class RateAppPopup extends StatelessWidget with MyPopup, LabelMixin {
             text: label.l_rate_later,
             backgroundColor: Colors.grey.shade300,
             onClick: () {
-              closePopup(context);
+              closePopup();
             },
           ),
         ],
       ),
-      context: context,
     );
   }
 }

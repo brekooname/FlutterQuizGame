@@ -107,7 +107,7 @@ class AstronomySolarSystemScreenState extends State<AstronomySolarSystemScreen>
   Widget build(BuildContext context) {
     var imageClickContainer = widget.createImageClickContainer(() {
       setState(() {});
-    }, widget.goToNextGameScreenCallBack(context));
+    }, widget.processNextGameScreenCallBack(context));
     Widget mainColumn = Column(
       children: [
         _createAstronomyLevelHeader(),

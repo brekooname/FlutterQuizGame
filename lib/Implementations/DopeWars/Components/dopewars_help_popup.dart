@@ -34,7 +34,6 @@ class DopeWarsHelpPopupState extends State<DopeWarsHelpPopup>
             ),
             margin,
           ]),
-      context: context,
     );
   }
 }

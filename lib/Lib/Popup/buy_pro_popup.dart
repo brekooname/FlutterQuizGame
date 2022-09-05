@@ -49,14 +49,13 @@ class BuyProPopupState extends State<BuyProPopup> with MyPopup, LabelMixin {
             text: label.l_download,
             backgroundColor: Colors.lightGreenAccent,
             onClick: () {
-              closePopup(context);
+              closePopup();
               widget._internetService
                   .openAppUrl(MyApp.appProStoreId, false, context);
             },
           ),
         ],
       ),
-      context: context,
     );
   }
 }

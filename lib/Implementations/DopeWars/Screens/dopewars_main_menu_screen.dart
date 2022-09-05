@@ -119,8 +119,7 @@ class DopeWarsMainMenuScreenState extends State<DopeWarsMainMenuScreen>
                 onChanged: (value) {
                   setState(() {
                     if (MyApp.isExtraContentLocked) {
-                      InAppPurchasesPopupService(buildContext: context)
-                          .showPopup();
+                      InAppPurchasesPopupService().showPopup();
                     } else {
                       widget._dopeWarsLocalStorage.toggleUnlimitedMode();
                     }
@@ -157,7 +156,7 @@ class DopeWarsMainMenuScreenState extends State<DopeWarsMainMenuScreen>
             context: context,
             iconName: "btn_settings",
             myPopupToDisplay: SettingsPopup(
-              resetContent: () {
+              resetContentOnClick: () {
                 widget._dopeWarsLocalStorage.clearAll();
               },
             ),

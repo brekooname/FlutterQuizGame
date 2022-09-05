@@ -21,4 +21,9 @@ mixin ScreenState {
     standardScreen.gameScreenManagerState.goBack(standardScreen);
   }
 
+  void refreshScreen(State state){
+    state.setState(() {
+    });
+  }
+
 }

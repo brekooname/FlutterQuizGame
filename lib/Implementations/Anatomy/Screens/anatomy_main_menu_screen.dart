@@ -118,7 +118,7 @@ class AnatomyMainMenuScreenState extends State<AnatomyMainMenuScreen>
             context: context,
             iconName: "btn_settings",
             myPopupToDisplay: SettingsPopup(
-              resetContent: () {
+              resetContentOnClick: () {
                 widget._anatomyLocalStorage.clearAll();
               },
             ),

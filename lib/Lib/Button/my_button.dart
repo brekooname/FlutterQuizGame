@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Lib/Animation/animation_zoom_in_zoom_out.dart';
 import 'package:flutter_app_quiz_game/Lib/Color/color_util.dart';
-import 'package:flutter_app_quiz_game/Lib/Image/image_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Popup/in_app_purchase_popup.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
@@ -143,7 +142,9 @@ class MyButtonState extends State<MyButton> {
     if (widget.contentLockedConfig.isContentLocked) {
       buttonContent = _buildContentLocked(buttonContent);
       widget.onClick = () {
-        InAppPurchasesPopupService(buildContext: context).showPopup();
+        InAppPurchasesPopupService().showPopup(
+            executeAfterPurchase:
+                widget.contentLockedConfig.executeAfterPurchase);
       };
     }
 
@@ -327,7 +328,11 @@ class MyButtonState extends State<MyButton> {
 
 class ContentLockedConfig {
   bool isContentLocked;
+  VoidCallback? executeAfterPurchase;
   Image? lockedIcon;
 
-  ContentLockedConfig({required this.isContentLocked, this.lockedIcon});
+  ContentLockedConfig(
+      {required this.isContentLocked,
+      this.lockedIcon,
+      this.executeAfterPurchase});
 }

@@ -168,7 +168,7 @@ class MyTextService {
 
   List<Widget> createMyTextWithOneParam(String labelText, String param,
       FontConfig staticTextFontConfig, FontConfig paramFontConfig,
-      {double? labelWidth, int? staticTextMaxLines}) {
+      {double? labelWidth, int? staticTextMaxLines, int? paramTextMaxLines}) {
     List<String> labelSplit = labelText.split("{0}");
     return [
       MyText(
@@ -183,6 +183,7 @@ class MyTextService {
         alignmentInsideContainer: Alignment.center,
         text: param,
         fontConfig: paramFontConfig,
+        maxLines: paramTextMaxLines,
       ),
       labelSplit[1].isEmpty
           ? Container()

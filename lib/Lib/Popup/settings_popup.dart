@@ -14,11 +14,10 @@ import 'my_popup.dart';
 class SettingsPopup extends StatefulWidget {
   late SettingsLocalStorage _settingsLocalStorage;
   final MyAudioPlayer _myAudioPlayer = MyAudioPlayer();
-  VoidCallback? resetContent;
+  VoidCallback? resetContentOnClick;
 
-  SettingsPopup({Key? key, VoidCallback? resetContent}) : super(key: key) {
+  SettingsPopup({this.resetContentOnClick, Key? key}) : super(key: key) {
     _settingsLocalStorage = SettingsLocalStorage();
-    this.resetContent = resetContent;
   }
 
   @override
@@ -106,12 +105,12 @@ class SettingsPopupState extends State<SettingsPopup> with MyPopup, LabelMixin {
     List<Widget> settingsButtons = [];
     if (MyApp.isExtraContentLocked) {
       settingsButtons.addAll([
-        _removeAdsButton(context),
+        _removeAdsButton(),
         margin,
       ]);
     }
     settingsButtons.addAll([
-      _deleteProgressButton(context),
+      _deleteProgressButton(),
     ]);
     settingsChildren.addAll([
       margin,
@@ -133,7 +132,6 @@ class SettingsPopupState extends State<SettingsPopup> with MyPopup, LabelMixin {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: settingsChildren,
       ),
-      context: context,
     );
   }
 
@@ -162,33 +160,33 @@ class SettingsPopupState extends State<SettingsPopup> with MyPopup, LabelMixin {
                 onChanged: (value) {
                   setState(() {
                     toggleControlOnOffSwitchPress.call();
-                    Future.delayed(const Duration(milliseconds: 300),
-                        () => closePopup(context));
+                    Future.delayed(
+                        const Duration(milliseconds: 300), () => closePopup());
                   });
                 },
               ))),
         ]);
   }
 
-  MyButton _deleteProgressButton(BuildContext context) {
+  MyButton _deleteProgressButton() {
     return MyButton(
       text: label.l_delete_progress,
       backgroundColor: Colors.red.shade200,
       onClick: () {
-        closePopup(context);
-        assert(widget.resetContent != null);
-        MyPopup.showPopup(context, ResetContentPopup(widget.resetContent!));
+        closePopup();
+        assert(widget.resetContentOnClick != null);
+        MyPopup.showPopup(ResetContentPopup(widget.resetContentOnClick!));
       },
     );
   }
 
-  MyButton _removeAdsButton(BuildContext context) {
+  MyButton _removeAdsButton() {
     return MyButton(
       text: label.l_remove_ads,
       backgroundColor: Colors.green.shade200,
       onClick: () {
-        closePopup(context);
-        InAppPurchasesPopupService(buildContext: context).showPopup();
+        closePopup();
+        InAppPurchasesPopupService().showPopup();
       },
     );
   }

@@ -48,15 +48,17 @@ class AstronomyLevelsScreenState extends State<AstronomyLevelsScreen>
   @override
   Widget build(BuildContext context) {
     debugPrint("build main menu");
+    var myBackButton = MyBackButton();
     var campaignText = MyText(
         text: widget.gameType.gameTypeLabel,
+        width: screenDimensions.dimen(100) - myBackButton.buttonSize.width * 2,
+        maxLines: 1,
         fontConfig: FontConfig(
             fontColor: Colors.blue.shade50,
             borderColor: Colors.indigo.shade800,
             fontWeight: FontWeight.w500,
             fontSize: FontConfig.getCustomFontSize(1.4)));
 
-    var myBackButton = MyBackButton();
     var mainColumn = Container(
         alignment: Alignment.center,
         child: Column(

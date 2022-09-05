@@ -61,8 +61,7 @@ class HintButtonState extends State<HintButton> {
         disabled: widget.disabled,
         onClick: shouldShowRewardedAd
             ? () {
-                MyPopup.showPopup(
-                    context, widget._adService.watchRewardedAdPopup!);
+                MyPopup.showPopup(widget._adService.watchRewardedAdPopup!);
               }
             : widget.onClick,
         buttonSkinConfig: ButtonSkinConfig(image: icon),

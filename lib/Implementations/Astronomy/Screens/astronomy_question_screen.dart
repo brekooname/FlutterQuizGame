@@ -94,11 +94,14 @@ class AstronomyQuestionScreen extends GameScreen<AstronomyGameContext,
       var dimen = screenDimensions.dimen(36);
       return Size(dimen, dimen);
     } else if (_astronomyGameQuestionConfig.isTimelineCategory(category)) {
-      return Size(screenDimensions.dimen(80), screenDimensions.dimen(20));
+      return _getTimelineAnswerBtnSize();
     } else {
       return super.getAnswerBtnSize();
     }
   }
+
+  Size _getTimelineAnswerBtnSize() =>
+      Size(screenDimensions.dimen(80), screenDimensions.dimen(20));
 }
 
 class AstronomyQuestionScreenState extends State<AstronomyQuestionScreen>
@@ -129,7 +132,7 @@ class AstronomyQuestionScreenState extends State<AstronomyQuestionScreen>
   Widget _createQuestionContainer() {
     Widget questionContainer = _createQuestionTextContainer();
     Widget optionsRows = widget.createOptionRows(
-        setStateCallback, widget.goToNextGameScreenCallBack(context),
+        setStateCallback, widget.processNextGameScreenCallBack(context),
         widgetBetweenImageAndOptionRows: SizedBox(
           height: screenDimensions.dimen(3),
         ),
@@ -189,7 +192,7 @@ class AstronomyQuestionScreenState extends State<AstronomyQuestionScreen>
   Widget _createQuestionTextContainer() {
     return createQuestionTextContainer(
       widget.currentQuestionInfo.question,
-      2,
+      3,
       4,
       questionColor: Colors.white,
       prefixColor: Colors.grey.shade400,
@@ -220,7 +223,7 @@ class AstronomyQuestionScreenState extends State<AstronomyQuestionScreen>
         imageExtension: "png");
     var questionText = MyText(
       width: screenDimensions.dimen(70),
-      maxLines: 2,
+      maxLines: 3,
       fontConfig: FontConfig(
           fontWeight: FontWeight.w700,
           borderColor: Colors.black,
@@ -290,9 +293,10 @@ class AstronomyQuestionScreenState extends State<AstronomyQuestionScreen>
   }
 
   Widget _createTimelineOptionBtn(String optText) {
-    Widget? btnContent;
     MyText optMyText = MyText(
       text: optText,
+      maxLines: 2,
+      width: widget._getTimelineAnswerBtnSize().width / 1.1,
       fontConfig: FontConfig(
           fontWeight: FontWeight.w700,
           borderColor: Colors.black,
@@ -300,8 +304,8 @@ class AstronomyQuestionScreenState extends State<AstronomyQuestionScreen>
           fontColor: Colors.white),
     );
     return widget.createPossibleAnswerButton(
-        setStateCallback, widget.goToNextGameScreenCallBack(context), optText,
-        customContent: btnContent ?? optMyText);
+        setStateCallback, widget.processNextGameScreenCallBack(context), optText,
+        customContent: optMyText);
   }
 
   Widget _createPlanetsOptionBtn(String optText) {
@@ -315,8 +319,7 @@ class AstronomyQuestionScreenState extends State<AstronomyQuestionScreen>
       fontConfig: FontConfig(
           fontWeight: FontWeight.w700,
           borderColor: Colors.black,
-          fontSize: FontConfig.getCustomFontSize(
-              catsWithEarthIcon && optText.length > 6 ? 1.0 : 1.1),
+          fontSize: FontConfig.getCustomFontSize(1),
           fontColor: Colors.white),
     );
     if (catsWithEarthIcon) {
@@ -337,7 +340,7 @@ class AstronomyQuestionScreenState extends State<AstronomyQuestionScreen>
       );
     }
     return widget.createPossibleAnswerButton(
-        setStateCallback, widget.goToNextGameScreenCallBack(context), optText,
+        setStateCallback, widget.processNextGameScreenCallBack(context), optText,
         customContent: btnContent ?? optMyText);
   }
 

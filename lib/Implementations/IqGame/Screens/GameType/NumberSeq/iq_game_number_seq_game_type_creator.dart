@@ -174,7 +174,6 @@ class IqGameNumberSeqGameTypeCreator extends IqGameGameTypeCreator {
               } else {
                 answerQuestion(pressedNumbers!, true);
                 MyPopup.showPopup(
-                    context,
                     IqGameIqNumberSeqAnswerPopup(
                         currentQuestionInfo,
                         qImage!,

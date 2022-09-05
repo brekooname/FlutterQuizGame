@@ -169,15 +169,15 @@ class AstronomyQuestionCollectorService extends QuestionCollectorService<
     }
 
     if (minutes > 0) {
+      formattedTime += containsHoursLabel ? "\n" : "";
       formattedTime +=
           formatTextWithOneParam(label.l_param0_minutes, minutes.toString()) +
               " ";
     }
 
     if (seconds > 0 && !containsHoursLabel) {
-      formattedTime +=
-          formatTextWithOneParam(label.l_param0_seconds, seconds.toString()) +
-              " ";
+      formattedTime += "\n" +
+          formatTextWithOneParam(label.l_param0_seconds, seconds.toString());
     }
 
     return formattedTime;

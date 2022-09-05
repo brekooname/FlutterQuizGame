@@ -4,8 +4,10 @@ import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Localization/label_mixin.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
+import '../../main.dart';
 import '../Font/font_config.dart';
 import '../Font/font_util.dart';
+import '../Screen/Game/game_screen.dart';
 import 'my_popup.dart';
 
 class NextQuestionWithExplanationPopup extends StatefulWidget {
@@ -36,10 +38,9 @@ class NextQuestionWithExplanationPopupState
   }
 
   @override
-  Widget createClosePopupBtn(
-      BuildContext context, VoidCallback? onCloseBtnClick) {
-    return super.createClosePopupBtn(context, () {
-      closePopup(context);
+  Widget createClosePopupBtn(VoidCallback? onCloseBtnClick) {
+    return super.createClosePopupBtn(() {
+      closePopup();
       widget.goToNextScreen.call();
     });
   }
@@ -52,17 +53,19 @@ class NextQuestionWithExplanationPopupState
     );
     var btnWidth = screenDimensions.dimen(70);
     var infoParamFontConfig = FontConfig(
-        fontWeight: FontWeight.w700,
-        fontSize: FontConfig.getCustomFontSize(1.15),
+        fontWeight: FontWeight.w800,
+        fontSize: FontConfig.getCustomFontSize(1.05),
         fontColor: Colors.black);
     var infoText = widget._myTextService.createMyTextWithOneParam(
-      "More information{0}",
-      widget.title,
-      FontConfig(),
-      infoParamFontConfig,
-      labelWidth: btnWidth / 1.5,
-      staticTextMaxLines: 1,
-    );
+        label.l_more_information + "{0}",
+        widget.title,
+        FontConfig(
+            fontWeight: FontWeight.w400,
+            fontSize: FontConfig.getCustomFontSize(1)),
+        infoParamFontConfig,
+        labelWidth: btnWidth / 1.5,
+        staticTextMaxLines: 1,
+        paramTextMaxLines: 2);
     var infoBtnWidgets = [
       horizMargin,
       Icon(Icons.info, color: Colors.blue.shade700, size: iconDimen),
@@ -79,13 +82,20 @@ class NextQuestionWithExplanationPopupState
         crossAxisAlignment: CrossAxisAlignment.center,
         children: infoBtnWidgets);
     var infoBtn = MyButton(
+      contentLockedConfig: ContentLockedConfig(
+          executeAfterPurchase: () {
+            var currentScreen = MyApp.gameScreenManager.currentScreen!;
+            currentScreen.gameScreenManagerState.refreshCurrentScreen();
+            (currentScreen as GameScreen).processNextGameScreenCallBack(context);
+          },
+          isContentLocked: MyApp.isExtraContentLocked),
       size: Size(btnWidth, screenDimensions.dimen(28)),
       buttonSkinConfig: ButtonSkinConfig(
           backgroundColor: Colors.lightBlueAccent,
           borderColor: Colors.lightBlueAccent.shade700),
       customContent: infoBtnContent,
       onClick: () {
-        openExplanationPopup(context);
+        _openExplanationPopup(context);
       },
     );
     return createDialog(
@@ -97,19 +107,16 @@ class NextQuestionWithExplanationPopupState
           infoBtn,
           margin,
           widget._nextQuestionWithExplanationService.createNextQuestionBtn(
-              context, widget.goToNextScreen, this, widget.nextQuestionBtnLabel)
+              widget.goToNextScreen, this, widget.nextQuestionBtnLabel)
         ],
       ),
-      context: context,
     );
   }
 
-  void openExplanationPopup(BuildContext context) {
-    closePopup(context);
-    MyPopup.showPopup(
-        context,
-        ExplanationPopup(widget.title, widget.explanation,
-            widget.goToNextScreen, widget.nextQuestionBtnLabel));
+  void _openExplanationPopup(BuildContext context) {
+    closePopup();
+    MyPopup.showPopup(ExplanationPopup(widget.title, widget.explanation,
+        widget.goToNextScreen, widget.nextQuestionBtnLabel));
   }
 }
 
@@ -138,10 +145,9 @@ class ExplanationPopupState extends State<ExplanationPopup> with MyPopup {
   }
 
   @override
-  Widget createClosePopupBtn(
-      BuildContext context, VoidCallback? onCloseBtnClick) {
-    return super.createClosePopupBtn(context, () {
-      closePopup(context);
+  Widget createClosePopupBtn(VoidCallback? onCloseBtnClick) {
+    return super.createClosePopupBtn(() {
+      closePopup();
       widget.goToNextScreen.call();
     });
   }
@@ -151,13 +157,16 @@ class ExplanationPopupState extends State<ExplanationPopup> with MyPopup {
     var title = MyText(
       fontConfig: FontConfig(
           fontColor: Colors.grey.shade300,
-          fontSize: FontConfig.getCustomFontSize(1.3)),
+          fontSize: FontConfig.getCustomFontSize(1.15)),
       text: widget.title,
     );
     var explanationText = MyText(
-      fontConfig:
-          FontConfig(fontColor: FontUtil.getFontDefaultColorForContrast()),
+      fontConfig: FontConfig(
+          fontColor: FontUtil.getFontDefaultColorForContrast(),
+          fontSize: FontConfig.getCustomFontSize(0.9)),
       text: widget.explanation,
+      maxLines: 17,
+      width: screenDimensions.dimen(95),
     );
     return createDialog(
       Column(
@@ -167,34 +176,24 @@ class ExplanationPopupState extends State<ExplanationPopup> with MyPopup {
             margin,
             title,
             margin,
-            SizedBox(
-                width: width,
-                height: screenDimensions.dimen(100),
-                child: ListView(
-                  shrinkWrap: true,
-                  children: [explanationText],
-                )),
+            explanationText,
             margin,
             widget._nextQuestionWithExplanationService.createNextQuestionBtn(
-                context,
-                widget.goToNextScreen,
-                this,
-                widget.nextQuestionBtnLabel),
+                widget.goToNextScreen, this, widget.nextQuestionBtnLabel),
             margin,
           ]),
-      context: context,
     );
   }
 }
 
 class NextQuestionWithExplanationService with LabelMixin {
-  MyButton createNextQuestionBtn(BuildContext context,
+  MyButton createNextQuestionBtn(
       VoidCallback goToNextScreen, MyPopup myPopup, String btnLabel) {
     return MyButton(
       text: btnLabel,
       backgroundColor: Colors.lightGreenAccent,
       onClick: () {
-        myPopup.closePopup(context);
+        myPopup.closePopup();
         goToNextScreen.call();
       },
     );

@@ -41,11 +41,10 @@ class PersTestReportNotAvailablePopupState
               backgroundColor: Colors.green.shade200,
               onClick: () {
                 widget.startTestCallback.call();
-                closePopup(context);
+                closePopup();
               },
             ),
           ]),
-      context: context,
     );
   }
 }

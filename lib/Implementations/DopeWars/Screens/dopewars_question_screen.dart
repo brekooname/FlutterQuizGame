@@ -310,7 +310,6 @@ class DopeWarsQuestionScreenState extends State<DopeWarsQuestionScreen>
         widget.gameContext.resetSelectedResource();
         setState(() {});
         MyPopup.showPopup(
-            context,
             DopeWarsLocationMovePopup(() {
               setState(() {});
             }, widget.gameContext));
@@ -325,7 +324,6 @@ class DopeWarsQuestionScreenState extends State<DopeWarsQuestionScreen>
         widget.gameContext.resetSelectedResource();
         setState(() {});
         MyPopup.showPopup(
-            context,
             DopeWarsShopPopup(() {
               setState(() {});
             }, widget.gameContext));

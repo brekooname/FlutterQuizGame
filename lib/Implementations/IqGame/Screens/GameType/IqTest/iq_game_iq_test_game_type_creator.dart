@@ -159,7 +159,6 @@ class IqGameIqTestGameTypeCreator extends IqGameGameTypeCreator {
             screenDimensionsService.dimen(18)),
         onClick: () {
           MyPopup.showPopup(
-              context,
               IqGameIqTestCorrectAnswersPopup(
                   gameContext, getQuestionImageModuleName(gameContext)));
         },

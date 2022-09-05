@@ -99,11 +99,11 @@ class IqGameQuestionScreenState extends State<IqGameQuestionScreen>
     if (MyApp.isExtraContentLocked) {
       if (isIqTestCategory()) {
         if (qIndex == 9) {
-          MyPopup.showPopup(context, BuyProPopup());
+          MyPopup.showPopup(BuyProPopup());
         }
       } else if (isNumberSeqCategory()) {
         if (qIndex == 6) {
-          MyPopup.showPopup(context, BuyProPopup());
+          MyPopup.showPopup(BuyProPopup());
         }
       }
     }

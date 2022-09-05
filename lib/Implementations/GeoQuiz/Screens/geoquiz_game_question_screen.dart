@@ -122,7 +122,7 @@ class GeoQuizQuestionScreenState extends State<GeoQuizQuestionScreen>
             borderRadius:
                 BorderRadius.circular(FontConfig.standardBorderRadius * 0.2)));
     Widget optionsRows = widget.createOptionRows(
-        setStateCallback, widget.goToNextGameScreenCallBack(context));
+        setStateCallback, widget.processNextGameScreenCallBack(context));
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
