@@ -98,7 +98,7 @@ class GeoQuizHangmanScreenState extends State<GeoQuizHangmanScreen>
     Widget wordContainer = createWordContainer();
     Widget letters = createLettersRows({},
         setStateCallback,
-        widget.processNextGameScreenCallBack(context),
+        widget.processNextGameScreenCallBack(),
         label.l_a_b_c_d_e_f_g_h_i_j_k_l_m_n_o_p_q_r_s_t_u_v_w_x_y_z);
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -206,7 +206,7 @@ class GeoQuizHangmanScreenState extends State<GeoQuizHangmanScreen>
     widget.gameContext.gameUser.setWonQuestion(questionInfo);
     widget._geoQuizLocalStorage.setWonQuestion(questionInfo.question);
     Future.delayed(const Duration(milliseconds: 500),
-        () => widget.goToNextGameScreen(context));
+        () => widget.goToNextGameScreen());
   }
 
   void setStateCallback() {

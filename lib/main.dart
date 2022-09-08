@@ -91,7 +91,7 @@ class MyApp extends StatefulWidget {
 
   MyApp({Key? key}) : super(key: key);
 
-  static BuildContext currentContext() {
+  static BuildContext globalContext() {
     if (MyApp.globalKey.currentState == null) {
       throw AssertionError("No state found for MyApp.");
     } else if (MyApp.globalKey.currentState!.overlay == null) {
@@ -100,9 +100,8 @@ class MyApp extends StatefulWidget {
     return MyApp.globalKey.currentState!.overlay!.context;
   }
 
-  static void extraContentBought(
-      BuildContext context, VoidCallback? executeAfterPurchase) {
-    context
+  static void extraContentBought(VoidCallback? executeAfterPurchase) {
+    globalContext()
         .findAncestorStateOfType<MyAppState>()!
         ._extraContentBought(executeAfterPurchase);
   }
@@ -217,12 +216,14 @@ class MyAppState extends State<MyApp> with WidgetsBindingObserver {
   }
 
   void _extraContentBought(VoidCallback? executeAfterPurchase) {
+    debugPrint("bought!!!");
     MyApp.isExtraContentLocked = false;
     widget._navigatorService.popAll();
     if (executeAfterPurchase == null) {
       MyApp.gameScreenManager.currentScreen!.gameScreenManagerState
           .showMainScreen();
     } else {
+      debugPrint("execute after purchase");
       executeAfterPurchase.call();
     }
     MyApp.bannerAdContainer = Container();

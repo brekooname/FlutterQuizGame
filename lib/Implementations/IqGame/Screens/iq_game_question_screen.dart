@@ -165,8 +165,7 @@ class IqGameQuestionScreenState extends State<IqGameQuestionScreen>
                 !iqNumberSeqCategory &&
                 playedQ > 0 &&
                 playedQ % showOnNrOfQ == 0);
-    adService.showInterstitialAd(context, showInterstitialAd,
-        executeAfterClose: () {
+    adService.showInterstitialAd(showInterstitialAd, executeAfterClose: () {
       widget.gameScreenManagerState
           .showNextGameScreen(widget.campaignLevel, widget.gameContext);
     });

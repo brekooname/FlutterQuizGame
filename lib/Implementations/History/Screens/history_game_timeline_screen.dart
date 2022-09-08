@@ -181,7 +181,7 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
         if (!widget.alreadyWentToNextScreen) {
           widget.alreadyWentToNextScreen = true;
           Future.delayed(const Duration(milliseconds: 1100),
-              () => widget.goToNextGameScreen(context));
+              () => widget.goToNextGameScreen());
         }
       }
 

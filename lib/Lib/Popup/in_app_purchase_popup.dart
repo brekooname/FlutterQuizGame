@@ -239,7 +239,7 @@ class _InAppPurchaseState extends State<InAppPurchasePopup>
       onClick: () {
         if (kIsWeb) {
           widget._inAppPurchaseLocalStorage.savePurchase(productDetails.id);
-          MyApp.extraContentBought(context, widget.executeAfterPurchase);
+          MyApp.extraContentBought(widget.executeAfterPurchase);
           _showSnackBar(label.l_purchased);
           return;
         }
@@ -300,7 +300,7 @@ class _InAppPurchaseState extends State<InAppPurchasePopup>
     if (purchaseDetails.productID == InAppPurchasePopup._kNonConsumableId) {
       widget._inAppPurchaseLocalStorage.savePurchase(purchaseDetails.productID);
       _showSnackBar(label.l_purchased);
-      MyApp.extraContentBought(context, widget.executeAfterPurchase);
+      MyApp.extraContentBought(widget.executeAfterPurchase);
       setState(() {
         _purchasePending = false;
       });

@@ -62,39 +62,45 @@ abstract class GameScreen<
 
   int nrOfQuestionsToShowInterstitialAd();
 
-  void goToNextGameScreen(BuildContext context) {
+  void goToNextGameScreen() {
     var playedQ = gameLocalStorage.getTotalPlayedQuestions();
     var showOnNrOfQ = nrOfQuestionsToShowInterstitialAd();
     var showInterstitialAd = playedQ > 0 && playedQ % showOnNrOfQ == 0;
-    adService.showInterstitialAd(context, showInterstitialAd,
-        executeAfterClose: () {
+    adService.showInterstitialAd(showInterstitialAd, executeAfterClose: () {
       gameScreenManagerState.showNextGameScreen(campaignLevel, gameContext);
     });
   }
 
-  VoidCallback processNextGameScreenCallBack(BuildContext context) {
+  VoidCallback processNextGameScreenCallBack(
+      {VoidCallback? refreshScreenAfterExtraContentPurchase}) {
     return () {
       if (listOfCurrentQuestionInfo.length != 1 ||
           currentQuestionInfo
               .question.questionExplanationToBeDisplayed.isEmpty) {
-        _goToNextGameScreenCallBack(context).call();
+        _goToNextGameScreenCallBack().call();
       } else {
         Question question = currentQuestionInfo.question;
-        var popup = NextQuestionWithExplanationPopup(
-            question.questionService.getCorrectAnswers(question).join(", "),
-            question.questionExplanationToBeDisplayed,
-            _goToNextGameScreenCallBack(context),
+        var nextQuestionBtnLabel =
             gameContext.gameUser.getOpenQuestions().isEmpty
                 ? label.l_go_back
-                : label.l_next_question);
+                : label.l_next_question;
+        var title =
+            question.questionService.getCorrectAnswers(question).join(", ");
+        var popup = NextQuestionWithExplanationPopup(
+            title: title,
+            explanation: question.questionExplanationToBeDisplayed,
+            goToNextScreen: _goToNextGameScreenCallBack(),
+            refreshScreenAfterExtraContentPurchase:
+                refreshScreenAfterExtraContentPurchase,
+            nextQuestionBtnLabel: nextQuestionBtnLabel);
         MyPopup.showPopup(popup);
       }
     };
   }
 
-  VoidCallback _goToNextGameScreenCallBack(BuildContext context) {
+  VoidCallback _goToNextGameScreenCallBack() {
     return () {
-      goToNextGameScreen(context);
+      goToNextGameScreen();
     };
   }
 }

@@ -53,7 +53,6 @@ class DopeWarsLocationMoveService {
 
   void increaseDaysPassed(BuildContext context) {
     adService.showInterstitialAd(
-        context,
         gameContext.daysPassed == 10 ||
             gameContext.daysPassed == 25 ||
             gameContext.daysPassed == 40 ||

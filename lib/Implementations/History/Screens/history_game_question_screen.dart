@@ -73,7 +73,7 @@ class HistoryGameQuestionScreenState extends State<HistoryGameQuestionScreen>
       widget.category == historyGameQuestionConfig.cat3 ? 4 : 2,
     );
     Widget optionsRows = widget.createOptionRows(
-        setStateCallback, widget.processNextGameScreenCallBack(context));
+        setStateCallback, widget.processNextGameScreenCallBack());
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[header, questionContainer, optionsRows],

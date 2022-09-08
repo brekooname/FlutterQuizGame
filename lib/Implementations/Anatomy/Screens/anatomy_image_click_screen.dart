@@ -106,7 +106,7 @@ class AnatomyImageClickScreenState extends State<AnatomyImageClickScreen>
       ),
       widget.createImageClickContainer(() {
         setState(() {});
-      }, widget.processNextGameScreenCallBack(context))
+      }, widget.processNextGameScreenCallBack())
     ]);
 
     return mainColumn;

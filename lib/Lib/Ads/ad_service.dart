@@ -59,7 +59,7 @@ class AdService {
     throw UnsupportedError("Unsupported platform");
   }
 
-  void showInterstitialAd(BuildContext buildContext, bool showInterstitialAd,
+  void showInterstitialAd(bool showInterstitialAd,
       {required VoidCallback executeAfterClose}) {
     if (MyApp.isExtraContentLocked &&
         isInterstitialAdLoaded &&

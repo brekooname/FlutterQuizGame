@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
+import 'package:flutter_app_quiz_game/Game/Question/Model/question_info.dart';
 import 'package:flutter_app_quiz_game/Implementations/Astronomy/Constants/astronomy_campaign_level_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/Astronomy/Constants/astronomy_game_question_config.dart';
 import 'package:flutter_app_quiz_game/Implementations/Astronomy/Questions/astronomy_game_context.dart';
@@ -33,13 +34,9 @@ class AstronomyQuestionScreen extends GameScreen<AstronomyGameContext,
     required QuestionDifficulty difficulty,
     required QuestionCategory category,
     required AstronomyGameContext gameContext,
-  }) : super(
-            gameScreenManagerState,
-            AstronomyCampaignLevelService(),
-            gameContext,
-            difficulty,
-            category,
-            [gameContext.gameUser.getRandomQuestion(difficulty, category)],
+    required QuestionInfo questionInfo,
+  }) : super(gameScreenManagerState, AstronomyCampaignLevelService(),
+            gameContext, difficulty, category, [questionInfo],
             key: key) {
     _gameType = campaignLevelService.findGameTypeForCategory(category);
     initQuizOptionsScreen(
@@ -60,6 +57,10 @@ class AstronomyQuestionScreen extends GameScreen<AstronomyGameContext,
                   backgroundColor: Colors.blue.withOpacity(0.5),
                   borderRadius: FontConfig.standardBorderRadius),
     );
+    debugPrint("create new q screen");
+    if (!currentQuestionInfo.isQuestionOpen()) {
+      processNextGameScreenCallBack();
+    }
   }
 
   Image? _getQuestionImage() {
@@ -116,6 +117,7 @@ class AstronomyQuestionScreenState extends State<AstronomyQuestionScreen>
 
   @override
   Widget build(BuildContext context) {
+    debugPrint("build astronomyyy");
     Widget container =
         widget.campaignLevelService.isPlanetsGameType(widget._gameType)
             ? _createPlanetsQuestionContainer()
@@ -123,16 +125,32 @@ class AstronomyQuestionScreenState extends State<AstronomyQuestionScreen>
                     .isTimelineCategory(widget.category)
                 ? _createTimelineQuestionContainer()
                 : _createQuestionContainer();
+
     return AnimateBackground(
         mainContent: container,
         particleImage: imageService.getSpecificImage(
             imageName: "stars", imageExtension: "png"));
   }
 
+  VoidCallback _refreshCurrentScreen() {
+    return () {
+      debugPrint("refresshsh 1111");
+      widget.gameScreenManagerState.setCurrentScreenState(
+          widget.gameScreenManagerState.createAstronomyQuestionScreen(
+              widget.gameContext,
+              widget.currentQuestionInfo,
+              widget.difficulty,
+              widget.category));
+      debugPrint("refresshsh 2222");
+    };
+  }
+
   Widget _createQuestionContainer() {
     Widget questionContainer = _createQuestionTextContainer();
     Widget optionsRows = widget.createOptionRows(
-        setStateCallback, widget.processNextGameScreenCallBack(context),
+        setStateCallback,
+        widget.processNextGameScreenCallBack(
+            refreshScreenAfterExtraContentPurchase: _refreshCurrentScreen),
         widgetBetweenImageAndOptionRows: SizedBox(
           height: screenDimensions.dimen(3),
         ),
@@ -304,7 +322,10 @@ class AstronomyQuestionScreenState extends State<AstronomyQuestionScreen>
           fontColor: Colors.white),
     );
     return widget.createPossibleAnswerButton(
-        setStateCallback, widget.processNextGameScreenCallBack(context), optText,
+        setStateCallback,
+        widget.processNextGameScreenCallBack(
+            refreshScreenAfterExtraContentPurchase: _refreshCurrentScreen),
+        optText,
         customContent: optMyText);
   }
 
@@ -340,7 +361,10 @@ class AstronomyQuestionScreenState extends State<AstronomyQuestionScreen>
       );
     }
     return widget.createPossibleAnswerButton(
-        setStateCallback, widget.processNextGameScreenCallBack(context), optText,
+        setStateCallback,
+        widget.processNextGameScreenCallBack(
+            refreshScreenAfterExtraContentPurchase: _refreshCurrentScreen),
+        optText,
         customContent: btnContent ?? optMyText);
   }
 

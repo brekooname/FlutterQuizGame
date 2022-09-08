@@ -3,6 +3,7 @@ import 'package:flutter_app_quiz_game/Game/Game/campaign_level.dart';
 import 'package:flutter_app_quiz_game/Game/Game/game_context.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
+import 'package:flutter_app_quiz_game/Game/Question/Model/question_info.dart';
 import 'package:flutter_app_quiz_game/Implementations/Astronomy/Constants/astronomy_game_question_config.dart';
 import 'package:flutter_app_quiz_game/Implementations/Astronomy/Questions/astronomy_game_context.dart';
 import 'package:flutter_app_quiz_game/Implementations/Astronomy/Screens/astronomy_levels_screen.dart';
@@ -121,12 +122,25 @@ class AstronomyScreenManagerState extends State<AstronomyScreenManager>
           category: category,
           difficulty: difficulty);
     } else {
-      return AstronomyQuestionScreen(this,
-          key: UniqueKey(),
-          gameContext: gameContext,
-          category: category,
-          difficulty: difficulty);
+      return createAstronomyQuestionScreen(
+          gameContext,
+          gameContext.gameUser.getRandomQuestion(difficulty, category),
+          difficulty,
+          category);
     }
+  }
+
+  AstronomyQuestionScreen createAstronomyQuestionScreen(
+      AstronomyGameContext gameContext,
+      QuestionInfo questionInfo,
+      QuestionDifficulty difficulty,
+      QuestionCategory category) {
+    return AstronomyQuestionScreen(this,
+        key: UniqueKey(),
+        gameContext: gameContext,
+        questionInfo: questionInfo,
+        category: category,
+        difficulty: difficulty);
   }
 
   @override

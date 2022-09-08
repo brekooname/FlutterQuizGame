@@ -13,14 +13,14 @@ class NavigatorService {
   NavigatorService.internal();
 
   void popAll() {
-    BuildContext buildContext = MyApp.currentContext();
+    BuildContext buildContext = MyApp.globalContext();
     while (Navigator.canPop(buildContext)) {
       Navigator.pop(buildContext);
     }
   }
 
   void pop() {
-    BuildContext buildContext = MyApp.currentContext();
+    BuildContext buildContext = MyApp.globalContext();
     if (Navigator.canPop(buildContext)) {
       Navigator.pop(buildContext);
     }

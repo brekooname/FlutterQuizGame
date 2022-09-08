@@ -30,13 +30,6 @@ mixin GameScreenManagerState<TGameContext extends GameContext> {
     setCurrentScreenState(createMainScreen());
   }
 
-  void refreshCurrentScreen() {
-    if (MyApp.gameScreenManager.currentScreen == null) {
-      throw AssertionError("No screen to refresh is set.");
-    }
-    setCurrentScreenState(MyApp.gameScreenManager.currentScreen!);
-  }
-
   void showNewGameScreen(CampaignLevel campaignLevel) {
     TGameContext gameContext = createGameContext(campaignLevel);
     var notPlayedRandomQuestionCategory =

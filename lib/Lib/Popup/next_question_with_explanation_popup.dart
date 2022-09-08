@@ -7,7 +7,6 @@ import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 import '../../main.dart';
 import '../Font/font_config.dart';
 import '../Font/font_util.dart';
-import '../Screen/Game/game_screen.dart';
 import 'my_popup.dart';
 
 class NextQuestionWithExplanationPopup extends StatefulWidget {
@@ -18,10 +17,15 @@ class NextQuestionWithExplanationPopup extends StatefulWidget {
   String explanation;
   String nextQuestionBtnLabel;
   VoidCallback goToNextScreen;
+  VoidCallback? refreshScreenAfterExtraContentPurchase;
 
-  NextQuestionWithExplanationPopup(this.title, this.explanation,
-      this.goToNextScreen, this.nextQuestionBtnLabel,
-      {Key? key})
+  NextQuestionWithExplanationPopup(
+      {required this.title,
+      required this.explanation,
+      required this.goToNextScreen,
+      this.refreshScreenAfterExtraContentPurchase,
+      required this.nextQuestionBtnLabel,
+      Key? key})
       : super(key: key);
 
   @override
@@ -83,11 +87,7 @@ class NextQuestionWithExplanationPopupState
         children: infoBtnWidgets);
     var infoBtn = MyButton(
       contentLockedConfig: ContentLockedConfig(
-          executeAfterPurchase: () {
-            var currentScreen = MyApp.gameScreenManager.currentScreen!;
-            currentScreen.gameScreenManagerState.refreshCurrentScreen();
-            (currentScreen as GameScreen).processNextGameScreenCallBack(context);
-          },
+          executeAfterPurchase: widget.refreshScreenAfterExtraContentPurchase,
           isContentLocked: MyApp.isExtraContentLocked),
       size: Size(btnWidth, screenDimensions.dimen(28)),
       buttonSkinConfig: ButtonSkinConfig(
@@ -115,8 +115,11 @@ class NextQuestionWithExplanationPopupState
 
   void _openExplanationPopup(BuildContext context) {
     closePopup();
-    MyPopup.showPopup(ExplanationPopup(widget.title, widget.explanation,
-        widget.goToNextScreen, widget.nextQuestionBtnLabel));
+    MyPopup.showPopup(ExplanationPopup(
+        title: widget.title,
+        explanation: widget.explanation,
+        goToNextScreen: widget.goToNextScreen,
+        nextQuestionBtnLabel: widget.nextQuestionBtnLabel));
   }
 }
 
@@ -128,9 +131,12 @@ class ExplanationPopup extends StatefulWidget with MyPopup {
   String nextQuestionBtnLabel;
   VoidCallback goToNextScreen;
 
-  ExplanationPopup(this.title, this.explanation, this.goToNextScreen,
-      this.nextQuestionBtnLabel,
-      {Key? key})
+  ExplanationPopup(
+      {required this.title,
+      required this.explanation,
+      required this.goToNextScreen,
+      required this.nextQuestionBtnLabel,
+      Key? key})
       : super(key: key);
 
   @override

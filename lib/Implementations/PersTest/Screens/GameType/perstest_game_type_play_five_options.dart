@@ -236,7 +236,7 @@ class PersTestGameTypePlayFiveOptions extends PersTestGameTypePlay {
       }
     } else {
       gameContext.currentQuestionInfo = questionInfo;
-      gameScreen.goToNextGameScreen(context);
+      gameScreen.goToNextGameScreen();
     }
   }
 
