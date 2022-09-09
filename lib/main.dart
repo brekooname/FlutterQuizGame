@@ -216,15 +216,13 @@ class MyAppState extends State<MyApp> with WidgetsBindingObserver {
   }
 
   void _extraContentBought(VoidCallback? executeAfterPurchase) {
-    debugPrint("bought!!!");
     MyApp.isExtraContentLocked = false;
     widget._navigatorService.popAll();
     if (executeAfterPurchase == null) {
       MyApp.gameScreenManager.currentScreen!.gameScreenManagerState
           .showMainScreen();
     } else {
-      debugPrint("execute after purchase");
-      executeAfterPurchase.call();
+      executeAfterPurchase();
     }
     MyApp.bannerAdContainer = Container();
     setState(() {});

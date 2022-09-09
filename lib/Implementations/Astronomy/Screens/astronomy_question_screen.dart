@@ -57,10 +57,6 @@ class AstronomyQuestionScreen extends GameScreen<AstronomyGameContext,
                   backgroundColor: Colors.blue.withOpacity(0.5),
                   borderRadius: FontConfig.standardBorderRadius),
     );
-    debugPrint("create new q screen");
-    if (!currentQuestionInfo.isQuestionOpen()) {
-      processNextGameScreenCallBack();
-    }
   }
 
   Image? _getQuestionImage() {
@@ -113,11 +109,16 @@ class AstronomyQuestionScreenState extends State<AstronomyQuestionScreen>
     initScreenState(onUserEarnedReward: () {
       _onHintButtonClick();
     });
+    var questionOpen = widget.currentQuestionInfo.isQuestionOpen();
+    Future.delayed(const Duration(milliseconds: 500), () {
+      if (!questionOpen) {
+        widget.processNextGameScreenCallBack().call();
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    debugPrint("build astronomyyy");
     Widget container =
         widget.campaignLevelService.isPlanetsGameType(widget._gameType)
             ? _createPlanetsQuestionContainer()
@@ -125,24 +126,19 @@ class AstronomyQuestionScreenState extends State<AstronomyQuestionScreen>
                     .isTimelineCategory(widget.category)
                 ? _createTimelineQuestionContainer()
                 : _createQuestionContainer();
-
     return AnimateBackground(
         mainContent: container,
         particleImage: imageService.getSpecificImage(
             imageName: "stars", imageExtension: "png"));
   }
 
-  VoidCallback _refreshCurrentScreen() {
-    return () {
-      debugPrint("refresshsh 1111");
-      widget.gameScreenManagerState.setCurrentScreenState(
-          widget.gameScreenManagerState.createAstronomyQuestionScreen(
-              widget.gameContext,
-              widget.currentQuestionInfo,
-              widget.difficulty,
-              widget.category));
-      debugPrint("refresshsh 2222");
-    };
+  void _refreshCurrentScreen() {
+    widget.gameScreenManagerState.setCurrentScreenState(
+        widget.gameScreenManagerState.createAstronomyQuestionScreen(
+            widget.gameContext,
+            widget.currentQuestionInfo,
+            widget.difficulty,
+            widget.category));
   }
 
   Widget _createQuestionContainer() {

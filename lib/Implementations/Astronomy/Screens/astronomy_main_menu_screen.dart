@@ -118,7 +118,8 @@ class AstronomyMainMenuScreenState extends State<AstronomyMainMenuScreen>
                           e, widget._questionConfig.diff0)) ??
                   0)
               .reduce((a, b) => a + b),
-          false));
+          false,
+          null));
       if (i > 0 && (i + 1) % 2 == 0) {
         btnRows.add(Row(
           mainAxisAlignment: MainAxisAlignment.center,

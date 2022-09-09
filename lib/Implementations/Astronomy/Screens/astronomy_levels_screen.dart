@@ -109,9 +109,10 @@ class AstronomyLevelsScreenState extends State<AstronomyLevelsScreen>
       var contentLocked =
           MyApp.isExtraContentLocked && lockedCategs.contains(category);
 
-      btns.add(widget._astronomyComponentsService.createLevelBtn(() {
-        widget.gameScreenManagerState.showNewGameScreen(campaignLevel);
-      },
+      btns.add(widget._astronomyComponentsService.createLevelBtn(
+          () {
+            widget.gameScreenManagerState.showNewGameScreen(campaignLevel);
+          },
           "btn_cat" + category.index.toString(),
           category.categoryLabel ?? "xx",
           widget._astronomyLocalStorage.getWonQuestionsForCat(category).length,
@@ -120,7 +121,10 @@ class AstronomyLevelsScreenState extends State<AstronomyLevelsScreen>
                   .get(CategoryDifficulty(
                       category, widget._questionConfig.diff0)) ??
               0,
-          contentLocked));
+          contentLocked,
+          () {
+            widget.gameScreenManagerState.showLevelsScreen(widget.gameType);
+          }));
       if (i > 0 && (i + 1) % 2 == 0) {
         btnRows.add(Row(
           mainAxisAlignment: MainAxisAlignment.center,

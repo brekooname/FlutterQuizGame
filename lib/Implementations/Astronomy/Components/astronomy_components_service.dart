@@ -23,8 +23,14 @@ class AstronomyComponentsService {
 
   AstronomyComponentsService.internal();
 
-  Widget createLevelBtn(VoidCallback onClick, String btnImageName,
-      String btnText, int answQ, int totalQ, bool isContentLocked) {
+  Widget createLevelBtn(
+      VoidCallback onClick,
+      String btnImageName,
+      String btnText,
+      int answQ,
+      int totalQ,
+      bool isContentLocked,
+      VoidCallback? refreshScreen) {
     var horizMargin = _screenDimensions.dimen(3);
     var vertMargin = _screenDimensions.dimen(4);
     var allQuestionsAnswered = answQ == totalQ;
@@ -91,6 +97,7 @@ class AstronomyComponentsService {
                     },
                     contentLockedConfig: ContentLockedConfig(
                       isContentLocked: isContentLocked,
+                      executeAfterPurchase: refreshScreen,
                       lockedIcon: _imageService.getSpecificImage(
                           imageName: "btn_locked",
                           imageExtension: "png",
@@ -103,8 +110,11 @@ class AstronomyComponentsService {
                         _screenDimensions.dimen(39)),
                     fontConfig: FontConfig(fontColor: Colors.black),
                     text: btnText,
-                    textMaxLines:
-                        btnText.length > 11 && btnText.length < 18 && !btnText.contains(" ") ? 1 : 2,
+                    textMaxLines: btnText.length > 11 &&
+                            btnText.length < 18 &&
+                            !btnText.contains(" ")
+                        ? 1
+                        : 2,
                   ),
                 ])));
   }
