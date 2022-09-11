@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
-import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_info.dart';
 import 'package:flutter_app_quiz_game/Implementations/Astronomy/Constants/astronomy_campaign_level_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/Astronomy/Constants/astronomy_game_question_config.dart';
@@ -17,6 +15,7 @@ import 'package:flutter_app_quiz_game/Lib/Screen/Game/quiz_question_container.da
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/quiz_question_manager.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
+import 'package:flutter_app_quiz_game/main.dart';
 
 import '../../../Lib/Animation/animation_background.dart';
 import '../Components/astronomy_level_header.dart';
@@ -31,33 +30,37 @@ class AstronomyQuestionScreen extends GameScreen<AstronomyGameContext,
   AstronomyQuestionScreen(
     AstronomyScreenManagerState gameScreenManagerState, {
     Key? key,
-    required QuestionDifficulty difficulty,
-    required QuestionCategory category,
     required AstronomyGameContext gameContext,
     required QuestionInfo questionInfo,
-  }) : super(gameScreenManagerState, AstronomyCampaignLevelService(),
-            gameContext, difficulty, category, [questionInfo],
-            key: key) {
+  }) : super(gameScreenManagerState, gameContext, [questionInfo], key: key) {
     _gameType = campaignLevelService.findGameTypeForCategory(category);
     initQuizOptionsScreen(
       QuizQuestionManager<AstronomyGameContext, AstronomyLocalStorage>(
           gameContext, currentQuestionInfo, AstronomyLocalStorage()),
       currentQuestionInfo,
       questionImage: _getQuestionImage(),
-      optionsButtonSkinConfig: campaignLevelService.isPlanetsGameType(_gameType)
-          ? ButtonSkinConfig(
-              backgroundColor: Colors.blue.withOpacity(0.5),
-              borderRadius: FontConfig.standardBorderRadius * 4)
-          : _astronomyGameQuestionConfig.isTimelineCategory(category)
-              ? ButtonSkinConfig(
-                  backgroundColor: Colors.purple.withOpacity(0.5),
-                  borderColor: Colors.transparent,
-                  buttonUnpressedShadowColor: Colors.transparent)
-              : ButtonSkinConfig(
-                  backgroundColor: Colors.blue.withOpacity(0.5),
-                  borderRadius: FontConfig.standardBorderRadius),
+      optionsButtonSkinConfig: _getOptionsButtonSkinConfig(),
     );
   }
+
+  ButtonSkinConfig _getOptionsButtonSkinConfig() {
+    return campaignLevelService.isPlanetsGameType(_gameType)
+        ? ButtonSkinConfig(
+            backgroundColor: Colors.blue.withOpacity(0.5),
+            borderRadius: FontConfig.standardBorderRadius * 4)
+        : _astronomyGameQuestionConfig.isTimelineCategory(category)
+            ? ButtonSkinConfig(
+                backgroundColor: Colors.purple.withOpacity(0.5),
+                borderColor: Colors.transparent,
+                buttonUnpressedShadowColor: Colors.transparent)
+            : ButtonSkinConfig(
+                backgroundColor: Colors.blue.withOpacity(0.5),
+                borderRadius: FontConfig.standardBorderRadius);
+  }
+
+  @override
+  AstronomyCampaignLevelService get campaignLevelService =>
+      AstronomyCampaignLevelService();
 
   Image? _getQuestionImage() {
     if (campaignLevelService.isImageQuestionGameType(_gameType)) {
@@ -135,10 +138,7 @@ class AstronomyQuestionScreenState extends State<AstronomyQuestionScreen>
   void _refreshCurrentScreen() {
     widget.gameScreenManagerState.setCurrentScreenState(
         widget.gameScreenManagerState.createAstronomyQuestionScreen(
-            widget.gameContext,
-            widget.currentQuestionInfo,
-            widget.difficulty,
-            widget.category));
+            widget.gameContext, widget.currentQuestionInfo));
   }
 
   Widget _createQuestionContainer() {

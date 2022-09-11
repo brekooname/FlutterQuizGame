@@ -38,12 +38,7 @@ class GeoQuizQuestionScreen extends GameScreen<GeoQuizGameContext,
     required QuestionDifficulty difficulty,
     required QuestionCategory category,
     required GeoQuizGameContext gameContext,
-  }) : super(
-            gameScreenManagerState,
-            GeoQuizCampaignLevelService(),
-            gameContext,
-            difficulty,
-            category,
+  }) : super(gameScreenManagerState, gameContext,
             [gameContext.gameUser.getRandomQuestion(difficulty, category)],
             key: key) {
     if (currentQuestionInfo.question.questionService
@@ -64,6 +59,10 @@ class GeoQuizQuestionScreen extends GameScreen<GeoQuizGameContext,
         multipleCorrectAnswersButtonSkinConfig:
             ButtonSkinConfig(backgroundColor: Colors.purple.shade100));
   }
+
+  @override
+  GeoQuizCampaignLevelService get campaignLevelService =>
+      GeoQuizCampaignLevelService();
 
   GeoQuizQuizQuestionManager createQuizQuestionManager() {
     return GeoQuizQuizQuestionManager(

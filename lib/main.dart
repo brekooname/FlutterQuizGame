@@ -56,10 +56,8 @@ class MyApp extends StatefulWidget {
   static CampaignLevel campaignLevel = AstronomyCampaignLevelService().level_13;
 
   //
-  static Language webLanguage = Language.da;
+  static Language webLanguage = Language.en;
   static bool webIsPro = false;
-
-  // static bool webIsPro = false;
 
   ////////////
   //////

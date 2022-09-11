@@ -19,17 +19,16 @@ class PersTestQuestionScreen extends GameScreen<PersTestGameContext,
     required QuestionDifficulty difficulty,
     required QuestionCategory category,
     required PersTestGameContext gameContext,
-  }) : super(
-            gameScreenManagerState,
-            PersTestCampaignLevelService(),
-            gameContext,
-            difficulty,
-            category,
+  }) : super(gameScreenManagerState, gameContext,
             [gameContext.currentQuestionInfo],
             key: key) {
     persTestGameType =
         PersTestGameTypePlay.createGameTypePlay(this, campaignLevel);
   }
+
+  @override
+  PersTestCampaignLevelService get campaignLevelService =>
+      PersTestCampaignLevelService();
 
   @override
   void incrementTotalPlayedQuestions() {

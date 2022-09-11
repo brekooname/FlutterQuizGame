@@ -32,10 +32,7 @@ class IqGameQuestionScreen extends GameScreen<IqGameContext,
     required IqGameContext gameContext,
   }) : super(
             gameScreenManagerState,
-            IqGameCampaignLevelService(),
             gameContext,
-            difficulty,
-            category,
             [
               getCurrentQuestionInfo(
                   gameScreenManagerState,
@@ -46,6 +43,10 @@ class IqGameQuestionScreen extends GameScreen<IqGameContext,
                   gameContext.skippedQuestions),
             ],
             key: key);
+
+  @override
+  IqGameCampaignLevelService get campaignLevelService =>
+      IqGameCampaignLevelService();
 
   @override
   State<IqGameQuestionScreen> createState() => IqGameQuestionScreenState();

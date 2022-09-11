@@ -24,7 +24,8 @@ class AstronomyGameContextService {
     var questions = MyApp.appId.gameConfig.questionCollectorService
         .getAllQuestions(categories: [campaignLevel.categories.first]);
     var gameContext = GameContextService()
-        .createGameContextWithHintsAndQuestions(3, questions);
+        .createGameContextWithHintsAndQuestions(
+            MyApp.isExtraContentLocked ? 3 : 5, questions);
     var astronomyGameContext = AstronomyGameContext(
       gameContext,
     );

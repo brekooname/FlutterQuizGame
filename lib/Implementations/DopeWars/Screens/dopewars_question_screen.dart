@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
@@ -24,7 +26,6 @@ import 'package:flutter_app_quiz_game/Lib/Screen/Game/quiz_question_container.da
 import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 import 'package:numberpicker/numberpicker.dart';
-import 'dart:math' as math;
 
 class DopeWarsQuestionScreen extends GameScreen<DopeWarsGameContext,
     DopeWarsScreenManagerState, DopeWarsCampaignLevelService> {
@@ -38,10 +39,7 @@ class DopeWarsQuestionScreen extends GameScreen<DopeWarsGameContext,
     required DopeWarsGameContext gameContext,
   }) : super(
             gameScreenManagerState,
-            DopeWarsCampaignLevelService(),
             gameContext,
-            difficulty,
-            category,
             [gameContext.gameUser.getRandomQuestion(difficulty, category)],
             key: key) {
     dopeWarsResourceTransactionService =
@@ -49,6 +47,10 @@ class DopeWarsQuestionScreen extends GameScreen<DopeWarsGameContext,
     dopeWarsResourceTransactionService.calculateReputation();
     gameContext.reputationChange = null;
   }
+
+  @override
+  DopeWarsCampaignLevelService get campaignLevelService =>
+      DopeWarsCampaignLevelService();
 
   @override
   State<DopeWarsQuestionScreen> createState() => DopeWarsQuestionScreenState();
@@ -309,10 +311,9 @@ class DopeWarsQuestionScreenState extends State<DopeWarsQuestionScreen>
       onClick: () {
         widget.gameContext.resetSelectedResource();
         setState(() {});
-        MyPopup.showPopup(
-            DopeWarsLocationMovePopup(() {
-              setState(() {});
-            }, widget.gameContext));
+        MyPopup.showPopup(DopeWarsLocationMovePopup(() {
+          setState(() {});
+        }, widget.gameContext));
       },
     );
     var shopBtn = MyButton(
@@ -323,10 +324,9 @@ class DopeWarsQuestionScreenState extends State<DopeWarsQuestionScreen>
       onClick: () {
         widget.gameContext.resetSelectedResource();
         setState(() {});
-        MyPopup.showPopup(
-            DopeWarsShopPopup(() {
-              setState(() {});
-            }, widget.gameContext));
+        MyPopup.showPopup(DopeWarsShopPopup(() {
+          setState(() {});
+        }, widget.gameContext));
       },
     );
     var nextDayBtn = MyButton(

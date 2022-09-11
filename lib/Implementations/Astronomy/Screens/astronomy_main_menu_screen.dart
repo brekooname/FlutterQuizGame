@@ -4,6 +4,7 @@ import 'package:flutter_app_quiz_game/Implementations/Astronomy/Constants/astron
 import 'package:flutter_app_quiz_game/Implementations/Astronomy/Service/astronomy_screen_manager.dart';
 import 'package:flutter_app_quiz_game/Lib/Animation/animation_background.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/floating_button.dart';
+import 'package:flutter_app_quiz_game/Lib/Constants/language.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/map_extension.dart';
 import 'package:flutter_app_quiz_game/Lib/Localization/label_mixin.dart';
 import 'package:flutter_app_quiz_game/Lib/Popup/settings_popup.dart';
@@ -58,7 +59,12 @@ class AstronomyMainMenuScreenState extends State<AstronomyMainMenuScreen>
             fontColor: Colors.blue.shade50,
             borderColor: Colors.indigo.shade800,
             fontWeight: FontWeight.w700,
-            fontSize: FontConfig.getCustomFontSize(1.8)),
+            fontSize: FontConfig.getCustomFontSize([
+              Language.sr.name,
+              Language.th.name
+            ].contains(MyApp.languageCode)
+                ? 1.3
+                : 1.8)),
         backgroundImagePath: assetsService.getSpecificAssetPath(
             assetExtension: "png", assetName: "title_background"));
 

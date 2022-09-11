@@ -122,25 +122,15 @@ class AstronomyScreenManagerState extends State<AstronomyScreenManager>
           category: category,
           difficulty: difficulty);
     } else {
-      return createAstronomyQuestionScreen(
-          gameContext,
-          gameContext.gameUser.getRandomQuestion(difficulty, category),
-          difficulty,
-          category);
+      return createAstronomyQuestionScreen(gameContext,
+          gameContext.gameUser.getRandomQuestion(difficulty, category));
     }
   }
 
   AstronomyQuestionScreen createAstronomyQuestionScreen(
-      AstronomyGameContext gameContext,
-      QuestionInfo questionInfo,
-      QuestionDifficulty difficulty,
-      QuestionCategory category) {
+      AstronomyGameContext gameContext, QuestionInfo questionInfo) {
     return AstronomyQuestionScreen(this,
-        key: UniqueKey(),
-        gameContext: gameContext,
-        questionInfo: questionInfo,
-        category: category,
-        difficulty: difficulty);
+        key: UniqueKey(), gameContext: gameContext, questionInfo: questionInfo);
   }
 
   @override

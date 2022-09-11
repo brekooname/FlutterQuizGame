@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
-import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
+import 'package:flutter_app_quiz_game/Game/Question/Model/question_info.dart';
 import 'package:flutter_app_quiz_game/Implementations/_Skel/Constants/skel_campaign_level_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/_Skel/Questions/skel_game_context.dart';
 import 'package:flutter_app_quiz_game/Implementations/_Skel/Service/skel_local_storage.dart';
@@ -19,22 +18,18 @@ class SkelQuestionScreen extends GameScreen<
   SkelQuestionScreen(
     SkelScreenManagerState gameScreenManagerState, {
     Key? key,
-    required QuestionDifficulty difficulty,
-    required QuestionCategory category,
     required SkelGameContext gameContext,
-  }) : super(
-            gameScreenManagerState,
-            SkelCampaignLevelService(),
-            gameContext,
-            difficulty,
-            category,
-            [gameContext.gameUser.getRandomQuestion(difficulty, category)],
-            key: key) {
+    required QuestionInfo questionInfo,
+  }) : super(gameScreenManagerState, gameContext, [questionInfo], key: key) {
     initQuizOptionsScreen(
         QuizQuestionManager<SkelGameContext, SkelLocalStorage>(
             gameContext, currentQuestionInfo, SkelLocalStorage()),
         currentQuestionInfo);
   }
+
+  @override
+  SkelCampaignLevelService get campaignLevelService =>
+      SkelCampaignLevelService();
 
   @override
   State<SkelQuestionScreen> createState() => SkelQuestionScreenState();

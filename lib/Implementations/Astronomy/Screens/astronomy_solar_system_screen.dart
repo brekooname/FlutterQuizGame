@@ -36,12 +36,7 @@ class AstronomySolarSystemScreen extends GameScreen<
     required QuestionDifficulty difficulty,
     required QuestionCategory category,
     required AstronomyGameContext gameContext,
-  }) : super(
-            gameScreenManagerState,
-            AstronomyCampaignLevelService(),
-            gameContext,
-            difficulty,
-            category,
+  }) : super(gameScreenManagerState, gameContext,
             [gameContext.gameUser.getRandomQuestion(difficulty, category)],
             key: key) {
     _rawImageToClickSize = gameQuestionConfig.categoryDiagramImgDimen
@@ -58,6 +53,10 @@ class AstronomySolarSystemScreen extends GameScreen<
             borderColor: Colors.red,
             backgroundColor: Colors.transparent));
   }
+
+  @override
+  AstronomyCampaignLevelService get campaignLevelService =>
+      AstronomyCampaignLevelService();
 
   @override
   State<AstronomySolarSystemScreen> createState() =>
@@ -139,7 +138,7 @@ class AstronomySolarSystemScreenState extends State<AstronomySolarSystemScreen>
           fontWeight: FontWeight.w800,
           fontSize: FontConfig.getCustomFontSize(1.3),
           borderColor: Colors.black),
-      maxLines: 3,
+      maxLines: 1,
       width: screenDimensions.dimen(80),
       text: widget.currentQuestionInfo.question.questionToBeDisplayed,
     );

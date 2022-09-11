@@ -23,8 +23,8 @@ class NextQuestionWithExplanationPopup extends StatefulWidget {
       {required this.title,
       required this.explanation,
       required this.goToNextScreen,
-      this.refreshScreenAfterExtraContentPurchase,
       required this.nextQuestionBtnLabel,
+      this.refreshScreenAfterExtraContentPurchase,
       Key? key})
       : super(key: key);
 
@@ -95,7 +95,12 @@ class NextQuestionWithExplanationPopupState
           borderColor: Colors.lightBlueAccent.shade700),
       customContent: infoBtnContent,
       onClick: () {
-        _openExplanationPopup(context);
+        closePopup();
+        MyPopup.showPopup(ExplanationPopup(
+            title: widget.title,
+            explanation: widget.explanation,
+            goToNextScreen: widget.goToNextScreen,
+            nextQuestionBtnLabel: widget.nextQuestionBtnLabel));
       },
     );
     return createDialog(
@@ -111,15 +116,6 @@ class NextQuestionWithExplanationPopupState
         ],
       ),
     );
-  }
-
-  void _openExplanationPopup(BuildContext context) {
-    closePopup();
-    MyPopup.showPopup(ExplanationPopup(
-        title: widget.title,
-        explanation: widget.explanation,
-        goToNextScreen: widget.goToNextScreen,
-        nextQuestionBtnLabel: widget.nextQuestionBtnLabel));
   }
 }
 
@@ -193,6 +189,15 @@ class ExplanationPopupState extends State<ExplanationPopup> with MyPopup {
 }
 
 class NextQuestionWithExplanationService with LabelMixin {
+  static final NextQuestionWithExplanationService singleton =
+      NextQuestionWithExplanationService.internal();
+
+  factory NextQuestionWithExplanationService() {
+    return singleton;
+  }
+
+  NextQuestionWithExplanationService.internal();
+
   MyButton createNextQuestionBtn(
       VoidCallback goToNextScreen, MyPopup myPopup, String btnLabel) {
     return MyButton(

@@ -25,12 +25,7 @@ class HistoryGameQuestionScreen extends GameScreen<HistoryGameContext,
     required QuestionDifficulty difficulty,
     required QuestionCategory category,
     required HistoryGameContext gameContext,
-  }) : super(
-            gameScreenManagerState,
-            HistoryCampaignLevelService(),
-            gameContext,
-            difficulty,
-            category,
+  }) : super(gameScreenManagerState, gameContext,
             [gameContext.gameUser.getRandomQuestion(difficulty, category)],
             key: key) {
     initQuizOptionsScreen(
@@ -42,6 +37,10 @@ class HistoryGameQuestionScreen extends GameScreen<HistoryGameContext,
             imageExtension: "jpeg",
             imageName: "i" + currentQuestionInfo.question.index.toString()));
   }
+
+  @override
+  HistoryCampaignLevelService get campaignLevelService =>
+      HistoryCampaignLevelService();
 
   @override
   int nrOfQuestionsToShowInterstitialAd() {

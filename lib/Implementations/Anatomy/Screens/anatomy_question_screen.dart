@@ -32,12 +32,7 @@ class AnatomyQuestionScreen extends GameScreen<AnatomyGameContext,
     required QuestionDifficulty difficulty,
     required QuestionCategory category,
     required AnatomyGameContext gameContext,
-  }) : super(
-            gameScreenManagerState,
-            AnatomyCampaignLevelService(),
-            gameContext,
-            difficulty,
-            category,
+  }) : super(gameScreenManagerState, gameContext,
             [gameContext.gameUser.getRandomQuestion(difficulty, category)],
             key: key) {
     var questionConfig = AnatomyGameQuestionConfig();
@@ -59,6 +54,10 @@ class AnatomyQuestionScreen extends GameScreen<AnatomyGameContext,
         optionsButtonSkinConfig:
             ButtonSkinConfig(backgroundColor: Colors.lightBlueAccent.shade100));
   }
+
+  @override
+  AnatomyCampaignLevelService get campaignLevelService =>
+      AnatomyCampaignLevelService();
 
   @override
   State<AnatomyQuestionScreen> createState() => AnatomyQuestionScreenState();

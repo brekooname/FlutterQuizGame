@@ -33,12 +33,7 @@ class AnatomyImageClickScreen extends GameScreen<
     required QuestionDifficulty difficulty,
     required QuestionCategory category,
     required AnatomyGameContext gameContext,
-  }) : super(
-            gameScreenManagerState,
-            AnatomyCampaignLevelService(),
-            gameContext,
-            difficulty,
-            category,
+  }) : super(gameScreenManagerState, gameContext,
             [gameContext.gameUser.getRandomQuestion(difficulty, category)],
             key: key) {
     initImageClickScreen(
@@ -50,6 +45,10 @@ class AnatomyImageClickScreen extends GameScreen<
         imageContainerHeightPercent:
             category == AnatomyGameQuestionConfig().cat11 ? 70 : null);
   }
+
+  @override
+  AnatomyCampaignLevelService get campaignLevelService =>
+      AnatomyCampaignLevelService();
 
   @override
   State<AnatomyImageClickScreen> createState() =>

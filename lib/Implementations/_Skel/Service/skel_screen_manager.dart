@@ -67,11 +67,13 @@ class SkelScreenManagerState extends State<SkelScreenManager>
     QuestionDifficulty difficulty,
     QuestionCategory category,
   ) {
-    return SkelQuestionScreen(this,
-        key: UniqueKey(),
-        gameContext: gameContext,
-        category: category,
-        difficulty: difficulty);
+    return SkelQuestionScreen(
+      this,
+      key: UniqueKey(),
+      gameContext: gameContext,
+      questionInfo:
+          gameContext.gameUser.getRandomQuestion(difficulty, category),
+    );
   }
 
   @override

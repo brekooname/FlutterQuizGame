@@ -28,10 +28,10 @@ import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import '../../../Lib/Button/button_skin_config.dart';
 import '../../../Lib/Font/font_config.dart';
 
-class HistoryGameTimelineScreen
-    extends GameScreen<HistoryGameContext, HistoryGameScreenManagerState,
-        HistoryCampaignLevelService>
-    with QuizQuestionContainer {
+class HistoryGameTimelineScreen extends GameScreen<
+    HistoryGameContext,
+    HistoryGameScreenManagerState,
+    HistoryCampaignLevelService> with QuizQuestionContainer {
   static const int scrollToItemDurationMillis = 600;
   static const int showInterstitialAdEveryNQuestions = 8;
   static const int defaultQuestionsToPlayUntilNextCategory = 1;
@@ -55,12 +55,7 @@ class HistoryGameTimelineScreen
     required QuestionDifficulty difficulty,
     required QuestionCategory category,
     required HistoryGameContext gameContext,
-  }) : super(
-            gameScreenManagerState,
-            HistoryCampaignLevelService(),
-            gameContext,
-            difficulty,
-            category,
+  }) : super(gameScreenManagerState, gameContext,
             [gameContext.gameUser.getRandomQuestion(difficulty, category)],
             key: key) {
     List<QuestionInfo> allAvailableQuestions = gameContext.gameUser
@@ -70,6 +65,10 @@ class HistoryGameTimelineScreen
     randomQuestionsToDisplay =
         getRandomIndexToDisplay(currentQuestionInfo, allAvailableQuestions);
   }
+
+  @override
+  HistoryCampaignLevelService get campaignLevelService =>
+      HistoryCampaignLevelService();
 
   Set<QuestionInfo> getRandomIndexToDisplay(
       QuestionInfo questionInfo, List<QuestionInfo> allAvailableQuestions) {

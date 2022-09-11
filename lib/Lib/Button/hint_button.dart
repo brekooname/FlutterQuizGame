@@ -90,7 +90,8 @@ class HintButtonState extends State<HintButton> {
         height: widget.buttonSize.height,
         child: MyText(
           alignmentInsideContainer: Alignment.bottomRight,
-          text: widget.availableHints.toString(),
+          text: (widget.availableHints < 0 ? 0 : widget.availableHints)
+              .toString(),
           fontConfig: FontConfig(
               fontSize: FontConfig.normalFontSize,
               fontColor: Colors.lightGreenAccent,

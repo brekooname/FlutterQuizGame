@@ -13,6 +13,7 @@ import 'package:flutter_app_quiz_game/Lib/Screen/standard_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Storage/game_local_storage.dart';
 
 import '../../../Game/Question/Model/question.dart';
+import '../../../main.dart';
 import '../../Popup/my_popup.dart';
 import '../../Popup/next_question_with_explanation_popup.dart';
 import 'game_screen_manager_state.dart';
@@ -26,25 +27,17 @@ abstract class GameScreen<
   AdService adService = AdService();
   MyAudioPlayer audioPlayer = MyAudioPlayer();
   ImageService imageService = ImageService();
-  TCampaignLevelService campaignLevelService;
-  late CampaignLevel campaignLevel;
   TGameContext gameContext;
-  QuestionDifficulty difficulty;
-  QuestionCategory category;
   final List<QuestionInfo> _currentQuestionInfos;
 
-  GameScreen(
-      TGameScreenManagerState gameScreenManagerState,
-      this.campaignLevelService,
-      this.gameContext,
-      this.difficulty,
-      this.category,
+  GameScreen(TGameScreenManagerState gameScreenManagerState, this.gameContext,
       this._currentQuestionInfos,
       {Key? key})
       : super(gameScreenManagerState, key: key) {
-    campaignLevel = campaignLevelService.campaignLevel(difficulty, category);
     incrementTotalPlayedQuestions();
   }
+
+  TCampaignLevelService get campaignLevelService;
 
   void incrementTotalPlayedQuestions() {
     gameLocalStorage.incrementTotalPlayedQuestions();
@@ -57,6 +50,15 @@ abstract class GameScreen<
     }
     return _currentQuestionInfos.first;
   }
+
+  QuestionDifficulty get difficulty =>
+      listOfCurrentQuestionInfo.first.question.difficulty;
+
+  QuestionCategory get category =>
+      listOfCurrentQuestionInfo.first.question.category;
+
+  CampaignLevel get campaignLevel =>
+      campaignLevelService.campaignLevel(difficulty, category);
 
   List<QuestionInfo> get listOfCurrentQuestionInfo => _currentQuestionInfos;
 
@@ -80,22 +82,41 @@ abstract class GameScreen<
         _goToNextGameScreenCallBack().call();
       } else {
         Question question = currentQuestionInfo.question;
-        var nextQuestionBtnLabel =
-            gameContext.gameUser.getOpenQuestions().isEmpty
-                ? label.l_go_back
-                : label.l_next_question;
-        var title =
-            question.questionService.getCorrectAnswers(question).join(", ");
-        var popup = NextQuestionWithExplanationPopup(
-            title: title,
+
+        Widget popup = _createNextQuestionWithExplanationPopup(
+            title:
+                question.questionService.getCorrectAnswers(question).join(", "),
             explanation: question.questionExplanationToBeDisplayed,
-            goToNextScreen: _goToNextGameScreenCallBack(),
+            nextQuestionBtnLabel:
+                gameContext.gameUser.getOpenQuestions().isEmpty
+                    ? label.l_go_back
+                    : label.l_next_question,
             refreshScreenAfterExtraContentPurchase:
-                refreshScreenAfterExtraContentPurchase,
-            nextQuestionBtnLabel: nextQuestionBtnLabel);
+                refreshScreenAfterExtraContentPurchase);
+
         MyPopup.showPopup(popup);
       }
     };
+  }
+
+  Widget _createNextQuestionWithExplanationPopup(
+      {required String title,
+      required String explanation,
+      required String nextQuestionBtnLabel,
+      required VoidCallback? refreshScreenAfterExtraContentPurchase}) {
+    return MyApp.isExtraContentLocked
+        ? NextQuestionWithExplanationPopup(
+            title: title,
+            explanation: explanation,
+            goToNextScreen: _goToNextGameScreenCallBack(),
+            refreshScreenAfterExtraContentPurchase:
+                refreshScreenAfterExtraContentPurchase,
+            nextQuestionBtnLabel: nextQuestionBtnLabel)
+        : ExplanationPopup(
+            title: title,
+            explanation: explanation,
+            goToNextScreen: _goToNextGameScreenCallBack(),
+            nextQuestionBtnLabel: nextQuestionBtnLabel);
   }
 
   VoidCallback _goToNextGameScreenCallBack() {

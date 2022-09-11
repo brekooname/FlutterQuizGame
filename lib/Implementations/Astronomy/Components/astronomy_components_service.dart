@@ -108,7 +108,12 @@ class AstronomyComponentsService {
                         borderRadius: FontConfig.standardBorderRadius * 4),
                     size: Size(_screenDimensions.dimen(40),
                         _screenDimensions.dimen(39)),
-                    fontConfig: FontConfig(fontColor: Colors.black),
+                    fontConfig: FontConfig(
+                        fontColor: Colors.black,
+                        fontSize: FontConfig.getCustomFontSize(
+                            btnText.length > 23 && btnText.contains(" ")
+                                ? 0.9
+                                : 1)),
                     text: btnText,
                     textMaxLines: btnText.length > 11 &&
                             btnText.length < 18 &&

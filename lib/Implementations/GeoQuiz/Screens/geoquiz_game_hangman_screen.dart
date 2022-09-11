@@ -20,10 +20,8 @@ import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
-class GeoQuizHangmanScreen extends GameScreen<
-    GeoQuizGameContext,
-    GeoQuizGameScreenManagerState,
-    GeoQuizCampaignLevelService> {
+class GeoQuizHangmanScreen extends GameScreen<GeoQuizGameContext,
+    GeoQuizGameScreenManagerState, GeoQuizCampaignLevelService> {
   static const int showInterstitialAdEveryNQuestions = 8;
   final GeoQuizLocalStorage _geoQuizLocalStorage = GeoQuizLocalStorage();
   final MyAudioPlayer _audioPlayer = MyAudioPlayer();
@@ -40,12 +38,7 @@ class GeoQuizHangmanScreen extends GameScreen<
     required QuestionDifficulty difficulty,
     required QuestionCategory category,
     required GeoQuizGameContext gameContext,
-  }) : super(
-            gameScreenManagerState,
-            GeoQuizCampaignLevelService(),
-            gameContext,
-            difficulty,
-            category,
+  }) : super(gameScreenManagerState, gameContext,
             getCurrentQuestionInfos(difficulty, category, gameContext),
             key: key) {
     questionService =
@@ -61,6 +54,10 @@ class GeoQuizHangmanScreen extends GameScreen<
           .getCountryNamesForOptions(currentQuestionInfo.question.rawString);
     }
   }
+
+  @override
+  GeoQuizCampaignLevelService get campaignLevelService =>
+      GeoQuizCampaignLevelService();
 
   static List<QuestionInfo> getCurrentQuestionInfos(
       QuestionDifficulty difficulty,
@@ -205,8 +202,8 @@ class GeoQuizHangmanScreenState extends State<GeoQuizHangmanScreen>
   void setWonQuestion(QuestionInfo questionInfo) {
     widget.gameContext.gameUser.setWonQuestion(questionInfo);
     widget._geoQuizLocalStorage.setWonQuestion(questionInfo.question);
-    Future.delayed(const Duration(milliseconds: 500),
-        () => widget.goToNextGameScreen());
+    Future.delayed(
+        const Duration(milliseconds: 500), () => widget.goToNextGameScreen());
   }
 
   void setStateCallback() {
