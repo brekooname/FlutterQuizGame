@@ -17,13 +17,16 @@ class TestUtil {
     FontConfig.fontScale = 30;
     MyApp.kIsAutomatedTest = true;
     MyApp.webIsPro = true;
+    MyApp.bannerAdContainer = Container();
     await MyAppState.initAppConfig(MyAppState.createWebAppConfig());
+    MyApp.initAsyncCompleted = true;
     MyApp.appId.gameConfig.allQuestionsService.clearCache();
     await TestUtil.pumpWidget(tester, MyApp.gameScreenManager);
   }
 
   static Future<void> updateAppKeyAndLang(
       String appKey, Language lang, WidgetTester tester) async {
+    MyApp.languageCode = lang.name;
     MyApp.webLanguage = lang;
     MyApp.webAppKey = appKey;
     MyApp.appId.gameConfig.allQuestionsService.clearCache();

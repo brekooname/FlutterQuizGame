@@ -84,8 +84,7 @@ class MyApp extends StatefulWidget {
   static late Container bannerAdContainer;
   static late GameScreenManager gameScreenManager;
   static bool isExtraContentLocked = true;
-
-  bool initAsyncCompleted = false;
+  static bool initAsyncCompleted = false;
 
   MyApp({Key? key}) : super(key: key);
 
@@ -115,11 +114,13 @@ class MyAppState extends State<MyApp> with WidgetsBindingObserver {
   void initState() {
     super.initState();
     WidgetsBinding.instance?.addObserver(this);
-    _init().then((value) => {
-          setState(() {
-            widget.initAsyncCompleted = true;
-          })
-        });
+    if (!MyApp.initAsyncCompleted) {
+      _init().then((value) => {
+            setState(() {
+              MyApp.initAsyncCompleted = true;
+            })
+          });
+    }
   }
 
   @override
@@ -151,8 +152,6 @@ class MyAppState extends State<MyApp> with WidgetsBindingObserver {
       bannerAd = widget._adService.initBannerAd();
     }
 
-    MyApp.backgroundTexture = ImageService().getSpecificImage(
-        imageName: "background_texture", imageExtension: "png");
     MyApp.bannerAdContainer = _createBannerAdContainer(bannerAd);
 
     setState(() {});
@@ -211,6 +210,8 @@ class MyAppState extends State<MyApp> with WidgetsBindingObserver {
         !InAppPurchaseLocalStorage()
             .isPurchased(appId.gameConfig.extraContentProductId);
     MyApp.gameScreenManager = appId.gameConfig.gameScreenManager;
+    MyApp.backgroundTexture = ImageService().getSpecificImage(
+        imageName: "background_texture", imageExtension: "png");
   }
 
   void _extraContentBought(VoidCallback? executeAfterPurchase) {
@@ -230,14 +231,14 @@ class MyAppState extends State<MyApp> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     Widget widgetToShow = _getWidgetToShow();
     var materialApp =
-        buildMaterialApp(context, widgetToShow, widget.initAsyncCompleted);
+        buildMaterialApp(context, widgetToShow, MyApp.initAsyncCompleted);
 
     return materialApp;
   }
 
   Widget _getWidgetToShow() {
     Widget widgetToShow;
-    if (widget.initAsyncCompleted) {
+    if (MyApp.initAsyncCompleted) {
       //
       ////
       //
@@ -323,7 +324,7 @@ class MyAppState extends State<MyApp> with WidgetsBindingObserver {
           var currentScreen = gameScreenManager.currentScreen;
           return currentScreen!.gameScreenManagerState.goBack(currentScreen);
         },
-        child: widget.initAsyncCompleted ? gameScreenManager : Container());
+        child: MyApp.initAsyncCompleted ? gameScreenManager : Container());
   }
 
   Container _createBannerAdContainer(BannerAd? bannerAd) {
