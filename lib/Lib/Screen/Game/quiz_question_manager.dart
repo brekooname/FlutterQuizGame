@@ -135,7 +135,9 @@ class QuizQuestionManager<TGameContext extends GameContext,
     optionsToDisable.removeAll(correctAnswersForQuestion);
 
     hintDisabledPossibleAnswers.add(optionsToDisable.first.toLowerCase());
-    hintDisabledPossibleAnswers.add(optionsToDisable.last.toLowerCase());
+    if (optionsToDisable.length > 2) {
+      hintDisabledPossibleAnswers.add(optionsToDisable.last.toLowerCase());
+    }
 
     refreshSetState.call();
   }

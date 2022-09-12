@@ -237,7 +237,7 @@ class _InAppPurchaseState extends State<InAppPurchasePopup>
         ),
       ]),
       onClick: () {
-        if (kIsWeb) {
+        if (kIsWeb || MyApp.kIsManualTest) {
           widget._inAppPurchaseLocalStorage.savePurchase(productDetails.id);
           MyApp.extraContentBought(widget.executeAfterPurchase);
           _showSnackBar(label.l_purchased);

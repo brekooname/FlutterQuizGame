@@ -108,7 +108,7 @@ class AstronomyGameConfig extends GameConfig {
       case Language.sl:
         return "Astronomija";
       case Language.sr:
-        return "Астрономија   ";
+        return "Астрономија";
       case Language.sv:
         return "Astronomi";
       case Language.th:

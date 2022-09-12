@@ -108,8 +108,8 @@ android {
 /////////////////////////////////////////////////////////////////////////////
         astronomy {
             applicationIdSuffix ".astronomy"
-            versionCode 3
-            versionName "2.0"
+            versionCode 4
+            versionName "2.1"
             dimension "game"
             manifestPlaceholders = [appIcon: "@drawable/astronomy_icon"]
         }

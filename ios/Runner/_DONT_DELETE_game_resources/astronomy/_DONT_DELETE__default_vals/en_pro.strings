@@ -1,9 +1,10 @@
 CFBundleDisplayName="Astronomy Game";
 language="en";
-appKey="skelgame";
+appKey="astronomy";
 isPro="true";
-appRatingPackage="xxxxx";
-GADApplicationIdentifier="xxxxx";
-admobBannerId="xxxxx";
-admobInterId="xxxxx";
-admobVideoId="xxxxx";
+appRatingPackage="1501301238";
+appProStoreId="1501301238";
+GADApplicationIdentifier="ca-app-pub-9432399956064043~6602393911";
+admobBannerId="ca-app-pub-9432399956064043/1266306750";
+admobInterId="ca-app-pub-9432399956064043/8953225080";
+admobVideoId="ca-app-pub-9432399956064043/6327061745";

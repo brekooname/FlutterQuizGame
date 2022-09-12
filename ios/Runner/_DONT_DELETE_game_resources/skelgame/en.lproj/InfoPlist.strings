@@ -3,6 +3,7 @@ language="en";
 appKey="skelgame";
 isPro="false";
 appRatingPackage="xxxxx";
+appProStoreId="xxxxx";
 GADApplicationIdentifier="xxxxx";
 admobBannerId="xxxxx";
 admobInterId="xxxxx";
