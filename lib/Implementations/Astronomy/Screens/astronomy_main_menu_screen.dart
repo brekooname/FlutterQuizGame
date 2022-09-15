@@ -108,7 +108,7 @@ class AstronomyMainMenuScreenState extends State<AstronomyMainMenuScreen>
     int i = 0;
     for (AstronomyGameType gameType in widget._campaignLevelService.gameTypes) {
       btns.add(widget._astronomyComponentsService.createLevelBtn(() {
-        onLevelBtnClick(gameType);
+        _onLevelBtnClick(gameType);
       },
           "btn_gametype" + gameType.id.toString(),
           gameType.gameTypeLabel,
@@ -148,7 +148,7 @@ class AstronomyMainMenuScreenState extends State<AstronomyMainMenuScreen>
     );
   }
 
-  void onLevelBtnClick(AstronomyGameType astronomyGameType) {
+  void _onLevelBtnClick(AstronomyGameType astronomyGameType) {
     if (astronomyGameType.gameTypeCampaignLevels.length == 1) {
       widget.gameScreenManagerState
           .showNewGameScreen(astronomyGameType.gameTypeCampaignLevels.first);

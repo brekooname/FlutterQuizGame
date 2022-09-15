@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_app_quiz_game/Implementations/Astronomy/Constants/astronomy_campaign_level_service.dart';
+import 'package:flutter_app_quiz_game/Implementations/Hangman/Constants/hangman_campaign_level_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/enum_extension.dart';
 import 'package:flutter_app_quiz_game/Lib/Navigation/navigator_service.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -53,7 +54,8 @@ class MyApp extends StatefulWidget {
   // static String webAppKey = "anatomy";
   // static String webAppKey = "iqgame";
   static String webAppKey = "astronomy";
-  static CampaignLevel campaignLevel = AstronomyCampaignLevelService().level_13;
+  // static String webAppKey = "hangman";
+  static CampaignLevel campaignLevel = HangmanCampaignLevelService().level_0;
 
   //
   static Language webLanguage = Language.en;

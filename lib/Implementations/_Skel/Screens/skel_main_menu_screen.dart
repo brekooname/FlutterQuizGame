@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app_quiz_game/Implementations/_Skel/Service/skel_local_storage.dart';
 import 'package:flutter_app_quiz_game/Implementations/_Skel/Service/skel_screen_manager.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/floating_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Localization/label_mixin.dart';
@@ -11,6 +12,8 @@ import '../../../Lib/Font/font_config.dart';
 import '../../../main.dart';
 
 class SkelMainMenuScreen extends StandardScreen<SkelScreenManagerState> {
+  final SkelLocalStorage _skelLocalStorage = SkelLocalStorage();
+
   SkelMainMenuScreen(SkelScreenManagerState gameScreenManagerState, {Key? key})
       : super(gameScreenManagerState, key: key);
 
@@ -59,7 +62,7 @@ class SkelMainMenuScreenState extends State<SkelMainMenuScreen>
             iconName: "btn_settings",
             myPopupToDisplay: SettingsPopup(
               resetContentOnClick: () {
-                // widget.skelLocalStorage.clearAll();
+                widget._skelLocalStorage.clearAll();
               },
             ),
           ),

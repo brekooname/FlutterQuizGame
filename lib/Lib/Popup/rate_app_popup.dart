@@ -10,7 +10,7 @@ import '../Font/font_util.dart';
 import 'my_popup.dart';
 
 class RatePopupService {
-  final int launchesUntilPrompt = MyApp.kIsManualTest ? 5 : 2;
+  final int launchesUntilPrompt = MyApp.kIsManualTest ? 15 : 2;
 
   late RateAppLocalStorage rateAppLocalStorage;
 
