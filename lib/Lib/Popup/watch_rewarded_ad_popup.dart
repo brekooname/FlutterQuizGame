@@ -130,7 +130,7 @@ class WatchRewardedAdPopupState extends State<WatchRewardedAdPopup>
     }
     if (widget.rewardedAd != null && widget.isRewardedAdLoaded) {
       widget.rewardedAd!.show(
-          onUserEarnedReward: (RewardedAd ad, RewardItem rewardItem) {
+          onUserEarnedReward: (AdWithoutView ad, RewardItem rewardItem) {
         executeAfterClose.call();
       });
       widget.rewardedAd!.fullScreenContentCallback =
