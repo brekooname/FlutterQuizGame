@@ -9,7 +9,6 @@ import 'package:flutter_app_quiz_game/Lib/Popup/settings_popup.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/standard_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/game_title.dart';
-import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 import '../../../Lib/Font/font_config.dart';
 import '../../../main.dart';
@@ -27,12 +26,17 @@ class HangmanMainMenuScreen extends StandardScreen<HangmanScreenManagerState> {
 
 class HangmanMainMenuScreenState extends State<HangmanMainMenuScreen>
     with ScreenState, LabelMixin {
-  final ItemScrollController _itemScrollController = ItemScrollController();
+  final ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
     super.initState();
     initScreenState();
+    Future.delayed(const Duration(milliseconds: 500), () {
+      var btnSize = _createBtnSize();
+      _scrollController.animateTo(btnSize.height * 8,
+          duration: const Duration(milliseconds: 500), curve: Curves.ease);
+    });
   }
 
   @override
@@ -50,6 +54,7 @@ class HangmanMainMenuScreenState extends State<HangmanMainMenuScreen>
 
     var mainColumn = Container(
         alignment: Alignment.center,
+        width: screenDimensions.dimen(100),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -57,9 +62,13 @@ class HangmanMainMenuScreenState extends State<HangmanMainMenuScreen>
             SizedBox(height: screenDimensions.dimen(11)),
             gameTitle,
             SizedBox(height: screenDimensions.dimen(14)),
-            Expanded(child: createListView()),
+            Expanded(
+                child: SingleChildScrollView(
+                    controller: _scrollController,
+                    child: Column(children: _createListView()))),
           ],
         ));
+
     return Scaffold(
         body: mainColumn,
         backgroundColor: Colors.transparent,
@@ -77,10 +86,11 @@ class HangmanMainMenuScreenState extends State<HangmanMainMenuScreen>
         floatingActionButtonLocation: FloatingActionButtonLocation.startTop);
   }
 
-  ScrollablePositionedList createListView() {
-    var btnSize = Size(screenDimensions.dimen(25), screenDimensions.dimen(39));
+  List<Widget> _createListView() {
+    var btnSize = _createBtnSize();
+    var lateralMarginWidth = (screenDimensions.dimen(100) - btnSize.width) / 2;
     SizedBox lateralMargin = SizedBox(
-      width: (screenDimensions.dimen(100) - btnSize.width) / 2,
+      width: lateralMarginWidth,
       height: btnSize.height,
     );
     var boxDecoration = BoxDecoration(
@@ -88,52 +98,97 @@ class HangmanMainMenuScreenState extends State<HangmanMainMenuScreen>
       repeat: ImageRepeat.repeatX,
       image: MyApp.backgroundTexture.image,
     ));
-    ScrollablePositionedList listView = ScrollablePositionedList.builder(
-      physics: const ClampingScrollPhysics(),
-      itemCount: 20,
-      itemScrollController: _itemScrollController,
-      itemBuilder: (BuildContext context, int index) {
-        var btnText = index.toString();
-        var levelBtn = MyButton(
-          fontConfig: FontConfig(
-              fontColor: Colors.black,
-              fontSize: FontConfig.getCustomFontSize(
-                  btnText.length > 23 && btnText.contains(" ") ? 0.9 : 1)),
-          textMaxLines: btnText.length > 11 &&
-                  btnText.length < 18 &&
-                  !btnText.contains(" ")
-              ? 1
-              : 2,
-          size: btnSize,
-          text: btnText,
-          buttonSkinConfig: ButtonSkinConfig(
-              image: imageService.getSpecificImage(
-                  module: "buttons",
-                  imageName: "btn_cat1",
-                  imageExtension: "png")),
-        );
-        List<Widget> rowChildren = [];
-        int itemPosition = index % 2 == 0
-            ? 0
-            : (index - 1) % 4 == 0
-                ? -1
-                : 1;
-        if (itemPosition == 0) {
-          rowChildren.addAll([lateralMargin, levelBtn, lateralMargin]);
-        } else if (itemPosition == -1) {
-          rowChildren.addAll([levelBtn, lateralMargin, lateralMargin]);
-        } else if (itemPosition == 1) {
-          rowChildren.addAll([lateralMargin, lateralMargin, levelBtn]);
-        }
-        return Container(
-            decoration: boxDecoration,
-            width: screenDimensions.dimen(100),
-            height: btnSize.height,
-            child: Row(
-              children: rowChildren,
-            ));
-      },
-    );
-    return listView;
+    List<Widget> res = [];
+    for (int index = 0; index < 20; index++) {
+      var btnText = index.toString();
+      var levelBtn = MyButton(
+        fontConfig: FontConfig(
+            fontColor: Colors.black,
+            fontSize: FontConfig.getCustomFontSize(
+                btnText.length > 23 && btnText.contains(" ") ? 0.9 : 1)),
+        textMaxLines:
+            btnText.length > 11 && btnText.length < 18 && !btnText.contains(" ")
+                ? 1
+                : 2,
+        size: btnSize,
+        text: btnText,
+        buttonSkinConfig: ButtonSkinConfig(
+            image: imageService.getSpecificImage(
+                module: "buttons",
+                imageName: "btn_cat1",
+                imageExtension: "png")),
+      );
+      List<Widget> rowChildren = [];
+      int itemPosition = index % 2 == 0
+          ? 0
+          : (index - 1) % 4 == 0
+              ? -1
+              : 1;
+      if (itemPosition == 0) {
+        rowChildren.addAll([lateralMargin, levelBtn, lateralMargin]);
+      } else if (itemPosition == -1) {
+        rowChildren.addAll([levelBtn, lateralMargin, lateralMargin]);
+      } else if (itemPosition == 1) {
+        rowChildren.addAll([lateralMargin, lateralMargin, levelBtn]);
+      }
+      var customPaint = CustomPaint(
+        size: btnSize,
+        painter: LinesPainter(btnSize, Size(lateralMarginWidth, btnSize.height),
+            itemPosition, index),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: rowChildren,
+        ),
+      );
+
+      res.add(Container(
+          decoration: boxDecoration,
+          width: screenDimensions.dimen(100),
+          height: btnSize.height,
+          child: customPaint));
+    }
+
+    return res;
+  }
+
+  Size _createBtnSize() =>
+      Size(screenDimensions.dimen(25), screenDimensions.dimen(39));
+}
+
+class LinesPainter extends CustomPainter {
+  Size btnSize;
+  Size lateralMargin;
+  int itemPosition;
+  int index;
+
+  LinesPainter(this.btnSize, this.lateralMargin, this.itemPosition, this.index);
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    double xPadding = itemPosition == 0
+        ? lateralMargin.width
+        : itemPosition == 1
+            ? lateralMargin.width * 2
+            : 0;
+    double x1 = xPadding + btnSize.width / 2;
+    var centerToLeftDisplay = itemPosition == 1 || (index + 2) % 4 == 0;
+    var xwLength = (btnSize.width / 2 +
+        (centerToLeftDisplay ? btnSize.width / 2 : lateralMargin.width));
+    double x2 = xPadding + ((centerToLeftDisplay ? -1 : 1) * xwLength);
+    double y2 = -btnSize.width / 2;
+    if (index != 0) {
+      canvas.drawLine(
+          Offset(x1, btnSize.height / 2),
+          Offset(x2, y2),
+          Paint()
+            ..strokeWidth = 14
+            ..color = Colors.redAccent);
+    }
+  }
+
+  @override
+  bool shouldRepaint(LinesPainter oldDelegate) {
+    return false;
   }
 }

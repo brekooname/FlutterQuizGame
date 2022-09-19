@@ -15,7 +15,6 @@ import 'package:flutter_app_quiz_game/Lib/Screen/Game/quiz_question_container.da
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/quiz_question_manager.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
-import 'package:flutter_app_quiz_game/main.dart';
 
 import '../../../Lib/Animation/animation_background.dart';
 import '../Components/astronomy_level_header.dart';

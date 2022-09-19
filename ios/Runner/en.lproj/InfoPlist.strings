@@ -1,8 +1,8 @@
 CFBundleDisplayName="Astronomy Game";
 language="en";
 appKey="astronomy";
-isPro="false";
-appRatingPackage="1501300649";
+isPro="true";
+appRatingPackage="1501301238";
 appProStoreId="1501301238";
 GADApplicationIdentifier="ca-app-pub-9432399956064043~6602393911";
 admobBannerId="ca-app-pub-9432399956064043/1266306750";

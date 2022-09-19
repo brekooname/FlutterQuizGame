@@ -1,5 +1,5 @@
-import 'package:charts_flutter/flutter.dart' as charts;
-import 'package:charts_flutter/flutter.dart';
+import 'package:charts_flutter_new/flutter.dart' as charts;
+import 'package:charts_flutter_new/flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Implementations/IqGame/Service/iq_game_local_storage.dart';
 import 'package:flutter_app_quiz_game/Lib/Font/font_config.dart';
