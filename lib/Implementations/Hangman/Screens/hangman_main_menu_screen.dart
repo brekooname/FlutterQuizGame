@@ -11,6 +11,7 @@ import 'package:flutter_app_quiz_game/Lib/Screen/standard_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/game_title.dart';
 
 import '../../../Lib/Font/font_config.dart';
+import '../../../Lib/ScreenDimensions/screen_dimensions_service.dart';
 import '../../../main.dart';
 
 class HangmanMainMenuScreen extends StandardScreen<HangmanScreenManagerState> {
@@ -32,11 +33,11 @@ class HangmanMainMenuScreenState extends State<HangmanMainMenuScreen>
   void initState() {
     super.initState();
     initScreenState();
-    Future.delayed(const Duration(milliseconds: 500), () {
-      var btnSize = _createBtnSize();
-      _scrollController.animateTo(btnSize.height * 8,
-          duration: const Duration(milliseconds: 500), curve: Curves.ease);
-    });
+    // Future.delayed(const Duration(milliseconds: 500), () {
+    //   var btnSize = _createBtnSize();
+    //   _scrollController.animateTo(btnSize.height * 8,
+    //       duration: const Duration(milliseconds: 500), curve: Curves.ease);
+    // });
   }
 
   @override
@@ -52,22 +53,36 @@ class HangmanMainMenuScreenState extends State<HangmanMainMenuScreen>
           borderColor: Colors.green),
     );
 
-    var mainColumn = Container(
-        alignment: Alignment.center,
-        width: screenDimensions.dimen(100),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            SizedBox(height: screenDimensions.dimen(11)),
-            gameTitle,
-            SizedBox(height: screenDimensions.dimen(14)),
-            Expanded(
-                child: SingleChildScrollView(
-                    controller: _scrollController,
-                    child: Column(children: _createListView()))),
-          ],
-        ));
+    var mainColumn = SizedBox(
+        width: double.infinity,
+        child: Container(
+            alignment: Alignment.center,
+            width: _getListViewAllWidth(),
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  SizedBox(height: screenDimensions.dimen(11)),
+                  gameTitle,
+                  SizedBox(height: screenDimensions.dimen(14)),
+                  Expanded(
+                    child: SingleChildScrollView(
+                        controller: _scrollController,
+                        child: Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: _createConnectingLinesListView()),
+                            Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: _createButtonsListView())
+                          ],
+                        )),
+                  )
+                ])));
 
     return Scaffold(
         body: mainColumn,
@@ -86,18 +101,40 @@ class HangmanMainMenuScreenState extends State<HangmanMainMenuScreen>
         floatingActionButtonLocation: FloatingActionButtonLocation.startTop);
   }
 
-  List<Widget> _createListView() {
+  List<Widget> _createConnectingLinesListView() {
     var btnSize = _createBtnSize();
-    var lateralMarginWidth = (screenDimensions.dimen(100) - btnSize.width) / 2;
+    var lateralMarginWidth = _getListViewItemLateralMargin(btnSize);
+    List<Widget> res = [];
+    for (int index = 0; index < 20; index++) {
+      var customPaint = CustomPaint(
+        size: btnSize,
+        painter: LinesPainter(
+          btnSize,
+          Size(lateralMarginWidth, btnSize.height),
+          _getListViewItemPosition(index),
+          index,
+        ),
+      );
+      res.add(_createListViewItemContainer(
+          btnSize,
+          customPaint,
+          BoxDecoration(
+              image: DecorationImage(
+            repeat: ImageRepeat.repeatX,
+            image: MyApp.backgroundTexture.image,
+          ))));
+    }
+
+    return res;
+  }
+
+  List<Widget> _createButtonsListView() {
+    var btnSize = _createBtnSize();
+    var lateralMarginWidth = _getListViewItemLateralMargin(btnSize);
     SizedBox lateralMargin = SizedBox(
       width: lateralMarginWidth,
       height: btnSize.height,
     );
-    var boxDecoration = BoxDecoration(
-        image: DecorationImage(
-      repeat: ImageRepeat.repeatX,
-      image: MyApp.backgroundTexture.image,
-    ));
     List<Widget> res = [];
     for (int index = 0; index < 20; index++) {
       var btnText = index.toString();
@@ -118,38 +155,51 @@ class HangmanMainMenuScreenState extends State<HangmanMainMenuScreen>
                 imageName: "btn_cat1",
                 imageExtension: "png")),
       );
+      int itemPosition = _getListViewItemPosition(index);
+
       List<Widget> rowChildren = [];
-      int itemPosition = index % 2 == 0
-          ? 0
-          : (index - 1) % 4 == 0
-              ? -1
-              : 1;
       if (itemPosition == 0) {
-        rowChildren.addAll([lateralMargin, levelBtn, lateralMargin]);
+        rowChildren = [lateralMargin, levelBtn, lateralMargin];
       } else if (itemPosition == -1) {
-        rowChildren.addAll([levelBtn, lateralMargin, lateralMargin]);
+        rowChildren = [levelBtn, lateralMargin, lateralMargin];
       } else if (itemPosition == 1) {
-        rowChildren.addAll([lateralMargin, lateralMargin, levelBtn]);
+        rowChildren = [lateralMargin, lateralMargin, levelBtn];
       }
-      var customPaint = CustomPaint(
-        size: btnSize,
-        painter: LinesPainter(btnSize, Size(lateralMarginWidth, btnSize.height),
-            itemPosition, index),
-        child: Row(
+
+      res.add(_createListViewItemContainer(
+        btnSize,
+        Row(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: rowChildren,
         ),
-      );
-
-      res.add(Container(
-          decoration: boxDecoration,
-          width: screenDimensions.dimen(100),
-          height: btnSize.height,
-          child: customPaint));
+        null,
+      ));
     }
 
     return res;
+  }
+
+  Widget _createListViewItemContainer(
+      Size btnSize, Widget item, BoxDecoration? boxDecoration) {
+    return Container(
+        // decoration: boxDecoration,
+        width: _getListViewAllWidth(),
+        height: btnSize.height,
+        child: item);
+  }
+
+  double _getListViewItemLateralMargin(Size btnSize) =>
+      (_getListViewAllWidth() - btnSize.width) / 2;
+
+  double _getListViewAllWidth() => screenDimensions.dimen(95);
+
+  int _getListViewItemPosition(int index) {
+    return index % 2 == 0
+        ? 0
+        : (index - 1) % 4 == 0
+            ? -1
+            : 1;
   }
 
   Size _createBtnSize() =>
@@ -157,6 +207,9 @@ class HangmanMainMenuScreenState extends State<HangmanMainMenuScreen>
 }
 
 class LinesPainter extends CustomPainter {
+  final ScreenDimensionsService _screenDimensionsService =
+      ScreenDimensionsService();
+
   Size btnSize;
   Size lateralMargin;
   int itemPosition;
@@ -166,23 +219,29 @@ class LinesPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
+    double variableAngle = 0.88;
+
+    var centerToLeftDisplay = itemPosition == 1 || (index + 2) % 4 == 0;
+
+    var xwLength = btnSize.width / 2 +
+        (centerToLeftDisplay ? btnSize.width / 2 : lateralMargin.width);
+
     double xPadding = itemPosition == 0
         ? lateralMargin.width
         : itemPosition == 1
             ? lateralMargin.width * 2
             : 0;
+
     double x1 = xPadding + btnSize.width / 2;
-    var centerToLeftDisplay = itemPosition == 1 || (index + 2) % 4 == 0;
-    var xwLength = (btnSize.width / 2 +
-        (centerToLeftDisplay ? btnSize.width / 2 : lateralMargin.width));
     double x2 = xPadding + ((centerToLeftDisplay ? -1 : 1) * xwLength);
-    double y2 = -btnSize.width / 2;
+    double y2 = -btnSize.width /
+        (2 - (centerToLeftDisplay ? variableAngle : variableAngle * 0.81));
     if (index != 0) {
       canvas.drawLine(
           Offset(x1, btnSize.height / 2),
           Offset(x2, y2),
           Paint()
-            ..strokeWidth = 14
+            ..strokeWidth = _screenDimensionsService.dimen(10)
             ..color = Colors.redAccent);
     }
   }
