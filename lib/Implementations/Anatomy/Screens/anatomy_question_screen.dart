@@ -15,8 +15,8 @@ import 'package:flutter_app_quiz_game/Lib/Font/font_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Localization/label_mixin.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/Options/quiz_options_game_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen.dart';
-import 'package:flutter_app_quiz_game/Lib/Screen/Game/quiz_question_container.dart';
-import 'package:flutter_app_quiz_game/Lib/Screen/Game/quiz_question_manager.dart';
+import 'package:flutter_app_quiz_game/Lib/Screen/Game/Options/quiz_question_container.dart';
+import 'package:flutter_app_quiz_game/Lib/Screen/Game/Options/quiz_question_manager.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
 
 class AnatomyQuestionScreen extends GameScreen<AnatomyGameContext,
@@ -48,7 +48,6 @@ class AnatomyQuestionScreen extends GameScreen<AnatomyGameContext,
           currentQuestionInfo,
           AnatomyLocalStorage(),
         ),
-        currentQuestionInfo,
         questionImage: questionImg,
         zoomableImage: true,
         optionsButtonSkinConfig:
@@ -69,7 +68,9 @@ class AnatomyQuestionScreen extends GameScreen<AnatomyGameContext,
 }
 
 class AnatomyQuestionScreenState extends State<AnatomyQuestionScreen>
-    with ScreenState, QuizQuestionContainer, LabelMixin {
+    with ScreenState, LabelMixin {
+  final QuizQuestionContainer _quizQuestionContainer = QuizQuestionContainer();
+
   @override
   void initState() {
     super.initState();
@@ -84,11 +85,11 @@ class AnatomyQuestionScreenState extends State<AnatomyQuestionScreen>
 
   @override
   Widget build(BuildContext context) {
-    Widget questionContainer = createQuestionTextContainer(
-        widget.currentQuestionInfo.question, 2, 6,
-        questionContainerDecoration: createQuestionContainerDecoration(),
-        questionFontSize: FontConfig.getCustomFontSize(1.25),
-        marginBetweenPrefixAndQuestion: screenDimensions.dimen(2));
+    Widget questionContainer = _quizQuestionContainer
+        .createQuestionTextContainer(widget.currentQuestionInfo.question, 2, 6,
+            questionContainerDecoration: createQuestionContainerDecoration(),
+            questionFontSize: FontConfig.getCustomFontSize(1.25),
+            marginBetweenPrefixAndQuestion: screenDimensions.dimen(2));
     Widget optionsRows = widget.createOptionRows(
         setStateCallback, widget.processNextGameScreenCallBack(),
         widgetBetweenImageAndOptionRows: SizedBox(

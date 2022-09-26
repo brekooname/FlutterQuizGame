@@ -18,7 +18,9 @@ class DopeWarsShopPopup extends StatefulWidget with MyPopup {
   final VoidCallback _refreshStateCallback;
   late DopeWarsResourceTransactionService _dopeWarsResourceTransactionService;
 
-  DopeWarsShopPopup(this._refreshStateCallback, this._dopeWarsGameContext) {
+  DopeWarsShopPopup(this._refreshStateCallback, this._dopeWarsGameContext,
+      {Key? key})
+      : super(key: key) {
     _dopeWarsResourceTransactionService =
         DopeWarsResourceTransactionService(_dopeWarsGameContext);
   }

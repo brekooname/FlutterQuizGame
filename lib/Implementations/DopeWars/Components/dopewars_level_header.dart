@@ -24,7 +24,9 @@ class DopeWarsLevelHeader extends StatelessWidget with LabelMixin {
   int? reputationChange;
 
   DopeWarsLevelHeader(
-      this.gameContext, this.daysPassedChanged, this.reputationChange);
+      this.gameContext, this.daysPassedChanged, this.reputationChange,
+      {Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

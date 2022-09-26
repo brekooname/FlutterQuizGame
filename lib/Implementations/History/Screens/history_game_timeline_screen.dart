@@ -20,7 +20,7 @@ import 'package:flutter_app_quiz_game/Lib/Extensions/map_extension.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/string_extension.dart';
 import 'package:flutter_app_quiz_game/Lib/Localization/label_mixin.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen.dart';
-import 'package:flutter_app_quiz_game/Lib/Screen/Game/quiz_question_container.dart';
+import 'package:flutter_app_quiz_game/Lib/Screen/Game/Options/quiz_question_container.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
@@ -28,10 +28,8 @@ import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import '../../../Lib/Button/button_skin_config.dart';
 import '../../../Lib/Font/font_config.dart';
 
-class HistoryGameTimelineScreen extends GameScreen<
-    HistoryGameContext,
-    HistoryGameScreenManagerState,
-    HistoryCampaignLevelService> with QuizQuestionContainer {
+class HistoryGameTimelineScreen extends GameScreen<HistoryGameContext,
+    HistoryGameScreenManagerState, HistoryCampaignLevelService> {
   static const int scrollToItemDurationMillis = 600;
   static const int showInterstitialAdEveryNQuestions = 8;
   static const int defaultQuestionsToPlayUntilNextCategory = 1;
@@ -110,6 +108,7 @@ class HistoryQuestion {
 
 class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
     with ScreenState, LabelMixin {
+  final QuizQuestionContainer _quizQuestionContainer = QuizQuestionContainer();
   final ItemScrollController _itemScrollController = ItemScrollController();
   late Image _timelineOptUnknown;
   late Image _histAnswWrong;
@@ -199,13 +198,14 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
 
     HistoryGameLevelHeader header = _createHeader();
     QuestionInfo? mostRecentQ = _getMostRecentAnswered();
-    Widget questionContainer = widget.createQuestionTextContainer(
-        _shouldGoToNextGameScreen()
-            ? mostRecentQ?.question
-            : widget.currentQuestionInfo.question,
-        widget.category == HistoryGameQuestionConfig().cat0 ? 1 : 2,
-        widget.category == HistoryGameQuestionConfig().cat3 ? 4 : 2,
-        questionContainerHeight: screenDimensions.dimen(25));
+    Widget questionContainer =
+        _quizQuestionContainer.createQuestionTextContainer(
+            _shouldGoToNextGameScreen()
+                ? mostRecentQ?.question
+                : widget.currentQuestionInfo.question,
+            widget.category == HistoryGameQuestionConfig().cat0 ? 1 : 2,
+            widget.category == HistoryGameQuestionConfig().cat3 ? 4 : 2,
+            questionContainerHeight: screenDimensions.dimen(25));
 
     ScrollablePositionedList listView =
         _createListView(_answerBtnSize, zoomInZoomOutAnswerDuration);

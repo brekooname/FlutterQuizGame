@@ -22,7 +22,6 @@ import 'package:flutter_app_quiz_game/Lib/Font/font_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Localization/label_mixin.dart';
 import 'package:flutter_app_quiz_game/Lib/Popup/my_popup.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen.dart';
-import 'package:flutter_app_quiz_game/Lib/Screen/Game/quiz_question_container.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 import 'package:numberpicker/numberpicker.dart';
@@ -37,9 +36,7 @@ class DopeWarsQuestionScreen extends GameScreen<DopeWarsGameContext,
     required QuestionDifficulty difficulty,
     required QuestionCategory category,
     required DopeWarsGameContext gameContext,
-  }) : super(
-            gameScreenManagerState,
-            gameContext,
+  }) : super(gameScreenManagerState, gameContext,
             [gameContext.gameUser.getRandomQuestion(difficulty, category)],
             key: key) {
     dopeWarsResourceTransactionService =
@@ -62,7 +59,7 @@ class DopeWarsQuestionScreen extends GameScreen<DopeWarsGameContext,
 }
 
 class DopeWarsQuestionScreenState extends State<DopeWarsQuestionScreen>
-    with ScreenState, QuizQuestionContainer, LabelMixin {
+    with ScreenState, LabelMixin {
   @override
   Widget build(BuildContext context) {
     var margin = SizedBox(
@@ -451,7 +448,7 @@ class DopeWarsQuestionScreenState extends State<DopeWarsQuestionScreen>
           opacity: resLabelOpacity(),
           child: Container(
             height: btnSize.height / 3.5,
-            decoration: BoxDecoration(color: Colors.white),
+            decoration: const BoxDecoration(color: Colors.white),
           )),
       MyText(
         text: res.resourceType.resourceLabel,

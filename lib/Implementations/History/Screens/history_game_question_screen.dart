@@ -9,9 +9,9 @@ import 'package:flutter_app_quiz_game/Implementations/History/Service/history_ga
 import 'package:flutter_app_quiz_game/Implementations/History/Service/history_game_screen_manager.dart';
 import 'package:flutter_app_quiz_game/Lib/Localization/label_mixin.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/Options/quiz_options_game_screen.dart';
+import 'package:flutter_app_quiz_game/Lib/Screen/Game/Options/quiz_question_container.dart';
+import 'package:flutter_app_quiz_game/Lib/Screen/Game/Options/quiz_question_manager.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen.dart';
-import 'package:flutter_app_quiz_game/Lib/Screen/Game/quiz_question_container.dart';
-import 'package:flutter_app_quiz_game/Lib/Screen/Game/quiz_question_manager.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
 
 import 'history_game_timeline_screen.dart';
@@ -31,7 +31,6 @@ class HistoryGameQuestionScreen extends GameScreen<HistoryGameContext,
     initQuizOptionsScreen(
         QuizQuestionManager<HistoryGameContext, HistoryLocalStorage>(
             gameContext, currentQuestionInfo, HistoryLocalStorage()),
-        currentQuestionInfo,
         questionImage: imageService.getSpecificImage(
             module: "questions/images/" + difficulty.name + "/" + category.name,
             imageExtension: "jpeg",
@@ -53,7 +52,9 @@ class HistoryGameQuestionScreen extends GameScreen<HistoryGameContext,
 }
 
 class HistoryGameQuestionScreenState extends State<HistoryGameQuestionScreen>
-    with ScreenState, QuizQuestionContainer, LabelMixin {
+    with ScreenState, LabelMixin {
+  final QuizQuestionContainer _quizQuestionContainer = QuizQuestionContainer();
+
   @override
   void initState() {
     super.initState();
@@ -66,7 +67,8 @@ class HistoryGameQuestionScreenState extends State<HistoryGameQuestionScreen>
   Widget build(BuildContext context) {
     HistoryGameLevelHeader header = createHeader();
     var historyGameQuestionConfig = HistoryGameQuestionConfig();
-    Widget questionContainer = createQuestionTextContainer(
+    Widget questionContainer =
+        _quizQuestionContainer.createQuestionTextContainer(
       widget.currentQuestionInfo.question,
       widget.category == historyGameQuestionConfig.cat0 ? 1 : 2,
       widget.category == historyGameQuestionConfig.cat3 ? 4 : 2,

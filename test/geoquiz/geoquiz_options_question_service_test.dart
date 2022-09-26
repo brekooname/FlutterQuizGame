@@ -118,21 +118,19 @@ void testGeographicalRegionAndEmpireCategory() {
       "Bangladesh"
     ];
     expect(
-        questionService.isGameFinishedSuccessfulWithOptionList(
+        questionService.isGameFinishedSuccessful(
             expectedCorrectOptions, ["India", "Afghanistan", "Bangladesh"]),
         false);
     expect(
-        questionService.isGameFinishedFailedWithOptionList(
+        questionService.isGameFinishedFailed(
             expectedCorrectOptions, ["India", "Afghanistan", "Bangladesh"]),
         false);
     expect(
-        questionService.isGameFinishedSuccessfulWithOptionList(
-            expectedCorrectOptions,
+        questionService.isGameFinishedSuccessful(expectedCorrectOptions,
             ["India", "Afghanistan", "Pakistan", "Bangladesh"]),
         true);
     expect(
-        questionService.isGameFinishedFailedWithOptionList(
-            expectedCorrectOptions,
+        questionService.isGameFinishedFailed(expectedCorrectOptions,
             ["India", "Afghanistan", "x", "Bangladesh"]),
         true);
     verifyQuestion(
@@ -223,12 +221,14 @@ void testStatisticsCategories() {
     questionConfig.diff0,
   );
   var expectedCorrectOptions = ["United States"];
+  var correctAnswers = questionService.getCorrectAnswers(question);
   expect(
       questionService.isGameFinishedSuccessful(
-          question, expectedCorrectOptions),
+          correctAnswers, expectedCorrectOptions),
       true);
-  expect(questionService.isGameFinishedSuccessful(question, ["wrong"]), false);
-  expect(questionService.isGameFinishedFailed(question, ["wrong"]), true);
+  expect(questionService.isGameFinishedSuccessful(correctAnswers, ["wrong"]),
+      false);
+  expect(questionService.isGameFinishedFailed(correctAnswers, ["wrong"]), true);
   verifyQuestion("Which country is more populous?", "", expectedCorrectOptions,
       ["United States", "", "", ""], question);
   verifyQuestion(

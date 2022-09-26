@@ -20,7 +20,9 @@ class DopeWarsLocationMovePopup extends StatefulWidget with MyPopup {
   late DopeWarsResourceTransactionService _dopeWarsResourceTransactionService;
 
   DopeWarsLocationMovePopup(
-      this._refreshStateCallback, this._dopeWarsGameContext) {
+      this._refreshStateCallback, this._dopeWarsGameContext,
+      {Key? key})
+      : super(key: key) {
     _dopeWarsResourceTransactionService =
         DopeWarsResourceTransactionService(_dopeWarsGameContext);
   }

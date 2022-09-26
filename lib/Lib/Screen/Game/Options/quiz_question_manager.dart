@@ -3,7 +3,6 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_app_quiz_game/Game/Game/game_context.dart';
-import 'package:flutter_app_quiz_game/Game/Question/Model/question.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_info.dart';
 import 'package:flutter_app_quiz_game/Lib/Audio/my_audio_player.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/list_extension.dart';
@@ -14,16 +13,16 @@ class QuizQuestionManager<TGameContext extends GameContext,
     TQuizGameLocalStorage extends QuizGameLocalStorage> {
   final MyAudioPlayer _audioPlayer = MyAudioPlayer();
   final TGameContext gameContext;
-  final QuestionInfo _currentQuestionInfo;
+  final QuestionInfo currentQuestionInfo;
   final TQuizGameLocalStorage quizGameLocalStorage;
-  final Set<String> wrongPressedAnswer = HashSet();
   final Set<String> hintDisabledPossibleAnswers = HashSet();
+
   late List<String> correctAnswersForQuestion;
   late Set<String> possibleAnswers;
 
   QuizQuestionManager(
-      this.gameContext, this._currentQuestionInfo, this.quizGameLocalStorage) {
-    var question = _currentQuestionInfo.question;
+      this.gameContext, this.currentQuestionInfo, this.quizGameLocalStorage) {
+    var question = currentQuestionInfo.question;
     var questionService = question.questionService;
     correctAnswersForQuestion = questionService
         .getCorrectAnswers(question)
@@ -34,47 +33,55 @@ class QuizQuestionManager<TGameContext extends GameContext,
         _getPossibleAnswerOption().map((e) => e.capitalized).toList());
   }
 
-  void onClickAnswerOptionBtn(Question question, String answerBtnText,
+  void onClickAnswerOptionBtn(String answerBtnText,
       VoidCallback refreshSetState, VoidCallback goToNextScreenAfterPress) {
+    var question = currentQuestionInfo.question;
     gameContext.gameUser.addAnswerToQuestionInfo(question, answerBtnText);
-    if (isAnswerCorrectInOptionsList(question, answerBtnText)) {
+    if (isAnswerCorrectInOptionsList(answerBtnText)) {
       executeOnPressedCorrectAnswer();
     } else {
-      executeOnPressedWrongAnswer(answerBtnText);
+      executeOnPressedWrongAnswer();
     }
     refreshSetState.call();
-    _processGameFinished(question, goToNextScreenAfterPress);
+    _processGameFinished(goToNextScreenAfterPress);
   }
 
-  bool isAnswerCorrectInOptionsList(Question question, String answerBtnText) {
-    return question.questionService
+  bool isAnswerCorrectInOptionsList(String answerBtnText) {
+    return currentQuestionInfo.question.questionService
         .isAnswerCorrectInOptionsList(correctAnswersForQuestion, answerBtnText);
   }
 
-  void executeOnPressedCorrectAnswer() {
-    playSuccessAudio();
+  Set<String> get correctPressedAnswer {
+    var pressedAnswers = currentQuestionInfo.pressedAnswers.toSet();
+    pressedAnswers.retainWhere((e) => correctAnswersForQuestion.contains(e));
+    return pressedAnswers;
   }
+
+  Set<String> get wrongPressedAnswer {
+    var pressedAnswers = currentQuestionInfo.pressedAnswers.toSet();
+    pressedAnswers.retainWhere((e) => !correctAnswersForQuestion.contains(e));
+    return pressedAnswers;
+  }
+
+  void executeOnPressedCorrectAnswer() => playSuccessAudio();
 
   void playSuccessAudio() => _audioPlayer.playSuccess();
 
-  void executeOnPressedWrongAnswer(String answerBtnText) {
-    _audioPlayer.playFail();
-    wrongPressedAnswer.add(answerBtnText);
-  }
+  void executeOnPressedWrongAnswer() => _audioPlayer.playFail();
 
-  void _processGameFinished(
-      Question question, VoidCallback goToNextScreenAfterPress) {
+  void _processGameFinished(VoidCallback goToNextScreenAfterPress) {
+    var question = currentQuestionInfo.question;
     var questionService = question.questionService;
     if (isGameFinished()) {
       Future.delayed(durationGoToNextScreen, () {
         goToNextScreenAfterPress.call();
       });
       if (isGameFinishedSuccessful()) {
-        gameContext.gameUser.setWonQuestion(_currentQuestionInfo);
+        gameContext.gameUser.setWonQuestion(currentQuestionInfo);
         quizGameLocalStorage.setWonQuestion(question);
-      } else if (questionService.isGameFinishedFailedWithOptionList(
-          correctAnswersForQuestion, _currentQuestionInfo.pressedAnswers)) {
-        gameContext.gameUser.setLostQuestion(_currentQuestionInfo);
+      } else if (questionService.isGameFinishedFailed(
+          correctAnswersForQuestion, currentQuestionInfo.pressedAnswers)) {
+        gameContext.gameUser.setLostQuestion(currentQuestionInfo);
         quizGameLocalStorage.setLostQuestion(question);
       }
     }
@@ -85,31 +92,27 @@ class QuizQuestionManager<TGameContext extends GameContext,
           getValueBasedOnNrOfPossibleAnswers(1100, 1600, 1700, 1800, false, 1));
 
   bool isGameFinishedSuccessful() {
-    return _currentQuestionInfo.question.questionService
-        .isGameFinishedSuccessfulWithOptionList(
-            correctAnswersForQuestion, _currentQuestionInfo.pressedAnswers);
+    return currentQuestionInfo.question.questionService
+        .isGameFinishedSuccessful(
+            correctAnswersForQuestion, currentQuestionInfo.pressedAnswers);
   }
 
   bool isGameFinishedFailed() {
-    return _currentQuestionInfo.question.questionService
-        .isGameFinishedFailedWithOptionList(
-            correctAnswersForQuestion, _currentQuestionInfo.pressedAnswers);
+    return currentQuestionInfo.question.questionService.isGameFinishedFailed(
+        correctAnswersForQuestion, currentQuestionInfo.pressedAnswers);
   }
 
   bool isGameFinished() {
-    var gameFinishedWithOptionList = _currentQuestionInfo
-        .question.questionService
-        .isGameFinishedWithOptionList(
-            correctAnswersForQuestion, _currentQuestionInfo.pressedAnswers);
-    return gameFinishedWithOptionList;
+    return currentQuestionInfo.question.questionService.isGameFinished(
+        correctAnswersForQuestion, currentQuestionInfo.pressedAnswers);
   }
 
   void onHintButtonClickForCatDiff(VoidCallback refreshSetState) {
     _decreaseAvailableHints();
 
     quizGameLocalStorage.setRemainingHintsForCatDiff(
-        _currentQuestionInfo.question.category,
-        _currentQuestionInfo.question.difficulty,
+        currentQuestionInfo.question.category,
+        currentQuestionInfo.question.difficulty,
         gameContext.amountAvailableHints);
 
     _onHintButtonUpdateControls(refreshSetState);
@@ -119,7 +122,7 @@ class QuizQuestionManager<TGameContext extends GameContext,
     _decreaseAvailableHints();
 
     quizGameLocalStorage.setRemainingHintsForDiff(
-        _currentQuestionInfo.question.difficulty,
+        currentQuestionInfo.question.difficulty,
         gameContext.amountAvailableHints);
 
     _onHintButtonUpdateControls(refreshSetState);
@@ -144,7 +147,7 @@ class QuizQuestionManager<TGameContext extends GameContext,
 
   List<String> _getPossibleAnswerOption() {
     List<String> possibleAnswers;
-    var question = _currentQuestionInfo.question;
+    var question = currentQuestionInfo.question;
     var questionService = question.questionService;
     possibleAnswers = List.of(questionService.getQuizAnswerOptions(question));
     possibleAnswers.shuffle();

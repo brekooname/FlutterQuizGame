@@ -10,7 +10,7 @@ import 'package:flutter_app_quiz_game/Lib/Image/image_service.dart';
 import 'package:flutter_app_quiz_game/Lib/ScreenDimensions/screen_dimensions_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
-import '../quiz_question_manager.dart';
+import '../Options/quiz_question_manager.dart';
 
 mixin ImageClickScreen<TQuizQuestionManager extends QuizQuestionManager> {
   final ScreenDimensionsService _screenDimensions = ScreenDimensionsService();
@@ -268,7 +268,6 @@ mixin ImageClickScreen<TQuizQuestionManager extends QuizQuestionManager> {
         disabled: btnDisabled,
         onClick: () {
           quizQuestionManager.onClickAnswerOptionBtn(
-            _currentQuestionInfo.question,
             imageClickInfo.answerLabel,
             refreshSetState,
             goToNextScreenAfterPress,
@@ -306,7 +305,6 @@ mixin ImageClickScreen<TQuizQuestionManager extends QuizQuestionManager> {
             width: answerLabelWidth,
             decoration: BoxDecoration(
               color: (quizQuestionManager.isAnswerCorrectInOptionsList(
-                          _currentQuestionInfo.question,
                           imageClickInfo.answerLabel)
                       ? Colors.lightGreenAccent
                       : Colors.red.shade200)

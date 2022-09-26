@@ -1,12 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question.dart';
 import 'package:flutter_app_quiz_game/Lib/Font/font_config.dart';
 import 'package:flutter_app_quiz_game/Lib/ScreenDimensions/screen_dimensions_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
-mixin QuizQuestionContainer {
+class QuizQuestionContainer {
   final ScreenDimensionsService _screenDimensions = ScreenDimensionsService();
+
+  static final QuizQuestionContainer singleton =
+      QuizQuestionContainer.internal();
+
+  factory QuizQuestionContainer() {
+    return singleton;
+  }
+
+  QuizQuestionContainer.internal();
 
   Widget createQuestionTextContainer(
     Question? question,

@@ -78,7 +78,7 @@ class AnatomyQuestionCollectorService extends QuestionCollectorService<
               e.index,
               e.difficulty,
               e.category,
-              _processRawStringForDependentQuestionWith_Cat0_Options(
+              _processRawStringForDependentQuestionWithCat0Options(
                   e, true, true)))
           .toList();
     }
@@ -107,7 +107,7 @@ class AnatomyQuestionCollectorService extends QuestionCollectorService<
               e.index,
               difficulty,
               e.category,
-              _processRawStringForDependentQuestionWith_Cat0_Options(
+              _processRawStringForDependentQuestionWithCat0Options(
                   e, false, false)))
           .toList();
     }
@@ -116,7 +116,7 @@ class AnatomyQuestionCollectorService extends QuestionCollectorService<
         .toList();
   }
 
-  String _processRawStringForDependentQuestionWith_Cat0_Options(
+  String _processRawStringForDependentQuestionWithCat0Options(
       Question question, bool displayQuestion, bool takeInAccountOptions) {
     Question? questionOpt = getAllQuestions(
             difficulties: [gameQuestionConfig.diff0],

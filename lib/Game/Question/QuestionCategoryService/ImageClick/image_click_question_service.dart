@@ -40,16 +40,16 @@ class ImageClickQuestionService extends QuestionService {
 
   @override
   bool isGameFinishedFailed(
-      Question question, Iterable<String> pressedAnswers) {
+      List<String> correctAnswers, Iterable<String> pressedAnswers) {
     return pressedAnswers.isNotEmpty &&
-        !isAnswerCorrectInQuestion(question, pressedAnswers.first);
+        !isAnswerCorrectInQuestion(correctAnswers, pressedAnswers.first);
   }
 
   @override
   bool isGameFinishedSuccessful(
-      Question question, Iterable<String> pressedAnswers) {
+      List<String> correctAnswers, Iterable<String> pressedAnswers) {
     return pressedAnswers.isNotEmpty &&
-        isAnswerCorrectInQuestion(question, pressedAnswers.first);
+        isAnswerCorrectInQuestion(correctAnswers, pressedAnswers.first);
   }
 
   @override

@@ -1,28 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_app_quiz_game/Game/Question/Model/question.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_info.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/button_skin_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Font/font_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Image/image_service.dart';
-import 'package:flutter_app_quiz_game/Lib/ScreenDimensions/screen_dimensions_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
-import '../quiz_question_manager.dart';
+import '../../../ScreenDimensions/screen_dimensions_service.dart';
+import 'quiz_question_manager.dart';
 
 mixin QuizOptionsGameScreen<TQuizQuestionManager extends QuizQuestionManager> {
-  final ScreenDimensionsService screenDimensions = ScreenDimensionsService();
+  final ScreenDimensionsService _screenDimensions = ScreenDimensionsService();
   final ImageService _imageService = ImageService();
+
   late TQuizQuestionManager quizQuestionManager;
-  late QuestionInfo _currentQuestionInfo;
 
   Image? _questionImage;
   bool? _zoomableImage;
   ButtonSkinConfig? _optionsButtonSkinConfig;
 
   void initQuizOptionsScreen(TQuizQuestionManager quizQuestionManager,
-      QuestionInfo currentQuestionInfo,
       {ButtonSkinConfig? optionsButtonSkinConfig,
       ButtonSkinConfig? multipleCorrectAnswersButtonSkinConfig,
       Image? questionImage,
@@ -30,7 +27,6 @@ mixin QuizOptionsGameScreen<TQuizQuestionManager extends QuizQuestionManager> {
     this.quizQuestionManager = quizQuestionManager;
     _zoomableImage = zoomableImage;
     _questionImage = questionImage;
-    _currentQuestionInfo = currentQuestionInfo;
 
     _optionsButtonSkinConfig =
         this.quizQuestionManager.correctAnswersForQuestion.length == 1
@@ -78,29 +74,27 @@ mixin QuizOptionsGameScreen<TQuizQuestionManager extends QuizQuestionManager> {
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        _createImageContainer(
-            _currentQuestionInfo.question, questionImageHeightPercent),
+        _createImageContainer(questionImageHeightPercent),
         widgetBetweenImageAndOptionRows ?? Container(),
         btnContainer
       ],
     );
   }
 
-  Widget _createImageContainer(
-      Question question, double? questionImageHeightPercent) {
+  Widget _createImageContainer(double? questionImageHeightPercent) {
     if (_questionImage == null) {
       return Container();
     }
     return SizedBox(
-        width: screenDimensions.dimen(98),
-        height: screenDimensions.h(questionImageHeightPercent ?? 36),
+        width: _screenDimensions.dimen(98),
+        height: _screenDimensions.h(questionImageHeightPercent ?? 36),
         child: _zoomableImage ?? false
-            ? createZoomableContainer()
+            ? _createZoomableContainer()
             : _questionImage!);
   }
 
-  Widget createZoomableContainer() {
-    var pinchIconSideDimen = screenDimensions.dimen(10);
+  Widget _createZoomableContainer() {
+    var pinchIconSideDimen = _screenDimensions.dimen(10);
     Stack stack = Stack(
       alignment: Alignment.center,
       children: [
@@ -110,7 +104,7 @@ mixin QuizOptionsGameScreen<TQuizQuestionManager extends QuizQuestionManager> {
           child: _questionImage!,
         ),
         Padding(
-            padding: EdgeInsets.all(screenDimensions.dimen(5)),
+            padding: EdgeInsets.all(_screenDimensions.dimen(5)),
             child: Container(
                 alignment: Alignment.bottomRight,
                 child: _imageService.getMainImage(
@@ -125,7 +119,7 @@ mixin QuizOptionsGameScreen<TQuizQuestionManager extends QuizQuestionManager> {
             color: Colors.white,
             border: Border.all(
                 color: Colors.blue.shade700,
-                width: screenDimensions.dimen(0.3)),
+                width: _screenDimensions.dimen(0.3)),
             borderRadius:
                 BorderRadius.circular(FontConfig.standardBorderRadius * 0.1)),
         child: stack);
@@ -144,10 +138,7 @@ mixin QuizOptionsGameScreen<TQuizQuestionManager extends QuizQuestionManager> {
             disabledBackgroundColor: _getAnswerBtnDisabledColor(answerBtnText),
             onClick: () {
               quizQuestionManager.onClickAnswerOptionBtn(
-                  _currentQuestionInfo.question,
-                  answerBtnText,
-                  refreshSetState,
-                  goToNextScreenAfterPress);
+                  answerBtnText, refreshSetState, goToNextScreenAfterPress);
             },
             buttonSkinConfig:
                 _optionsButtonSkinConfig ?? _defaultButtonSkinConfig(),
@@ -166,23 +157,25 @@ mixin QuizOptionsGameScreen<TQuizQuestionManager extends QuizQuestionManager> {
     return ButtonSkinConfig(backgroundColor: Colors.lightBlueAccent);
   }
 
+  QuestionInfo get currentQuestionInfo =>
+      quizQuestionManager.currentQuestionInfo;
+
   Size getAnswerBtnSize() {
     return Size(
-        screenDimensions.dimen(45),
-        screenDimensions.dimen(quizQuestionManager
+        _screenDimensions.dimen(45),
+        _screenDimensions.dimen(quizQuestionManager
             .getValueBasedOnNrOfPossibleAnswers(
                 26, 23, 19, 16, true, _questionImage == null ? 2 : 1)
             .toDouble()));
   }
 
-  double getAnswerButtonPaddingBetween() => screenDimensions.dimen(1);
+  double getAnswerButtonPaddingBetween() => _screenDimensions.dimen(1);
 
   MaterialColor? _getAnswerBtnDisabledColor(String answerBtnText) {
     return _isAnswerBtnDisabled(answerBtnText)
         ? quizQuestionManager.wrongPressedAnswer.contains(answerBtnText)
             ? Colors.red
-            : quizQuestionManager.isAnswerCorrectInOptionsList(
-                    _currentQuestionInfo.question, answerBtnText)
+            : quizQuestionManager.isAnswerCorrectInOptionsList(answerBtnText)
                 ? Colors.green
                 : null
         : null;
@@ -191,7 +184,7 @@ mixin QuizOptionsGameScreen<TQuizQuestionManager extends QuizQuestionManager> {
   bool _isAnswerBtnDisabled(String answerBtnText) {
     return quizQuestionManager.wrongPressedAnswer.isNotEmpty ||
         quizQuestionManager.correctAnswersForQuestion.contains(answerBtnText) &&
-            _currentQuestionInfo.pressedAnswers.contains(answerBtnText) ||
+            currentQuestionInfo.pressedAnswers.contains(answerBtnText) ||
         quizQuestionManager.isGameFinished() ||
         quizQuestionManager.hintDisabledPossibleAnswers
             .contains(answerBtnText.toLowerCase());

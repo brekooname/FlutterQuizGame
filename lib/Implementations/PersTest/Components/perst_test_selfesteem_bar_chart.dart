@@ -12,7 +12,7 @@ class PersTestSelfEsteemBarChart extends StatelessWidget with LabelMixin {
   int selfEsteem;
   int? age;
 
-  PersTestSelfEsteemBarChart(this.selfEsteem, this.age);
+  PersTestSelfEsteemBarChart(this.selfEsteem, this.age, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -44,7 +44,7 @@ class WatchRewardedAdPopup extends StatefulWidget {
               isRewardedAdLoaded = true;
             },
             onAdFailedToLoad: (LoadAdError error) {
-              print('RewardedAd failed to load: $error');
+              debugPrint('RewardedAd failed to load: $error');
             },
           ));
     }

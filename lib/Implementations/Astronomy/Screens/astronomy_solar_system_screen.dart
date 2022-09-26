@@ -16,8 +16,7 @@ import '../../../Lib/Animation/animation_background.dart';
 import '../../../Lib/Button/button_skin_config.dart';
 import '../../../Lib/Font/font_config.dart';
 import '../../../Lib/Screen/Game/ImageClick/image_click_screen.dart';
-import '../../../Lib/Screen/Game/quiz_question_manager.dart';
-import '../../../Lib/ScreenDimensions/screen_dimensions_service.dart';
+import '../../../Lib/Screen/Game/Options/quiz_question_manager.dart';
 import '../../../Lib/Text/my_text.dart';
 import '../Components/astronomy_level_header.dart';
 
@@ -25,7 +24,6 @@ class AstronomySolarSystemScreen extends GameScreen<
     AstronomyGameContext,
     AstronomyScreenManagerState,
     AstronomyCampaignLevelService> with ImageClickScreen<QuizQuestionManager> {
-  ScreenDimensionsService screenDimensions = ScreenDimensionsService();
   AstronomyGameQuestionConfig gameQuestionConfig =
       AstronomyGameQuestionConfig();
   late Size _rawImageToClickSize;

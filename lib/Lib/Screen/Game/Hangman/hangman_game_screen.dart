@@ -1,80 +1,127 @@
-import 'dart:collection';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_app_quiz_game/Game/Game/game_context.dart';
-import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
-import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
-import 'package:flutter_app_quiz_game/Game/Question/Model/question_info.dart';
-import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/Hangman/hangman_question_category_service.dart';
-import 'package:flutter_app_quiz_game/Game/Question/QuestionCategoryService/Hangman/hangman_service.dart';
-import 'package:flutter_app_quiz_game/Lib/Audio/my_audio_player.dart';
-import 'package:flutter_app_quiz_game/Lib/Font/font_config.dart';
-import 'package:flutter_app_quiz_game/Lib/ScreenDimensions/screen_dimensions_service.dart';
-import 'package:flutter_app_quiz_game/Lib/Storage/quiz_game_local_storage.dart';
-import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
-mixin HangmanGameScreen<TGameContext extends GameContext> {
+import '../../../../Game/Question/QuestionCategoryService/Hangman/hangman_service.dart';
+import '../../../Button/my_button.dart';
+import '../../../Font/font_config.dart';
+import '../../../ScreenDimensions/screen_dimensions_service.dart';
+import '../../../Text/my_text.dart';
+import '../Options/quiz_question_manager.dart';
+
+mixin HangmanGameScreen<TQuizQuestionManager extends QuizQuestionManager> {
   final ScreenDimensionsService _screenDimensions = ScreenDimensionsService();
-  final MyAudioPlayer _audioPlayer = MyAudioPlayer();
-  final HangmanCategoryQuestionService _hangmanCategoryQuestionService =
-      HangmanCategoryQuestionService();
   final HangmanService _hangmanService = HangmanService();
-  late QuestionInfo _currentQuestionInfo;
-  late QuizGameLocalStorage quizGameLocalStorage;
-  late TGameContext _gameContext;
-  String? wrongPressedAnswer;
-  Set<String> hintDisabledPossibleAnswers = HashSet();
+  late TQuizQuestionManager quizQuestionManager;
 
-  void initQuizHangmanScreen(
-      TGameContext gameContext,
-      QuizGameLocalStorage quizGameLocalStorage,
-      QuestionDifficulty difficulty,
-      QuestionCategory category) {
-    this.quizGameLocalStorage = quizGameLocalStorage;
-    this._gameContext = gameContext;
-    _currentQuestionInfo =
-        gameContext.gameUser.getRandomQuestion(difficulty, category);
+  void initHangmanGameScreen(TQuizQuestionManager quizQuestionManager) {
+    this.quizQuestionManager = quizQuestionManager;
   }
 
-  Widget getHangmanWordContainer() {
-    return SizedBox(
-      height: _screenDimensions.dimen(22),
-      child: MyText(
-        maxLines: 1,
-        width: _screenDimensions.dimen(98),
-        fontSize: FontConfig.bigFontSize,
-        text: _hangmanService.getCurrentWordState(
-            _currentQuestionInfo.question.questionToBeDisplayed,
-            _currentQuestionInfo.pressedAnswers),
-      ),
+  void pressFirstAndLastLetter() {
+    quizQuestionManager.gameContext.gameUser.addAnswerToQuestionInfo(
+        quizQuestionManager.currentQuestionInfo.question, hangmanWord[0]);
+    quizQuestionManager.gameContext.gameUser.addAnswerToQuestionInfo(
+        quizQuestionManager.currentQuestionInfo.question,
+        hangmanWord[hangmanWord.length - 1]);
+  }
+
+  String get hangmanWord =>
+      quizQuestionManager.currentQuestionInfo.question.questionToBeDisplayed;
+
+  Set<String> get allPressedLetters =>
+      (quizQuestionManager.correctPressedAnswer.toList() +
+              quizQuestionManager.wrongPressedAnswer.toList())
+          .toSet();
+
+  Widget createLettersRows(VoidCallback refreshSetState,
+      VoidCallback goToNextScreenAfterPress, String allLettersLabel) {
+    int nrOfRowsWithLetters = 5;
+    List<String> allLetters = allLettersLabel.split(",");
+    int answerIndex = 0;
+    List<Row> allRows = [];
+    for (int i = nrOfRowsWithLetters; i >= 0; i--) {
+      List<MyButton> rowButtons = [];
+      for (int j = 0;
+          j < _getNrOfAnswersOnRow(allLetters.length, nrOfRowsWithLetters);
+          j++) {
+        if (answerIndex < allLetters.length) {
+          MyButton button = _createHangmanButton(
+            allLetters.elementAt(answerIndex),
+            allPressedLetters,
+            refreshSetState,
+            goToNextScreenAfterPress,
+          );
+          rowButtons.add(button);
+          answerIndex++;
+        }
+      }
+      allRows.add(Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: rowButtons,
+      ));
+    }
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: allRows,
     );
   }
 
-  void clickAnswerBtn(String btnLetter, VoidCallback goToNextScreenAfterPress,
-      VoidCallback refreshSetState) {
-    var questionService = _hangmanCategoryQuestionService.getQuestionService();
-    var question = _currentQuestionInfo.question;
-    if (!questionService.isGameFinishedSuccessful(
-        question, _currentQuestionInfo.pressedAnswers)) {
-      _currentQuestionInfo.addPressedAnswer(btnLetter);
-      if (questionService.isAnswerCorrectInQuestion(question, btnLetter)) {
-        _audioPlayer.playSuccess();
-        if (questionService.isGameFinishedSuccessful(
-            question, _currentQuestionInfo.pressedAnswers)) {
-          _gameContext.gameUser.setWonQuestion(_currentQuestionInfo);
-          quizGameLocalStorage.setWonQuestion(_currentQuestionInfo.question);
-          Future.delayed(const Duration(milliseconds: 1100),
-              () => goToNextScreenAfterPress.call());
-        }
-      } else {
-        _audioPlayer.playFail();
-      }
-      refreshSetState.call();
-    }
+  MyButton _createHangmanButton(
+    String btnLetter,
+    Set<String> alreadyPressedLetters,
+    VoidCallback refreshSetState,
+    VoidCallback goToNextScreenAfterPress,
+  ) {
+    var btnSide = _screenDimensions.dimen(12);
+    return MyButton(
+      onClick: () {
+        quizQuestionManager.onClickAnswerOptionBtn(
+            btnLetter, refreshSetState, goToNextScreenAfterPress);
+      },
+      disabled: alreadyPressedLetters
+          .map((e) => e.toLowerCase())
+          .contains(btnLetter.toLowerCase()),
+      buttonAllPadding: _screenDimensions.dimen(2),
+      text: btnLetter,
+      size: Size(btnSide, btnSide),
+    );
   }
 
-  void onHintButtonClick(VoidCallback refreshSetState) {
-    refreshSetState.call();
+  int _getNrOfAnswersOnRow(int nrOfAllLetters, int nrOfRowsWithLetters) {
+    return (nrOfAllLetters / nrOfRowsWithLetters).ceil();
+  }
+
+  Widget createWordContainer() {
+    var hangmanWordFontSize = _getHangmanWordFontSize(hangmanWord);
+    var fontConfig =
+        FontConfig(fontSize: FontConfig.getCustomFontSize(hangmanWordFontSize));
+    String currentWordState =
+        _hangmanService.getCurrentWordState(hangmanWord, allPressedLetters);
+    List<Widget> lettersRowChildren = [];
+    for (int i = 0; i < currentWordState.length; i++) {
+      lettersRowChildren.add(MyText(
+        fontConfig: fontConfig,
+        text: currentWordState[i],
+        textAllPadding: _screenDimensions.dimen(.65),
+      ));
+    }
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: lettersRowChildren,
+    );
+  }
+
+  double _getHangmanWordFontSize(String hangmanWord) {
+    var val = 2.5;
+    if (hangmanWord.length < 10) {
+      val = 2.5;
+    } else if (hangmanWord.length < 15) {
+      val = 2;
+    } else {
+      val = 1.5;
+    }
+    return val;
   }
 }

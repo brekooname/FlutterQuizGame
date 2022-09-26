@@ -226,7 +226,7 @@ class GeoQuizMainMenuScreenState extends State<GeoQuizMainMenuScreen>
     );
   }
 
-  Container _createLevelBtnColumn() {
+  Column _createLevelBtnColumn() {
     int i = 0;
     List<Widget> levels = [];
     for (CampaignLevel campaignLevel
@@ -235,12 +235,10 @@ class GeoQuizMainMenuScreenState extends State<GeoQuizMainMenuScreen>
       levels.add(_createLevelBtn(campaignLevel, i));
     }
 
-    Container mainContent = Container(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: levels,
-      ),
+    Column mainContent = Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: levels,
     );
     return mainContent;
   }

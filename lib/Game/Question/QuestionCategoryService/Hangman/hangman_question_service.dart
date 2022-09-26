@@ -5,6 +5,7 @@ import '../Base/question_service.dart';
 import 'hangman_question_parser.dart';
 
 class HangmanQuestionService extends QuestionService {
+  final int nrOfHangmanLives = 8;
   final HangmanService _hangmanService = HangmanService();
   late HangmanQuestionParser questionParser;
 
@@ -30,15 +31,21 @@ class HangmanQuestionService extends QuestionService {
   }
 
   @override
-  bool isAnswerCorrectInQuestion(Question question, String answer) {
-    return compareAnswerStrings(question.questionToBeDisplayed, answer);
+  bool isAnswerCorrectInQuestion(List<String> correctAnswers, String answer) {
+    return areHangmanWordsEqual(correctAnswers.join(), answer);
   }
 
   @override
   bool isGameFinishedSuccessful(
-      Question question, Iterable<String> pressedAnswers) {
-    return pressedAnswers.toSet().containsAll(_hangmanService
-        .getNormalizedWordLetters(question.questionToBeDisplayed));
+      List<String> correctAnswers, Iterable<String> pressedAnswers) {
+    return pressedAnswers.toSet().containsAll(correctAnswers);
+  }
+
+  @override
+  bool isGameFinishedFailed(
+      List<String> correctAnswers, Iterable<String> pressedAnswers) {
+    return _getNrOfWrongAnswersPressed(correctAnswers, pressedAnswers) >
+        nrOfHangmanLives;
   }
 
   @override
@@ -51,8 +58,7 @@ class HangmanQuestionService extends QuestionService {
     return _hangmanService.availableLetters.split(",").toSet();
   }
 
-  @override
-  bool compareAnswerStrings(String hangmanWord, String answer) {
+  bool areHangmanWordsEqual(String hangmanWord, String answer) {
     hangmanWord = _hangmanService.normalizeString(hangmanWord);
     answer = _hangmanService.normalizeString(answer);
     return hangmanWord.toLowerCase().contains(answer.toLowerCase());
@@ -61,9 +67,14 @@ class HangmanQuestionService extends QuestionService {
   @override
   int getNrOfWrongAnswersPressed(
       Question question, Set<String> pressedAnswers) {
+    return _getNrOfWrongAnswersPressed(
+        getCorrectAnswers(question), pressedAnswers);
+  }
+
+  int _getNrOfWrongAnswersPressed(
+      List<String> correctAnswers, Iterable<String> pressedAnswers) {
     Set<String> answerIds = pressedAnswers.toSet();
-    answerIds.removeAll(_hangmanService
-        .getNormalizedWordLetters(question.questionToBeDisplayed));
+    answerIds.removeAll(correctAnswers);
     return answerIds.length;
   }
 }

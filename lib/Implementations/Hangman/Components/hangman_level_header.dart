@@ -6,14 +6,10 @@ import 'package:flutter_app_quiz_game/Lib/Button/my_back_button.dart';
 import 'package:flutter_app_quiz_game/Lib/ScreenDimensions/screen_dimensions_service.dart';
 
 import '../../../Lib/Font/font_config.dart';
-import '../../../Lib/Image/image_service.dart';
 import '../../../main.dart';
 import '../Questions/hangman_game_context.dart';
 
 class HangmanLevelHeader extends StatelessWidget {
-  final ImageService _imageService = ImageService();
-  final ScreenDimensionsService _screenDimensionsService =
-      ScreenDimensionsService();
 
   HangmanGameContext gameContext;
   bool animateScore;

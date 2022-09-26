@@ -67,8 +67,8 @@ abstract class QuestionService {
     return newAllAnswersList;
   }
 
-  bool isAnswerCorrectInQuestion(Question question, String answer) {
-    return isAnswerCorrectInOptionsList(getCorrectAnswers(question), answer);
+  bool isAnswerCorrectInQuestion(List<String> correctAnswers, String answer) {
+    return isAnswerCorrectInOptionsList(correctAnswers, answer);
   }
 
   bool isAnswerCorrectInOptionsList(
@@ -91,28 +91,17 @@ abstract class QuestionService {
     return 0;
   }
 
-  bool isGameFinished(Question question, Set<String> pressedAnswers) {
-    return isGameFinishedWithOptionList(
-        getCorrectAnswers(question), pressedAnswers);
-  }
-
-  bool isGameFinishedWithOptionList(
+  bool isGameFinished(
       List<String> correctAnswers, Iterable<String> pressedAnswers) {
-    return isGameFinishedSuccessfulWithOptionList(
-            correctAnswers, pressedAnswers) ||
-        isGameFinishedFailedWithOptionList(correctAnswers, pressedAnswers);
+    return isGameFinishedSuccessful(correctAnswers, pressedAnswers) ||
+        isGameFinishedFailed(correctAnswers, pressedAnswers);
   }
 
   bool isGameFinishedSuccessful(
-      Question question, Iterable<String> pressedAnswers) {
-    return isGameFinishedSuccessfulWithOptionList(
-        getCorrectAnswers(question), pressedAnswers);
-  }
-
-  bool isGameFinishedSuccessfulWithOptionList(
       List<String> correctAnswers, Iterable<String> pressedAnswers) {
-    return !isGameFinishedFailedWithOptionList(
-            correctAnswers, pressedAnswers) &&
+    var isGameFinishedFailedBool =
+        isGameFinishedFailed(correctAnswers, pressedAnswers);
+    return !isGameFinishedFailedBool &&
         pressedAnswers
             .map((e) => e.toLowerCase())
             .toSet()
@@ -120,12 +109,6 @@ abstract class QuestionService {
   }
 
   bool isGameFinishedFailed(
-      Question question, Iterable<String> pressedAnswers) {
-    return isGameFinishedFailedWithOptionList(
-        getCorrectAnswers(question), pressedAnswers);
-  }
-
-  bool isGameFinishedFailedWithOptionList(
       List<String> correctAnswers, Iterable<String> pressedAnswers) {
     return pressedAnswers
         .where(

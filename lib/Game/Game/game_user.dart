@@ -101,13 +101,15 @@ class GameUser {
 
   void setQuestionFinishedStatus(QuestionInfo gameQuestionInfo) {
     QuestionService questionService = gameQuestionInfo.question.questionService;
+    var correctAnswers =
+        questionService.getCorrectAnswers(gameQuestionInfo.question);
     bool userSuccess = questionService.isGameFinishedSuccessful(
-        gameQuestionInfo.question, gameQuestionInfo.pressedAnswers);
+        correctAnswers, gameQuestionInfo.pressedAnswers);
     if (userSuccess) {
       setWonQuestion(gameQuestionInfo);
     } else {
       bool userFail = questionService.isGameFinishedFailed(
-          gameQuestionInfo.question, gameQuestionInfo.pressedAnswers);
+          correctAnswers, gameQuestionInfo.pressedAnswers);
       if (userFail) {
         setLostQuestion(gameQuestionInfo);
       }

@@ -20,8 +20,6 @@ class HangmanService {
   HangmanService.internal();
 
   static bool isHangmanSupported() {
-    return false;
-
     return [
       Language.ar,
       Language.he,
@@ -52,27 +50,28 @@ class HangmanService {
     return availableLetters.replaceAll(",", "") != standardLetters;
   }
 
-  String getCurrentWordState(String hangmanWord, Iterable<String> answerIds) {
-    Set<String> wordLettersToProcess = getNormalizedWordLetters(hangmanWord);
-    wordLettersToProcess.removeAll(answerIds);
+  String getCurrentWordState(
+      String hangmanWord, Iterable<String> pressedAnswers,
+      {bool showFirstAndLastLetter = false}) {
+    Set<String> unpressedHangmanWordLetters =
+        getNormalizedWordLetters(hangmanWord);
+    unpressedHangmanWordLetters
+        .removeAll(pressedAnswers.map((e) => e.toLowerCase()).toList());
+
     String processedHangmanWord = normalizeString(hangmanWord);
-    for (String letter in wordLettersToProcess) {
-      processedHangmanWord =
-          _replaceLetter(processedHangmanWord, letter.toLowerCase());
-      processedHangmanWord =
-          _replaceLetter(processedHangmanWord, letter.toUpperCase());
+
+    for (String letter in unpressedHangmanWordLetters) {
+      processedHangmanWord = processedHangmanWord
+          .replaceAll(letter.toLowerCase(), "_")
+          .replaceAll(letter.toUpperCase(), "_");
     }
+
     List<String> hangmanWordArray = hangmanWord.split("");
-    List<String> processedHangmanWordArray = processedHangmanWord.split("");
-    for (int i = 0; i < processedHangmanWordArray.length; i++) {
+    for (int i = 0; i < processedHangmanWord.length; i++) {
       hangmanWordArray[i] =
-          processedHangmanWordArray[i] == '_' ? '_' : hangmanWordArray[i];
+          processedHangmanWord[i] == '_' ? '_' : hangmanWordArray[i];
     }
     return hangmanWordArray.join(" ");
-  }
-
-  String _replaceLetter(String hangmanWord, String letter) {
-    return hangmanWord.replaceAll(letter, "_");
   }
 
   Set<String> getNormalizedWordLetters(String hangmanWord) {
@@ -80,11 +79,11 @@ class HangmanService {
   }
 
   Set<String> _getWordLetters(String hangmanWord) {
-    hangmanWord = removeCharsToBeIgnored(hangmanWord.toLowerCase());
+    hangmanWord = _removeCharsToBeIgnored(hangmanWord.toLowerCase());
     return hangmanWord.split("").toSet();
   }
 
-  String removeCharsToBeIgnored(String string) {
+  String _removeCharsToBeIgnored(String string) {
     for (String charToBeIgnored in _charsToBeIgnored) {
       string = string.replaceAll(charToBeIgnored, "");
     }

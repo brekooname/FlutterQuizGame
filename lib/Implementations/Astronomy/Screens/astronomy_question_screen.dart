@@ -11,8 +11,8 @@ import 'package:flutter_app_quiz_game/Lib/Font/font_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Localization/label_mixin.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/Options/quiz_options_game_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen.dart';
-import 'package:flutter_app_quiz_game/Lib/Screen/Game/quiz_question_container.dart';
-import 'package:flutter_app_quiz_game/Lib/Screen/Game/quiz_question_manager.dart';
+import 'package:flutter_app_quiz_game/Lib/Screen/Game/Options/quiz_question_container.dart';
+import 'package:flutter_app_quiz_game/Lib/Screen/Game/Options/quiz_question_manager.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
@@ -36,7 +36,6 @@ class AstronomyQuestionScreen extends GameScreen<AstronomyGameContext,
     initQuizOptionsScreen(
       QuizQuestionManager<AstronomyGameContext, AstronomyLocalStorage>(
           gameContext, currentQuestionInfo, AstronomyLocalStorage()),
-      currentQuestionInfo,
       questionImage: _getQuestionImage(),
       optionsButtonSkinConfig: _getOptionsButtonSkinConfig(),
     );
@@ -104,7 +103,9 @@ class AstronomyQuestionScreen extends GameScreen<AstronomyGameContext,
 }
 
 class AstronomyQuestionScreenState extends State<AstronomyQuestionScreen>
-    with ScreenState, QuizQuestionContainer, LabelMixin {
+    with ScreenState, LabelMixin {
+  final QuizQuestionContainer _quizQuestionContainer = QuizQuestionContainer();
+
   @override
   void initState() {
     super.initState();
@@ -203,7 +204,7 @@ class AstronomyQuestionScreenState extends State<AstronomyQuestionScreen>
   }
 
   Widget _createQuestionTextContainer() {
-    return createQuestionTextContainer(
+    return _quizQuestionContainer.createQuestionTextContainer(
       widget.currentQuestionInfo.question,
       3,
       4,

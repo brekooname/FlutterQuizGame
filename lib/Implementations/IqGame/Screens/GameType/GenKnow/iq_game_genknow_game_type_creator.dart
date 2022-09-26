@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app_quiz_game/Game/Question/Model/question.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_info.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_info_status.dart';
 import 'package:flutter_app_quiz_game/Implementations/IqGame/Questions/iq_game_context.dart';
 import 'package:flutter_app_quiz_game/Implementations/IqGame/Service/iq_game_local_storage.dart';
 
 import '../../../../../Lib/Screen/Game/Options/quiz_options_game_screen.dart';
-import '../../../../../Lib/Screen/Game/quiz_question_container.dart';
-import '../../../../../Lib/Screen/Game/quiz_question_manager.dart';
+import '../../../../../Lib/Screen/Game/Options/quiz_question_container.dart';
+import '../../../../../Lib/Screen/Game/Options/quiz_question_manager.dart';
 import '../iq_game_game_type_creator.dart';
 
 class IqGameGenKnowGameTypeCreator extends IqGameGameTypeCreator
-    with QuizQuestionContainer, QuizOptionsGameScreen {
+    with QuizOptionsGameScreen {
+  final QuizQuestionContainer _quizQuestionContainer = QuizQuestionContainer();
+
   IqGameGenKnowGameTypeCreator(IqGameContext gameContext) : super(gameContext);
 
   @override
@@ -26,7 +27,6 @@ class IqGameGenKnowGameTypeCreator extends IqGameGameTypeCreator
     initQuizOptionsScreen(
         IqGameGenKnowQuizQuestionManager(
             gameContext, currentQuestionInfo, iqGameLocalStorage, this),
-        currentQuestionInfo,
         questionImage: imageService.getSpecificImage(
             module: gameContext.questionConfig.categories.first.name,
             imageExtension: "jpg",
@@ -35,8 +35,8 @@ class IqGameGenKnowGameTypeCreator extends IqGameGameTypeCreator
 
   @override
   Widget createGameContainer(BuildContext context) {
-    Widget questionContainer =
-        createQuestionTextContainer(currentQuestionInfo.question, 1, 3);
+    Widget questionContainer = _quizQuestionContainer
+        .createQuestionTextContainer(currentQuestionInfo.question, 1, 3);
     Widget optionsRows = createOptionRows(refreshScreen, goToNextScreen,
         questionImageHeightPercent: 33);
     int totalQuestions = gameContext.gameUser.getAllQuestions([]).length;
@@ -81,10 +81,10 @@ class IqGameGenKnowQuizQuestionManager
       : super(gameContext, currentQuestionInfo, quizGameLocalStorage);
 
   @override
-  void onClickAnswerOptionBtn(Question question, String answerBtnText,
+  void onClickAnswerOptionBtn(String answerBtnText,
       VoidCallback refreshSetState, VoidCallback goToNextScreenAfterPress) {
     iqGameGenKnowGameTypeCreator.answerQuestion(answerBtnText, false);
-    if (!isAnswerCorrectInOptionsList(question, answerBtnText)) {
+    if (!isAnswerCorrectInOptionsList(answerBtnText)) {
       wrongPressedAnswer.add(answerBtnText);
     }
     Future.delayed(const Duration(seconds: 1), () {

@@ -20,12 +20,10 @@ import 'package:flutter_app_quiz_game/Lib/Button/button_skin_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Color/color_util.dart';
 import 'package:flutter_app_quiz_game/Lib/Font/font_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/Options/quiz_options_game_screen.dart';
+import 'package:flutter_app_quiz_game/Lib/Screen/Game/Options/quiz_question_container.dart';
+import 'package:flutter_app_quiz_game/Lib/Screen/Game/Options/quiz_question_manager.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen.dart';
-import 'package:flutter_app_quiz_game/Lib/Screen/Game/quiz_question_container.dart';
-import 'package:flutter_app_quiz_game/Lib/Screen/Game/quiz_question_manager.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
-
-import 'geoquiz_game_hangman_screen.dart';
 
 class GeoQuizQuestionScreen extends GameScreen<GeoQuizGameContext,
         GeoQuizGameScreenManagerState, GeoQuizCampaignLevelService>
@@ -48,7 +46,7 @@ class GeoQuizQuestionScreen extends GameScreen<GeoQuizGameContext,
           .clearCache();
     }
 
-    initQuizOptionsScreen(createQuizQuestionManager(), currentQuestionInfo,
+    initQuizOptionsScreen(createQuizQuestionManager(),
         questionImage: getQuestionImage(category),
         zoomableImage: GeoQuizGameQuestionConfig().cat9 == category,
         optionsButtonSkinConfig: ButtonSkinConfig(
@@ -71,7 +69,7 @@ class GeoQuizQuestionScreen extends GameScreen<GeoQuizGameContext,
 
   @override
   int nrOfQuestionsToShowInterstitialAd() {
-    return GeoQuizHangmanScreen.showInterstitialAdEveryNQuestions;
+    return 8;
   }
 
   @override
@@ -94,7 +92,9 @@ class GeoQuizQuestionScreen extends GameScreen<GeoQuizGameContext,
 }
 
 class GeoQuizQuestionScreenState extends State<GeoQuizQuestionScreen>
-    with ScreenState, QuizQuestionContainer {
+    with ScreenState {
+  final QuizQuestionContainer _quizQuestionContainer = QuizQuestionContainer();
+
   @override
   void initState() {
     super.initState();
@@ -105,21 +105,21 @@ class GeoQuizQuestionScreenState extends State<GeoQuizQuestionScreen>
 
   @override
   Widget build(BuildContext context) {
-    Widget questionContainer = createQuestionTextContainer(
-        widget.currentQuestionInfo.question, 4, 4,
-        questionContainerDecoration: BoxDecoration(
-            gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  ColorUtil.colorDarken(Colors.blue.shade100, -0.1),
-                  Colors.blue.shade100,
-                ]),
-            border: Border.all(
-                color: Colors.blue.shade700,
-                width: screenDimensions.dimen(0.3)),
-            borderRadius:
-                BorderRadius.circular(FontConfig.standardBorderRadius * 0.2)));
+    Widget questionContainer = _quizQuestionContainer
+        .createQuestionTextContainer(widget.currentQuestionInfo.question, 4, 4,
+            questionContainerDecoration: BoxDecoration(
+                gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      ColorUtil.colorDarken(Colors.blue.shade100, -0.1),
+                      Colors.blue.shade100,
+                    ]),
+                border: Border.all(
+                    color: Colors.blue.shade700,
+                    width: screenDimensions.dimen(0.3)),
+                borderRadius: BorderRadius.circular(
+                    FontConfig.standardBorderRadius * 0.2)));
     Widget optionsRows = widget.createOptionRows(
         setStateCallback, widget.processNextGameScreenCallBack());
     return Column(
@@ -198,8 +198,8 @@ class GeoQuizQuizQuestionManager
   }
 
   @override
-  void executeOnPressedWrongAnswer(String answerBtnText) {
-    super.executeOnPressedWrongAnswer(answerBtnText);
+  void executeOnPressedWrongAnswer() {
+    super.executeOnPressedWrongAnswer();
     if (isGameFinishedFailed() && gameContext.consecutiveCorrectAnswers > 0) {
       animateWrongAnswer = true;
     }

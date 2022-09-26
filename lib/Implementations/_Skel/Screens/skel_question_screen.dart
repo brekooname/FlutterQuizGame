@@ -6,9 +6,9 @@ import 'package:flutter_app_quiz_game/Implementations/_Skel/Service/skel_local_s
 import 'package:flutter_app_quiz_game/Implementations/_Skel/Service/skel_screen_manager.dart';
 import 'package:flutter_app_quiz_game/Lib/Localization/label_mixin.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/Options/quiz_options_game_screen.dart';
+import 'package:flutter_app_quiz_game/Lib/Screen/Game/Options/quiz_question_container.dart';
+import 'package:flutter_app_quiz_game/Lib/Screen/Game/Options/quiz_question_manager.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen.dart';
-import 'package:flutter_app_quiz_game/Lib/Screen/Game/quiz_question_container.dart';
-import 'package:flutter_app_quiz_game/Lib/Screen/Game/quiz_question_manager.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
 
 class SkelQuestionScreen extends GameScreen<
@@ -23,8 +23,7 @@ class SkelQuestionScreen extends GameScreen<
   }) : super(gameScreenManagerState, gameContext, [questionInfo], key: key) {
     initQuizOptionsScreen(
         QuizQuestionManager<SkelGameContext, SkelLocalStorage>(
-            gameContext, currentQuestionInfo, SkelLocalStorage()),
-        currentQuestionInfo);
+            gameContext, currentQuestionInfo, SkelLocalStorage()));
   }
 
   @override
@@ -41,7 +40,9 @@ class SkelQuestionScreen extends GameScreen<
 }
 
 class SkelQuestionScreenState extends State<SkelQuestionScreen>
-    with ScreenState, QuizQuestionContainer, LabelMixin {
+    with ScreenState, LabelMixin {
+  final QuizQuestionContainer _quizQuestionContainer = QuizQuestionContainer();
+
   @override
   void initState() {
     super.initState();

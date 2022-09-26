@@ -5,11 +5,11 @@ import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.da
 import 'package:flutter_app_quiz_game/Implementations/Anatomy/Constants/anatomy_game_question_config.dart';
 
 class AnatomyCampaignLevelService extends CampaignLevelService {
-  late CampaignLevel level_image_click; //Organs diagram image click
-  late CampaignLevel level_trivia; //Organs trivia
-  late CampaignLevel level_disease_trivia; //Organs disease trivia
-  late CampaignLevel level_disease_symp; //Organs disease symptoms
-  late CampaignLevel level_image_trivia; //Organs image trivia
+  late CampaignLevel levelImageClick; //Organs diagram image click
+  late CampaignLevel levelTrivia; //Organs trivia
+  late CampaignLevel levelDiseaseTrivia; //Organs disease trivia
+  late CampaignLevel levelDiseaseSymp; //Organs disease symptoms
+  late CampaignLevel levelImageTrivia; //Organs image trivia
 
   static final AnatomyCampaignLevelService singleton =
       AnatomyCampaignLevelService.internal();
@@ -31,11 +31,11 @@ class AnatomyCampaignLevelService extends CampaignLevelService {
         ));
       }
     }
-    singleton.level_image_click = singleton.allLevels[0];
-    singleton.level_trivia = singleton.allLevels[12];
-    singleton.level_disease_trivia = singleton.allLevels[24];
-    singleton.level_disease_symp = singleton.allLevels[36];
-    singleton.level_image_trivia = singleton.allLevels[53];
+    singleton.levelImageClick = singleton.allLevels[0];
+    singleton.levelTrivia = singleton.allLevels[12];
+    singleton.levelDiseaseTrivia = singleton.allLevels[24];
+    singleton.levelDiseaseSymp = singleton.allLevels[36];
+    singleton.levelImageTrivia = singleton.allLevels[53];
     return singleton;
   }
 
