@@ -9,27 +9,27 @@ import '../../Lib/Font/font_config.dart';
 import '../../main.dart';
 import 'button_size.dart';
 
+//ignore: must_be_immutable
 class MyButton extends StatefulWidget {
-  final ButtonSize _buttonSize = ButtonSize();
-
-  late FontConfig fontConfig;
-  late Color disabledBackgroundColor;
-  late ButtonSkinConfig buttonSkinConfig;
-  late VoidCallback onClick;
-  late Size size;
-  late ContentLockedConfig contentLockedConfig;
-  late Widget customContent;
+  late final FontConfig fontConfig;
+  late final Color disabledBackgroundColor;
+  late final ButtonSkinConfig buttonSkinConfig;
+  late final VoidCallback onClick;
+  late final Size size;
+  late final ContentLockedConfig contentLockedConfig;
+  late final Widget customContent;
 
   bool pressed = false;
-  bool disabled;
   bool touchable;
-  bool visible;
 
-  double buttonAllPadding;
+  final bool disabled;
+  final bool visible;
 
-  String? text;
-  int textMaxLines;
-  bool textFirstCharUppercase;
+  final double buttonAllPadding;
+
+  final String? text;
+  final int textMaxLines;
+  final bool textFirstCharUppercase;
 
   MyButton({
     Key? key,
@@ -51,11 +51,7 @@ class MyButton extends StatefulWidget {
     ContentLockedConfig? contentLockedConfig,
     Widget? customContent,
   }) : super(key: key) {
-    this.size = size == null
-        ? width == null
-            ? _buttonSize.normalSize
-            : Size(width, _buttonSize.normalSize.height)
-        : size;
+    this.size = _getSize(size, width);
     this.fontConfig = fontConfig ?? FontConfig(fontSize: fontSize);
     this.onClick = onClick ?? () {};
     this.contentLockedConfig =
@@ -70,6 +66,21 @@ class MyButton extends StatefulWidget {
     this.disabledBackgroundColor =
         disabledBackgroundColor ?? Colors.grey.shade400;
     this.customContent = customContent ?? _createCustomContent();
+  }
+
+  Size _getSize(Size? size, double? btnWidth) {
+    Size res;
+    if (size == null) {
+      var buttonSize = ButtonSize();
+      if (btnWidth == null) {
+        res = buttonSize.normalSize;
+      } else {
+        res = Size(btnWidth, buttonSize.normalSize.height);
+      }
+    } else {
+      res = size;
+    }
+    return res;
   }
 
   Widget _createCustomContent() {

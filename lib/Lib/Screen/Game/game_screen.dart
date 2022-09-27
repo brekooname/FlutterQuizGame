@@ -20,8 +20,8 @@ abstract class GameScreen<
         TGameScreenManagerState extends GameScreenManagerState,
         TCampaignLevelService extends CampaignLevelService>
     extends StandardScreen<TGameScreenManagerState> with LabelMixin {
-  GameLocalStorage gameLocalStorage = GameLocalStorage();
-  TGameContext gameContext;
+  final GameLocalStorage gameLocalStorage = GameLocalStorage();
+  final TGameContext gameContext;
   final List<QuestionInfo> _currentQuestionInfos;
 
   GameScreen(TGameScreenManagerState gameScreenManagerState, this.gameContext,

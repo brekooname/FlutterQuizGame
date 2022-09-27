@@ -12,9 +12,9 @@ import 'in_app_purchase_popup.dart';
 import 'my_popup.dart';
 
 class SettingsPopup extends StatefulWidget {
-  late SettingsLocalStorage _settingsLocalStorage;
+  late final SettingsLocalStorage _settingsLocalStorage;
   final MyAudioPlayer _myAudioPlayer = MyAudioPlayer();
-  VoidCallback? resetContentOnClick;
+  final VoidCallback? resetContentOnClick;
 
   SettingsPopup({this.resetContentOnClick, Key? key}) : super(key: key) {
     _settingsLocalStorage = SettingsLocalStorage();

@@ -5,9 +5,9 @@ import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
 class PersTestLevelHeader extends StatelessWidget {
   final ScreenDimensionsService _screenDimensions = ScreenDimensionsService();
-  String questionNr;
+  final String questionNr;
 
-  PersTestLevelHeader(this.questionNr);
+  PersTestLevelHeader(this.questionNr, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

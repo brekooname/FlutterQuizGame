@@ -13,8 +13,8 @@ import 'my_button.dart';
 class MyBackButton extends StatelessWidget {
   final ImageService _imageService = ImageService();
   final ScreenDimensionsService _screenDimensions = ScreenDimensionsService();
-  late Size buttonSize;
-  double buttonAllPadding;
+  late final Size buttonSize;
+  final double buttonAllPadding;
 
   MyBackButton({Key? key, this.buttonAllPadding = 0}) : super(key: key) {
     var side = _screenDimensions.dimen(12);

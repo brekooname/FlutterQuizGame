@@ -11,14 +11,14 @@ import '../Questions/hangman_game_context.dart';
 
 class HangmanLevelHeader extends StatelessWidget {
 
-  HangmanGameContext gameContext;
-  bool animateScore;
-  int availableHints;
+  final HangmanGameContext gameContext;
+  final bool animateScore;
+  final int availableHints;
 
-  VoidCallback hintButtonOnClick;
-  bool disableHintBtn;
+  final VoidCallback hintButtonOnClick;
+  final bool disableHintBtn;
 
-  ScreenDimensionsService screenDimensions = ScreenDimensionsService();
+  final ScreenDimensionsService _screenDimensions = ScreenDimensionsService();
 
   @override
   Widget build(BuildContext context) {
@@ -44,21 +44,21 @@ class HangmanLevelHeader extends StatelessWidget {
         watchRewardedAdForHint: MyApp.isExtraContentLocked,
         showAvailableHintsText: true);
 
-    var headerHeight = screenDimensions.dimen(14);
+    var headerHeight = _screenDimensions.dimen(14);
     var headerButtonsContainer = SizedBox(
         height: headerHeight,
         child: Padding(
-            padding: EdgeInsets.all(screenDimensions.dimen(1)),
+            padding: EdgeInsets.all(_screenDimensions.dimen(1)),
             child: Row(
               children: <Widget>[
                 myBackButton,
-                SizedBox(width: screenDimensions.dimen(2)),
+                SizedBox(width: _screenDimensions.dimen(2)),
                 const Spacer(),
                 hintBtn,
               ],
             )));
 
-    var progressBarWidth = screenDimensions.dimen(65);
+    var progressBarWidth = _screenDimensions.dimen(65);
     Widget scoreContainer = SizedBox(
       width: progressBarWidth,
       child: Row(

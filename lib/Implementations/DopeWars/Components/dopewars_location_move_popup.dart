@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Implementations/DopeWars/Constants/dopewars_location.dart';
 import 'package:flutter_app_quiz_game/Implementations/DopeWars/Constants/dopewars_resource_type.dart';
@@ -17,7 +16,7 @@ class DopeWarsLocationMovePopup extends StatefulWidget with MyPopup {
   final DopeWarsLocalStorage _dopeWarsLocalStorage = DopeWarsLocalStorage();
   final DopeWarsGameContext _dopeWarsGameContext;
   final VoidCallback _refreshStateCallback;
-  late DopeWarsResourceTransactionService _dopeWarsResourceTransactionService;
+  late final DopeWarsResourceTransactionService _dopeWarsResourceTransactionService;
 
   DopeWarsLocationMovePopup(
       this._refreshStateCallback, this._dopeWarsGameContext,

@@ -13,11 +13,11 @@ class NextQuestionWithExplanationPopup extends StatefulWidget {
   final MyTextService _myTextService = MyTextService();
   final NextQuestionWithExplanationService _nextQuestionWithExplanationService =
       NextQuestionWithExplanationService();
-  String title;
-  String explanation;
-  String nextQuestionBtnLabel;
-  VoidCallback goToNextScreen;
-  VoidCallback? refreshScreenAfterExtraContentPurchase;
+  final String title;
+  final String explanation;
+  final String nextQuestionBtnLabel;
+  final VoidCallback goToNextScreen;
+  final VoidCallback? refreshScreenAfterExtraContentPurchase;
 
   NextQuestionWithExplanationPopup(
       {required this.title,
@@ -122,10 +122,10 @@ class NextQuestionWithExplanationPopupState
 class ExplanationPopup extends StatefulWidget with MyPopup {
   final NextQuestionWithExplanationService _nextQuestionWithExplanationService =
       NextQuestionWithExplanationService();
-  String title;
-  String explanation;
-  String nextQuestionBtnLabel;
-  VoidCallback goToNextScreen;
+  final String title;
+  final String explanation;
+  final String nextQuestionBtnLabel;
+  final VoidCallback goToNextScreen;
 
   ExplanationPopup(
       {required this.title,

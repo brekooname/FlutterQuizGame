@@ -19,9 +19,9 @@ class DopeWarsLevelHeader extends StatelessWidget with LabelMixin {
       DopeWarsTotalDaysService();
   final ImageService _imageService = ImageService();
 
-  DopeWarsGameContext gameContext;
-  bool? daysPassedChanged;
-  int? reputationChange;
+  final DopeWarsGameContext gameContext;
+  final bool? daysPassedChanged;
+  final int? reputationChange;
 
   DopeWarsLevelHeader(
       this.gameContext, this.daysPassedChanged, this.reputationChange,

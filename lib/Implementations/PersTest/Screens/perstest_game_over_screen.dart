@@ -4,15 +4,14 @@ import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.da
 import 'package:flutter_app_quiz_game/Implementations/PersTest/Constants/perstest_campaign_level_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/PersTest/Screens/GameType/perstest_game_type_report.dart';
 import 'package:flutter_app_quiz_game/Implementations/PersTest/Service/perstest_game_screen_manager.dart';
-import 'package:flutter_app_quiz_game/Lib/Screen/Game/Options/quiz_question_container.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/standard_screen.dart';
 
 class PersTestGameOverScreen
     extends StandardScreen<PersTestGameScreenManagerState> {
-  late PersTestGameTypeReport persTestGameTypeReport;
-  QuestionDifficulty difficulty;
-  QuestionCategory category;
+  late final PersTestGameTypeReport persTestGameTypeReport;
+  final QuestionDifficulty difficulty;
+  final QuestionCategory category;
 
   PersTestGameOverScreen(
     PersTestGameScreenManagerState gameScreenManagerState, {
@@ -32,8 +31,6 @@ class PersTestGameOverScreen
 
 class PersTestGameOverScreenState extends State<PersTestGameOverScreen>
     with ScreenState {
-  
-  final QuizQuestionContainer _quizQuestionContainer = QuizQuestionContainer();
   
   @override
   Widget build(BuildContext context) {

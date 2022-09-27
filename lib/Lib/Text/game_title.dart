@@ -5,14 +5,14 @@ import 'package:flutter_app_quiz_game/Lib/ScreenDimensions/screen_dimensions_ser
 import 'my_text.dart';
 
 class GameTitle extends StatelessWidget {
-  late double backgroundImageWidth;
-  FontConfig fontConfig;
-  String text;
-  String? backgroundImagePath;
-  double? backgroundImageOpacity;
-  Color? backgroundColor;
-  Shadow? textShadow;
-  double? textWidth;
+  late final double backgroundImageWidth;
+  final FontConfig fontConfig;
+  final String text;
+  final String? backgroundImagePath;
+  final double? backgroundImageOpacity;
+  final Color? backgroundColor;
+  final Shadow? textShadow;
+  late final double? textWidth;
 
   GameTitle({
     Key? key,

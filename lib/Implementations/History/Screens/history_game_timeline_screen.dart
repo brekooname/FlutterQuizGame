@@ -19,8 +19,8 @@ import 'package:flutter_app_quiz_game/Lib/Extensions/int_extension.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/map_extension.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/string_extension.dart';
 import 'package:flutter_app_quiz_game/Lib/Localization/label_mixin.dart';
-import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/Options/quiz_question_container.dart';
+import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
@@ -28,24 +28,26 @@ import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import '../../../Lib/Button/button_skin_config.dart';
 import '../../../Lib/Font/font_config.dart';
 
+//ignore: must_be_immutable
 class HistoryGameTimelineScreen extends GameScreen<HistoryGameContext,
     HistoryGameScreenManagerState, HistoryCampaignLevelService> {
   static const int scrollToItemDurationMillis = 600;
   static const int showInterstitialAdEveryNQuestions = 8;
   static const int defaultQuestionsToPlayUntilNextCategory = 1;
   final MyAudioPlayer _audioPlayer = MyAudioPlayer();
+
+  final HistoryLocalStorage historyLocalStorage = HistoryLocalStorage();
+
+  final Map<int, HistoryQuestion> questions = HashMap<int, HistoryQuestion>();
+  final Map<QuestionCategory, List<int>> shownImagesForTimeLineHints =
+      HashMap();
+  late final Set<QuestionInfo> randomQuestionsToDisplay;
   int questionsToPlayUntilNextCategory =
       defaultQuestionsToPlayUntilNextCategory;
-
-  HistoryLocalStorage historyLocalStorage = HistoryLocalStorage();
-
-  Map<int, HistoryQuestion> questions = HashMap<int, HistoryQuestion>();
-  Map<QuestionCategory, List<int>> shownImagesForTimeLineHints = HashMap();
   bool correctAnswerPressed = false;
   bool alreadyWentToNextScreen = false;
   bool animateQuestionText = false;
   int? lasPressedQuestionIndex;
-  Set<QuestionInfo> randomQuestionsToDisplay = HashSet();
 
   HistoryGameTimelineScreen(
     HistoryGameScreenManagerState gameScreenManagerState, {

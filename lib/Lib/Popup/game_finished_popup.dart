@@ -8,10 +8,10 @@ import '../Font/font_util.dart';
 import 'my_popup.dart';
 
 class GameFinishedPopup extends StatelessWidget with MyPopup, LabelMixin {
-  int? highScore;
-  bool isGameFinishedSuccess;
-  VoidCallback playAgainClick;
-  VoidCallback goBackClick;
+  final int? highScore;
+  final bool isGameFinishedSuccess;
+  final VoidCallback playAgainClick;
+  final VoidCallback goBackClick;
 
   GameFinishedPopup(
       {Key? key,

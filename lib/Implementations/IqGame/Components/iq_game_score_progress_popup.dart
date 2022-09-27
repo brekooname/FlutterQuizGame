@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
 import 'package:flutter_app_quiz_game/Implementations/IqGame/Components/iq_game_score_progress_bar_chart.dart';
@@ -11,7 +10,7 @@ import '../../../Lib/Font/font_config.dart';
 
 class IqGameScoreProgressPopup extends StatefulWidget with MyPopup {
   final IqGameLocalStorage _iqGameLocalStorage = IqGameLocalStorage();
-  QuestionCategory cat;
+  final QuestionCategory cat;
 
   IqGameScoreProgressPopup(this.cat, {Key? key}) : super(key: key);
 

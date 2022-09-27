@@ -4,10 +4,10 @@ import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
 class AnimateColorInColorOutText extends StatefulWidget {
   static const double defaultZoomAmount = 1.1;
-  MyText toAnimateText;
-  Color colorTo;
+  final MyText toAnimateText;
+  final Color colorTo;
 
-  AnimateColorInColorOutText(
+  const AnimateColorInColorOutText(
       {Key? key, required this.colorTo, required this.toAnimateText})
       : super(key: key);
 
@@ -49,10 +49,10 @@ class MyAnimatedWidgetState extends State<AnimateColorInColorOutText>
 }
 
 class InternalAnimatedWidget extends AnimatedWidget {
-  MyText toAnimateText;
-  Color colorTo;
+  final MyText toAnimateText;
+  final Color colorTo;
 
-  InternalAnimatedWidget(
+  const InternalAnimatedWidget(
       {Key? key,
       required this.colorTo,
       required this.toAnimateText,

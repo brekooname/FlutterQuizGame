@@ -1,20 +1,19 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_app_quiz_game/Lib/Color/color_util.dart';
 import 'package:flutter_app_quiz_game/Lib/Font/font_config.dart';
 
 class ProgressBar extends StatefulWidget {
-  int startNr;
-  int endNr;
-  int totalNr;
-  double height;
-  double width;
-  bool animateStepIncrease;
-  Color fillBarColor;
+  final int startNr;
+  final int endNr;
+  final int totalNr;
+  final double height;
+  final double width;
+  final bool animateStepIncrease;
+  final Color fillBarColor;
 
-  ProgressBar(
+  const ProgressBar(
       {Key? key,
       required this.startNr,
       required this.endNr,
@@ -64,15 +63,15 @@ class ProgressBarState extends State<ProgressBar>
 }
 
 class InternalAnimatedWidget extends AnimatedWidget {
-  int startNr;
-  int endNr;
-  int totalNr;
-  double height;
-  double width;
-  bool animateStepIncrease;
-  Color fillBarColor;
+  final int startNr;
+  final int endNr;
+  final int totalNr;
+  final double height;
+  final double width;
+  final bool animateStepIncrease;
+  final Color fillBarColor;
 
-  InternalAnimatedWidget(
+  const InternalAnimatedWidget(
       {Key? key,
       required this.startNr,
       required this.endNr,

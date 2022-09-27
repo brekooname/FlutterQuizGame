@@ -11,25 +11,26 @@ import '../../Lib/Font/font_config.dart';
 import 'my_button.dart';
 
 class HintButton extends StatefulWidget {
-  ScreenDimensionsService screenDimensions = ScreenDimensionsService();
+  final ScreenDimensionsService screenDimensions = ScreenDimensionsService();
   final AdService _adService = AdService();
-  late Size buttonSize;
-  VoidCallback onClick;
-  bool disabled;
-  bool showAvailableHintsText;
-  bool watchRewardedAdForHint;
-  int availableHints;
+  late final Size buttonSize;
+  late final bool disableButton;
+  final VoidCallback onClick;
+  final bool showAvailableHintsText;
+  final bool watchRewardedAdForHint;
+  final int availableHints;
 
   HintButton(
       {Key? key,
       Size? buttonSize,
+      bool disabled = false,
       this.availableHints = 1,
       required this.onClick,
-      this.disabled = false,
       this.watchRewardedAdForHint = false,
       this.showAvailableHintsText = false})
       : super(key: key) {
     var side = screenDimensions.dimen(14);
+    disableButton = availableHints <= 0 && !watchRewardedAdForHint || disabled;
     this.buttonSize = buttonSize ?? Size(side, side);
     if (watchRewardedAdForHint && _adService.watchRewardedAdPopup == null) {
       throw Exception(
@@ -52,13 +53,9 @@ class HintButtonState extends State<HintButton> {
         module: "buttons",
         maxWidth: widget.buttonSize.width);
 
-    if (widget.availableHints <= 0 && !widget.watchRewardedAdForHint) {
-      widget.disabled = true;
-    }
-
     var btn = MyButton(
         size: widget.buttonSize,
-        disabled: widget.disabled,
+        disabled: widget.disableButton,
         onClick: shouldShowRewardedAd
             ? () {
                 MyPopup.showPopup(widget._adService.watchRewardedAdPopup!);
@@ -70,7 +67,7 @@ class HintButtonState extends State<HintButton> {
     var fittedBtn = SizedBox(
         width: widget.buttonSize.width,
         height: widget.buttonSize.height,
-        child: widget.disabled
+        child: widget.disableButton
             ? btn
             : AnimateZoomInZoomOut(
                 toAnimateWidgetSize: widget.buttonSize,

@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
 
 class AnimateFadeInFadeOut extends StatefulWidget {
-  Widget toAnimateWidget;
-  bool fadeInFadeOutOnce;
-  bool onlyFadeOut;
-  Duration duration;
+  final Widget toAnimateWidget;
+  final bool onlyFadeOut;
+  final Duration duration;
+  late final bool _fadeInFadeOutOnceAnimation;
 
   AnimateFadeInFadeOut(
       {Key? key,
-      this.fadeInFadeOutOnce = false,
+      bool fadeInFadeOutOnce = false,
       this.onlyFadeOut = false,
       this.duration = const Duration(milliseconds: 500),
       required this.toAnimateWidget})
       : super(key: key) {
     if (onlyFadeOut) {
-      fadeInFadeOutOnce = true;
+      _fadeInFadeOutOnceAnimation = true;
+    } else {
+      _fadeInFadeOutOnceAnimation = fadeInFadeOutOnce;
     }
   }
 
@@ -34,7 +36,7 @@ class MyAnimatedWidgetState extends State<AnimateFadeInFadeOut>
       if (status == AnimationStatus.completed && !widget.onlyFadeOut) {
         controller.reverse();
       } else if (status == AnimationStatus.dismissed &&
-          !widget.fadeInFadeOutOnce) {
+          !widget._fadeInFadeOutOnceAnimation) {
         controller.forward();
       }
     });
@@ -60,11 +62,11 @@ class MyAnimatedWidgetState extends State<AnimateFadeInFadeOut>
 }
 
 class InternalAnimatedWidget extends AnimatedWidget {
-  Widget toAnimateWidget;
-  Duration duration;
-  bool onlyFadeOut;
+  final Widget toAnimateWidget;
+  final Duration duration;
+  final bool onlyFadeOut;
 
-  InternalAnimatedWidget(
+  const InternalAnimatedWidget(
       {Key? key,
       required this.toAnimateWidget,
       required this.duration,

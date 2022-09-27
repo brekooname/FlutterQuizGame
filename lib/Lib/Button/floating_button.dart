@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Lib/Image/image_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Popup/my_popup.dart';
@@ -11,9 +10,9 @@ import 'my_button.dart';
 class FloatingButton extends StatelessWidget {
   final ImageService _imageService = ImageService();
   final ScreenDimensionsService _screenDimensions = ScreenDimensionsService();
-  StatefulWidget myPopupToDisplay;
-  String iconName;
-  late Size _buttonSize;
+  final StatefulWidget myPopupToDisplay;
+  final String iconName;
+  late final Size _buttonSize;
 
   FloatingButton(
       {Key? key,

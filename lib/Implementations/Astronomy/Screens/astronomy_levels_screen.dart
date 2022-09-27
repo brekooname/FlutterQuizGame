@@ -27,7 +27,7 @@ class AstronomyLevelsScreen
       AstronomyQuestionCollectorService();
   final AstronomyGameQuestionConfig _questionConfig =
       AstronomyGameQuestionConfig();
-  AstronomyGameType gameType;
+  final AstronomyGameType gameType;
 
   AstronomyLevelsScreen(AstronomyScreenManagerState gameScreenManagerState,
       {Key? key, required this.gameType})

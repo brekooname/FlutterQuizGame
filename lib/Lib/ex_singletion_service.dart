@@ -1,12 +1,12 @@
 
 
-class xxxService {
+class XxxService {
 
-  static final xxxService singleton = xxxService.internal();
+  static final XxxService singleton = XxxService.internal();
 
-  factory xxxService() {
+  factory XxxService() {
     return singleton;
   }
 
-  xxxService.internal();
+  XxxService.internal();
 }

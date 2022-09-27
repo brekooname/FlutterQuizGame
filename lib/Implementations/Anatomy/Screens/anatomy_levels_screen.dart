@@ -27,8 +27,8 @@ class AnatomyLevelsScreen extends StandardScreen<AnatomyScreenManagerState> {
   final AnatomyComponentCreatorService _anatomyComponentCreatorService =
       AnatomyComponentCreatorService();
   final AnatomyLocalStorage _anatomyLocalStorage = AnatomyLocalStorage();
-  QuestionCategory category;
-  late Image backgroundImage;
+  final QuestionCategory category;
+  late final Image backgroundImage;
 
   AnatomyLevelsScreen(AnatomyScreenManagerState gameScreenManagerState,
       {Key? key, required this.category})

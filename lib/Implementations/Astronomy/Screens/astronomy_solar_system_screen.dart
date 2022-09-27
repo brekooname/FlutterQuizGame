@@ -24,9 +24,9 @@ class AstronomySolarSystemScreen extends GameScreen<
     AstronomyGameContext,
     AstronomyScreenManagerState,
     AstronomyCampaignLevelService> with ImageClickScreen<QuizQuestionManager> {
-  AstronomyGameQuestionConfig gameQuestionConfig =
+  final AstronomyGameQuestionConfig gameQuestionConfig =
       AstronomyGameQuestionConfig();
-  late Size _rawImageToClickSize;
+  late final Size _rawImageToClickSize;
 
   AstronomySolarSystemScreen(
     AstronomyScreenManagerState gameScreenManagerState, {

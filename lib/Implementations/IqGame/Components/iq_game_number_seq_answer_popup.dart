@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_info.dart';
 import 'package:flutter_app_quiz_game/Lib/Localization/label_mixin.dart';
@@ -10,12 +9,12 @@ import '../../../Lib/Font/font_config.dart';
 import '../../../main.dart';
 
 class IqGameIqNumberSeqAnswerPopup extends StatefulWidget with MyPopup {
-  QuestionInfo questionInfo;
-  Widget questionImage;
-  String correctAnswer;
-  String userAnswer;
-  VoidCallback nextQuestion;
-  bool isShowExplanationPopup;
+  final QuestionInfo questionInfo;
+  final Widget questionImage;
+  final String correctAnswer;
+  final String userAnswer;
+  final VoidCallback nextQuestion;
+  final bool isShowExplanationPopup;
 
   IqGameIqNumberSeqAnswerPopup(
       this.questionInfo,
@@ -36,8 +35,7 @@ class IqGameIqNumberSeqAnswerPopupState
     extends State<IqGameIqNumberSeqAnswerPopup> with MyPopup, LabelMixin {
   @override
   void initState() {
-    initPopup();
-    width = screenDimensions.w(90);
+    initPopup(width: screenDimensions.w(90));
     super.initState();
   }
 

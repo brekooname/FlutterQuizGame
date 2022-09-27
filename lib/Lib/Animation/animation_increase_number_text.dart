@@ -5,14 +5,15 @@ import 'package:flutter_app_quiz_game/Lib/Audio/my_audio_player.dart';
 import 'package:flutter_app_quiz_game/Lib/Font/font_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
+//ignore: must_be_immutable
 class AnimateIncreaseNumberText extends StatefulWidget {
   final MyAudioPlayer _myAudioPlayer = MyAudioPlayer();
   static const double defaultZoomAmount = 1.1;
-  MyText toAnimateText;
+  final MyText toAnimateText;
+  final String audioPlayerId;
+  final bool? audioPlayLoop;
   int startNr;
-  int endNr;
-  String audioPlayerId;
-  bool? audioPlayLoop;
+  final int endNr;
 
   AnimateIncreaseNumberText(
       {Key? key,
@@ -86,10 +87,10 @@ class MyAnimatedWidgetState extends State<AnimateIncreaseNumberText>
 }
 
 class InternalAnimatedWidget extends AnimatedWidget {
-  MyText toAnimateText;
-  String textToDisplay;
+  final MyText toAnimateText;
+  final String textToDisplay;
 
-  InternalAnimatedWidget(
+  const InternalAnimatedWidget(
       {Key? key,
       required this.toAnimateText,
       required this.textToDisplay,

@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Implementations/DopeWars/Constants/dopewars_shop_item.dart';
 import 'package:flutter_app_quiz_game/Implementations/DopeWars/Questions/dopewars_game_context.dart';
@@ -16,7 +15,7 @@ class DopeWarsShopPopup extends StatefulWidget with MyPopup {
   final DopeWarsLocalStorage _dopeWarsLocalStorage = DopeWarsLocalStorage();
   final DopeWarsGameContext _dopeWarsGameContext;
   final VoidCallback _refreshStateCallback;
-  late DopeWarsResourceTransactionService _dopeWarsResourceTransactionService;
+  late final DopeWarsResourceTransactionService _dopeWarsResourceTransactionService;
 
   DopeWarsShopPopup(this._refreshStateCallback, this._dopeWarsGameContext,
       {Key? key})

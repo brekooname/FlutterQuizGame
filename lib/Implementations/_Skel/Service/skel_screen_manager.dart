@@ -12,6 +12,7 @@ import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen_manager.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen_manager_state.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/standard_screen.dart';
 
+//ignore: must_be_immutable
 class SkelScreenManager extends GameScreenManager {
   SkelScreenManager({Key? key}) : super(key: key);
 

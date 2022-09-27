@@ -17,6 +17,7 @@ import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen_manager.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen_manager_state.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/standard_screen.dart';
 
+//ignore: must_be_immutable
 class AnatomyScreenManager extends GameScreenManager {
   AnatomyScreenManager({Key? key}) : super(key: key);
 
@@ -42,7 +43,8 @@ class AnatomyScreenManagerState extends State<AnatomyScreenManager>
 
   @override
   StandardScreen getScreenAfterGameOver(GameContext gameContext) {
-    return _createAnatomyLevelsScreen(gameContext.questionConfig.categories.first);
+    return _createAnatomyLevelsScreen(
+        gameContext.questionConfig.categories.first);
   }
 
   void showLevelsScreen(QuestionCategory category) {
@@ -58,12 +60,13 @@ class AnatomyScreenManagerState extends State<AnatomyScreenManager>
   }
 
   @override
-  void showNextGameScreen(CampaignLevel campaignLevel, AnatomyGameContext gameContext) {
-      gameContext.gameUser
-          .getAllQuestions([QuestionInfoStatus.lost]).forEach((element) {
-        gameContext.gameUser.resetQuestion(element);
-      });
-      super.showNextGameScreen(campaignLevel, gameContext);
+  void showNextGameScreen(
+      CampaignLevel campaignLevel, AnatomyGameContext gameContext) {
+    gameContext.gameUser
+        .getAllQuestions([QuestionInfoStatus.lost]).forEach((element) {
+      gameContext.gameUser.resetQuestion(element);
+    });
+    super.showNextGameScreen(campaignLevel, gameContext);
   }
 
   @override

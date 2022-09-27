@@ -3,7 +3,6 @@ import 'package:flutter_app_quiz_game/Implementations/IqGame/Questions/iq_game_c
 import 'package:flutter_app_quiz_game/Implementations/IqGame/Screens/GameType/iq_game_game_type_creator.dart';
 import 'package:flutter_app_quiz_game/Implementations/IqGame/Service/iq_game_screen_manager.dart';
 import 'package:flutter_app_quiz_game/Lib/Localization/label_mixin.dart';
-import 'package:flutter_app_quiz_game/Lib/Screen/Game/Options/quiz_question_container.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
 
 import '../../../Lib/Screen/standard_screen.dart';
@@ -11,8 +10,8 @@ import '../Components/iq_game_level_header.dart';
 import '../Constants/iq_game_campaign_level_service.dart';
 
 class IqGameGameOverScreen extends StandardScreen<IqGameScreenManagerState> {
-  IqGameGameTypeCreator iqGameGameTypeCreator;
-  IqGameContext gameContext;
+  final IqGameGameTypeCreator iqGameGameTypeCreator;
+  final IqGameContext gameContext;
 
   IqGameGameOverScreen(
     this.iqGameGameTypeCreator,
@@ -30,8 +29,6 @@ class IqGameGameOverScreen extends StandardScreen<IqGameScreenManagerState> {
 
 class IqGameGameOverScreenState extends State<IqGameGameOverScreen>
     with ScreenState, LabelMixin {
-  
-  final QuizQuestionContainer _quizQuestionContainer = QuizQuestionContainer();
   
   @override
   void initState() {

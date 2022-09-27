@@ -23,7 +23,7 @@ import '../../../main.dart';
 class PersTestMainMenuScreen
     extends StandardScreen<PersTestGameScreenManagerState> {
   final PersTestLocalStorage _persTestLocalStorage = PersTestLocalStorage();
-  late Image backgroundImage;
+  late final Image backgroundImage;
 
   PersTestMainMenuScreen(PersTestGameScreenManagerState gameScreenManagerState,
       {Key? key})

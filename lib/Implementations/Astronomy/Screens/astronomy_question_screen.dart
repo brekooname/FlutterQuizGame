@@ -24,7 +24,7 @@ class AstronomyQuestionScreen extends GameScreen<AstronomyGameContext,
     with QuizOptionsGameScreen<QuizQuestionManager> {
   final AstronomyGameQuestionConfig _astronomyGameQuestionConfig =
       AstronomyGameQuestionConfig();
-  late AstronomyGameType _gameType;
+  late final AstronomyGameType _gameType;
 
   AstronomyQuestionScreen(
     AstronomyScreenManagerState gameScreenManagerState, {

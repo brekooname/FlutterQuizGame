@@ -34,10 +34,10 @@ class GeoQuizMainMenuScreen extends StandardScreen {
       GeoQuizCampaignLevelService();
   final GeoQuizCampaignLevelExperienceMap _campaignLevelExperienceMap =
       GeoQuizCampaignLevelExperienceMap();
-  late Map<CampaignLevel, MapEntry<Color, Color>> _campaignLevelBackgrColor;
-  late MapEntry<CampaignLevel, ExperienceLevel>
+  late final Map<CampaignLevel, MapEntry<Color, Color>> _campaignLevelBackgrColor;
+  late final MapEntry<CampaignLevel, ExperienceLevel>
       _mostRecentUnlockedCampaignLevel;
-  late MapEntry<CampaignLevel, ExperienceLevel>? _previousUnlockedCampaignLevel;
+  late final MapEntry<CampaignLevel, ExperienceLevel>? _previousUnlockedCampaignLevel;
 
   GeoQuizMainMenuScreen(GameScreenManagerState gameScreenManagerState,
       {Key? key})

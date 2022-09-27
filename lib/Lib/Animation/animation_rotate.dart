@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 
 class AnimateRotate extends StatefulWidget {
   static const int _totalRotations = 100;
-  Widget toAnimateWidget;
-  bool rotateOnce;
-  RotationSpeed rotationSpeed;
+  final Widget toAnimateWidget;
+  final bool rotateOnce;
+  final RotationSpeed rotationSpeed;
 
-  AnimateRotate(
+  const AnimateRotate(
       {Key? key,
       required this.toAnimateWidget,
       this.rotateOnce = false,

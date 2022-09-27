@@ -14,11 +14,11 @@ import '../../../Lib/Font/font_config.dart';
 
 class IqGameLevelHeader extends StatelessWidget {
   final ScreenDimensionsService _screenDimensions = ScreenDimensionsService();
-  int? score;
-  VoidCallback? nextQuestion;
-  VoidCallback? skipQuestion;
-  VoidCallback? restartLevel;
-  QuestionInfoStatus? questionInfoStatus;
+  final int? score;
+  final VoidCallback? nextQuestion;
+  final VoidCallback? skipQuestion;
+  final VoidCallback? restartLevel;
+  final QuestionInfoStatus? questionInfoStatus;
 
   IqGameLevelHeader(
       {Key? key,

@@ -3,7 +3,7 @@ import 'package:flutter_app_quiz_game/Lib/Popup/my_popup.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
 class DopeWarsHelpPopup extends StatefulWidget with MyPopup {
-  String helpText;
+  final String helpText;
 
   DopeWarsHelpPopup(this.helpText, {Key? key}) : super(key: key);
 

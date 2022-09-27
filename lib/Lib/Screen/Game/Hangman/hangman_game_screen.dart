@@ -10,7 +10,7 @@ import '../Options/quiz_question_manager.dart';
 mixin HangmanGameScreen<TQuizQuestionManager extends QuizQuestionManager> {
   final ScreenDimensionsService _screenDimensions = ScreenDimensionsService();
   final HangmanService _hangmanService = HangmanService();
-  late TQuizQuestionManager quizQuestionManager;
+  late final TQuizQuestionManager quizQuestionManager;
 
   void initHangmanGameScreen(TQuizQuestionManager quizQuestionManager) {
     this.quizQuestionManager = quizQuestionManager;

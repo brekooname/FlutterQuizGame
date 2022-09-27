@@ -16,6 +16,7 @@ import 'package:flutter_app_quiz_game/Lib/Screen/standard_screen.dart';
 
 import 'history_gamecontext_service.dart';
 
+//ignore: must_be_immutable
 class HistoryGameScreenManager extends GameScreenManager {
   HistoryGameScreenManager({Key? key}) : super(key: key);
 

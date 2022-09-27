@@ -30,8 +30,9 @@ class InternetService {
     if (!kIsWeb) {
       if (Platform.isAndroid) {
         String url = "market://details?id=" + storeAppId;
-        if (await canLaunch(url)) {
-          await launch(url);
+        var uri = Uri.parse(url);
+        if (await canLaunchUrl(uri)) {
+          await launchUrl(uri);
         }
       }
 
@@ -51,7 +52,7 @@ class InternetService {
                 storeAppId +
                 (rateApp ? "?action=write-review" : "");
           }
-          await launch(url);
+          await launchUrl(Uri.parse(url));
         } on Exception {
           return;
         } catch (error) {

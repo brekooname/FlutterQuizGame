@@ -1,5 +1,4 @@
 import 'package:charts_flutter_new/flutter.dart' as charts;
-import 'package:charts_flutter_new/flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Implementations/IqGame/Service/iq_game_local_storage.dart';
 import 'package:flutter_app_quiz_game/Lib/Font/font_config.dart';
@@ -10,8 +9,8 @@ class IqGameScoreProgressBarChart extends StatelessWidget with LabelMixin {
   final ScreenDimensionsService _screenDimensionsService =
       ScreenDimensionsService();
   static final fontSize = FontConfig.getCustomFontSize(1).toInt();
-  List<IqGameScoreInfo> scoreInfo;
-  int maxScore;
+  final List<IqGameScoreInfo> scoreInfo;
+  final int maxScore;
 
   IqGameScoreProgressBarChart(this.scoreInfo, this.maxScore, {Key? key})
       : super(key: key);

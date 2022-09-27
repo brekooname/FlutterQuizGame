@@ -37,8 +37,8 @@ class RatePopupService {
 }
 
 class RateAppPopup extends StatelessWidget with MyPopup, LabelMixin {
-  RateAppLocalStorage rateAppLocalStorage;
-  InternetService internetService = InternetService();
+  final RateAppLocalStorage rateAppLocalStorage;
+  final InternetService internetService = InternetService();
 
   RateAppPopup(this.rateAppLocalStorage, {Key? key}) : super(key: key);
 

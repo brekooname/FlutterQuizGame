@@ -4,13 +4,13 @@ import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
 class AnimateZoomInZoomOutText extends StatefulWidget {
   static const double defaultZoomAmount = 1.1;
-  MyText toAnimateText;
-  double zoomAmount;
-  bool executeAnimationOnlyOnce;
-  Duration duration;
-  Color? colorTo;
+  final MyText toAnimateText;
+  final double zoomAmount;
+  final bool executeAnimationOnlyOnce;
+  final Duration duration;
+  final Color? colorTo;
 
-  AnimateZoomInZoomOutText(
+  const AnimateZoomInZoomOutText(
       {Key? key,
       this.zoomAmount = defaultZoomAmount,
       this.executeAnimationOnlyOnce = false,
@@ -62,11 +62,11 @@ class MyAnimatedWidgetState extends State<AnimateZoomInZoomOutText>
 }
 
 class InternalAnimatedWidget extends AnimatedWidget {
-  MyText toAnimateText;
-  double zoomAmount;
-  Color? colorTo;
+  final MyText toAnimateText;
+  final double zoomAmount;
+  final Color? colorTo;
 
-  InternalAnimatedWidget(
+  const InternalAnimatedWidget(
       {Key? key,
       required this.zoomAmount,
       required this.toAnimateText,

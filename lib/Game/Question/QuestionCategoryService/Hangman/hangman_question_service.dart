@@ -38,7 +38,10 @@ class HangmanQuestionService extends QuestionService {
   @override
   bool isGameFinishedSuccessful(
       List<String> correctAnswers, Iterable<String> pressedAnswers) {
-    return pressedAnswers.toSet().containsAll(correctAnswers);
+    return pressedAnswers
+        .map((e) => e.toLowerCase())
+        .toSet()
+        .containsAll(correctAnswers.map((e) => e.toLowerCase()).toSet());
   }
 
   @override
@@ -73,8 +76,8 @@ class HangmanQuestionService extends QuestionService {
 
   int _getNrOfWrongAnswersPressed(
       List<String> correctAnswers, Iterable<String> pressedAnswers) {
-    Set<String> answerIds = pressedAnswers.toSet();
-    answerIds.removeAll(correctAnswers);
+    Set<String> answerIds = pressedAnswers.map((e) => e.toLowerCase()).toSet();
+    answerIds.removeAll(correctAnswers.map((e) => e.toLowerCase()).toSet());
     return answerIds.length;
   }
 }

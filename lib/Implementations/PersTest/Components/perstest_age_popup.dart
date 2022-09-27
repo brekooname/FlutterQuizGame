@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_app_quiz_game/Implementations/PersTest/Service/perstest_game_local_storage.dart';
@@ -10,9 +9,9 @@ import 'package:flutter_app_quiz_game/Lib/Number/number_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Popup/my_popup.dart';
 
 class PersTestAgePopup extends StatefulWidget {
-  VoidCallback goToGameOverScreenCallback;
-  PersTestLocalStorage persTestLocalStorage = PersTestLocalStorage();
-  TextEditingController ageController = TextEditingController();
+  final VoidCallback goToGameOverScreenCallback;
+  final PersTestLocalStorage persTestLocalStorage = PersTestLocalStorage();
+  final TextEditingController ageController = TextEditingController();
 
   PersTestAgePopup(this.goToGameOverScreenCallback, {Key? key})
       : super(key: key);

@@ -25,7 +25,8 @@ class AnatomyImageClickScreen extends GameScreen<
     AnatomyCampaignLevelService> with ImageClickScreen<QuizQuestionManager> {
   final AnatomyQuestionCollectorService _anatomyQuestionCollectorService =
       AnatomyQuestionCollectorService();
-  AnatomyGameQuestionConfig gameQuestionConfig = AnatomyGameQuestionConfig();
+  final AnatomyGameQuestionConfig gameQuestionConfig =
+      AnatomyGameQuestionConfig();
 
   AnatomyImageClickScreen(
     AnatomyScreenManagerState gameScreenManagerState, {

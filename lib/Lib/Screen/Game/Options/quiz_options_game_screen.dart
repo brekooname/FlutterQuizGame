@@ -13,11 +13,11 @@ mixin QuizOptionsGameScreen<TQuizQuestionManager extends QuizQuestionManager> {
   final ScreenDimensionsService _screenDimensions = ScreenDimensionsService();
   final ImageService _imageService = ImageService();
 
-  late TQuizQuestionManager quizQuestionManager;
+  late final TQuizQuestionManager quizQuestionManager;
 
-  Image? _questionImage;
-  bool? _zoomableImage;
-  ButtonSkinConfig? _optionsButtonSkinConfig;
+  late final Image? _questionImage;
+  late final bool? _zoomableImage;
+  late final ButtonSkinConfig? _optionsButtonSkinConfig;
 
   void initQuizOptionsScreen(TQuizQuestionManager quizQuestionManager,
       {ButtonSkinConfig? optionsButtonSkinConfig,

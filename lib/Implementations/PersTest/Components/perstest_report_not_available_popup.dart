@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Localization/label_mixin.dart';
@@ -6,9 +5,9 @@ import 'package:flutter_app_quiz_game/Lib/Popup/my_popup.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
 class PersTestReportNotAvailablePopup extends StatefulWidget {
-  VoidCallback startTestCallback;
+  final VoidCallback startTestCallback;
 
-  PersTestReportNotAvailablePopup(this.startTestCallback, {Key? key})
+  const PersTestReportNotAvailablePopup(this.startTestCallback, {Key? key})
       : super(key: key);
 
   @override

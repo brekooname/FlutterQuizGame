@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 
 class AnimateZoomInZoomOut extends StatefulWidget {
   static const double defaultZoomAmount = 5;
-  Widget toAnimateWidget;
-  Size toAnimateWidgetSize;
-  double zoomAmount;
-  bool zoomInZoomOutOnce;
-  Duration duration;
+  final Widget toAnimateWidget;
+  final Size toAnimateWidgetSize;
+  final double zoomAmount;
+  final bool zoomInZoomOutOnce;
+  final Duration duration;
 
-  AnimateZoomInZoomOut(
+  const AnimateZoomInZoomOut(
       {Key? key,
       this.zoomAmount = defaultZoomAmount,
       this.zoomInZoomOutOnce = false,
@@ -57,11 +57,11 @@ class MyAnimatedWidgetState extends State<AnimateZoomInZoomOut>
 }
 
 class InternalAnimatedWidget extends AnimatedWidget {
-  Widget toAnimateWidget;
-  Size toAnimateWidgetSize;
-  double zoomAmount;
+  final Widget toAnimateWidget;
+  final Size toAnimateWidgetSize;
+  final double zoomAmount;
 
-  InternalAnimatedWidget(
+  const InternalAnimatedWidget(
       {Key? key,
       required this.zoomAmount,
       required this.toAnimateWidgetSize,

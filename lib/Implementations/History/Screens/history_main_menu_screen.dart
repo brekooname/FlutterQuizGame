@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Game/Game/campaign_level.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Constants/history_campaign_level_service.dart';
-import 'package:flutter_app_quiz_game/Implementations/History/Constants/history_game_question_config.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Questions/AllContent/history_all_questions.dart';
 import 'package:flutter_app_quiz_game/Implementations/History/Service/history_game_local_storage.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/floating_button.dart';
@@ -24,18 +23,19 @@ import '../../../Lib/Font/font_config.dart';
 import '../../../main.dart';
 
 class HistoryMainMenuScreen extends StandardScreen {
-  HistoryLocalStorage historyLocalStorage = HistoryLocalStorage();
-  HistoryGameQuestionConfig historyGameQuestionConfig =
-      HistoryGameQuestionConfig();
-  HistoryAllQuestions allQuestions = HistoryAllQuestions();
-  Map<QuestionDifficulty, int> totalNrOfQuestionsForCampaignLevel = HashMap();
+  final HistoryLocalStorage _historyLocalStorage = HistoryLocalStorage();
+  final HistoryAllQuestions _allQuestions = HistoryAllQuestions();
+  final Map<QuestionDifficulty, int> _totalNrOfQuestionsForCampaignLevel =
+      HashMap();
 
   HistoryMainMenuScreen(GameScreenManagerState gameScreenManagerState,
       {Key? key})
       : super(gameScreenManagerState, key: key) {
     for (CampaignLevel l in HistoryCampaignLevelService().allLevels) {
-      totalNrOfQuestionsForCampaignLevel.putIfAbsent(l.difficulty,
-          () => allQuestions.getAllQuestionsForDifficulty(l.difficulty).length);
+      _totalNrOfQuestionsForCampaignLevel.putIfAbsent(
+          l.difficulty,
+          () =>
+              _allQuestions.getAllQuestionsForDifficulty(l.difficulty).length);
     }
   }
 
@@ -105,7 +105,7 @@ class HistoryMainMenuScreenState extends State<HistoryMainMenuScreen>
             iconName: "btn_settings",
             myPopupToDisplay: SettingsPopup(
               resetContentOnClick: () {
-                widget.historyLocalStorage.clearAll();
+                widget._historyLocalStorage.clearAll();
               },
             ),
           ),
@@ -120,10 +120,10 @@ class HistoryMainMenuScreenState extends State<HistoryMainMenuScreen>
     var iconWidth = screenDimensions.dimen(14);
 
     int totalQuestionsForCampaignLevel = widget
-            .totalNrOfQuestionsForCampaignLevel
+            ._totalNrOfQuestionsForCampaignLevel
             .get<QuestionDifficulty, int>(campaignLevel.difficulty) ??
         0;
-    var totalWonQuestions = widget.historyLocalStorage
+    var totalWonQuestions = widget._historyLocalStorage
         .getTotalWonQuestions(campaignLevel.difficulty);
     var myButton = MyButton(
         contentLockedConfig: ContentLockedConfig(
@@ -134,13 +134,13 @@ class HistoryMainMenuScreenState extends State<HistoryMainMenuScreen>
                 module: "buttons")),
         size: btnSize,
         onClick: () {
-          if (widget.historyLocalStorage
+          if (widget._historyLocalStorage
                   .getWonQuestionsForDiff(campaignLevel.difficulty)
                   .length ==
               totalQuestionsForCampaignLevel) {
-            widget.historyLocalStorage
+            widget._historyLocalStorage
                 .resetHintsForDiff(campaignLevel.difficulty);
-            widget.historyLocalStorage
+            widget._historyLocalStorage
                 .resetLevelQuestions(campaignLevel.difficulty);
           }
           widget.gameScreenManagerState.showNewGameScreen(campaignLevel);

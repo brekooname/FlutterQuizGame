@@ -15,12 +15,12 @@ import '../Options/quiz_question_manager.dart';
 mixin ImageClickScreen<TQuizQuestionManager extends QuizQuestionManager> {
   final ScreenDimensionsService _screenDimensions = ScreenDimensionsService();
   final ImageService _imageService = ImageService();
-  late TQuizQuestionManager quizQuestionManager;
-  late QuestionInfo _currentQuestionInfo;
-  late Image imageToClick;
-  late Size _rawImageToClickSize;
-  late double _imageContainerHeightPercent;
-  ButtonSkinConfig? _answerBtnSkin;
+  late final TQuizQuestionManager quizQuestionManager;
+  late final QuestionInfo _currentQuestionInfo;
+  late final Image imageToClick;
+  late final Size _rawImageToClickSize;
+  late final double _imageContainerHeightPercent;
+  late final ButtonSkinConfig? _answerBtnSkin;
 
   void initImageClickScreen(TQuizQuestionManager quizQuestionManager,
       QuestionInfo currentQuestionInfo, Size rawImageToClickSize,

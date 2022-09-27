@@ -24,7 +24,7 @@ class AnatomyQuestionScreen extends GameScreen<AnatomyGameContext,
     with QuizOptionsGameScreen<QuizQuestionManager> {
   final AnatomyQuestionCollectorService _anatomyQuestionCollectorService =
       AnatomyQuestionCollectorService();
-  late Image backgroundImage;
+  late final Image backgroundImage;
 
   AnatomyQuestionScreen(
     AnatomyScreenManagerState gameScreenManagerState, {

@@ -9,12 +9,12 @@ import 'Game/game_screen_manager_state.dart';
 abstract class StandardScreen<
         TGameScreenManagerState extends GameScreenManagerState>
     extends StatefulWidget {
-  ScreenDimensionsService screenDimensions = ScreenDimensionsService();
-  MyAudioPlayer audioPlayer = MyAudioPlayer();
-  ImageService imageService = ImageService();
-  AdService adService = AdService();
+  final ScreenDimensionsService screenDimensions = ScreenDimensionsService();
+  final MyAudioPlayer audioPlayer = MyAudioPlayer();
+  final ImageService imageService = ImageService();
+  final AdService adService = AdService();
 
-  TGameScreenManagerState gameScreenManagerState;
+  final TGameScreenManagerState gameScreenManagerState;
 
   StandardScreen(this.gameScreenManagerState, {Key? key}) : super(key: key);
 

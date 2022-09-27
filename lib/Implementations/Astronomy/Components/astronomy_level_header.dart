@@ -17,14 +17,14 @@ class AstronomyLevelHeader extends StatelessWidget {
   final ScreenDimensionsService _screenDimensionsService =
       ScreenDimensionsService();
 
-  AstronomyGameContext gameContext;
-  bool animateScore;
-  int availableHints;
+  final AstronomyGameContext gameContext;
+  final bool animateScore;
+  final int availableHints;
 
-  VoidCallback? hintButtonOnClick;
-  bool disableHintBtn;
+  final VoidCallback? hintButtonOnClick;
+  final bool disableHintBtn;
 
-  ScreenDimensionsService screenDimensions = ScreenDimensionsService();
+  final ScreenDimensionsService screenDimensions = ScreenDimensionsService();
 
   @override
   Widget build(BuildContext context) {

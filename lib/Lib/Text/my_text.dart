@@ -6,14 +6,14 @@ import 'package:google_fonts/google_fonts.dart';
 class MyText extends StatelessWidget {
   final MyTextService _myTextCreatorService = MyTextService();
 
-  late FontConfig fontConfig;
-  late int maxLines;
-  double? width;
-  Shadow? textShadow;
-  Alignment alignmentInsideContainer;
-  String text;
-  double textAllPadding;
-  bool firstCharUppercase;
+  late final String _text;
+  late final FontConfig fontConfig;
+  late final int maxLines;
+  final double? width;
+  final Shadow? textShadow;
+  final Alignment alignmentInsideContainer;
+  final double textAllPadding;
+  final bool firstCharUppercase;
 
   MyText({
     Key? key,
@@ -21,7 +21,7 @@ class MyText extends StatelessWidget {
     double? fontSize,
     Color? fontColor,
     int? maxLines,
-    required this.text,
+    required String text,
     this.textAllPadding = 0,
     this.alignmentInsideContainer = Alignment.center,
     this.width,
@@ -29,15 +29,17 @@ class MyText extends StatelessWidget {
     this.firstCharUppercase = true,
   }) : super(key: key) {
     this.maxLines = maxLines ?? 2;
-    text = firstCharUppercase ? text.capitalized.trim() : text.trim();
+    _text = firstCharUppercase ? text.capitalized.trim() : text.trim();
     this.fontConfig =
         fontConfig ?? FontConfig(fontSize: fontSize, fontColor: fontColor);
   }
 
+  String get text => _text;
+
   @override
   Widget build(BuildContext context) {
     var defaultText = _myTextCreatorService._createText(
-        text, _getTextStyle(), TextAlign.center, maxLines);
+        _text, _getTextStyle(), TextAlign.center, maxLines);
 
     Widget result;
     if (fontConfig.borderColor == Colors.transparent) {
@@ -70,7 +72,7 @@ class MyText extends StatelessWidget {
         fontSize: fontConfig.fontSize,
         shadows: shadows);
 
-    while (_hasTextOverflow(text, textStyle,
+    while (_hasTextOverflow(_text, textStyle,
         maxWidth: width ?? double.infinity, maxLines: maxLines)) {
       fontConfig.fontSize = fontConfig.fontSize / 1.1;
       textStyle = TextStyle(

@@ -9,12 +9,12 @@ import '../../../Lib/Font/font_config.dart';
 import '../../../main.dart';
 
 class HistoryGameLevelHeader extends StatelessWidget {
-  String score;
-  bool animateScore;
-  int availableHints;
-  VoidCallback hintButtonOnClick;
-  bool disableHintBtn;
-  ScreenDimensionsService screenDimensions = ScreenDimensionsService();
+  final String score;
+  final bool animateScore;
+  final int availableHints;
+  final VoidCallback hintButtonOnClick;
+  final bool disableHintBtn;
+  final ScreenDimensionsService _screenDimensions = ScreenDimensionsService();
 
   HistoryGameLevelHeader(
       {Key? key,
@@ -38,7 +38,7 @@ class HistoryGameLevelHeader extends StatelessWidget {
         watchRewardedAdForHint: MyApp.isExtraContentLocked,
         showAvailableHintsText: true);
 
-    var scoreTextWidth = screenDimensions.dimen(60);
+    var scoreTextWidth = _screenDimensions.dimen(60);
     var scoreText = MyText(
       maxLines: 1,
       width: scoreTextWidth,
@@ -50,16 +50,16 @@ class HistoryGameLevelHeader extends StatelessWidget {
     );
 
     return Container(
-        height: screenDimensions.dimen(16),
+        height: _screenDimensions.dimen(16),
         decoration: BoxDecoration(
           color: Colors.lightBlueAccent.withOpacity(0.3),
         ),
         child: Padding(
-            padding: EdgeInsets.all(screenDimensions.dimen(1)),
+            padding: EdgeInsets.all(_screenDimensions.dimen(1)),
             child: Row(
               children: <Widget>[
                 MyBackButton(),
-                SizedBox(width: screenDimensions.dimen(2)),
+                SizedBox(width: _screenDimensions.dimen(2)),
                 SizedBox(
                     width: scoreTextWidth,
                     child: animateScore

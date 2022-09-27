@@ -7,12 +7,12 @@ import 'package:flutter_app_quiz_game/Lib/ScreenDimensions/screen_dimensions_ser
 import '../../../main.dart';
 
 class AnatomyLevelHeader extends StatelessWidget {
-  ScreenDimensionsService screenDimensions = ScreenDimensionsService();
-  int availableHints;
-  int totalWonQuestions;
-  int totalQuestionsLevel;
-  VoidCallback hintButtonOnClick;
-  bool disableHintBtn;
+  final ScreenDimensionsService screenDimensions = ScreenDimensionsService();
+  final int availableHints;
+  final int totalWonQuestions;
+  final int totalQuestionsLevel;
+  final VoidCallback hintButtonOnClick;
+  final bool disableHintBtn;
 
   AnatomyLevelHeader(
       {Key? key,

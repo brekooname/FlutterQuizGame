@@ -9,8 +9,8 @@ class PersTestSelfEsteemBarChart extends StatelessWidget with LabelMixin {
   final ScreenDimensionsService _screenDimensionsService =
       ScreenDimensionsService();
   static final fontSize = FontConfig.getCustomFontSize(0.7).toInt();
-  int selfEsteem;
-  int? age;
+  final int selfEsteem;
+  final int? age;
 
   PersTestSelfEsteemBarChart(this.selfEsteem, this.age, {Key? key}) : super(key: key);
 

@@ -12,19 +12,19 @@ import '../../../Lib/Font/font_config.dart';
 import '../../../main.dart';
 
 class GeoQuizGameLevelHeader extends StatelessWidget {
-  bool animateScore;
-  bool animateWrongAnswer;
-  bool animateStepIncrease;
-  bool allQuestionsAnswered;
-  int score;
-  int availableHints;
-  int consecutiveCorrectAnswers;
-  int nrOfCorrectAnsweredQuestions;
+  final bool animateScore;
+  final bool animateWrongAnswer;
+  final bool animateStepIncrease;
+  final bool allQuestionsAnswered;
+  final int score;
+  final int availableHints;
+  final int consecutiveCorrectAnswers;
+  final int nrOfCorrectAnsweredQuestions;
 
-  VoidCallback hintButtonOnClick;
-  bool disableHintBtn;
+  final VoidCallback hintButtonOnClick;
+  final bool disableHintBtn;
 
-  ScreenDimensionsService screenDimensions = ScreenDimensionsService();
+  final ScreenDimensionsService _screenDimensions = ScreenDimensionsService();
 
   @override
   Widget build(BuildContext context) {
@@ -53,28 +53,28 @@ class GeoQuizGameLevelHeader extends StatelessWidget {
         watchRewardedAdForHint: MyApp.isExtraContentLocked,
         showAvailableHintsText: true);
 
-    var headerHeight = screenDimensions.dimen(16);
+    var headerHeight = _screenDimensions.dimen(16);
     var headerButtonsContainer = SizedBox(
         height: headerHeight,
         child: Padding(
-            padding: EdgeInsets.all(screenDimensions.dimen(1)),
+            padding: EdgeInsets.all(_screenDimensions.dimen(1)),
             child: Row(
               children: <Widget>[
                 MyBackButton(),
-                SizedBox(width: screenDimensions.dimen(2)),
+                SizedBox(width: _screenDimensions.dimen(2)),
                 const Spacer(),
                 hintBtn,
               ],
             )));
 
-    var progressBarWidth = screenDimensions.dimen(65);
+    var progressBarWidth = _screenDimensions.dimen(65);
     Widget scoreContainer = SizedBox(
       width: progressBarWidth,
       child: Row(
         children: [
           const Spacer(),
           SizedBox(
-            width: screenDimensions.dimen(20),
+            width: _screenDimensions.dimen(20),
           ),
           createScoreContainer(),
           createMultiplierContainer(),
@@ -125,7 +125,7 @@ class GeoQuizGameLevelHeader extends StatelessWidget {
 
   Widget createMultiplierContainer() {
     var multiplier = MyText(
-      width: screenDimensions.dimen(20),
+      width: _screenDimensions.dimen(20),
       text: consecutiveCorrectAnswers == 0 && !animateWrongAnswer
           ? ""
           : (consecutiveCorrectAnswers).toString() + "X",

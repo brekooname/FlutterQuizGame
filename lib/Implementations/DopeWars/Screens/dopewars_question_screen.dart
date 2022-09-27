@@ -28,7 +28,7 @@ import 'package:numberpicker/numberpicker.dart';
 
 class DopeWarsQuestionScreen extends GameScreen<DopeWarsGameContext,
     DopeWarsScreenManagerState, DopeWarsCampaignLevelService> {
-  late DopeWarsResourceTransactionService dopeWarsResourceTransactionService;
+  late final DopeWarsResourceTransactionService dopeWarsResourceTransactionService;
 
   DopeWarsQuestionScreen(
     DopeWarsScreenManagerState gameScreenManagerState, {

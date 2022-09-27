@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/button_size.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/button_skin_config.dart';
@@ -12,18 +11,19 @@ import '../../main.dart';
 import '../Font/font_config.dart';
 
 mixin MyPopup {
-  late double width;
-  late SizedBox margin;
-  late NavigatorService _navigatorService;
-  late double marginDoubleVal;
-  double? height;
-  SnackBarService snackBarService = SnackBarService();
-  ImageService imageService = ImageService();
-  ButtonSize buttonSize = ButtonSize();
-  ScreenDimensionsService screenDimensions = ScreenDimensionsService();
-  AssetImage? backgroundImage;
+  final SnackBarService snackBarService = SnackBarService();
+  final ImageService imageService = ImageService();
+  final ButtonSize buttonSize = ButtonSize();
+  final ScreenDimensionsService screenDimensions = ScreenDimensionsService();
 
-  void initPopup({String? backgroundImageName}) {
+  late final double width;
+  late final double? height;
+  late final SizedBox margin;
+  late final NavigatorService _navigatorService;
+  late final double marginDoubleVal;
+  late final AssetImage? backgroundImage;
+
+  void initPopup({String? backgroundImageName, double? width, double? height}) {
     if (backgroundImageName != null) {
       backgroundImage = imageService.getMainAssetImage(
         imageName: backgroundImageName,
@@ -32,9 +32,11 @@ mixin MyPopup {
       );
     }
     _navigatorService = NavigatorService();
-    width = ScreenDimensionsService.isPortrait()
-        ? screenDimensions.dimen(100)
-        : screenDimensions.w(70);
+    this.width = width ??
+        (ScreenDimensionsService.isPortrait()
+            ? screenDimensions.dimen(100)
+            : screenDimensions.w(70));
+    this.height = height;
     marginDoubleVal = screenDimensions.dimen(6);
     var marginDimen = marginDoubleVal;
     margin = SizedBox(

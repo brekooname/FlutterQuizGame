@@ -44,8 +44,8 @@ class InAppPurchasePopup extends StatefulWidget {
 
   final InAppPurchaseLocalStorage _inAppPurchaseLocalStorage =
       InAppPurchaseLocalStorage();
-  late InAppPurchase _inAppPurchase;
-  VoidCallback? executeAfterPurchase;
+  late final InAppPurchase _inAppPurchase;
+  final VoidCallback? executeAfterPurchase;
 
   InAppPurchasePopup({this.executeAfterPurchase, Key? key}) : super(key: key) {
     _inAppPurchase = InAppPurchase.instance;
@@ -141,7 +141,7 @@ class _InAppPurchaseState extends State<InAppPurchasePopup>
 
     final bool isAvailable =
         await widget._inAppPurchase.isAvailable().catchError((e) {
-      print('Got error: $e'); // Finally, callback fires.
+      debugPrint('Got error: $e'); // Finally, callback fires.
     });
     if (!isAvailable) {
       setState(() {
@@ -190,7 +190,7 @@ class _InAppPurchaseState extends State<InAppPurchasePopup>
     });
   }
 
-  Container _buildProductList() {
+  Column _buildProductList() {
     var btnWidth = screenDimensions.dimen(65);
     var paddingBetween = screenDimensions.dimen(1);
     var iconWidth = screenDimensions.dimen(8);
@@ -212,7 +212,7 @@ class _InAppPurchaseState extends State<InAppPurchasePopup>
       },
     ));
 
-    return Container(child: Column(children: productList));
+    return Column(children: productList);
   }
 
   MyButton _buildBuyButton(double btnWidth, double paddingBetween,

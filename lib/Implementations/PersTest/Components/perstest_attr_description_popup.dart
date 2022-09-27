@@ -1,10 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Lib/Popup/my_popup.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
 class PersTestDescriptionPopup extends StatefulWidget with MyPopup {
-  String description;
+  final String description;
 
   PersTestDescriptionPopup(this.description, {Key? key}) : super(key: key);
 
@@ -17,8 +16,7 @@ class PersTestDescriptionPopupState extends State<PersTestDescriptionPopup>
     with MyPopup {
   @override
   void initState() {
-    initPopup();
-    width = screenDimensions.w(90);
+    initPopup(width: screenDimensions.w(90));
     super.initState();
   }
 

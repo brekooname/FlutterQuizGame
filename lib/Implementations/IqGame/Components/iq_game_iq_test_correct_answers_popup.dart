@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_info_status.dart';
 import 'package:flutter_app_quiz_game/Implementations/IqGame/Screens/GameType/IqTest/iq_game_iq_test_game_type_creator.dart';
@@ -11,9 +10,9 @@ import '../../../Lib/Localization/label_mixin.dart';
 import '../Questions/iq_game_context.dart';
 
 class IqGameIqTestCorrectAnswersPopup extends StatefulWidget with MyPopup {
-  IqGameContext iqGameContext;
-  String iqTestQuestionImgModuleName;
   static const double _popupHeightPercent = 100;
+  final IqGameContext iqGameContext;
+  final String iqTestQuestionImgModuleName;
 
   IqGameIqTestCorrectAnswersPopup(
       this.iqGameContext, this.iqTestQuestionImgModuleName,
@@ -29,10 +28,10 @@ class IqGameIqTestCorrectAnswersPopupState
     extends State<IqGameIqTestCorrectAnswersPopup> with MyPopup, LabelMixin {
   @override
   void initState() {
-    initPopup();
-    width = screenDimensions.w(90);
-    height =
-        screenDimensions.h(IqGameIqTestCorrectAnswersPopup._popupHeightPercent);
+    initPopup(
+        width: screenDimensions.w(90),
+        height: screenDimensions
+            .h(IqGameIqTestCorrectAnswersPopup._popupHeightPercent));
     super.initState();
   }
 

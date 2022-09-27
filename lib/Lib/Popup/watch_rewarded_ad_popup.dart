@@ -13,9 +13,10 @@ import '../../main.dart';
 import '../Font/font_util.dart';
 import 'my_popup.dart';
 
+//ignore: must_be_immutable
 class WatchRewardedAdPopup extends StatefulWidget {
-  AdService adService = AdService();
-  bool watchVideoForExtraHint;
+  final AdService adService = AdService();
+  final bool watchVideoForExtraHint;
   VoidCallback onUserEarnedReward;
   RewardedAd? rewardedAd;
   bool isRewardedAdLoaded = false;

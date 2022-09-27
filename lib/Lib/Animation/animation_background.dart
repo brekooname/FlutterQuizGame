@@ -2,10 +2,10 @@ import 'package:animated_background/animated_background.dart';
 import 'package:flutter/material.dart';
 
 class AnimateBackground extends StatefulWidget {
-  Widget mainContent;
-  Image? particleImage;
+  final Widget mainContent;
+  final Image? particleImage;
 
-  AnimateBackground({
+  const AnimateBackground({
     Key? key,
     required this.mainContent,
     this.particleImage,
