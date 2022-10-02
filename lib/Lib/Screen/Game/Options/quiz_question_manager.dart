@@ -52,15 +52,26 @@ class QuizQuestionManager<TGameContext extends GameContext,
   }
 
   Set<String> get correctPressedAnswer {
-    var pressedAnswers = currentQuestionInfo.pressedAnswers.toSet();
-    pressedAnswers.retainWhere((e) => correctAnswersForQuestion.contains(e));
+    Set<String> pressedAnswers = _getPressedAnswersToLower();
+    pressedAnswers.retainWhere((e) => _correctAnswersContainPressedAnswer(e));
     return pressedAnswers;
   }
 
   Set<String> get wrongPressedAnswer {
-    var pressedAnswers = currentQuestionInfo.pressedAnswers.toSet();
-    pressedAnswers.retainWhere((e) => !correctAnswersForQuestion.contains(e));
+    Set<String> pressedAnswers = _getPressedAnswersToLower();
+    pressedAnswers.removeWhere((e) => _correctAnswersContainPressedAnswer(e));
     return pressedAnswers;
+  }
+
+  bool _correctAnswersContainPressedAnswer(String pressedAnswer) =>
+      correctAnswersForQuestion
+          .map((e) => e.toLowerCase())
+          .contains(pressedAnswer.toLowerCase());
+
+  Set<String> _getPressedAnswersToLower() {
+    return currentQuestionInfo.pressedAnswers
+        .map((e) => e.toLowerCase())
+        .toSet();
   }
 
   void executeOnPressedCorrectAnswer() => playSuccessAudio();

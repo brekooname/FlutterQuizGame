@@ -38,7 +38,8 @@ class HangmanGameConfig extends GameConfig {
   ImageRepeat get backgroundTextureRepeat => ImageRepeat.noRepeat;
 
   @override
-  Color get defaultScreenBackgroundColor => const Color.fromRGBO(198, 236, 255, 1);
+  Color get defaultScreenBackgroundColor => const Color.fromRGBO(
+      112, 194, 57, 1.0);
 
   @override
   String get extraContentProductId => "extracontent.hangman";

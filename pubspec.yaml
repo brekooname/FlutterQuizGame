@@ -120,6 +120,7 @@ flutter:
     ########################
     - assets/implementations/hangman/
     - assets/implementations/hangman/buttons/
+    - assets/implementations/hangman/game/
     ########################
     ###### ASTRONOMY #############################################################################
     ########################

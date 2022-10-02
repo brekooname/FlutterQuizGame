@@ -80,8 +80,9 @@ mixin HangmanGameScreen<TQuizQuestionManager extends QuizQuestionManager> {
             btnLetter, refreshSetState, goToNextScreenAfterPress);
       },
       disabled: alreadyPressedLetters
-          .map((e) => e.toLowerCase())
-          .contains(btnLetter.toLowerCase()),
+              .map((e) => e.toLowerCase())
+              .contains(btnLetter.toLowerCase()) ||
+          quizQuestionManager.isGameFinished(),
       buttonAllPadding: _screenDimensions.dimen(2),
       text: btnLetter,
       size: Size(btnSide, btnSide),
@@ -98,19 +99,54 @@ mixin HangmanGameScreen<TQuizQuestionManager extends QuizQuestionManager> {
         FontConfig(fontSize: FontConfig.getCustomFontSize(hangmanWordFontSize));
     String currentWordState =
         _hangmanService.getCurrentWordState(hangmanWord, allPressedLetters);
-    List<Widget> lettersRowChildren = [];
-    for (int i = 0; i < currentWordState.length; i++) {
-      lettersRowChildren.add(MyText(
-        fontConfig: fontConfig,
-        text: currentWordState[i],
-        textAllPadding: _screenDimensions.dimen(.65),
+
+    List<Widget> lettersRows = [];
+    var splitLongWord = _getSplitLongWord(currentWordState);
+    for (String section in splitLongWord) {
+      List<Widget> lettersRowChildren = [];
+      for (int i = 0; i < section.length; i++) {
+        lettersRowChildren.add(MyText(
+          fontConfig: fontConfig,
+          text: section[i],
+          textAllPadding: _screenDimensions.dimen(.65),
+        ));
+      }
+      lettersRows.add(Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: lettersRowChildren,
       ));
     }
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: lettersRowChildren,
-    );
+    return Column(children: lettersRows);
+  }
+
+  List<String> _getSplitLongWord(String word) {
+    List<String> currentWordStateSections;
+    var delimiter = "  ";
+    //For example a value of 40 means that the word contains 20 letters.
+    //This is because between the letters there is an empty char.
+    var maxOneLineLengthWithSpaceBetweenLetters = 40;
+    if (word.length > maxOneLineLengthWithSpaceBetweenLetters &&
+        word.contains(delimiter)) {
+      var lastIndexOf = word.lastIndexOf(delimiter);
+      if (word.length - word.substring(lastIndexOf).length <
+          maxOneLineLengthWithSpaceBetweenLetters) {
+        currentWordStateSections = [
+          word.substring(0, lastIndexOf),
+          word.substring(lastIndexOf)
+        ];
+      } else {
+        var indexOf =
+            word.indexOf(delimiter, word.indexOf(delimiter) + delimiter.length);
+        currentWordStateSections = [
+          word.substring(0, indexOf),
+          word.substring(indexOf)
+        ];
+      }
+    } else {
+      currentWordStateSections = [word];
+    }
+    return currentWordStateSections;
   }
 
   double _getHangmanWordFontSize(String hangmanWord) {
@@ -119,8 +155,10 @@ mixin HangmanGameScreen<TQuizQuestionManager extends QuizQuestionManager> {
       val = 2.5;
     } else if (hangmanWord.length < 15) {
       val = 2;
-    } else {
+    } else if (hangmanWord.length < 20) {
       val = 1.5;
+    } else {
+      val = 1;
     }
     return val;
   }
