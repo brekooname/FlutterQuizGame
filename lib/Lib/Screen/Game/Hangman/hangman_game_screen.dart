@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app_quiz_game/Lib/Button/button_skin_config.dart';
+import 'package:flutter_app_quiz_game/Lib/Color/color_util.dart';
 
 import '../../../../Game/Question/QuestionCategoryService/Hangman/hangman_service.dart';
 import '../../../Button/my_button.dart';
@@ -46,7 +48,6 @@ mixin HangmanGameScreen<TQuizQuestionManager extends QuizQuestionManager> {
         if (answerIndex < allLetters.length) {
           MyButton button = _createHangmanButton(
             allLetters.elementAt(answerIndex),
-            allPressedLetters,
             refreshSetState,
             goToNextScreenAfterPress,
           );
@@ -69,22 +70,38 @@ mixin HangmanGameScreen<TQuizQuestionManager extends QuizQuestionManager> {
 
   MyButton _createHangmanButton(
     String btnLetter,
-    Set<String> alreadyPressedLetters,
     VoidCallback refreshSetState,
     VoidCallback goToNextScreenAfterPress,
   ) {
-    var btnSide = _screenDimensions.dimen(12);
+    var btnSide = _screenDimensions.dimen(14);
+    var btnDisabled = quizQuestionManager.allPressedAnswer
+            .contains(btnLetter.toLowerCase()) ||
+        quizQuestionManager.isGameFinished();
+    var backgroundColor = Colors.white.withOpacity(0.15);
     return MyButton(
       onClick: () {
         quizQuestionManager.onClickAnswerOptionBtn(
             btnLetter, refreshSetState, goToNextScreenAfterPress);
       },
-      disabled: alreadyPressedLetters
-              .map((e) => e.toLowerCase())
-              .contains(btnLetter.toLowerCase()) ||
-          quizQuestionManager.isGameFinished(),
-      buttonAllPadding: _screenDimensions.dimen(2),
-      text: btnLetter,
+      disabledBackgroundColor: quizQuestionManager.correctPressedAnswer
+              .contains(btnLetter.toLowerCase())
+          ? Colors.lightGreenAccent.shade200
+          : quizQuestionManager.wrongPressedAnswer
+                  .contains(btnLetter.toLowerCase())
+              ? Colors.orange.shade100
+              : backgroundColor,
+      buttonSkinConfig: ButtonSkinConfig(
+          withBorder: btnDisabled,
+          backgroundColor: backgroundColor,
+          buttonUnpressedShadowColor: Colors.transparent,
+          buttonPressedShadowColor: Colors.green),
+      disabled: btnDisabled,
+      fontConfig: FontConfig(
+          fontSize: FontConfig.getCustomFontSize(1.3),
+          fontWeight: FontWeight.w700),
+      buttonAllPadding: _screenDimensions.dimen(1.5),
+      text: btnLetter.toLowerCase(),
+      textFirstCharUppercase: false,
       size: Size(btnSide, btnSide),
     );
   }
@@ -95,19 +112,30 @@ mixin HangmanGameScreen<TQuizQuestionManager extends QuizQuestionManager> {
 
   Widget createWordContainer() {
     var hangmanWordFontSize = _getHangmanWordFontSize(hangmanWord);
-    var fontConfig =
-        FontConfig(fontSize: FontConfig.getCustomFontSize(hangmanWordFontSize));
-    String currentWordState =
-        _hangmanService.getCurrentWordState(hangmanWord, allPressedLetters);
+    var gameFinished = quizQuestionManager.isGameFinished();
+    String currentWordState = _hangmanService.getCurrentWordState(
+        hangmanWord,
+        gameFinished
+            ? quizQuestionManager.correctAnswersForQuestion
+            : allPressedLetters);
 
     List<Widget> lettersRows = [];
     var splitLongWord = _getSplitLongWord(currentWordState);
+    var allPressedAnswer = quizQuestionManager.allPressedAnswer;
     for (String section in splitLongWord) {
       List<Widget> lettersRowChildren = [];
       for (int i = 0; i < section.length; i++) {
+        var letter = section[i];
+        var fontColor =
+            gameFinished && !allPressedAnswer.contains(letter.toLowerCase())
+                ? Colors.red.shade600
+                : Colors.black;
         lettersRowChildren.add(MyText(
-          fontConfig: fontConfig,
-          text: section[i],
+          fontConfig: FontConfig(
+              fontSize: FontConfig.getCustomFontSize(hangmanWordFontSize),
+              fontColor: fontColor,),
+          text: letter,
+          firstCharUppercase: false,
           textAllPadding: _screenDimensions.dimen(.65),
         ));
       }
@@ -158,7 +186,7 @@ mixin HangmanGameScreen<TQuizQuestionManager extends QuizQuestionManager> {
     } else if (hangmanWord.length < 20) {
       val = 1.5;
     } else {
-      val = 1;
+      val = 1.3;
     }
     return val;
   }

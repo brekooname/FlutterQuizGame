@@ -26,22 +26,22 @@ class AnimateFadeInFadeOut extends StatefulWidget {
 
 class MyAnimatedWidgetState extends State<AnimateFadeInFadeOut>
     with TickerProviderStateMixin {
-  late Animation<double> animation;
-  late AnimationController controller;
+  late Animation<double> _animation;
+  late AnimationController _controller;
 
   void startAnimation() {
-    controller = AnimationController(duration: widget.duration, vsync: this);
-    animation = CurvedAnimation(parent: controller, curve: Curves.ease);
-    animation.addStatusListener((status) {
+    _controller = AnimationController(duration: widget.duration, vsync: this);
+    _animation = CurvedAnimation(parent: _controller, curve: Curves.ease);
+    _animation.addStatusListener((status) {
       if (status == AnimationStatus.completed && !widget.onlyFadeOut) {
-        controller.reverse();
+        _controller.reverse();
       } else if (status == AnimationStatus.dismissed &&
           !widget._fadeInFadeOutOnceAnimation) {
-        controller.forward();
+        _controller.forward();
       }
     });
 
-    controller.forward();
+    _controller.forward();
   }
 
   @override
@@ -51,12 +51,12 @@ class MyAnimatedWidgetState extends State<AnimateFadeInFadeOut>
         duration: widget.duration,
         onlyFadeOut: widget.onlyFadeOut,
         toAnimateWidget: widget.toAnimateWidget,
-        animation: animation);
+        animation: _animation);
   }
 
   @override
   void dispose() {
-    controller.dispose();
+    _controller.dispose();
     super.dispose();
   }
 }

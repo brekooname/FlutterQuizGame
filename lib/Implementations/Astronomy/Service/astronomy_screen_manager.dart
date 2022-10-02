@@ -32,7 +32,7 @@ class AstronomyScreenManagerState extends State<AstronomyScreenManager>
   @override
   void initState() {
     super.initState();
-    RatePopupService ratePopupService = RatePopupService(buildContext: context);
+    RatePopupService ratePopupService = RatePopupService();
     ratePopupService.showRateAppPopup();
 
     showMainScreen();

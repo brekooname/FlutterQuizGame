@@ -19,4 +19,6 @@ abstract class StandardScreen<
   StandardScreen(this.gameScreenManagerState, {Key? key}) : super(key: key);
 
   Color? get screenBackgroundColor => null;
+
+  Gradient? get screenBackgroundGradient => null;
 }

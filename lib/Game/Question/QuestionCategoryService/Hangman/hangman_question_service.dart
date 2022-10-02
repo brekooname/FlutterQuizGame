@@ -5,7 +5,8 @@ import '../Base/question_service.dart';
 import 'hangman_question_parser.dart';
 
 class HangmanQuestionService extends QuestionService {
-  final int nrOfHangmanLives = 8;
+  final int nrOfHangmanLives = 5;
+
   final HangmanService _hangmanService = HangmanService();
   late HangmanQuestionParser questionParser;
 

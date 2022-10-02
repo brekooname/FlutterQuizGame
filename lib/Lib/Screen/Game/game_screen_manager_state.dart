@@ -93,8 +93,10 @@ mixin GameScreenManagerState<TGameContext extends GameContext> {
       ),
     );
     return Container(
-      color: currentScreen.screenBackgroundColor ??
-          MyApp.appId.gameConfig.defaultScreenBackgroundColor,
+      decoration: BoxDecoration(
+          gradient: currentScreen.screenBackgroundGradient,
+          color: currentScreen.screenBackgroundColor ??
+              MyApp.appId.gameConfig.defaultScreenBackgroundColor),
       child: screenContainerWithDecoration,
     );
   }

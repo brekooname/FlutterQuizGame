@@ -12,40 +12,45 @@ import 'my_popup.dart';
 class RatePopupService {
   final int launchesUntilPrompt = MyApp.kIsManualTest ? 15 : 2;
 
-  late RateAppLocalStorage rateAppLocalStorage;
-
-  late BuildContext context;
+  final RateAppLocalStorage _rateAppLocalStorage = RateAppLocalStorage();
 
   static final RatePopupService singleton = RatePopupService.internal();
 
-  factory RatePopupService({required BuildContext buildContext}) {
-    singleton.context = buildContext;
-    singleton.rateAppLocalStorage = RateAppLocalStorage();
+  factory RatePopupService() {
     return singleton;
   }
 
   RatePopupService.internal();
 
   void showRateAppPopup() {
-    if (rateAppLocalStorage.isAlreadyRated()) {
+    if (_rateAppLocalStorage.isAlreadyRated()) {
       return;
-    } else if (rateAppLocalStorage.appLaunchedCount() % launchesUntilPrompt ==
+    } else if (_rateAppLocalStorage.appLaunchedCount() % launchesUntilPrompt ==
         0) {
-      MyPopup.showPopup(RateAppPopup(rateAppLocalStorage));
+      MyPopup.showPopup(RateAppPopup());
     }
   }
 }
 
-class RateAppPopup extends StatelessWidget with MyPopup, LabelMixin {
-  final RateAppLocalStorage rateAppLocalStorage;
-  final InternetService internetService = InternetService();
+class RateAppPopup extends StatefulWidget {
+  final RateAppLocalStorage _rateAppLocalStorage = RateAppLocalStorage();
+  final InternetService _internetService = InternetService();
 
-  RateAppPopup(this.rateAppLocalStorage, {Key? key}) : super(key: key);
+  RateAppPopup({Key? key}) : super(key: key);
+
+  @override
+  State<RateAppPopup> createState() => RateAppPopupState();
+}
+
+class RateAppPopupState extends State<RateAppPopup> with MyPopup, LabelMixin {
+  @override
+  void initState() {
+    super.initState();
+    initPopup(backgroundImageName: "popup_rate_app_stars_background");
+  }
 
   @override
   AlertDialog build(BuildContext context) {
-    initPopup(backgroundImageName: "popup_rate_app_stars_background");
-
     return createDialog(
       Column(
         mainAxisAlignment: MainAxisAlignment.end,
@@ -60,8 +65,9 @@ class RateAppPopup extends StatelessWidget with MyPopup, LabelMixin {
             backgroundColor: Colors.lightGreenAccent,
             onClick: () {
               closePopup();
-              rateAppLocalStorage.setAlreadyRated();
-              internetService.openAppUrl(MyApp.appRatingPackage, true, context);
+              widget._rateAppLocalStorage.setAlreadyRated();
+              widget._internetService
+                  .openAppUrl(MyApp.appRatingPackage, true, context);
             },
           ),
           margin,

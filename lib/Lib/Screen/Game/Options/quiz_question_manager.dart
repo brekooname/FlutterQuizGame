@@ -63,6 +63,10 @@ class QuizQuestionManager<TGameContext extends GameContext,
     return pressedAnswers;
   }
 
+  Set<String> get allPressedAnswer {
+    return _getPressedAnswersToLower();
+  }
+
   bool _correctAnswersContainPressedAnswer(String pressedAnswer) =>
       correctAnswersForQuestion
           .map((e) => e.toLowerCase())

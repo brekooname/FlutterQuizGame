@@ -28,6 +28,10 @@ class MyText extends StatelessWidget {
     this.textShadow,
     this.firstCharUppercase = true,
   }) : super(key: key) {
+    if (fontConfig != null && (fontColor != null || fontSize != null)) {
+      throw Exception(
+          "fontColor or fontSize cannot have a value because fontConfig is configured.");
+    }
     this.maxLines = maxLines ?? 2;
     _text = firstCharUppercase ? text.capitalized.trim() : text.trim();
     this.fontConfig =
