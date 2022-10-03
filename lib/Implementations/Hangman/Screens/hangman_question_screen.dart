@@ -113,14 +113,6 @@ class HangmanQuestionScreenState extends State<HangmanQuestionScreen>
     precacheImage(_emojiHappy.image, context);
   }
 
-  Image _getGameImage(String imgName) {
-    return imageService.getSpecificImage(
-        imageName: imgName,
-        imageExtension: "png",
-        module: "game",
-        maxHeight: screenDimensions.dimen(50));
-  }
-
   @override
   Widget build(BuildContext context) {
     return Column(children: [
@@ -156,7 +148,8 @@ class HangmanQuestionScreenState extends State<HangmanQuestionScreen>
   }
 
   void _onHintButtonClick() {
-    widget.quizQuestionManager.onHintButtonClickForCatDiff(setStateCallback);
+    widget.quizQuestionManager.onHintButtonClickForCatDiff(
+        setStateCallback, widget.processNextGameScreenCallBack());
   }
 
   Widget _createBackgroundWithHangmanImage() {
@@ -211,6 +204,14 @@ class HangmanQuestionScreenState extends State<HangmanQuestionScreen>
       width: double.infinity,
       height: screenDimensions.dimen(70),
     );
+  }
+
+  Image _getGameImage(String imgName) {
+    return imageService.getSpecificImage(
+        imageName: imgName,
+        imageExtension: "png",
+        module: "game",
+        maxHeight: screenDimensions.dimen(50));
   }
 
   void setStateCallback() {

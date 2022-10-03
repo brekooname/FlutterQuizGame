@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/button_skin_config.dart';
-import 'package:flutter_app_quiz_game/Lib/Color/color_util.dart';
 
 import '../../../../Game/Question/QuestionCategoryService/Hangman/hangman_service.dart';
 import '../../../Button/my_button.dart';
@@ -78,20 +77,30 @@ mixin HangmanGameScreen<TQuizQuestionManager extends QuizQuestionManager> {
             .contains(btnLetter.toLowerCase()) ||
         quizQuestionManager.isGameFinished();
     var backgroundColor = Colors.white.withOpacity(0.15);
+    var correctAnswerPressed = quizQuestionManager.correctPressedAnswer
+        .contains(btnLetter.toLowerCase());
+    var wrongAnswerPressed = quizQuestionManager.wrongPressedAnswer
+        .contains(btnLetter.toLowerCase());
     return MyButton(
       onClick: () {
         quizQuestionManager.onClickAnswerOptionBtn(
             btnLetter, refreshSetState, goToNextScreenAfterPress);
       },
-      disabledBackgroundColor: quizQuestionManager.correctPressedAnswer
-              .contains(btnLetter.toLowerCase())
-          ? Colors.lightGreenAccent.shade200
-          : quizQuestionManager.wrongPressedAnswer
-                  .contains(btnLetter.toLowerCase())
-              ? Colors.orange.shade100
-              : backgroundColor,
+      disabledButtonSkinConfig: ButtonSkinConfig(
+        backgroundColor: correctAnswerPressed
+            ? Colors.lightGreenAccent.shade200
+            : wrongAnswerPressed
+                ? Colors.orange.shade100
+                : backgroundColor,
+        borderColor: correctAnswerPressed
+            ? Colors.green
+            : wrongAnswerPressed
+                ? Colors.deepOrangeAccent
+                : Colors.transparent,
+        buttonUnpressedShadowColor: Colors.transparent,
+      ),
       buttonSkinConfig: ButtonSkinConfig(
-          withBorder: btnDisabled,
+          withBorder: false,
           backgroundColor: backgroundColor,
           buttonUnpressedShadowColor: Colors.transparent,
           buttonPressedShadowColor: Colors.green),
@@ -132,8 +141,9 @@ mixin HangmanGameScreen<TQuizQuestionManager extends QuizQuestionManager> {
                 : Colors.black;
         lettersRowChildren.add(MyText(
           fontConfig: FontConfig(
-              fontSize: FontConfig.getCustomFontSize(hangmanWordFontSize),
-              fontColor: fontColor,),
+            fontSize: FontConfig.getCustomFontSize(hangmanWordFontSize),
+            fontColor: fontColor,
+          ),
           text: letter,
           firstCharUppercase: false,
           textAllPadding: _screenDimensions.dimen(.65),

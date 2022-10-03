@@ -12,7 +12,7 @@ import 'button_size.dart';
 //ignore: must_be_immutable
 class MyButton extends StatefulWidget {
   late final FontConfig fontConfig;
-  late final Color disabledBackgroundColor;
+  late final ButtonSkinConfig disabledButtonSkinConfig;
   late final ButtonSkinConfig buttonSkinConfig;
   late final VoidCallback onClick;
   late final Size size;
@@ -40,13 +40,14 @@ class MyButton extends StatefulWidget {
     this.disabled = false,
     this.touchable = true,
     this.visible = true,
-    Color? disabledBackgroundColor,
     VoidCallback? onClick,
     Size? size,
     double? fontSize,
     double? width,
     FontConfig? fontConfig,
     Color? backgroundColor,
+    Color? disabledBackgroundColor,
+    ButtonSkinConfig? disabledButtonSkinConfig,
     ButtonSkinConfig? buttonSkinConfig,
     ContentLockedConfig? contentLockedConfig,
     Widget? customContent,
@@ -59,13 +60,30 @@ class MyButton extends StatefulWidget {
     touchable = !disabled || this.contentLockedConfig.isContentLocked
         ? touchable
         : false;
-    this.buttonSkinConfig = buttonSkinConfig ??
-        ButtonSkinConfig(
-            backgroundColor:
-                backgroundColor ?? Colors.lightBlueAccent.shade200);
-    this.disabledBackgroundColor =
-        disabledBackgroundColor ?? Colors.grey.shade400;
+    this.buttonSkinConfig =
+        buttonSkinConfig ?? _createButtonSkinConfig(backgroundColor);
+    this.disabledButtonSkinConfig = disabledButtonSkinConfig ??
+        _createDisabledButtonSkinConfig(disabledBackgroundColor);
     this.customContent = customContent ?? _createCustomContent();
+  }
+
+  ButtonSkinConfig _createButtonSkinConfig(Color? backgroundColor) {
+    return ButtonSkinConfig(
+        backgroundColor: backgroundColor ?? Colors.lightBlueAccent.shade200);
+  }
+
+  ButtonSkinConfig _createDisabledButtonSkinConfig(
+      Color? disabledBackgroundColor) {
+    var disabledButtonDefaultColor =
+        disabledBackgroundColor ?? Colors.grey.shade400;
+    return ButtonSkinConfig(
+        backgroundColor: disabledButtonDefaultColor,
+        buttonPressedShadowColor: buttonSkinConfig.buttonPressedShadowColor,
+        buttonUnpressedShadowColor: buttonSkinConfig.buttonUnpressedShadowColor,
+        borderColor: buttonSkinConfig.borderColor == Colors.transparent
+            ? Colors.transparent
+            : ColorUtil.colorDarken(disabledButtonDefaultColor, 0.2),
+        borderWidth: buttonSkinConfig.borderWidth);
   }
 
   Size _getSize(Size? size, double? btnWidth) {
@@ -244,7 +262,7 @@ class MyButtonState extends State<MyButton> {
   BoxDecoration? _createGradientButtonDecoration() {
     ButtonSkinConfig buttonSkinConfig;
     if (widget.disabled) {
-      buttonSkinConfig = _createDisabledButtonSkinConfig();
+      buttonSkinConfig = widget.disabledButtonSkinConfig;
     } else {
       buttonSkinConfig = widget.buttonSkinConfig;
     }
@@ -319,21 +337,6 @@ class MyButtonState extends State<MyButton> {
         colors: [darken, darken],
         stops: backgroundGradient.stops,
         transform: backgroundGradient.transform);
-  }
-
-  ButtonSkinConfig _createDisabledButtonSkinConfig() {
-    Color borderColor =
-        widget.buttonSkinConfig.borderColor == Colors.transparent
-            ? Colors.transparent
-            : ColorUtil.colorDarken(widget.disabledBackgroundColor, 0.2);
-    return ButtonSkinConfig(
-        backgroundColor: widget.disabledBackgroundColor,
-        buttonPressedShadowColor:
-            widget.buttonSkinConfig.buttonPressedShadowColor,
-        buttonUnpressedShadowColor:
-            widget.buttonSkinConfig.buttonUnpressedShadowColor,
-        borderColor: borderColor,
-        borderWidth: widget.buttonSkinConfig.borderWidth);
   }
 }
 

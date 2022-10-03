@@ -99,7 +99,8 @@ class GeoQuizQuestionScreenState extends State<GeoQuizQuestionScreen>
   void initState() {
     super.initState();
     initScreenState(onUserEarnedReward: () {
-      widget.quizQuestionManager.onHintButtonClickForDiff(setStateCallback);
+      widget.quizQuestionManager.onHintButtonClickForDiff(
+          setStateCallback, widget.processNextGameScreenCallBack());
     });
   }
 
@@ -150,7 +151,8 @@ class GeoQuizQuestionScreenState extends State<GeoQuizQuestionScreen>
       disableHintBtn:
           widget.quizQuestionManager.hintDisabledPossibleAnswers.isNotEmpty,
       hintButtonOnClick: () {
-        widget.quizQuestionManager.onHintButtonClickForDiff(setStateCallback);
+        widget.quizQuestionManager.onHintButtonClickForDiff(
+            setStateCallback, widget.processNextGameScreenCallBack());
       },
     );
     widget.quizQuestionManager.animateWrongAnswer = false;

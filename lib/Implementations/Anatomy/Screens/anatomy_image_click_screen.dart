@@ -115,7 +115,7 @@ class AnatomyImageClickScreenState extends State<AnatomyImageClickScreen>
   }
 
   void _onHintButtonClick() {
-    widget.quizQuestionManager.onHintButtonClickForCatDiff(setStateCallback);
+    widget.quizQuestionManager.onHintButtonClickForCatDiff(setStateCallback, widget.processNextGameScreenCallBack());
   }
 
   void setStateCallback() {

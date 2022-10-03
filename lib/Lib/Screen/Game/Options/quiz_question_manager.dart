@@ -9,6 +9,8 @@ import 'package:flutter_app_quiz_game/Lib/Extensions/list_extension.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/string_extension.dart';
 import 'package:flutter_app_quiz_game/Lib/Storage/quiz_game_local_storage.dart';
 
+import '../../../../Game/Constants/hint_button_type.dart';
+
 class QuizQuestionManager<TGameContext extends GameContext,
     TQuizGameLocalStorage extends QuizGameLocalStorage> {
   final MyAudioPlayer _audioPlayer = MyAudioPlayer();
@@ -122,7 +124,8 @@ class QuizQuestionManager<TGameContext extends GameContext,
         correctAnswersForQuestion, currentQuestionInfo.pressedAnswers);
   }
 
-  void onHintButtonClickForCatDiff(VoidCallback refreshSetState) {
+  void onHintButtonClickForCatDiff(
+      VoidCallback refreshSetState, VoidCallback goToNextScreenAfterPress) {
     _decreaseAvailableHints();
 
     quizGameLocalStorage.setRemainingHintsForCatDiff(
@@ -130,34 +133,57 @@ class QuizQuestionManager<TGameContext extends GameContext,
         currentQuestionInfo.question.difficulty,
         gameContext.amountAvailableHints);
 
-    _onHintButtonUpdateControls(refreshSetState);
+    _onHintButtonUpdateControls(refreshSetState, goToNextScreenAfterPress);
   }
 
-  void onHintButtonClickForDiff(VoidCallback refreshSetState) {
+  void onHintButtonClickForDiff(
+      VoidCallback refreshSetState, VoidCallback goToNextScreenAfterPress) {
     _decreaseAvailableHints();
 
     quizGameLocalStorage.setRemainingHintsForDiff(
         currentQuestionInfo.question.difficulty,
         gameContext.amountAvailableHints);
 
-    _onHintButtonUpdateControls(refreshSetState);
+    _onHintButtonUpdateControls(refreshSetState, goToNextScreenAfterPress);
   }
 
   void _decreaseAvailableHints() {
     gameContext.amountAvailableHints--;
   }
 
-  void _onHintButtonUpdateControls(VoidCallback refreshSetState) {
-    var optionsToDisable = List.of(possibleAnswers);
-    optionsToDisable.shuffle();
-    optionsToDisable.removeAll(correctAnswersForQuestion);
+  void _onHintButtonUpdateControls(
+      VoidCallback refreshSetState, VoidCallback goToNextScreenAfterPress) {
+    var hintButtonType = currentQuestionInfo.question.category
+        .getQuestionCategoryService(currentQuestionInfo.question.difficulty)
+        .getHintButtonType();
+    if (hintButtonType == HintButtonType.hintDisableTwoAnswers) {
+      var optionsToDisable = List.of(possibleAnswers);
+      optionsToDisable.shuffle();
+      optionsToDisable.removeAll(correctAnswersForQuestion);
 
-    hintDisabledPossibleAnswers.add(optionsToDisable.first.toLowerCase());
-    if (optionsToDisable.length > 2) {
-      hintDisabledPossibleAnswers.add(optionsToDisable.last.toLowerCase());
+      hintDisabledPossibleAnswers.add(optionsToDisable.first.toLowerCase());
+      if (optionsToDisable.length > 2) {
+        hintDisabledPossibleAnswers.add(optionsToDisable.last.toLowerCase());
+      }
+
+      refreshSetState.call();
+    } else if (hintButtonType == HintButtonType.hintPressRandomAnswer) {
+      var optionsToDisable =
+          correctAnswersForQuestion.map((e) => e.toLowerCase()).toList();
+      optionsToDisable.shuffle();
+      optionsToDisable.removeAll(allPressedAnswer);
+
+      var answerToPress = optionsToDisable.first.toLowerCase();
+
+      hintDisabledPossibleAnswers.add(answerToPress);
+
+      gameContext.gameUser
+          .addAnswerToQuestionInfo(currentQuestionInfo.question, answerToPress);
+
+      refreshSetState.call();
+
+      _processGameFinished(goToNextScreenAfterPress);
     }
-
-    refreshSetState.call();
   }
 
   List<String> _getPossibleAnswerOption() {

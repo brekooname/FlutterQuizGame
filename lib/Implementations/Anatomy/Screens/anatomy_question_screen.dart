@@ -135,7 +135,8 @@ class AnatomyQuestionScreenState extends State<AnatomyQuestionScreen>
   }
 
   void _onHintButtonClick() {
-    widget.quizQuestionManager.onHintButtonClickForCatDiff(setStateCallback);
+    widget.quizQuestionManager.onHintButtonClickForCatDiff(
+        setStateCallback, widget.processNextGameScreenCallBack());
   }
 
   void setStateCallback() {

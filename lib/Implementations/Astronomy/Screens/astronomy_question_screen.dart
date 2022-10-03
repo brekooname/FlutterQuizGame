@@ -10,9 +10,9 @@ import 'package:flutter_app_quiz_game/Lib/Button/button_skin_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Font/font_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Localization/label_mixin.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/Options/quiz_options_game_screen.dart';
-import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/Options/quiz_question_container.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/Options/quiz_question_manager.dart';
+import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
@@ -378,7 +378,8 @@ class AstronomyQuestionScreenState extends State<AstronomyQuestionScreen>
   }
 
   void _onHintButtonClick() {
-    widget.quizQuestionManager.onHintButtonClickForCatDiff(setStateCallback);
+    widget.quizQuestionManager.onHintButtonClickForCatDiff(
+        setStateCallback, widget.processNextGameScreenCallBack());
   }
 
   void setStateCallback() {
