@@ -15,8 +15,8 @@ class HangmanCampaignLevelService extends CampaignLevelService {
     var questionConfig = HangmanGameQuestionConfig();
 
     singleton.allLevels = [];
-    for (QuestionCategory cat in questionConfig.categories) {
-      for (QuestionDifficulty diff in questionConfig.difficulties) {
+    for (QuestionDifficulty diff in questionConfig.difficulties) {
+      for (QuestionCategory cat in questionConfig.categories) {
         singleton.allLevels.add(CampaignLevel(
           difficulty: diff,
           categories: [

@@ -6,6 +6,7 @@ import 'package:flutter_app_quiz_game/Implementations/Hangman/Service/hangman_lo
 import '../../../main.dart';
 
 class HangmanGameContextService {
+  static const int numberOfQuestionsPerGame = 5;
   HangmanLocalStorage hangmanLocalStorage = HangmanLocalStorage();
 
   static final HangmanGameContextService singleton =
@@ -18,11 +19,14 @@ class HangmanGameContextService {
   HangmanGameContextService.internal();
 
   HangmanGameContext createGameContext(CampaignLevel campaignLevel) {
+    var questions = MyApp.appId.gameConfig.questionCollectorService
+        .getAllQuestions(
+            categories: [campaignLevel.categories.first],
+            difficulties: [campaignLevel.difficulty]);
+    questions.shuffle();
+    questions = questions.sublist(0, numberOfQuestionsPerGame);
     var gameContext = GameContextService()
-        .createGameContextWithHintsAndQuestions(
-            0,
-            MyApp.appId.gameConfig.questionCollectorService
-                .getAllQuestions(categories: [campaignLevel.categories.first]));
+        .createGameContextWithHintsAndQuestions(3, questions);
     var hangmanGameContext = HangmanGameContext(gameContext);
     return hangmanGameContext;
   }

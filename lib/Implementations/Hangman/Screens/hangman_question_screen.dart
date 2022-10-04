@@ -15,6 +15,7 @@ import 'package:flutter_app_quiz_game/Lib/Screen/Game/Options/quiz_question_mana
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
 
+import '../../../Game/Question/Model/question_info_status.dart';
 import '../../../Lib/Color/color_util.dart';
 
 class HangmanQuestionScreen extends GameScreen<
@@ -125,21 +126,39 @@ class HangmanQuestionScreenState extends State<HangmanQuestionScreen>
 
   Widget _createAnsweredQuestionsHeader() {
     var hintButton = HintButton(
+        disabled: widget.quizQuestionManager.isGameFinished(),
         onClick: _onHintButtonClick,
-        availableHints: 4,
+        availableHints: widget.gameContext.amountAvailableHints,
         showAvailableHintsText: true);
     List<Widget> rowItems = [];
-    rowItems.add(SizedBox(
-      width: hintButton.buttonSize.width,
-    ));
+    var hintBtnLateralPadding = EdgeInsets.fromLTRB(
+        screenDimensions.dimen(1), 0, screenDimensions.dimen(1), 0);
+    rowItems.add(Padding(
+        padding: hintBtnLateralPadding,
+        child: SizedBox(
+          width: hintButton.buttonSize.width,
+        )));
     rowItems.add(const Spacer());
-    for (int i = 0; i < 5; i++) {
-      rowItems.add(Padding(
-          padding: EdgeInsets.all(screenDimensions.dimen(1)),
-          child: ColorUtil.imageToGreyScale(_emojiNothing)));
+    var allQuestions = widget.gameContext.gameUser.getAllQuestions([]);
+    allQuestions.sort((a, b) => (a.questionAnsweredAt ?? DateTime.now())
+        .compareTo(b.questionAnsweredAt ?? DateTime.now()));
+    for (int i = 0; i < allQuestions.length; i++) {
+      var item = allQuestions.elementAt(i);
+      var emojiIcon = item.status == QuestionInfoStatus.won
+          ? _emojiHappy
+          : item.status == QuestionInfoStatus.lost
+              ? _emojiDead
+              : ColorUtil.imageToGreyScale(_emojiNothing);
+      rowItems.add(
+        Opacity(
+            opacity: 0.7,
+            child: Padding(
+                padding: EdgeInsets.all(screenDimensions.dimen(1)),
+                child: emojiIcon)),
+      );
     }
     rowItems.add(const Spacer());
-    rowItems.add(hintButton);
+    rowItems.add(Padding(padding: hintBtnLateralPadding, child: hintButton));
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,

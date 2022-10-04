@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app_quiz_game/Implementations/Hangman/Constants/hangman_campaign_level_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/Hangman/Service/hangman_local_storage.dart';
 import 'package:flutter_app_quiz_game/Implementations/Hangman/Service/hangman_screen_manager.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/button_skin_config.dart';
@@ -16,6 +17,8 @@ import '../../../main.dart';
 
 class HangmanMainMenuScreen extends StandardScreen<HangmanScreenManagerState> {
   final HangmanLocalStorage _hangmanLocalStorage = HangmanLocalStorage();
+  final HangmanCampaignLevelService _campaignLevelService =
+      HangmanCampaignLevelService();
 
   HangmanMainMenuScreen(HangmanScreenManagerState gameScreenManagerState,
       {Key? key})
@@ -102,21 +105,24 @@ class HangmanMainMenuScreenState extends State<HangmanMainMenuScreen>
   }
 
   List<Widget> _createConnectingLinesListView() {
-    var btnSize = _createBtnSize();
-    var lateralMarginWidth = _getListViewItemLateralMargin(btnSize);
+    var containerSize =
+        Size(screenDimensions.dimen(50), screenDimensions.dimen(39));
+    var lateralMarginWidth =
+        _getListViewItemLateralMargin(screenDimensions.dimen(50));
     List<Widget> res = [];
-    for (int index = 0; index < 20; index++) {
+    var allLevels = widget._campaignLevelService.allLevels;
+    for (int index = 0; index < allLevels.length; index++) {
       var customPaint = CustomPaint(
-        size: btnSize,
+        size: containerSize,
         painter: LinesPainter(
-          btnSize,
-          Size(lateralMarginWidth, btnSize.height),
+          containerSize,
+          Size(lateralMarginWidth, containerSize.height),
           _getListViewItemPosition(index),
           index,
         ),
       );
       res.add(_createListViewItemContainer(
-          btnSize,
+          containerSize,
           customPaint,
           BoxDecoration(
               image: DecorationImage(
@@ -129,15 +135,17 @@ class HangmanMainMenuScreenState extends State<HangmanMainMenuScreen>
   }
 
   List<Widget> _createButtonsListView() {
-    var btnSize = _createBtnSize();
-    var lateralMarginWidth = _getListViewItemLateralMargin(btnSize);
+    var btnSize = Size(screenDimensions.dimen(50), screenDimensions.dimen(39));
+    var lateralMarginWidth = _getListViewItemLateralMargin(btnSize.width);
     SizedBox lateralMargin = SizedBox(
       width: lateralMarginWidth,
       height: btnSize.height,
     );
+    var allLevels = widget._campaignLevelService.allLevels;
     List<Widget> res = [];
-    for (int index = 0; index < 20; index++) {
-      var btnText = index.toString();
+    for (int index = 0; index < allLevels.length; index++) {
+      var btnText =
+          allLevels.elementAt(index).categories.first.categoryLabel ?? "";
       var levelBtn = MyButton(
         fontConfig: FontConfig(
             fontColor: Colors.black,
@@ -153,7 +161,8 @@ class HangmanMainMenuScreenState extends State<HangmanMainMenuScreen>
             image: imageService.getSpecificImage(
                 module: "buttons",
                 imageName: "btn_cat1",
-                imageExtension: "png")),
+                imageExtension: "png",
+                maxWidth: btnSize.width / 2)),
       );
       int itemPosition = _getListViewItemPosition(index);
 
@@ -189,8 +198,8 @@ class HangmanMainMenuScreenState extends State<HangmanMainMenuScreen>
         child: item);
   }
 
-  double _getListViewItemLateralMargin(Size btnSize) =>
-      (_getListViewAllWidth() - btnSize.width) / 2;
+  double _getListViewItemLateralMargin(double btnWidth) =>
+      (_getListViewAllWidth() - btnWidth) / 2;
 
   double _getListViewAllWidth() => screenDimensions.dimen(95);
 
@@ -201,9 +210,6 @@ class HangmanMainMenuScreenState extends State<HangmanMainMenuScreen>
             ? -1
             : 1;
   }
-
-  Size _createBtnSize() =>
-      Size(screenDimensions.dimen(25), screenDimensions.dimen(39));
 }
 
 class LinesPainter extends CustomPainter {
@@ -219,12 +225,13 @@ class LinesPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    double variableAngle = 0.88;
+    //Larger value shows the liner higher
+    double variableAngle = -0.4;
 
     var centerToLeftDisplay = itemPosition == 1 || (index + 2) % 4 == 0;
 
     var xwLength = btnSize.width / 2 +
-        (centerToLeftDisplay ? btnSize.width / 2 : lateralMargin.width);
+        (centerToLeftDisplay ? -lateralMargin.width / 1.1 : lateralMargin.width);
 
     double xPadding = itemPosition == 0
         ? lateralMargin.width
@@ -235,7 +242,7 @@ class LinesPainter extends CustomPainter {
     double x1 = xPadding + btnSize.width / 2;
     double x2 = xPadding + ((centerToLeftDisplay ? -1 : 1) * xwLength);
     double y2 = -btnSize.width /
-        (2 - (centerToLeftDisplay ? variableAngle : variableAngle * 0.81));
+        (2 - (centerToLeftDisplay ? variableAngle : variableAngle * 0.50));
     if (index != 0) {
       canvas.drawLine(
           Offset(x1, btnSize.height / 2),
