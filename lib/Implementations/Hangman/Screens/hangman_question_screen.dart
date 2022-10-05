@@ -8,6 +8,7 @@ import 'package:flutter_app_quiz_game/Implementations/Hangman/Questions/hangman_
 import 'package:flutter_app_quiz_game/Implementations/Hangman/Service/hangman_local_storage.dart';
 import 'package:flutter_app_quiz_game/Implementations/Hangman/Service/hangman_screen_manager.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/hint_button.dart';
+import 'package:flutter_app_quiz_game/Lib/Button/my_back_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/map_extension.dart';
 import 'package:flutter_app_quiz_game/Lib/Localization/label_mixin.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/Hangman/hangman_game_screen.dart';
@@ -135,9 +136,7 @@ class HangmanQuestionScreenState extends State<HangmanQuestionScreen>
         screenDimensions.dimen(1), 0, screenDimensions.dimen(1), 0);
     rowItems.add(Padding(
         padding: hintBtnLateralPadding,
-        child: SizedBox(
-          width: hintButton.buttonSize.width,
-        )));
+        child: MyBackButton()));
     rowItems.add(const Spacer());
     var allQuestions = widget.gameContext.gameUser.getAllQuestions([]);
     allQuestions.sort((a, b) => (a.questionAnsweredAt ?? DateTime.now())

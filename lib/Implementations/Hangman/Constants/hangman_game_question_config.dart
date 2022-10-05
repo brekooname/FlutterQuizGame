@@ -37,13 +37,13 @@ class HangmanGameQuestionConfig extends GameQuestionConfig with LabelMixin {
     //
     //
     singleton.categories = [
-      singleton.cat0 = QuestionCategory(
-          index: 0,
-          categoryLabel: "Countries",
-          questionCategoryService: HangmanCategoryQuestionService()),
       singleton.cat1 = QuestionCategory(
           index: 1,
           categoryLabel: "Animals",
+          questionCategoryService: HangmanCategoryQuestionService()),
+      singleton.cat4 = QuestionCategory(
+          index: 4,
+          categoryLabel: "Food",
           questionCategoryService: HangmanCategoryQuestionService()),
       singleton.cat2 = QuestionCategory(
           index: 2,
@@ -53,9 +53,9 @@ class HangmanGameQuestionConfig extends GameQuestionConfig with LabelMixin {
           index: 3,
           categoryLabel: "Kitchen",
           questionCategoryService: HangmanCategoryQuestionService()),
-      singleton.cat4 = QuestionCategory(
-          index: 4,
-          categoryLabel: "Food",
+      singleton.cat0 = QuestionCategory(
+          index: 0,
+          categoryLabel: "Countries",
           questionCategoryService: HangmanCategoryQuestionService()),
       singleton.cat5 = QuestionCategory(
           index: 5,

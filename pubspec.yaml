@@ -39,8 +39,8 @@ dependencies:
   url_launcher: ^6.0.17
   in_app_purchase: ^2.0.1
   in_app_purchase_storekit: ^0.2.0
-#  Check if new version is released
-#  charts_flutter: ^0.12.0
+  #  Check if new version is released
+  #  charts_flutter: ^0.12.0
   charts_flutter_new: ^0.12.0
   numberpicker: ^2.1.1
   function_tree: ^0.8.12
@@ -119,75 +119,82 @@ flutter:
     ###### HANGMAN ###############################################################################
     ########################
     - assets/implementations/hangman/
-    - assets/implementations/hangman/buttons/
     - assets/implementations/hangman/game/
+    - assets/implementations/hangman/campaign/background/
+    - assets/implementations/hangman/campaign/buttons/
+    - assets/implementations/hangman/campaign/l_0/
+    - assets/implementations/hangman/campaign/l_1/
+    - assets/implementations/hangman/campaign/l_2/
+    - assets/implementations/hangman/campaign/l_3/
+    - assets/implementations/hangman/campaign/l_4/
+    - assets/implementations/hangman/campaign/l_5/
     ########################
     ###### ASTRONOMY #############################################################################
     ########################
-#    - assets/implementations/astronomy/
-#    - assets/implementations/astronomy/audio/
-#    - assets/implementations/astronomy/buttons/
-#    - assets/implementations/astronomy/categories/
-#    - assets/implementations/astronomy/planets/
-#    - assets/implementations/astronomy/questions/cat11/
-#    - assets/implementations/astronomy/questions/cat12/
-#    - assets/implementations/astronomy/questions/cat13/
-#    - assets/implementations/astronomy/questions/cat15/
-#    - assets/implementations/astronomy/questions/cat16/
+    #    - assets/implementations/astronomy/
+    #    - assets/implementations/astronomy/audio/
+    #    - assets/implementations/astronomy/buttons/
+    #    - assets/implementations/astronomy/categories/
+    #    - assets/implementations/astronomy/planets/
+    #    - assets/implementations/astronomy/questions/cat11/
+    #    - assets/implementations/astronomy/questions/cat12/
+    #    - assets/implementations/astronomy/questions/cat13/
+    #    - assets/implementations/astronomy/questions/cat15/
+    #    - assets/implementations/astronomy/questions/cat16/
     ########################
     ###### IQGAME ################################################################################
     ########################
-#    - assets/implementations/iqgame/
-#    - assets/implementations/iqgame/buttons/
-#    - assets/implementations/iqgame/cat0/
-#    - assets/implementations/iqgame/cat1/
-#    - assets/implementations/iqgame/cat2/
-#    - assets/implementations/iqgame/cat5/
+    #    - assets/implementations/iqgame/
+    #    - assets/implementations/iqgame/buttons/
+    #    - assets/implementations/iqgame/cat0/
+    #    - assets/implementations/iqgame/cat1/
+    #    - assets/implementations/iqgame/cat2/
+    #    - assets/implementations/iqgame/cat5/
     ########################
     ###### ANATOMY #################################################################################
     ########################
-#    - assets/implementations/anatomy/
-#    - assets/implementations/anatomy/buttons/
-#    - assets/implementations/anatomy/general/
-#    - assets/implementations/anatomy/categories/
-#    - assets/implementations/anatomy/questions/diff4/cat0/
-#    - assets/implementations/anatomy/questions/diff4/cat1/
-#    - assets/implementations/anatomy/questions/diff4/cat2/
-#    - assets/implementations/anatomy/questions/diff4/cat3/
-#    - assets/implementations/anatomy/questions/diff4/cat4/
-#    - assets/implementations/anatomy/questions/diff4/cat5/
-#    - assets/implementations/anatomy/questions/diff4/cat6/
-#    - assets/implementations/anatomy/questions/diff4/cat7/
-#    - assets/implementations/anatomy/questions/diff4/cat8/
-#    - assets/implementations/anatomy/questions/diff4/cat9/
-#    - assets/implementations/anatomy/questions/diff4/cat10/
-#    - assets/implementations/anatomy/questions/diff4/cat11/
+    #    - assets/implementations/anatomy/
+    #    - assets/implementations/anatomy/buttons/
+    #    - assets/implementations/anatomy/general/
+    #    - assets/implementations/anatomy/categories/
+    #    - assets/implementations/anatomy/questions/diff4/cat0/
+    #    - assets/implementations/anatomy/questions/diff4/cat1/
+    #    - assets/implementations/anatomy/questions/diff4/cat2/
+    #    - assets/implementations/anatomy/questions/diff4/cat3/
+    #    - assets/implementations/anatomy/questions/diff4/cat4/
+    #    - assets/implementations/anatomy/questions/diff4/cat5/
+    #    - assets/implementations/anatomy/questions/diff4/cat6/
+    #    - assets/implementations/anatomy/questions/diff4/cat7/
+    #    - assets/implementations/anatomy/questions/diff4/cat8/
+    #    - assets/implementations/anatomy/questions/diff4/cat9/
+    #    - assets/implementations/anatomy/questions/diff4/cat10/
+    #    - assets/implementations/anatomy/questions/diff4/cat11/
     ########################
     ###### DOPEWARS ################################################################################
     ########################
-#    - assets/implementations/dopewars/
-#    - assets/implementations/dopewars/buttons/
-#    - assets/implementations/dopewars/general/
-#    - assets/implementations/dopewars/resource_background/
+    #    - assets/implementations/dopewars/
+    #    - assets/implementations/dopewars/buttons/
+    #    - assets/implementations/dopewars/general/
+    #    - assets/implementations/dopewars/resource_background/
     ########################
     ###### PERSTEST ################################################################################
     ########################
-#    - assets/implementations/perstest/
-#    - assets/implementations/perstest/buttons/
+    #    - assets/implementations/perstest/
+    #    - assets/implementations/perstest/buttons/
     ########################
     ###### GEOQUIZ #################################################################################
     ########################
-#    - assets/implementations/geoquiz/
-#    - assets/implementations/geoquiz/questions/images/cat7/
-#    - assets/implementations/geoquiz/questions/images/cat9/
-#    - assets/implementations/geoquiz/questions/images/diff0/cat5/
-#    - assets/implementations/geoquiz/questions/images/diff0/cat8/
-#    - assets/implementations/geoquiz/questions/images/diff1/cat5/
-#    - assets/implementations/geoquiz/questions/images/diff1/cat8/
-#    - assets/implementations/geoquiz/questions/images/diff2/cat5/
-#    - assets/implementations/geoquiz/questions/images/diff2/cat8/
-#    - assets/implementations/geoquiz/questions/images/diff3/cat5/
-#    - assets/implementations/geoquiz/questions/images/diff3/cat8/
+    #    - assets/implementations/geoquiz/
+    #    - assets/implementations/geoquiz/questions/images/cat7/
+    #    - assets/implementations/geoquiz/questions/images/cat9/
+    #    - assets/implementations/geoquiz/questions/images/diff0/cat5/
+    #    - assets/implementations/geoquiz/questions/images/diff0/cat8/
+    #    - assets/implementations/geoquiz/questions/images/diff1/cat5/
+    #    - assets/implementations/geoquiz/questions/images/diff1/cat8/
+    #    - assets/implementations/geoquiz/questions/images/diff2/cat5/
+    #    - assets/implementations/geoquiz/questions/images/diff2/cat8/
+    #    - assets/implementations/geoquiz/questions/images/diff3/cat5/
+    #    - assets/implementations/geoquiz/questions/images/diff3/cat8/
     ########################
     ###### HISTORY #################################################################################
     ########################
