@@ -65,6 +65,10 @@ class HangmanGameQuestionConfig extends GameQuestionConfig with LabelMixin {
     return singleton;
   }
 
+  bool isMixedCategory(QuestionCategory cat) {
+    return cat.index == 5;
+  }
+
   HangmanGameQuestionConfig.internal();
 
   @override

@@ -102,7 +102,7 @@ class MyButton extends StatefulWidget {
   }
 
   Widget _createCustomContent() {
-    if (text != null && buttonSkinConfig.image != null) {
+    if ((text ?? "").isNotEmpty && buttonSkinConfig.image != null) {
       var labelContainerDecoration = BoxDecoration(
           color: Colors.white.withOpacity(0.9),
           borderRadius: BorderRadius.circular(FontConfig.standardBorderRadius));
@@ -130,7 +130,7 @@ class MyButton extends StatefulWidget {
           ],
         ),
       );
-    } else if (text != null) {
+    } else if ((text ?? "").isNotEmpty) {
       return _createMyText();
     } else if (buttonSkinConfig.image != null) {
       return _createImageButtonContent();

@@ -77,27 +77,23 @@ class HangmanQuestionScreenState extends State<HangmanQuestionScreen>
       _hImages.putIfAbsent(i, () => _getGameImage("h" + i.toString()));
       _skybImages.putIfAbsent(i, () => _getGameImage("skyb" + i.toString()));
     }
-    var emojiWidth = screenDimensions.dimen(10);
-    _emojiDead = imageService.getSpecificImage(
-        imageName: "emoji_dead",
-        imageExtension: "png",
-        module: "game",
-        maxWidth: emojiWidth);
-    _emojiHappy = imageService.getSpecificImage(
-        imageName: "emoji_happy",
-        imageExtension: "png",
-        module: "game",
-        maxWidth: emojiWidth);
-    _emojiNothing = imageService.getSpecificImage(
-        imageName: "emoji_nothing",
-        imageExtension: "png",
-        module: "game",
-        maxWidth: emojiWidth);
+    _emojiDead = _getEmojiImage("emoji_dead");
+    _emojiHappy = _getEmojiImage("emoji_happy");
+    _emojiNothing = _getEmojiImage("emoji_nothing");
     _forestTexture = imageService.getSpecificImage(
         imageName: "forest_texture",
         imageExtension: "png",
         module: "game",
         maxWidth: screenDimensions.dimen(100));
+  }
+
+  Image _getEmojiImage(String imgName) {
+    var emojiWidth = screenDimensions.dimen(10);
+    return imageService.getSpecificImage(
+        imageName: imgName,
+        imageExtension: "png",
+        module: "game",
+        maxWidth: emojiWidth);
   }
 
   @override
@@ -134,9 +130,8 @@ class HangmanQuestionScreenState extends State<HangmanQuestionScreen>
     List<Widget> rowItems = [];
     var hintBtnLateralPadding = EdgeInsets.fromLTRB(
         screenDimensions.dimen(1), 0, screenDimensions.dimen(1), 0);
-    rowItems.add(Padding(
-        padding: hintBtnLateralPadding,
-        child: MyBackButton()));
+    rowItems
+        .add(Padding(padding: hintBtnLateralPadding, child: MyBackButton()));
     rowItems.add(const Spacer());
     var allQuestions = widget.gameContext.gameUser.getAllQuestions([]);
     allQuestions.sort((a, b) => (a.questionAnsweredAt ?? DateTime.now())

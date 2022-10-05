@@ -24,13 +24,13 @@ mixin MyPopup {
   late final AssetImage? backgroundImage;
 
   void initPopup({String? backgroundImageName, double? width, double? height}) {
-    if (backgroundImageName != null) {
-      backgroundImage = imageService.getMainAssetImage(
-        imageName: backgroundImageName,
-        imageExtension: "png",
-        module: "popup",
-      );
-    }
+    backgroundImage = backgroundImageName == null
+        ? null
+        : imageService.getMainAssetImage(
+            imageName: backgroundImageName,
+            imageExtension: "png",
+            module: "popup",
+          );
     _navigatorService = NavigatorService();
     this.width = width ??
         (ScreenDimensionsService.isPortrait()
