@@ -70,7 +70,9 @@ class HangmanQuestionScreenState extends State<HangmanQuestionScreen>
   @override
   void initState() {
     super.initState();
-    initScreenState();
+    initScreenState(onUserEarnedReward: () {
+      _onHintButtonClick();
+    });
 
     widget.pressFirstAndLastLetter();
 
@@ -114,6 +116,15 @@ class HangmanQuestionScreenState extends State<HangmanQuestionScreen>
 
   @override
   Widget build(BuildContext context) {
+    if (widget.gameContext.gameUser.getOpenQuestions().isEmpty) {
+      widget.quizQuestionManager.quizGameLocalStorage
+          .setFoundWordsInOneGameForCatDiff(
+              widget.category,
+              widget.difficulty,
+              widget.gameContext.gameUser
+                  .countAllQuestions([QuestionInfoStatus.won]));
+    }
+
     return Column(children: [
       _createBackgroundWithHangmanImage(),
       widget.createWordContainer(),
@@ -124,6 +135,7 @@ class HangmanQuestionScreenState extends State<HangmanQuestionScreen>
 
   Widget _createAnsweredQuestionsHeader() {
     var hintButton = HintButton(
+        watchRewardedAdForHint: true,
         disabled: widget.quizQuestionManager.isGameFinished(),
         onClick: _onHintButtonClick,
         availableHints: widget.gameContext.amountAvailableHints,
@@ -230,18 +242,5 @@ class HangmanQuestionScreenState extends State<HangmanQuestionScreen>
 
   void setStateCallback() {
     setState(() {});
-  }
-
-  @override
-  void dispose() {
-    if (widget.gameContext.gameUser.getOpenQuestions().isEmpty) {
-      widget.quizQuestionManager.quizGameLocalStorage
-          .setFoundWordsInOneGameForCatDiff(
-              widget.category,
-              widget.difficulty,
-              widget.gameContext.gameUser
-                  .countAllQuestions([QuestionInfoStatus.won]));
-    }
-    super.dispose();
   }
 }

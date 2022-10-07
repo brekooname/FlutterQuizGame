@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Lib/Animation/animation_zoom_in_zoom_out.dart';
 import 'package:flutter_app_quiz_game/Lib/Color/color_util.dart';
-import 'package:flutter_app_quiz_game/Lib/Popup/in_app_purchase_popup.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
 import '../../Lib/Button/button_skin_config.dart';
 import '../../Lib/Font/font_config.dart';
 import '../../main.dart';
+import '../Popup/in_app_purchase_popup.dart';
 import 'button_size.dart';
 
 //ignore: must_be_immutable
@@ -54,9 +54,11 @@ class MyButton extends StatefulWidget {
   }) : super(key: key) {
     this.size = _getSize(size, width);
     this.fontConfig = fontConfig ?? FontConfig(fontSize: fontSize);
-    this.onClick = onClick ?? () {};
     this.contentLockedConfig =
         contentLockedConfig ?? ContentLockedConfig(isContentLocked: false);
+    this.onClick = this.contentLockedConfig.isContentLocked
+        ? _onClickContentLocked
+        : onClick ?? () {};
     touchable = !disabled || this.contentLockedConfig.isContentLocked
         ? touchable
         : false;
@@ -65,6 +67,11 @@ class MyButton extends StatefulWidget {
     this.disabledButtonSkinConfig = disabledButtonSkinConfig ??
         _createDisabledButtonSkinConfig(disabledBackgroundColor);
     this.customContent = customContent ?? _createCustomContent();
+  }
+
+  _onClickContentLocked() {
+    InAppPurchasesPopupService().showPopup(
+        executeAfterPurchase: contentLockedConfig.executeAfterPurchase);
   }
 
   ButtonSkinConfig _createButtonSkinConfig(Color? backgroundColor) {
@@ -170,11 +177,6 @@ class MyButtonState extends State<MyButton> {
 
     if (widget.contentLockedConfig.isContentLocked) {
       buttonContent = _buildContentLocked(buttonContent);
-      widget.onClick = () {
-        InAppPurchasesPopupService().showPopup(
-            executeAfterPurchase:
-                widget.contentLockedConfig.executeAfterPurchase);
-      };
     }
 
     return Visibility(

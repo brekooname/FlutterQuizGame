@@ -21,7 +21,9 @@ import 'package:flutter_app_quiz_game/Lib/Text/game_title.dart';
 import '../../../Lib/Color/color_util.dart';
 import '../../../Lib/Font/font_config.dart';
 import '../../../Lib/ScreenDimensions/screen_dimensions_service.dart';
+import '../../../Lib/Text/my_text.dart';
 import '../../../main.dart';
+import '../Service/hangman_gamecontext_service.dart';
 
 class HangmanMainMenuScreen extends StandardScreen<HangmanScreenManagerState> {
   final HangmanLocalStorage _hangmanLocalStorage = HangmanLocalStorage();
@@ -50,7 +52,6 @@ class HangmanMainMenuScreenState extends State<HangmanMainMenuScreen>
   late final Image _flame;
   late final Image _explosion;
   late final Image _wallBackgr;
-  late final Image _starScore;
 
   @override
   void initState() {
@@ -61,8 +62,6 @@ class HangmanMainMenuScreenState extends State<HangmanMainMenuScreen>
     _explosion = _getCampaignRes("explosion", "campaign", _getLevelIconWidth());
     _bomb = _getCampaignRes("bomb", "campaign", _getLevelIconWidth() / 1.5);
     _flame = _getCampaignRes("flames", "campaign", _getFlameWidth());
-    _starScore =
-        _getCampaignRes("star_score", "campaign", _getLevelIconWidth() / 3);
 
     _campaignLevelColor.putIfAbsent(0, () => Colors.green.shade400);
     _campaignLevelColor.putIfAbsent(1, () => Colors.grey);
@@ -104,6 +103,11 @@ class HangmanMainMenuScreenState extends State<HangmanMainMenuScreen>
         });
       }
     }
+
+    Future.delayed(const Duration(milliseconds: 500), () {
+      _scrollController.animateTo(_getBtnSize().height * 8,
+          duration: const Duration(milliseconds: 500), curve: Curves.ease);
+    });
   }
 
   double _getFlameWidth() => _getLevelIconWidth() / 1.75;
@@ -135,36 +139,34 @@ class HangmanMainMenuScreenState extends State<HangmanMainMenuScreen>
           borderColor: Colors.green),
     );
 
-    var mainColumn = SizedBox(
-        width: double.infinity,
-        child: Container(
-            alignment: Alignment.center,
-            width: _getListViewAllWidth(),
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  SizedBox(height: screenDimensions.dimen(11)),
-                  gameTitle,
-                  SizedBox(height: screenDimensions.dimen(14)),
-                  Expanded(
-                    child: SingleChildScrollView(
-                        controller: _scrollController,
-                        child: Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: _createConnectingLinesListView()),
-                            Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: _createButtonsListView())
-                          ],
-                        )),
-                  )
-                ])));
+    var mainColumn = Container(
+        alignment: Alignment.center,
+        width: _getListViewAllWidth(),
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              SizedBox(height: screenDimensions.dimen(11)),
+              gameTitle,
+              SizedBox(height: screenDimensions.dimen(14)),
+              Expanded(
+                child: SingleChildScrollView(
+                    controller: _scrollController,
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: _createConnectingLinesListView()),
+                        Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: _createButtonsListView())
+                      ],
+                    )),
+              )
+            ]));
 
     return Scaffold(
         body: mainColumn,
@@ -185,7 +187,7 @@ class HangmanMainMenuScreenState extends State<HangmanMainMenuScreen>
 
   List<Widget> _createConnectingLinesListView() {
     var containerSize =
-        Size(screenDimensions.dimen(50), screenDimensions.dimen(39));
+        _getBtnSize();
     var lateralMarginWidth =
         _getListViewItemLateralMargin(screenDimensions.dimen(50));
     List<Widget> res = [];
@@ -203,23 +205,28 @@ class HangmanMainMenuScreenState extends State<HangmanMainMenuScreen>
       );
       var cornerRadius =
           Radius.circular(screenDimensions.dimen(index == 0 ? 15 : 0));
-      res.add(_createListViewItemContainer(
-          containerSize,
-          customPaint,
-          BoxDecoration(
+      var decorationImage = DecorationImage(
+        repeat: ImageRepeat.repeatX,
+        image: _campaignLevelTexture.get(elementAt.difficulty.index),
+      );
+      if (index == 0) {
+        res.add(Container(
+          decoration: BoxDecoration(
               borderRadius: BorderRadius.only(
                   topLeft: cornerRadius, topRight: cornerRadius),
-              image: DecorationImage(
-                repeat: ImageRepeat.repeatX,
-                image: _campaignLevelTexture.get(elementAt.difficulty.index),
-              ))));
+              image: decorationImage),
+          height: containerSize.height,
+        ));
+      }
+      res.add(_createListViewItemContainer(
+          containerSize, customPaint, BoxDecoration(image: decorationImage)));
     }
 
     return res;
   }
 
   List<Widget> _createButtonsListView() {
-    var btnSize = Size(screenDimensions.dimen(50), screenDimensions.dimen(39));
+    var btnSize = _getBtnSize();
     var lateralMarginWidth = _getListViewItemLateralMargin(btnSize.width);
     SizedBox lateralMargin = SizedBox(
       width: lateralMarginWidth,
@@ -229,11 +236,9 @@ class HangmanMainMenuScreenState extends State<HangmanMainMenuScreen>
     List<Widget> res = [];
     for (int index = 0; index < allLevels.length; index++) {
       var campaignLevel = allLevels.elementAt(index);
-      var category = campaignLevel.categories.first;
-      var difficulty = campaignLevel.difficulty;
 
-      var levelBtn =
-          _createLevelButton(btnSize, campaignLevel, difficulty, category);
+      var levelBtn = _createLevelButton(btnSize, campaignLevel);
+
       int itemPosition = _getListViewItemPosition(index);
 
       List<Widget> rowChildren = [];
@@ -259,10 +264,18 @@ class HangmanMainMenuScreenState extends State<HangmanMainMenuScreen>
     return res;
   }
 
-  Widget _createLevelButton(Size btnSize, CampaignLevel campaignLevel,
-      QuestionDifficulty difficulty, QuestionCategory category) {
+  Size _getBtnSize() => Size(screenDimensions.dimen(50), screenDimensions.dimen(39));
+
+  Widget _createLevelButton(Size btnSize, CampaignLevel campaignLevel) {
+    var category = campaignLevel.categories.first;
+    var difficulty = campaignLevel.difficulty;
+    int wordsFoundInOneGame = widget._hangmanLocalStorage
+        .getFoundWordsInOneGameForCatDiff(category, difficulty);
     var isMixedCategory = widget._gameQuestionConfig.isMixedCategory(category);
-    var btnText = isMixedCategory ? "" : category.categoryLabel ?? "";
+    var isGameLevelLocked = _isGameLevelLocked(campaignLevel);
+    var btnText = isMixedCategory || isGameLevelLocked
+        ? ""
+        : category.categoryLabel ?? "";
     var buttonSkinConfig = ButtonSkinConfig(
         buttonPressedShadowColor: Colors.transparent,
         buttonUnpressedShadowColor: Colors.transparent,
@@ -273,8 +286,9 @@ class HangmanMainMenuScreenState extends State<HangmanMainMenuScreen>
               isMixedCategory
                   ? ColorUtil.imageToGreyScale(_wallBackgr)
                   : _levelBtnBackground.get(difficulty.index),
-              _createLevelIcon(category, difficulty),
-              _createStarScore()
+              _createLevelIcon(
+                  category, difficulty, wordsFoundInOneGame, isGameLevelLocked),
+              _createStarScore(wordsFoundInOneGame)
             ]));
     var fontConfig = FontConfig(
         fontColor: Colors.black,
@@ -285,11 +299,14 @@ class HangmanMainMenuScreenState extends State<HangmanMainMenuScreen>
             ? 1
             : 2;
     return MyButton(
+      touchable: !isGameLevelLocked,
       fontConfig: fontConfig,
       textMaxLines: textMaxLines,
       size: btnSize,
       text: btnText,
       buttonSkinConfig: buttonSkinConfig,
+      contentLockedConfig:
+          ContentLockedConfig(isContentLocked: isGameLevelLocked),
       onClick: () {
         MyApp.gameScreenManager.currentScreen!.gameScreenManagerState
             .showNewGameScreen(campaignLevel);
@@ -297,36 +314,95 @@ class HangmanMainMenuScreenState extends State<HangmanMainMenuScreen>
     );
   }
 
-  Widget _createLevelIcon(
-      QuestionCategory category, QuestionDifficulty difficulty) {
-    var isMixedCategory = widget._gameQuestionConfig.isMixedCategory(category);
-    List<Widget> children = [
-      isMixedCategory
-          ? _createBombIcon()
-          : _levelIconImgs.get(CategoryDifficulty(category, difficulty)),
-    ];
-    if (true) {
-      children.add(Opacity(opacity: 0.7, child: _levelBtnBackground.get(0)));
-      children.add(Icon(
-        Icons.check,
-        size: _getLevelIconWidth(),
-        color: Colors.green.shade900,
-      ));
+  bool _isGameLevelLocked(CampaignLevel campaignLevel) {
+    int campaignLevelIndex =
+        widget._campaignLevelService.getCampaignLevelIndex(campaignLevel);
+    if (campaignLevelIndex == 0) {
+      return false;
     }
-    return Stack(alignment: Alignment.center, children: children);
+    CampaignLevel prevCampaignLevel =
+        widget._campaignLevelService.allLevels[campaignLevelIndex - 1];
+    int wordsFoundInOneGame = widget._hangmanLocalStorage
+        .getFoundWordsInOneGameForCatDiff(
+            prevCampaignLevel.categories.first, prevCampaignLevel.difficulty);
+    return !_isLevelFinished(wordsFoundInOneGame);
   }
 
-  Widget _createStarScore() {
+  Widget _createLevelIcon(
+      QuestionCategory category,
+      QuestionDifficulty difficulty,
+      int wordsFoundInOneGame,
+      bool isGameLevelLocked) {
+    bool displayIcon = !isGameLevelLocked && !_isExtraContentLocked(difficulty);
+
+    var isMixedCategory = widget._gameQuestionConfig.isMixedCategory(category);
+    List<Widget> buttonStackChildren = [];
+    if (displayIcon) {
+      buttonStackChildren.add(isMixedCategory
+          ? _createBombIcon()
+          : _levelIconImgs.get(CategoryDifficulty(category, difficulty)));
+    }
+    if (!displayIcon && isGameLevelLocked) {
+      buttonStackChildren.add(
+        imageService.getMainImage(
+            imageName: "btn_locked",
+            imageExtension: "png",
+            module: "buttons",
+            maxWidth: _getLevelIconWidth() / 1.2),
+      );
+    }
+    return Stack(alignment: Alignment.center, children: buttonStackChildren);
+  }
+
+  bool _isExtraContentLocked(QuestionDifficulty difficulty) {
+    return MyApp.isExtraContentLocked &&
+        difficulty.index >= widget._gameQuestionConfig.diff2.index;
+  }
+
+  bool _isLevelFinished(int wordsFoundInOneGame) {
+    return wordsFoundInOneGame >
+        (HangmanGameContextService.numberOfQuestionsPerGame / 2).floor();
+  }
+
+  Widget _createStarScore(int wordsFoundInOneGame) {
+    List<Widget> list = [];
+    if (wordsFoundInOneGame == -1) {
+      return Container();
+    }
+    var allWordsFound = wordsFoundInOneGame ==
+        HangmanGameContextService.numberOfQuestionsPerGame;
+    var isLevelFinished = _isLevelFinished(wordsFoundInOneGame);
+    var labelContainerDecoration = BoxDecoration(
+        color: (allWordsFound
+            ? Colors.lightGreenAccent.shade400
+            : (isLevelFinished
+                ? Colors.green.shade50
+                : Colors.redAccent.shade100)),
+        border: Border.all(
+            color: isLevelFinished
+                ? Colors.lightGreenAccent.shade700
+                : Colors.red.shade400,
+            width: FontConfig.standardBorderWidth),
+        borderRadius: BorderRadius.circular(FontConfig.standardBorderRadius));
+    var margin = FontConfig.standardMinMargin;
+    var labelWithPadding = Padding(
+        padding: EdgeInsets.fromLTRB(margin * 2, 0, margin * 2, 0),
+        child: MyText(
+            fontConfig: FontConfig(
+              borderColor: Colors.black,
+              borderWidth: FontConfig.standardBorderWidth * 1.5,
+              fontColor: allWordsFound ? Colors.yellow : Colors.white,
+              fontSize: FontConfig.getCustomFontSize(allWordsFound ? 1.3 : 1.1),
+            ),
+            text: wordsFoundInOneGame.toString() +
+                "/" +
+                HangmanGameContextService.numberOfQuestionsPerGame.toString()));
+    list.add(Container(
+        decoration: labelContainerDecoration, child: labelWithPadding));
     return Positioned(
-        top: screenDimensions.dimen(18),
+        bottom: _getLevelIconWidth(),
         child: Row(
-          children: [
-            _starScore,
-            _starScore,
-            _starScore,
-            _starScore,
-            _starScore
-          ],
+          children: list,
         ));
   }
 
@@ -426,17 +502,22 @@ class LinesPainter extends CustomPainter {
 
     double x1 = xPadding + btnSize.width / 2;
     double x2 = xPadding + ((centerToLeftDisplay ? -1 : 1) * xwLength);
-    double y2 = -btnSize.width /
-        (2 - (centerToLeftDisplay ? variableAngle : variableAngle * -5.0));
+
+    double y1 = 0;
+    double y2 = (-btnSize.height /
+            (2 -
+                (centerToLeftDisplay ? variableAngle : variableAngle * -5.0))) -
+        btnSize.height / 2;
+
     if (index != 0) {
       canvas.drawLine(
-          Offset(x1, btnSize.height / 2),
+          Offset(x1, y1),
           Offset(x2, y2),
           Paint()
             ..strokeWidth = _screenDimensionsService.dimen(10)
             ..color = ColorUtil.colorDarken(lineColor, -0.1));
       canvas.drawLine(
-          Offset(x1, btnSize.height / 2),
+          Offset(x1, y1),
           Offset(x2, y2),
           Paint()
             ..strokeWidth = _screenDimensionsService.dimen(3)

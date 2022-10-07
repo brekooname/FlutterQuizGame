@@ -4,13 +4,16 @@ import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.da
 import 'campaign_level.dart';
 
 abstract class CampaignLevelService {
-
   late List<CampaignLevel> allLevels;
 
   CampaignLevel campaignLevel(
       QuestionDifficulty difficulty, QuestionCategory category) {
     return allLevels.firstWhere((element) =>
-    element.difficulty == difficulty &&
+        element.difficulty == difficulty &&
         element.categories.contains(category));
+  }
+
+  int getCampaignLevelIndex(CampaignLevel campaignLevel) {
+    return allLevels.indexOf(campaignLevel);
   }
 }

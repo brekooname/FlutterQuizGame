@@ -148,7 +148,7 @@ mixin HangmanGameScreen<TQuizQuestionManager extends QuizQuestionManager> {
           ),
           text: letter,
           firstCharUppercase: false,
-          textAllPadding: _screenDimensions.dimen(.65),
+          textAllPadding: _screenDimensions.dimen(.15),
         ));
       }
       lettersRows.add(Row(

@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
 import 'package:flutter_app_quiz_game/Lib/Storage/quiz_game_local_storage.dart';
@@ -17,13 +18,15 @@ class HangmanLocalStorage extends QuizGameLocalStorage {
       QuestionCategory cat, QuestionDifficulty diff) {
     return localStorage
             .getInt(_getFoundWordsInOneGameForCatDiffFieldName(cat, diff)) ??
-        0;
+        -1;
   }
 
   void setFoundWordsInOneGameForCatDiff(
       QuestionCategory cat, QuestionDifficulty diff, int value) {
-    localStorage.setInt(
-        _getFoundWordsInOneGameForCatDiffFieldName(cat, diff), value);
+    if (value > getFoundWordsInOneGameForCatDiff(cat, diff)) {
+      localStorage.setInt(
+          _getFoundWordsInOneGameForCatDiffFieldName(cat, diff), value);
+    }
   }
 
   String _getFoundWordsInOneGameForCatDiffFieldName(
@@ -42,7 +45,7 @@ class HangmanLocalStorage extends QuizGameLocalStorage {
     for (var diff in gameConfig.questionDifficulties) {
       for (var cat in gameConfig.questionCategories) {
         localStorage.setInt(
-            _getFoundWordsInOneGameForCatDiffFieldName(cat, diff), 0);
+            _getFoundWordsInOneGameForCatDiffFieldName(cat, diff), -1);
       }
     }
   }
