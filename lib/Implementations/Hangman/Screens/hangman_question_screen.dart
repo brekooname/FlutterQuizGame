@@ -19,10 +19,11 @@ import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
 import '../../../Game/Question/Model/question_info_status.dart';
 import '../../../Lib/Color/color_util.dart';
 
-class HangmanQuestionScreen extends GameScreen<
-    HangmanGameContext,
-    HangmanScreenManagerState,
-    HangmanCampaignLevelService> with HangmanGameScreen<QuizQuestionManager> {
+class HangmanQuestionScreen extends GameScreen<HangmanGameContext,
+        HangmanScreenManagerState, HangmanCampaignLevelService>
+    with
+        HangmanGameScreen<
+            QuizQuestionManager<HangmanGameContext, HangmanLocalStorage>> {
   HangmanQuestionScreen(
     HangmanScreenManagerState gameScreenManagerState, {
     Key? key,
@@ -229,5 +230,18 @@ class HangmanQuestionScreenState extends State<HangmanQuestionScreen>
 
   void setStateCallback() {
     setState(() {});
+  }
+
+  @override
+  void dispose() {
+    if (widget.gameContext.gameUser.getOpenQuestions().isEmpty) {
+      widget.quizQuestionManager.quizGameLocalStorage
+          .setFoundWordsInOneGameForCatDiff(
+              widget.category,
+              widget.difficulty,
+              widget.gameContext.gameUser
+                  .countAllQuestions([QuestionInfoStatus.won]));
+    }
+    super.dispose();
   }
 }

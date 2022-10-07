@@ -274,7 +274,7 @@ class HangmanMainMenuScreenState extends State<HangmanMainMenuScreen>
                   ? ColorUtil.imageToGreyScale(_wallBackgr)
                   : _levelBtnBackground.get(difficulty.index),
               _createLevelIcon(category, difficulty),
-              // _createStarScore()
+              _createStarScore()
             ]));
     var fontConfig = FontConfig(
         fontColor: Colors.black,
