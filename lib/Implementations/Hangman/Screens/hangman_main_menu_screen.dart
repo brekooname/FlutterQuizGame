@@ -5,6 +5,7 @@ import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
 import 'package:flutter_app_quiz_game/Implementations/Hangman/Constants/hangman_campaign_level_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/Hangman/Constants/hangman_game_question_config.dart';
+import 'package:flutter_app_quiz_game/Implementations/Hangman/Service/hangman_game_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/Hangman/Service/hangman_local_storage.dart';
 import 'package:flutter_app_quiz_game/Implementations/Hangman/Service/hangman_screen_manager.dart';
 import 'package:flutter_app_quiz_game/Lib/Animation/animation_zoom_in_zoom_out.dart';
@@ -27,6 +28,7 @@ import '../Service/hangman_gamecontext_service.dart';
 
 class HangmanMainMenuScreen extends StandardScreen<HangmanScreenManagerState> {
   final HangmanLocalStorage _hangmanLocalStorage = HangmanLocalStorage();
+  final HangmanGameService _hangmanGameService = HangmanGameService();
   final HangmanGameQuestionConfig _gameQuestionConfig =
       HangmanGameQuestionConfig();
   final HangmanCampaignLevelService _campaignLevelService =
@@ -104,10 +106,17 @@ class HangmanMainMenuScreenState extends State<HangmanMainMenuScreen>
       }
     }
 
-    Future.delayed(const Duration(milliseconds: 500), () {
-      _scrollController.animateTo(_getBtnSize().height * 8,
-          duration: const Duration(milliseconds: 500), curve: Curves.ease);
-    });
+    var firstGameLevelLocked =
+        widget._hangmanGameService.getFirstGameLevelLocked();
+    if (firstGameLevelLocked > 1) {
+      Future.delayed(const Duration(milliseconds: 500), () {
+        _scrollController.animateTo(
+            _getBtnSize().height * firstGameLevelLocked -
+                _getBtnSize().height * 2,
+            duration: const Duration(milliseconds: 500),
+            curve: Curves.ease);
+      });
+    }
   }
 
   double _getFlameWidth() => _getLevelIconWidth() / 1.75;
@@ -186,8 +195,7 @@ class HangmanMainMenuScreenState extends State<HangmanMainMenuScreen>
   }
 
   List<Widget> _createConnectingLinesListView() {
-    var containerSize =
-        _getBtnSize();
+    var containerSize = _getBtnSize();
     var lateralMarginWidth =
         _getListViewItemLateralMargin(screenDimensions.dimen(50));
     List<Widget> res = [];
@@ -264,7 +272,8 @@ class HangmanMainMenuScreenState extends State<HangmanMainMenuScreen>
     return res;
   }
 
-  Size _getBtnSize() => Size(screenDimensions.dimen(50), screenDimensions.dimen(39));
+  Size _getBtnSize() =>
+      Size(screenDimensions.dimen(50), screenDimensions.dimen(39));
 
   Widget _createLevelButton(Size btnSize, CampaignLevel campaignLevel) {
     var category = campaignLevel.categories.first;
@@ -272,7 +281,8 @@ class HangmanMainMenuScreenState extends State<HangmanMainMenuScreen>
     int wordsFoundInOneGame = widget._hangmanLocalStorage
         .getFoundWordsInOneGameForCatDiff(category, difficulty);
     var isMixedCategory = widget._gameQuestionConfig.isMixedCategory(category);
-    var isGameLevelLocked = _isGameLevelLocked(campaignLevel);
+    var isGameLevelLocked =
+        widget._hangmanGameService.isGameLevelLocked(campaignLevel);
     var btnText = isMixedCategory || isGameLevelLocked
         ? ""
         : category.categoryLabel ?? "";
@@ -314,20 +324,6 @@ class HangmanMainMenuScreenState extends State<HangmanMainMenuScreen>
     );
   }
 
-  bool _isGameLevelLocked(CampaignLevel campaignLevel) {
-    int campaignLevelIndex =
-        widget._campaignLevelService.getCampaignLevelIndex(campaignLevel);
-    if (campaignLevelIndex == 0) {
-      return false;
-    }
-    CampaignLevel prevCampaignLevel =
-        widget._campaignLevelService.allLevels[campaignLevelIndex - 1];
-    int wordsFoundInOneGame = widget._hangmanLocalStorage
-        .getFoundWordsInOneGameForCatDiff(
-            prevCampaignLevel.categories.first, prevCampaignLevel.difficulty);
-    return !_isLevelFinished(wordsFoundInOneGame);
-  }
-
   Widget _createLevelIcon(
       QuestionCategory category,
       QuestionDifficulty difficulty,
@@ -359,11 +355,6 @@ class HangmanMainMenuScreenState extends State<HangmanMainMenuScreen>
         difficulty.index >= widget._gameQuestionConfig.diff2.index;
   }
 
-  bool _isLevelFinished(int wordsFoundInOneGame) {
-    return wordsFoundInOneGame >
-        (HangmanGameContextService.numberOfQuestionsPerGame / 2).floor();
-  }
-
   Widget _createStarScore(int wordsFoundInOneGame) {
     List<Widget> list = [];
     if (wordsFoundInOneGame == -1) {
@@ -371,7 +362,8 @@ class HangmanMainMenuScreenState extends State<HangmanMainMenuScreen>
     }
     var allWordsFound = wordsFoundInOneGame ==
         HangmanGameContextService.numberOfQuestionsPerGame;
-    var isLevelFinished = _isLevelFinished(wordsFoundInOneGame);
+    var isLevelFinished =
+        widget._hangmanGameService.isLevelFinished(wordsFoundInOneGame);
     var labelContainerDecoration = BoxDecoration(
         color: (allWordsFound
             ? Colors.lightGreenAccent.shade400

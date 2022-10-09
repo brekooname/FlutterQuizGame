@@ -5,6 +5,7 @@ import 'package:flutter_app_quiz_game/Game/Question/Model/question_info.dart';
 import 'package:flutter_app_quiz_game/Implementations/Hangman/Components/hangman_smoke_animation.dart';
 import 'package:flutter_app_quiz_game/Implementations/Hangman/Constants/hangman_campaign_level_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/Hangman/Questions/hangman_game_context.dart';
+import 'package:flutter_app_quiz_game/Implementations/Hangman/Service/hangman_gamecontext_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/Hangman/Service/hangman_local_storage.dart';
 import 'package:flutter_app_quiz_game/Implementations/Hangman/Service/hangman_screen_manager.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/hint_button.dart';
@@ -17,13 +18,17 @@ import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
 
 import '../../../Game/Question/Model/question_info_status.dart';
+import '../../../Lib/Animation/animation_fade_in_fade_out_text.dart';
 import '../../../Lib/Color/color_util.dart';
+import '../Service/hangman_game_service.dart';
 
 class HangmanQuestionScreen extends GameScreen<HangmanGameContext,
         HangmanScreenManagerState, HangmanCampaignLevelService>
     with
         HangmanGameScreen<
             QuizQuestionManager<HangmanGameContext, HangmanLocalStorage>> {
+  final HangmanGameService _hangmanGameService = HangmanGameService();
+
   HangmanQuestionScreen(
     HangmanScreenManagerState gameScreenManagerState, {
     Key? key,
@@ -67,6 +72,8 @@ class HangmanQuestionScreenState extends State<HangmanQuestionScreen>
   late final Map<int, Image> _hImages = {};
   late final Map<int, Image> _skybImages = {};
 
+  late final bool _onInitLevelIsAlreadyFinished;
+
   @override
   void initState() {
     super.initState();
@@ -88,6 +95,9 @@ class HangmanQuestionScreenState extends State<HangmanQuestionScreen>
         imageExtension: "png",
         module: "game",
         maxWidth: screenDimensions.dimen(100));
+
+    _onInitLevelIsAlreadyFinished =
+        widget._hangmanGameService.isLevelFinished(_getNrOfWonQuestions());
   }
 
   Image _getEmojiImage(String imgName) {
@@ -119,19 +129,54 @@ class HangmanQuestionScreenState extends State<HangmanQuestionScreen>
     if (widget.gameContext.gameUser.getOpenQuestions().isEmpty) {
       widget.quizQuestionManager.quizGameLocalStorage
           .setFoundWordsInOneGameForCatDiff(
-              widget.category,
-              widget.difficulty,
-              widget.gameContext.gameUser
-                  .countAllQuestions([QuestionInfoStatus.won]));
+              widget.category, widget.difficulty, _getNrOfWonQuestions());
     }
 
-    return Column(children: [
-      _createBackgroundWithHangmanImage(),
-      widget.createWordContainer(),
-      widget.createLettersRows(setStateCallback, widget.goToNextGameScreen,
-          label.l_a_b_c_d_e_f_g_h_i_j_k_l_m_n_o_p_q_r_s_t_u_v_w_x_y_z)
+    return Stack(alignment: Alignment.center, children: [
+      Column(children: [
+        _createBackgroundWithHangmanImage(),
+        widget.createWordContainer(),
+        widget.createLettersRows(setStateCallback, widget.goToNextGameScreen,
+            label.l_a_b_c_d_e_f_g_h_i_j_k_l_m_n_o_p_q_r_s_t_u_v_w_x_y_z)
+      ]),
+      _getAchievementAnimation() ?? Container()
     ]);
   }
+
+  Widget? _getAchievementAnimation() {
+    double imgSizeDimen = screenDimensions.dimen(30);
+    if (!widget.currentQuestionInfo.isQuestionOpen()) {
+      String? achievementImgName;
+      var nrOfWonQuestions = _getNrOfWonQuestions();
+      if (nrOfWonQuestions ==
+          HangmanGameContextService.numberOfQuestionsPerGame) {
+        achievementImgName = "achv_all_words_found";
+      } else if (!_onInitLevelIsAlreadyFinished &&
+          widget._hangmanGameService.isLevelFinished(nrOfWonQuestions)) {
+        achievementImgName = "achv_level_finished";
+      }
+      if (achievementImgName != null) {
+        var image = widget.imageService.getSpecificImage(
+            imageName: achievementImgName,
+            imageExtension: "png",
+            maxHeight: imgSizeDimen,
+            module: "game");
+        return SizedBox(
+            width: imgSizeDimen,
+            height: imgSizeDimen,
+            child: AnimateFadeInFadeOut(
+              key: Key(achievementImgName),
+              duration: widget.quizQuestionManager.durationGoToNextScreen,
+              onlyFadeOut: true,
+              toAnimateWidget: image,
+            ));
+      }
+    }
+    return null;
+  }
+
+  int _getNrOfWonQuestions() =>
+      widget.gameContext.gameUser.countAllQuestions([QuestionInfoStatus.won]);
 
   Widget _createAnsweredQuestionsHeader() {
     var hintButton = HintButton(
@@ -149,20 +194,20 @@ class HangmanQuestionScreenState extends State<HangmanQuestionScreen>
     var allQuestions = widget.gameContext.gameUser.getAllQuestions([]);
     allQuestions.sort((a, b) => (a.questionAnsweredAt ?? DateTime.now())
         .compareTo(b.questionAnsweredAt ?? DateTime.now()));
-    for (int i = 0; i < allQuestions.length; i++) {
+    var allQLength = allQuestions.length;
+    for (int i = 0; i < allQLength; i++) {
       var item = allQuestions.elementAt(i);
       var emojiIcon = item.status == QuestionInfoStatus.won
           ? _emojiHappy
           : item.status == QuestionInfoStatus.lost
               ? _emojiDead
               : ColorUtil.imageToGreyScale(_emojiNothing);
-      rowItems.add(
-        Opacity(
-            opacity: 0.7,
-            child: Padding(
-                padding: EdgeInsets.all(screenDimensions.dimen(1)),
-                child: emojiIcon)),
-      );
+
+      rowItems.add(Opacity(
+          opacity: 0.7,
+          child: Padding(
+              padding: EdgeInsets.all(screenDimensions.dimen(1)),
+              child: emojiIcon)));
     }
     rowItems.add(const Spacer());
     rowItems.add(Padding(padding: hintBtnLateralPadding, child: hintButton));

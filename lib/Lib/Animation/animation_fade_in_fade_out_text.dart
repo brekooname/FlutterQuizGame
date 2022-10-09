@@ -29,7 +29,9 @@ class MyAnimatedWidgetState extends State<AnimateFadeInFadeOut>
   late Animation<double> _animation;
   late AnimationController _controller;
 
-  void startAnimation() {
+  @override
+  void initState() {
+    super.initState();
     _controller = AnimationController(duration: widget.duration, vsync: this);
     _animation = CurvedAnimation(parent: _controller, curve: Curves.ease);
     _animation.addStatusListener((status) {
@@ -46,7 +48,6 @@ class MyAnimatedWidgetState extends State<AnimateFadeInFadeOut>
 
   @override
   Widget build(BuildContext context) {
-    startAnimation();
     return InternalAnimatedWidget(
         duration: widget.duration,
         onlyFadeOut: widget.onlyFadeOut,

@@ -248,10 +248,10 @@ class MyAppState extends State<MyApp> with WidgetsBindingObserver {
       ////
       widgetToShow = _createScreen(MyApp.gameScreenManager);
       ////
-      // Future.delayed(const Duration(milliseconds: 100), () {
-      //   MyApp.gameScreenManager.currentScreen!.gameScreenManagerState
-      //       .showNewGameScreen(MyApp.campaignLevel);
-      // });
+      Future.delayed(const Duration(milliseconds: 100), () {
+        MyApp.gameScreenManager.currentScreen!.gameScreenManagerState
+            .showNewGameScreen(MyApp.campaignLevel);
+      });
       ////
       //
       ////
