@@ -12,6 +12,7 @@ class GameTitle extends StatelessWidget {
   final double? backgroundImageOpacity;
   final Color? backgroundColor;
   final Shadow? textShadow;
+  final Widget? backgroundImageWidget;
   late final double? textWidth;
 
   GameTitle({
@@ -22,6 +23,7 @@ class GameTitle extends StatelessWidget {
     this.backgroundImagePath,
     this.backgroundImageOpacity,
     this.backgroundColor,
+    this.backgroundImageWidget,
     double? backgroundImageWidth,
     double? textWidth,
   }) : super(key: key) {
@@ -34,16 +36,17 @@ class GameTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     var imageWithText =
         Stack(alignment: AlignmentDirectional.center, children: <Widget>[
-      backgroundImagePath == null
-          ? const SizedBox()
-          : Opacity(
-              opacity: backgroundImageOpacity ?? 1,
-              child: Image.asset(
-                backgroundImagePath!,
-                fit: BoxFit.fitWidth,
-                alignment: Alignment.center,
-                width: backgroundImageWidth,
-              )),
+      backgroundImageWidget ??
+          (backgroundImagePath == null
+              ? const SizedBox()
+              : Opacity(
+                  opacity: backgroundImageOpacity ?? 1,
+                  child: Image.asset(
+                    backgroundImagePath!,
+                    fit: BoxFit.fitWidth,
+                    alignment: Alignment.center,
+                    width: backgroundImageWidth,
+                  ))),
       MyText(
         text: text,
         textShadow: textShadow,

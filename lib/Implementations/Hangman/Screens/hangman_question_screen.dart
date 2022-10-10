@@ -18,7 +18,7 @@ import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
 
 import '../../../Game/Question/Model/question_info_status.dart';
-import '../../../Lib/Animation/animation_fade_in_fade_out_text.dart';
+import '../../../Lib/Animation/animation_fade_in_fade_out.dart';
 import '../../../Lib/Color/color_util.dart';
 import '../Service/hangman_game_service.dart';
 

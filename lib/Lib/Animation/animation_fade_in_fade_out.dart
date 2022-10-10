@@ -85,7 +85,7 @@ class InternalAnimatedWidget extends AnimatedWidget {
             : this.duration.inMilliseconds);
     return AnimatedOpacity(
         duration: duration,
-        opacity: Tween<double>(begin: 1, end: onlyFadeOut ? 0 : 0.1)
+        opacity: Tween<double>(begin: 1, end: onlyFadeOut ? 0 : 0)
             .evaluate(animation),
         child: toAnimateWidget);
   }

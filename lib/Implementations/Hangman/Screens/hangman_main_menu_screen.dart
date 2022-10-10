@@ -8,6 +8,7 @@ import 'package:flutter_app_quiz_game/Implementations/Hangman/Constants/hangman_
 import 'package:flutter_app_quiz_game/Implementations/Hangman/Service/hangman_game_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/Hangman/Service/hangman_local_storage.dart';
 import 'package:flutter_app_quiz_game/Implementations/Hangman/Service/hangman_screen_manager.dart';
+import 'package:flutter_app_quiz_game/Lib/Animation/animation_fade_in_fade_out.dart';
 import 'package:flutter_app_quiz_game/Lib/Animation/animation_zoom_in_zoom_out.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/button_skin_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/floating_button.dart';
@@ -65,7 +66,7 @@ class HangmanMainMenuScreenState extends State<HangmanMainMenuScreen>
     _bomb = _getCampaignRes("bomb", "campaign", _getLevelIconWidth() / 1.5);
     _flame = _getCampaignRes("flames", "campaign", _getFlameWidth());
 
-    _campaignLevelColor.putIfAbsent(0, () => Colors.green.shade400);
+    _campaignLevelColor.putIfAbsent(0, () => Colors.lightGreen);
     _campaignLevelColor.putIfAbsent(1, () => Colors.grey);
     _campaignLevelColor.putIfAbsent(2, () => Colors.orange);
     _campaignLevelColor.putIfAbsent(3, () => Colors.yellow);
@@ -109,11 +110,11 @@ class HangmanMainMenuScreenState extends State<HangmanMainMenuScreen>
     var firstGameLevelLocked =
         widget._hangmanGameService.getFirstGameLevelLocked();
     if (firstGameLevelLocked > 1) {
-      Future.delayed(const Duration(milliseconds: 500), () {
+      Future.delayed(const Duration(milliseconds: 200), () {
         _scrollController.animateTo(
             _getBtnSize().height * firstGameLevelLocked -
                 _getBtnSize().height * 2,
-            duration: const Duration(milliseconds: 500),
+            duration: const Duration(milliseconds: 200),
             curve: Curves.ease);
       });
     }
@@ -138,54 +139,75 @@ class HangmanMainMenuScreenState extends State<HangmanMainMenuScreen>
   @override
   Widget build(BuildContext context) {
     debugPrint("build main menu");
+    var backgroundImgWidth = screenDimensions.dimen(90);
     var gameTitle = GameTitle(
       text: MyApp.appTitle,
-      backgroundImageWidth: screenDimensions.dimen(70),
+      backgroundImageWidget: Stack(children: [
+        Positioned(
+            top: screenDimensions.dimen(30),
+            child: AnimateFadeInFadeOut(
+                duration: const Duration(seconds: 2),
+                toAnimateWidget: imageService.getSpecificImage(
+                    imageName: "title_rays",
+                    imageExtension: "png",
+                    maxWidth: backgroundImgWidth))),
+        imageService.getSpecificImage(
+            imageName: "title_clouds_background",
+            imageExtension: "png",
+            maxWidth: backgroundImgWidth)
+      ]),
+      backgroundImageWidth: backgroundImgWidth,
       fontConfig: FontConfig(
           fontColor: Colors.white,
           fontWeight: FontWeight.normal,
-          fontSize: FontConfig.getCustomFontSize(3),
+          fontSize: FontConfig.getCustomFontSize(2),
           borderColor: Colors.black),
     );
 
     var mainColumn = Container(
         alignment: Alignment.center,
         width: screenDimensions.dimen(100),
-        child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              SizedBox(height: screenDimensions.dimen(11)),
+        child: Stack(alignment: Alignment.center, children: [
+          Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                SizedBox(height: screenDimensions.dimen(45)),
+                Expanded(
+                  child: Container(
+                      decoration: BoxDecoration(
+                          color: Colors.green.shade100.withOpacity(0.8),
+                          borderRadius: _getListviewTopBorder(),
+                          boxShadow: [
+                            BoxShadow(
+                                color: Colors.grey.withOpacity(0.1),
+                                spreadRadius: screenDimensions.dimen(1),
+                                blurRadius: FontConfig.standardShadowRadius)
+                          ]),
+                      child: SingleChildScrollView(
+                          controller: _scrollController,
+                          child: Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: _createConnectingLinesListView()),
+                              Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: _createButtonsListView())
+                            ],
+                          ))),
+                )
+              ]),
+          Column(
+            children: [
+              SizedBox(height: screenDimensions.dimen(5)),
               gameTitle,
-              SizedBox(height: screenDimensions.dimen(14)),
-              Expanded(
-                child: Container(
-                    decoration: BoxDecoration(
-                        color: Colors.green.shade100.withOpacity(0.8),
-                        borderRadius: _getListviewTopBorder(),
-                        boxShadow: [
-                          BoxShadow(
-                              color: Colors.grey.withOpacity(0.1),
-                              spreadRadius: screenDimensions.dimen(1),
-                              blurRadius: FontConfig.standardShadowRadius)
-                        ]),
-                    child: SingleChildScrollView(
-                        controller: _scrollController,
-                        child: Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: _createConnectingLinesListView()),
-                            Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: _createButtonsListView())
-                          ],
-                        ))),
-              )
-            ]));
+            ],
+          )
+        ]));
 
     return Scaffold(
         body: SizedBox(width: double.infinity, child: mainColumn),
@@ -285,7 +307,7 @@ class HangmanMainMenuScreenState extends State<HangmanMainMenuScreen>
   }
 
   Size _getBtnSize() =>
-      Size(screenDimensions.dimen(50), screenDimensions.dimen(39));
+      Size(screenDimensions.dimen(50), screenDimensions.dimen(32));
 
   Widget _createLevelButton(Size btnSize, CampaignLevel campaignLevel) {
     var category = campaignLevel.categories.first;
@@ -490,7 +512,7 @@ class LinesPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     //Larger value shows the liner higher
-    double variableAngle = 0.1;
+    double variableAngle = 0.5;
 
     var centerToLeftDisplay = itemPosition == 1 || (index + 2) % 4 == 0;
 
@@ -510,23 +532,31 @@ class LinesPainter extends CustomPainter {
 
     double y1 = 0;
     double y2 = (-btnSize.height /
-            (2 -
-                (centerToLeftDisplay ? variableAngle : variableAngle * -5.0))) -
+            (2 - (centerToLeftDisplay ? variableAngle : variableAngle * 0.0))) -
         btnSize.height / 2;
 
     if (index != 0) {
+      var strokeWidth = _screenDimensionsService.dimen(10);
       canvas.drawLine(
           Offset(x1, y1),
           Offset(x2, y2),
           Paint()
-            ..strokeWidth = _screenDimensionsService.dimen(10)
+            ..strokeWidth = strokeWidth
             ..color = ColorUtil.colorDarken(lineColor, -0.1));
+      var marginColor = ColorUtil.colorDarken(lineColor, 0.2);
+      var marginStrokeWidth = _screenDimensionsService.dimen(1);
       canvas.drawLine(
-          Offset(x1, y1),
-          Offset(x2, y2),
+          Offset(x1 - strokeWidth / 2, y1),
+          Offset(x2 + -strokeWidth / 2, y2),
           Paint()
-            ..strokeWidth = _screenDimensionsService.dimen(3)
-            ..color = ColorUtil.colorDarken(lineColor, 0.075));
+            ..strokeWidth = marginStrokeWidth
+            ..color = marginColor);
+      canvas.drawLine(
+          Offset(x1 + strokeWidth / 2, y1),
+          Offset(x2 - -strokeWidth / 2, y2),
+          Paint()
+            ..strokeWidth = marginStrokeWidth
+            ..color = marginColor);
     }
   }
 

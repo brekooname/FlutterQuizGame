@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_info.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_info_status.dart';
 import 'package:flutter_app_quiz_game/Implementations/IqGame/Questions/iq_game_context.dart';
-import 'package:flutter_app_quiz_game/Lib/Animation/animation_fade_in_fade_out_text.dart';
+import 'package:flutter_app_quiz_game/Lib/Animation/animation_fade_in_fade_out.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/button_skin_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/map_extension.dart';
