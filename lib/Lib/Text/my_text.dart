@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Lib/Extensions/string_extension.dart';
 import 'package:flutter_app_quiz_game/Lib/Font/font_config.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_app_quiz_game/main.dart';
 
 class MyText extends StatelessWidget {
   final MyTextService _myTextCreatorService = MyTextService();
@@ -168,7 +168,7 @@ class MyTextService {
       textScaleFactor: 1,
       overflow: TextOverflow.visible,
       textAlign: textAlign,
-      style: GoogleFonts.roboto(textStyle: textStyle),
+      style: MyApp.appId.gameConfig.googleFonts(textStyle),
     );
   }
 

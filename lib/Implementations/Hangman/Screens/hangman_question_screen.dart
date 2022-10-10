@@ -35,10 +35,12 @@ class HangmanQuestionScreen extends GameScreen<HangmanGameContext,
     required HangmanGameContext gameContext,
     required QuestionInfo questionInfo,
   }) : super(gameScreenManagerState, gameContext, [questionInfo], key: key) {
-    initHangmanGameScreen(
-        QuizQuestionManager<HangmanGameContext, HangmanLocalStorage>(
-            gameContext, currentQuestionInfo, HangmanLocalStorage()));
+    initHangmanGameScreen(HangmanQuizQuestionManager(
+        gameContext, currentQuestionInfo, HangmanLocalStorage()));
   }
+
+  @override
+  ImageRepeat? get backgroundTextureRepeat => null;
 
   @override
   HangmanCampaignLevelService get campaignLevelService =>
@@ -139,11 +141,11 @@ class HangmanQuestionScreenState extends State<HangmanQuestionScreen>
         widget.createLettersRows(setStateCallback, widget.goToNextGameScreen,
             label.l_a_b_c_d_e_f_g_h_i_j_k_l_m_n_o_p_q_r_s_t_u_v_w_x_y_z)
       ]),
-      _getAchievementAnimation() ?? Container()
+      _processAchievementAnimation() ?? Container()
     ]);
   }
 
-  Widget? _getAchievementAnimation() {
+  Widget? _processAchievementAnimation() {
     double imgSizeDimen = screenDimensions.dimen(30);
     if (!widget.currentQuestionInfo.isQuestionOpen()) {
       String? achievementImgName;
@@ -151,9 +153,13 @@ class HangmanQuestionScreenState extends State<HangmanQuestionScreen>
       if (nrOfWonQuestions ==
           HangmanGameContextService.numberOfQuestionsPerGame) {
         achievementImgName = "achv_all_words_found";
+        widget.audioPlayer.playSuccess2();
       } else if (!_onInitLevelIsAlreadyFinished &&
           widget._hangmanGameService.isLevelFinished(nrOfWonQuestions)) {
         achievementImgName = "achv_level_finished";
+        widget.audioPlayer.playSuccess();
+      } else if (widget.currentQuestionInfo.status == QuestionInfoStatus.won) {
+        widget.audioPlayer.playClick2();
       }
       if (achievementImgName != null) {
         var image = widget.imageService.getSpecificImage(
@@ -288,4 +294,16 @@ class HangmanQuestionScreenState extends State<HangmanQuestionScreen>
   void setStateCallback() {
     setState(() {});
   }
+}
+
+class HangmanQuizQuestionManager
+    extends QuizQuestionManager<HangmanGameContext, HangmanLocalStorage> {
+  HangmanQuizQuestionManager(
+      HangmanGameContext gameContext,
+      QuestionInfo currentQuestionInfo,
+      HangmanLocalStorage quizGameLocalStorage)
+      : super(gameContext, currentQuestionInfo, quizGameLocalStorage);
+
+  @override
+  void playSuccessAudio() => "";
 }

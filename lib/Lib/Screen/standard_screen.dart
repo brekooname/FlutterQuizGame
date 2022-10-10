@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../main.dart';
 import '../Ads/ad_service.dart';
 import '../Audio/my_audio_player.dart';
 import '../Image/image_service.dart';
@@ -21,4 +22,7 @@ abstract class StandardScreen<
   Color? get screenBackgroundColor => null;
 
   Gradient? get screenBackgroundGradient => null;
+
+  ImageRepeat? get backgroundTextureRepeat =>
+      MyApp.appId.gameConfig.backgroundTextureRepeat;
 }

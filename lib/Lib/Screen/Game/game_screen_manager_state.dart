@@ -63,11 +63,16 @@ mixin GameScreenManagerState<TGameContext extends GameContext> {
       },
       child: currentScreen,
     )));
-    var boxDecoration = BoxDecoration(
-        image: DecorationImage(
-      repeat: MyApp.appId.gameConfig.backgroundTextureRepeat,
-      image: MyApp.backgroundTexture.image,
-    ));
+    BoxDecoration? boxDecoration;
+    ImageRepeat? textureRepeat = currentScreen.backgroundTextureRepeat;
+    if (textureRepeat != null) {
+      boxDecoration = BoxDecoration(
+          image: DecorationImage(
+        repeat: textureRepeat,
+        image: MyApp.backgroundTexture.image,
+      ));
+    }
+
     var screenContainerWithDecoration = Container(
       decoration: boxDecoration,
       alignment: Alignment.center,
@@ -92,6 +97,7 @@ mixin GameScreenManagerState<TGameContext extends GameContext> {
         ),
       ),
     );
+
     return Container(
       decoration: BoxDecoration(
           gradient: currentScreen.screenBackgroundGradient,

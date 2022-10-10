@@ -13,7 +13,7 @@ import '../../../../Game/Constants/hint_button_type.dart';
 
 class QuizQuestionManager<TGameContext extends GameContext,
     TQuizGameLocalStorage extends QuizGameLocalStorage> {
-  final MyAudioPlayer _audioPlayer = MyAudioPlayer();
+  final MyAudioPlayer audioPlayer = MyAudioPlayer();
   final TGameContext gameContext;
   final QuestionInfo currentQuestionInfo;
   final TQuizGameLocalStorage quizGameLocalStorage;
@@ -82,9 +82,9 @@ class QuizQuestionManager<TGameContext extends GameContext,
 
   void executeOnPressedCorrectAnswer() => playSuccessAudio();
 
-  void playSuccessAudio() => _audioPlayer.playSuccess();
+  void playSuccessAudio() => audioPlayer.playSuccess();
 
-  void executeOnPressedWrongAnswer() => _audioPlayer.playFail();
+  void executeOnPressedWrongAnswer() => audioPlayer.playFail();
 
   void _processGameFinished(VoidCallback goToNextScreenAfterPress) {
     var question = currentQuestionInfo.question;

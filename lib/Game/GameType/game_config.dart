@@ -7,6 +7,7 @@ import 'package:flutter_app_quiz_game/Lib/Constants/contrast.dart';
 import 'package:flutter_app_quiz_game/Lib/Constants/language.dart';
 import 'package:flutter_app_quiz_game/Lib/Constants/screen_orientation.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen_manager.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'game_question_config.dart';
 
@@ -34,7 +35,11 @@ abstract class GameConfig {
 
   GameScreenManager get gameScreenManager;
 
-  ImageRepeat get backgroundTextureRepeat => ImageRepeat.repeat;
+  ImageRepeat? get backgroundTextureRepeat => ImageRepeat.repeat;
+
+  TextStyle googleFonts(TextStyle textStyle) {
+    return GoogleFonts.roboto(textStyle: textStyle);
+  }
 
   List<QuestionCategory> get questionCategories =>
       gameQuestionConfig.categories;

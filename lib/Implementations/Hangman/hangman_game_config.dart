@@ -6,6 +6,7 @@ import 'package:flutter_app_quiz_game/Game/Question/question_collector_service.d
 import 'package:flutter_app_quiz_game/Implementations/Hangman/Service/hangman_screen_manager.dart';
 import 'package:flutter_app_quiz_game/Lib/Constants/language.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen_manager.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'Constants/hangman_game_question_config.dart';
 import 'Questions/AllContent/hangman_all_questions.dart';
@@ -35,7 +36,12 @@ class HangmanGameConfig extends GameConfig {
       HangmanScreenManager(key: UniqueKey());
 
   @override
-  ImageRepeat get backgroundTextureRepeat => ImageRepeat.noRepeat;
+  TextStyle googleFonts(TextStyle textStyle) {
+    return GoogleFonts.pangolin(textStyle: textStyle);
+  }
+
+  @override
+  ImageRepeat? get backgroundTextureRepeat => ImageRepeat.repeat;
 
   @override
   Color get defaultScreenBackgroundColor => const Color.fromRGBO(

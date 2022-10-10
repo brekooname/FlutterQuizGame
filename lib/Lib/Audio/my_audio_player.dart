@@ -16,6 +16,15 @@ class MyAudioPlayer {
 
   MyAudioPlayer.internal();
 
+  Future<void> playSuccess2(
+      {String? audioPlayerId, bool loop = false, double? playSpeed}) async {
+    await _playSound(
+        assetName: "level_success2",
+        loop: loop,
+        audioPlayerId: audioPlayerId,
+        playSpeed: playSpeed);
+  }
+
   Future<void> playSuccess(
       {String? audioPlayerId, bool loop = false, double? playSpeed}) async {
     await _playSound(
@@ -31,6 +40,10 @@ class MyAudioPlayer {
 
   Future<void> playClick() async {
     await _playSound(assetName: "click");
+  }
+
+  Future<void> playClick2() async {
+    await _playSound(assetName: "click2");
   }
 
   Future<void> playBackgroundMusic() async {
