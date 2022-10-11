@@ -315,9 +315,12 @@ class HangmanMainMenuScreenState extends State<HangmanMainMenuScreen>
     int wordsFoundInCampaignLevel = widget._hangmanLocalStorage
         .getFoundWordsInOneGameForCatDiff(category, difficulty);
     var isMixedCategory = widget._gameQuestionConfig.isMixedCategory(category);
+    var isExtraContentLocked = MyApp.isExtraContentLocked &&
+        campaignLevel.difficulty.index > widget._gameQuestionConfig.diff2.index;
     var isGameLevelLocked =
-        widget._hangmanGameService.isGameLevelLocked(campaignLevel);
-    var btnText = isMixedCategory || isGameLevelLocked
+        widget._hangmanGameService.isGameLevelLocked(campaignLevel) &&
+            !isExtraContentLocked;
+    var btnText = isMixedCategory || isGameLevelLocked || isExtraContentLocked
         ? ""
         : category.categoryLabel ?? "";
     var buttonSkinConfig = ButtonSkinConfig(
@@ -331,7 +334,7 @@ class HangmanMainMenuScreenState extends State<HangmanMainMenuScreen>
                   ? ColorUtil.imageToGreyScale(_wallBackgr)
                   : _levelBtnBackground.get(difficulty.index),
               _createLevelIcon(category, difficulty, wordsFoundInCampaignLevel,
-                  isGameLevelLocked),
+                  isGameLevelLocked, isExtraContentLocked),
               _createStarScore(wordsFoundInCampaignLevel)
             ]));
     var fontConfig = FontConfig(
@@ -350,7 +353,7 @@ class HangmanMainMenuScreenState extends State<HangmanMainMenuScreen>
       text: btnText,
       buttonSkinConfig: buttonSkinConfig,
       contentLockedConfig:
-          ContentLockedConfig(isContentLocked: isGameLevelLocked),
+          ContentLockedConfig(isContentLocked: isExtraContentLocked),
       onClick: () {
         MyApp.gameScreenManager.currentScreen!.gameScreenManagerState
             .showNewGameScreen(campaignLevel);
@@ -362,8 +365,9 @@ class HangmanMainMenuScreenState extends State<HangmanMainMenuScreen>
       QuestionCategory category,
       QuestionDifficulty difficulty,
       int wordsFoundInCampaignLevel,
-      bool isGameLevelLocked) {
-    bool displayIcon = !isGameLevelLocked && !_isExtraContentLocked(difficulty);
+      bool isGameLevelLocked,
+      bool isExtraContentLocked) {
+    bool displayIcon = !isGameLevelLocked && !isExtraContentLocked;
 
     var isMixedCategory = widget._gameQuestionConfig.isMixedCategory(category);
     List<Widget> buttonStackChildren = [];
@@ -372,21 +376,27 @@ class HangmanMainMenuScreenState extends State<HangmanMainMenuScreen>
           ? _createBombIcon(wordsFoundInCampaignLevel)
           : _levelIconImgs.get(CategoryDifficulty(category, difficulty)));
     }
+    var lockedDimen = _getLevelIconWidth() / 1.2;
     if (!displayIcon && isGameLevelLocked) {
       buttonStackChildren.add(
         imageService.getMainImage(
             imageName: "btn_locked",
             imageExtension: "png",
             module: "buttons",
-            maxWidth: _getLevelIconWidth() / 1.2),
+            maxWidth: lockedDimen),
+      );
+    } else if (!displayIcon && isExtraContentLocked) {
+      buttonStackChildren.add(
+        AnimateZoomInZoomOut(
+            toAnimateWidgetSize: Size(lockedDimen, lockedDimen),
+            toAnimateWidget: imageService.getSpecificImage(
+                imageName: "btn_diamond",
+                imageExtension: "png",
+                module: "campaign/buttons",
+                maxWidth: lockedDimen)),
       );
     }
     return Stack(alignment: Alignment.center, children: buttonStackChildren);
-  }
-
-  bool _isExtraContentLocked(QuestionDifficulty difficulty) {
-    return MyApp.isExtraContentLocked &&
-        difficulty.index >= widget._gameQuestionConfig.diff2.index;
   }
 
   Widget _createStarScore(int wordsFoundInCampaignLevel) {

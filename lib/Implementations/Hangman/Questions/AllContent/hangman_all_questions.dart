@@ -40,26 +40,13 @@ class HangmanAllQuestions extends AllQuestionsService {
         questionConfig.cat1, //
         questionConfig.diff0, //
         [
-          "Mouse",
-          "Monkey",
-          "Leopard",
-          "Dolphin",
-          "Cheetah",
-          "Chimpanzee",
-          "Crocodile",
-          "Crow",
-          "Deer",
-          "Rabbit",
-          "Shark",
-          "Tiger",
-          "Pigeon",
-          "Duck",
-          "Eagle",
-          "Elephant",
-          "Giraffe",
-          "Lion",
-          "Bear",
-          "Horse"
+          "Winter Bear",
+              "Winter Beara",
+              "Winter Bearb",
+              "Winter Bearc",
+              "Winter Beard",
+              "Winter Beare",
+              "Winter Bearf",
         ]);
     addQuestions(
         result, //

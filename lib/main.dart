@@ -44,20 +44,20 @@ class MyApp extends StatefulWidget {
   static bool kIsAutomatedTest = false;
 
   //TODO ---VALUE CHANGED--- should be false
-  static bool kIsManualTest = false;
+  static bool kIsManualTest = true;
 
   // static String webAppKey = "history";
   // static String webAppKey = "geoquiz";
   // static String webAppKey = "perstest";
   // static String webAppKey = "dopewars";
-  static String webAppKey = "anatomy";
+  // static String webAppKey = "anatomy";
   // static String webAppKey = "iqgame";
   // static String webAppKey = "astronomy";
-  // static String webAppKey = "hangman";
+  static String webAppKey = "hangman";
   static CampaignLevel campaignLevel = HangmanCampaignLevelService().level_0;
 
   //
-  static Language webLanguage = Language.ru;
+  static Language webLanguage = Language.en;
   static bool webIsPro = false;
 
   ////////////

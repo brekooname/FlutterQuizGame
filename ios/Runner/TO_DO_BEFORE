@@ -1,0 +1,14 @@
+Info.plist
+    <key>CFBundleDisplayName</key>
+	<string>App name</string>
+	-------------------------
+	<key>GADApplicationIdentifier</key>
+    <string>ca-app-pub-9432399956064043~6602393911</string>
+##############################
+en.lproj
+    defaults
+	-------------------------
+    check appProStoreId is added to defaults
+##############################
+AppIcon.appiconset
+	change icons

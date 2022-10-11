@@ -108,7 +108,7 @@ mixin HangmanGameScreen<TQuizQuestionManager extends QuizQuestionManager> {
       fontConfig: FontConfig(
           fontSize: FontConfig.getCustomFontSize(1.3),
           fontWeight: FontWeight.w700),
-      buttonAllPadding: _screenDimensions.dimen(1.5),
+      buttonAllPadding: _screenDimensions.dimen(1),
       text: btnLetter.toLowerCase(),
       textFirstCharUppercase: false,
       size: Size(btnSide, btnSide),
