@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Game/Game/game_user.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_info.dart';
@@ -42,17 +41,6 @@ abstract class QuestionService {
   bool addAnswerToGameInfo(
       GameUser gameUser, Question question, String answer) {
     return gameUser.addAnswerToQuestionInfo(question, answer);
-  }
-
-  Image? getQuestionImage(Question question) {
-    Image? image;
-    if (false) {
-      image = Image.asset("img_cat" +
-          question.category.index.toString() +
-          "_" +
-          question.index.toString());
-    }
-    return image;
   }
 
   List<String> createWrongAnswerList(QuestionInfo questionInfo,

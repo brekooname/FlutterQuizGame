@@ -179,9 +179,9 @@ mixin ImageClickScreen<TQuizQuestionManager extends QuizQuestionManager> {
   double _calculateOriginX() {
     return showAnswerPointerOnOrigin()
         //To verify if it works with - or +
-        // ?  _getAnswerBtnSideDimen() / 2 + _getAnswerBtnBorderWidth()
+        ?  _getAnswerBtnSideDimen() / 2 + _getAnswerBtnBorderWidth()
         // ?  - _getAnswerBtnSideDimen() / 2 + _getAnswerBtnBorderWidth()
-        ? _getAnswerBtnBorderWidth() / 2
+        // ? _getAnswerBtnBorderWidth() / 2
         : -_getPointerDimen() / 2 + _getAnswerBtnBorderWidth();
   }
 

@@ -55,14 +55,13 @@ mixin GameScreenManagerState<TGameContext extends GameContext> {
       return Container();
     }
     var currentScreenExpanded = Expanded(
-        child: SafeArea(
-            child: AnimatedSwitcher(
+        child: AnimatedSwitcher(
       duration: const Duration(milliseconds: 200),
       transitionBuilder: (Widget child, Animation<double> animation) {
         return FadeTransition(child: child, opacity: animation);
       },
       child: currentScreen,
-    )));
+    ));
     BoxDecoration? boxDecoration;
     ImageRepeat? textureRepeat = currentScreen.backgroundTextureRepeat;
     if (textureRepeat != null) {
@@ -92,6 +91,8 @@ mixin GameScreenManagerState<TGameContext extends GameContext> {
           ////
           alignment: Alignment.center,
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[MyApp.bannerAdContainer, currentScreenExpanded],
           ),
         ),

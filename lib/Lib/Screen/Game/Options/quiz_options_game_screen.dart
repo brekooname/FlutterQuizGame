@@ -58,17 +58,16 @@ mixin QuizOptionsGameScreen<TQuizQuestionManager extends QuizQuestionManager> {
         answerBtns = [];
       }
     }
-    answerRows.add(Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: answerBtns,
-    ));
-    var btnSize = getAnswerBtnSize();
-    Widget btnContainer = SizedBox(
-        height: (btnSize.height + getAnswerButtonPaddingBetween() * 2) *
-            (quizQuestionManager.possibleAnswers.length / 2).ceil(),
-        child: ListView(
-          children: answerRows,
-        ));
+    if (answerBtns.isNotEmpty) {
+      answerRows.add(Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: answerBtns,
+      ));
+    }
+    Widget btnContainer = Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: answerRows);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -173,9 +172,11 @@ mixin QuizOptionsGameScreen<TQuizQuestionManager extends QuizQuestionManager> {
 
   MaterialColor? _getAnswerBtnDisabledColor(String answerBtnText) {
     return _isAnswerBtnDisabled(answerBtnText)
-        ? quizQuestionManager.wrongPressedAnswer.contains(answerBtnText)
+        ? quizQuestionManager.wrongPressedAnswer
+                .contains(answerBtnText.toLowerCase())
             ? Colors.red
-            : quizQuestionManager.isAnswerCorrectInOptionsList(answerBtnText)
+            : quizQuestionManager
+                    .isAnswerCorrectInOptionsList(answerBtnText.toLowerCase())
                 ? Colors.green
                 : null
         : null;

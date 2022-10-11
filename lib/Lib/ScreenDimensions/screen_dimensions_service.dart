@@ -42,6 +42,20 @@ class ScreenDimensionsService {
       MediaQueryData mediaQueryData) {
     var width = _getExternalDeviceWidth(mediaQueryData);
     var height = _getExternalDeviceHeight(mediaQueryData);
+
+    var ratioWidthHeight = _getRatioWidthHeight(width: width, height: height);
+
+    if (MyApp.isExtraContentLocked) {
+      return _getRatioWidthHeight(
+          width: ratioWidthHeight.key,
+          height: ratioWidthHeight.value - AdSize.banner.height);
+    } else {
+      return ratioWidthHeight;
+    }
+  }
+
+  static MapEntry<double, double> _getRatioWidthHeight(
+      {required double width, required double height}) {
     if (isPortrait()) {
       if (height / width > _standardScreenRatio) {
         height = width * _standardScreenRatio;
@@ -55,15 +69,12 @@ class ScreenDimensionsService {
         height = width / _standardScreenRatio;
       }
     }
+
     return MapEntry(width, height);
   }
 
   static double _getExternalDeviceHeight(MediaQueryData mediaQueryData) {
-    var height = mediaQueryData.size.height;
-    if (MyApp.isExtraContentLocked) {
-      height = height - AdSize.banner.height;
-    }
-    return height;
+    return mediaQueryData.size.height;
   }
 
   static double _getExternalDeviceWidth(MediaQueryData mediaQueryData) {

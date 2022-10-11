@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/category_difficulty.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
-import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
 import 'package:flutter_app_quiz_game/Implementations/Anatomy/Components/anatomy_level_header.dart';
 import 'package:flutter_app_quiz_game/Implementations/Anatomy/Constants/anatomy_campaign_level_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/Anatomy/Constants/anatomy_game_question_config.dart';
@@ -17,6 +16,7 @@ import 'package:flutter_app_quiz_game/Lib/Screen/Game/Options/quiz_question_cont
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/Options/quiz_question_manager.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
 
+import '../../../Game/Question/Model/question_info.dart';
 import 'anatomy_question_screen.dart';
 
 class AnatomyImageClickScreen extends GameScreen<
@@ -31,18 +31,15 @@ class AnatomyImageClickScreen extends GameScreen<
   AnatomyImageClickScreen(
     AnatomyScreenManagerState gameScreenManagerState, {
     Key? key,
-    required QuestionDifficulty difficulty,
-    required QuestionCategory category,
     required AnatomyGameContext gameContext,
-  }) : super(gameScreenManagerState, gameContext,
-            [gameContext.gameUser.getRandomQuestion(difficulty, category)],
-            key: key) {
+    required QuestionInfo questionInfo,
+  }) : super(gameScreenManagerState, gameContext, [questionInfo], key: key) {
     initImageClickScreen(
         QuizQuestionManager<AnatomyGameContext, AnatomyLocalStorage>(
-            gameContext, currentQuestionInfo, AnatomyLocalStorage()),
-        currentQuestionInfo,
-        gameQuestionConfig.categoryDiagramImgDimen.get<QuestionCategory, Size>(
-            currentQuestionInfo.question.category)!,
+            gameContext, questionInfo, AnatomyLocalStorage()),
+        questionInfo,
+        gameQuestionConfig.categoryDiagramImgDimen
+            .get<QuestionCategory, Size>(questionInfo.question.category)!,
         imageContainerHeightPercent:
             category == AnatomyGameQuestionConfig().cat11 ? 70 : null);
   }
@@ -115,7 +112,8 @@ class AnatomyImageClickScreenState extends State<AnatomyImageClickScreen>
   }
 
   void _onHintButtonClick() {
-    widget.quizQuestionManager.onHintButtonClickForCatDiff(setStateCallback, widget.processNextGameScreenCallBack());
+    widget.quizQuestionManager.onHintButtonClickForCatDiff(
+        setStateCallback, widget.processNextGameScreenCallBack());
   }
 
   void setStateCallback() {

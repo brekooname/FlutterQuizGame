@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/category_difficulty.dart';
-import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
-import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
 import 'package:flutter_app_quiz_game/Implementations/Anatomy/Components/anatomy_level_header.dart';
 import 'package:flutter_app_quiz_game/Implementations/Anatomy/Constants/anatomy_campaign_level_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/Anatomy/Constants/anatomy_game_question_config.dart';
@@ -14,10 +12,12 @@ import 'package:flutter_app_quiz_game/Lib/Extensions/map_extension.dart';
 import 'package:flutter_app_quiz_game/Lib/Font/font_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Localization/label_mixin.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/Options/quiz_options_game_screen.dart';
-import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/Options/quiz_question_container.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/Options/quiz_question_manager.dart';
+import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
+
+import '../../../Game/Question/Model/question_info.dart';
 
 class AnatomyQuestionScreen extends GameScreen<AnatomyGameContext,
         AnatomyScreenManagerState, AnatomyCampaignLevelService>
@@ -26,26 +26,22 @@ class AnatomyQuestionScreen extends GameScreen<AnatomyGameContext,
       AnatomyQuestionCollectorService();
   late final Image backgroundImage;
 
-  AnatomyQuestionScreen(
-    AnatomyScreenManagerState gameScreenManagerState, {
-    Key? key,
-    required QuestionDifficulty difficulty,
-    required QuestionCategory category,
-    required AnatomyGameContext gameContext,
-  }) : super(gameScreenManagerState, gameContext,
-            [gameContext.gameUser.getRandomQuestion(difficulty, category)],
-            key: key) {
+  AnatomyQuestionScreen(AnatomyScreenManagerState gameScreenManagerState,
+      {Key? key,
+      required AnatomyGameContext gameContext,
+      required QuestionInfo questionInfo})
+      : super(gameScreenManagerState, gameContext, [questionInfo], key: key) {
     var questionConfig = AnatomyGameQuestionConfig();
     var questionImg = difficulty == questionConfig.diff4
         ? imageService.getSpecificImage(
             module: "questions/" + difficulty.name + "/" + category.name,
             imageExtension: "png",
-            imageName: currentQuestionInfo.question.index.toString())
+            imageName: questionInfo.question.index.toString())
         : null;
     initQuizOptionsScreen(
         QuizQuestionManager<AnatomyGameContext, AnatomyLocalStorage>(
           gameContext,
-          currentQuestionInfo,
+          questionInfo,
           AnatomyLocalStorage(),
         ),
         questionImage: questionImg,

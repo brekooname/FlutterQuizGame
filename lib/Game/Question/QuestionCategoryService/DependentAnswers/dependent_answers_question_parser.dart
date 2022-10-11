@@ -7,7 +7,7 @@ import 'package:flutter_app_quiz_game/Lib/Extensions/string_extension.dart';
 import '../Base/question_parser.dart';
 
 class DependentAnswersQuestionParser extends QuestionParser {
-  static const String delimiter = "::";
+  static const String delimiter = ":";
 
   static final DependentAnswersQuestionParser singleton =
       DependentAnswersQuestionParser.internal();

@@ -109,17 +109,21 @@ class AnatomyScreenManagerState extends State<AnatomyScreenManager>
   ) {
     if (category.getQuestionCategoryService(difficulty)
         is ImageClickCategoryQuestionService) {
-      return AnatomyImageClickScreen(this,
-          key: UniqueKey(),
-          gameContext: gameContext,
-          category: category,
-          difficulty: difficulty);
+      return AnatomyImageClickScreen(
+        this,
+        key: UniqueKey(),
+        gameContext: gameContext,
+        questionInfo:
+            gameContext.gameUser.getRandomQuestion(difficulty, category),
+      );
     } else {
-      return AnatomyQuestionScreen(this,
-          key: UniqueKey(),
-          gameContext: gameContext,
-          category: category,
-          difficulty: difficulty);
+      return AnatomyQuestionScreen(
+        this,
+        key: UniqueKey(),
+        gameContext: gameContext,
+        questionInfo:
+            gameContext.gameUser.getRandomQuestion(difficulty, category),
+      );
     }
   }
 
