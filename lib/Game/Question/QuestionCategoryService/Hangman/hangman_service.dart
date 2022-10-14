@@ -71,7 +71,7 @@ class HangmanService {
       hangmanWordArray[i] =
           processedHangmanWord[i] == '_' ? '_' : hangmanWordArray[i];
     }
-    return hangmanWordArray.join(" ");
+    return hangmanWordArray.join("").replaceAll(" ", "   ");
   }
 
   Set<String> getNormalizedWordLetters(String hangmanWord) {

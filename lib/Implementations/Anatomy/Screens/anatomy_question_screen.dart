@@ -59,7 +59,7 @@ class AnatomyQuestionScreen extends GameScreen<AnatomyGameContext,
 
   @override
   int nrOfQuestionsToShowInterstitialAd() {
-    return 8;
+    return 12;
   }
 }
 

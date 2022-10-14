@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
-import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
 import 'package:flutter_app_quiz_game/Implementations/IqGame/Constants/iq_game_campaign_level_service.dart';
 import 'package:flutter_app_quiz_game/Implementations/IqGame/Constants/iq_game_question_config.dart';
 import 'package:flutter_app_quiz_game/Implementations/IqGame/Questions/iq_game_context.dart';
@@ -16,32 +14,21 @@ import '../../../Lib/Popup/my_popup.dart';
 import '../../../main.dart';
 import '../Components/iq_game_level_header.dart';
 import '../Service/iq_game_local_storage.dart';
+import 'GameType/NumberSeq/iq_game_number_seq_game_type_creator.dart';
 
 class IqGameQuestionScreen extends GameScreen<IqGameContext,
     IqGameScreenManagerState, IqGameCampaignLevelService> {
-  final IqGameGameTypeCreator iqGameGameTypeCreator;
-  final IqGameLocalStorage iqGameLocalStorage = IqGameLocalStorage();
+  final IqGameGameTypeCreator _iqGameGameTypeCreator;
+  final IqGameLocalStorage _iqGameLocalStorage = IqGameLocalStorage();
+  final IqGameQuestionConfig _iqGameQuestionConfig = IqGameQuestionConfig();
 
   IqGameQuestionScreen(
-    this.iqGameGameTypeCreator,
+    this._iqGameGameTypeCreator,
     IqGameScreenManagerState gameScreenManagerState, {
     Key? key,
-    required QuestionDifficulty difficulty,
-    required QuestionCategory category,
+    required QuestionInfo questionInfo,
     required IqGameContext gameContext,
-  }) : super(
-            gameScreenManagerState,
-            gameContext,
-            [
-              getCurrentQuestionInfo(
-                  gameScreenManagerState,
-                  gameContext,
-                  category,
-                  gameContext.gameUser
-                      .getOpenQuestionsForConfig(difficulty, category),
-                  gameContext.skippedQuestions),
-            ],
-            key: key);
+  }) : super(gameScreenManagerState, gameContext, [questionInfo], key: key);
 
   @override
   IqGameCampaignLevelService get campaignLevelService =>
@@ -52,44 +39,25 @@ class IqGameQuestionScreen extends GameScreen<IqGameContext,
 
   @override
   int nrOfQuestionsToShowInterstitialAd() {
-    return 8;
-  }
-
-  static QuestionInfo getCurrentQuestionInfo(
-      IqGameScreenManagerState gameScreenManagerState,
-      IqGameContext gameContext,
-      QuestionCategory category,
-      Iterable<QuestionInfo> allOpenQuestion,
-      List<QuestionInfo> skippedQuestions) {
-    QuestionInfo? currentQuestionInfo;
-    for (QuestionInfo q in allOpenQuestion) {
-      if (!skippedQuestions.contains(q)) {
-        currentQuestionInfo = q;
-        break;
-      }
-    }
-    var openSkippedQuestions =
-        skippedQuestions.where((element) => element.isQuestionOpen());
-    if (currentQuestionInfo == null && openSkippedQuestions.isNotEmpty) {
-      currentQuestionInfo = openSkippedQuestions.first;
-    }
-    return currentQuestionInfo!;
+    return 12;
   }
 
   @override
   Color? get screenBackgroundColor =>
-      iqGameGameTypeCreator.getBackgroundColor(currentQuestionInfo.question);
+      _iqGameGameTypeCreator.getBackgroundColor(currentQuestionInfo.question);
 }
 
 class IqGameQuestionScreenState extends State<IqGameQuestionScreen>
     with ScreenState, LabelMixin {
-
   @override
   void initState() {
     super.initState();
-    widget.iqGameGameTypeCreator.initGameTypeCreator(widget.currentQuestionInfo,
-        refreshScreen: setStateCallback, goToNextScreen: () {
-      nextQuestion();
+    widget._iqGameGameTypeCreator.initGameTypeCreator(
+        widget.currentQuestionInfo,
+        refreshState: setStateCallback,
+        restartCurrentScreenAfterExtraContentPurchase:
+            _restartCurrentScreenAfterExtraContentPurchase, goToNextScreen: () {
+      _nextQuestion();
     }, goToGameOverScreen: () {
       widget.gameScreenManagerState.setCurrentScreenState(widget
           .gameScreenManagerState
@@ -98,11 +66,12 @@ class IqGameQuestionScreenState extends State<IqGameQuestionScreen>
 
     var qIndex = widget.currentQuestionInfo.question.index;
     if (MyApp.isExtraContentLocked) {
-      if (isIqTestCategory()) {
+      if (widget._iqGameQuestionConfig.isIqTestCategory(widget.category)) {
         if (qIndex == 9) {
           MyPopup.showPopup(BuyProPopup());
         }
-      } else if (isNumberSeqCategory()) {
+      } else if (widget._iqGameQuestionConfig
+          .isNumberSeqCategory(widget.category)) {
         if (qIndex == 6) {
           MyPopup.showPopup(BuyProPopup());
         }
@@ -118,47 +87,57 @@ class IqGameQuestionScreenState extends State<IqGameQuestionScreen>
         children: [
           IqGameLevelHeader(
             questionInfoStatus: widget.currentQuestionInfo.status,
-            nextQuestion: widget.iqGameGameTypeCreator.hasGoToNextQuestionBtn()
+            nextQuestion: widget._iqGameGameTypeCreator.hasGoToNextQuestionBtn()
                 ? () {
-                    nextQuestion();
+                    _nextQuestion();
                   }
                 : null,
-            skipQuestion: widget.iqGameGameTypeCreator.hasSkipButton()
+            skipQuestion: widget._iqGameGameTypeCreator.hasSkipButton()
                 ? () {
-                    nextQuestion();
+                    _nextQuestion();
                   }
                 : null,
             restartLevel: () {
-              restartCategory();
+              _restartCategory();
             },
-            score: widget.iqGameGameTypeCreator.showScore()
-                ? widget.iqGameGameTypeCreator.getScore()
+            score: widget._iqGameGameTypeCreator.showScore()
+                ? widget._iqGameGameTypeCreator.getScore()
                 : null,
           ),
           const Spacer(),
-          widget.iqGameGameTypeCreator.createGameContainerWithDecoration(
+          widget._iqGameGameTypeCreator.createGameContainerWithDecoration(
             context,
           ),
           const Spacer(),
         ]);
   }
 
-  void restartCategory() {
-    widget.iqGameLocalStorage.putAnsweredQuestions({}, widget.category);
+  void _restartCurrentScreenAfterExtraContentPurchase() {
+    widget.gameScreenManagerState.setCurrentScreenState(IqGameQuestionScreen(
+        widget._iqGameGameTypeCreator, widget.gameScreenManagerState,
+        key: UniqueKey(),
+        gameContext: widget.gameContext,
+        questionInfo: widget.currentQuestionInfo));
+  }
+
+  void _restartCategory() {
+    widget._iqGameLocalStorage.putAnsweredQuestions({}, widget.category);
     widget.gameScreenManagerState.showNewGameScreen(widget.campaignLevel);
   }
 
-  void nextQuestion() {
+  void _nextQuestion() {
     widget.gameContext.skipQuestion(widget.currentQuestionInfo);
-    goToNextGameScreen();
+    _goToNextGameScreen();
   }
 
-  void goToNextGameScreen() {
+  void _goToNextGameScreen() {
     var playedQ = widget.gameLocalStorage.getTotalPlayedQuestions();
     var showOnNrOfQ = widget.nrOfQuestionsToShowInterstitialAd();
     var qIndex = widget.currentQuestionInfo.question.index;
-    var iqTestCategory = isIqTestCategory();
-    var iqNumberSeqCategory = isNumberSeqCategory();
+    var iqTestCategory =
+        widget._iqGameQuestionConfig.isIqTestCategory(widget.category);
+    var iqNumberSeqCategory =
+        widget._iqGameQuestionConfig.isNumberSeqCategory(widget.category);
     var showInterstitialAd =
         (iqTestCategory && (qIndex == 20 || qIndex == 30)) ||
             (iqNumberSeqCategory && (qIndex == 12 || qIndex == 17)) ||
@@ -172,14 +151,6 @@ class IqGameQuestionScreenState extends State<IqGameQuestionScreen>
     });
   }
 
-  bool isIqTestCategory() {
-    return widget.category == IqGameQuestionConfig().cat0;
-  }
-
-  bool isNumberSeqCategory() {
-    return widget.category == IqGameQuestionConfig().cat2;
-  }
-
   void setStateCallback() {
     setState(() {});
   }
@@ -187,7 +158,7 @@ class IqGameQuestionScreenState extends State<IqGameQuestionScreen>
   @override
   void dispose() {
     super.dispose();
-    widget.iqGameGameTypeCreator.disposeGameTypeCreator();
+    widget._iqGameGameTypeCreator.disposeGameTypeCreator();
   }
 
   @override

@@ -6,7 +6,7 @@ import 'package:flutter_app_quiz_game/Implementations/Hangman/Service/hangman_lo
 import '../../../main.dart';
 
 class HangmanGameContextService {
-  static const int numberOfQuestionsPerGame = 5;
+  static const int numberOfQuestionsPerGame = 2;
   HangmanLocalStorage hangmanLocalStorage = HangmanLocalStorage();
 
   static final HangmanGameContextService singleton =

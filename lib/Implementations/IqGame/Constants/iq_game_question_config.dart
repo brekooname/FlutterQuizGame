@@ -61,6 +61,14 @@ class IqGameQuestionConfig extends GameQuestionConfig with LabelMixin {
 
   IqGameQuestionConfig.internal();
 
+  bool isIqTestCategory(QuestionCategory category) {
+    return category == IqGameQuestionConfig().cat0;
+  }
+
+  bool isNumberSeqCategory(QuestionCategory category) {
+    return category == IqGameQuestionConfig().cat2;
+  }
+
   @override
   Map<QuestionCategoryDifficultyWithPrefixCode, String> get prefixLabelForCode {
     Map<QuestionCategoryDifficultyWithPrefixCode, String> res = HashMap();

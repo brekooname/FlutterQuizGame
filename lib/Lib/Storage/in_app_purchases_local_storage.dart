@@ -20,6 +20,10 @@ class InAppPurchaseLocalStorage extends MyLocalStorage {
     localStorage.setBool(_getProductIdKey(productId), true);
   }
 
+  void deletePurchase(String productId) {
+    localStorage.setBool(_getProductIdKey(productId), false);
+  }
+
   String _getProductIdKey(String productId) {
     return localStorageName + "_ProductIdKey_" + productId;
   }

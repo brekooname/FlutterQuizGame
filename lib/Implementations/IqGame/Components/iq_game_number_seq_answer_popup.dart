@@ -14,6 +14,7 @@ class IqGameIqNumberSeqAnswerPopup extends StatefulWidget with MyPopup {
   final String correctAnswer;
   final String userAnswer;
   final VoidCallback nextQuestion;
+  final VoidCallback refreshScreenAfterExtraContentPurchase;
   final bool isShowExplanationPopup;
 
   IqGameIqNumberSeqAnswerPopup(
@@ -22,6 +23,7 @@ class IqGameIqNumberSeqAnswerPopup extends StatefulWidget with MyPopup {
       this.correctAnswer,
       this.userAnswer,
       this.nextQuestion,
+      this.refreshScreenAfterExtraContentPurchase,
       this.isShowExplanationPopup,
       {Key? key})
       : super(key: key);
@@ -97,8 +99,10 @@ class IqGameIqNumberSeqAnswerPopupState
     } else {
       answerInfo.add(MyButton(
         text: label.l_show_explanation,
-        contentLockedConfig:
-            ContentLockedConfig(isContentLocked: MyApp.isExtraContentLocked),
+        contentLockedConfig: ContentLockedConfig(
+            isContentLocked: MyApp.isExtraContentLocked,
+            executeAfterPurchase:
+                widget.refreshScreenAfterExtraContentPurchase),
         onClick: () {
           closePopup();
           MyPopup.showPopup(IqGameIqNumberSeqAnswerPopup(
@@ -107,6 +111,7 @@ class IqGameIqNumberSeqAnswerPopupState
               widget.correctAnswer,
               widget.userAnswer,
               widget.nextQuestion,
+              widget.refreshScreenAfterExtraContentPurchase,
               true));
         },
       ));

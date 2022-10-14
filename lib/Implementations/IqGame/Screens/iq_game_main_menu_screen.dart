@@ -79,7 +79,12 @@ class IqGameMainMenuScreenState extends State<IqGameMainMenuScreen>
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             SizedBox(height: screenDimensions.dimen(1)),
-            gameTitle,
+            Container(
+                decoration: BoxDecoration(
+                    color: Colors.blue.withOpacity(0.2),
+                    borderRadius: BorderRadius.circular(
+                        FontConfig.standardBorderRadius / 2)),
+                child: gameTitle),
             SizedBox(height: screenDimensions.dimen(1)),
             _createLevelBtns(),
           ],

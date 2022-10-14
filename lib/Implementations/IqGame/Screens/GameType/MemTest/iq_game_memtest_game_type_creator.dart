@@ -26,11 +26,13 @@ class IqGameMemTestGameTypeCreator extends IqGameGameTypeCreator {
 
   @override
   void initGameTypeCreator(QuestionInfo currentQuestionInfo,
-      {required VoidCallback refreshScreen,
-      required VoidCallback goToNextScreen,
-      required VoidCallback goToGameOverScreen}) {
+      {required VoidCallback refreshState,
+        required VoidCallback restartCurrentScreenAfterExtraContentPurchase,
+        required VoidCallback goToNextScreen,
+        required VoidCallback goToGameOverScreen}) {
     super.initGameTypeCreator(currentQuestionInfo,
-        refreshScreen: refreshScreen,
+        refreshState: refreshState,
+        restartCurrentScreenAfterExtraContentPurchase: restartCurrentScreenAfterExtraContentPurchase,
         goToNextScreen: goToNextScreen,
         goToGameOverScreen: goToGameOverScreen);
     _memTestGameTypeScreenState = IqGameMemTestGameTypeScreenState.loading;
@@ -64,7 +66,7 @@ class IqGameMemTestGameTypeCreator extends IqGameGameTypeCreator {
                 IqGameMemTestGameTypeScreenState.showNumbers
             ? IqGameMemTestGameTypeScreenState.hideNumbers
             : IqGameMemTestGameTypeScreenState.showNumbers;
-        refreshScreen.call();
+        refreshState.call();
       });
     }
 
@@ -130,7 +132,7 @@ class IqGameMemTestGameTypeCreator extends IqGameGameTypeCreator {
                         goToNextScreen.call();
                       });
                     } else {
-                      refreshScreen.call();
+                      refreshState.call();
                     }
                   } else {
                     answerQuestion(

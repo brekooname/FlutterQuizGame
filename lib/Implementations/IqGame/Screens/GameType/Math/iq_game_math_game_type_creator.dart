@@ -30,11 +30,13 @@ class IqGameMathGameTypeCreator extends IqGameGameTypeCreator {
 
   @override
   void initGameTypeCreator(QuestionInfo currentQuestionInfo,
-      {required VoidCallback refreshScreen,
-      required VoidCallback goToNextScreen,
-      required VoidCallback goToGameOverScreen}) {
+      {required VoidCallback refreshState,
+        required VoidCallback restartCurrentScreenAfterExtraContentPurchase,
+        required VoidCallback goToNextScreen,
+        required VoidCallback goToGameOverScreen}) {
     super.initGameTypeCreator(currentQuestionInfo,
-        refreshScreen: refreshScreen,
+        refreshState: refreshState,
+        restartCurrentScreenAfterExtraContentPurchase: restartCurrentScreenAfterExtraContentPurchase,
         goToNextScreen: goToNextScreen,
         goToGameOverScreen: goToGameOverScreen);
     remainingSeconds = startSeconds;
@@ -58,7 +60,7 @@ class IqGameMathGameTypeCreator extends IqGameGameTypeCreator {
           });
         }
         remainingSeconds--;
-        refreshScreen.call();
+        refreshState.call();
       },
     );
   }
@@ -118,7 +120,7 @@ class IqGameMathGameTypeCreator extends IqGameGameTypeCreator {
               true,
               currentQuestionInfo,
               gameContext,
-              refreshScreen,
+              refreshState,
               goToNextScreen,
               nr1!,
               nr2!),
@@ -126,7 +128,7 @@ class IqGameMathGameTypeCreator extends IqGameGameTypeCreator {
           MyText(text: nr2.toString(), fontConfig: nrFontConfig),
           opMargin,
           createOperationBtn("=", true, currentQuestionInfo, gameContext,
-              refreshScreen, goToNextScreen, nr1!, nr2!),
+              refreshState, goToNextScreen, nr1!, nr2!),
           opMargin,
           MyText(
               text: getNr1Nr2Interpret().toInt().toString(),
@@ -173,7 +175,7 @@ class IqGameMathGameTypeCreator extends IqGameGameTypeCreator {
               margin,
               margin,
               createOperationBtns(nr1!, nr2!, currentQuestionInfo, gameContext,
-                  refreshScreen, goToNextScreen),
+                  refreshState, goToNextScreen),
             ],
           ),
         )

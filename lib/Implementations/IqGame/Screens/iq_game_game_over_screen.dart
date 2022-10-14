@@ -5,17 +5,22 @@ import 'package:flutter_app_quiz_game/Implementations/IqGame/Service/iq_game_scr
 import 'package:flutter_app_quiz_game/Lib/Localization/label_mixin.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
 
+import '../../../Lib/Popup/my_popup.dart';
 import '../../../Lib/Screen/standard_screen.dart';
+import '../Components/iq_game_iq_test_correct_answers_popup.dart';
 import '../Components/iq_game_level_header.dart';
 import '../Constants/iq_game_campaign_level_service.dart';
+import '../Constants/iq_game_question_config.dart';
+import 'GameType/NumberSeq/iq_game_number_seq_game_type_creator.dart';
 
 class IqGameGameOverScreen extends StandardScreen<IqGameScreenManagerState> {
-  final IqGameGameTypeCreator iqGameGameTypeCreator;
-  final IqGameContext gameContext;
+  final IqGameGameTypeCreator _iqGameGameTypeCreator;
+  final IqGameQuestionConfig _iqGameQuestionConfig = IqGameQuestionConfig();
+  final IqGameContext _gameContext;
 
   IqGameGameOverScreen(
-    this.iqGameGameTypeCreator,
-    this.gameContext,
+    this._iqGameGameTypeCreator,
+    this._gameContext,
     IqGameScreenManagerState gameScreenManagerState, {
     Key? key,
   }) : super(gameScreenManagerState, key: key);
@@ -29,16 +34,33 @@ class IqGameGameOverScreen extends StandardScreen<IqGameScreenManagerState> {
 
 class IqGameGameOverScreenState extends State<IqGameGameOverScreen>
     with ScreenState, LabelMixin {
-  
   @override
   void initState() {
     super.initState();
-    widget.iqGameGameTypeCreator.initGameOverTypeCreator(
-        refreshScreen: setStateCallback,
+    widget._iqGameGameTypeCreator.initGameOverTypeCreator(
+        refreshState: setStateCallback,
+        restartCurrentScreenAfterExtraContentPurchase:
+            _restartCurrentScreenAfterExtraContentPurchase,
         goToGameOverScreen: () {
           widget.gameScreenManagerState.showMainScreen();
         });
-    widget.iqGameGameTypeCreator.executeOnGameOver();
+    widget._iqGameGameTypeCreator.executeOnGameOver();
+  }
+
+  void _restartCurrentScreenAfterExtraContentPurchase() {
+    widget.gameScreenManagerState.setCurrentScreenState(widget
+        .gameScreenManagerState
+        .createGameOverScreen(widget._gameContext));
+
+    if (widget._iqGameQuestionConfig.isIqTestCategory(
+        widget._gameContext.questionConfig.categories.first)) {
+      Future.delayed(const Duration(milliseconds: 500), () {
+        MyPopup.showPopup(IqGameIqTestCorrectAnswersPopup(
+            widget._gameContext,
+            widget._iqGameGameTypeCreator
+                .getQuestionImageModuleName(widget._gameContext)));
+      });
+    }
   }
 
   @override
@@ -52,11 +74,11 @@ class IqGameGameOverScreenState extends State<IqGameGameOverScreen>
               IqGameLevelHeader(restartLevel: () {
                 widget.gameScreenManagerState.showNewGameScreen(
                     IqGameCampaignLevelService().campaignLevel(
-                        widget.gameContext.questionConfig.difficulties.first,
-                        widget.gameContext.questionConfig.categories.first));
+                        widget._gameContext.questionConfig.difficulties.first,
+                        widget._gameContext.questionConfig.categories.first));
               }),
               const Spacer(),
-              widget.iqGameGameTypeCreator.createGameOverContainer(context),
+              widget._iqGameGameTypeCreator.createGameOverContainer(context),
               const Spacer(),
             ]));
   }

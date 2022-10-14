@@ -17,11 +17,13 @@ class IqGameGenKnowGameTypeCreator extends IqGameGameTypeCreator
 
   @override
   void initGameTypeCreator(QuestionInfo currentQuestionInfo,
-      {required VoidCallback refreshScreen,
-      required VoidCallback goToNextScreen,
-      required VoidCallback goToGameOverScreen}) {
+      {required VoidCallback refreshState,
+        required VoidCallback restartCurrentScreenAfterExtraContentPurchase,
+        required VoidCallback goToNextScreen,
+        required VoidCallback goToGameOverScreen}) {
     super.initGameTypeCreator(currentQuestionInfo,
-        refreshScreen: refreshScreen,
+        refreshState: refreshState,
+        restartCurrentScreenAfterExtraContentPurchase: restartCurrentScreenAfterExtraContentPurchase,
         goToNextScreen: goToNextScreen,
         goToGameOverScreen: goToGameOverScreen);
     initQuizOptionsScreen(
@@ -37,7 +39,7 @@ class IqGameGenKnowGameTypeCreator extends IqGameGameTypeCreator
   Widget createGameContainer(BuildContext context) {
     Widget questionContainer = _quizQuestionContainer
         .createQuestionTextContainer(currentQuestionInfo.question, 1, 3);
-    Widget optionsRows = createOptionRows(refreshScreen, goToNextScreen,
+    Widget optionsRows = createOptionRows(refreshState, goToNextScreen,
         questionImageHeightPercent: 33);
     int totalQuestions = gameContext.gameUser.getAllQuestions([]).length;
     return Column(

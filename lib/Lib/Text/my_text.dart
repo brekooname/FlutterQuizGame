@@ -13,7 +13,6 @@ class MyText extends StatelessWidget {
   final Shadow? textShadow;
   final Alignment alignmentInsideContainer;
   final double textAllPadding;
-  final bool firstCharUppercase;
 
   MyText({
     Key? key,
@@ -21,19 +20,22 @@ class MyText extends StatelessWidget {
     double? fontSize,
     Color? fontColor,
     int? maxLines,
+    bool trim = true,
+    bool firstCharUppercase = true,
     required String text,
     this.textAllPadding = 0,
     this.alignmentInsideContainer = Alignment.center,
     this.width,
     this.textShadow,
-    this.firstCharUppercase = true,
   }) : super(key: key) {
     if (fontConfig != null && (fontColor != null || fontSize != null)) {
       throw Exception(
           "fontColor or fontSize cannot have a value because fontConfig is configured.");
     }
     this.maxLines = maxLines ?? 2;
-    _text = firstCharUppercase ? text.capitalized.trim() : text.trim();
+    var processedText = firstCharUppercase ? text.capitalized : text;
+    processedText = trim ? processedText.trim() : processedText;
+    _text = processedText;
     this.fontConfig =
         fontConfig ?? FontConfig(fontSize: fontSize, fontColor: fontColor);
   }

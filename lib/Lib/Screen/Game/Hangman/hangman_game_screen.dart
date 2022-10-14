@@ -146,7 +146,7 @@ mixin HangmanGameScreen<TQuizQuestionManager extends QuizQuestionManager> {
           ),
           text: letter,
           firstCharUppercase: false,
-          textAllPadding: _screenDimensions.dimen(.15),
+          trim: false,
         ));
       }
       lettersRows.add(Row(
@@ -160,15 +160,11 @@ mixin HangmanGameScreen<TQuizQuestionManager extends QuizQuestionManager> {
 
   List<String> _getSplitLongWord(String word) {
     List<String> currentWordStateSections;
-    var delimiter = "  ";
-    //For example a value of 40 means that the word contains 20 letters.
-    //This is because between the letters there is an empty char.
-    var maxOneLineLengthWithSpaceBetweenLetters = 40;
-    if (word.length > maxOneLineLengthWithSpaceBetweenLetters &&
-        word.contains(delimiter)) {
+    var delimiter = " ";
+    var maxOneLineLength = 20;
+    if (word.length > maxOneLineLength && word.contains(delimiter)) {
       var lastIndexOf = word.lastIndexOf(delimiter);
-      if (word.length - word.substring(lastIndexOf).length <
-          maxOneLineLengthWithSpaceBetweenLetters) {
+      if (word.length - word.substring(lastIndexOf).length < maxOneLineLength) {
         currentWordStateSections = [
           word.substring(0, lastIndexOf),
           word.substring(lastIndexOf)

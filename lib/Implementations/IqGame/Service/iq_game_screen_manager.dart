@@ -19,6 +19,7 @@ import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen_manager.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen_manager_state.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/standard_screen.dart';
 
+import '../../../Game/Question/Model/question_info.dart';
 import '../Constants/iq_game_question_config.dart';
 import '../Screens/GameType/NumberSeq/iq_game_number_seq_game_type_creator.dart';
 
@@ -66,7 +67,11 @@ class IqGameScreenManagerState extends State<IqGameScreenManager>
 
   StandardScreen createGameOverScreen(IqGameContext gameContext) {
     return IqGameGameOverScreen(
-        _getGameTypeCreator(gameContext), gameContext, this);
+      _getGameTypeCreator(gameContext),
+      gameContext,
+      this,
+      key: UniqueKey(),
+    );
   }
 
   @override
@@ -86,8 +91,27 @@ class IqGameScreenManagerState extends State<IqGameScreenManager>
     return IqGameQuestionScreen(_getGameTypeCreator(gameContext), this,
         key: UniqueKey(),
         gameContext: gameContext,
-        category: category,
-        difficulty: difficulty);
+        questionInfo: _getCurrentQuestionInfo(
+            gameContext.gameUser
+                .getOpenQuestionsForConfig(difficulty, category),
+            gameContext.skippedQuestions));
+  }
+
+  QuestionInfo _getCurrentQuestionInfo(Iterable<QuestionInfo> allOpenQuestion,
+      List<QuestionInfo> skippedQuestions) {
+    QuestionInfo? currentQuestionInfo;
+    for (QuestionInfo q in allOpenQuestion) {
+      if (!skippedQuestions.contains(q)) {
+        currentQuestionInfo = q;
+        break;
+      }
+    }
+    var openSkippedQuestions =
+        skippedQuestions.where((element) => element.isQuestionOpen());
+    if (currentQuestionInfo == null && openSkippedQuestions.isNotEmpty) {
+      currentQuestionInfo = openSkippedQuestions.first;
+    }
+    return currentQuestionInfo!;
   }
 
   @override

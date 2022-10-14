@@ -54,7 +54,7 @@ class AnatomyImageClickScreen extends GameScreen<
 
   @override
   int nrOfQuestionsToShowInterstitialAd() {
-    return 8;
+    return 12;
   }
 }
 

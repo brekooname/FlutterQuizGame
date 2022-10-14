@@ -143,8 +143,9 @@ class MyButton extends StatefulWidget {
       return _createMyText();
     } else if (buttonSkinConfig.image != null) {
       return _createImageButtonContent();
+    } else {
+      return Container();
     }
-    throw AssertionError("No content set for button!!!");
   }
 
   MyText _createMyText() {

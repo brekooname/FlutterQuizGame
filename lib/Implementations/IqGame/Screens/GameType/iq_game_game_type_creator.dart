@@ -19,7 +19,8 @@ abstract class IqGameGameTypeCreator with LabelMixin {
   ImageService imageService = ImageService();
   ScreenDimensionsService screenDimensionsService = ScreenDimensionsService();
 
-  late VoidCallback refreshScreen;
+  late VoidCallback refreshState;
+  late VoidCallback restartCurrentScreenAfterExtraContentPurchase;
   late VoidCallback goToNextScreen;
   late VoidCallback goToGameOverScreen;
   late QuestionInfo currentQuestionInfo;
@@ -28,19 +29,25 @@ abstract class IqGameGameTypeCreator with LabelMixin {
   IqGameGameTypeCreator(this.gameContext);
 
   void initGameTypeCreator(QuestionInfo currentQuestionInfo,
-      {required VoidCallback refreshScreen,
+      {required VoidCallback refreshState,
+      required VoidCallback restartCurrentScreenAfterExtraContentPurchase,
       required VoidCallback goToNextScreen,
       required VoidCallback goToGameOverScreen}) {
     this.currentQuestionInfo = currentQuestionInfo;
-    this.refreshScreen = refreshScreen;
+    this.refreshState = refreshState;
+    this.restartCurrentScreenAfterExtraContentPurchase =
+        restartCurrentScreenAfterExtraContentPurchase;
     this.goToNextScreen = goToNextScreen;
     this.goToGameOverScreen = goToGameOverScreen;
   }
 
   void initGameOverTypeCreator(
-      {required VoidCallback refreshScreen,
+      {required VoidCallback refreshState,
+      required VoidCallback restartCurrentScreenAfterExtraContentPurchase,
       required VoidCallback goToGameOverScreen}) {
-    this.refreshScreen = refreshScreen;
+    this.refreshState = refreshState;
+    this.restartCurrentScreenAfterExtraContentPurchase =
+        restartCurrentScreenAfterExtraContentPurchase;
     this.goToGameOverScreen = goToGameOverScreen;
   }
 
@@ -160,7 +167,7 @@ abstract class IqGameGameTypeCreator with LabelMixin {
         iqGameLocalStorage
             .putAnsweredQuestions({}, getGameTypeCategory(gameContext));
       }
-      refreshScreen.call();
+      refreshState.call();
       if (showScore()) {
         if (isCorrectAnswer) {
           audioPlayer.playSuccess();

@@ -74,9 +74,8 @@ class HangmanMainMenuScreenState extends State<HangmanMainMenuScreen>
     _campaignLevelColor.putIfAbsent(5, () => Colors.red);
 
     var difficulties = widget._gameQuestionConfig.difficulties;
-    var categoriesWithoutMixed = widget._gameQuestionConfig.categories;
-    categoriesWithoutMixed.removeWhere(
-        (category) => widget._gameQuestionConfig.isMixedCategory(category));
+    var categoriesWithoutMixed =
+        widget._gameQuestionConfig.getAllCategoriesWithoutMixCategory();
     for (int i = 0; i < difficulties.length; i++) {
       _campaignLevelTexture.putIfAbsent(
           i,

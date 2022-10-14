@@ -151,16 +151,16 @@ class IqGameIqTestGameTypeCreator extends IqGameGameTypeCreator {
         height: screenDimensionsService.dimen(10),
       ),
       MyButton(
-        contentLockedConfig:
-            ContentLockedConfig(isContentLocked: MyApp.isExtraContentLocked),
+        contentLockedConfig: ContentLockedConfig(
+            isContentLocked: MyApp.isExtraContentLocked,
+            executeAfterPurchase: restartCurrentScreenAfterExtraContentPurchase),
         text: label.l_show_correct_answers,
         textMaxLines: 2,
         size: Size(screenDimensionsService.dimen(60),
             screenDimensionsService.dimen(18)),
         onClick: () {
-          MyPopup.showPopup(
-              IqGameIqTestCorrectAnswersPopup(
-                  gameContext, getQuestionImageModuleName(gameContext)));
+          MyPopup.showPopup(IqGameIqTestCorrectAnswersPopup(
+              gameContext, getQuestionImageModuleName(gameContext)));
         },
       ),
     ]);

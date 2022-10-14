@@ -69,6 +69,12 @@ class HangmanGameQuestionConfig extends GameQuestionConfig with LabelMixin {
     return cat.index == 5;
   }
 
+  List<QuestionCategory> getAllCategoriesWithoutMixCategory() {
+    var categoriesWithoutMixed = categories;
+    categoriesWithoutMixed.removeWhere((category) => isMixedCategory(category));
+    return categoriesWithoutMixed;
+  }
+
   HangmanGameQuestionConfig.internal();
 
   @override

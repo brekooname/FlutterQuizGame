@@ -11,6 +11,7 @@ import '../../../../../Lib/Button/button_skin_config.dart';
 import '../../../../../Lib/Color/color_util.dart';
 import '../../../../../Lib/Font/font_config.dart';
 import '../../../../../Lib/Popup/my_popup.dart';
+import '../../../../../main.dart';
 import '../iq_game_game_type_creator.dart';
 
 class IqGameNumberSeqGameTypeCreator extends IqGameGameTypeCreator {
@@ -21,11 +22,13 @@ class IqGameNumberSeqGameTypeCreator extends IqGameGameTypeCreator {
 
   @override
   void initGameTypeCreator(QuestionInfo currentQuestionInfo,
-      {required VoidCallback refreshScreen,
+      {required VoidCallback refreshState,
+      required VoidCallback restartCurrentScreenAfterExtraContentPurchase,
       required VoidCallback goToNextScreen,
       required VoidCallback goToGameOverScreen}) {
     super.initGameTypeCreator(currentQuestionInfo,
-        refreshScreen: refreshScreen,
+        refreshState: refreshState,
+        restartCurrentScreenAfterExtraContentPurchase: restartCurrentScreenAfterExtraContentPurchase,
         goToNextScreen: goToNextScreen,
         goToGameOverScreen: goToGameOverScreen);
     resetPressedNumbers();
@@ -63,7 +66,7 @@ class IqGameNumberSeqGameTypeCreator extends IqGameGameTypeCreator {
         onClick: () {
           if ((pressedNumbers ?? "").length < 5) {
             pressedNumbers = (pressedNumbers ?? "") + i.toString();
-            refreshScreen.call();
+            refreshState.call();
           }
         },
         size: Size(btnSizeDimen, btnSizeDimen),
@@ -107,8 +110,8 @@ class IqGameNumberSeqGameTypeCreator extends IqGameGameTypeCreator {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  createSubmitClearBtn(context, btnPad, gameContext,
-                      currentQuestionInfo, null, refreshScreen, goToNextScreen),
+                  createSubmitClearBtn(context, true, btnPad, gameContext,
+                      currentQuestionInfo, refreshState),
                   horizMargin,
                   SizedBox(
                       width: screenDimensionsService.dimen(40),
@@ -120,19 +123,8 @@ class IqGameNumberSeqGameTypeCreator extends IqGameGameTypeCreator {
                               fontSize: FontConfig.getCustomFontSize(1.3),
                               fontColor: Colors.white))),
                   horizMargin,
-                  createSubmitClearBtn(
-                      context,
-                      btnPad,
-                      gameContext,
-                      currentQuestionInfo,
-                      imageService.getSpecificImage(
-                          imageName: "q" + question.index.toString() + "_a",
-                          imageExtension: "jpg",
-                          maxWidth: screenDimensionsService.w(80),
-                          maxHeight: screenDimensionsService.h(30),
-                          module: getQuestionImageModuleName(gameContext)),
-                      refreshScreen,
-                      goToNextScreen),
+                  createSubmitClearBtn(context, false, btnPad, gameContext,
+                      currentQuestionInfo, refreshState),
                 ])),
         heightMargin,
         answerColumn,
@@ -140,18 +132,25 @@ class IqGameNumberSeqGameTypeCreator extends IqGameGameTypeCreator {
     );
   }
 
+  Image _getQuestionImage(Question question) {
+    return imageService.getSpecificImage(
+        imageName: "q" + question.index.toString() + "_a",
+        imageExtension: "jpg",
+        maxWidth: screenDimensionsService.w(80),
+        maxHeight: screenDimensionsService.h(30),
+        module: getQuestionImageModuleName(gameContext));
+  }
+
   double getBtnSizeDimen() => screenDimensionsService.dimen(14);
 
   Widget createSubmitClearBtn(
       BuildContext context,
+      bool isClearBtn,
       double btnPad,
       IqGameContext gameContext,
       QuestionInfo currentQuestionInfo,
-      Widget? qImage,
-      VoidCallback refreshScreen,
-      VoidCallback goToNextScreen) {
+      VoidCallback refreshScreen) {
     var btnSizeDimen = getBtnSizeDimen();
-    var isClearBtn = qImage == null;
     return pressedNumbers == null || !currentQuestionInfo.isQuestionOpen()
         ? Container()
         : MyButton(
@@ -173,19 +172,23 @@ class IqGameNumberSeqGameTypeCreator extends IqGameGameTypeCreator {
                 refreshScreen.call();
               } else {
                 answerQuestion(pressedNumbers!, true);
-                MyPopup.showPopup(
-                    IqGameIqNumberSeqAnswerPopup(
-                        currentQuestionInfo,
-                        qImage!,
-                        currentQuestionInfo.question.correctAnswers.first,
-                        pressedNumbers ?? "",
-                        goToNextScreen,
-                        false));
+                showExplanationPopup();
                 resetPressedNumbers();
               }
             },
             size: Size(btnSizeDimen, btnSizeDimen),
           );
+  }
+
+  void showExplanationPopup() {
+    return MyPopup.showPopup(IqGameIqNumberSeqAnswerPopup(
+        currentQuestionInfo,
+        _getQuestionImage(currentQuestionInfo.question),
+        currentQuestionInfo.question.correctAnswers.first,
+        pressedNumbers ?? "",
+        goToNextScreen,
+        restartCurrentScreenAfterExtraContentPurchase,
+        !MyApp.isExtraContentLocked));
   }
 
   void resetPressedNumbers() {
