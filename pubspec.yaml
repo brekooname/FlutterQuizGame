@@ -118,17 +118,17 @@ flutter:
     ########################
     ###### HANGMAN ###############################################################################
     ########################
-    - assets/implementations/hangman/
-    - assets/implementations/hangman/game/
-    - assets/implementations/hangman/campaign/
-    - assets/implementations/hangman/campaign/background/
-    - assets/implementations/hangman/campaign/buttons/
-    - assets/implementations/hangman/campaign/l_0/
-    - assets/implementations/hangman/campaign/l_1/
-    - assets/implementations/hangman/campaign/l_2/
-    - assets/implementations/hangman/campaign/l_3/
-    - assets/implementations/hangman/campaign/l_4/
-    - assets/implementations/hangman/campaign/l_5/
+#    - assets/implementations/hangman/
+#    - assets/implementations/hangman/game/
+#    - assets/implementations/hangman/campaign/
+#    - assets/implementations/hangman/campaign/background/
+#    - assets/implementations/hangman/campaign/buttons/
+#    - assets/implementations/hangman/campaign/l_0/
+#    - assets/implementations/hangman/campaign/l_1/
+#    - assets/implementations/hangman/campaign/l_2/
+#    - assets/implementations/hangman/campaign/l_3/
+#    - assets/implementations/hangman/campaign/l_4/
+#    - assets/implementations/hangman/campaign/l_5/
     ########################
     ###### ASTRONOMY #############################################################################
     ########################
@@ -145,12 +145,12 @@ flutter:
     ########################
     ###### IQGAME ################################################################################
     ########################
-    #    - assets/implementations/iqgame/
-    #    - assets/implementations/iqgame/buttons/
-    #    - assets/implementations/iqgame/cat0/
-    #    - assets/implementations/iqgame/cat1/
-    #    - assets/implementations/iqgame/cat2/
-    #    - assets/implementations/iqgame/cat5/
+#    - assets/implementations/iqgame/
+#    - assets/implementations/iqgame/buttons/
+#    - assets/implementations/iqgame/cat0/
+#    - assets/implementations/iqgame/cat1/
+#    - assets/implementations/iqgame/cat2/
+#    - assets/implementations/iqgame/cat5/
     ########################
     ###### ANATOMY #################################################################################
     ########################
@@ -185,17 +185,17 @@ flutter:
     ########################
     ###### GEOQUIZ #################################################################################
     ########################
-    #    - assets/implementations/geoquiz/
-    #    - assets/implementations/geoquiz/questions/images/cat7/
-    #    - assets/implementations/geoquiz/questions/images/cat9/
-    #    - assets/implementations/geoquiz/questions/images/diff0/cat5/
-    #    - assets/implementations/geoquiz/questions/images/diff0/cat8/
-    #    - assets/implementations/geoquiz/questions/images/diff1/cat5/
-    #    - assets/implementations/geoquiz/questions/images/diff1/cat8/
-    #    - assets/implementations/geoquiz/questions/images/diff2/cat5/
-    #    - assets/implementations/geoquiz/questions/images/diff2/cat8/
-    #    - assets/implementations/geoquiz/questions/images/diff3/cat5/
-    #    - assets/implementations/geoquiz/questions/images/diff3/cat8/
+    - assets/implementations/geoquiz/
+    - assets/implementations/geoquiz/questions/images/cat7/
+    - assets/implementations/geoquiz/questions/images/cat9/
+    - assets/implementations/geoquiz/questions/images/diff0/cat5/
+    - assets/implementations/geoquiz/questions/images/diff0/cat8/
+    - assets/implementations/geoquiz/questions/images/diff1/cat5/
+    - assets/implementations/geoquiz/questions/images/diff1/cat8/
+    - assets/implementations/geoquiz/questions/images/diff2/cat5/
+    - assets/implementations/geoquiz/questions/images/diff2/cat8/
+    - assets/implementations/geoquiz/questions/images/diff3/cat5/
+    - assets/implementations/geoquiz/questions/images/diff3/cat8/
     ########################
     ###### HISTORY #################################################################################
     ########################

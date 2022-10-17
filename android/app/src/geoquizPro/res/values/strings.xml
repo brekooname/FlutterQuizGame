@@ -4,6 +4,7 @@
     <string name="app_name">World Geography</string>
     <string name="language">en</string>
     <string name="game_id">geoquiz</string>
+    <string name="app_pro_store_id">com.habapps.geoquizpro</string>
 
     <string name="admob_banner_id"></string>
     <string name="admob_inter_id"></string>

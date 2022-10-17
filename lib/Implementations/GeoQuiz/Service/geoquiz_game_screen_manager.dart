@@ -85,8 +85,8 @@ class GeoQuizGameScreenManagerState extends State<GeoQuizGameScreenManager>
       this,
       key: UniqueKey(),
       gameContext: gameContext,
-      difficulty: difficulty,
-      category: category,
+      questionInfo:
+          gameContext.gameUser.getRandomQuestion(difficulty, category),
     );
   }
 

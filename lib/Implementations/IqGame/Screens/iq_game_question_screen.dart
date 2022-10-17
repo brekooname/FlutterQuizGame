@@ -118,6 +118,13 @@ class IqGameQuestionScreenState extends State<IqGameQuestionScreen>
         key: UniqueKey(),
         gameContext: widget.gameContext,
         questionInfo: widget.currentQuestionInfo));
+
+    if (widget._iqGameQuestionConfig.isNumberSeqCategory(widget.category)) {
+      Future.delayed(const Duration(milliseconds: 500), () {
+        (widget._iqGameGameTypeCreator as IqGameNumberSeqGameTypeCreator)
+            .showExplanationPopup();
+      });
+    }
   }
 
   void _restartCategory() {

@@ -3,6 +3,7 @@ language="en";
 appKey="geoquiz";
 isPro="true";
 appRatingPackage="1480827008";
+appProStoreId="1480827008";
 GADApplicationIdentifier="ca-app-pub-9894292627655692~3492378443";
 admobBannerId="ca-app-pub-9894292627655692/1794447109";
 admobInterId="ca-app-pub-9894292627655692/9535058525";

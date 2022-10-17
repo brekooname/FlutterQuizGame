@@ -52,8 +52,8 @@ class GeoQuizQuestionCollectorService extends QuestionCollectorService<
     } else
     //------------- CAT 2 ------------- NEIGHBOURS ===> sorted by rank
     if (category == gameQuestionConfig.cat2) {
-      var sortedAfterRank = sortQuestionListAfterRankedCountries(
-          getEnglishLangQuestions(category), 0);
+      var sortedAfterRank = _sortQuestionListAfterRankedCountries(
+          _getEnglishLangQuestions(category), 0);
       //because we have multiple playing types depending on the difficulty level
       //here we show only easy countries diff0
       result = sortedAfterRank.sublist(0, 10);
@@ -100,7 +100,7 @@ class GeoQuizQuestionCollectorService extends QuestionCollectorService<
         flagsCategory: allQuestionsService.allFlags,
         mapsCategory: allQuestionsService.allMaps,
       };
-      result = createQuestionsForCountryIndexes(
+      result = _createQuestionsForCountryIndexes(
           countryIndexesForCategory
               .get<QuestionCategory, List<String>>(category)!,
           category,
@@ -111,20 +111,20 @@ class GeoQuizQuestionCollectorService extends QuestionCollectorService<
         .toList();
   }
 
-  List<Question> createQuestionsForCountryIndexes(List<String> countryIndexes,
+  List<Question> _createQuestionsForCountryIndexes(List<String> countryIndexes,
       QuestionCategory category, QuestionDifficulty difficulty) {
     List<Question> result = [];
-    var questionsWithCountry = transformCountriesStringToQuestion(
+    var questionsWithCountry = _transformCountriesStringToQuestion(
         countryIndexes, category, difficulty);
     var sortedAfterRank =
-        sortQuestionListAfterRankedCountries(questionsWithCountry, 0);
+        _sortQuestionListAfterRankedCountries(questionsWithCountry, 0);
     result = _percentOfListForDifficulty
         .get<QuestionDifficulty, PercentRangeForList>(difficulty)!
         .getQuestionsForRange(sortedAfterRank);
     return result;
   }
 
-  List<Question> transformCountriesStringToQuestion(List<String> countryIndexes,
+  List<Question> _transformCountriesStringToQuestion(List<String> countryIndexes,
       QuestionCategory category, QuestionDifficulty difficulty) {
     return allQuestionsService.createQuestions(
         difficulty, category, countryIndexes);
@@ -134,10 +134,10 @@ class GeoQuizQuestionCollectorService extends QuestionCollectorService<
     if (!_geoQuizCountryUtils.isStatsCategory(category)) {
       return [];
     }
-    return getEnglishLangQuestions(category);
+    return _getEnglishLangQuestions(category);
   }
 
-  List<Question> getEnglishLangQuestions(QuestionCategory category) {
+  List<Question> _getEnglishLangQuestions(QuestionCategory category) {
     return allQuestionsService
         .getAllQuestionsWithLanguages()
         .get<Language, Map<CategoryDifficulty, List<Question>>>(Language.en)!
@@ -162,29 +162,29 @@ class GeoQuizQuestionCollectorService extends QuestionCollectorService<
   }
 
   List<int> sortCountryIndexListAfterRankedCountries(List<int> countryIndexes) {
-    List<int> allCountriesIndexesRanked = getAllCountriesSortedAfterRank();
+    List<int> allCountriesIndexesRanked = _getAllCountriesSortedAfterRank();
     countryIndexes.sort((a, b) => allCountriesIndexesRanked
         .indexOf(a)
         .compareTo(allCountriesIndexesRanked.indexOf(b)));
     return countryIndexes;
   }
 
-  List<Question> sortQuestionListAfterRankedCountries(
+  List<Question> _sortQuestionListAfterRankedCountries(
       List<Question> questions, int? countryPositionInRawString) {
-    List<int> allCountriesIndexesRanked = getAllCountriesSortedAfterRank();
+    List<int> allCountriesIndexesRanked = _getAllCountriesSortedAfterRank();
     questions.sort((a, b) => allCountriesIndexesRanked
-        .indexOf(getIndexOfCountry(a, countryPositionInRawString))
+        .indexOf(_getIndexOfCountry(a, countryPositionInRawString))
         .compareTo(allCountriesIndexesRanked
-            .indexOf(getIndexOfCountry(b, countryPositionInRawString))));
+            .indexOf(_getIndexOfCountry(b, countryPositionInRawString))));
     return questions;
   }
 
-  int getIndexOfCountry(Question q, int? countryPositionInRawString) =>
+  int _getIndexOfCountry(Question q, int? countryPositionInRawString) =>
       countryPositionInRawString == null
           ? _geoQuizCountryUtils.getCountryIndexForName(q.rawString)
           : q.rawString.split(":")[countryPositionInRawString].parseToInt;
 
-  List<int> getAllCountriesSortedAfterRank() {
+  List<int> _getAllCountriesSortedAfterRank() {
     List<String> allCountriesRanked = allQuestionsService.allCountriesRanked;
     allCountriesRanked.sort((a, b) =>
         a.split(":")[1].parseToInt.compareTo(b.split(":")[1].parseToInt));

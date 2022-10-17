@@ -498,7 +498,7 @@ class GeoQuizAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat5, //
         questionConfig.diff0, //
-        ["‎‎‎‎‎‎‎‎‎‎:‎‎برج إيفل ، باريس‎‎:‎‎‎‎:‎‎‎", "‎‎‎‎‎‎‎‎‎‎:‎‎الكولوسيوم ، روما‎‎:‎‎‎‎:‎‎‎", "‎‎‎‎‎‎‎‎‎‎:‎‎هوليوود ساين ، لوس أنجلوس‎‎:‎‎‎‎:‎‎‎", "‎‎‎‎‎‎‎‎‎‎:‎‎الهرم الأكبر بالجيزة ، مصر‎‎:‎‎‎‎:‎‎‎", "‎‎‎‎‎‎‎‎‎‎:‎‎تمثال الحرية ، نيويورك‎‎:‎‎‎‎:‎‎‎", "‎‎‎‎‎‎‎‎‎‎:‎‎سور الصين العظيم‎‎:‎‎‎‎:‎‎‎", "‎‎‎‎‎‎‎‎‎‎:‎‎أنغكور وات ، كمبوديا‎‎:‎‎‎‎:‎‎‎", "‎‎‎‎‎‎‎‎‎‎:‎‎الفاتيكان‎‎:‎‎‎‎:‎‎‎", "‎‎‎‎‎‎‎‎‎‎:‎‎برج بيزا المائل ، إيطاليا‎‎:‎‎‎‎:‎‎‎", "‎‎‎‎‎‎‎‎‎‎:‎‎المسيح المخلص ، ريو دي جانيرو‎‎:‎‎‎‎:‎‎‎", "‎‎‎‎‎‎‎‎‎‎:‎‎دار أوبرا سيدني ، سيدني‎‎:‎‎‎‎:‎‎‎"]);
+        ["‎‎‎‎‎‎‎‎‎‎:‎‎برج إيفل ، باريس‎‎:‎‎‎‎:‎‎‎", "‎‎‎‎‎‎‎‎‎‎:‎‎الكولوسيوم ، روما‎‎:‎‎‎‎:‎‎‎", "‎‎‎‎‎‎‎‎‎‎:‎‎لافتة هوليوود ، لوس أنجلوس‎‎:‎‎‎‎:‎‎‎", "‎‎‎‎‎‎‎‎‎‎:‎‎الهرم الأكبر في الجيزة ، مصر‎‎:‎‎‎‎:‎‎‎", "‎‎‎‎‎‎‎‎‎‎:‎‎تمثال الحرية ، نيويورك‎‎:‎‎‎‎:‎‎‎", "‎‎‎‎‎‎‎‎‎‎:‎‎سور الصين العظيم‎‎:‎‎‎‎:‎‎‎", "‎‎‎‎‎‎‎‎‎‎:‎‎أنغكور وات ، كمبوديا‎‎:‎‎‎‎:‎‎‎", "‎‎‎‎‎‎‎‎‎‎:‎‎الفاتيكان‎‎:‎‎‎‎:‎‎‎", "‎‎‎‎‎‎‎‎‎‎:‎‎برج بيزا المائل ، إيطاليا‎‎:‎‎‎‎:‎‎‎", "‎‎‎‎‎‎‎‎‎‎:‎‎تمثال المسيح الفادي ، ريو دي جانيرو‎‎:‎‎‎‎:‎‎‎", "‎‎‎‎‎‎‎‎‎‎:‎‎دار أوبرا سيدني ، سيدني‎‎:‎‎‎‎:‎‎‎"]);
     addQuestions(
         result, //
         language, //
@@ -563,7 +563,7 @@ class GeoQuizAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat5, //
         questionConfig.diff0, //
-        [":Айфелова кула, Париж::", ":Колизей, Рим::", ":Знак Холивуд, Лос Анджелис::", ":Хеопсова пирамида, Египет::", ":Статуя на Свободата, Ню Йорк::", ":Велика китайска стена::", ":Ангкор Ват, Камбоджа::", ":Ватикана::", ":Наклонена кула в Пиза, Италия::", ":Статуя на Христос Спасител, Рио де Жанейро::", ":Опера на Сидни, Сидни::"]);
+        [":Айфелова кула, Париж::", ":Колизей, Рим::", ":Знак Голливуда, Лос Анджелис::", ":Хеопсова пирамида, Египет::", ":Статуя на Свободата, Ню Йорк::", ":Велика китайска стена::", ":Ангкор Ват, Камбоджа::", ":Ватикана::", ":Наклонена кула в Пиза, Италия::", ":Статуя на Христос Спасител, Рио де Жанейро::", ":Опера на Сидни, Сидни::"]);
     addQuestions(
         result, //
         language, //
@@ -628,7 +628,7 @@ class GeoQuizAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat5, //
         questionConfig.diff0, //
-        [":Eiffelova věž, Paříž::", ":Koloseum, Řím::", ":Hollywood podepsat, Los Angeles::", ":Velká pyramida v Gíze, Egypt::", ":Socha svobody, New York::", ":Velká čínská zeď::", ":Angkor Vat, Kambodža::", ":Vatikán::", ":Šikmá věž v Pise, Itálie::", ":Kristus Vykupitel, Rio de Janeiro::", ":Opera v Sydney, Sydney::"]);
+        [":Eiffelova věž, Paříž::", ":Koloseum, Řím::", ":Nápis Hollywood, Los Angeles::", ":Velká pyramida v Gíze, Egypt::", ":Socha svobody, New York::", ":Velká čínská zeď::", ":Angkor Vat, Kambodža::", ":Vatikán::", ":Šikmá věž v Pise, Itálie::", ":Kristus Vykupitel, Rio de Janeiro::", ":Opera v Sydney, Sydney::"]);
     addQuestions(
         result, //
         language, //
@@ -693,7 +693,7 @@ class GeoQuizAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat5, //
         questionConfig.diff0, //
-        [":Eiffeltårnet, Paris::", ":Colosseum, Rom::", ":Hollywood-tegn, Los Angeles::", ":Den store pyramide i Giza, Egypten::", ":Frihedsgudinden, New York::", ":Kinesiske mur::", ":Angkor Wat, Cambodja::", ":Vatikanstaten::", ":Skæve Tårn i Pisa, Italien::", ":Kristus forløser, Rio de Janeiro::", ":Operahuset i Sydney, Sydney::"]);
+        [":Eiffeltårnet, Paris::", ":Colosseum, Rom::", ":Hollywood Sign, Los Angeles::", ":Den store pyramide i Giza, Egypten::", ":Frihedsgudinden, New York::", ":Kinesiske mur::", ":Angkor Wat, Cambodja::", ":Vatikanstaten::", ":Skæve Tårn i Pisa, Italien::", ":Kristus forløser, Rio de Janeiro::", ":Operahuset i Sydney, Sydney::"]);
     addQuestions(
         result, //
         language, //
@@ -758,7 +758,7 @@ class GeoQuizAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat5, //
         questionConfig.diff0, //
-        [":Eiffelturm, Paris::", ":Kolosseum, Rom::", ":Hollywood Zeichen, Los Angeles::", ":Große Pyramide von Gizeh, Ägypten::", ":Freiheitsstatue, New York::", ":Chinesische Mauer::", ":Angkor Wat, Kambodscha::", ":Vatikanstadt::", ":Schiefer Turm von Pisa, Italien::", ":Christus der Erlöser, Rio de Janeiro::", ":Sydney Opernhaus, Sydney::"]);
+        [":Eiffelturm, Paris::", ":Kolosseum, Rom::", ":Hollywood Sign, Los Angeles::", ":Große Pyramide von Gizeh, Ägypten::", ":Freiheitsstatue, New York::", ":Chinesische Mauer::", ":Angkor Wat, Kambodscha::", ":Vatikanstadt::", ":Schiefer Turm von Pisa, Italien::", ":Christus der Erlöser, Rio de Janeiro::", ":Sydney Opernhaus, Sydney::"]);
     addQuestions(
         result, //
         language, //
@@ -823,7 +823,7 @@ class GeoQuizAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat5, //
         questionConfig.diff0, //
-        [":Πύργος του Άιφελ, Παρίσι::", ":Κολοσσαίο, Ρώμη::", ":Ημερολόγιο του Χόλιγουντ, Λος Άντζελες::", ":Μεγάλη Πυραμίδα της Γκίζας, Αίγυπτος::", ":Άγαλμα της Ελευθερίας, Νέα Υόρκη::", ":Σινικό τείχος της Κίνας::", ":Άνγκορ Βατ, Καμπότζη::", ":Πόλη του Βατικανού::", ":Πύργος της Πίζας, Ιταλία::", ":Χριστός Λυτρωτής, Ρίο ντε Τζανέιρο::", ":Όπερα του Σίδνεϊ, Σίδνεϊ::"]);
+        [":Πύργος του Άιφελ, Παρίσι::", ":Κολοσσαίο, Ρώμη::", ":Σημάδι του Χόλιγουντ, Λος Άντζελες::", ":Μεγάλη Πυραμίδα της Γκίζας, Αίγυπτος::", ":Άγαλμα της Ελευθερίας, Νέα Υόρκη::", ":Σινικό τείχος της Κίνας::", ":Άνγκορ Βατ, Καμπότζη::", ":Πόλη του Βατικανού::", ":Πύργος της Πίζας, Ιταλία::", ":Χριστός Λυτρωτής, Ρίο ντε Τζανέιρο::", ":Όπερα του Σίδνεϊ, Σίδνεϊ::"]);
     addQuestions(
         result, //
         language, //
@@ -1036,7 +1036,7 @@ class GeoQuizAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat5, //
         questionConfig.diff0, //
-        [":Eiffel-torni, Pariisi::", ":Colosseum, Rooma::", ":Hollywood-merkki, Los Angeles::", ":Gizan suuri pyramidi, Egypti::", ":Vapaudenpatsas, New York::", ":Kiinan suuri muuri::", ":Angkor Wat, Kambodža::", ":Vatikaani::", ":Pisan kalteva torni, Italia::", ":Kristuksen Lunastaja, Rio de Janeiro::", ":Sydneyn oopperatalo, Sydney::"]);
+        [":Eiffel-torni, Pariisi::", ":Colosseum, Rooma::", ":Hollywood-kyltti, Los Angeles::", ":Gizan suuri pyramidi, Egypti::", ":Vapaudenpatsas, New York::", ":Kiinan suuri muuri::", ":Angkor Wat, Kambodža::", ":Vatikaani::", ":Pisan kalteva torni, Italia::", ":Kristuksen Lunastaja, Rio de Janeiro::", ":Sydneyn oopperatalo, Sydney::"]);
     addQuestions(
         result, //
         language, //
@@ -1361,7 +1361,7 @@ class GeoQuizAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat5, //
         questionConfig.diff0, //
-        [":Eiffel-torony, Párizs::", ":Colosseum, Róma::", ":Hollywood Jel, Los Angeles::", ":Nagy Giza-i piramis, Egyiptom::", ":Szabadság-szobor, New York::", ":Kínai Nagy Fal::", ":Angkorvat, Kambodzsa::", ":Vatikánváros::", ":Pisa ferde tornya, Olaszország::", ":A megváltó Krisztus, Rio de Janeiro::", ":Sydney Operaház, Sydney::"]);
+        [":Eiffel-torony, Párizs::", ":Colosseum, Róma::", ":Hollywood Sign, Los Angeles::", ":Nagy Giza-i piramis, Egyiptom::", ":Szabadság-szobor, New York::", ":Kínai Nagy Fal::", ":Angkorvat, Kambodzsa::", ":Vatikánváros::", ":Pisa ferde tornya, Olaszország::", ":A megváltó Krisztus, Rio de Janeiro::", ":Sydney Operaház, Sydney::"]);
     addQuestions(
         result, //
         language, //
@@ -1686,7 +1686,7 @@ class GeoQuizAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat5, //
         questionConfig.diff0, //
-        [":Menara Eiffel, Paris::", ":Colosseum, Rom::", ":Tanda Hollywood, Los Angeles::", ":Piramid Besar Giza, Mesir::", ":Patung Liberty, New York::", ":Tembok Besar China::", ":Angkor Wat, Kemboja::", ":Kota Vatikan::", ":Menara Condong Pisa, Itali::", ":Kristus Penebus, Rio de Janeiro::", ":Panggung Opera Sydney, Sydney::"]);
+        [":Menara Eiffel, Paris::", ":Colosseum, Rom::", ":Hollywood Sign, Los Angeles::", ":Piramid Besar Giza, Mesir::", ":Patung Liberty, New York::", ":Tembok Besar China::", ":Angkor Wat, Kemboja::", ":Kota Vatikan::", ":Menara Condong Pisa, Itali::", ":Kristus Penebus, Rio de Janeiro::", ":Panggung Opera Sydney, Sydney::"]);
     addQuestions(
         result, //
         language, //
@@ -2531,7 +2531,7 @@ class GeoQuizAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat5, //
         questionConfig.diff0, //
-        [":Ейфелева вежа, Париж::", ":Колізей, Рим::", ":Голлівудський знак, Лос-Анджелес::", ":Велика піраміда Гізи, Єгипет::", ":Статуя Свободи, Нью-Йорк::", ":Велика Китайська стіна::", ":Ангкор-Ват, Камбоджа::", ":Місто Ватикан::", ":Пізанська вежа, Італія::", ":Христос-Викупитель, Ріо-де-Жанейро::", ":Оперний театр Сіднея, Сідней::"]);
+        [":Ейфелева вежа, Париж::", ":Колізей, Рим::", ":Знак Голлівуду, Лос-Анджелес::", ":Велика піраміда Гізи, Єгипет::", ":Статуя Свободи, Нью-Йорк::", ":Велика Китайська стіна::", ":Ангкор-Ват, Камбоджа::", ":Місто Ватикан::", ":Пізанська вежа, Італія::", ":Христос-Викупитель, Ріо-де-Жанейро::", ":Оперний театр Сіднея, Сідней::"]);
     addQuestions(
         result, //
         language, //
@@ -2596,7 +2596,7 @@ class GeoQuizAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat5, //
         questionConfig.diff0, //
-        [":Tháp Eiffel, Paris::", ":Đấu trường La Mã, Rome::", ":Dấu hiệu Hollywood, Los Angeles::", ":Kim tự tháp Giza vĩ đại, Ai Cập::", ":Tượng Nữ thần Tự do, New York::", ":Vạn Lý Trường Thành của Trung Quốc::", ":Angkor Wat, Campuchia::", ":Thành phố Vatican::", ":Tháp nghiêng Pisa, Ý::", ":Chúa Cứu thế, Rio de Janeiro::", ":Nhà hát Opera Sydney, Sydney::"]);
+        [":Tháp Eiffel, Paris::", ":Đấu trường La Mã, Rome::", ":Bảng hiệu Hollywood, Los Angeles::", ":Kim tự tháp Giza vĩ đại, Ai Cập::", ":Tượng Nữ thần Tự do, New York::", ":Vạn Lý Trường Thành của Trung Quốc::", ":Angkor Wat, Campuchia::", ":Thành phố Vatican::", ":Tháp nghiêng Pisa, Ý::", ":Chúa Cứu thế, Rio de Janeiro::", ":Nhà hát Opera Sydney, Sydney::"]);
     addQuestions(
         result, //
         language, //
@@ -2661,7 +2661,7 @@ class GeoQuizAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat5, //
         questionConfig.diff0, //
-        [":巴黎埃菲尔铁塔::", ":罗马斗兽场，罗马::", ":好莱坞标志，洛杉矶::", ":埃及吉萨大金字塔::", ":纽约自由女神像::", ":中国长城::", ":柬埔寨吴哥窟::", ":梵蒂冈城::", ":意大利比萨斜塔::", ":基督救世主，里约热内卢::", ":悉尼悉尼歌剧院::"]);
+        [":巴黎埃菲尔铁塔::", ":罗马斗兽场，罗马::", ":好萊塢標誌，洛杉矶::", ":埃及吉萨大金字塔::", ":纽约自由女神像::", ":中国长城::", ":柬埔寨吴哥窟::", ":梵蒂冈城::", ":意大利比萨斜塔::", ":基督救世主，里约热内卢::", ":悉尼悉尼歌剧院::"]);
     addQuestions(
         result, //
         language, //

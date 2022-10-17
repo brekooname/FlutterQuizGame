@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Game/Game/campaign_level.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
-import 'package:flutter_app_quiz_game/Game/Question/Model/question_difficulty.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_info.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_info_status.dart';
 import 'package:flutter_app_quiz_game/Implementations/GeoQuiz/Components/geoquiz_game_level_header.dart';
@@ -33,21 +32,17 @@ class GeoQuizQuestionScreen extends GameScreen<GeoQuizGameContext,
   GeoQuizQuestionScreen(
     GeoQuizGameScreenManagerState gameScreenManagerState, {
     Key? key,
-    required QuestionDifficulty difficulty,
-    required QuestionCategory category,
     required GeoQuizGameContext gameContext,
-  }) : super(gameScreenManagerState, gameContext,
-            [gameContext.gameUser.getRandomQuestion(difficulty, category)],
-            key: key) {
-    if (currentQuestionInfo.question.questionService
+    required QuestionInfo questionInfo,
+  }) : super(gameScreenManagerState, gameContext, [questionInfo], key: key) {
+    if (questionInfo.question.questionService
         is GeoQuizOptionsQuestionService) {
-      (currentQuestionInfo.question.questionService
-              as GeoQuizOptionsQuestionService)
+      (questionInfo.question.questionService as GeoQuizOptionsQuestionService)
           .clearCache();
     }
 
-    initQuizOptionsScreen(createQuizQuestionManager(),
-        questionImage: getQuestionImage(category),
+    initQuizOptionsScreen(createQuizQuestionManager(questionInfo),
+        questionImage: getQuestionImage(questionInfo, category),
         zoomableImage: GeoQuizGameQuestionConfig().cat9 == category,
         optionsButtonSkinConfig: ButtonSkinConfig(
             backgroundGradient: RadialGradient(radius: 4, colors: [
@@ -62,25 +57,27 @@ class GeoQuizQuestionScreen extends GameScreen<GeoQuizGameContext,
   GeoQuizCampaignLevelService get campaignLevelService =>
       GeoQuizCampaignLevelService();
 
-  GeoQuizQuizQuestionManager createQuizQuestionManager() {
+  GeoQuizQuizQuestionManager createQuizQuestionManager(
+      QuestionInfo questionInfo) {
     return GeoQuizQuizQuestionManager(
-        gameContext, currentQuestionInfo, GeoQuizLocalStorage(), campaignLevel);
+        gameContext, questionInfo, GeoQuizLocalStorage(), campaignLevel);
   }
 
   @override
   int nrOfQuestionsToShowInterstitialAd() {
-    return 8;
+    return 12;
   }
 
   @override
   State<GeoQuizQuestionScreen> createState() => GeoQuizQuestionScreenState();
 
-  Image? getQuestionImage(QuestionCategory category) {
+  Image? getQuestionImage(
+      QuestionInfo questionInfo, QuestionCategory category) {
     if (_geoQuizCountryUtils.isCategoryWithImageQuestions(category)) {
       var flagsOrMaps = _geoQuizCountryUtils.isFlagsOrMapsCategory(category);
       var imageName = flagsOrMaps
-          ? currentQuestionInfo.question.rawString
-          : currentQuestionInfo.question.index.toString();
+          ? questionInfo.question.rawString
+          : questionInfo.question.index.toString();
       var module = flagsOrMaps
           ? "questions/images/" + category.name
           : "questions/images/" + difficulty.name + "/" + category.name;
@@ -106,16 +103,17 @@ class GeoQuizQuestionScreenState extends State<GeoQuizQuestionScreen>
 
   @override
   Widget build(BuildContext context) {
+    var gradient = LinearGradient(
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+        colors: [
+          ColorUtil.colorDarken(Colors.blue.shade100, -0.1),
+          Colors.blue.shade100,
+        ]);
     Widget questionContainer = _quizQuestionContainer
         .createQuestionTextContainer(widget.currentQuestionInfo.question, 4, 4,
             questionContainerDecoration: BoxDecoration(
-                gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      ColorUtil.colorDarken(Colors.blue.shade100, -0.1),
-                      Colors.blue.shade100,
-                    ]),
+                gradient: gradient,
                 border: Border.all(
                     color: Colors.blue.shade700,
                     width: screenDimensions.dimen(0.3)),
@@ -128,8 +126,10 @@ class GeoQuizQuestionScreenState extends State<GeoQuizQuestionScreen>
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         createHeader(),
+        const Spacer(),
         questionContainer,
         optionsRows,
+        const Spacer(),
         const Spacer(),
       ],
     );

@@ -46,7 +46,8 @@ mixin QuizOptionsGameScreen<TQuizQuestionManager extends QuizQuestionManager> {
     List<Row> answerRows = [];
     int answersOnRow = 2;
     List<Widget> answerBtns = [];
-    for (String possibleAnswer in quizQuestionManager.possibleAnswers) {
+    var possibleAnswers = quizQuestionManager.possibleAnswers;
+    for (String possibleAnswer in possibleAnswers) {
       answerBtns.add(createPossibleAnswerButton(
           refreshSetState, goToNextScreenAfterPress, possibleAnswer,
           fontConfig: optionTextFontConfig));
@@ -64,25 +65,50 @@ mixin QuizOptionsGameScreen<TQuizQuestionManager extends QuizQuestionManager> {
         children: answerBtns,
       ));
     }
-    Widget btnContainer = Column(
+    Widget btnColumn = Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: answerRows);
 
+    var greaterThanRowsForListview = 4;
+    var scrollController = ScrollController();
+    Widget btnContainer;
+    if (possibleAnswers.length / 2 > greaterThanRowsForListview) {
+      var scrollbar = Scrollbar(
+          thickness: _screenDimensions.dimen(2),
+          controller: scrollController,
+          thumbVisibility: true,
+          child: ListView(
+            controller: scrollController,
+            children: [btnColumn],
+          ));
+      var listviewHeight =
+          (getAnswerBtnSize().height + getAnswerButtonPaddingBetween() * 2) *
+                  greaterThanRowsForListview +
+              getAnswerButtonPaddingBetween() * 4;
+      btnContainer = SizedBox(height: listviewHeight, child: scrollbar);
+    } else {
+      btnContainer = btnColumn;
+    }
+    var optionsColumnChildren = <Widget>[];
+    var imageContainer = _createImageContainer(questionImageHeightPercent);
+    if (imageContainer != null) {
+      optionsColumnChildren.add(imageContainer);
+    }
+    if (widgetBetweenImageAndOptionRows != null) {
+      optionsColumnChildren.add(widgetBetweenImageAndOptionRows);
+    }
+    optionsColumnChildren.add(btnContainer);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        _createImageContainer(questionImageHeightPercent),
-        widgetBetweenImageAndOptionRows ?? Container(),
-        btnContainer
-      ],
+      children: optionsColumnChildren,
     );
   }
 
-  Widget _createImageContainer(double? questionImageHeightPercent) {
+  Widget? _createImageContainer(double? questionImageHeightPercent) {
     if (_questionImage == null) {
-      return Container();
+      return null;
     }
     return SizedBox(
         width: _screenDimensions.dimen(98),

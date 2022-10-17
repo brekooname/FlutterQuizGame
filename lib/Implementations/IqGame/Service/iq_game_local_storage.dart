@@ -65,7 +65,6 @@ class IqGameLocalStorage extends QuizGameLocalStorage {
 
   @override
   void clearAll() {
-    InAppPurchaseLocalStorage().deletePurchase(MyApp.appId.gameConfig.extraContentProductId);
     IqGameQuestionConfig config = IqGameQuestionConfig();
     for (QuestionCategory cat in config.categories) {
       localStorage.setString(_answeredQuestionsFieldName(cat), "");
