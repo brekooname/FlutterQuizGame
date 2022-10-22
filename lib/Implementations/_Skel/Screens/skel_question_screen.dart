@@ -41,6 +41,7 @@ class SkelQuestionScreen extends GameScreen<
 
 class SkelQuestionScreenState extends State<SkelQuestionScreen>
     with ScreenState, LabelMixin {
+  // ignore: unused_field
   final QuizQuestionContainer _quizQuestionContainer = QuizQuestionContainer();
 
   @override

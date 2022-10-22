@@ -210,8 +210,9 @@ class GeoQuizQuizQuestionManager
   }
 
   @override
-  Duration get durationGoToNextScreen =>
+  Duration durationGoToNextScreen({int? defaultAllDurationValue}) =>
       allQuestionsAnswered && gameContext.consecutiveCorrectAnswers > 1
           ? const Duration(milliseconds: 3000)
-          : super.durationGoToNextScreen;
+          : super.durationGoToNextScreen(
+              defaultAllDurationValue: defaultAllDurationValue);
 }

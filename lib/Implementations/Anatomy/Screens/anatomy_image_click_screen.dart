@@ -11,9 +11,9 @@ import 'package:flutter_app_quiz_game/Implementations/Anatomy/Service/anatomy_sc
 import 'package:flutter_app_quiz_game/Lib/Extensions/map_extension.dart';
 import 'package:flutter_app_quiz_game/Lib/Localization/label_mixin.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/ImageClick/image_click_screen.dart';
-import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/Options/quiz_question_container.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/Options/quiz_question_manager.dart';
+import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
 
 import '../../../Game/Question/Model/question_info.dart';
@@ -37,7 +37,6 @@ class AnatomyImageClickScreen extends GameScreen<
     initImageClickScreen(
         QuizQuestionManager<AnatomyGameContext, AnatomyLocalStorage>(
             gameContext, questionInfo, AnatomyLocalStorage()),
-        questionInfo,
         gameQuestionConfig.categoryDiagramImgDimen
             .get<QuestionCategory, Size>(questionInfo.question.category)!,
         imageContainerHeightPercent:

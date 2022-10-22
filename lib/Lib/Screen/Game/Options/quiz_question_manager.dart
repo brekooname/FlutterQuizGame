@@ -10,6 +10,7 @@ import 'package:flutter_app_quiz_game/Lib/Extensions/string_extension.dart';
 import 'package:flutter_app_quiz_game/Lib/Storage/quiz_game_local_storage.dart';
 
 import '../../../../Game/Constants/hint_button_type.dart';
+import '../../../../Game/Question/QuestionCategoryService/ImageClick/image_click_question_service.dart';
 
 class QuizQuestionManager<TGameContext extends GameContext,
     TQuizGameLocalStorage extends QuizGameLocalStorage> {
@@ -90,7 +91,13 @@ class QuizQuestionManager<TGameContext extends GameContext,
     var question = currentQuestionInfo.question;
     var questionService = question.questionService;
     if (isGameFinished()) {
-      Future.delayed(durationGoToNextScreen, () {
+      Future.delayed(
+          durationGoToNextScreen(
+              //because image click questions don't have any text
+              //we don't need to wait much time to go to the next screen
+              defaultAllDurationValue:
+                  questionService is ImageClickQuestionService ? 1100 : null),
+          () {
         goToNextScreenAfterPress.call();
       });
       if (isGameFinishedSuccessful()) {
@@ -104,9 +111,14 @@ class QuizQuestionManager<TGameContext extends GameContext,
     }
   }
 
-  Duration get durationGoToNextScreen => Duration(
-      milliseconds:
-          getValueBasedOnNrOfPossibleAnswers(1100, 1600, 1700, 1800, false, 1));
+  Duration durationGoToNextScreen({int? defaultAllDurationValue}) => Duration(
+      milliseconds: getValueBasedOnNrOfPossibleAnswers(
+          defaultAllDurationValue ?? 1100,
+          defaultAllDurationValue ?? 1600,
+          defaultAllDurationValue ?? 1700,
+          defaultAllDurationValue ?? 1800,
+          false,
+          1));
 
   bool isGameFinishedSuccessful() {
     return currentQuestionInfo.question.questionService

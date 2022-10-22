@@ -11,7 +11,9 @@ import '../../../main.dart';
 import '../Questions/skel_game_context.dart';
 
 class SkelLevelHeader extends StatelessWidget {
+  // ignore: unused_field
   final ImageService _imageService = ImageService();
+  // ignore: unused_field
   final ScreenDimensionsService _screenDimensionsService =
       ScreenDimensionsService();
 

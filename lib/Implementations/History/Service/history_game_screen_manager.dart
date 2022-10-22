@@ -99,9 +99,9 @@ class HistoryGameScreenManagerState extends State<HistoryGameScreenManager>
       goToScreen = HistoryGameQuestionScreen(
         this,
         key: UniqueKey(),
+        questionInfo:
+            gameContext.gameUser.getRandomQuestion(difficulty, category),
         gameContext: gameContext,
-        difficulty: difficulty,
-        category: category,
       );
     }
     return goToScreen;
@@ -112,5 +112,4 @@ class HistoryGameScreenManagerState extends State<HistoryGameScreenManager>
   HistoryGameContext createGameContext(CampaignLevel campaignLevel) {
     return HistoryGameContextService().createGameContext(campaignLevel);
   }
-
 }

@@ -111,8 +111,9 @@ class MyButton extends StatefulWidget {
   Widget _createCustomContent() {
     if ((text ?? "").isNotEmpty && buttonSkinConfig.image != null) {
       var labelContainerDecoration = BoxDecoration(
-          color: Colors.white.withOpacity(0.9),
-          borderRadius: BorderRadius.circular(FontConfig.standardBorderRadius));
+        color: Colors.white.withOpacity(0.9),
+        borderRadius: BorderRadius.circular(FontConfig.standardBorderRadius),
+      );
       var labelWithPadding = Padding(
           padding: EdgeInsets.all(FontConfig.standardMinMargin),
           child: _createMyText());
@@ -121,10 +122,10 @@ class MyButton extends StatefulWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SizedBox(
-              height: size.height / 1.5,
+              height: size.height / 2.5,
             ),
             Container(
-                height: size.height / 3,
+                height: size.height / 2.5,
                 decoration: labelContainerDecoration,
                 child: labelWithPadding)
           ]);
@@ -132,7 +133,7 @@ class MyButton extends StatefulWidget {
         width: size.width,
         height: size.height,
         child: Stack(
-          alignment: Alignment.center,
+          alignment: Alignment.topCenter,
           children: [
             buttonSkinConfig.image!,
             labelContainer,

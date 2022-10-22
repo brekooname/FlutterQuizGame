@@ -45,10 +45,13 @@ class AstronomyGameConfig extends GameConfig {
   ImageRepeat get backgroundTextureRepeat => ImageRepeat.repeat;
 
   @override
-  Color get defaultScreenBackgroundColor => const Color.fromRGBO(198, 236, 255, 1);
+  Color get defaultScreenBackgroundColor =>
+      const Color.fromRGBO(198, 236, 255, 1);
 
   @override
-  String get extraContentProductId => "extracontent.astronomy";
+  String get extraContentProductId =>
+      //Same for Android and iOS
+      "extracontent.astronomy";
 
   @override
   String getTitle(Language language) {

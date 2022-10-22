@@ -25,6 +25,8 @@ class HangmanGameQuestionConfig extends GameQuestionConfig with LabelMixin {
   static final HangmanGameQuestionConfig singleton =
       HangmanGameQuestionConfig.internal();
 
+  HangmanGameQuestionConfig.internal();
+
   factory HangmanGameQuestionConfig() {
     singleton.difficulties = [
       singleton.diff0 = QuestionDifficulty(index: 0),
@@ -74,8 +76,6 @@ class HangmanGameQuestionConfig extends GameQuestionConfig with LabelMixin {
     categoriesWithoutMixed.removeWhere((category) => isMixedCategory(category));
     return categoriesWithoutMixed;
   }
-
-  HangmanGameQuestionConfig.internal();
 
   @override
   Map<QuestionCategoryDifficultyWithPrefixCode, String> get prefixLabelForCode {

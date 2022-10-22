@@ -77,16 +77,16 @@ class HistoryMainMenuScreenState extends State<HistoryMainMenuScreen>
     var level3 = createLevelButton(context, historyCampaignLevel.level_3,
         Colors.yellow.shade300, label.l_prehistory, MyApp.isExtraContentLocked);
 
-    var btnMargin = screenDimensions.dimen(10);
+    var btnMargin = screenDimensions.dimen(6);
     var mainColumn = Container(
         alignment: Alignment.center,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            SizedBox(height: screenDimensions.dimen(11)),
+            SizedBox(height: screenDimensions.dimen(8)),
             gameTitle,
-            SizedBox(height: screenDimensions.dimen(14)),
+            SizedBox(height: screenDimensions.dimen(8)),
             level0,
             SizedBox(height: btnMargin),
             level1,

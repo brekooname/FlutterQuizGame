@@ -42,7 +42,6 @@ class AstronomySolarSystemScreen extends GameScreen<
     initImageClickScreen(
         QuizQuestionManager<AstronomyGameContext, AstronomyLocalStorage>(
             gameContext, currentQuestionInfo, AstronomyLocalStorage()),
-        currentQuestionInfo,
         _rawImageToClickSize,
         imageContainerHeightPercent: 85,
         answerBtnSkin: ButtonSkinConfig(
@@ -62,7 +61,7 @@ class AstronomySolarSystemScreen extends GameScreen<
 
   @override
   int nrOfQuestionsToShowInterstitialAd() {
-    return 8;
+    return 12;
   }
 
   @override

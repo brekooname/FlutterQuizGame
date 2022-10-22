@@ -2,10 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_category.dart';
 import 'package:flutter_app_quiz_game/Implementations/IqGame/Constants/iq_game_question_config.dart';
-import 'package:flutter_app_quiz_game/Lib/Storage/in_app_purchases_local_storage.dart';
 import 'package:flutter_app_quiz_game/Lib/Storage/quiz_game_local_storage.dart';
-
-import '../../../main.dart';
 
 class IqGameLocalStorage extends QuizGameLocalStorage {
   static final IqGameLocalStorage singleton = IqGameLocalStorage.internal();

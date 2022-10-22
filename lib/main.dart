@@ -46,14 +46,13 @@ class MyApp extends StatefulWidget {
   //TODO ---VALUE CHANGED--- should be false
   static bool kIsManualTest = false;
 
-  // static String webAppKey = "history";
-  static String webAppKey = "geoquiz";
+  static String webAppKey = "history";
+  // static String webAppKey = "geoquiz";
   // static String webAppKey = "perstest";
   // static String webAppKey = "dopewars";
   // static String webAppKey = "anatomy";
   // static String webAppKey = "iqgame";
   // static String webAppKey = "astronomy";
-  // static String webAppKey = "hangman";
   static CampaignLevel campaignLevel = HangmanCampaignLevelService().level_0;
 
   //

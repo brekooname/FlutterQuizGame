@@ -32,7 +32,7 @@ import '../../../Lib/Font/font_config.dart';
 class HistoryGameTimelineScreen extends GameScreen<HistoryGameContext,
     HistoryGameScreenManagerState, HistoryCampaignLevelService> {
   static const int scrollToItemDurationMillis = 600;
-  static const int showInterstitialAdEveryNQuestions = 8;
+  static const int showInterstitialAdEveryNQuestions = 12;
   static const int defaultQuestionsToPlayUntilNextCategory = 1;
   final MyAudioPlayer _audioPlayer = MyAudioPlayer();
 
@@ -207,7 +207,7 @@ class HistoryGameTimelineScreenState extends State<HistoryGameTimelineScreen>
                 : widget.currentQuestionInfo.question,
             widget.category == HistoryGameQuestionConfig().cat0 ? 1 : 2,
             widget.category == HistoryGameQuestionConfig().cat3 ? 4 : 2,
-            questionContainerHeight: screenDimensions.dimen(25));
+            questionContainerHeight: screenDimensions.dimen(30));
 
     ScrollablePositionedList listView =
         _createListView(_answerBtnSize, zoomInZoomOutAnswerDuration);

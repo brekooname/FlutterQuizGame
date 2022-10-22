@@ -18,6 +18,7 @@ class SkelAllQuestions extends AllQuestionsService {
   @override
   Map<Language, Map<CategoryDifficulty, List<Question>>>
       getAllQuestionsWithLanguages() {
+    // ignore: unused_local_variable
     var questionConfig = SkelGameQuestionConfig();
     Map<Language, Map<CategoryDifficulty, List<Question>>> result =
         HashMap<Language, Map<CategoryDifficulty, List<Question>>>();

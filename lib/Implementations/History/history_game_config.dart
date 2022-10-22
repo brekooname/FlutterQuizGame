@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Game/GameType/game_config.dart';
 import 'package:flutter_app_quiz_game/Game/GameType/game_question_config.dart';
@@ -22,7 +21,8 @@ class HistoryGameConfig extends GameConfig {
   HistoryGameConfig.internal();
 
   @override
-  QuestionCollectorService get questionCollectorService => HistoryQuestionCollectorService();
+  QuestionCollectorService get questionCollectorService =>
+      HistoryQuestionCollectorService();
 
   @override
   GameQuestionConfig get gameQuestionConfig => HistoryGameQuestionConfig();
@@ -38,7 +38,9 @@ class HistoryGameConfig extends GameConfig {
   Color get defaultScreenBackgroundColor => Colors.amber.shade100;
 
   @override
-  String get extraContentProductId => "extracontent.history";
+  String get extraContentProductId =>
+      //Same for Android and iOS
+      "extracontent.history";
 
   @override
   String getTitle(Language language) {
@@ -109,5 +111,4 @@ class HistoryGameConfig extends GameConfig {
         return "History Game";
     }
   }
-
 }

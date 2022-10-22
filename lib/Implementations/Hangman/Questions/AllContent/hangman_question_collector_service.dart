@@ -31,6 +31,12 @@ class HangmanQuestionCollectorService extends QuestionCollectorService<
             difficulties: difficulties, categories: [questionCategory]));
       }
     }
+
+    result = result
+        .where((element) =>
+            element.rawString.length > 2 && element.rawString.length < 27)
+        .toList();
+
     return result;
   }
 

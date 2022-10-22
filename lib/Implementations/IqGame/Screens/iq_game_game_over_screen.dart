@@ -11,7 +11,6 @@ import '../Components/iq_game_iq_test_correct_answers_popup.dart';
 import '../Components/iq_game_level_header.dart';
 import '../Constants/iq_game_campaign_level_service.dart';
 import '../Constants/iq_game_question_config.dart';
-import 'GameType/NumberSeq/iq_game_number_seq_game_type_creator.dart';
 
 class IqGameGameOverScreen extends StandardScreen<IqGameScreenManagerState> {
   final IqGameGameTypeCreator _iqGameGameTypeCreator;

@@ -16,17 +16,15 @@ mixin ImageClickScreen<TQuizQuestionManager extends QuizQuestionManager> {
   final ScreenDimensionsService _screenDimensions = ScreenDimensionsService();
   final ImageService _imageService = ImageService();
   late final TQuizQuestionManager quizQuestionManager;
-  late final QuestionInfo _currentQuestionInfo;
   late final Image imageToClick;
   late final Size _rawImageToClickSize;
   late final double _imageContainerHeightPercent;
   late final ButtonSkinConfig? _answerBtnSkin;
 
-  void initImageClickScreen(TQuizQuestionManager quizQuestionManager,
-      QuestionInfo currentQuestionInfo, Size rawImageToClickSize,
+  void initImageClickScreen(
+      TQuizQuestionManager quizQuestionManager, Size rawImageToClickSize,
       {double? imageContainerHeightPercent, ButtonSkinConfig? answerBtnSkin}) {
     _imageContainerHeightPercent = imageContainerHeightPercent ?? 75;
-    _currentQuestionInfo = currentQuestionInfo;
     this.quizQuestionManager = quizQuestionManager;
     _rawImageToClickSize = rawImageToClickSize;
     _answerBtnSkin = answerBtnSkin;
@@ -179,9 +177,9 @@ mixin ImageClickScreen<TQuizQuestionManager extends QuizQuestionManager> {
   double _calculateOriginX() {
     return showAnswerPointerOnOrigin()
         //To verify if it works with - or +
-        ?  _getAnswerBtnSideDimen() / 2 + _getAnswerBtnBorderWidth()
+        // ?  _getAnswerBtnSideDimen() / 2 + _getAnswerBtnBorderWidth()
         // ?  - _getAnswerBtnSideDimen() / 2 + _getAnswerBtnBorderWidth()
-        // ? _getAnswerBtnBorderWidth() / 2
+        ? _getAnswerBtnBorderWidth() / 2
         : -_getPointerDimen() / 2 + _getAnswerBtnBorderWidth();
   }
 
@@ -194,6 +192,9 @@ mixin ImageClickScreen<TQuizQuestionManager extends QuizQuestionManager> {
             ((_getImageContainerHeight() - adjustedImageSize.height) / 2) -
             (_getAnswerBtnSideDimen() / 2 - _getAnswerBtnBorderWidth() * 2);
   }
+
+  QuestionInfo get _currentQuestionInfo =>
+      quizQuestionManager.currentQuestionInfo;
 
   bool _pressedAnswerEqualsButton(ImageClickInfo imageClickInfo) {
     return _currentQuestionInfo.pressedAnswers.isNotEmpty &&

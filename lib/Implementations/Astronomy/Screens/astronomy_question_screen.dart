@@ -35,8 +35,8 @@ class AstronomyQuestionScreen extends GameScreen<AstronomyGameContext,
     _gameType = campaignLevelService.findGameTypeForCategory(category);
     initQuizOptionsScreen(
       QuizQuestionManager<AstronomyGameContext, AstronomyLocalStorage>(
-          gameContext, currentQuestionInfo, AstronomyLocalStorage()),
-      questionImage: _getQuestionImage(),
+          gameContext, questionInfo, AstronomyLocalStorage()),
+      questionImage: _getQuestionImage(questionInfo),
       optionsButtonSkinConfig: _getOptionsButtonSkinConfig(),
     );
   }
@@ -60,9 +60,9 @@ class AstronomyQuestionScreen extends GameScreen<AstronomyGameContext,
   AstronomyCampaignLevelService get campaignLevelService =>
       AstronomyCampaignLevelService();
 
-  Image? _getQuestionImage() {
+  Image? _getQuestionImage(QuestionInfo questionInfo) {
     if (campaignLevelService.isImageQuestionGameType(_gameType)) {
-      var imageName = currentQuestionInfo.question.index.toString();
+      var imageName = questionInfo.question.index.toString();
       var module = "questions/" + category.name;
       return imageService.getSpecificImage(
           module: module, imageExtension: "jpg", imageName: imageName);
@@ -76,7 +76,7 @@ class AstronomyQuestionScreen extends GameScreen<AstronomyGameContext,
 
   @override
   int nrOfQuestionsToShowInterstitialAd() {
-    return 8;
+    return 12;
   }
 
   @override

@@ -172,7 +172,7 @@ class HangmanQuestionScreenState extends State<HangmanQuestionScreen>
             height: imgSizeDimen,
             child: AnimateFadeInFadeOut(
               key: Key(achievementImgName),
-              duration: widget.quizQuestionManager.durationGoToNextScreen,
+              duration: widget.quizQuestionManager.durationGoToNextScreen(),
               onlyFadeOut: true,
               toAnimateWidget: image,
             ));
