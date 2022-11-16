@@ -23,7 +23,7 @@ class GameContextService {
 
   GameContext createGameContextWithHintsAndQuestions(
       int amountAvailableHints, List<Question> questions) {
-    GameUser gameUser = createGameUser(questions);
+    GameUser gameUser = _createGameUser(questions);
     Set<QuestionCategory> categs = {};
     Set<QuestionDifficulty> diff = {};
     for (Question question in questions) {
@@ -32,23 +32,23 @@ class GameContextService {
     }
     QuestionConfig questionConfig =
         QuestionConfig(diff, categs, questions.length, amountAvailableHints);
-    return createGameContextWithUserAndQuestionConfig(gameUser, questionConfig);
+    return _createGameContextWithUserAndQuestionConfig(gameUser, questionConfig);
   }
 
-  GameContext createGameContextWithUserAndQuestionConfig(
+  GameContext _createGameContextWithUserAndQuestionConfig(
       GameUser gameUser, QuestionConfig questionConfig) {
     return GameContext(gameUser, questionConfig);
   }
 
-  GameUser createGameUser(List<Question> questions) {
+  GameUser _createGameUser(List<Question> questions) {
     GameUser gameUser = GameUser();
     for (Question question in questions) {
-      addNewQuestionInfo(gameUser, question);
+      _addNewQuestionInfo(gameUser, question);
     }
     return gameUser;
   }
 
-  void addNewQuestionInfo(GameUser gameUser, Question question) {
+  void _addNewQuestionInfo(GameUser gameUser, Question question) {
     QuestionInfo gameQuestionInfo = QuestionInfo(question);
     gameUser.addQuestionInfoToList(gameQuestionInfo);
     question.questionService

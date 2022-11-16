@@ -38,30 +38,31 @@ class HangmanGameQuestionConfig extends GameQuestionConfig with LabelMixin {
     ];
     //
     //
+    var staticLabel = LabelMixin.staticLabel;
     singleton.categories = [
       singleton.cat1 = QuestionCategory(
           index: 1,
-          categoryLabel: "Animals",
+          categoryLabel: staticLabel.l_animals,
           questionCategoryService: HangmanCategoryQuestionService()),
       singleton.cat4 = QuestionCategory(
           index: 4,
-          categoryLabel: "Food",
+          categoryLabel: staticLabel.l_food,
           questionCategoryService: HangmanCategoryQuestionService()),
       singleton.cat2 = QuestionCategory(
           index: 2,
-          categoryLabel: "Plants",
+          categoryLabel: staticLabel.l_plants,
           questionCategoryService: HangmanCategoryQuestionService()),
       singleton.cat3 = QuestionCategory(
           index: 3,
-          categoryLabel: "Kitchen",
+          categoryLabel: staticLabel.l_kitchen,
           questionCategoryService: HangmanCategoryQuestionService()),
       singleton.cat0 = QuestionCategory(
           index: 0,
-          categoryLabel: "Countries",
+          categoryLabel: staticLabel.l_countries,
           questionCategoryService: HangmanCategoryQuestionService()),
       singleton.cat5 = QuestionCategory(
           index: 5,
-          categoryLabel: "Mixed",
+          categoryLabel: staticLabel.l_mixed,
           questionCategoryService: HangmanCategoryQuestionService()),
     ];
     return singleton;

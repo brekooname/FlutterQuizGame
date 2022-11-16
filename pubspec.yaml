@@ -118,17 +118,17 @@ flutter:
     ########################
     ###### HANGMAN ###############################################################################
     ########################
-#    - assets/implementations/hangman/
-#    - assets/implementations/hangman/game/
-#    - assets/implementations/hangman/campaign/
-#    - assets/implementations/hangman/campaign/background/
-#    - assets/implementations/hangman/campaign/buttons/
-#    - assets/implementations/hangman/campaign/l_0/
-#    - assets/implementations/hangman/campaign/l_1/
-#    - assets/implementations/hangman/campaign/l_2/
-#    - assets/implementations/hangman/campaign/l_3/
-#    - assets/implementations/hangman/campaign/l_4/
-#    - assets/implementations/hangman/campaign/l_5/
+    - assets/implementations/hangman/
+    - assets/implementations/hangman/game/
+    - assets/implementations/hangman/campaign/
+    - assets/implementations/hangman/campaign/background/
+    - assets/implementations/hangman/campaign/buttons/
+    - assets/implementations/hangman/campaign/l_0/
+    - assets/implementations/hangman/campaign/l_1/
+    - assets/implementations/hangman/campaign/l_2/
+    - assets/implementations/hangman/campaign/l_3/
+    - assets/implementations/hangman/campaign/l_4/
+    - assets/implementations/hangman/campaign/l_5/
     ########################
     ###### ASTRONOMY #############################################################################
     ########################
@@ -199,23 +199,23 @@ flutter:
     ########################
     ###### HISTORY #################################################################################
     ########################
-    - assets/implementations/history/
-    - assets/implementations/history/buttons/
-    - assets/implementations/history/questions/images/diff0/cat0/
-    - assets/implementations/history/questions/images/diff0/cat1/
-    - assets/implementations/history/questions/images/diff0/cat2/
-    - assets/implementations/history/questions/images/diff0/cat3/
-    - assets/implementations/history/questions/images/diff0/cat4/
-    - assets/implementations/history/questions/images/diff1/cat0/
-    - assets/implementations/history/questions/images/diff1/cat1/
-    - assets/implementations/history/questions/images/diff1/cat2/
-    - assets/implementations/history/questions/images/diff1/cat3/
-    - assets/implementations/history/questions/images/diff1/cat4/
-    - assets/implementations/history/questions/images/diff2/cat0/
-    - assets/implementations/history/questions/images/diff2/cat1/
-    - assets/implementations/history/questions/images/diff2/cat2/
-    - assets/implementations/history/questions/images/diff2/cat3/
-    - assets/implementations/history/questions/images/diff2/cat4/
-    - assets/implementations/history/questions/images/diff3/cat0/
-    - assets/implementations/history/questions/images/diff3/cat2/
-    - assets/implementations/history/questions/images/diff3/cat3/
+#    - assets/implementations/history/
+#    - assets/implementations/history/buttons/
+#    - assets/implementations/history/questions/images/diff0/cat0/
+#    - assets/implementations/history/questions/images/diff0/cat1/
+#    - assets/implementations/history/questions/images/diff0/cat2/
+#    - assets/implementations/history/questions/images/diff0/cat3/
+#    - assets/implementations/history/questions/images/diff0/cat4/
+#    - assets/implementations/history/questions/images/diff1/cat0/
+#    - assets/implementations/history/questions/images/diff1/cat1/
+#    - assets/implementations/history/questions/images/diff1/cat2/
+#    - assets/implementations/history/questions/images/diff1/cat3/
+#    - assets/implementations/history/questions/images/diff1/cat4/
+#    - assets/implementations/history/questions/images/diff2/cat0/
+#    - assets/implementations/history/questions/images/diff2/cat1/
+#    - assets/implementations/history/questions/images/diff2/cat2/
+#    - assets/implementations/history/questions/images/diff2/cat3/
+#    - assets/implementations/history/questions/images/diff2/cat4/
+#    - assets/implementations/history/questions/images/diff3/cat0/
+#    - assets/implementations/history/questions/images/diff3/cat2/
+#    - assets/implementations/history/questions/images/diff3/cat3/

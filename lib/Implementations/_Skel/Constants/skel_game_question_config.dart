@@ -20,6 +20,8 @@ class SkelGameQuestionConfig extends GameQuestionConfig with LabelMixin {
     ];
     //
     //
+    // ignore: unused_local_variable
+    var staticLabel = LabelMixin.staticLabel;
     singleton.categories = [
       singleton.cat0 = QuestionCategory(
           index: 0,
