@@ -22,10 +22,12 @@ mixin HangmanGameScreen<TQuizQuestionManager extends QuizQuestionManager> {
 
   void pressFirstAndLastLetter() {
     quizQuestionManager.gameContext.gameUser.addAnswerToQuestionInfo(
-        quizQuestionManager.currentQuestionInfo.question, hangmanWord[0]);
+        quizQuestionManager.currentQuestionInfo.question,
+        _hangmanService.normalizeString(hangmanWord[0].toLowerCase()));
     quizQuestionManager.gameContext.gameUser.addAnswerToQuestionInfo(
         quizQuestionManager.currentQuestionInfo.question,
-        hangmanWord[hangmanWord.length - 1]);
+        _hangmanService.normalizeString(
+            hangmanWord[hangmanWord.length - 1].toLowerCase()));
   }
 
   String get hangmanWord =>
@@ -120,6 +122,7 @@ mixin HangmanGameScreen<TQuizQuestionManager extends QuizQuestionManager> {
   }
 
   Widget createWordContainer() {
+    debugPrint(hangmanWord);
     var hangmanWordFontSize = _getHangmanWordFontSize(hangmanWord);
     var gameFinished = quizQuestionManager.isGameFinished();
     String currentWordState = _hangmanService.getCurrentWordState(
@@ -135,10 +138,11 @@ mixin HangmanGameScreen<TQuizQuestionManager extends QuizQuestionManager> {
       List<Widget> lettersRowChildren = [];
       for (int i = 0; i < section.length; i++) {
         var letter = section[i];
-        var fontColor =
-            gameFinished && !allPressedAnswer.contains(letter.toLowerCase())
-                ? Colors.red.shade600
-                : Colors.black;
+        var fontColor = gameFinished &&
+                !allPressedAnswer.contains(
+                    _hangmanService.normalizeString(letter.toLowerCase()))
+            ? Colors.red.shade600
+            : Colors.black;
         lettersRowChildren.add(MyText(
           fontConfig: FontConfig(
             fontSize: FontConfig.getCustomFontSize(hangmanWordFontSize),

@@ -42,8 +42,8 @@ class HangmanService {
 
   String normalizeString(String string) {
     return availableLettersHaveSpecialCharacters()
-        ? _normalize(string)
-        : string;
+        ? string
+        : _normalize(string);
   }
 
   bool availableLettersHaveSpecialCharacters() {

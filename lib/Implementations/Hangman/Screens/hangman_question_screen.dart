@@ -16,7 +16,6 @@ import 'package:flutter_app_quiz_game/Lib/Screen/Game/Hangman/hangman_game_scree
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/Options/quiz_question_manager.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
-import 'package:flutter_app_quiz_game/main.dart';
 
 import '../../../Game/Question/Model/question_info_status.dart';
 import '../../../Lib/Animation/animation_fade_in_fade_out.dart';
