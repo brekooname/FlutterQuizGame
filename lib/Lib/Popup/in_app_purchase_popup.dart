@@ -14,7 +14,6 @@ import 'package:in_app_purchase_android/in_app_purchase_android.dart';
 import 'package:in_app_purchase_storekit/in_app_purchase_storekit.dart';
 import 'package:in_app_purchase_storekit/store_kit_wrappers.dart';
 
-import '../Font/font_util.dart';
 import 'my_popup.dart';
 
 class InAppPurchasesPopupService {
@@ -201,7 +200,7 @@ class _InAppPurchaseState extends State<InAppPurchasePopup>
         return Column(children: [
           MyText(
             fontSize: FontConfig.bigFontSize,
-            fontColor: FontUtil.getFontDefaultColorForContrast(),
+            fontColor: FontConfig.fontDefaultColorForContrast,
             text: label.l_extra_content_ad_free,
           ),
           margin,

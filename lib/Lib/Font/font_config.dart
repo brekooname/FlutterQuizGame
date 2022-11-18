@@ -5,7 +5,6 @@ import 'package:flutter_app_quiz_game/Lib/Extensions/map_extension.dart';
 import 'package:flutter_app_quiz_game/Lib/ScreenDimensions/screen_dimensions_service.dart';
 
 import '../../main.dart';
-import 'font_util.dart';
 
 class FontConfig {
   static var fontScale = _initFontScale();
@@ -27,25 +26,35 @@ class FontConfig {
       double? borderWidth,
       this.fontWeight = FontWeight.w500}) {
     this.fontSize = fontSize ?? normalFontSize;
-    this.fontColor = fontColor ?? FontUtil.getFontDefaultColor();
+    this.fontColor = fontColor ?? fontDefaultColor;
     this.borderWidth = borderColor == Colors.transparent
         ? 0
         : borderWidth ?? getStandardBorderWidthBasedOnFontSize(this.fontSize);
+  }
+
+  static Color get fontDefaultColor {
+    return Colors.black;
+  }
+
+  static Color get fontDefaultColorForContrast {
+    return MyApp.appId.gameConfig.isLightScreenContrast
+        ? Colors.black
+        : Colors.white;
   }
 
   static double getStandardBorderWidthBasedOnFontSize(double fontSize) {
     return standardBorderWidth * (fontSize / normalFontSize);
   }
 
-  static double get standardBorderWidth => displayDimensionScale / 150;
+  static double get standardBorderWidth => _displayDimensionScale / 150;
 
-  static double get standardMinMargin => displayDimensionScale / 100;
+  static double get standardMinMargin => _displayDimensionScale / 100;
 
-  static double get standardBorderRadius => displayDimensionScale / 20;
+  static double get standardBorderRadius => _displayDimensionScale / 20;
 
-  static double get standardShadowOffset => displayDimensionScale / 100;
+  static double get standardShadowOffset => _displayDimensionScale / 100;
 
-  static double get standardShadowRadius => displayDimensionScale / 100;
+  static double get standardShadowRadius => _displayDimensionScale / 100;
 
   static double getCustomFontSize(double val) {
     return normalFontSize * val;
@@ -56,12 +65,12 @@ class FontConfig {
   static double get veryBigFontSize => normalFontSize * 2;
 
   static double get normalFontSize {
-    return displayDimensionScale / fontScale;
+    return _displayDimensionScale / fontScale;
   }
 
   static double get smallFontSize => normalFontSize / 2;
 
-  static double get displayDimensionScale =>
+  static double get _displayDimensionScale =>
       ScreenDimensionsService.isPortrait()
           ? MyApp.screenWidth
           : MyApp.screenHeight;

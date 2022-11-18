@@ -6,7 +6,6 @@ import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
 import '../../main.dart';
 import '../Font/font_config.dart';
-import '../Font/font_util.dart';
 import 'my_popup.dart';
 
 class NextQuestionWithExplanationPopup extends StatefulWidget {
@@ -164,7 +163,7 @@ class ExplanationPopupState extends State<ExplanationPopup> with MyPopup {
     );
     var explanationText = MyText(
       fontConfig: FontConfig(
-          fontColor: FontUtil.getFontDefaultColorForContrast(),
+          fontColor: FontConfig.fontDefaultColorForContrast,
           fontSize: FontConfig.getCustomFontSize(0.9)),
       text: widget.explanation,
       maxLines: 17,

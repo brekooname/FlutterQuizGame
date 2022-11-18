@@ -16,6 +16,7 @@ import 'package:flutter_app_quiz_game/Lib/Screen/Game/Hangman/hangman_game_scree
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/Options/quiz_question_manager.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/Game/game_screen.dart';
 import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
+import 'package:flutter_app_quiz_game/main.dart';
 
 import '../../../Game/Question/Model/question_info_status.dart';
 import '../../../Lib/Animation/animation_fade_in_fade_out.dart';
@@ -35,8 +36,10 @@ class HangmanQuestionScreen extends GameScreen<HangmanGameContext,
     required HangmanGameContext gameContext,
     required QuestionInfo questionInfo,
   }) : super(gameScreenManagerState, gameContext, [questionInfo], key: key) {
-    initHangmanGameScreen(HangmanQuizQuestionManager(
-        gameContext, currentQuestionInfo, HangmanLocalStorage()));
+    initHangmanGameScreen(
+        HangmanQuizQuestionManager(
+            gameContext, currentQuestionInfo, HangmanLocalStorage()),
+        label.l_a_b_c_d_e_f_g_h_i_j_k_l_m_n_o_p_q_r_s_t_u_v_w_x_y_z);
   }
 
   @override
@@ -138,8 +141,7 @@ class HangmanQuestionScreenState extends State<HangmanQuestionScreen>
       Column(children: [
         _createBackgroundWithHangmanImage(),
         widget.createWordContainer(),
-        widget.createLettersRows(setStateCallback, widget.goToNextGameScreen,
-            label.l_a_b_c_d_e_f_g_h_i_j_k_l_m_n_o_p_q_r_s_t_u_v_w_x_y_z)
+        widget.createLettersRows(setStateCallback, widget.goToNextGameScreen)
       ]),
       _processAchievementAnimation() ?? Container()
     ]);
@@ -279,7 +281,7 @@ class HangmanQuestionScreenState extends State<HangmanQuestionScreen>
         image: _skybImages.get(index)!.image,
       )),
       width: double.infinity,
-      height: screenDimensions.dimen(70),
+      height: screenDimensions.dimen(70 - _getVariableForNrOfLetterRows()),
     );
   }
 
@@ -288,7 +290,12 @@ class HangmanQuestionScreenState extends State<HangmanQuestionScreen>
         imageName: imgName,
         imageExtension: "png",
         module: "game",
-        maxHeight: screenDimensions.dimen(50));
+        maxHeight:
+            screenDimensions.dimen(50 - _getVariableForNrOfLetterRows()));
+  }
+
+  double _getVariableForNrOfLetterRows() {
+    return widget.getNrRowsWithLetters() > 5 ? 12.5 : 0;
   }
 
   void setStateCallback() {

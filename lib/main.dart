@@ -57,7 +57,7 @@ class MyApp extends StatefulWidget {
   static CampaignLevel campaignLevel = HangmanCampaignLevelService().level_0;
 
   //
-  static Language webLanguage = Language.de;
+  static Language webLanguage = Language.ru;
   static bool webIsPro = false;
 
   ////////////

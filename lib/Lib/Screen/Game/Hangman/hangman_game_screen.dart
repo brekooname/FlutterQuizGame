@@ -12,9 +12,12 @@ mixin HangmanGameScreen<TQuizQuestionManager extends QuizQuestionManager> {
   final ScreenDimensionsService _screenDimensions = ScreenDimensionsService();
   final HangmanService _hangmanService = HangmanService();
   late final TQuizQuestionManager quizQuestionManager;
+  late final List<String> allLetters;
 
-  void initHangmanGameScreen(TQuizQuestionManager quizQuestionManager) {
+  void initHangmanGameScreen(
+      TQuizQuestionManager quizQuestionManager, String allLettersLabel) {
     this.quizQuestionManager = quizQuestionManager;
+    allLetters = allLettersLabel.split(",");
   }
 
   void pressFirstAndLastLetter() {
@@ -33,17 +36,14 @@ mixin HangmanGameScreen<TQuizQuestionManager extends QuizQuestionManager> {
               quizQuestionManager.wrongPressedAnswer.toList())
           .toSet();
 
-  Widget createLettersRows(VoidCallback refreshSetState,
-      VoidCallback goToNextScreenAfterPress, String allLettersLabel) {
-    int nrOfRowsWithLetters = 5;
-    List<String> allLetters = allLettersLabel.split(",");
+  Widget createLettersRows(
+      VoidCallback refreshSetState, VoidCallback goToNextScreenAfterPress) {
+    int nrOfRowsWithLetters = getNrRowsWithLetters();
     int answerIndex = 0;
     List<Row> allRows = [];
-    for (int i = nrOfRowsWithLetters; i >= 0; i--) {
+    for (int i = nrOfRowsWithLetters - 1; i >= 0; i--) {
       List<MyButton> rowButtons = [];
-      for (int j = 0;
-          j < _getNrOfAnswersOnRow(allLetters.length, nrOfRowsWithLetters);
-          j++) {
+      for (int j = 0; j < _getNrOfLettersOnRow(); j++) {
         if (answerIndex < allLetters.length) {
           MyButton button = _createHangmanButton(
             allLetters.elementAt(answerIndex),
@@ -72,7 +72,7 @@ mixin HangmanGameScreen<TQuizQuestionManager extends QuizQuestionManager> {
     VoidCallback refreshSetState,
     VoidCallback goToNextScreenAfterPress,
   ) {
-    var btnSide = _screenDimensions.dimen(14);
+    var btnSide = _screenDimensions.dimen(14.5);
     var btnDisabled = quizQuestionManager.allPressedAnswer
             .contains(btnLetter.toLowerCase()) ||
         quizQuestionManager.isGameFinished();
@@ -115,8 +115,8 @@ mixin HangmanGameScreen<TQuizQuestionManager extends QuizQuestionManager> {
     );
   }
 
-  int _getNrOfAnswersOnRow(int nrOfAllLetters, int nrOfRowsWithLetters) {
-    return (nrOfAllLetters / nrOfRowsWithLetters).ceil();
+  int getNrRowsWithLetters() {
+    return (allLetters.length / _getNrOfLettersOnRow()).ceil();
   }
 
   Widget createWordContainer() {
@@ -196,4 +196,6 @@ mixin HangmanGameScreen<TQuizQuestionManager extends QuizQuestionManager> {
     }
     return val;
   }
+
+  int _getNrOfLettersOnRow() => 6;
 }

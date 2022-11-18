@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
+import 'package:flutter_app_quiz_game/Lib/Font/font_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Internet/internet_service.dart';
 import 'package:flutter_app_quiz_game/Lib/Localization/label_mixin.dart';
 import 'package:flutter_app_quiz_game/Lib/Storage/rate_app_local_storage.dart';
 import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 
 import '../../main.dart';
-import '../Font/font_util.dart';
 import 'my_popup.dart';
 
 class RatePopupService {
@@ -58,7 +58,7 @@ class RateAppPopupState extends State<RateAppPopup> with MyPopup, LabelMixin {
           margin,
           MyText(
               text: label.l_thanks_for_your_support,
-              fontColor: FontUtil.getFontDefaultColorForContrast()),
+              fontColor: FontConfig.fontDefaultColorForContrast),
           margin,
           MyButton(
             text: label.l_rate_now_the_app,

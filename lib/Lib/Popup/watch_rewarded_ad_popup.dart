@@ -10,7 +10,6 @@ import 'package:flutter_app_quiz_game/Lib/Text/my_text.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 import '../../main.dart';
-import '../Font/font_util.dart';
 import 'my_popup.dart';
 
 //ignore: must_be_immutable
@@ -74,7 +73,7 @@ class WatchRewardedAdPopupState extends State<WatchRewardedAdPopup>
             text: getText(),
             maxLines: 3,
             width: width / 1.2,
-            fontColor: FontUtil.getFontDefaultColorForContrast(),
+            fontColor: FontConfig.fontDefaultColorForContrast,
             fontSize: FontConfig.getCustomFontSize(1.2),
           ),
           margin,
