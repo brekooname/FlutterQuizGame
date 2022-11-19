@@ -138,9 +138,11 @@ mixin HangmanGameScreen<TQuizQuestionManager extends QuizQuestionManager> {
       List<Widget> lettersRowChildren = [];
       for (int i = 0; i < section.length; i++) {
         var letter = section[i];
+        var normalizedLetter =
+            _hangmanService.normalizeString(letter.toLowerCase());
         var fontColor = gameFinished &&
-                !allPressedAnswer.contains(
-                    _hangmanService.normalizeString(letter.toLowerCase()))
+                !allPressedAnswer.contains(normalizedLetter) &&
+                !HangmanService.charsToBeIgnored.contains(normalizedLetter)
             ? Colors.red.shade600
             : Colors.black;
         lettersRowChildren.add(MyText(

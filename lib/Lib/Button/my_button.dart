@@ -115,20 +115,22 @@ class MyButton extends StatefulWidget {
         borderRadius: BorderRadius.circular(FontConfig.standardBorderRadius),
       );
       var labelWithPadding = Padding(
-          padding: EdgeInsets.all(FontConfig.standardMinMargin),
-          child: _createMyText());
-      var labelContainer = Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(
-              height: size.height / 2.5,
-            ),
-            Container(
-                height: size.height / 2.5,
-                decoration: labelContainerDecoration,
-                child: labelWithPadding)
-          ]);
+        padding: EdgeInsets.all(FontConfig.standardMinMargin),
+        child: _createMyText(),
+      );
+      var bottomMargin = SizedBox(
+        height: size.height / 2.5,
+      );
+      var labelContainer = Container(
+        height: size.height / 4,
+        decoration: labelContainerDecoration,
+        child: labelWithPadding,
+      );
+      var labelContainerWithMargin = Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [bottomMargin, labelContainer],
+      );
       return SizedBox(
         width: size.width,
         height: size.height,
@@ -136,7 +138,7 @@ class MyButton extends StatefulWidget {
           alignment: Alignment.topCenter,
           children: [
             buttonSkinConfig.image!,
-            labelContainer,
+            labelContainerWithMargin,
           ],
         ),
       );

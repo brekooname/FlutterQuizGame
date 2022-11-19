@@ -5,7 +5,7 @@ import '../../../../main.dart';
 
 class HangmanService {
   static const String standardLetters = "abcdefghijklmnopqrstuvwxyz";
-  static const List<String> _charsToBeIgnored = [" ", "-", "'"];
+  static const List<String> charsToBeIgnored = [" ", "-", "'"];
 
   late String availableLetters;
 
@@ -84,7 +84,7 @@ class HangmanService {
   }
 
   String _removeCharsToBeIgnored(String string) {
-    for (String charToBeIgnored in _charsToBeIgnored) {
+    for (String charToBeIgnored in charsToBeIgnored) {
       string = string.replaceAll(charToBeIgnored, "");
     }
     return string;

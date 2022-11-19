@@ -59,6 +59,28 @@ class HangmanMainMenuScreenState extends State<HangmanMainMenuScreen>
   @override
   void initState() {
     super.initState();
+
+    HangmanLocalStorage().setFoundWordsInOneGameForCatDiff(
+        HangmanGameQuestionConfig().cat0,
+        HangmanGameQuestionConfig().diff0,
+        5);
+    HangmanLocalStorage().setFoundWordsInOneGameForCatDiff(
+        HangmanGameQuestionConfig().cat1,
+        HangmanGameQuestionConfig().diff0,
+        5);
+    HangmanLocalStorage().setFoundWordsInOneGameForCatDiff(
+        HangmanGameQuestionConfig().cat2,
+        HangmanGameQuestionConfig().diff0,
+        5);
+    HangmanLocalStorage().setFoundWordsInOneGameForCatDiff(
+        HangmanGameQuestionConfig().cat3,
+        HangmanGameQuestionConfig().diff0,
+        5);
+    HangmanLocalStorage().setFoundWordsInOneGameForCatDiff(
+        HangmanGameQuestionConfig().cat4,
+        HangmanGameQuestionConfig().diff0,
+        5);
+
     initScreenState();
 
     _wallBackgr = _getLevelBtnBackground("btn_campaign_wall_up");
@@ -340,10 +362,7 @@ class HangmanMainMenuScreenState extends State<HangmanMainMenuScreen>
         fontColor: Colors.black,
         fontSize: FontConfig.getCustomFontSize(
             btnText.length > 23 && btnText.contains(" ") ? 0.9 : 1));
-    var textMaxLines =
-        btnText.length > 11 && btnText.length < 18 && !btnText.contains(" ")
-            ? 1
-            : 2;
+    var textMaxLines = 1;
     return MyButton(
       touchable: !isGameLevelLocked,
       fontConfig: fontConfig,

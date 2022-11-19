@@ -1729,7 +1729,7 @@ class HangmanAllQuestions extends AllQuestionsService {
         language, //
         questionConfig.cat1, //
         questionConfig.diff0, //
-        ["Miš", "Majmun", "Leopard", "Dupin", "Gepard", "Čimpanza", "Krokodil", "Vrana", "Jelen", "Zec", "Morski pas", "Tigar", "Golub", "Patka", "Orao", "Slon", "Žirafa", "Lav", "Snositi", "Konj"]);
+        ["Miš", "Majmun", "Leopard", "Dupin", "Gepard", "Čimpanza", "Krokodil", "Vrana", "Jelen", "Zec", "Morski pas", "Tigar", "Golub", "Patka", "Orao", "Slon", "Žirafa", "Lav", "Medvjedi", "Konj"]);
     addQuestions(
         result, //
         language, //
