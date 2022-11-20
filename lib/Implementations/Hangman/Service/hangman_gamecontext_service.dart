@@ -29,7 +29,8 @@ class HangmanGameContextService {
     questions =
         questions.sublist(0, min(questions.length, numberOfQuestionsPerGame));
     var gameContext = GameContextService()
-        .createGameContextWithHintsAndQuestions(3, questions);
+        .createGameContextWithHintsAndQuestions(
+            MyApp.isExtraContentLocked ? 3 : 6, questions);
     var hangmanGameContext = HangmanGameContext(gameContext);
     return hangmanGameContext;
   }

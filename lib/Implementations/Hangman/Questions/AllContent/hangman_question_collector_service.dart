@@ -25,7 +25,8 @@ class HangmanQuestionCollectorService extends QuestionCollectorService<
     List<Question> result = [];
     for (QuestionCategory questionCategory in categories ?? []) {
       if (gameQuestionConfig.isMixedCategory(questionCategory)) {
-        result.addAll(_getMixCategoryQuestions(difficulties ?? []));
+        result.addAll(
+            _getMixCategoryQuestions(difficulties ?? [], questionCategory));
       } else {
         result.addAll(super.getAllQuestions(
             difficulties: difficulties, categories: [questionCategory]));
@@ -41,14 +42,15 @@ class HangmanQuestionCollectorService extends QuestionCollectorService<
   }
 
   List<Question> _getMixCategoryQuestions(
-      List<QuestionDifficulty> difficulties) {
+      List<QuestionDifficulty> difficulties, QuestionCategory mixedCategory) {
     List<Question> result = [];
     List<QuestionCategory> categsWithoutMix =
         gameQuestionConfig.getAllCategoriesWithoutMixCategory();
     for (QuestionDifficulty diff in difficulties) {
       for (QuestionCategory cat in categsWithoutMix) {
-        result.addAll(
-            super.getAllQuestions(difficulties: [diff], categories: [cat]));
+        result.addAll(super
+            .getAllQuestions(difficulties: [diff], categories: [cat]).map((e) =>
+                Question(e.index, e.difficulty, mixedCategory, e.rawString)));
       }
     }
     return result;

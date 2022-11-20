@@ -3,6 +3,8 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Lib/ScreenDimensions/screen_dimensions_service.dart';
 
+import '../../../Lib/Font/font_config.dart';
+
 class HangmanSmokeAnimation extends StatefulWidget {
   final Image forestTexture;
 
@@ -94,7 +96,9 @@ class HangmanHouseSmokePainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    var standardX = _screenDimensionsService.dimen(89);
+    double xPercent = 89;
+    var standardX = _screenDimensionsService
+        .dimen(FontConfig.isRtlLanguage ? -(100 - xPercent) : xPercent);
     var standardY = -(_screenDimensionsService.dimen(y) -
         _screenDimensionsService.dimen(8));
     var paint = Paint()

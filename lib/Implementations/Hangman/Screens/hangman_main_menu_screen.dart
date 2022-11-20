@@ -260,7 +260,7 @@ class HangmanMainMenuScreenState extends State<HangmanMainMenuScreen>
         painter: LinesPainter(
             containerSize,
             Size(lateralMarginWidth, containerSize.height),
-            _getListViewItemPosition(index),
+            _getListViewItemPosition(index, false),
             index,
             _campaignLevelColor.get(elementAt.difficulty.index)),
       );
@@ -302,7 +302,7 @@ class HangmanMainMenuScreenState extends State<HangmanMainMenuScreen>
 
       var levelBtn = _createLevelButton(btnSize, campaignLevel);
 
-      int itemPosition = _getListViewItemPosition(index);
+      int itemPosition = _getListViewItemPosition(index, true);
 
       List<Widget> rowChildren = [];
       if (itemPosition == 0) {
@@ -498,12 +498,11 @@ class HangmanMainMenuScreenState extends State<HangmanMainMenuScreen>
 
   double _getListViewAllWidth() => screenDimensions.dimen(100);
 
-  int _getListViewItemPosition(int index) {
+  int _getListViewItemPosition(int index, bool isButtonPosition) {
     return index % 2 == 0
         ? 0
-        : (index - 1) % 4 == 0
-            ? -1
-            : 1;
+        : (FontConfig.isRtlLanguage && isButtonPosition ? -1 : 1) *
+            ((index - 1) % 4 == 0 ? -1 : 1);
   }
 
   Image _getCampaignRes(String imgName, String module, double maxWidth) {

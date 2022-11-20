@@ -6,10 +6,13 @@ import 'package:flutter_app_quiz_game/Lib/Popup/watch_rewarded_ad_popup.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 import '../../main.dart';
+import '../Popup/buy_pro_popup.dart';
+import '../Popup/my_popup.dart';
 
 class AdService {
-  bool isInterstitialAdLoaded = false;
-  InterstitialAd? interstitialAd;
+  bool _isInterstitialAdLoaded = false;
+  int _interstitialAdsShown = 0;
+  InterstitialAd? _interstitialAd;
   WatchRewardedAdPopup? watchRewardedAdPopup;
 
   static final AdService singleton = AdService.internal();
@@ -61,23 +64,49 @@ class AdService {
 
   void showInterstitialAd(bool showInterstitialAd,
       {required VoidCallback executeAfterClose}) {
-    if (MyApp.isExtraContentLocked &&
-        isInterstitialAdLoaded &&
-        showInterstitialAd) {
-      isInterstitialAdLoaded = false;
-      interstitialAd?.show();
-      interstitialAd?.fullScreenContentCallback = FullScreenContentCallback(
+    if (_shouldShowInterstitialAd(showInterstitialAd)) {
+      _processInterstitialPopupAd(executeAfterClose);
+      _interstitialAdsShown++;
+    } else {
+      _executeAfterCloseWithInit(executeAfterClose);
+    }
+  }
+
+  void _processInterstitialPopupAd(VoidCallback executeAfterClose) {
+    if (_shouldShowBuyProPopup()) {
+      MyPopup.showPopup(BuyProPopup(executeAfterClose));
+    } else {
+      _showInterstitialAd(executeAfterClose);
+    }
+  }
+
+  bool _shouldShowInterstitialAd(bool showInterstitialAd) =>
+      MyApp.isExtraContentLocked && showInterstitialAd;
+
+  void _showInterstitialAd(VoidCallback executeAfterClose) {
+    if (_isInterstitialAdLoaded) {
+      _isInterstitialAdLoaded = false;
+      _interstitialAd?.show();
+      _interstitialAd?.fullScreenContentCallback = FullScreenContentCallback(
           onAdDismissedFullScreenContent: (interstitialAd) {
-        executeAfterClose.call();
-        initInterstitialAd();
+        _executeAfterCloseWithInit(executeAfterClose);
       }, onAdFailedToShowFullScreenContent: (InterstitialAd ad, AdError error) {
-        executeAfterClose.call();
-        initInterstitialAd();
+        _executeAfterCloseWithInit(executeAfterClose);
       });
     } else {
-      executeAfterClose.call();
-      initInterstitialAd();
+      _executeAfterCloseWithInit(executeAfterClose);
     }
+  }
+
+  bool _shouldShowBuyProPopup() {
+    return MyApp.appId.gameConfig.showBuyProPopupAsFirstInterstitial &&
+        //Show buyPro every (5 * nrOfQuestionsToShowInterstitialAd) questions => also as the first interstitial
+        _interstitialAdsShown % 5 == 0;
+  }
+
+  void _executeAfterCloseWithInit(VoidCallback executeAfterClose) {
+    executeAfterClose.call();
+    initInterstitialAd();
   }
 
   void initRewardedAd(VoidCallback? onUserEarnedReward) {
@@ -113,15 +142,15 @@ class AdService {
   }
 
   void initInterstitialAd() {
-    if (!kIsWeb && !isInterstitialAdLoaded && MyApp.isExtraContentLocked) {
-      interstitialAd?.dispose();
+    if (!kIsWeb && !_isInterstitialAdLoaded && MyApp.isExtraContentLocked) {
+      _interstitialAd?.dispose();
       InterstitialAd.load(
           adUnitId: interstitialAdUnitId,
           request: const AdRequest(),
           adLoadCallback: InterstitialAdLoadCallback(
             onAdLoaded: (InterstitialAd ad) {
-              interstitialAd = ad;
-              isInterstitialAdLoaded = true;
+              _interstitialAd = ad;
+              _isInterstitialAdLoaded = true;
             },
             onAdFailedToLoad: (LoadAdError error) {
               debugPrint('InterstitialAd failed to load: $error');

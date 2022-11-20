@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/button_skin_config.dart';
+import 'package:flutter_app_quiz_game/Lib/Extensions/string_extension.dart';
 
 import '../../../../Game/Question/QuestionCategoryService/Hangman/hangman_service.dart';
 import '../../../Button/my_button.dart';
@@ -59,7 +60,9 @@ mixin HangmanGameScreen<TQuizQuestionManager extends QuizQuestionManager> {
       allRows.add(Row(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
-        children: rowButtons,
+        children: FontConfig.isRtlLanguage
+            ? rowButtons.reversed.toList()
+            : rowButtons,
       ));
     }
     return Column(
@@ -135,6 +138,7 @@ mixin HangmanGameScreen<TQuizQuestionManager extends QuizQuestionManager> {
     var splitLongWord = _getSplitLongWord(currentWordState);
     var allPressedAnswer = quizQuestionManager.allPressedAnswer;
     for (String section in splitLongWord) {
+      section = FontConfig.isRtlLanguage ? section.reversed : section;
       List<Widget> lettersRowChildren = [];
       for (int i = 0; i < section.length; i++) {
         var letter = section[i];

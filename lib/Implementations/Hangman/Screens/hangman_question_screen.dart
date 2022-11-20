@@ -20,6 +20,7 @@ import 'package:flutter_app_quiz_game/Lib/Screen/screen_state.dart';
 import '../../../Game/Question/Model/question_info_status.dart';
 import '../../../Lib/Animation/animation_fade_in_fade_out.dart';
 import '../../../Lib/Color/color_util.dart';
+import '../../../main.dart';
 import '../Service/hangman_game_service.dart';
 
 class HangmanQuestionScreen extends GameScreen<HangmanGameContext,
@@ -35,6 +36,11 @@ class HangmanQuestionScreen extends GameScreen<HangmanGameContext,
     required HangmanGameContext gameContext,
     required QuestionInfo questionInfo,
   }) : super(gameScreenManagerState, gameContext, [questionInfo], key: key) {
+    debugPrint(gameContext.gameUser
+        .getAllQuestions([])
+        .map((e) => e.question.rawString)
+        .toList()
+        .toString());
     initHangmanGameScreen(
         HangmanQuizQuestionManager(
             gameContext, currentQuestionInfo, HangmanLocalStorage()),
@@ -187,7 +193,7 @@ class HangmanQuestionScreenState extends State<HangmanQuestionScreen>
 
   Widget _createAnsweredQuestionsHeader() {
     var hintButton = HintButton(
-        watchRewardedAdForHint: true,
+        watchRewardedAdForHint: MyApp.isExtraContentLocked,
         disabled: widget.quizQuestionManager.isGameFinished(),
         onClick: _onHintButtonClick,
         availableHints: widget.gameContext.amountAvailableHints,

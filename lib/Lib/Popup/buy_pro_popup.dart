@@ -11,8 +11,9 @@ import 'my_popup.dart';
 class BuyProPopup extends StatefulWidget {
   final InternetService _internetService = InternetService();
   final MyTextService _myTextService = MyTextService();
+  final VoidCallback executeAfterClose;
 
-  BuyProPopup({Key? key}) : super(key: key);
+  BuyProPopup(this.executeAfterClose, {Key? key}) : super(key: key);
 
   @override
   State<BuyProPopup> createState() => BuyProPopupState();
@@ -56,5 +57,13 @@ class BuyProPopupState extends State<BuyProPopup> with MyPopup, LabelMixin {
         ],
       ),
     );
+  }
+
+  @override
+  Widget createClosePopupBtn(VoidCallback? onCloseBtnClick) {
+    return super.createClosePopupBtn(() {
+      closePopup();
+      widget.executeAfterClose.call();
+    });
   }
 }

@@ -1,3 +1,5 @@
+import 'dart:io';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Game/GameType/game_config.dart';
 import 'package:flutter_app_quiz_game/Game/GameType/game_question_config.dart';
@@ -44,15 +46,29 @@ class HangmanGameConfig extends GameConfig {
   ImageRepeat? get backgroundTextureRepeat => ImageRepeat.repeat;
 
   @override
-  Color get defaultScreenBackgroundColor => const Color.fromRGBO(
-      112, 194, 57, 1.0);
+  Color get defaultScreenBackgroundColor =>
+      const Color.fromRGBO(112, 194, 57, 1.0);
 
   @override
-  String get extraContentProductId => "extracontent.hangman";
+  String get extraContentProductId {
+    if (kIsWeb) {
+      return "extraContent";
+    } else if (Platform.isAndroid) {
+      return "xxxxxx";
+    } else if (Platform.isIOS) {
+      return "extracontent.hangmanclassic";
+    }
+    throw UnsupportedError("Unsupported platform");
+  }
+
+  @override
+  bool get showBuyProPopupAsFirstInterstitial => true;
 
   @override
   String getTitle(Language language) {
     switch (language) {
+      case Language.ar:
+        return "الجلاد";
       case Language.bg:
         return "Бесеница";
       case Language.cs:
@@ -71,6 +87,10 @@ class HangmanGameConfig extends GameConfig {
         return "Hirsipuu";
       case Language.fr:
         return "Le Pendu";
+      case Language.he:
+        return "איש תלוי";
+      case Language.hi:
+        return "हैंगमेन";
       case Language.hr:
         return "Vješala";
       case Language.hu:
@@ -79,6 +99,10 @@ class HangmanGameConfig extends GameConfig {
         return "Hangman";
       case Language.it:
         return "L'impiccato";
+      case Language.ja:
+        return "ハングマン";
+      case Language.ko:
+        return "행맨";
       case Language.ms:
         return "Hangman";
       case Language.nl:
@@ -101,10 +125,16 @@ class HangmanGameConfig extends GameConfig {
         return "Обешењака";
       case Language.sv:
         return "Hänga gubbe";
+      case Language.th:
+        return "แฮงแมน";
       case Language.tr:
         return "Adam asmaca";
       case Language.uk:
         return "Шибениця";
+      case Language.vi:
+        return "Người treo cổ";
+      case Language.zh:
+        return "猜單詞遊戲";
       default:
         return "Hangman";
     }
