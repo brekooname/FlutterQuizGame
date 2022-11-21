@@ -50,8 +50,10 @@ class BuyProPopupState extends State<BuyProPopup> with MyPopup, LabelMixin {
             backgroundColor: Colors.lightGreenAccent,
             onClick: () {
               closePopup();
+              widget.executeAfterClose.call();
               widget._internetService
                   .openAppUrl(MyApp.appProStoreId, false, context);
+
             },
           ),
         ],

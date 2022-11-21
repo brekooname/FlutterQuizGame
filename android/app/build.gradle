@@ -106,6 +106,14 @@ android {
     flavorDimensions "game"
     productFlavors {
 /////////////////////////////////////////////////////////////////////////////
+        hangman {
+            applicationIdSuffix ".hangmanro"
+            versionCode 2
+            versionName "2.0"
+            dimension "game"
+            manifestPlaceholders = [appIcon: "@drawable/hangmanro_icon"]
+        }
+/////////////////////////////////////////////////////////////////////////////
         astronomy {
             applicationIdSuffix ".astronomy"
             versionCode 5

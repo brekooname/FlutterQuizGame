@@ -31,7 +31,6 @@ class GameUser {
       QuestionDifficulty difficulty, QuestionCategory category) {
     List<QuestionInfo> res =
         getOpenQuestionsForConfig(difficulty, category).toList();
-    //TODO uncomment
     res.shuffle();
     return res.first;
   }

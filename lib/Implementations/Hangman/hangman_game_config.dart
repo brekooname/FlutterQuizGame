@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Game/GameType/game_config.dart';
@@ -53,16 +54,14 @@ class HangmanGameConfig extends GameConfig {
   String get extraContentProductId {
     if (kIsWeb) {
       return "extraContent";
-    } else if (Platform.isAndroid) {
-      return "xxxxxx";
-    } else if (Platform.isIOS) {
+    } else if (Platform.isIOS || Platform.isAndroid) {
       return "extracontent.hangmanclassic";
     }
     throw UnsupportedError("Unsupported platform");
   }
 
   @override
-  bool get showBuyProPopupAsFirstInterstitial => true;
+  bool get showBuyProPopupAsFirstInterstitial => kIsWeb || Platform.isIOS;
 
   @override
   String getTitle(Language language) {

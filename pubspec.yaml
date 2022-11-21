@@ -120,6 +120,8 @@ flutter:
     ########################
     - assets/implementations/hangman/
     - assets/implementations/hangman/game/
+    - assets/implementations/hangman/game/hangman_img/android/
+    - assets/implementations/hangman/game/hangman_img/default/
     - assets/implementations/hangman/campaign/
     - assets/implementations/hangman/campaign/background/
     - assets/implementations/hangman/campaign/buttons/

@@ -1,5 +1,7 @@
+import 'dart:io';
 import 'dart:math';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app_quiz_game/Game/Question/Model/question_info.dart';
 import 'package:flutter_app_quiz_game/Implementations/Hangman/Components/hangman_smoke_animation.dart';
@@ -94,8 +96,12 @@ class HangmanQuestionScreenState extends State<HangmanQuestionScreen>
     widget.pressFirstAndLastLetter();
 
     for (int i = 0; i < 7; i++) {
-      _hImages.putIfAbsent(i, () => _getGameImage("h" + i.toString()));
-      _skybImages.putIfAbsent(i, () => _getGameImage("skyb" + i.toString()));
+      _hImages.putIfAbsent(
+          i,
+          () => _getGameImage(
+              "h" + i.toString(), "game/hangman_img/" + _getHangmanImgModule));
+      _skybImages.putIfAbsent(
+          i, () => _getGameImage("skyb" + i.toString(), "game"));
     }
     _emojiDead = _getEmojiImage("emoji_dead");
     _emojiHappy = _getEmojiImage("emoji_happy");
@@ -108,6 +114,15 @@ class HangmanQuestionScreenState extends State<HangmanQuestionScreen>
 
     _onInitLevelIsAlreadyFinished =
         widget._hangmanGameService.isLevelFinished(_getNrOfWonQuestions());
+  }
+
+  String get _getHangmanImgModule {
+    if (kIsWeb) {
+      return "android";
+    } else if (Platform.isAndroid) {
+      return "android";
+    }
+    return "default";
   }
 
   Image _getEmojiImage(String imgName) {
@@ -251,7 +266,9 @@ class HangmanQuestionScreenState extends State<HangmanQuestionScreen>
                 return FadeTransition(child: child, opacity: animation);
               },
               child: _createSkyContainer(nrOfWrongAnswers)),
-          HangmanSmokeAnimation(_forestTexture)
+          _getHangmanImgModule == "android"
+              ? Container()
+              : HangmanSmokeAnimation(_forestTexture)
         ]),
         Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -290,11 +307,11 @@ class HangmanQuestionScreenState extends State<HangmanQuestionScreen>
     );
   }
 
-  Image _getGameImage(String imgName) {
+  Image _getGameImage(String imgName, String module) {
     return imageService.getSpecificImage(
         imageName: imgName,
         imageExtension: "png",
-        module: "game",
+        module: module,
         maxHeight:
             screenDimensions.dimen(50 - _getVariableForNrOfLetterRows()));
   }

@@ -41,6 +41,18 @@ class HangmanMainMenuScreen extends StandardScreen<HangmanScreenManagerState> {
 
   @override
   State<HangmanMainMenuScreen> createState() => HangmanMainMenuScreenState();
+
+  @override
+  Gradient? get screenBackgroundGradient => const LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            Color.fromRGBO(62, 185, 0, 1),
+            Color.fromRGBO(142, 233, 54, 1),
+          ]);
+
+  @override
+  ImageRepeat? get backgroundTextureRepeat => null;
 }
 
 class HangmanMainMenuScreenState extends State<HangmanMainMenuScreen>
@@ -59,27 +71,6 @@ class HangmanMainMenuScreenState extends State<HangmanMainMenuScreen>
   @override
   void initState() {
     super.initState();
-
-    HangmanLocalStorage().setFoundWordsInOneGameForCatDiff(
-        HangmanGameQuestionConfig().cat0,
-        HangmanGameQuestionConfig().diff0,
-        5);
-    HangmanLocalStorage().setFoundWordsInOneGameForCatDiff(
-        HangmanGameQuestionConfig().cat1,
-        HangmanGameQuestionConfig().diff0,
-        5);
-    HangmanLocalStorage().setFoundWordsInOneGameForCatDiff(
-        HangmanGameQuestionConfig().cat2,
-        HangmanGameQuestionConfig().diff0,
-        5);
-    HangmanLocalStorage().setFoundWordsInOneGameForCatDiff(
-        HangmanGameQuestionConfig().cat3,
-        HangmanGameQuestionConfig().diff0,
-        5);
-    HangmanLocalStorage().setFoundWordsInOneGameForCatDiff(
-        HangmanGameQuestionConfig().cat4,
-        HangmanGameQuestionConfig().diff0,
-        5);
 
     initScreenState();
 
@@ -224,7 +215,7 @@ class HangmanMainMenuScreenState extends State<HangmanMainMenuScreen>
               ]),
           Column(
             children: [
-              SizedBox(height: screenDimensions.dimen(5)),
+              SizedBox(height: screenDimensions.dimen(2)),
               gameTitle,
             ],
           )
