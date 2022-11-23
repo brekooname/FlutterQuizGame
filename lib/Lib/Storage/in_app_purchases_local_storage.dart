@@ -1,10 +1,9 @@
-
+import '../../main.dart';
 import 'my_local_storage.dart';
 
 class InAppPurchaseLocalStorage extends MyLocalStorage {
-
   static final InAppPurchaseLocalStorage singleton =
-  InAppPurchaseLocalStorage.internal();
+      InAppPurchaseLocalStorage.internal();
 
   factory InAppPurchaseLocalStorage() {
     return singleton;
@@ -18,6 +17,10 @@ class InAppPurchaseLocalStorage extends MyLocalStorage {
 
   void savePurchase(String productId) {
     localStorage.setBool(_getProductIdKey(productId), true);
+  }
+
+  void deleteGameExtraContentPurchase() {
+    deletePurchase(MyApp.appId.gameConfig.extraContentProductId);
   }
 
   void deletePurchase(String productId) {

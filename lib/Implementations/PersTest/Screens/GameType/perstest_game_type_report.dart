@@ -9,6 +9,7 @@ import 'package:flutter_app_quiz_game/Implementations/PersTest/Screens/GameType/
 import 'package:flutter_app_quiz_game/Implementations/PersTest/Screens/GameType/perstest_game_type_report_personalitydisc.dart';
 import 'package:flutter_app_quiz_game/Implementations/PersTest/Screens/GameType/perstest_game_type_report_selfesteem.dart';
 import 'package:flutter_app_quiz_game/Implementations/PersTest/Service/perstest_game_local_storage.dart';
+import 'package:flutter_app_quiz_game/Implementations/PersTest/Service/perstest_game_screen_manager.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/button_skin_config.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_back_button.dart';
 import 'package:flutter_app_quiz_game/Lib/Button/my_button.dart';
@@ -172,7 +173,15 @@ abstract class PersTestGameTypeReport with LabelMixin {
               MyPopup.showPopup(PersTestDescriptionPopup(attr.description));
             },
             contentLockedConfig: ContentLockedConfig(
-                isContentLocked: MyApp.isExtraContentLocked),
+                isContentLocked: MyApp.isExtraContentLocked,
+                executeAfterPurchase: () {
+                  (MyApp.gameScreenManager.currentScreen!.gameScreenManagerState
+                          as PersTestGameScreenManagerState)
+                      .showGameOverScreen(difficulty, category, () {
+                    MyPopup.showPopup(
+                        PersTestDescriptionPopup(attr.description));
+                  });
+                }),
             textMaxLines: 1,
             text: attr.label,
             size: btnSize,

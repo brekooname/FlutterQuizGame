@@ -31,7 +31,7 @@ abstract class GameConfig {
   //TODO Check extra content "iOS" and "Android" may be different
   String get extraContentProductId;
 
-  bool get showBuyProPopupAsFirstInterstitial => false;
+  bool get showBuyProPopupAsFirstInterstitial => true;
 
   Color get defaultScreenBackgroundColor;
 

@@ -12,17 +12,20 @@ class PersTestGameOverScreen
   late final PersTestGameTypeReport persTestGameTypeReport;
   final QuestionDifficulty difficulty;
   final QuestionCategory category;
+  final VoidCallback? executeOnLoad;
 
   PersTestGameOverScreen(
     PersTestGameScreenManagerState gameScreenManagerState, {
     Key? key,
     required this.difficulty,
     required this.category,
+    this.executeOnLoad,
   }) : super(gameScreenManagerState, key: key) {
     var campaignLevel =
         PersTestCampaignLevelService().campaignLevel(difficulty, category);
     persTestGameTypeReport =
         PersTestGameTypeReport.createGameTypeReport(campaignLevel);
+    executeOnLoad?.call();
   }
 
   @override
@@ -31,7 +34,6 @@ class PersTestGameOverScreen
 
 class PersTestGameOverScreenState extends State<PersTestGameOverScreen>
     with ScreenState {
-  
   @override
   Widget build(BuildContext context) {
     return widget.persTestGameTypeReport.createResultsReportContent(context);

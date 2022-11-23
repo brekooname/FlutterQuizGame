@@ -48,12 +48,12 @@ class MyApp extends StatefulWidget {
 
   // static String webAppKey = "history";
   // static String webAppKey = "geoquiz";
-  // static String webAppKey = "perstest";
+  static String webAppKey = "perstest";
   // static String webAppKey = "dopewars";
   // static String webAppKey = "anatomy";
   // static String webAppKey = "iqgame";
   // static String webAppKey = "astronomy";
-  static String webAppKey = "hangman";
+  // static String webAppKey = "hangman";
   static CampaignLevel campaignLevel = HangmanCampaignLevelService().level_0;
 
   //
@@ -294,14 +294,13 @@ class MyAppState extends State<MyApp> with WidgetsBindingObserver {
   }
 
   static List<Locale> _getSupportedLocales() {
-    return MyApp.kIsMobile
-        ? AppLocalizations.supportedLocales
-        : [
-            Locale(AppLocalizations.supportedLocales
-                    .contains(Locale(MyApp.webLanguage.name))
-                ? MyApp.webLanguage.name
-                : Language.en.name)
-          ];
+    var _languageCode =
+        MyApp.kIsMobile ? MyApp.languageCode : MyApp.webLanguage.name;
+    return [
+      Locale(AppLocalizations.supportedLocales.contains(Locale(_languageCode))
+          ? _languageCode
+          : Language.en.name)
+    ];
   }
 
   Widget _createScreen(GameScreenManager gameScreenManager) {

@@ -99,6 +99,7 @@ class AdService {
   }
 
   bool _shouldShowBuyProPopup() {
+    debugPrint("inter " + _interstitialAdsShown.toString());
     return MyApp.appId.gameConfig.showBuyProPopupAsFirstInterstitial &&
         //Show buyPro every (5 * nrOfQuestionsToShowInterstitialAd) questions => also as the first interstitial
         _interstitialAdsShown % 5 == 0;

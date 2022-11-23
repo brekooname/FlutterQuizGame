@@ -83,13 +83,16 @@ android {
         astronomyPro {
             assets.srcDirs = ['assets/implementations/astronomy', 'assets/main']
         }
+        hangman {
+            assets.srcDirs = ['assets/implementations/hangman', 'assets/main']
+        }
     }
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "com.habapps"
         minSdkVersion 19
-        targetSdkVersion 30
+        targetSdkVersion 31
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         multiDexEnabled true

@@ -118,19 +118,19 @@ flutter:
     ########################
     ###### HANGMAN ###############################################################################
     ########################
-    - assets/implementations/hangman/
-    - assets/implementations/hangman/game/
-    - assets/implementations/hangman/game/hangman_img/android/
-    - assets/implementations/hangman/game/hangman_img/default/
-    - assets/implementations/hangman/campaign/
-    - assets/implementations/hangman/campaign/background/
-    - assets/implementations/hangman/campaign/buttons/
-    - assets/implementations/hangman/campaign/l_0/
-    - assets/implementations/hangman/campaign/l_1/
-    - assets/implementations/hangman/campaign/l_2/
-    - assets/implementations/hangman/campaign/l_3/
-    - assets/implementations/hangman/campaign/l_4/
-    - assets/implementations/hangman/campaign/l_5/
+#    - assets/implementations/hangman/
+#    - assets/implementations/hangman/game/
+#    - assets/implementations/hangman/game/hangman_img/android/
+#    - assets/implementations/hangman/game/hangman_img/default/
+#    - assets/implementations/hangman/campaign/
+#    - assets/implementations/hangman/campaign/background/
+#    - assets/implementations/hangman/campaign/buttons/
+#    - assets/implementations/hangman/campaign/l_0/
+#    - assets/implementations/hangman/campaign/l_1/
+#    - assets/implementations/hangman/campaign/l_2/
+#    - assets/implementations/hangman/campaign/l_3/
+#    - assets/implementations/hangman/campaign/l_4/
+#    - assets/implementations/hangman/campaign/l_5/
     ########################
     ###### ASTRONOMY #############################################################################
     ########################
@@ -175,15 +175,15 @@ flutter:
     ########################
     ###### DOPEWARS ################################################################################
     ########################
-    #    - assets/implementations/dopewars/
-    #    - assets/implementations/dopewars/buttons/
-    #    - assets/implementations/dopewars/general/
-    #    - assets/implementations/dopewars/resource_background/
+#    - assets/implementations/dopewars/
+#    - assets/implementations/dopewars/buttons/
+#    - assets/implementations/dopewars/general/
+#    - assets/implementations/dopewars/resource_background/
     ########################
     ###### PERSTEST ################################################################################
     ########################
-    #    - assets/implementations/perstest/
-    #    - assets/implementations/perstest/buttons/
+    - assets/implementations/perstest/
+    - assets/implementations/perstest/buttons/
     ########################
     ###### GEOQUIZ #################################################################################
     ########################
